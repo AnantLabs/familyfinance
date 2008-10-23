@@ -11,3 +11,31 @@ Add your content here.  Format your content with:
   * Text in *bold* or _italic_
   * Headings, paragraphs, and lists
   * Automatic links to other wiki pages
+
+=Heading1=
+==Heading2==
+===Heading3===
+
+*bold*
+_italic_
+~~strike~~
+^superscript^
+,,subscript,,
+`inline code`
+
+Indent lists 2 spaces:
+  * bullet item
+  # numbered list
+
+{{{
+verbatim code block
+}}}
+
+Horizontal rule
+----
+
+WikiWordLink
+[http://domain/page label]
+http://domain/page
+
+|| table || cells ||
