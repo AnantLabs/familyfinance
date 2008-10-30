@@ -1,6 +1,6 @@
-#summary Changeing the labels of the Credit and Debit columns.
+#summary Changing the labels of the Credit and Debit columns.
 
-= Credit & Debit Columns =
+= Changing the Credit & Debit Column Labels =
 
 If you don't like the "Credit" and "Debit" labels, go ahead and change them.
   # Double click the column header.
