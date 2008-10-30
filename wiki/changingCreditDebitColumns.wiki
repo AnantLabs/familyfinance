@@ -3,6 +3,11 @@
 = Changing the Credit & Debit Column Labels =
 
 If you don't like the "Credit" and "Debit" labels, go ahead and change them.
-  # Double click the column header.
+
+You can do this quickly within a Registry Tab.
+  # Select the Account or Envelope you want to change the labels for in the left panel.
+  # Double-Click the column header of the registry grid.
   # Change the name in the dialog.
-  # Click done. 
+  # Click done.
+
+You can also change the labels by going into the Account Details or Envelope Details dialog under Edit in the menu.
