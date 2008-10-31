@@ -16,5 +16,3 @@ Horizontal rule
 WikiWordLink
 [http://domain/page label]
 http://domain/page
-
-|| table || cells ||
