@@ -1,4 +1,4 @@
-#summary Changing the labels of the Credit and Debit columns.
+#summary HOWTO: Change the Credit and Debit column Labels.
 
 = HOWTO: Change the Credit & Debit Column Labels =
 
