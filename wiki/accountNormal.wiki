@@ -13,7 +13,7 @@ If you want the calculated numbers to look like your loan or credit card stateme
 
 == Long Answer ==
 
-The Account Normal can be either debit or credit. In asking several financial people debit and credit only refers to the right or left column. Debit is always on the left and credit is always on the right. The Account Normal just determines the way of adding up the numbers. Checking and saving accounts are good examples of Debit Normal accounts. These accounts the debits are negative and credits are positive. On the other side Loans and Credit Cards are examples of Credit Normal accounts. With these accounts debits are positive and credits are negative.
+An account can be either Debit Normal or Credit Normal. In asking several financial people, debit and credit only refers to if the number belongs in the left or right column. Debits are always on the left and credits are always on the right. The Account Normal determines how the numbers are added up. Checking and saving accounts are examples of Debit Normal accounts. These accounts the debits are negative and credits are positive. On the other side Loans and Credit Cards are examples of Credit Normal accounts. With these accounts debits are positive and credits are negative.
 
 
 
