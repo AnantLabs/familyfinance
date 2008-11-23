@@ -1,6 +1,6 @@
-#summary INFO: Picking the Account Normal.
+#summary INFO: Picking the Account's Normal Balance.
 
-= INFO: Picking the Account Normal. =
+= INFO: Picking the Account's Normal Balance. =
 
 
 == Quick Answer ==
@@ -13,10 +13,10 @@ If you want the calculated numbers to look like your loan or credit card stateme
 
 == Long Answer ==
 
-An account can be either Debit Normal or Credit Normal. In asking several financial people, debit and credit only refers to if the number belongs in the left or right column. Debits are always on the left and credits are always on the right. The Account Normal determines how the numbers are added up. Checking and saving accounts are examples of Debit Normal accounts. These accounts the debits are negative and credits are positive. On the other side Loans and Credit Cards are examples of Credit Normal accounts. With these accounts debits are positive and credits are negative.
+An accounts Normal Balance can be either Debit or Credit. In asking several financial people, debit and credit only refers to if the number belongs in the left or right column. Credits are always on the left and debits are always on the right. The Accounts Normal Balance is picked by what the balance in the account is "Normally" and it determines how the numbers are added up. Checking and saving accounts (or Assets) are examples of Debit accounts. In these accounts the credits are negative and debits are positive. On the other side Loans and Credit Cards (or Liabilities) are examples of Credit accounts. In these accounts credits are positive and debits are negative.
 
 
 
 == Program Standard ==
 
-As a program standard, all debits are negative and all credits are positive. The only exception is when calculating the starting and ending balances and when calculating the running balance of the accounts that have there Account Normals set to Credit. Hence you will notice that an account that uses Envelopes and is a Credit Normal will calculate a debit as positive when looking at the Account balance, but when looking at the sub transactions and envelopes it will be calculated as a negative.
+As a program standard, all credits are negative and all debits are positive. The only exception is when calculating the starting balance, ending balance and the running total of the accounts that have there Normal Balance set to Credit. You will notice that an account that uses envelopes and is marked as Credit will calculate a credit as positive when looking at the account registry, but when looking at the sub transactions and envelopes it will be calculated as a negative. This is because whether an account's normal balance is credit or debit, a credit line means money leaving, and a debit line means money coming in.
