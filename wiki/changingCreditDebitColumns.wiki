@@ -10,4 +10,4 @@ You can do this quickly within a Registry Tab.
   # Change the name in the dialog.
   # Click done.
 
-You can also change the labels by going into the Account Details or Envelope Details dialog under Edit in the menu, and changing the appropriate fields.
+You can also change the labels by going into the Account Details or Envelope Details dialog under Edit in the menu, and chang the appropriate fields.
