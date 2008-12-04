@@ -5,9 +5,9 @@
 
 == Quick Answer ==
 
-Most of the time *Debit* is the selection you want. This is where money leaving the account is negative and the money going into the account is positive.
+Most of the time *Debit* is the selection you want. This is where money leaving the account is negative and the money going into the account is positive. Examples would be checking, savings, cash, or any of the 'Expenses'. 
 
-If you want the calculated numbers to look like your loan or credit card statement then pick *Credit*. This is where the money you spend from the account is positive and the money that you pay into the account is negative.
+If you want the registries running total to look like your loan or credit card statement then pick *Credit*. This is where the money you spend from the account is positive and the money that you pay into the account is negative. More examples include any type of account considered a liability or any of the 'Incomes'. 
 
 
 
