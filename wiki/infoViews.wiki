@@ -4,7 +4,7 @@
 
 == View ==
 
-From the Admin screen you are able to setup views. A view is how the program keeps accounts and envelopes grouped together correctly. For example You might want to setup a view called "Mom and Dad" and views for your children called "John" or "Mary". Then all accounts and envelopes setup within each view will be kept separate. Then when making a transaction that crosses a view, the account names are hidden by the view names. For example, as a birthday gift Mom and Dad might give Marry some money. From "Mom and Dads" checking account the transaction will show "Marry" as the recipient. Then when Marry goes to her view she will she the transaction as coming from "Mom and Dad" and not from Mom and Dads checking account.
+From the Admin screen you are able to setup views. A view is how the program keeps accounts and envelopes grouped together correctly. For example You might want to setup a view called "Mom and Dad" and views for your children called "John" or "Mary". Then all accounts and envelopes setup within each view will be kept separate.
 
 
 
