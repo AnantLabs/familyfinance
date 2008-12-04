@@ -3,4 +3,4 @@
 = HOWTO: Install Family Finance. =
 
   # Make sure that you have installed the SQLce 3.1 on your computer. This is Microsofts  Compact Edition of SQL Server, and is the database engine that Family Finance uses.
-  # Have the FamilyFinance.exe executable and the FamilyFinanceDB.sdf database file in the same directory.
+  # After Family Finance runs the first time it will create the database file FamilyFinanceDB.sdf. Keep this and FamilyFinance.exe in the same directory and all should run well.
