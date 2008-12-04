@@ -11,5 +11,3 @@ You can do this quickly within a Registry Tab.
   # Click done.
 
 You can also change the labels by going into the Account Details or Envelope Details dialog under Edit in the menu, and changing the appropriate fields.
-
-http://code.google.com/images/code_sm.png
