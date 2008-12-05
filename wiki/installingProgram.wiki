@@ -7,5 +7,4 @@
 
 If you get an error saying that you need to install a version of the .NET Framework v2.0.xxxxx then you need to download ind install this file.
 
-[.NET Framework v2.0]
-http://www.microsoft.com/downloads/details.aspx?FamilyID=0856eacb-4362-4b0d-8edd-aab15c5e04f5&displaylang=en
+[http://www.microsoft.com/downloads/details.aspx?FamilyID=0856eacb-4362-4b0d-8edd-aab15c5e04f5&displaylang=en .NET Framework v2.0]
