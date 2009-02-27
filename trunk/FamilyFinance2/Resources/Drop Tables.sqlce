@@ -1,9 +1,0 @@
-DROP TABLE SubLineItem;
-DROP TABLE LineItem;
-DROP TABLE LineType;
-DROP TABLE Envelope;
-DROP TABLE Account;
-DROP TABLE AccountType;
-
-
-
