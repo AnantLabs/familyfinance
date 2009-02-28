@@ -4,11 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.IO;
-using FamilyFinance.Import_Classes;
 using System.Data.SqlServerCe;
+using FamilyFinance2.Forms;
 
-
-namespace FamilyFinanceMin
+namespace FamilyFinance2
 {
     static class Program
     {
@@ -24,7 +23,7 @@ namespace FamilyFinanceMin
                     return;
     #else
             AppDomain.CurrentDomain.SetData("DataDirectory", Path.GetDirectoryName(Application.ExecutablePath));
-            FamilyFinanceDBDataSet.myCreateDBFile();
+            FFDBDataSet.myCreateDBFile();
             runProgram();
             return;
 
@@ -63,8 +62,8 @@ namespace FamilyFinanceMin
 
         private static void runProgram()
         {
-            FamilyFinanceDBDataSet globalDataSet = new FamilyFinanceDBDataSet();
-            globalDataSet.myInit();
+            //FamilyFinanceDBDataSet globalDataSet = new FamilyFinanceDBDataSet();
+            //globalDataSet.myInit();
 
 #if (DEBUG)
 
@@ -72,7 +71,8 @@ namespace FamilyFinanceMin
             //globalDataSet.myCheckPassword(1, "123");
             //Application.Run(new MainForm(ref globalDataSet));
 
-            Application.Run(new LoginForm(ref globalDataSet));
+            //Application.Run(new LoginForm(ref globalDataSet));
+            Application.Run(new MainForm());
 
 #else
 
@@ -109,7 +109,7 @@ namespace FamilyFinanceMin
 
             AppDomain.CurrentDomain.SetData("DataDirectory", Properties.Settings.Default.DataDirectory);
 
-            try { result = FamilyFinanceDBDataSet.myGoodPath(); }
+            try { result = FFDBDataSet.myGoodPath(); }
 
             catch
             {
@@ -119,7 +119,7 @@ namespace FamilyFinanceMin
 
             if (result == false)
             {
-                try { result = FamilyFinanceDBDataSet.myCreateDBFile(); }
+                try { result = FFDBDataSet.myCreateDBFile(); }
 
                 catch { result = false; }
 
@@ -138,9 +138,9 @@ namespace FamilyFinanceMin
 #if (DEBUG)
         private static void testCode()
         {
-            FamilyFinanceDBDataSet testDS = new FamilyFinanceDBDataSet();
-            testDS.Test_myRunAllTests();
-            testDS.Dispose();
+            //FamilyFinanceDBDataSet testDS = new FamilyFinanceDBDataSet();
+            //testDS.Test_myRunAllTests();
+            //testDS.Dispose();
         }
 #endif
 

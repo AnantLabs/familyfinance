@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FamilyFinance2.Properties
-{
-
-
+namespace FamilyFinance2.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -22,49 +22,115 @@ namespace FamilyFinance2.Properties
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "2.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources
-    {
-
+    internal class Resources {
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources()
-        {
+        internal Resources() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager
-        {
-            get
-            {
-                if ((resourceMan == null))
-                {
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FamilyFinance2.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture
-        {
-            get
-            {
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
                 return resourceCulture;
             }
-            set
-            {
+            set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to -------------------------------------------------------------------------------
+        ///-------------------------------------------------------------------------------
+        ///CREATE TABLE AccountType
+        ///(
+        ///	id					smallint		NOT NULL,
+        ///	[name]				nvarchar(30)	NOT NULL,
+        ///	CONSTRAINT PK_AccountType_id        PRIMARY KEY (id)
+        ///);
+        ///INSERT INTO AccountType VALUES (-1, &apos; &apos;); -- Null Account Type
+        ///
+        ///
+        ///
+        ///-------------------------------------------------------------------------------
+        ///----------------------------------------------- [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Build_Tables {
+            get {
+                return ResourceManager.GetString("Build_Tables", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM SubLineItem WHERE id &gt; 0;
+        ///DELETE FROM LineItem WHERE id &gt; 0;
+        ///DELETE FROM LineType WHERE id &gt; 0;
+        ///UPDATE Envelope SET parentEnvelope = -1;
+        ///DELETE FROM Envelope WHERE id &gt; 0;
+        ///DELETE FROM Account WHERE id &gt; 0;
+        ///DELETE FROM AccountType WHERE id &gt; 0;
+        ///.
+        /// </summary>
+        internal static string Delete_Data {
+            get {
+                return ResourceManager.GetString("Delete_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DROP TABLE SubLineItem;
+        ///DROP TABLE LineItem;
+        ///DROP TABLE LineType;
+        ///DROP TABLE Envelope;
+        ///DROP TABLE Account;
+        ///DROP TABLE AccountType;
+        ///
+        ///
+        ///
+        ///.
+        /// </summary>
+        internal static string Drop_Tables {
+            get {
+                return ResourceManager.GetString("Drop_Tables", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to -------------------------------------------------------------------------------
+        ///-------------------------------------------------------------------------------
+        ///--TABLE AccountType (id, name(30))
+        ///INSERT INTO AccountType VALUES (1, &apos;View&apos;);
+        ///INSERT INTO AccountType VALUES (2, &apos;Cash&apos;);
+        ///INSERT INTO AccountType VALUES (3, &apos;Loan&apos;);
+        ///INSERT INTO AccountType VALUES (4, &apos;Checking&apos;);
+        ///INSERT INTO AccountType VALUES (5, &apos;Savings&apos;);
+        ///INSERT INTO AccountType VALUES (6, &apos;Credit Card&apos;);
+        ///INSERT INTO AccountType VALUES [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Test_Data {
+            get {
+                return ResourceManager.GetString("Test_Data", resourceCulture);
             }
         }
     }

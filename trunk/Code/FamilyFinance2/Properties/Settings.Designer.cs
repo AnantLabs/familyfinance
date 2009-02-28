@@ -33,5 +33,26 @@ namespace FamilyFinance2.Properties {
                 return ((string)(this["FFDBConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(".")]
+        public string DataDirectory {
+            get {
+                return ((string)(this["DataDirectory"]));
+            }
+            set {
+                this["DataDirectory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("FamilyFinanceDB.sdf")]
+        public string DBFileName {
+            get {
+                return ((string)(this["DBFileName"]));
+            }
+        }
     }
 }
