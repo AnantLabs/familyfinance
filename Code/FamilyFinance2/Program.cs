@@ -45,7 +45,7 @@ namespace FamilyFinance2
 
             catch
             {
-                string message = "Please note that this program does not yet run on Winx63.\n Also, please make sure SQLServerCE31-EN.msi has heen installed first.\n";
+                string message = "Please note that this program does not yet run on 64bit versions of Windows.\n Also, please make sure SQLServerCE3-5-1.msi has heen installed first.\n";
                 string caption = "Error";
                 MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return false;
@@ -76,7 +76,7 @@ namespace FamilyFinance2
 
 #else
 
-            Application.Run(new LoginForm(ref globalDataSet));
+            Application.Run(new MainForm());
 
 #endif
 
