@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.IO;
 using System.Data.SqlServerCe;
+using System.Linq;
 using FamilyFinance2.Forms;
 
 namespace FamilyFinance2
@@ -38,18 +39,39 @@ namespace FamilyFinance2
 
         }
 
-        private static bool isSQLceInstaled()
+        private static bool canRun()
         {
-            // See if SQLCE is installed
-            try { sqlCommand(); }
+            string message;
+            string caption;
 
-            catch
+            // see if framework 3.5 is installed
+            if (!Directory.Exists("C:\\Windows\\Microsoft.NET\\Framework\\v3.5"))
             {
-                string message = "Please note that this program does not yet run on 64bit versions of Windows.\n Also, please make sure SQLServerCE3-5-1.msi has heen installed first.\n";
-                string caption = "Error";
+                message = "It appears this computer does not yet have the .NET Framework v3.5 installed. \n Please get it installed before running Family Finance.";
+                caption = "Error";
                 MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return false;
             }
+
+            // See if SQLCE is installed
+            try { sqlCommand(); }
+            catch
+            {
+                message = "It appears this computer does not yet have SQLServerCE3-5-1.msi installed.\n Please get it installed before running Family Finance.";
+                caption = "Error";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return false;
+            }
+
+            // See if Win 64
+            if (Is64BitWindows())
+            {
+                message = "Family Finance is not yet supported in 64-bit versions of Windows.\n";
+                caption = "Error";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return false;
+            }
+
 
             return true;
         }
@@ -58,6 +80,20 @@ namespace FamilyFinance2
         {
             SqlCeCommand test = new SqlCeCommand();
             test.Dispose();
+        }
+
+        private static bool Is64BitWindows()
+        {
+            #if (_WIN64)
+             return TRUE;  // 64-bit programs run only on Win64
+            #elif (_WIN32)
+             // 32-bit programs run on both 32-bit and 64-bit Windows
+             // so must sniff
+             bool f64 = false;
+             return IsWow64Process(GetCurrentProcess(), &f64) && f64;
+            #else
+             return false; // Win64 does not support Win16
+            #endif
         }
 
         private static void runProgram()
