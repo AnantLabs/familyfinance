@@ -38,9 +38,9 @@
             this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
             this.accountTypeBindingNavigatorSaveItem = new System.Windows.Forms.ToolStripButton();
             this.accountTypeDataGridView = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.accountTypeTableAdapter = new FamilyFinance2.FFDBDataSetTableAdapters.AccountTypeTableAdapter();
             this.tableAdapterManager = new FamilyFinance2.FFDBDataSetTableAdapters.TableAdapterManager();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.accountTypeBindingNavigator)).BeginInit();
             this.accountTypeBindingNavigator.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.accountTypeBindingSource)).BeginInit();
@@ -83,6 +83,7 @@
             // 
             this.accountTypeBindingSource.DataMember = "AccountType";
             this.accountTypeBindingSource.DataSource = this.fFDBDataSet;
+            this.accountTypeBindingSource.Filter = "id > 0";
             this.accountTypeBindingSource.Sort = "name";
             // 
             // fFDBDataSet
@@ -115,12 +116,24 @@
             this.dataGridViewTextBoxColumn2});
             this.accountTypeDataGridView.DataSource = this.accountTypeBindingSource;
             resources.ApplyResources(this.accountTypeDataGridView, "accountTypeDataGridView");
+            this.accountTypeDataGridView.MultiSelect = false;
             this.accountTypeDataGridView.Name = "accountTypeDataGridView";
             this.accountTypeDataGridView.RowHeadersVisible = false;
+            this.accountTypeDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.accountTypeDataGridView.ShowCellErrors = false;
             this.accountTypeDataGridView.ShowCellToolTips = false;
             this.accountTypeDataGridView.ShowEditingIcon = false;
             this.accountTypeDataGridView.ShowRowErrors = false;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "name";
+            resources.ApplyResources(this.dataGridViewTextBoxColumn2, "dataGridViewTextBoxColumn2");
+            this.dataGridViewTextBoxColumn2.MaxInputLength = 30;
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // accountTypeTableAdapter
             // 
@@ -137,16 +150,6 @@
             this.tableAdapterManager.SubLineItemTableAdapter = null;
             this.tableAdapterManager.UpdateOrder = FamilyFinance2.FFDBDataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
             // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "name";
-            resources.ApplyResources(this.dataGridViewTextBoxColumn2, "dataGridViewTextBoxColumn2");
-            this.dataGridViewTextBoxColumn2.MaxInputLength = 30;
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
             // AccountTypeForm
             // 
             resources.ApplyResources(this, "$this");
@@ -157,6 +160,8 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AccountTypeForm";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.Load += new System.EventHandler(this.TypeForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.accountTypeBindingNavigator)).EndInit();
             this.accountTypeBindingNavigator.ResumeLayout(false);

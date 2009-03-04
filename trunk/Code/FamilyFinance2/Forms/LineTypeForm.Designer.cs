@@ -56,6 +56,7 @@
             // 
             this.lineTypeBindingSource.DataMember = "LineType";
             this.lineTypeBindingSource.DataSource = this.fFDBDataSet;
+            this.lineTypeBindingSource.Filter = "id > 0";
             this.lineTypeBindingSource.Sort = "name";
             // 
             // lineTypeTableAdapter
@@ -102,7 +103,7 @@
             this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
             this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorAddNewItem.Text = "Add new";
+            this.bindingNavigatorAddNewItem.Text = "Add a new Transaction Type";
             // 
             // bindingNavigatorDeleteItem
             // 
@@ -120,13 +121,15 @@
             this.lineTypeBindingNavigatorSaveItem.Image = ((System.Drawing.Image)(resources.GetObject("lineTypeBindingNavigatorSaveItem.Image")));
             this.lineTypeBindingNavigatorSaveItem.Name = "lineTypeBindingNavigatorSaveItem";
             this.lineTypeBindingNavigatorSaveItem.Size = new System.Drawing.Size(23, 22);
-            this.lineTypeBindingNavigatorSaveItem.Text = "Save Data";
+            this.lineTypeBindingNavigatorSaveItem.Text = "Save Changes";
             this.lineTypeBindingNavigatorSaveItem.Click += new System.EventHandler(this.lineTypeBindingNavigatorSaveItem_Click);
             // 
             // lineTypeDataGridView
             // 
             this.lineTypeDataGridView.AllowUserToAddRows = false;
             this.lineTypeDataGridView.AllowUserToDeleteRows = false;
+            this.lineTypeDataGridView.AllowUserToResizeColumns = false;
+            this.lineTypeDataGridView.AllowUserToResizeRows = false;
             this.lineTypeDataGridView.AutoGenerateColumns = false;
             this.lineTypeDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.lineTypeDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -134,8 +137,10 @@
             this.lineTypeDataGridView.DataSource = this.lineTypeBindingSource;
             this.lineTypeDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lineTypeDataGridView.Location = new System.Drawing.Point(0, 25);
+            this.lineTypeDataGridView.MultiSelect = false;
             this.lineTypeDataGridView.Name = "lineTypeDataGridView";
             this.lineTypeDataGridView.RowHeadersVisible = false;
+            this.lineTypeDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.lineTypeDataGridView.ShowCellErrors = false;
             this.lineTypeDataGridView.ShowCellToolTips = false;
             this.lineTypeDataGridView.ShowEditingIcon = false;
@@ -163,6 +168,8 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "LineTypeForm";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.Text = "Transaction Type";
             this.Load += new System.EventHandler(this.LineTypeForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.fFDBDataSet)).EndInit();

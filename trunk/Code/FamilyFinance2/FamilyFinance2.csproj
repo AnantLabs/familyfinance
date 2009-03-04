@@ -66,6 +66,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Custom Controls\GlobalClasses.cs" />
+    <Compile Include="Custom Controls\RegistryPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Custom Controls\RegistryPanel.Designer.cs">
+      <DependentUpon>RegistryPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Data Tables\DTLineType.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -104,6 +110,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Custom Controls\RegistryPanel.resx">
+      <DependentUpon>RegistryPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FindDBForm.resx">
       <DependentUpon>FindDBForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -187,7 +196,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FamilyFinanceDB.sdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

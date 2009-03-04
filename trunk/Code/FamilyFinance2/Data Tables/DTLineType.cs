@@ -104,35 +104,6 @@ namespace FamilyFinance2
                 return newType.id;
             }
 
-            public void myAddDefaultTypes()
-            {
-                LineTypeRow newType;
-
-                newType = this.NewLineTypeRow();
-                newType.name = "Deposit";
-                this.Rows.Add(newType);
-
-                newType = this.NewLineTypeRow();
-                newType.name = "Debit";
-                this.Rows.Add(newType);
-
-                newType = this.NewLineTypeRow();
-                newType.name = "Check";
-                this.Rows.Add(newType);
-
-                newType = this.NewLineTypeRow();
-                newType.name = "Transfer";
-                this.Rows.Add(newType);
-
-                newType = this.NewLineTypeRow();
-                newType.name = "Cash";
-                this.Rows.Add(newType);
-
-                newType = this.NewLineTypeRow();
-                newType.name = "Bill Pay";
-                this.Rows.Add(newType);
-
-            }
 
 
         }// END partial class LineTypeDataTable
