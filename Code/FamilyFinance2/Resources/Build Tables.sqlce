@@ -9,7 +9,6 @@ CREATE TABLE AccountType
 INSERT INTO AccountType VALUES (-1, ' '); -- Null Account Type
 
 
-
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
 CREATE TABLE Account
@@ -109,5 +108,39 @@ CREATE TABLE SubLineItem
 	CONSTRAINT FK_SubLine_lineID	 FOREIGN KEY (lineItemID) REFERENCES  LineItem(id),
 	CONSTRAINT FK_SubLine_envelopeID FOREIGN KEY (envelopeID) REFERENCES  Envelope(id)
 );
+
+
+
+
+
+
+
+--------------------------------------------------------------------------------------
+--   Good Defaults
+--------------------------------------------------------------------------------------
+
+-- Default Account Types
+INSERT INTO AccountType VALUES (1, 'Checking');
+INSERT INTO AccountType VALUES (2, 'Savings');
+INSERT INTO AccountType VALUES (3, 'Loan');
+INSERT INTO AccountType VALUES (4, 'Credit Card');
+INSERT INTO AccountType VALUES (5, 'Cash');
+INSERT INTO AccountType VALUES (6, 'Job');
+INSERT INTO AccountType VALUES (7, 'Other');
+INSERT INTO AccountType VALUES (8, 'Person');
+INSERT INTO AccountType VALUES (9, 'Store');
+INSERT INTO AccountType VALUES (10, 'Utility');
+INSERT INTO AccountType VALUES (11, 'Restraunt');
+INSERT INTO AccountType VALUES (12, 'Grocery Store');
+
+
+-- Default LineItem Types
+INSERT INTO LineType VALUES (1, 'Deposit');
+INSERT INTO LineType VALUES (2, 'Debit');
+INSERT INTO LineType VALUES (3, 'Check');
+INSERT INTO LineType VALUES (4, 'Transfer');
+INSERT INTO LineType VALUES (5, 'Cash');
+INSERT INTO LineType VALUES (6, 'Bill Pay');
+INSERT INTO LineType VALUES (7, 'Withdrawl');
 
 

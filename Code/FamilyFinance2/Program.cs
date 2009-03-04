@@ -20,20 +20,23 @@ namespace FamilyFinance2
 
 #if (DEBUG)
     #if (RUN_TESTS)
-                    testCode();
-                    return;
+
+            testCode();
+            return;
+
     #else
             AppDomain.CurrentDomain.SetData("DataDirectory", Path.GetDirectoryName(Application.ExecutablePath));
             FFDBDataSet.myCreateDBFile();
-            runProgram();
+            Application.Run(new MainForm());
             return;
 
     #endif
 
 #else
-                if (isSQLceInstaled())
-                    if (findPath())
-                        runProgram();
+
+            if (canRun())
+                if (findPath())
+                    runProgram();
 
 #endif
 
@@ -63,15 +66,14 @@ namespace FamilyFinance2
                 return false;
             }
 
-            // See if Win 64
-            if (Is64BitWindows())
+            // See if 64 bit machine
+            if (IntPtr.Size == 8)
             {
                 message = "Family Finance is not yet supported in 64-bit versions of Windows.\n";
                 caption = "Error";
                 MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return false;
             }
-
 
             return true;
         }
@@ -80,42 +82,6 @@ namespace FamilyFinance2
         {
             SqlCeCommand test = new SqlCeCommand();
             test.Dispose();
-        }
-
-        private static bool Is64BitWindows()
-        {
-            #if (_WIN64)
-             return TRUE;  // 64-bit programs run only on Win64
-            #elif (_WIN32)
-             // 32-bit programs run on both 32-bit and 64-bit Windows
-             // so must sniff
-             bool f64 = false;
-             return IsWow64Process(GetCurrentProcess(), &f64) && f64;
-            #else
-             return false; // Win64 does not support Win16
-            #endif
-        }
-
-        private static void runProgram()
-        {
-            //FamilyFinanceDBDataSet globalDataSet = new FamilyFinanceDBDataSet();
-            //globalDataSet.myInit();
-
-#if (DEBUG)
-
-            //globalDataSet.Test_myResetDataBase();
-            //globalDataSet.myCheckPassword(1, "123");
-            //Application.Run(new MainForm(ref globalDataSet));
-
-            //Application.Run(new LoginForm(ref globalDataSet));
-            Application.Run(new MainForm());
-
-#else
-
-            Application.Run(new MainForm());
-
-#endif
-
         }
 
         private static bool findPath()

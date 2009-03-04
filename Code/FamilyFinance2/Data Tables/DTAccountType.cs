@@ -10,9 +10,9 @@ namespace FamilyFinance2
     {
         partial class AccountTypeDataTable
         {
-            ////////////////////////////////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////
             //   Local Variables
-            ////////////////////////////////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////
             private bool autoChange;
 
 
@@ -103,66 +103,6 @@ namespace FamilyFinance2
                 return temp.id;
             }
 
-            public void myAddDefaultTypes(int viewID)
-            {
-                AccountTypeRow newType;
-
-                //Account Types
-                newType = this.NewAccountTypeRow();
-                newType.name = "Checking";
-                this.Rows.Add(newType);
-
-                newType = this.NewAccountTypeRow();
-                newType.name = "Savings";
-                this.Rows.Add(newType);
-
-                newType = this.NewAccountTypeRow();
-                newType.name = "Loan";
-                this.Rows.Add(newType);
-
-                newType = this.NewAccountTypeRow();
-                newType.name = "Credit Card";
-                this.Rows.Add(newType);
-
-                newType = this.NewAccountTypeRow();
-                newType.name = "Cash";
-                this.Rows.Add(newType);
-
-                //Income Types
-                newType = this.NewAccountTypeRow();
-                newType.name = "Job";
-                this.Rows.Add(newType);
-
-                newType = this.NewAccountTypeRow();
-                newType.name = "Other";
-                this.Rows.Add(newType);
-
-                //Expense Types
-                newType = this.NewAccountTypeRow();
-                newType.name = "Person";
-                this.Rows.Add(newType);
-
-                newType = this.NewAccountTypeRow();
-                newType.name = "Store";
-                this.Rows.Add(newType);
-
-                newType = this.NewAccountTypeRow();
-                newType.name = "Utility";
-                this.Rows.Add(newType);
-
-                newType = this.NewAccountTypeRow();
-                newType.name = "Restraunt";
-                this.Rows.Add(newType);
-
-                newType = this.NewAccountTypeRow();
-                newType.name = "Insurance";
-                this.Rows.Add(newType);
-
-                newType = this.NewAccountTypeRow();
-                newType.name = "Grocery Store";
-                this.Rows.Add(newType);
-
-            }
 
         }// END partial class AccountTypeDataTable
     }// END partial class FamilyFinanceDBDataSet
