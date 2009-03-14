@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Data;
 using System.Data.SqlServerCe;
@@ -8,7 +8,7 @@ namespace FamilyFinance2
 {
     partial class FFDBDataSet
     {
-        partial class LineTypeDataTable
+        partial class SubLineItemDataTable
         {
             ///////////////////////////////////////////////////////////////////////
             //   Local Variables
@@ -22,15 +22,14 @@ namespace FamilyFinance2
 
 
             ///////////////////////////////////////////////////////////////////////
-            //   Function Overrides
+            //   Function Overridden
             ///////////////////////////////////////////////////////////////////////
             public override void EndInit()
             {
                 base.EndInit();
 
-
-                this.TableNewRow += new DataTableNewRowEventHandler(LineTypeDataTable_TableNewRow);
-                this.TableNewRow +=new DataTableNewRowEventHandler(LineTypeDataTable_TableNewRow);
+                this.TableNewRow += new DataTableNewRowEventHandler(SubLineItemDataTable_TableNewRow);
+                this.ColumnChanged += new DataColumnChangeEventHandler(SubLineItemDataTable_ColumnChanged);
 
                 autoChange = true;
             }
@@ -39,42 +38,51 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             //   Internal Events
             ///////////////////////////////////////////////////////////////////////
-            private void LineTypeDataTable_TableNewRow(object sender, DataTableNewRowEventArgs e)
+            private void SubLineItemDataTable_TableNewRow(object sender, DataTableNewRowEventArgs e)
             {
-                LineTypeRow lineTypeRow = e.Row as LineTypeRow;
+                SubLineItemRow subLineItemRow = e.Row as SubLineItemRow;
                 int newID = -1;
+
+                autoChange = false;
 
                 if (this.Count > 0)
                     newID = this[this.Count - 1].id + 1;
 
                 if (newID > 0)
-                    lineTypeRow.id = (short)newID;
+                    subLineItemRow.id = newID;
                 else
-                    lineTypeRow.id = 1;
+                    subLineItemRow.id = 1;
 
-                lineTypeRow.name = "";
+                subLineItemRow.envelopeID = SpclEnvelope.NULL;
+                subLineItemRow.description = "";
+                subLineItemRow.amount = 0.0m;
+
+                autoChange = true;
             }
 
-            private void LineTypeDataTable_ColumnChanged(object sender, DataColumnChangeEventArgs e)
+            private void SubLineItemDataTable_ColumnChanged(object sender, DataColumnChangeEventArgs e)
             {
-                LineTypeRow row;
-                string tmp;
-                int maxLen;
+                SubLineItemRow row;
 
                 if (autoChange == false)
                     return;
 
                 autoChange = false;
+                row = e.Row as SubLineItemRow;
 
-                row = e.Row as LineTypeRow;
-
-                if (e.Column.ColumnName == "name")
+                if (e.Column.ColumnName == "amount")
                 {
-                    tmp = e.ProposedValue as string;
-                    maxLen = this.nameColumn.MaxLength;
+                    decimal newValue;
+                    int tempValue;
 
-                    if (tmp.Length > maxLen)
-                        row.name = tmp.Substring(0, maxLen);
+                    newValue = Convert.ToDecimal(e.ProposedValue);
+                    tempValue = Convert.ToInt32(newValue * 100);
+                    newValue = Convert.ToDecimal(tempValue) / 100;
+
+                    if (newValue < 0)
+                        newValue = newValue * -1;
+
+                    row.amount = newValue;
                 }
 
                 autoChange = true;
@@ -82,17 +90,10 @@ namespace FamilyFinance2
 
 
             ///////////////////////////////////////////////////////////////////////
-            //   Function Private
-            ///////////////////////////////////////////////////////////////////////
-
-
-            ///////////////////////////////////////////////////////////////////////
             //   Function Public
             ///////////////////////////////////////////////////////////////////////
 
 
-
-
-        }// END partial class LineTypeDataTable
+        }// END endpartial class SubLineItemDataTable
     }// END partial class FamilyFinanceDBDataSet
 } // END namespace FamilyFinance

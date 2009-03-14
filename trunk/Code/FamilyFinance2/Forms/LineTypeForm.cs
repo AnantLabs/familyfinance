@@ -20,13 +20,11 @@ namespace FamilyFinance2.Forms
         {
             this.Validate();
             this.lineTypeBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.fFDBDataSet);
-
+            this.lineTypeTableAdapter.Update(this.fFDBDataSet.LineType);
         }
 
         private void LineTypeForm_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'fFDBDataSet.LineType' table. You can move, or remove it, as needed.
             this.lineTypeTableAdapter.Fill(this.fFDBDataSet.LineType);
 
         }

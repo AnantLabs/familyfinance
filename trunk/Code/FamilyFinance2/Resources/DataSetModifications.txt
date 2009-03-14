@@ -1,0 +1,5 @@
+﻿Modify LineItem
+	Add	creditAmount - Decimal
+	Add	debitAmount - Decimal
+	Add	balanceAmount - Decimal
+	

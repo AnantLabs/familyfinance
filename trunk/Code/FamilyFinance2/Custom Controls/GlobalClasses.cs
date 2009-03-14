@@ -8,11 +8,12 @@ namespace FamilyFinance2
 {
     /////////////////////////////////
     // Constants
-    public class AccountCatagory
+    public class SpclAccountCat
     {
-        public const string INCOME = "I";
-        public const string ACCOUNT = "A";
-        public const string EXPENSE = "E";
+        public const byte NULL = 0;
+        public const byte INCOME = 1;
+        public const byte ACCOUNT = 2;
+        public const byte EXPENSE = 3;
     }
 
     public class LineCD
@@ -36,19 +37,19 @@ namespace FamilyFinance2
 
     public class SpclAccountType
     {
-        public const int NULL = -1;
+        public const short NULL = -1;
     }
 
     public class SpclEnvelope
     {
-        public const int SPLIT = -2;
-        public const int NULL = -1;
-        public const int NOENVELOPE = 0;
+        public const short SPLIT = -2;
+        public const short NULL = -1;
+        public const short NOENVELOPE = 0;
     }
 
     public class SpclLineType
     {
-        public const int NULL = -1;
+        public const short NULL = -1;
     }
 
 
@@ -309,12 +310,11 @@ namespace FamilyFinance2
         {
             return Name.ToString();
         }
-
     }
 
     public class MyTreeNode : TreeNode
     {
-        public int EnvelopeID;
+        public short ID;
     }
 
 

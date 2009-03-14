@@ -40,7 +40,6 @@
             this.accountTypeDataGridView = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.accountTypeTableAdapter = new FamilyFinance2.FFDBDataSetTableAdapters.AccountTypeTableAdapter();
-            this.tableAdapterManager = new FamilyFinance2.FFDBDataSetTableAdapters.TableAdapterManager();
             ((System.ComponentModel.ISupportInitialize)(this.accountTypeBindingNavigator)).BeginInit();
             this.accountTypeBindingNavigator.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.accountTypeBindingSource)).BeginInit();
@@ -139,17 +138,6 @@
             // 
             this.accountTypeTableAdapter.ClearBeforeFill = true;
             // 
-            // tableAdapterManager
-            // 
-            this.tableAdapterManager.AccountTableAdapter = null;
-            this.tableAdapterManager.AccountTypeTableAdapter = this.accountTypeTableAdapter;
-            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager.EnvelopeTableAdapter = null;
-            this.tableAdapterManager.LineItemTableAdapter = null;
-            this.tableAdapterManager.LineTypeTableAdapter = null;
-            this.tableAdapterManager.SubLineItemTableAdapter = null;
-            this.tableAdapterManager.UpdateOrder = FamilyFinance2.FFDBDataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            // 
             // AccountTypeForm
             // 
             resources.ApplyResources(this, "$this");
@@ -185,7 +173,6 @@
         private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem;
         private System.Windows.Forms.ToolStripButton accountTypeBindingNavigatorSaveItem;
         private System.Windows.Forms.DataGridView accountTypeDataGridView;
-        private FamilyFinance2.FFDBDataSetTableAdapters.TableAdapterManager tableAdapterManager;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
 
     }

@@ -5,3 +5,4 @@ UPDATE Envelope SET parentEnvelope = -1;
 DELETE FROM Envelope WHERE id > 0;
 DELETE FROM Account WHERE id > 0;
 DELETE FROM AccountType WHERE id > 0;
+DELETE FROM AccountCatagory WHERE id > 3;
