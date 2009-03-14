@@ -21,7 +21,6 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
 
 
-
             ///////////////////////////////////////////////////////////////////////
             //   Overriden Functions 
             ///////////////////////////////////////////////////////////////////////
@@ -85,23 +84,6 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             //   Functions Public
             ///////////////////////////////////////////////////////////////////////
-            public int myAddType(string newTypeName)
-            {
-                if (newTypeName == null)
-                    return SpclAccountType.NULL;
-
-                foreach (AccountTypeRow row in this)
-                {
-                    if (row.name == newTypeName)
-                        return row.id;
-                }
-
-                AccountTypeRow temp = this.NewAccountTypeRow();
-                temp.name = newTypeName;
-                this.Rows.Add(temp);
-
-                return temp.id;
-            }
 
 
         }// END partial class AccountTypeDataTable

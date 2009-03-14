@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Data;
 using System.Data.SqlServerCe;
@@ -8,10 +8,10 @@ namespace FamilyFinance2
 {
     partial class FFDBDataSet
     {
-        partial class LineTypeDataTable
+        partial class AccountDataTable
         {
             ///////////////////////////////////////////////////////////////////////
-            //   Local Variables
+            //   LocalVariables
             ///////////////////////////////////////////////////////////////////////
             private bool autoChange;
 
@@ -22,15 +22,14 @@ namespace FamilyFinance2
 
 
             ///////////////////////////////////////////////////////////////////////
-            //   Function Overrides
+            //   Overriden Functions 
             ///////////////////////////////////////////////////////////////////////
             public override void EndInit()
             {
                 base.EndInit();
 
-
-                this.TableNewRow += new DataTableNewRowEventHandler(LineTypeDataTable_TableNewRow);
-                this.TableNewRow +=new DataTableNewRowEventHandler(LineTypeDataTable_TableNewRow);
+                this.TableNewRow += new System.Data.DataTableNewRowEventHandler(AccountDataTable_TableNewRow);
+                this.ColumnChanged += new DataColumnChangeEventHandler(AccountDataTable_ColumnChanged);
 
                 autoChange = true;
             }
@@ -39,42 +38,53 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             //   Internal Events
             ///////////////////////////////////////////////////////////////////////
-            private void LineTypeDataTable_TableNewRow(object sender, DataTableNewRowEventArgs e)
+            private void AccountDataTable_TableNewRow(object sender, System.Data.DataTableNewRowEventArgs e)
             {
-                LineTypeRow lineTypeRow = e.Row as LineTypeRow;
-                int newID = -1;
+                AccountRow accountRow = e.Row as AccountRow;
+                short newID = -1;
 
                 if (this.Count > 0)
-                    newID = this[this.Count - 1].id + 1;
-
+                    newID = Convert.ToInt16(this[this.Count - 1].id + 1);
+                
                 if (newID > 0)
-                    lineTypeRow.id = (short)newID;
+                    accountRow.id = newID;
                 else
-                    lineTypeRow.id = 1;
+                    accountRow.id = 1;
 
-                lineTypeRow.name = "";
+                accountRow.name = "";
+                accountRow.accountTypeID = SpclAccountType.NULL;
+                accountRow.catagoryID = SpclAccountCat.ACCOUNT;
+                accountRow.closed = false;
+                accountRow.creditDebit = LineCD.DEBIT;
+                accountRow.envelopes = false;
+
             }
 
-            private void LineTypeDataTable_ColumnChanged(object sender, DataColumnChangeEventArgs e)
+            private void AccountDataTable_ColumnChanged(object sender, DataColumnChangeEventArgs e)
             {
-                LineTypeRow row;
+                AccountRow row;
                 string tmp;
                 int maxLen;
 
                 if (autoChange == false)
                     return;
 
-                autoChange = false;
+                autoChange = false;          
 
-                row = e.Row as LineTypeRow;
+                row = e.Row as AccountRow;
 
-                if (e.Column.ColumnName == "name")
+                switch (e.Column.ColumnName)
                 {
-                    tmp = e.ProposedValue as string;
-                    maxLen = this.nameColumn.MaxLength;
+                    case "name":
+                        {
+                            tmp = e.ProposedValue as string;
+                            maxLen = this.nameColumn.MaxLength;
 
-                    if (tmp.Length > maxLen)
-                        row.name = tmp.Substring(0, maxLen);
+                            if (tmp.Length > maxLen)
+                                row.name = tmp.Substring(0, maxLen);
+
+                            break;
+                        }
                 }
 
                 autoChange = true;
@@ -82,17 +92,18 @@ namespace FamilyFinance2
 
 
             ///////////////////////////////////////////////////////////////////////
-            //   Function Private
+            //   Functions Private 
+            ///////////////////////////////////////////////////////////////////////
+            
+
+            ///////////////////////////////////////////////////////////////////////
+            //   Functions Public 
             ///////////////////////////////////////////////////////////////////////
 
 
-            ///////////////////////////////////////////////////////////////////////
-            //   Function Public
-            ///////////////////////////////////////////////////////////////////////
-
-
-
-
-        }// END partial class LineTypeDataTable
+        }//END partial class AccountDataTable
     }// END partial class FamilyFinanceDBDataSet
 } // END namespace FamilyFinance
+
+
+

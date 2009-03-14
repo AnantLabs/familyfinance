@@ -26,8 +26,7 @@ namespace FamilyFinance2.Forms
         {
             this.Validate();
             this.accountTypeBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.fFDBDataSet);
-
+            this.accountTypeTableAdapter.Update(this.fFDBDataSet.AccountType);
         }
     }
 }

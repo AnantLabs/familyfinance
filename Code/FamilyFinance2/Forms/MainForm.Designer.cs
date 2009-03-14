@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.editTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.accountsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -35,7 +36,11 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.accountTypesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.transactionTypesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.registryPanel1 = new FamilyFinance2.Custom_Controls.RegistryPanel();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.mainMenuStrip.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainMenuStrip
@@ -67,12 +72,14 @@
             this.accountsToolStripMenuItem.Name = "accountsToolStripMenuItem";
             this.accountsToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.accountsToolStripMenuItem.Text = "Accounts";
+            this.accountsToolStripMenuItem.Click += new System.EventHandler(this.accountsToolStripMenuItem_Click);
             // 
             // envelopesToolStripMenuItem
             // 
             this.envelopesToolStripMenuItem.Name = "envelopesToolStripMenuItem";
             this.envelopesToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.envelopesToolStripMenuItem.Text = "Envelopes";
+            this.envelopesToolStripMenuItem.Click += new System.EventHandler(this.envelopesToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -93,17 +100,41 @@
             this.transactionTypesToolStripMenuItem.Text = "Transaction Types";
             this.transactionTypesToolStripMenuItem.Click += new System.EventHandler(this.transactionTypesToolStripMenuItem_Click);
             // 
+            // registryPanel1
+            // 
+            this.registryPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.registryPanel1.Location = new System.Drawing.Point(0, 0);
+            this.registryPanel1.Name = "registryPanel1";
+            this.registryPanel1.Size = new System.Drawing.Size(496, 429);
+            this.registryPanel1.TabIndex = 1;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 24);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.registryPanel1);
+            this.splitContainer1.Size = new System.Drawing.Size(702, 429);
+            this.splitContainer1.SplitterDistance = 202;
+            this.splitContainer1.TabIndex = 2;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(702, 453);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.mainMenuStrip);
             this.MainMenuStrip = this.mainMenuStrip;
             this.Name = "MainForm";
             this.Text = "Family Finance";
             this.mainMenuStrip.ResumeLayout(false);
             this.mainMenuStrip.PerformLayout();
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -118,6 +149,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem accountTypesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem transactionTypesToolStripMenuItem;
+        private FamilyFinance2.Custom_Controls.RegistryPanel registryPanel1;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }
 

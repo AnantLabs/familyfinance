@@ -33,7 +33,6 @@
             this.fFDBDataSet = new FamilyFinance2.FFDBDataSet();
             this.lineTypeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.lineTypeTableAdapter = new FamilyFinance2.FFDBDataSetTableAdapters.LineTypeTableAdapter();
-            this.tableAdapterManager = new FamilyFinance2.FFDBDataSetTableAdapters.TableAdapterManager();
             this.lineTypeBindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
@@ -62,17 +61,6 @@
             // lineTypeTableAdapter
             // 
             this.lineTypeTableAdapter.ClearBeforeFill = true;
-            // 
-            // tableAdapterManager
-            // 
-            this.tableAdapterManager.AccountTableAdapter = null;
-            this.tableAdapterManager.AccountTypeTableAdapter = null;
-            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager.EnvelopeTableAdapter = null;
-            this.tableAdapterManager.LineItemTableAdapter = null;
-            this.tableAdapterManager.LineTypeTableAdapter = this.lineTypeTableAdapter;
-            this.tableAdapterManager.SubLineItemTableAdapter = null;
-            this.tableAdapterManager.UpdateOrder = FamilyFinance2.FFDBDataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
             // 
             // lineTypeBindingNavigator
             // 
@@ -170,6 +158,7 @@
             this.Name = "LineTypeForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Transaction Type";
             this.Load += new System.EventHandler(this.LineTypeForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.fFDBDataSet)).EndInit();
@@ -188,7 +177,6 @@
         private FFDBDataSet fFDBDataSet;
         private System.Windows.Forms.BindingSource lineTypeBindingSource;
         private FamilyFinance2.FFDBDataSetTableAdapters.LineTypeTableAdapter lineTypeTableAdapter;
-        private FamilyFinance2.FFDBDataSetTableAdapters.TableAdapterManager tableAdapterManager;
         private System.Windows.Forms.BindingNavigator lineTypeBindingNavigator;
         private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem;
