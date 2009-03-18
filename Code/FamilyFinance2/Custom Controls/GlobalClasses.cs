@@ -3,19 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
+using TreeList;
 
 namespace FamilyFinance2
 {
     /////////////////////////////////
     // Constants
-    public class SpclAccountCat
-    {
-        public const byte NULL = 0;
-        public const byte INCOME = 1;
-        public const byte ACCOUNT = 2;
-        public const byte EXPENSE = 3;
-    }
-
     public class LineCD
     {
         public const bool CREDIT = false;
@@ -33,6 +26,14 @@ namespace FamilyFinance2
     {
         public const int MULTIPLE = -2;
         public const int NULL = -1;
+    }
+
+    public class SpclAccountCat
+    {
+        public const byte NULL = 0;
+        public const byte INCOME = 1;
+        public const byte ACCOUNT = 2;
+        public const byte EXPENSE = 3;
     }
 
     public class SpclAccountType
@@ -54,123 +55,67 @@ namespace FamilyFinance2
 
 
 
-
-
     /////////////////////////////////
     // Custom List items, Passing variables and sorting classes
-    public class AccEnvDetails
-    {
-        public int accountID;
-        public int envelopeID;
-        public bool error;
-        public string name;
-        public string type;
-        public string bank;
-        public string catagory;
-        public decimal balance;
 
-        public AccEnvDetails()
-        {
-            accountID = SpclAccount.NULL;
-            envelopeID = SpclEnvelope.NULL;
-            error = false;
-            name = "";
-            type = "";
-            bank = "";
-            catagory = "";
-            balance = 0.0m; 
-        }
-    }
 
-    public class AccEnvDetailsNameComparer : IComparer<AccEnvDetails>
-    {
-        public int Compare(AccEnvDetails x, AccEnvDetails y)
-        {
-            return x.name.CompareTo(y.name);         
-        }   
-    }
+    //public class DetailedErrorParam
+    //{
+    //    public int ErrorID;
+    //    public string Type;
+    //    public string Description;
+    //    public int RefID;
 
-    public class AccEnvDetailsTypeNameComparer : IComparer<AccEnvDetails>
-    {
-        public int Compare(AccEnvDetails x, AccEnvDetails y)
-        {
-            int temp = x.type.CompareTo(y.type);
-            if (temp == 0)
-                return x.name.CompareTo(y.name);
-            else
-                return temp;
-        }
-    }
+    //    public DetailedErrorParam(int errorID, string type, int refID, string description)
+    //    {
+    //        ErrorID = errorID;
+    //        Type = type;
+    //        RefID = refID;
+    //        Description = description;
+    //    }
+    //}
 
-    public class AccEnvDetailsBankNameComparer : IComparer<AccEnvDetails>
-    {
-        public int Compare(AccEnvDetails x, AccEnvDetails y)
-        {
-            int temp = x.bank.CompareTo(y.bank);
-            if (temp == 0)
-                return x.name.CompareTo(y.name);
-            else
-                return temp;
-        }
-    }
-    
-    public class DetailedErrorParam
-    {
-        public int ErrorID;
-        public string Type;
-        public string Description;
-        public int RefID;
+    //public class ErrorParam
+    //{
+    //    public int ErrorID;
+    //    public string Type;
+    //    public int RefID;
 
-        public DetailedErrorParam(int errorID, string type, int refID, string description)
-        {
-            ErrorID = errorID;
-            Type = type;
-            RefID = refID;
-            Description = description;
-        }
-    }
+    //    public ErrorParam(int errorID, string type, int refID)
+    //    {
+    //        ErrorID = errorID;
+    //        Type = type;
+    //        RefID = refID;
+    //    }
+    //}
 
-    public class ErrorParam
-    {
-        public int ErrorID;
-        public string Type;
-        public int RefID;
+    //public class ErrorParamComparer : IComparer<ErrorParam>
+    //{
+    //    public int Compare(ErrorParam x, ErrorParam y)
+    //    {
+    //        return x.Type.CompareTo(y.Type);
+    //    }
+    //}
 
-        public ErrorParam(int errorID, string type, int refID)
-        {
-            ErrorID = errorID;
-            Type = type;
-            RefID = refID;
-        }
-    }
+    //public class EnvelopesIDandName
+    //{
+    //    public int ID;
+    //    public string Name;
 
-    public class ErrorParamComparer : IComparer<ErrorParam>
-    {
-        public int Compare(ErrorParam x, ErrorParam y)
-        {
-            return x.Type.CompareTo(y.Type);
-        }
-    }
+    //    public EnvelopesIDandName(int id, string name)
+    //    {
+    //        ID = id;
+    //        Name = name;
+    //    }
+    //}
 
-    public class EnvelopesIDandName
-    {
-        public int ID;
-        public string Name;
-
-        public EnvelopesIDandName(int id, string name)
-        {
-            ID = id;
-            Name = name;
-        }
-    }
-
-    public class EnvelopesIDandNameComparer : IComparer<EnvelopesIDandName>
-    {
-        public int Compare(EnvelopesIDandName x, EnvelopesIDandName y)
-        {
-            return x.Name.CompareTo(y.Name);
-        }
-    }
+    //public class EnvelopesIDandNameComparer : IComparer<EnvelopesIDandName>
+    //{
+    //    public int Compare(EnvelopesIDandName x, EnvelopesIDandName y)
+    //    {
+    //        return x.Name.CompareTo(y.Name);
+    //    }
+    //}
 
     //public class MyConnectionString
     //{
@@ -193,104 +138,80 @@ namespace FamilyFinance2
     //}
     // Data Source = "|DataDirectory|\FamilyFinanceDB.sdf"; File Mode = 'Read Write'; Max Database Size = 1024; Max Buffer Size = 640; Password = 's7upahu2umEcrabr!c#?u66v*FRad4gum2swe#22'; 
 
-    public class SubLineEntry
-    {
-        public int EnvelopeID;
-        public string Description;
-        public decimal Amount;
+    //public class SubLineEntry
+    //{
+    //    public int EnvelopeID;
+    //    public string Description;
+    //    public decimal Amount;
 
-        public SubLineEntry()
-        {
-            EnvelopeID = SpclEnvelope.NULL;
-            Description = "";
-            Amount = 0;
-        }
-    }
+    //    public SubLineEntry()
+    //    {
+    //        EnvelopeID = SpclEnvelope.NULL;
+    //        Description = "";
+    //        Amount = 0;
+    //    }
+    //}
 
-    public class OppLineEntry
-    {
-        public int AccountID;
-        public string Description;
-        public decimal Amount;
+    //public class OppLineEntry
+    //{
+    //    public int AccountID;
+    //    public string Description;
+    //    public decimal Amount;
 
-        public OppLineEntry()
-        {
-            AccountID = SpclAccount.NULL;
-            Description = "";
-            Amount = 0;
-        }
-    }
+    //    public OppLineEntry()
+    //    {
+    //        AccountID = SpclAccount.NULL;
+    //        Description = "";
+    //        Amount = 0;
+    //    }
+    //}
 
-    public class TransactionEntry
-    {
-        public DateTime Date;
-        public string Type;
-        public int AccountID;
-        public string Description;
-        public string ConfermationNumber;
-        public string Complete;
-        public decimal Amount;
-        public bool CreditDebit;
-        public List<OppLineEntry> OppLineList;
-        public List<SubLineEntry> SubLineList;
+    //public class TransactionEntry
+    //{
+    //    public DateTime Date;
+    //    public string Type;
+    //    public int AccountID;
+    //    public string Description;
+    //    public string ConfermationNumber;
+    //    public string Complete;
+    //    public decimal Amount;
+    //    public bool CreditDebit;
+    //    public List<OppLineEntry> OppLineList;
+    //    public List<SubLineEntry> SubLineList;
 
-        public TransactionEntry()
-        {
-            Date = new DateTime(1, 1, 1);
-            Type = "";
-            AccountID = SpclAccount.NULL;
-            Description = "";
-            ConfermationNumber = "";
-            Complete = LineState.PENDING;
-            Amount = 0;
-            CreditDebit = LineCD.DEBIT;
+    //    public TransactionEntry()
+    //    {
+    //        Date = new DateTime(1, 1, 1);
+    //        Type = "";
+    //        AccountID = SpclAccount.NULL;
+    //        Description = "";
+    //        ConfermationNumber = "";
+    //        Complete = LineState.PENDING;
+    //        Amount = 0;
+    //        CreditDebit = LineCD.DEBIT;
 
-            OppLineList = new List<OppLineEntry>();
-            SubLineList = new List<SubLineEntry>();
-        }
-    }
+    //        OppLineList = new List<OppLineEntry>();
+    //        SubLineList = new List<SubLineEntry>();
+    //    }
+    //}
 
-    public class AccountEntry
-    {
-        public string name;
-        public string type;
-        public string catagory;
-        public bool creditDebit;
-        public bool envelopes;
+    //public class AccountEntry
+    //{
+    //    public string name;
+    //    public string type;
+    //    public string catagory;
+    //    public bool creditDebit;
+    //    public bool envelopes;
 
-        public AccountEntry()
-        {
-            name = "";
-            type = "";
-            catagory = "";
-            creditDebit = true;
-            envelopes = true;
-        }
-    }
-
-    public class AEBalanceEntry
-    {
-        public int AccountID;
-        public int EnvelopeID;
-
-        public AEBalanceEntry(int accountID, int envelopeID)
-        {
-            AccountID = accountID;
-            EnvelopeID = envelopeID;
-        }
-    }
-
-    public class AEBalanceEntryComparer : IComparer<AEBalanceEntry>
-    {
-        public int Compare(AEBalanceEntry x, AEBalanceEntry y)
-        {
-            int temp = x.AccountID.CompareTo(y.AccountID);
-            if (temp == 0)
-                return x.EnvelopeID.CompareTo(y.EnvelopeID);
-            else
-                return temp;
-        }
-    }
+    //    public AccountEntry()
+    //    {
+    //        name = "";
+    //        type = "";
+    //        catagory = "";
+    //        creditDebit = true;
+    //        envelopes = true;
+    //    }
+    //}
 
 
     ///////////////////////////////////////
@@ -317,64 +238,12 @@ namespace FamilyFinance2
         public short ID;
     }
 
-
-    ///////////////////////////////////////
-    // Cell Styles and Colors
-    public class CellStyles
+    public class MyTreeListNode : TreeList.Node
     {
-        public readonly DataGridViewCellStyle Normal;
-        public readonly DataGridViewCellStyle Money;
-        public readonly DataGridViewCellStyle AlternatingRow;
-        public readonly DataGridViewCellStyle Future;
-        public readonly DataGridViewCellStyle Error;
-
-        public CellStyles()
-        {
-            Normal = new DataGridViewCellStyle();
-
-            Money = new DataGridViewCellStyle();
-            Money.Alignment = DataGridViewContentAlignment.TopRight;
-            Money.Format = "C2";
-            Money.NullValue = null;
-
-            AlternatingRow = new DataGridViewCellStyle();
-            AlternatingRow.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-
-            Future = new DataGridViewCellStyle();
-            Future.BackColor = System.Drawing.Color.LightGray;
-
-            Error = new DataGridViewCellStyle();
-            Error.BackColor = System.Drawing.Color.Red;
-
-        }
+        public short EnvelopeID;
+        public short AccountID;
     }
 
-    public class MyColors
-    {
-        public Color DGVSelectedBack;
-        public Color DGVSelectedFore;
-
-        public Color DGVBack;
-        public Color DGVFore;
-
-        public Color DGVAlternateBack;
-        public Color DGVAlternateFore;
-
-        public Color DGVFutureBack;
-        public Color DGVFutureFore;
-
-        //public Color DGVFutureAlternateBack;
-        //public Color DGVFutureAlternateFore;
-
-        public Color DGVErrorBack;
-        public Color DGVErrorFore;
-
-        public Color DGVNegativeBalanceFore;
-
-        public Color DGVDisabledBack;
-
-        
-    }
 
 
     ///////////////////////////////////////
@@ -391,45 +260,6 @@ namespace FamilyFinance2
             AccountID = accountID;
             EnvelopeID = envelopeID;
             NewAmount = newAmount;
-        }
-    }
-
-    public delegate void LabelChangedEventHandler(Object sender, LabelChangedEventArgs e);
-    public class LabelChangedEventArgs : EventArgs
-    {
-        public string Text;
-
-        public LabelChangedEventArgs(string text)
-        {
-            Text = text;
-        }
-    }
-
-    public delegate void AccountAddedEventHandler(Object sender, AccountAddedEventArgs e);
-    public class AccountAddedEventArgs : EventArgs
-    {
-        public int AccountID;
-        public string Catagory;
-        public string Type;
-        public string BankName;
-
-        public AccountAddedEventArgs(int accountID, string catagory, string type, string bankName)
-        {
-            AccountID = accountID;
-            Catagory = catagory;
-            Type = type;
-            BankName = bankName;
-        }
-    }
-
-    public delegate void EnvelopeAddedEventHandler(Object sender, EnvelopeAddedEventArgs e);
-    public class EnvelopeAddedEventArgs : EventArgs
-    {
-        public int EnvelopeID;
-
-        public EnvelopeAddedEventArgs(int envelopeID)
-        {
-            EnvelopeID = envelopeID;
         }
     }
 

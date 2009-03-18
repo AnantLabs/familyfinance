@@ -13,12 +13,14 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             //   LocalVariables
             ///////////////////////////////////////////////////////////////////////
-            private bool autoChange;
+            private FFDBDataSetTableAdapters.AccountTableAdapter thisTableAdapter;
 
+            private bool autoChange;
 
             ///////////////////////////////////////////////////////////////////////
             //   Properties
             ///////////////////////////////////////////////////////////////////////
+
 
 
             ///////////////////////////////////////////////////////////////////////
@@ -27,6 +29,9 @@ namespace FamilyFinance2
             public override void EndInit()
             {
                 base.EndInit();
+
+                this.thisTableAdapter = new FFDBDataSetTableAdapters.AccountTableAdapter();
+                this.thisTableAdapter.ClearBeforeFill = true;
 
                 this.TableNewRow += new System.Data.DataTableNewRowEventHandler(AccountDataTable_TableNewRow);
                 this.ColumnChanged += new DataColumnChangeEventHandler(AccountDataTable_ColumnChanged);
@@ -57,6 +62,8 @@ namespace FamilyFinance2
                 accountRow.closed = false;
                 accountRow.creditDebit = LineCD.DEBIT;
                 accountRow.envelopes = false;
+                accountRow.endingBalance = 0.0m;
+                accountRow.currentBalance = 0.0m;
 
             }
 
@@ -99,6 +106,112 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             //   Functions Public 
             ///////////////////////////////////////////////////////////////////////
+            public void myFillTA()
+            { this.thisTableAdapter.Fill(this); }
+
+            public void myUpdateTA()
+            {
+                this.thisTableAdapter.Update(this);
+            }
+
+
+
+            public void myUpdateAccountEBUndo(short oldAccountID, bool oldCD, decimal oldAmount)
+            {
+                AccountRow row = FindByid(oldAccountID);
+
+                // Undo the old Amount
+                if (row.creditDebit == LineCD.DEBIT)
+                {
+                    if (oldCD == LineCD.CREDIT)
+                        row.endingBalance += oldAmount;
+                    else
+                        row.endingBalance -= oldAmount;
+                }
+                else
+                {
+                    if (oldCD == LineCD.CREDIT)
+                        row.endingBalance -= oldAmount;
+                    else
+                        row.endingBalance += oldAmount;
+                }
+
+                this.thisTableAdapter.Update(row);
+            }
+
+            public void myUpdateAccountEBDo(short newAccountID, bool newCD, decimal newAmount)
+            {
+                AccountRow row = FindByid(newAccountID);
+
+                //  Update to the new amount
+                if (row.creditDebit == LineCD.DEBIT)
+                {
+                    if (newCD == LineCD.CREDIT)
+                        row.endingBalance -= newAmount;
+                    else
+                        row.endingBalance += newAmount;
+                }
+                else
+                {
+                    if (newCD == LineCD.CREDIT)
+                        row.endingBalance += newAmount;
+                    else
+                        row.endingBalance -= newAmount;
+                }
+
+                this.thisTableAdapter.Update(row);
+            }
+
+            public void myUpdateAccountEBUndoDo(short oldAccountID, bool oldCD, decimal oldAmount, short newAccountID, bool newCD, decimal newAmount)
+            {
+                AccountRow oldRow = FindByid(oldAccountID);
+                AccountRow newRow = FindByid(newAccountID);
+
+                // Undo the old Amount
+                if (oldRow.creditDebit == LineCD.DEBIT)
+                {
+                    if (oldCD == LineCD.CREDIT)
+                        oldRow.endingBalance += oldAmount;
+                    else
+                        oldRow.endingBalance -= oldAmount;
+                }
+                else
+                {
+                    if (oldCD == LineCD.CREDIT)
+                        oldRow.endingBalance -= oldAmount;
+                    else
+                        oldRow.endingBalance += oldAmount;
+                }
+
+                //  Update to the new amount
+                if (newRow.creditDebit == LineCD.DEBIT)
+                {
+                    if (newCD == LineCD.CREDIT)
+                        newRow.endingBalance -= newAmount;
+                    else
+                        newRow.endingBalance += newAmount;
+                }
+                else
+                {
+                    if (newCD == LineCD.CREDIT)
+                        newRow.endingBalance += newAmount;
+                    else
+                        newRow.endingBalance -= newAmount;
+                }
+
+                if (oldAccountID == newAccountID)
+                {
+                    this.thisTableAdapter.Update(newRow);
+                }
+                else
+                {
+                    this.thisTableAdapter.Update(newRow);
+                    this.thisTableAdapter.Update(oldRow);
+                }
+
+            }
+
+
 
 
         }//END partial class AccountDataTable

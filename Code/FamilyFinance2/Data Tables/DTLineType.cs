@@ -13,6 +13,7 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             //   Local Variables
             ///////////////////////////////////////////////////////////////////////
+            private FFDBDataSetTableAdapters.LineTypeTableAdapter thisTableAdapter;
             private bool autoChange;
 
 
@@ -28,6 +29,8 @@ namespace FamilyFinance2
             {
                 base.EndInit();
 
+                this.thisTableAdapter = new FFDBDataSetTableAdapters.LineTypeTableAdapter();
+                this.thisTableAdapter.ClearBeforeFill = true;
 
                 this.TableNewRow += new DataTableNewRowEventHandler(LineTypeDataTable_TableNewRow);
                 this.TableNewRow +=new DataTableNewRowEventHandler(LineTypeDataTable_TableNewRow);
@@ -89,7 +92,26 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             //   Function Public
             ///////////////////////////////////////////////////////////////////////
+            public void myFillTA()
+            { this.thisTableAdapter.Fill(this); }
 
+            public void myUpdateTA()
+            { this.thisTableAdapter.Update(this); }
+
+            //public int myAddType(string name)
+            //{
+            //    foreach (LineTypeRow row in this)
+            //        if (row.name == name)
+            //            return row.id;
+
+            //    LineTypeRow newType = this.NewLineTypeRow();
+            //    newType.name = name;
+
+            //    this.Rows.Add(newType);
+            //    this.thisTableAdapter.Update(newType);
+
+            //    return newType.id;
+            //}
 
 
 

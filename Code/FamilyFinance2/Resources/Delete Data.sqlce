@@ -1,6 +1,7 @@
 DELETE FROM SubLineItem WHERE id > 0;
 DELETE FROM LineItem WHERE id > 0;
 DELETE FROM LineType WHERE id > 0;
+DELETE FROM AEBalance WHERE id > 0;
 UPDATE Envelope SET parentEnvelope = -1;
 DELETE FROM Envelope WHERE id > 0;
 DELETE FROM Account WHERE id > 0;

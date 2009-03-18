@@ -220,6 +220,7 @@
             this.accountTypeBindingSource.DataMember = "AccountType";
             this.accountTypeBindingSource.DataSource = this.fFDBDataSet;
             this.accountTypeBindingSource.Filter = "id > 0";
+            this.accountTypeBindingSource.Sort = "name";
             // 
             // catagoryComboBox
             // 

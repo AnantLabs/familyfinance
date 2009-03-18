@@ -12,6 +12,13 @@ namespace FamilyFinance2.Forms
     public partial class EditAccountsForm : Form
     {
         ////////////////////////////////////////////////////////////////////////////////////////////
+        //   Local Variables
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        private MyTreeNode accountRootNode;
+        private MyTreeNode expenseRootNode;
+        private MyTreeNode incomeRootNode;
+
+        ////////////////////////////////////////////////////////////////////////////////////////////
         //   Internal Events
         ////////////////////////////////////////////////////////////////////////////////////////////
         private void EditAccountsForm_Load(object sender, EventArgs e)
@@ -20,7 +27,10 @@ namespace FamilyFinance2.Forms
             this.accountTypeTableAdapter.Fill(this.fFDBDataSet.AccountType);
             this.accountTableAdapter.Fill(this.fFDBDataSet.Account);
 
+            this.accountTreeView.Nodes.Clear();
+
             this.buildAccountTree();
+
             this.accountBindingSource.Filter = "id = -100";
         }
 
@@ -45,29 +55,51 @@ namespace FamilyFinance2.Forms
                 this.accountBindingSource.Filter = "id = " + accountID.ToString();
         }
 
+
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Private
         ////////////////////////////////////////////////////////////////////////////////////////////
         private void buildAccountTree()
         {
-            // Add all the root envelopes
-
-            this.accountTreeView.Nodes.Clear();
-
-            foreach ( FFDBDataSet.AccountCatagoryRow catRow in fFDBDataSet.AccountCatagory )
+            // Add the AccountRootNode if needed
+            if (accountRootNode == null)
             {
-                if (catRow.id > 0)
-                {
-                    MyTreeNode node = new MyTreeNode();
-                    node.Text = this.fFDBDataSet.AccountCatagory.FindByid(catRow.id).name;
-                    node.ID = SpclAccount.NULL;
-                    this.addTypeBranch(catRow.id, ref node);
-                    this.accountTreeView.Nodes.Add(node);
-                }
+                accountRootNode = new MyTreeNode();
+                accountRootNode.Text = "Accounts";
+                accountRootNode.ID = SpclAccount.NULL;
+                this.accountTreeView.Nodes.Add(accountRootNode);
+                this.accountRootNode.Expand();
             }
 
-            if (this.accountTreeView.Nodes.Count > 0)
-                this.accountTreeView.ExpandAll();
+            // Add the ExpenceRootNode if needed
+            if (expenseRootNode == null)
+            {
+                expenseRootNode = new MyTreeNode();
+                expenseRootNode.Text = "Expenses";
+                expenseRootNode.ID = SpclAccount.NULL;
+                this.accountTreeView.Nodes.Add(expenseRootNode);
+                this.expenseRootNode.Expand();
+            }
+
+            // Add the IncomeRootNode if needed
+            if (incomeRootNode == null)
+            {
+                incomeRootNode = new MyTreeNode();
+                incomeRootNode.Text = "Incomes";
+                incomeRootNode.ID = SpclAccount.NULL;
+                this.accountTreeView.Nodes.Add(incomeRootNode);
+                this.incomeRootNode.Expand();
+            }
+
+            // Clear all the nodes under the roots
+            this.accountRootNode.Nodes.Clear();
+            this.expenseRootNode.Nodes.Clear();
+            this.incomeRootNode.Nodes.Clear();
+
+            // Add all the Type nodes under the catagory roots
+            this.addTypeBranch(SpclAccountCat.ACCOUNT, ref this.accountRootNode);
+            this.addTypeBranch(SpclAccountCat.EXPENSE, ref this.expenseRootNode);
+            this.addTypeBranch(SpclAccountCat.INCOME, ref this.incomeRootNode);
 
             this.accountTreeView.Sort();
         }

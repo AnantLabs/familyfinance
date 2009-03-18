@@ -31,6 +31,8 @@ namespace FamilyFinance2 {
         
         private AccountTypeDataTable tableAccountType;
         
+        private AEBalanceDataTable tableAEBalance;
+        
         private EnvelopeDataTable tableEnvelope;
         
         private LineItemDataTable tableLineItem;
@@ -39,9 +41,19 @@ namespace FamilyFinance2 {
         
         private SubLineItemDataTable tableSubLineItem;
         
+        private AccountSumsViewDataTable tableAccountSumsView;
+        
+        private EnvelopeSumsViewDataTable tableEnvelopeSumsView;
+        
+        private AEBalanceSumsViewDataTable tableAEBalanceSumsView;
+        
         private global::System.Data.DataRelation relationFK_Account_catID;
         
         private global::System.Data.DataRelation relationFK_Account_typeID;
+        
+        private global::System.Data.DataRelation relationFK_AEBalance_accountID;
+        
+        private global::System.Data.DataRelation relationFK_AEBalance_envelopeID;
         
         private global::System.Data.DataRelation relationFK_Envelope_parentID;
         
@@ -92,6 +104,9 @@ namespace FamilyFinance2 {
                 if ((ds.Tables["AccountType"] != null)) {
                     base.Tables.Add(new AccountTypeDataTable(ds.Tables["AccountType"]));
                 }
+                if ((ds.Tables["AEBalance"] != null)) {
+                    base.Tables.Add(new AEBalanceDataTable(ds.Tables["AEBalance"]));
+                }
                 if ((ds.Tables["Envelope"] != null)) {
                     base.Tables.Add(new EnvelopeDataTable(ds.Tables["Envelope"]));
                 }
@@ -103,6 +118,15 @@ namespace FamilyFinance2 {
                 }
                 if ((ds.Tables["SubLineItem"] != null)) {
                     base.Tables.Add(new SubLineItemDataTable(ds.Tables["SubLineItem"]));
+                }
+                if ((ds.Tables["AccountSumsView"] != null)) {
+                    base.Tables.Add(new AccountSumsViewDataTable(ds.Tables["AccountSumsView"]));
+                }
+                if ((ds.Tables["EnvelopeSumsView"] != null)) {
+                    base.Tables.Add(new EnvelopeSumsViewDataTable(ds.Tables["EnvelopeSumsView"]));
+                }
+                if ((ds.Tables["AEBalanceSumsView"] != null)) {
+                    base.Tables.Add(new AEBalanceSumsViewDataTable(ds.Tables["AEBalanceSumsView"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -152,6 +176,15 @@ namespace FamilyFinance2 {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public AEBalanceDataTable AEBalance {
+            get {
+                return this.tableAEBalance;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
         public EnvelopeDataTable Envelope {
             get {
                 return this.tableEnvelope;
@@ -182,6 +215,33 @@ namespace FamilyFinance2 {
         public SubLineItemDataTable SubLineItem {
             get {
                 return this.tableSubLineItem;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public AccountSumsViewDataTable AccountSumsView {
+            get {
+                return this.tableAccountSumsView;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public EnvelopeSumsViewDataTable EnvelopeSumsView {
+            get {
+                return this.tableEnvelopeSumsView;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public AEBalanceSumsViewDataTable AEBalanceSumsView {
+            get {
+                return this.tableAEBalanceSumsView;
             }
         }
         
@@ -253,6 +313,9 @@ namespace FamilyFinance2 {
                 if ((ds.Tables["AccountType"] != null)) {
                     base.Tables.Add(new AccountTypeDataTable(ds.Tables["AccountType"]));
                 }
+                if ((ds.Tables["AEBalance"] != null)) {
+                    base.Tables.Add(new AEBalanceDataTable(ds.Tables["AEBalance"]));
+                }
                 if ((ds.Tables["Envelope"] != null)) {
                     base.Tables.Add(new EnvelopeDataTable(ds.Tables["Envelope"]));
                 }
@@ -264,6 +327,15 @@ namespace FamilyFinance2 {
                 }
                 if ((ds.Tables["SubLineItem"] != null)) {
                     base.Tables.Add(new SubLineItemDataTable(ds.Tables["SubLineItem"]));
+                }
+                if ((ds.Tables["AccountSumsView"] != null)) {
+                    base.Tables.Add(new AccountSumsViewDataTable(ds.Tables["AccountSumsView"]));
+                }
+                if ((ds.Tables["EnvelopeSumsView"] != null)) {
+                    base.Tables.Add(new EnvelopeSumsViewDataTable(ds.Tables["EnvelopeSumsView"]));
+                }
+                if ((ds.Tables["AEBalanceSumsView"] != null)) {
+                    base.Tables.Add(new AEBalanceSumsViewDataTable(ds.Tables["AEBalanceSumsView"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -313,6 +385,12 @@ namespace FamilyFinance2 {
                     this.tableAccountType.InitVars();
                 }
             }
+            this.tableAEBalance = ((AEBalanceDataTable)(base.Tables["AEBalance"]));
+            if ((initTable == true)) {
+                if ((this.tableAEBalance != null)) {
+                    this.tableAEBalance.InitVars();
+                }
+            }
             this.tableEnvelope = ((EnvelopeDataTable)(base.Tables["Envelope"]));
             if ((initTable == true)) {
                 if ((this.tableEnvelope != null)) {
@@ -337,8 +415,28 @@ namespace FamilyFinance2 {
                     this.tableSubLineItem.InitVars();
                 }
             }
+            this.tableAccountSumsView = ((AccountSumsViewDataTable)(base.Tables["AccountSumsView"]));
+            if ((initTable == true)) {
+                if ((this.tableAccountSumsView != null)) {
+                    this.tableAccountSumsView.InitVars();
+                }
+            }
+            this.tableEnvelopeSumsView = ((EnvelopeSumsViewDataTable)(base.Tables["EnvelopeSumsView"]));
+            if ((initTable == true)) {
+                if ((this.tableEnvelopeSumsView != null)) {
+                    this.tableEnvelopeSumsView.InitVars();
+                }
+            }
+            this.tableAEBalanceSumsView = ((AEBalanceSumsViewDataTable)(base.Tables["AEBalanceSumsView"]));
+            if ((initTable == true)) {
+                if ((this.tableAEBalanceSumsView != null)) {
+                    this.tableAEBalanceSumsView.InitVars();
+                }
+            }
             this.relationFK_Account_catID = this.Relations["FK_Account_catID"];
             this.relationFK_Account_typeID = this.Relations["FK_Account_typeID"];
+            this.relationFK_AEBalance_accountID = this.Relations["FK_AEBalance_accountID"];
+            this.relationFK_AEBalance_envelopeID = this.Relations["FK_AEBalance_envelopeID"];
             this.relationFK_Envelope_parentID = this.Relations["FK_Envelope_parentID"];
             this.relationFK_Line_accountID = this.Relations["FK_Line_accountID"];
             this.relationFK_Line_envelopeID = this.Relations["FK_Line_envelopeID"];
@@ -361,6 +459,8 @@ namespace FamilyFinance2 {
             base.Tables.Add(this.tableAccountCatagory);
             this.tableAccountType = new AccountTypeDataTable();
             base.Tables.Add(this.tableAccountType);
+            this.tableAEBalance = new AEBalanceDataTable();
+            base.Tables.Add(this.tableAEBalance);
             this.tableEnvelope = new EnvelopeDataTable();
             base.Tables.Add(this.tableEnvelope);
             this.tableLineItem = new LineItemDataTable();
@@ -369,6 +469,12 @@ namespace FamilyFinance2 {
             base.Tables.Add(this.tableLineType);
             this.tableSubLineItem = new SubLineItemDataTable();
             base.Tables.Add(this.tableSubLineItem);
+            this.tableAccountSumsView = new AccountSumsViewDataTable();
+            base.Tables.Add(this.tableAccountSumsView);
+            this.tableEnvelopeSumsView = new EnvelopeSumsViewDataTable();
+            base.Tables.Add(this.tableEnvelopeSumsView);
+            this.tableAEBalanceSumsView = new AEBalanceSumsViewDataTable();
+            base.Tables.Add(this.tableAEBalanceSumsView);
             this.relationFK_Account_catID = new global::System.Data.DataRelation("FK_Account_catID", new global::System.Data.DataColumn[] {
                         this.tableAccountCatagory.idColumn}, new global::System.Data.DataColumn[] {
                         this.tableAccount.catagoryIDColumn}, false);
@@ -377,6 +483,14 @@ namespace FamilyFinance2 {
                         this.tableAccountType.idColumn}, new global::System.Data.DataColumn[] {
                         this.tableAccount.accountTypeIDColumn}, false);
             this.Relations.Add(this.relationFK_Account_typeID);
+            this.relationFK_AEBalance_accountID = new global::System.Data.DataRelation("FK_AEBalance_accountID", new global::System.Data.DataColumn[] {
+                        this.tableAccount.idColumn}, new global::System.Data.DataColumn[] {
+                        this.tableAEBalance.accountIDColumn}, false);
+            this.Relations.Add(this.relationFK_AEBalance_accountID);
+            this.relationFK_AEBalance_envelopeID = new global::System.Data.DataRelation("FK_AEBalance_envelopeID", new global::System.Data.DataColumn[] {
+                        this.tableEnvelope.idColumn}, new global::System.Data.DataColumn[] {
+                        this.tableAEBalance.envelopeIDColumn}, false);
+            this.Relations.Add(this.relationFK_AEBalance_envelopeID);
             this.relationFK_Envelope_parentID = new global::System.Data.DataRelation("FK_Envelope_parentID", new global::System.Data.DataColumn[] {
                         this.tableEnvelope.idColumn}, new global::System.Data.DataColumn[] {
                         this.tableEnvelope.parentEnvelopeColumn}, false);
@@ -423,6 +537,11 @@ namespace FamilyFinance2 {
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private bool ShouldSerializeAEBalance() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         private bool ShouldSerializeEnvelope() {
             return false;
         }
@@ -439,6 +558,21 @@ namespace FamilyFinance2 {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         private bool ShouldSerializeSubLineItem() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private bool ShouldSerializeAccountSumsView() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private bool ShouldSerializeEnvelopeSumsView() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private bool ShouldSerializeAEBalanceSumsView() {
             return false;
         }
         
@@ -501,6 +635,8 @@ namespace FamilyFinance2 {
         
         public delegate void AccountTypeRowChangeEventHandler(object sender, AccountTypeRowChangeEvent e);
         
+        public delegate void AEBalanceRowChangeEventHandler(object sender, AEBalanceRowChangeEvent e);
+        
         public delegate void EnvelopeRowChangeEventHandler(object sender, EnvelopeRowChangeEvent e);
         
         public delegate void LineItemRowChangeEventHandler(object sender, LineItemRowChangeEvent e);
@@ -508,6 +644,12 @@ namespace FamilyFinance2 {
         public delegate void LineTypeRowChangeEventHandler(object sender, LineTypeRowChangeEvent e);
         
         public delegate void SubLineItemRowChangeEventHandler(object sender, SubLineItemRowChangeEvent e);
+        
+        public delegate void AccountSumsViewRowChangeEventHandler(object sender, AccountSumsViewRowChangeEvent e);
+        
+        public delegate void EnvelopeSumsViewRowChangeEventHandler(object sender, EnvelopeSumsViewRowChangeEvent e);
+        
+        public delegate void AEBalanceSumsViewRowChangeEventHandler(object sender, AEBalanceSumsViewRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -530,6 +672,10 @@ namespace FamilyFinance2 {
             private global::System.Data.DataColumn columncreditDebit;
             
             private global::System.Data.DataColumn columnenvelopes;
+            
+            private global::System.Data.DataColumn columncurrentBalance;
+            
+            private global::System.Data.DataColumn columnendingBalance;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public AccountDataTable() {
@@ -611,6 +757,20 @@ namespace FamilyFinance2 {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn currentBalanceColumn {
+                get {
+                    return this.columncurrentBalance;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn endingBalanceColumn {
+                get {
+                    return this.columnendingBalance;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -639,7 +799,7 @@ namespace FamilyFinance2 {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public AccountRow AddAccountRow(short id, string name, AccountTypeRow parentAccountTypeRowByFK_Account_typeID, AccountCatagoryRow parentAccountCatagoryRowByFK_Account_catID, bool closed, bool creditDebit, bool envelopes) {
+            public AccountRow AddAccountRow(short id, string name, AccountTypeRow parentAccountTypeRowByFK_Account_typeID, AccountCatagoryRow parentAccountCatagoryRowByFK_Account_catID, bool closed, bool creditDebit, bool envelopes, decimal currentBalance, decimal endingBalance) {
                 AccountRow rowAccountRow = ((AccountRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         id,
@@ -648,7 +808,9 @@ namespace FamilyFinance2 {
                         null,
                         closed,
                         creditDebit,
-                        envelopes};
+                        envelopes,
+                        currentBalance,
+                        endingBalance};
                 if ((parentAccountTypeRowByFK_Account_typeID != null)) {
                     columnValuesArray[2] = parentAccountTypeRowByFK_Account_typeID[0];
                 }
@@ -687,6 +849,8 @@ namespace FamilyFinance2 {
                 this.columnclosed = base.Columns["closed"];
                 this.columncreditDebit = base.Columns["creditDebit"];
                 this.columnenvelopes = base.Columns["envelopes"];
+                this.columncurrentBalance = base.Columns["currentBalance"];
+                this.columnendingBalance = base.Columns["endingBalance"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -705,6 +869,10 @@ namespace FamilyFinance2 {
                 base.Columns.Add(this.columncreditDebit);
                 this.columnenvelopes = new global::System.Data.DataColumn("envelopes", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnenvelopes);
+                this.columncurrentBalance = new global::System.Data.DataColumn("currentBalance", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncurrentBalance);
+                this.columnendingBalance = new global::System.Data.DataColumn("endingBalance", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnendingBalance);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AllowDBNull = false;
@@ -716,6 +884,8 @@ namespace FamilyFinance2 {
                 this.columnclosed.AllowDBNull = false;
                 this.columncreditDebit.AllowDBNull = false;
                 this.columnenvelopes.AllowDBNull = false;
+                this.columncurrentBalance.AllowDBNull = false;
+                this.columnendingBalance.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1335,6 +1505,301 @@ namespace FamilyFinance2 {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class AEBalanceDataTable : global::System.Data.TypedTableBase<AEBalanceRow> {
+            
+            private global::System.Data.DataColumn columnid;
+            
+            private global::System.Data.DataColumn columnaccountID;
+            
+            private global::System.Data.DataColumn columnenvelopeID;
+            
+            private global::System.Data.DataColumn columncurrentBalance;
+            
+            private global::System.Data.DataColumn columnendingBalance;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public AEBalanceDataTable() {
+                this.TableName = "AEBalance";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            internal AEBalanceDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected AEBalanceDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn idColumn {
+                get {
+                    return this.columnid;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn accountIDColumn {
+                get {
+                    return this.columnaccountID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn envelopeIDColumn {
+                get {
+                    return this.columnenvelopeID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn currentBalanceColumn {
+                get {
+                    return this.columncurrentBalance;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn endingBalanceColumn {
+                get {
+                    return this.columnendingBalance;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public AEBalanceRow this[int index] {
+                get {
+                    return ((AEBalanceRow)(this.Rows[index]));
+                }
+            }
+            
+            public event AEBalanceRowChangeEventHandler AEBalanceRowChanging;
+            
+            public event AEBalanceRowChangeEventHandler AEBalanceRowChanged;
+            
+            public event AEBalanceRowChangeEventHandler AEBalanceRowDeleting;
+            
+            public event AEBalanceRowChangeEventHandler AEBalanceRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void AddAEBalanceRow(AEBalanceRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public AEBalanceRow AddAEBalanceRow(int id, AccountRow parentAccountRowByFK_AEBalance_accountID, EnvelopeRow parentEnvelopeRowByFK_AEBalance_envelopeID, decimal currentBalance, decimal endingBalance) {
+                AEBalanceRow rowAEBalanceRow = ((AEBalanceRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        id,
+                        null,
+                        null,
+                        currentBalance,
+                        endingBalance};
+                if ((parentAccountRowByFK_AEBalance_accountID != null)) {
+                    columnValuesArray[1] = parentAccountRowByFK_AEBalance_accountID[0];
+                }
+                if ((parentEnvelopeRowByFK_AEBalance_envelopeID != null)) {
+                    columnValuesArray[2] = parentEnvelopeRowByFK_AEBalance_envelopeID[0];
+                }
+                rowAEBalanceRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowAEBalanceRow);
+                return rowAEBalanceRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public AEBalanceRow FindByid(int id) {
+                return ((AEBalanceRow)(this.Rows.Find(new object[] {
+                            id})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public override global::System.Data.DataTable Clone() {
+                AEBalanceDataTable cln = ((AEBalanceDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new AEBalanceDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            internal void InitVars() {
+                this.columnid = base.Columns["id"];
+                this.columnaccountID = base.Columns["accountID"];
+                this.columnenvelopeID = base.Columns["envelopeID"];
+                this.columncurrentBalance = base.Columns["currentBalance"];
+                this.columnendingBalance = base.Columns["endingBalance"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            private void InitClass() {
+                this.columnid = new global::System.Data.DataColumn("id", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnid);
+                this.columnaccountID = new global::System.Data.DataColumn("accountID", typeof(short), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnaccountID);
+                this.columnenvelopeID = new global::System.Data.DataColumn("envelopeID", typeof(short), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnenvelopeID);
+                this.columncurrentBalance = new global::System.Data.DataColumn("currentBalance", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncurrentBalance);
+                this.columnendingBalance = new global::System.Data.DataColumn("endingBalance", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnendingBalance);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnid}, true));
+                this.columnid.AllowDBNull = false;
+                this.columnid.Unique = true;
+                this.columnaccountID.AllowDBNull = false;
+                this.columnenvelopeID.AllowDBNull = false;
+                this.columncurrentBalance.AllowDBNull = false;
+                this.columnendingBalance.AllowDBNull = false;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public AEBalanceRow NewAEBalanceRow() {
+                return ((AEBalanceRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new AEBalanceRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override global::System.Type GetRowType() {
+                return typeof(AEBalanceRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.AEBalanceRowChanged != null)) {
+                    this.AEBalanceRowChanged(this, new AEBalanceRowChangeEvent(((AEBalanceRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.AEBalanceRowChanging != null)) {
+                    this.AEBalanceRowChanging(this, new AEBalanceRowChangeEvent(((AEBalanceRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.AEBalanceRowDeleted != null)) {
+                    this.AEBalanceRowDeleted(this, new AEBalanceRowChangeEvent(((AEBalanceRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.AEBalanceRowDeleting != null)) {
+                    this.AEBalanceRowDeleting(this, new AEBalanceRowChangeEvent(((AEBalanceRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void RemoveAEBalanceRow(AEBalanceRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                FFDBDataSet ds = new FFDBDataSet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "AEBalanceDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class EnvelopeDataTable : global::System.Data.TypedTableBase<EnvelopeRow> {
             
             private global::System.Data.DataColumn columnid;
@@ -1346,6 +1811,10 @@ namespace FamilyFinance2 {
             private global::System.Data.DataColumn columnparentEnvelope;
             
             private global::System.Data.DataColumn columnclosed;
+            
+            private global::System.Data.DataColumn columncurrentBalance;
+            
+            private global::System.Data.DataColumn columnendingBalance;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public EnvelopeDataTable() {
@@ -1413,6 +1882,20 @@ namespace FamilyFinance2 {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn currentBalanceColumn {
+                get {
+                    return this.columncurrentBalance;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn endingBalanceColumn {
+                get {
+                    return this.columnendingBalance;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1441,14 +1924,16 @@ namespace FamilyFinance2 {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public EnvelopeRow AddEnvelopeRow(short id, string name, string fullName, EnvelopeRow parentEnvelopeRowByFK_Envelope_parentID, bool closed) {
+            public EnvelopeRow AddEnvelopeRow(short id, string name, string fullName, EnvelopeRow parentEnvelopeRowByFK_Envelope_parentID, bool closed, decimal currentBalance, decimal endingBalance) {
                 EnvelopeRow rowEnvelopeRow = ((EnvelopeRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         id,
                         name,
                         fullName,
                         null,
-                        closed};
+                        closed,
+                        currentBalance,
+                        endingBalance};
                 if ((parentEnvelopeRowByFK_Envelope_parentID != null)) {
                     columnValuesArray[3] = parentEnvelopeRowByFK_Envelope_parentID[0];
                 }
@@ -1482,6 +1967,8 @@ namespace FamilyFinance2 {
                 this.columnfullName = base.Columns["fullName"];
                 this.columnparentEnvelope = base.Columns["parentEnvelope"];
                 this.columnclosed = base.Columns["closed"];
+                this.columncurrentBalance = base.Columns["currentBalance"];
+                this.columnendingBalance = base.Columns["endingBalance"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1496,6 +1983,10 @@ namespace FamilyFinance2 {
                 base.Columns.Add(this.columnparentEnvelope);
                 this.columnclosed = new global::System.Data.DataColumn("closed", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnclosed);
+                this.columncurrentBalance = new global::System.Data.DataColumn("currentBalance", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncurrentBalance);
+                this.columnendingBalance = new global::System.Data.DataColumn("endingBalance", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnendingBalance);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, true));
                 this.columnid.AllowDBNull = false;
@@ -1506,6 +1997,8 @@ namespace FamilyFinance2 {
                 this.columnfullName.MaxLength = 300;
                 this.columnparentEnvelope.AllowDBNull = false;
                 this.columnclosed.AllowDBNull = false;
+                this.columncurrentBalance.AllowDBNull = false;
+                this.columnendingBalance.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2651,6 +3144,776 @@ namespace FamilyFinance2 {
         }
         
         /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class AccountSumsViewDataTable : global::System.Data.TypedTableBase<AccountSumsViewRow> {
+            
+            private global::System.Data.DataColumn columnaccountID;
+            
+            private global::System.Data.DataColumn columncreditDebit;
+            
+            private global::System.Data.DataColumn columnsum;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public AccountSumsViewDataTable() {
+                this.TableName = "AccountSumsView";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            internal AccountSumsViewDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected AccountSumsViewDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn accountIDColumn {
+                get {
+                    return this.columnaccountID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn creditDebitColumn {
+                get {
+                    return this.columncreditDebit;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn sumColumn {
+                get {
+                    return this.columnsum;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public AccountSumsViewRow this[int index] {
+                get {
+                    return ((AccountSumsViewRow)(this.Rows[index]));
+                }
+            }
+            
+            public event AccountSumsViewRowChangeEventHandler AccountSumsViewRowChanging;
+            
+            public event AccountSumsViewRowChangeEventHandler AccountSumsViewRowChanged;
+            
+            public event AccountSumsViewRowChangeEventHandler AccountSumsViewRowDeleting;
+            
+            public event AccountSumsViewRowChangeEventHandler AccountSumsViewRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void AddAccountSumsViewRow(AccountSumsViewRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public AccountSumsViewRow AddAccountSumsViewRow(short accountID, bool creditDebit, decimal sum) {
+                AccountSumsViewRow rowAccountSumsViewRow = ((AccountSumsViewRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        accountID,
+                        creditDebit,
+                        sum};
+                rowAccountSumsViewRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowAccountSumsViewRow);
+                return rowAccountSumsViewRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public override global::System.Data.DataTable Clone() {
+                AccountSumsViewDataTable cln = ((AccountSumsViewDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new AccountSumsViewDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            internal void InitVars() {
+                this.columnaccountID = base.Columns["accountID"];
+                this.columncreditDebit = base.Columns["creditDebit"];
+                this.columnsum = base.Columns["sum"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            private void InitClass() {
+                this.columnaccountID = new global::System.Data.DataColumn("accountID", typeof(short), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnaccountID);
+                this.columncreditDebit = new global::System.Data.DataColumn("creditDebit", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncreditDebit);
+                this.columnsum = new global::System.Data.DataColumn("sum", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnsum);
+                this.columnaccountID.AllowDBNull = false;
+                this.columncreditDebit.AllowDBNull = false;
+                this.columnsum.ReadOnly = true;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public AccountSumsViewRow NewAccountSumsViewRow() {
+                return ((AccountSumsViewRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new AccountSumsViewRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override global::System.Type GetRowType() {
+                return typeof(AccountSumsViewRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.AccountSumsViewRowChanged != null)) {
+                    this.AccountSumsViewRowChanged(this, new AccountSumsViewRowChangeEvent(((AccountSumsViewRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.AccountSumsViewRowChanging != null)) {
+                    this.AccountSumsViewRowChanging(this, new AccountSumsViewRowChangeEvent(((AccountSumsViewRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.AccountSumsViewRowDeleted != null)) {
+                    this.AccountSumsViewRowDeleted(this, new AccountSumsViewRowChangeEvent(((AccountSumsViewRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.AccountSumsViewRowDeleting != null)) {
+                    this.AccountSumsViewRowDeleting(this, new AccountSumsViewRowChangeEvent(((AccountSumsViewRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void RemoveAccountSumsViewRow(AccountSumsViewRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                FFDBDataSet ds = new FFDBDataSet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "AccountSumsViewDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class EnvelopeSumsViewDataTable : global::System.Data.TypedTableBase<EnvelopeSumsViewRow> {
+            
+            private global::System.Data.DataColumn columnenvelopeID;
+            
+            private global::System.Data.DataColumn columncreditDebit;
+            
+            private global::System.Data.DataColumn columnsum;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public EnvelopeSumsViewDataTable() {
+                this.TableName = "EnvelopeSumsView";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            internal EnvelopeSumsViewDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected EnvelopeSumsViewDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn envelopeIDColumn {
+                get {
+                    return this.columnenvelopeID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn creditDebitColumn {
+                get {
+                    return this.columncreditDebit;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn sumColumn {
+                get {
+                    return this.columnsum;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public EnvelopeSumsViewRow this[int index] {
+                get {
+                    return ((EnvelopeSumsViewRow)(this.Rows[index]));
+                }
+            }
+            
+            public event EnvelopeSumsViewRowChangeEventHandler EnvelopeSumsViewRowChanging;
+            
+            public event EnvelopeSumsViewRowChangeEventHandler EnvelopeSumsViewRowChanged;
+            
+            public event EnvelopeSumsViewRowChangeEventHandler EnvelopeSumsViewRowDeleting;
+            
+            public event EnvelopeSumsViewRowChangeEventHandler EnvelopeSumsViewRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void AddEnvelopeSumsViewRow(EnvelopeSumsViewRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public EnvelopeSumsViewRow AddEnvelopeSumsViewRow(short envelopeID, bool creditDebit, decimal sum) {
+                EnvelopeSumsViewRow rowEnvelopeSumsViewRow = ((EnvelopeSumsViewRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        envelopeID,
+                        creditDebit,
+                        sum};
+                rowEnvelopeSumsViewRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowEnvelopeSumsViewRow);
+                return rowEnvelopeSumsViewRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public override global::System.Data.DataTable Clone() {
+                EnvelopeSumsViewDataTable cln = ((EnvelopeSumsViewDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new EnvelopeSumsViewDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            internal void InitVars() {
+                this.columnenvelopeID = base.Columns["envelopeID"];
+                this.columncreditDebit = base.Columns["creditDebit"];
+                this.columnsum = base.Columns["sum"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            private void InitClass() {
+                this.columnenvelopeID = new global::System.Data.DataColumn("envelopeID", typeof(short), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnenvelopeID);
+                this.columncreditDebit = new global::System.Data.DataColumn("creditDebit", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncreditDebit);
+                this.columnsum = new global::System.Data.DataColumn("sum", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnsum);
+                this.columnenvelopeID.ReadOnly = true;
+                this.columncreditDebit.ReadOnly = true;
+                this.columnsum.ReadOnly = true;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public EnvelopeSumsViewRow NewEnvelopeSumsViewRow() {
+                return ((EnvelopeSumsViewRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new EnvelopeSumsViewRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override global::System.Type GetRowType() {
+                return typeof(EnvelopeSumsViewRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.EnvelopeSumsViewRowChanged != null)) {
+                    this.EnvelopeSumsViewRowChanged(this, new EnvelopeSumsViewRowChangeEvent(((EnvelopeSumsViewRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.EnvelopeSumsViewRowChanging != null)) {
+                    this.EnvelopeSumsViewRowChanging(this, new EnvelopeSumsViewRowChangeEvent(((EnvelopeSumsViewRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.EnvelopeSumsViewRowDeleted != null)) {
+                    this.EnvelopeSumsViewRowDeleted(this, new EnvelopeSumsViewRowChangeEvent(((EnvelopeSumsViewRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.EnvelopeSumsViewRowDeleting != null)) {
+                    this.EnvelopeSumsViewRowDeleting(this, new EnvelopeSumsViewRowChangeEvent(((EnvelopeSumsViewRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void RemoveEnvelopeSumsViewRow(EnvelopeSumsViewRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                FFDBDataSet ds = new FFDBDataSet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "EnvelopeSumsViewDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class AEBalanceSumsViewDataTable : global::System.Data.TypedTableBase<AEBalanceSumsViewRow> {
+            
+            private global::System.Data.DataColumn columnaccountID;
+            
+            private global::System.Data.DataColumn columnenvelopeID;
+            
+            private global::System.Data.DataColumn columncreditDebit;
+            
+            private global::System.Data.DataColumn columnsum;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public AEBalanceSumsViewDataTable() {
+                this.TableName = "AEBalanceSumsView";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            internal AEBalanceSumsViewDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected AEBalanceSumsViewDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn accountIDColumn {
+                get {
+                    return this.columnaccountID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn envelopeIDColumn {
+                get {
+                    return this.columnenvelopeID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn creditDebitColumn {
+                get {
+                    return this.columncreditDebit;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn sumColumn {
+                get {
+                    return this.columnsum;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public AEBalanceSumsViewRow this[int index] {
+                get {
+                    return ((AEBalanceSumsViewRow)(this.Rows[index]));
+                }
+            }
+            
+            public event AEBalanceSumsViewRowChangeEventHandler AEBalanceSumsViewRowChanging;
+            
+            public event AEBalanceSumsViewRowChangeEventHandler AEBalanceSumsViewRowChanged;
+            
+            public event AEBalanceSumsViewRowChangeEventHandler AEBalanceSumsViewRowDeleting;
+            
+            public event AEBalanceSumsViewRowChangeEventHandler AEBalanceSumsViewRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void AddAEBalanceSumsViewRow(AEBalanceSumsViewRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public AEBalanceSumsViewRow AddAEBalanceSumsViewRow(short accountID, short envelopeID, bool creditDebit, decimal sum) {
+                AEBalanceSumsViewRow rowAEBalanceSumsViewRow = ((AEBalanceSumsViewRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        accountID,
+                        envelopeID,
+                        creditDebit,
+                        sum};
+                rowAEBalanceSumsViewRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowAEBalanceSumsViewRow);
+                return rowAEBalanceSumsViewRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public override global::System.Data.DataTable Clone() {
+                AEBalanceSumsViewDataTable cln = ((AEBalanceSumsViewDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new AEBalanceSumsViewDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            internal void InitVars() {
+                this.columnaccountID = base.Columns["accountID"];
+                this.columnenvelopeID = base.Columns["envelopeID"];
+                this.columncreditDebit = base.Columns["creditDebit"];
+                this.columnsum = base.Columns["sum"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            private void InitClass() {
+                this.columnaccountID = new global::System.Data.DataColumn("accountID", typeof(short), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnaccountID);
+                this.columnenvelopeID = new global::System.Data.DataColumn("envelopeID", typeof(short), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnenvelopeID);
+                this.columncreditDebit = new global::System.Data.DataColumn("creditDebit", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncreditDebit);
+                this.columnsum = new global::System.Data.DataColumn("sum", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnsum);
+                this.columnaccountID.ReadOnly = true;
+                this.columnenvelopeID.ReadOnly = true;
+                this.columncreditDebit.ReadOnly = true;
+                this.columnsum.ReadOnly = true;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public AEBalanceSumsViewRow NewAEBalanceSumsViewRow() {
+                return ((AEBalanceSumsViewRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new AEBalanceSumsViewRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override global::System.Type GetRowType() {
+                return typeof(AEBalanceSumsViewRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.AEBalanceSumsViewRowChanged != null)) {
+                    this.AEBalanceSumsViewRowChanged(this, new AEBalanceSumsViewRowChangeEvent(((AEBalanceSumsViewRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.AEBalanceSumsViewRowChanging != null)) {
+                    this.AEBalanceSumsViewRowChanging(this, new AEBalanceSumsViewRowChangeEvent(((AEBalanceSumsViewRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.AEBalanceSumsViewRowDeleted != null)) {
+                    this.AEBalanceSumsViewRowDeleted(this, new AEBalanceSumsViewRowChangeEvent(((AEBalanceSumsViewRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.AEBalanceSumsViewRowDeleting != null)) {
+                    this.AEBalanceSumsViewRowDeleting(this, new AEBalanceSumsViewRowChangeEvent(((AEBalanceSumsViewRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void RemoveAEBalanceSumsViewRow(AEBalanceSumsViewRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                FFDBDataSet ds = new FFDBDataSet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "AEBalanceSumsViewDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
@@ -2735,6 +3998,26 @@ namespace FamilyFinance2 {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public decimal currentBalance {
+                get {
+                    return ((decimal)(this[this.tableAccount.currentBalanceColumn]));
+                }
+                set {
+                    this[this.tableAccount.currentBalanceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public decimal endingBalance {
+                get {
+                    return ((decimal)(this[this.tableAccount.endingBalanceColumn]));
+                }
+                set {
+                    this[this.tableAccount.endingBalanceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public AccountCatagoryRow AccountCatagoryRow {
                 get {
                     return ((AccountCatagoryRow)(this.GetParentRow(this.Table.ParentRelations["FK_Account_catID"])));
@@ -2751,6 +4034,16 @@ namespace FamilyFinance2 {
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_Account_typeID"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public AEBalanceRow[] GetAEBalanceRows() {
+                if ((this.Table.ChildRelations["FK_AEBalance_accountID"] == null)) {
+                    return new AEBalanceRow[0];
+                }
+                else {
+                    return ((AEBalanceRow[])(base.GetChildRows(this.Table.ChildRelations["FK_AEBalance_accountID"])));
                 }
             }
             
@@ -2869,6 +4162,91 @@ namespace FamilyFinance2 {
         ///Represents strongly named DataRow class.
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+        public partial class AEBalanceRow : global::System.Data.DataRow {
+            
+            private AEBalanceDataTable tableAEBalance;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            internal AEBalanceRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableAEBalance = ((AEBalanceDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public int id {
+                get {
+                    return ((int)(this[this.tableAEBalance.idColumn]));
+                }
+                set {
+                    this[this.tableAEBalance.idColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public short accountID {
+                get {
+                    return ((short)(this[this.tableAEBalance.accountIDColumn]));
+                }
+                set {
+                    this[this.tableAEBalance.accountIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public short envelopeID {
+                get {
+                    return ((short)(this[this.tableAEBalance.envelopeIDColumn]));
+                }
+                set {
+                    this[this.tableAEBalance.envelopeIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public decimal currentBalance {
+                get {
+                    return ((decimal)(this[this.tableAEBalance.currentBalanceColumn]));
+                }
+                set {
+                    this[this.tableAEBalance.currentBalanceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public decimal endingBalance {
+                get {
+                    return ((decimal)(this[this.tableAEBalance.endingBalanceColumn]));
+                }
+                set {
+                    this[this.tableAEBalance.endingBalanceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public AccountRow AccountRow {
+                get {
+                    return ((AccountRow)(this.GetParentRow(this.Table.ParentRelations["FK_AEBalance_accountID"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_AEBalance_accountID"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public EnvelopeRow EnvelopeRow {
+                get {
+                    return ((EnvelopeRow)(this.GetParentRow(this.Table.ParentRelations["FK_AEBalance_envelopeID"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_AEBalance_envelopeID"]);
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
         public partial class EnvelopeRow : global::System.Data.DataRow {
             
             private EnvelopeDataTable tableEnvelope;
@@ -2930,12 +4308,42 @@ namespace FamilyFinance2 {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public decimal currentBalance {
+                get {
+                    return ((decimal)(this[this.tableEnvelope.currentBalanceColumn]));
+                }
+                set {
+                    this[this.tableEnvelope.currentBalanceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public decimal endingBalance {
+                get {
+                    return ((decimal)(this[this.tableEnvelope.endingBalanceColumn]));
+                }
+                set {
+                    this[this.tableEnvelope.endingBalanceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public EnvelopeRow EnvelopeRowParent {
                 get {
                     return ((EnvelopeRow)(this.GetParentRow(this.Table.ParentRelations["FK_Envelope_parentID"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_Envelope_parentID"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public AEBalanceRow[] GetAEBalanceRows() {
+                if ((this.Table.ChildRelations["FK_AEBalance_envelopeID"] == null)) {
+                    return new AEBalanceRow[0];
+                }
+                else {
+                    return ((AEBalanceRow[])(base.GetChildRows(this.Table.ChildRelations["FK_AEBalance_envelopeID"])));
                 }
             }
             
@@ -3426,6 +4834,271 @@ namespace FamilyFinance2 {
         }
         
         /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+        public partial class AccountSumsViewRow : global::System.Data.DataRow {
+            
+            private AccountSumsViewDataTable tableAccountSumsView;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            internal AccountSumsViewRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableAccountSumsView = ((AccountSumsViewDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public short accountID {
+                get {
+                    return ((short)(this[this.tableAccountSumsView.accountIDColumn]));
+                }
+                set {
+                    this[this.tableAccountSumsView.accountIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool creditDebit {
+                get {
+                    return ((bool)(this[this.tableAccountSumsView.creditDebitColumn]));
+                }
+                set {
+                    this[this.tableAccountSumsView.creditDebitColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public decimal sum {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableAccountSumsView.sumColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'sum\' in table \'AccountSumsView\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableAccountSumsView.sumColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IssumNull() {
+                return this.IsNull(this.tableAccountSumsView.sumColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetsumNull() {
+                this[this.tableAccountSumsView.sumColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+        public partial class EnvelopeSumsViewRow : global::System.Data.DataRow {
+            
+            private EnvelopeSumsViewDataTable tableEnvelopeSumsView;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            internal EnvelopeSumsViewRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableEnvelopeSumsView = ((EnvelopeSumsViewDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public short envelopeID {
+                get {
+                    try {
+                        return ((short)(this[this.tableEnvelopeSumsView.envelopeIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'envelopeID\' in table \'EnvelopeSumsView\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnvelopeSumsView.envelopeIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool creditDebit {
+                get {
+                    try {
+                        return ((bool)(this[this.tableEnvelopeSumsView.creditDebitColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'creditDebit\' in table \'EnvelopeSumsView\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnvelopeSumsView.creditDebitColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public decimal sum {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableEnvelopeSumsView.sumColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'sum\' in table \'EnvelopeSumsView\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnvelopeSumsView.sumColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsenvelopeIDNull() {
+                return this.IsNull(this.tableEnvelopeSumsView.envelopeIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetenvelopeIDNull() {
+                this[this.tableEnvelopeSumsView.envelopeIDColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IscreditDebitNull() {
+                return this.IsNull(this.tableEnvelopeSumsView.creditDebitColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetcreditDebitNull() {
+                this[this.tableEnvelopeSumsView.creditDebitColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IssumNull() {
+                return this.IsNull(this.tableEnvelopeSumsView.sumColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetsumNull() {
+                this[this.tableEnvelopeSumsView.sumColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+        public partial class AEBalanceSumsViewRow : global::System.Data.DataRow {
+            
+            private AEBalanceSumsViewDataTable tableAEBalanceSumsView;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            internal AEBalanceSumsViewRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableAEBalanceSumsView = ((AEBalanceSumsViewDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public short accountID {
+                get {
+                    try {
+                        return ((short)(this[this.tableAEBalanceSumsView.accountIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'accountID\' in table \'AEBalanceSumsView\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableAEBalanceSumsView.accountIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public short envelopeID {
+                get {
+                    try {
+                        return ((short)(this[this.tableAEBalanceSumsView.envelopeIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'envelopeID\' in table \'AEBalanceSumsView\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableAEBalanceSumsView.envelopeIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool creditDebit {
+                get {
+                    try {
+                        return ((bool)(this[this.tableAEBalanceSumsView.creditDebitColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'creditDebit\' in table \'AEBalanceSumsView\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableAEBalanceSumsView.creditDebitColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public decimal sum {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableAEBalanceSumsView.sumColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'sum\' in table \'AEBalanceSumsView\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableAEBalanceSumsView.sumColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsaccountIDNull() {
+                return this.IsNull(this.tableAEBalanceSumsView.accountIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetaccountIDNull() {
+                this[this.tableAEBalanceSumsView.accountIDColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsenvelopeIDNull() {
+                return this.IsNull(this.tableAEBalanceSumsView.envelopeIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetenvelopeIDNull() {
+                this[this.tableAEBalanceSumsView.envelopeIDColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IscreditDebitNull() {
+                return this.IsNull(this.tableAEBalanceSumsView.creditDebitColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetcreditDebitNull() {
+                this[this.tableAEBalanceSumsView.creditDebitColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IssumNull() {
+                return this.IsNull(this.tableAEBalanceSumsView.sumColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetsumNull() {
+                this[this.tableAEBalanceSumsView.sumColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
@@ -3505,6 +5178,37 @@ namespace FamilyFinance2 {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public AccountTypeRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+        public class AEBalanceRowChangeEvent : global::System.EventArgs {
+            
+            private AEBalanceRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public AEBalanceRowChangeEvent(AEBalanceRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public AEBalanceRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -3629,6 +5333,99 @@ namespace FamilyFinance2 {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public SubLineItemRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+        public class AccountSumsViewRowChangeEvent : global::System.EventArgs {
+            
+            private AccountSumsViewRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public AccountSumsViewRowChangeEvent(AccountSumsViewRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public AccountSumsViewRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+        public class EnvelopeSumsViewRowChangeEvent : global::System.EventArgs {
+            
+            private EnvelopeSumsViewRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public EnvelopeSumsViewRowChangeEvent(EnvelopeSumsViewRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public EnvelopeSumsViewRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+        public class AEBalanceSumsViewRowChangeEvent : global::System.EventArgs {
+            
+            private AEBalanceSumsViewRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public AEBalanceSumsViewRowChangeEvent(AEBalanceSumsViewRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public AEBalanceSumsViewRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -3768,6 +5565,8 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("closed", "closed");
             tableMapping.ColumnMappings.Add("creditDebit", "creditDebit");
             tableMapping.ColumnMappings.Add("envelopes", "envelopes");
+            tableMapping.ColumnMappings.Add("currentBalance", "currentBalance");
+            tableMapping.ColumnMappings.Add("endingBalance", "endingBalance");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
@@ -3777,7 +5576,8 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
             this._adapter.InsertCommand = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
             this._adapter.InsertCommand.CommandText = "INSERT INTO [Account] ([id], [name], [accountTypeID], [catagoryID], [closed], [cr" +
-                "editDebit], [envelopes]) VALUES (@p1, @p2, @p3, @p4, @p5, @p6, @p7)";
+                "editDebit], [envelopes], [currentBalance], [endingBalance]) VALUES (@p1, @p2, @p" +
+                "3, @p4, @p5, @p6, @p7, @p8, @p9)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p1", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Current, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "name", global::System.Data.DataRowVersion.Current, null));
@@ -3786,11 +5586,13 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p5", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "closed", global::System.Data.DataRowVersion.Current, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p6", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "creditDebit", global::System.Data.DataRowVersion.Current, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p7", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "envelopes", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p8", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "currentBalance", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p9", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "endingBalance", global::System.Data.DataRowVersion.Current, null));
             this._adapter.UpdateCommand = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
             this._adapter.UpdateCommand.CommandText = "UPDATE [Account] SET [id] = @p1, [name] = @p2, [accountTypeID] = @p3, [catagoryID" +
-                "] = @p4, [closed] = @p5, [creditDebit] = @p6, [envelopes] = @p7 WHERE (([id] = @" +
-                "p8))";
+                "] = @p4, [closed] = @p5, [creditDebit] = @p6, [envelopes] = @p7, [currentBalance" +
+                "] = @p8, [endingBalance] = @p9 WHERE (([id] = @p10))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p1", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Current, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "name", global::System.Data.DataRowVersion.Current, null));
@@ -3799,7 +5601,9 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p5", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "closed", global::System.Data.DataRowVersion.Current, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p6", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "creditDebit", global::System.Data.DataRowVersion.Current, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p7", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "envelopes", global::System.Data.DataRowVersion.Current, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p8", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Original, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p8", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "currentBalance", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p9", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "endingBalance", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p10", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Original, null));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3810,12 +5614,17 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlServerCe.SqlCeCommand[1];
+            this._commandCollection = new global::System.Data.SqlServerCe.SqlCeCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT [id], [name], [accountTypeID], [catagoryID], [closed], [creditDebit], [env" +
-                "elopes] FROM [Account]";
+                "elopes], [currentBalance], [endingBalance] FROM [Account]";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1] = new global::System.Data.SqlServerCe.SqlCeCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "SELECT id, name, accountTypeID, catagoryID, closed, creditDebit, envelopes, 0.0 A" +
+                "S currentBalance, 0.0 AS endingBalance \r\nFROM Account";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3835,6 +5644,28 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual FFDBDataSet.AccountDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            FFDBDataSet.AccountDataTable dataTable = new FFDBDataSet.AccountDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillByZero(FFDBDataSet.AccountDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual FFDBDataSet.AccountDataTable GetDataByZero() {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
             FFDBDataSet.AccountDataTable dataTable = new FFDBDataSet.AccountDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -3889,7 +5720,7 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(short p1, string p2, short p3, byte p4, bool p5, bool p6, bool p7) {
+        public virtual int Insert(short p1, string p2, short p3, byte p4, bool p5, bool p6, bool p7, decimal p8, decimal p9) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((short)(p1));
             if ((p2 == null)) {
                 throw new global::System.ArgumentNullException("p2");
@@ -3902,6 +5733,8 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
             this.Adapter.InsertCommand.Parameters[4].Value = ((bool)(p5));
             this.Adapter.InsertCommand.Parameters[5].Value = ((bool)(p6));
             this.Adapter.InsertCommand.Parameters[6].Value = ((bool)(p7));
+            this.Adapter.InsertCommand.Parameters[7].Value = ((decimal)(p8));
+            this.Adapter.InsertCommand.Parameters[8].Value = ((decimal)(p9));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -3921,7 +5754,7 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(short p1, string p2, short p3, byte p4, bool p5, bool p6, bool p7, short p8) {
+        public virtual int Update(short p1, string p2, short p3, byte p4, bool p5, bool p6, bool p7, decimal p8, decimal p9, short p10) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((short)(p1));
             if ((p2 == null)) {
                 throw new global::System.ArgumentNullException("p2");
@@ -3934,7 +5767,9 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
             this.Adapter.UpdateCommand.Parameters[4].Value = ((bool)(p5));
             this.Adapter.UpdateCommand.Parameters[5].Value = ((bool)(p6));
             this.Adapter.UpdateCommand.Parameters[6].Value = ((bool)(p7));
-            this.Adapter.UpdateCommand.Parameters[7].Value = ((short)(p8));
+            this.Adapter.UpdateCommand.Parameters[7].Value = ((decimal)(p8));
+            this.Adapter.UpdateCommand.Parameters[8].Value = ((decimal)(p9));
+            this.Adapter.UpdateCommand.Parameters[9].Value = ((short)(p10));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -3954,8 +5789,8 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string p2, short p3, byte p4, bool p5, bool p6, bool p7, short p8) {
-            return this.Update(p8, p2, p3, p4, p5, p6, p7, p8);
+        public virtual int Update(string p2, short p3, byte p4, bool p5, bool p6, bool p7, decimal p8, decimal p9, short p10) {
+            return this.Update(p10, p2, p3, p4, p5, p6, p7, p8, p9, p10);
         }
     }
     
@@ -4537,6 +6372,324 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class AEBalanceTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.SqlServerCe.SqlCeDataAdapter _adapter;
+        
+        private global::System.Data.SqlServerCe.SqlCeConnection _connection;
+        
+        private global::System.Data.SqlServerCe.SqlCeTransaction _transaction;
+        
+        private global::System.Data.SqlServerCe.SqlCeCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public AEBalanceTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        protected internal global::System.Data.SqlServerCe.SqlCeDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        internal global::System.Data.SqlServerCe.SqlCeConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::System.Data.SqlServerCe.SqlCeCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        internal global::System.Data.SqlServerCe.SqlCeTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        protected global::System.Data.SqlServerCe.SqlCeCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private void InitAdapter() {
+            this._adapter = new global::System.Data.SqlServerCe.SqlCeDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "AEBalance";
+            tableMapping.ColumnMappings.Add("id", "id");
+            tableMapping.ColumnMappings.Add("accountID", "accountID");
+            tableMapping.ColumnMappings.Add("envelopeID", "envelopeID");
+            tableMapping.ColumnMappings.Add("currentBalance", "currentBalance");
+            tableMapping.ColumnMappings.Add("endingBalance", "endingBalance");
+            this._adapter.TableMappings.Add(tableMapping);
+            this._adapter.DeleteCommand = new global::System.Data.SqlServerCe.SqlCeCommand();
+            this._adapter.DeleteCommand.Connection = this.Connection;
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [AEBalance] WHERE (([id] = @p1))";
+            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p1", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Original, null));
+            this._adapter.InsertCommand = new global::System.Data.SqlServerCe.SqlCeCommand();
+            this._adapter.InsertCommand.Connection = this.Connection;
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [AEBalance] ([id], [accountID], [envelopeID], [currentBalance], [endi" +
+                "ngBalance]) VALUES (@p1, @p2, @p3, @p4, @p5)";
+            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p1", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p2", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "accountID", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p3", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "envelopeID", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p4", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "currentBalance", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p5", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "endingBalance", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.UpdateCommand = new global::System.Data.SqlServerCe.SqlCeCommand();
+            this._adapter.UpdateCommand.Connection = this.Connection;
+            this._adapter.UpdateCommand.CommandText = "UPDATE [AEBalance] SET [id] = @p1, [accountID] = @p2, [envelopeID] = @p3, [curren" +
+                "tBalance] = @p4, [endingBalance] = @p5 WHERE (([id] = @p6))";
+            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p1", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p2", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "accountID", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p3", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "envelopeID", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p4", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "currentBalance", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p5", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "endingBalance", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p6", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Original, null));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private void InitConnection() {
+            this._connection = new global::System.Data.SqlServerCe.SqlCeConnection();
+            this._connection.ConnectionString = global::FamilyFinance2.Properties.Settings.Default.FFDBConnectionString;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.SqlServerCe.SqlCeCommand[2];
+            this._commandCollection[0] = new global::System.Data.SqlServerCe.SqlCeCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "SELECT [id], [accountID], [envelopeID], [currentBalance], [endingBalance] FROM [A" +
+                "EBalance]";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1] = new global::System.Data.SqlServerCe.SqlCeCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "DELETE FROM AEBalance";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(FFDBDataSet.AEBalanceDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual FFDBDataSet.AEBalanceDataTable GetData() {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            FFDBDataSet.AEBalanceDataTable dataTable = new FFDBDataSet.AEBalanceDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(FFDBDataSet.AEBalanceDataTable dataTable) {
+            return this.Adapter.Update(dataTable);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(FFDBDataSet dataSet) {
+            return this.Adapter.Update(dataSet, "AEBalance");
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow dataRow) {
+            return this.Adapter.Update(new global::System.Data.DataRow[] {
+                        dataRow});
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow[] dataRows) {
+            return this.Adapter.Update(dataRows);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
+        public virtual int Delete(int p1) {
+            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(p1));
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
+            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.DeleteCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.DeleteCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
+        public virtual int Insert(int p1, short p2, short p3, decimal p4, decimal p5) {
+            this.Adapter.InsertCommand.Parameters[0].Value = ((int)(p1));
+            this.Adapter.InsertCommand.Parameters[1].Value = ((short)(p2));
+            this.Adapter.InsertCommand.Parameters[2].Value = ((short)(p3));
+            this.Adapter.InsertCommand.Parameters[3].Value = ((decimal)(p4));
+            this.Adapter.InsertCommand.Parameters[4].Value = ((decimal)(p5));
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
+            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.InsertCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.InsertCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(int p1, short p2, short p3, decimal p4, decimal p5, int p6) {
+            this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(p1));
+            this.Adapter.UpdateCommand.Parameters[1].Value = ((short)(p2));
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((short)(p3));
+            this.Adapter.UpdateCommand.Parameters[3].Value = ((decimal)(p4));
+            this.Adapter.UpdateCommand.Parameters[4].Value = ((decimal)(p5));
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(p6));
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
+            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.UpdateCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.UpdateCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(short p2, short p3, decimal p4, decimal p5, int p6) {
+            return this.Update(p6, p2, p3, p4, p5, p6);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, false)]
+        public virtual int DeleteQuery() {
+            global::System.Data.SqlServerCe.SqlCeCommand command = this.CommandCollection[1];
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            int returnValue;
+            try {
+                returnValue = command.ExecuteNonQuery();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            return returnValue;
+        }
+    }
+    
+    /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
     public partial class EnvelopeTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.SqlServerCe.SqlCeDataAdapter _adapter;
@@ -4647,6 +6800,8 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("fullName", "fullName");
             tableMapping.ColumnMappings.Add("parentEnvelope", "parentEnvelope");
             tableMapping.ColumnMappings.Add("closed", "closed");
+            tableMapping.ColumnMappings.Add("currentBalance", "currentBalance");
+            tableMapping.ColumnMappings.Add("endingBalance", "endingBalance");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
@@ -4655,25 +6810,30 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p1", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Original, null));
             this._adapter.InsertCommand = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [Envelope] ([id], [name], [fullName], [parentEnvelope], [closed]) VAL" +
-                "UES (@p1, @p2, @p3, @p4, @p5)";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [Envelope] ([id], [name], [fullName], [parentEnvelope], [closed], [cu" +
+                "rrentBalance], [endingBalance]) VALUES (@p1, @p2, @p3, @p4, @p5, @p6, @p7)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p1", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Current, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "name", global::System.Data.DataRowVersion.Current, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p3", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "fullName", global::System.Data.DataRowVersion.Current, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p4", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "parentEnvelope", global::System.Data.DataRowVersion.Current, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p5", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "closed", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p6", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "currentBalance", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p7", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "endingBalance", global::System.Data.DataRowVersion.Current, null));
             this._adapter.UpdateCommand = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
             this._adapter.UpdateCommand.CommandText = "UPDATE [Envelope] SET [id] = @p1, [name] = @p2, [fullName] = @p3, [parentEnvelope" +
-                "] = @p4, [closed] = @p5 WHERE (([id] = @p6))";
+                "] = @p4, [closed] = @p5, [currentBalance] = @p6, [endingBalance] = @p7 WHERE (([" +
+                "id] = @p8))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p1", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Current, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "name", global::System.Data.DataRowVersion.Current, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p3", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "fullName", global::System.Data.DataRowVersion.Current, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p4", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "parentEnvelope", global::System.Data.DataRowVersion.Current, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p5", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "closed", global::System.Data.DataRowVersion.Current, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p6", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Original, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p6", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "currentBalance", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p7", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "endingBalance", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p8", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Original, null));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4684,11 +6844,17 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlServerCe.SqlCeCommand[1];
+            this._commandCollection = new global::System.Data.SqlServerCe.SqlCeCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT [id], [name], [fullName], [parentEnvelope], [closed] FROM [Envelope]";
+            this._commandCollection[0].CommandText = "SELECT [id], [name], [fullName], [parentEnvelope], [closed], [currentBalance], [e" +
+                "ndingBalance] FROM [Envelope]";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1] = new global::System.Data.SqlServerCe.SqlCeCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "SELECT id, name, fullName, parentEnvelope, closed, 0.0 AS currentBalance, 0.0 AS " +
+                "endingBalance\r\nFROM Envelope";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4708,6 +6874,28 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual FFDBDataSet.EnvelopeDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            FFDBDataSet.EnvelopeDataTable dataTable = new FFDBDataSet.EnvelopeDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillByZero(FFDBDataSet.EnvelopeDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual FFDBDataSet.EnvelopeDataTable GetDataByZero() {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
             FFDBDataSet.EnvelopeDataTable dataTable = new FFDBDataSet.EnvelopeDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -4762,7 +6950,7 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(short p1, string p2, string p3, short p4, bool p5) {
+        public virtual int Insert(short p1, string p2, string p3, short p4, bool p5, decimal p6, decimal p7) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((short)(p1));
             if ((p2 == null)) {
                 throw new global::System.ArgumentNullException("p2");
@@ -4778,6 +6966,8 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
             }
             this.Adapter.InsertCommand.Parameters[3].Value = ((short)(p4));
             this.Adapter.InsertCommand.Parameters[4].Value = ((bool)(p5));
+            this.Adapter.InsertCommand.Parameters[5].Value = ((decimal)(p6));
+            this.Adapter.InsertCommand.Parameters[6].Value = ((decimal)(p7));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -4797,7 +6987,7 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(short p1, string p2, string p3, short p4, bool p5, short p6) {
+        public virtual int Update(short p1, string p2, string p3, short p4, bool p5, decimal p6, decimal p7, short p8) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((short)(p1));
             if ((p2 == null)) {
                 throw new global::System.ArgumentNullException("p2");
@@ -4813,7 +7003,9 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
             }
             this.Adapter.UpdateCommand.Parameters[3].Value = ((short)(p4));
             this.Adapter.UpdateCommand.Parameters[4].Value = ((bool)(p5));
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((short)(p6));
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((decimal)(p6));
+            this.Adapter.UpdateCommand.Parameters[6].Value = ((decimal)(p7));
+            this.Adapter.UpdateCommand.Parameters[7].Value = ((short)(p8));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -4833,8 +7025,8 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string p2, string p3, short p4, bool p5, short p6) {
-            return this.Update(p6, p2, p3, p4, p5, p6);
+        public virtual int Update(string p2, string p3, short p4, bool p5, decimal p6, decimal p7, short p8) {
+            return this.Update(p8, p2, p3, p4, p5, p6, p7, p8);
         }
     }
     
@@ -5791,6 +7983,583 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
     }
     
     /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class AccountSumsViewTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.SqlServerCe.SqlCeDataAdapter _adapter;
+        
+        private global::System.Data.SqlServerCe.SqlCeConnection _connection;
+        
+        private global::System.Data.SqlServerCe.SqlCeTransaction _transaction;
+        
+        private global::System.Data.SqlServerCe.SqlCeCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public AccountSumsViewTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        protected internal global::System.Data.SqlServerCe.SqlCeDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        internal global::System.Data.SqlServerCe.SqlCeConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::System.Data.SqlServerCe.SqlCeCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        internal global::System.Data.SqlServerCe.SqlCeTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        protected global::System.Data.SqlServerCe.SqlCeCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private void InitAdapter() {
+            this._adapter = new global::System.Data.SqlServerCe.SqlCeDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "AccountSumsView";
+            tableMapping.ColumnMappings.Add("accountID", "accountID");
+            tableMapping.ColumnMappings.Add("creditDebit", "creditDebit");
+            tableMapping.ColumnMappings.Add("sum", "sum");
+            this._adapter.TableMappings.Add(tableMapping);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private void InitConnection() {
+            this._connection = new global::System.Data.SqlServerCe.SqlCeConnection();
+            this._connection.ConnectionString = global::FamilyFinance2.Properties.Settings.Default.FFDBConnectionString;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.SqlServerCe.SqlCeCommand[2];
+            this._commandCollection[0] = new global::System.Data.SqlServerCe.SqlCeCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "SELECT accountID, creditDebit, SUM(amount) as [sum]\r\nFROM LineItem\r\nGROUP BY acco" +
+                "untID, creditDebit";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1] = new global::System.Data.SqlServerCe.SqlCeCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "SELECT accountID, creditDebit, SUM(amount) as [sum]\r\nFROM LineItem\r\nWHERE date < " +
+                "@date\r\nGROUP BY accountID, creditDebit";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@date", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, true, 0, 0, "date", global::System.Data.DataRowVersion.Current, null));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(FFDBDataSet.AccountSumsViewDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual FFDBDataSet.AccountSumsViewDataTable GetData() {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            FFDBDataSet.AccountSumsViewDataTable dataTable = new FFDBDataSet.AccountSumsViewDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillByDate(FFDBDataSet.AccountSumsViewDataTable dataTable, System.DateTime date) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(date));
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual FFDBDataSet.AccountSumsViewDataTable GetDataByDate(System.DateTime date) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(date));
+            FFDBDataSet.AccountSumsViewDataTable dataTable = new FFDBDataSet.AccountSumsViewDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+    }
+    
+    /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class EnvelopeSumsViewTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.SqlServerCe.SqlCeDataAdapter _adapter;
+        
+        private global::System.Data.SqlServerCe.SqlCeConnection _connection;
+        
+        private global::System.Data.SqlServerCe.SqlCeTransaction _transaction;
+        
+        private global::System.Data.SqlServerCe.SqlCeCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public EnvelopeSumsViewTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        protected internal global::System.Data.SqlServerCe.SqlCeDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        internal global::System.Data.SqlServerCe.SqlCeConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::System.Data.SqlServerCe.SqlCeCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        internal global::System.Data.SqlServerCe.SqlCeTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        protected global::System.Data.SqlServerCe.SqlCeCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private void InitAdapter() {
+            this._adapter = new global::System.Data.SqlServerCe.SqlCeDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "EnvelopeSumsView";
+            tableMapping.ColumnMappings.Add("envelopeID", "envelopeID");
+            tableMapping.ColumnMappings.Add("creditDebit", "creditDebit");
+            tableMapping.ColumnMappings.Add("sum", "sum");
+            this._adapter.TableMappings.Add(tableMapping);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private void InitConnection() {
+            this._connection = new global::System.Data.SqlServerCe.SqlCeConnection();
+            this._connection.ConnectionString = global::FamilyFinance2.Properties.Settings.Default.FFDBConnectionString;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.SqlServerCe.SqlCeCommand[2];
+            this._commandCollection[0] = new global::System.Data.SqlServerCe.SqlCeCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "SELECT SubLineItem.envelopeID, LineItem.creditDebit, SUM(SubLineItem.amount) as [" +
+                "sum]\r\nFROM LineItem INNER JOIN SubLineItem ON LineItem.id = SubLineItem.lineItem" +
+                "ID\r\nGROUP BY SubLineItem.envelopeID, LineItem.creditDebit";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1] = new global::System.Data.SqlServerCe.SqlCeCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "SELECT SubLineItem.envelopeID, LineItem.creditDebit, SUM(SubLineItem.amount) as [" +
+                "sum]\r\nFROM LineItem INNER JOIN SubLineItem ON LineItem.id = SubLineItem.lineItem" +
+                "ID\r\nWHERE LineItem.date < @date\r\nGROUP BY SubLineItem.envelopeID, LineItem.credi" +
+                "tDebit";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@date", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, true, 0, 0, "date", global::System.Data.DataRowVersion.Current, null));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(FFDBDataSet.EnvelopeSumsViewDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual FFDBDataSet.EnvelopeSumsViewDataTable GetData() {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            FFDBDataSet.EnvelopeSumsViewDataTable dataTable = new FFDBDataSet.EnvelopeSumsViewDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillByDate(FFDBDataSet.EnvelopeSumsViewDataTable dataTable, System.DateTime date) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(date));
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual FFDBDataSet.EnvelopeSumsViewDataTable GetDataByDate(System.DateTime date) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(date));
+            FFDBDataSet.EnvelopeSumsViewDataTable dataTable = new FFDBDataSet.EnvelopeSumsViewDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+    }
+    
+    /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class AEBalanceSumsViewTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.SqlServerCe.SqlCeDataAdapter _adapter;
+        
+        private global::System.Data.SqlServerCe.SqlCeConnection _connection;
+        
+        private global::System.Data.SqlServerCe.SqlCeTransaction _transaction;
+        
+        private global::System.Data.SqlServerCe.SqlCeCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public AEBalanceSumsViewTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        protected internal global::System.Data.SqlServerCe.SqlCeDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        internal global::System.Data.SqlServerCe.SqlCeConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::System.Data.SqlServerCe.SqlCeCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        internal global::System.Data.SqlServerCe.SqlCeTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        protected global::System.Data.SqlServerCe.SqlCeCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private void InitAdapter() {
+            this._adapter = new global::System.Data.SqlServerCe.SqlCeDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "AEBalanceSumsView";
+            tableMapping.ColumnMappings.Add("accountID", "accountID");
+            tableMapping.ColumnMappings.Add("envelopeID", "envelopeID");
+            tableMapping.ColumnMappings.Add("creditDebit", "creditDebit");
+            tableMapping.ColumnMappings.Add("sum", "sum");
+            this._adapter.TableMappings.Add(tableMapping);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private void InitConnection() {
+            this._connection = new global::System.Data.SqlServerCe.SqlCeConnection();
+            this._connection.ConnectionString = global::FamilyFinance2.Properties.Settings.Default.FFDBConnectionString;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.SqlServerCe.SqlCeCommand[2];
+            this._commandCollection[0] = new global::System.Data.SqlServerCe.SqlCeCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = @"SELECT LineItem.accountID, SubLineItem.envelopeID, LineItem.creditDebit, SUM(SubLineItem.amount) as [sum]
+FROM LineItem INNER JOIN SubLineItem ON LineItem.id = SubLineItem.lineItemID
+GROUP BY LineItem.accountID, SubLineItem.envelopeID, LineItem.creditDebit";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1] = new global::System.Data.SqlServerCe.SqlCeCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = @"SELECT LineItem.accountID, SubLineItem.envelopeID, LineItem.creditDebit, SUM(SubLineItem.amount) as [sum]
+FROM LineItem INNER JOIN SubLineItem ON LineItem.id = SubLineItem.lineItemID
+WHERE LineItem.date < @date
+GROUP BY LineItem.accountID, SubLineItem.envelopeID, LineItem.creditDebit";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@date", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, true, 0, 0, "date", global::System.Data.DataRowVersion.Current, null));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(FFDBDataSet.AEBalanceSumsViewDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual FFDBDataSet.AEBalanceSumsViewDataTable GetData() {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            FFDBDataSet.AEBalanceSumsViewDataTable dataTable = new FFDBDataSet.AEBalanceSumsViewDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillByDate(FFDBDataSet.AEBalanceSumsViewDataTable dataTable, System.DateTime date) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(date));
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual FFDBDataSet.AEBalanceSumsViewDataTable GetDataByDate(System.DateTime date) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(date));
+            FFDBDataSet.AEBalanceSumsViewDataTable dataTable = new FFDBDataSet.AEBalanceSumsViewDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+    }
+    
+    /// <summary>
     ///TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
     ///</summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
@@ -5808,6 +8577,8 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
         private AccountCatagoryTableAdapter _accountCatagoryTableAdapter;
         
         private AccountTypeTableAdapter _accountTypeTableAdapter;
+        
+        private AEBalanceTableAdapter _aEBalanceTableAdapter;
         
         private EnvelopeTableAdapter _envelopeTableAdapter;
         
@@ -5867,6 +8638,19 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
             }
             set {
                 this._accountTypeTableAdapter = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
+            "ft.VSDesigner, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" +
+            "", "System.Drawing.Design.UITypeEditor")]
+        public AEBalanceTableAdapter AEBalanceTableAdapter {
+            get {
+                return this._aEBalanceTableAdapter;
+            }
+            set {
+                this._aEBalanceTableAdapter = value;
             }
         }
         
@@ -5951,6 +8735,10 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
                             && (this._accountTypeTableAdapter.Connection != null))) {
                     return this._accountTypeTableAdapter.Connection;
                 }
+                if (((this._aEBalanceTableAdapter != null) 
+                            && (this._aEBalanceTableAdapter.Connection != null))) {
+                    return this._aEBalanceTableAdapter.Connection;
+                }
                 if (((this._envelopeTableAdapter != null) 
                             && (this._envelopeTableAdapter.Connection != null))) {
                     return this._envelopeTableAdapter.Connection;
@@ -5988,6 +8776,9 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
                 if ((this._accountTypeTableAdapter != null)) {
                     count = (count + 1);
                 }
+                if ((this._aEBalanceTableAdapter != null)) {
+                    count = (count + 1);
+                }
                 if ((this._envelopeTableAdapter != null)) {
                     count = (count + 1);
                 }
@@ -6010,15 +8801,6 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         private int UpdateUpdatedRows(FFDBDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._accountTypeTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.AccountType.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._accountTypeTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
             if ((this._accountCatagoryTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.AccountCatagory.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
@@ -6028,12 +8810,12 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._lineTypeTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.LineType.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+            if ((this._accountTypeTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.AccountType.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    result = (result + this._lineTypeTableAdapter.Update(updatedRows));
+                    result = (result + this._accountTypeTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -6044,6 +8826,15 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
                             && (0 < updatedRows.Length))) {
                     this.SortSelfReferenceRows(updatedRows, dataSet.Relations["FK_Envelope_parentID"], false);
                     result = (result + this._envelopeTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this._lineTypeTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.LineType.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._lineTypeTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -6065,6 +8856,15 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
                     allChangedRows.AddRange(updatedRows);
                 }
             }
+            if ((this._aEBalanceTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.AEBalance.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._aEBalanceTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
             if ((this._subLineItemTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.SubLineItem.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
@@ -6083,14 +8883,6 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         private int UpdateInsertedRows(FFDBDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._accountTypeTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.AccountType.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._accountTypeTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
             if ((this._accountCatagoryTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.AccountCatagory.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
@@ -6099,11 +8891,11 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._lineTypeTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.LineType.Select(null, null, global::System.Data.DataViewRowState.Added);
+            if ((this._accountTypeTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.AccountType.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    result = (result + this._lineTypeTableAdapter.Update(addedRows));
+                    result = (result + this._accountTypeTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -6113,6 +8905,14 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
                             && (0 < addedRows.Length))) {
                     this.SortSelfReferenceRows(addedRows, dataSet.Relations["FK_Envelope_parentID"], false);
                     result = (result + this._envelopeTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._lineTypeTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.LineType.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._lineTypeTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -6129,6 +8929,14 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._lineItemTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._aEBalanceTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.AEBalance.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._aEBalanceTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -6157,6 +8965,14 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
                     allChangedRows.AddRange(deletedRows);
                 }
             }
+            if ((this._aEBalanceTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.AEBalance.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._aEBalanceTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
             if ((this._lineItemTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.LineItem.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
@@ -6173,6 +8989,14 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
                     allChangedRows.AddRange(deletedRows);
                 }
             }
+            if ((this._lineTypeTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.LineType.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._lineTypeTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
             if ((this._envelopeTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.Envelope.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
@@ -6182,11 +9006,11 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-            if ((this._lineTypeTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.LineType.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+            if ((this._accountTypeTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.AccountType.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    result = (result + this._lineTypeTableAdapter.Update(deletedRows));
+                    result = (result + this._accountTypeTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -6195,14 +9019,6 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._accountCatagoryTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-            if ((this._accountTypeTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.AccountType.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._accountTypeTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -6255,6 +9071,11 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
             }
             if (((this._accountTypeTableAdapter != null) 
                         && (this.MatchTableAdapterConnection(this._accountTypeTableAdapter.Connection) == false))) {
+                throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
+                        "tring.");
+            }
+            if (((this._aEBalanceTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._aEBalanceTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
@@ -6335,6 +9156,15 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
                     if (this._accountTypeTableAdapter.Adapter.AcceptChangesDuringUpdate) {
                         this._accountTypeTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
                         adaptersWithAcceptChangesDuringUpdate.Add(this._accountTypeTableAdapter.Adapter);
+                    }
+                }
+                if ((this._aEBalanceTableAdapter != null)) {
+                    revertConnections.Add(this._aEBalanceTableAdapter, this._aEBalanceTableAdapter.Connection);
+                    this._aEBalanceTableAdapter.Connection = ((global::System.Data.SqlServerCe.SqlCeConnection)(workConnection));
+                    this._aEBalanceTableAdapter.Transaction = ((global::System.Data.SqlServerCe.SqlCeTransaction)(workTransaction));
+                    if (this._aEBalanceTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this._aEBalanceTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this._aEBalanceTableAdapter.Adapter);
                     }
                 }
                 if ((this._envelopeTableAdapter != null)) {
@@ -6442,6 +9272,10 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
                 if ((this._accountTypeTableAdapter != null)) {
                     this._accountTypeTableAdapter.Connection = ((global::System.Data.SqlServerCe.SqlCeConnection)(revertConnections[this._accountTypeTableAdapter]));
                     this._accountTypeTableAdapter.Transaction = null;
+                }
+                if ((this._aEBalanceTableAdapter != null)) {
+                    this._aEBalanceTableAdapter.Connection = ((global::System.Data.SqlServerCe.SqlCeConnection)(revertConnections[this._aEBalanceTableAdapter]));
+                    this._aEBalanceTableAdapter.Transaction = null;
                 }
                 if ((this._envelopeTableAdapter != null)) {
                     this._envelopeTableAdapter.Connection = ((global::System.Data.SqlServerCe.SqlCeConnection)(revertConnections[this._envelopeTableAdapter]));

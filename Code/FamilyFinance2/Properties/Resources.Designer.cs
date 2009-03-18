@@ -63,18 +63,16 @@ namespace FamilyFinance2.Properties {
         /// <summary>
         ///   Looks up a localized string similar to -------------------------------------------------------------------------------
         ///-------------------------------------------------------------------------------
-        ///CREATE TABLE AccountType
+        ///CREATE TABLE AccountCatagory
         ///(
-        ///	id					smallint		NOT NULL,
-        ///	[name]				nvarchar(30)	NOT NULL,
-        ///	CONSTRAINT PK_AccountType_id        PRIMARY KEY (id)
+        ///	id					tinyint			NOT NULL,
+        ///	[name]				nvarchar(10)	NOT NULL,
+        ///	CONSTRAINT PK_AccountCatagory_id    PRIMARY KEY (id)
         ///);
-        ///INSERT INTO AccountType VALUES (-1, &apos; &apos;); -- Null Account Type
-        ///
-        ///
-        ///
-        ///-------------------------------------------------------------------------------
-        ///----------------------------------------------- [rest of string was truncated]&quot;;.
+        ///INSERT INTO AccountCatagory VALUES (0, &apos;NULL&apos;);
+        ///INSERT INTO AccountCatagory VALUES (1, &apos;Income&apos;);
+        ///INSERT INTO AccountCatagory VALUES (2, &apos;Account&apos;);
+        ///INSERT INTO AccountCatagory VALUES (3, &apos;Ex [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Build_Tables {
             get {
@@ -86,10 +84,12 @@ namespace FamilyFinance2.Properties {
         ///   Looks up a localized string similar to DELETE FROM SubLineItem WHERE id &gt; 0;
         ///DELETE FROM LineItem WHERE id &gt; 0;
         ///DELETE FROM LineType WHERE id &gt; 0;
+        ///DELETE FROM AEBalance WHERE id &gt; 0;
         ///UPDATE Envelope SET parentEnvelope = -1;
         ///DELETE FROM Envelope WHERE id &gt; 0;
         ///DELETE FROM Account WHERE id &gt; 0;
         ///DELETE FROM AccountType WHERE id &gt; 0;
+        ///DELETE FROM AccountCatagory WHERE id &gt; 3;
         ///.
         /// </summary>
         internal static string Delete_Data {
@@ -102,9 +102,11 @@ namespace FamilyFinance2.Properties {
         ///   Looks up a localized string similar to DROP TABLE SubLineItem;
         ///DROP TABLE LineItem;
         ///DROP TABLE LineType;
+        ///DROP TABLE AEBalance;
         ///DROP TABLE Envelope;
         ///DROP TABLE Account;
         ///DROP TABLE AccountType;
+        ///DROP TABLE AccountCatagory;
         ///
         ///
         ///
@@ -117,20 +119,46 @@ namespace FamilyFinance2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to -------------------------------------------------------------------------------
+        ///   Looks up a localized string similar to 
+        ///
         ///-------------------------------------------------------------------------------
-        ///--TABLE AccountType (id, name(30))
-        ///INSERT INTO AccountType VALUES (1, &apos;View&apos;);
-        ///INSERT INTO AccountType VALUES (2, &apos;Cash&apos;);
-        ///INSERT INTO AccountType VALUES (3, &apos;Loan&apos;);
-        ///INSERT INTO AccountType VALUES (4, &apos;Checking&apos;);
-        ///INSERT INTO AccountType VALUES (5, &apos;Savings&apos;);
-        ///INSERT INTO AccountType VALUES (6, &apos;Credit Card&apos;);
-        ///INSERT INTO AccountType VALUES [rest of string was truncated]&quot;;.
+        ///-------------------------------------------------------------------------------
+        ///--TABLE (id, name(30), typeID, catagory(1), sBalance, eBalance, closed(b), creditDebit(b), envelopes(b), creditColumnName(15), debitColumnName(15))
+        ///INSERT INTO Account VALUES (101, &apos;Main Checking&apos;, 4, 2, 0, 1, 1, 0.0, 0.0);
+        ///INSERT INTO Account VALUES (102, &apos;Vacation Savings&apos;, 5, 2, 0, 1, 1, 0.0, 0.0);
+        ///INSERT INTO Account VALUES (103, &apos;Local  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Test_Data {
             get {
                 return ResourceManager.GetString("Test_Data", resourceCulture);
+            }
+        }
+        
+        internal static System.Drawing.Bitmap TLVBank {
+            get {
+                object obj = ResourceManager.GetObject("TLVBank", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap TLVEnvelope {
+            get {
+                object obj = ResourceManager.GetObject("TLVEnvelope", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap TLVMoney {
+            get {
+                object obj = ResourceManager.GetObject("TLVMoney", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap TLVRedFlag {
+            get {
+                object obj = ResourceManager.GetObject("TLVRedFlag", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }
