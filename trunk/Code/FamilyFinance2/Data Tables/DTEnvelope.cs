@@ -13,6 +13,8 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             //   Local Variables
             ///////////////////////////////////////////////////////////////////////
+            private FFDBDataSetTableAdapters.EnvelopeTableAdapter thisTableAdapter;
+
             private bool autoChange;
 
 
@@ -21,12 +23,15 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
 
 
-            ///////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////////////////////////////
             //   Functions Override
-            ///////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////////////////////////////
             public override void EndInit()
             {
                 base.EndInit();
+
+                this.thisTableAdapter = new FFDBDataSetTableAdapters.EnvelopeTableAdapter();
+                this.thisTableAdapter.ClearBeforeFill = true;
 
                 this.TableNewRow += new System.Data.DataTableNewRowEventHandler(EnvelopeDataTable_TableNewRow);
                 this.ColumnChanged += new DataColumnChangeEventHandler(EnvelopeDataTable_ColumnChanged);
@@ -57,6 +62,8 @@ namespace FamilyFinance2
                 envelopeRow.fullName = "";
                 envelopeRow.parentEnvelope = SpclEnvelope.NULL;
                 envelopeRow.closed = false;
+                envelopeRow.endingBalance = 0.0m;
+                envelopeRow.currentBalance = 0.0m;
 
                 autoChange = true;
             }
@@ -98,6 +105,7 @@ namespace FamilyFinance2
 
                 autoChange = true;
             }
+
 
 
             ////////////////////////////////////////////////////////////////////////////////////////////
@@ -154,6 +162,82 @@ namespace FamilyFinance2
             ////////////////////////////////////////////////////////////////////////////////////////////
             //   Functions Public
             ////////////////////////////////////////////////////////////////////////////////////////////
+            public void myUpdateTA()
+            {
+                this.thisTableAdapter.Update(this);
+            }
+
+            public void myFillTA()
+            {
+                this.thisTableAdapter.Fill(this);
+            }
+
+
+
+            public void myUpdateEnvelopeEBUndo(short oldEnvelopeID, bool oldCD, decimal oldAmount)
+            {
+                EnvelopeRow row = this.FindByid(oldEnvelopeID);
+
+                // Undo the old Amount
+                if (oldCD == LineCD.CREDIT)
+                    row.endingBalance += oldAmount;
+
+                else
+                    row.endingBalance -= oldAmount;
+
+                //OnEnvelopeEndingBalanceChanged(new BalanceChangedEventArgs(SpclAccount.NULL, row.id, row.endingBalance));
+
+            }
+
+            public void myUpdateEnvelopeEBDo(short newEnvelopeID, bool newCD, decimal newAmount)
+            {
+                EnvelopeRow row = FindByid(newEnvelopeID);
+
+                //  Update to the new amount
+                if (newCD == LineCD.CREDIT)
+                    row.endingBalance -= newAmount;
+
+                else
+                    row.endingBalance += newAmount;
+
+                //OnEnvelopeEndingBalanceChanged(new BalanceChangedEventArgs(SpclAccount.NULL, row.id, row.endingBalance));
+            }
+
+            public void myUpdateEnvelopeEBUndoDo(short oldEnvelopeID, bool oldCD, decimal oldAmount, short newEnvelopeID, bool newCD, decimal newAmount)
+            {
+                EnvelopeRow oldEnvelopeRow = FindByid(oldEnvelopeID);
+                EnvelopeRow newEnvelopeRow = FindByid(newEnvelopeID);
+
+                // Undo the old Amount
+                if (oldCD == LineCD.CREDIT)
+                    oldEnvelopeRow.endingBalance += oldAmount;
+
+                else
+                    oldEnvelopeRow.endingBalance -= oldAmount;
+
+
+                //  Update to the new amount
+                if (newCD == LineCD.CREDIT)
+                    newEnvelopeRow.endingBalance -= newAmount;
+
+                else
+                    newEnvelopeRow.endingBalance += newAmount;
+
+
+                //if (oldEnvelopeID == newEnvelopeID)
+                //{
+                //    OnEnvelopeEndingBalanceChanged(new BalanceChangedEventArgs(SpclAccount.NULL, newEnvelopeID, newEnvelopeRow.endingBalance));
+                //}
+                //else
+                //{
+                //    OnEnvelopeEndingBalanceChanged(new BalanceChangedEventArgs(SpclAccount.NULL, newEnvelopeID, newEnvelopeRow.endingBalance));
+                //    OnEnvelopeEndingBalanceChanged(new BalanceChangedEventArgs(SpclAccount.NULL, oldEnvelopeID, oldEnvelopeRow.endingBalance));
+                //}
+
+            }
+
+
+
             public List<short> myGetChildEnvelopeIDList(short envelopeID)
             {
                 List<short> idList = new List<short>();

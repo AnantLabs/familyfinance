@@ -13,6 +13,7 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             //   Local Variables
             ///////////////////////////////////////////////////////////////////////
+            private FFDBDataSetTableAdapters.SubLineItemTableAdapter thisTableAdapter;
             private bool autoChange;
 
 
@@ -27,6 +28,9 @@ namespace FamilyFinance2
             public override void EndInit()
             {
                 base.EndInit();
+
+                this.thisTableAdapter = new FFDBDataSetTableAdapters.SubLineItemTableAdapter();
+                this.thisTableAdapter.ClearBeforeFill = true;
 
                 this.TableNewRow += new DataTableNewRowEventHandler(SubLineItemDataTable_TableNewRow);
                 this.ColumnChanged += new DataColumnChangeEventHandler(SubLineItemDataTable_ColumnChanged);
@@ -92,6 +96,11 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             //   Function Public
             ///////////////////////////////////////////////////////////////////////
+            public void myFillTA()
+            { this.thisTableAdapter.Fill(this); }
+
+            public void myUpdateTA()
+            { this.thisTableAdapter.Update(this); }
 
 
         }// END endpartial class SubLineItemDataTable

@@ -13,6 +13,7 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             //   Local Variables
             ///////////////////////////////////////////////////////////////////////
+            private FFDBDataSetTableAdapters.LineItemTableAdapter thisTableAdapter;
             private bool autoChange;
 
 
@@ -20,13 +21,16 @@ namespace FamilyFinance2
             //   Properties
             ///////////////////////////////////////////////////////////////////////
 
-            
+
             ///////////////////////////////////////////////////////////////////////
             //   Function Overrides
             ///////////////////////////////////////////////////////////////////////
             public override void EndInit()
             {
                 base.EndInit();
+
+                this.thisTableAdapter = new FFDBDataSetTableAdapters.LineItemTableAdapter();
+                this.thisTableAdapter.ClearBeforeFill = true;
 
                 this.TableNewRow += new System.Data.DataTableNewRowEventHandler(LineItemDataTable_TableNewRow);
                 this.ColumnChanged += new DataColumnChangeEventHandler(LineItemDataTable_ColumnChanged);
@@ -172,6 +176,27 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             //   Function Public
             ///////////////////////////////////////////////////////////////////////
+            public void myFillTA()
+            {
+                this.thisTableAdapter.Fill(this);
+                autoChange = false;
+
+                foreach (LineItemRow row in this)
+                {
+                    if (row.creditDebit == LineCD.DEBIT)
+                        row.debitAmount = row.amount;
+                    else
+                        row.creditAmount = row.amount;
+                }
+
+                autoChange = true;
+                this.AcceptChanges();
+            }
+
+            public void myUpdateTA()
+            { this.thisTableAdapter.Update(this); }
+
+            
 
         }//END partial class LineItemDataTable
     }// END FamilyFinanceDBDataSet Partial Class

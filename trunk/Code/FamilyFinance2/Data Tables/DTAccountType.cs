@@ -13,6 +13,8 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             //   Local Variables
             ///////////////////////////////////////////////////////////////////////
+            private FFDBDataSetTableAdapters.AccountTypeTableAdapter thisTableAdapter;
+
             private bool autoChange;
 
 
@@ -21,12 +23,16 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
 
 
+
             ///////////////////////////////////////////////////////////////////////
             //   Overriden Functions 
             ///////////////////////////////////////////////////////////////////////
             public override void EndInit()
             {
                 base.EndInit();
+
+                this.thisTableAdapter = new FFDBDataSetTableAdapters.AccountTypeTableAdapter();
+                this.thisTableAdapter.ClearBeforeFill = true;
 
                 this.TableNewRow += new DataTableNewRowEventHandler(AccountTypeDataTable_TableNewRow);
                 this.ColumnChanged += new DataColumnChangeEventHandler(AccountTypeDataTable_ColumnChanged);
@@ -84,7 +90,32 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             //   Functions Public
             ///////////////////////////////////////////////////////////////////////
+            public void myFillTA()
+            { this.thisTableAdapter.Fill(this); }
 
+            public void myUpdateTA()
+            {
+                this.thisTableAdapter.Update(this);
+            }
+
+            //public int myAddType(string newTypeName)
+            //{
+            //    if (newTypeName == null)
+            //        return SpclAccountType.NULL;
+
+            //    foreach (AccountTypeRow row in this)
+            //    {
+            //        if (row.name == newTypeName)
+            //            return row.id;
+            //    }
+
+            //    AccountTypeRow temp = this.NewAccountTypeRow();
+            //    temp.name = newTypeName;
+            //    this.Rows.Add(temp);
+            //    this.thisTableAdapter.Update(temp);
+
+            //    return temp.id;
+            //}
 
         }// END partial class AccountTypeDataTable
     }// END partial class FamilyFinanceDBDataSet

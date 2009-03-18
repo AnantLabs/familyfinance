@@ -51,6 +51,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data.SqlServerCe, Version=3.5.1.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -65,8 +66,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Custom Controls\AccountTLV.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Custom Controls\RegistrySplitContainer.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Custom Controls\GlobalClasses.cs" />
+    <Compile Include="Custom Controls\TreeList\Tracing.cs" />
+    <Compile Include="Custom Controls\TreeList\TreeListColumn.cs" />
+    <Compile Include="Custom Controls\TreeList\TreeListColumn.Design.cs" />
+    <Compile Include="Custom Controls\TreeList\TreeListNode.cs" />
+    <Compile Include="Custom Controls\TreeList\TreeListOptions.cs" />
+    <Compile Include="Custom Controls\TreeList\TreeListPainter.cs" />
+    <Compile Include="Custom Controls\TreeList\TreeListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Custom Controls\TreeList\Util.cs" />
+    <Compile Include="Data Tables\DTAccountCatagory.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Data Tables\DTAccount.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Data Tables\DTAEBalance.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Data Tables\DTEnvelope.cs">
@@ -79,6 +102,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Data Tables\DTSubLineItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Data Tables\Queries.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="FFDBDataSet.cs">
@@ -219,6 +245,10 @@
     <Content Include="FamilyFinanceDB.sdf">
     </Content>
     <Content Include="Resources\DataSetModifications.txt" />
+    <None Include="Resources\TLVRedFlag.png" />
+    <None Include="Resources\TLVMoney.png" />
+    <None Include="Resources\TLVEnvelope.png" />
+    <None Include="Resources\TLVBank.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

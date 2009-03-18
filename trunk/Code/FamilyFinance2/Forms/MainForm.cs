@@ -12,6 +12,10 @@ namespace FamilyFinance2
 {
     public partial class MainForm : Form
     {
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        //   Local Avriables
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        RegistySplitContainer registrySplitCont;
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,15 +37,21 @@ namespace FamilyFinance2
         {
             EditEnvelopesForm eef = new EditEnvelopesForm();
             eef.ShowDialog();
+            this.registrySplitCont.myRefresh();
         }
 
         private void accountsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             EditAccountsForm eaf = new EditAccountsForm();
             eaf.ShowDialog();
+            this.registrySplitCont.myRefresh();
         }
 
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+        }
         
+
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Private
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,6 +62,15 @@ namespace FamilyFinance2
         ////////////////////////////////////////////////////////////////////////////////////////////
         public MainForm()
         {
+            FFDBDataSet.myResetAccountBalances();
+            FFDBDataSet.myResetEnvelopeBalances();
+            FFDBDataSet.myResetAEBalance();
+
+            
+            registrySplitCont = new RegistySplitContainer();
+            registrySplitCont.Dock = DockStyle.Fill;
+            this.Controls.Add(registrySplitCont);
+
             InitializeComponent();
         }
     }

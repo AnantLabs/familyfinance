@@ -1,5 +1,69 @@
-﻿Modify LineItem
-	Add	creditAmount - Decimal
-	Add	debitAmount - Decimal
-	Add	balanceAmount - Decimal
+﻿++ Modify LineItem
+Add	creditAmount - Decimal
+Add	debitAmount - Decimal
+Add	balanceAmount - Decimal
+
+
+
+++ Add Query to Account
+	FillByZero
+SELECT id, name, accountTypeID, catagoryID, closed, creditDebit, envelopes, 0.0 AS currentBalance, 0.0 AS endingBalance 
+FROM Account
+
+
+
+++ Add Query to Envelope
+	FillByZero
+SELECT id, name, fullName, parentEnvelope, closed, 0.0 AS currentBalance, 0.0 AS endingBalance
+FROM Envelope
+
+
+
+++ Add Query to AEBalance
+	DeleteQuery
+DELETE FROM AEBalance
+
+
 	
+++ Create TableAdapter AccountSumsView   ** No Primary Key **   ** DELETE Relations that are Auto Generated **
+	Fill
+SELECT accountID, creditDebit, SUM(amount) as [sum]
+FROM LineItem
+GROUP BY accountID, creditDebit
+		
+	FillByDate
+SELECT accountID, creditDebit, SUM(amount) as [sum]
+FROM LineItem
+WHERE date < @date
+GROUP BY accountID, creditDebit
+		
+	
+		
+++ Create TableAdapter EnvelopeSumsView   ** No Primary Key **   ** DELETE Relations that are Auto Generated **
+	Fill
+SELECT SubLineItem.envelopeID, LineItem.creditDebit, SUM(SubLineItem.amount) as [sum]
+FROM LineItem INNER JOIN SubLineItem ON LineItem.id = SubLineItem.lineItemID
+GROUP BY SubLineItem.envelopeID, LineItem.creditDebit
+
+	FillByDate
+SELECT SubLineItem.envelopeID, LineItem.creditDebit, SUM(SubLineItem.amount) as [sum]
+FROM LineItem INNER JOIN SubLineItem ON LineItem.id = SubLineItem.lineItemID
+WHERE LineItem.date < @date
+GROUP BY SubLineItem.envelopeID, LineItem.creditDebit
+	
+		
+		
+++ Create TableAdapter AEBalanceSumsView   ** No Primary Key **   ** DELETE Relations that are Auto Generated **
+	Fill
+SELECT LineItem.accountID, SubLineItem.envelopeID, LineItem.creditDebit, SUM(SubLineItem.amount) as [sum]
+FROM LineItem INNER JOIN SubLineItem ON LineItem.id = SubLineItem.lineItemID
+GROUP BY LineItem.accountID, SubLineItem.envelopeID, LineItem.creditDebit
+
+	FillByDate
+SELECT LineItem.accountID, SubLineItem.envelopeID, LineItem.creditDebit, SUM(SubLineItem.amount) as [sum]
+FROM LineItem INNER JOIN SubLineItem ON LineItem.id = SubLineItem.lineItemID
+WHERE LineItem.date < @date
+GROUP BY LineItem.accountID, SubLineItem.envelopeID, LineItem.creditDebit
+	
+
+            
