@@ -254,6 +254,9 @@ namespace FamilyFinance2
 
         private void addEnvelopeNodes(MyTreeListNode pNode, short parentID)
         {
+            // Clear any nodes that might already be hear
+            pNode.Nodes.Clear();
+
             // If inside an Envelope add the money node.
             if (parentID != SpclEnvelope.NULL)
             {
