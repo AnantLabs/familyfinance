@@ -167,158 +167,155 @@ namespace FamilyFinance2
         {
             AccountDataTable account = new AccountDataTable();
             AccountTableAdapter accTA = new AccountTableAdapter();
-            AccountSumsViewDataTable balances;
-            AccountSumsViewTableAdapter balTA = new AccountSumsViewTableAdapter();
+            List<AccountSums> sums = new List<AccountSums>();
 
             // Bring up the Account table with the ending and current balances Zeroed out.
             accTA.FillByZero(account);
 
             // Get the endingBalance Sums
-            balances = balTA.GetData();
+            sums = FFDBDataSet.myGetAccountSums();
 
             // Reset the endingBalances
-            foreach (AccountSumsViewRow balRow in balances)
+            foreach (AccountSums sumRow in sums)
             {
-                if (account.FindByid(balRow.accountID).creditDebit == LineCD.DEBIT)
+                if (account.FindByid(sumRow.accountID).creditDebit == LineCD.DEBIT)
                 {
                     // If this in a Debit account (Checking, Savings) then subtract the Credits and add the debits
-                    if (balRow.creditDebit == LineCD.CREDIT)
-                        account.FindByid(balRow.accountID).endingBalance -= balRow.sum;
+                    if (sumRow.creditDebit == LineCD.CREDIT)
+                        account.FindByid(sumRow.accountID).endingBalance -= sumRow.balance;
                     else
-                        account.FindByid(balRow.accountID).endingBalance += balRow.sum;
+                        account.FindByid(sumRow.accountID).endingBalance += sumRow.balance;
                 }
                 else
                 {
                     // Else this is a Credit account (Loan, Credit) then add the Credits and subtract the debits
-                    if (balRow.creditDebit == LineCD.CREDIT)
-                        account.FindByid(balRow.accountID).endingBalance += balRow.sum;
+                    if (sumRow.creditDebit == LineCD.CREDIT)
+                        account.FindByid(sumRow.accountID).endingBalance += sumRow.balance;
                     else
-                        account.FindByid(balRow.accountID).endingBalance -= balRow.sum;
+                        account.FindByid(sumRow.accountID).endingBalance -= sumRow.balance;
                 }
             }
 
             // Get tomorrows Date and the currentBalance Sums
             DateTime tomorrow = DateTime.Today;
             tomorrow.AddDays(1.0);
-            balances = balTA.GetDataByDate(tomorrow);
+            sums.Clear();
+            sums = FFDBDataSet.myGetAccountSumsBeforeDate(tomorrow);
 
             // Reset the currentBalances
-            foreach (AccountSumsViewRow balRow in balances)
+            foreach (AccountSums sumRow in sums)
             {
-                if (account.FindByid(balRow.accountID).creditDebit == LineCD.DEBIT)
+                if (account.FindByid(sumRow.accountID).creditDebit == LineCD.DEBIT)
                 {
                     // If this in a Debit account (Checking, Savings) then subtract the Credits and add the Debits
-                    if (balRow.creditDebit == LineCD.CREDIT)
-                        account.FindByid(balRow.accountID).currentBalance -= balRow.sum;
+                    if (sumRow.creditDebit == LineCD.CREDIT)
+                        account.FindByid(sumRow.accountID).currentBalance -= sumRow.balance;
                     else
-                        account.FindByid(balRow.accountID).currentBalance += balRow.sum;
+                        account.FindByid(sumRow.accountID).currentBalance += sumRow.balance;
                 }
                 else
                 {
                     // Else this is a Credit account (Loan, Credit) then add the Credits and subtract the Debits
-                    if (balRow.creditDebit == LineCD.CREDIT)
-                        account.FindByid(balRow.accountID).currentBalance += balRow.sum;
+                    if (sumRow.creditDebit == LineCD.CREDIT)
+                        account.FindByid(sumRow.accountID).currentBalance += sumRow.balance;
                     else
-                        account.FindByid(balRow.accountID).currentBalance -= balRow.sum;
+                        account.FindByid(sumRow.accountID).currentBalance -= sumRow.balance;
                 }
             }
 
             // Save back to the database and dispose of the temperary tables and adapters.
             accTA.Update(account);
             account.Dispose();
-            balances.Dispose();
-            balTA.Dispose();
+            sums.Clear();
         }
 
         static public void myResetEnvelopeBalances()
         {
             EnvelopeDataTable envelope;
-            EnvelopeSumsViewDataTable balances;
+            List<EnvelopeSums> sums;
             EnvelopeTableAdapter envTA = new EnvelopeTableAdapter();
-            EnvelopeSumsViewTableAdapter balTA = new EnvelopeSumsViewTableAdapter();
 
             // Bring up the Envelope table with the ending and current balances Zeroed out.
             envelope = envTA.GetDataByZero();
 
             // Get the endingBalance Sums
-            balances = balTA.GetData();
+            sums = FFDBDataSet.myGetEnvelopeSums();
 
             // Reset the endingBalances
-            foreach (EnvelopeSumsViewRow balRow in balances)
+            foreach (EnvelopeSums balRow in sums)
             {
                 // For Envelopes subtract the Credits and add the Debits
                 if (balRow.creditDebit == LineCD.CREDIT)
-                    envelope.FindByid(balRow.envelopeID).endingBalance -= balRow.sum;
+                    envelope.FindByid(balRow.envelopeID).endingBalance -= balRow.balance;
                 else
-                    envelope.FindByid(balRow.envelopeID).endingBalance += balRow.sum;
+                    envelope.FindByid(balRow.envelopeID).endingBalance += balRow.balance;
             }
 
             // Get tomorrows Date and the currentBalance Sums
             DateTime tomorrow = DateTime.Today;
             tomorrow.AddDays(1.0);
-            balances = balTA.GetDataByDate(tomorrow);
+            sums.Clear();
+            sums = FFDBDataSet.myGetEnvelopeSumsBeforeDate(tomorrow);
 
             // Reset the currentBalances
-            foreach (EnvelopeSumsViewRow balRow in balances)
+            foreach (EnvelopeSums balRow in sums)
             {
                 // Subtract the Credits and add the Debits
                 if (balRow.creditDebit == LineCD.CREDIT)
-                    envelope.FindByid(balRow.envelopeID).currentBalance -= balRow.sum;
+                    envelope.FindByid(balRow.envelopeID).currentBalance -= balRow.balance;
                 else
-                    envelope.FindByid(balRow.envelopeID).currentBalance += balRow.sum;
+                    envelope.FindByid(balRow.envelopeID).currentBalance += balRow.balance;
             }
 
             // Save back to the database and dispose of the temperary tabls and adapters.
             envTA.Update(envelope);
             envelope.Dispose();
-            balances.Dispose();
-            balTA.Dispose();
+            sums.Clear();
         }
 
         static public void myResetAEBalance()
         {
             AEBalanceDataTable aeBalance;
             AEBalanceTableAdapter aeTA = new AEBalanceTableAdapter();
-            AEBalanceSumsViewDataTable balances;
-            AEBalanceSumsViewTableAdapter balTA = new AEBalanceSumsViewTableAdapter();
+            List<AEBalanceSums> balances;
 
             // Delete the AEBalance Table
             aeTA.DeleteQuery();
             aeBalance = aeTA.GetData();
 
             // Get the endingBalance Sums
-            balances = balTA.GetData();
+            balances = FFDBDataSet.myGetAEBalanceSums();
 
             // Reset the endingBalances
-            foreach (AEBalanceSumsViewRow balRow in balances)
+            foreach (AEBalanceSums balRow in balances)
             {
                 // For AEBalances subtract the Credits and add the Debits
                 if (balRow.creditDebit == LineCD.CREDIT)
-                    aeBalance.myGetRow(balRow.accountID, balRow.envelopeID).endingBalance -= balRow.sum;
+                    aeBalance.myGetRow(balRow.accountID, balRow.envelopeID).endingBalance -= balRow.balance;
                 else
-                    aeBalance.myGetRow(balRow.accountID, balRow.envelopeID).endingBalance += balRow.sum;
+                    aeBalance.myGetRow(balRow.accountID, balRow.envelopeID).endingBalance += balRow.balance;
             }
 
             // Get tomorrows Date and the currentBalance Sums
             DateTime tomorrow = DateTime.Today;
             tomorrow.AddDays(1.0);
-            balances = balTA.GetDataByDate(tomorrow);
+            balances.Clear();
+            balances = FFDBDataSet.myGetAEBalanceSumsBeforeDate(tomorrow);
 
             // Reset the currentBalances
-            foreach (AEBalanceSumsViewRow balRow in balances)
+            foreach (AEBalanceSums balRow in balances)
             {
                 // Subtract the Credits and add the Debits
                 if (balRow.creditDebit == LineCD.CREDIT)
-                    aeBalance.myGetRow(balRow.accountID, balRow.envelopeID).currentBalance -= balRow.sum;
+                    aeBalance.myGetRow(balRow.accountID, balRow.envelopeID).currentBalance -= balRow.balance;
                 else
-                    aeBalance.myGetRow(balRow.accountID, balRow.envelopeID).currentBalance += balRow.sum;
+                    aeBalance.myGetRow(balRow.accountID, balRow.envelopeID).currentBalance += balRow.balance;
             }
 
             // Save back to the database and dispose of the temperary tabls and adapters.
             aeTA.Update(aeBalance);
             aeBalance.Dispose();
-            balances.Dispose();
-            balTA.Dispose();
+            balances.Clear();
         }
 
 
