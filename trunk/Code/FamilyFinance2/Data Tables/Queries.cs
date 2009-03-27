@@ -71,8 +71,102 @@ namespace FamilyFinance2
             return queryResults;
         }
     }
-    
+
     #endregion Account Details Query
+
+
+    #region Account Sums View Query
+
+    public class AccountSums
+    {
+        public short accountID;
+        public bool creditDebit;
+        public decimal balance;
+    }
+
+    partial class FFDBDataSet
+    {
+        static public List<AccountSums> myGetAccountSums()
+        {
+            List<AccountSums> queryResults = new List<AccountSums>();
+            SqlCeConnection connection;
+            SqlCeCommand command;
+            string query;
+
+            query = "  SELECT accountID, creditDebit, SUM(amount) as [sum]";
+            query += " FROM LineItem ";
+            query += " GROUP BY accountID, creditDebit ";
+
+            connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            command = new SqlCeCommand(query, connection);
+            connection.Open();
+            SqlCeDataReader reader = command.ExecuteReader();
+
+            try
+            {
+                // Iterate through the results
+                while (reader.Read())
+                {
+                    AccountSums ad = new AccountSums();
+                    ad.accountID = reader.GetInt16(0);
+                    ad.creditDebit = reader.GetBoolean(1);
+                    ad.balance = reader.GetDecimal(2);
+
+                    queryResults.Add(ad);
+                }
+            }
+            finally
+            {
+                // Always call Close the reader and connection when done reading
+                reader.Close();
+                connection.Close();
+            }
+
+            return queryResults;
+        }
+
+        static public List<AccountSums> myGetAccountSumsBeforeDate(DateTime date)
+        {
+            List<AccountSums> queryResults = new List<AccountSums>();
+            SqlCeConnection connection;
+            SqlCeCommand command;
+            string query;
+
+            query = "  SELECT accountID, creditDebit, SUM(amount) as [sum]";
+            query += " FROM LineItem ";
+            query += " WHERE date < '" + date.Date.ToString("d") + "' ";
+            query += " GROUP BY accountID, creditDebit ";
+
+            connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            command = new SqlCeCommand(query, connection);
+            connection.Open();
+            SqlCeDataReader reader = command.ExecuteReader();
+
+            try
+            {
+                // Iterate through the results
+                while (reader.Read())
+                {
+                    AccountSums ad = new AccountSums();
+                    ad.accountID = reader.GetInt16(0);
+                    ad.creditDebit = reader.GetBoolean(1);
+                    ad.balance = reader.GetDecimal(2);
+
+                    queryResults.Add(ad);
+                }
+            }
+            finally
+            {
+                // Always call Close the reader and connection when done reading
+                reader.Close();
+                connection.Close();
+            }
+
+            return queryResults;
+        }
+    }
+
+    #endregion Account Sums View Query
 
 
     #region Envelope Details View Query
@@ -137,6 +231,197 @@ namespace FamilyFinance2
     }
 
     #endregion Envelope Details Query
+
+
+    #region Envelope Sums View Query
+
+    public class EnvelopeSums
+    {
+        public short envelopeID;
+        public bool creditDebit;
+        public decimal balance;
+    }
+
+    partial class FFDBDataSet
+    {
+        static public List<EnvelopeSums> myGetEnvelopeSums()
+        {
+            List<EnvelopeSums> queryResults = new List<EnvelopeSums>();
+            SqlCeConnection connection;
+            SqlCeCommand command;
+            string query;
+
+            query = "  SELECT SubLineItem.envelopeID, LineItem.creditDebit, SUM(SubLineItem.amount) as [sum] ";
+            query += " FROM LineItem INNER JOIN SubLineItem ON LineItem.id = SubLineItem.lineItemID ";
+            query += " GROUP BY SubLineItem.envelopeID, LineItem.creditDebit ";
+
+            connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            command = new SqlCeCommand(query, connection);
+            connection.Open();
+            SqlCeDataReader reader = command.ExecuteReader();
+
+            try
+            {
+                // Iterate through the results
+                while (reader.Read())
+                {
+                    EnvelopeSums ad = new EnvelopeSums();
+                    ad.envelopeID = reader.GetInt16(0);
+                    ad.creditDebit = reader.GetBoolean(1);
+                    ad.balance = reader.GetDecimal(2);
+
+                    queryResults.Add(ad);
+                }
+            }
+            finally
+            {
+                // Always call Close the reader and connection when done reading
+                reader.Close();
+                connection.Close();
+            }
+
+            return queryResults;
+        }
+
+        static public List<EnvelopeSums> myGetEnvelopeSumsBeforeDate(DateTime date)
+        {
+            List<EnvelopeSums> queryResults = new List<EnvelopeSums>();
+            SqlCeConnection connection;
+            SqlCeCommand command;
+            string query;
+
+            query = "  SELECT SubLineItem.envelopeID, LineItem.creditDebit, SUM(SubLineItem.amount) as [sum] ";
+            query += " FROM LineItem INNER JOIN SubLineItem ON LineItem.id = SubLineItem.lineItemID ";
+            query += " WHERE LineItem.date < '" + date.Date.ToString("d") + "' ";
+            query += " GROUP BY SubLineItem.envelopeID, LineItem.creditDebit ";
+
+            connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            command = new SqlCeCommand(query, connection);
+            connection.Open();
+            SqlCeDataReader reader = command.ExecuteReader();
+
+            try
+            {
+                // Iterate through the results
+                while (reader.Read())
+                {
+                    EnvelopeSums ad = new EnvelopeSums();
+                    ad.envelopeID = reader.GetInt16(0);
+                    ad.creditDebit = reader.GetBoolean(1);
+                    ad.balance = reader.GetDecimal(2);
+
+                    queryResults.Add(ad);
+                }
+            }
+            finally
+            {
+                // Always call Close the reader and connection when done reading
+                reader.Close();
+                connection.Close();
+            }
+
+            return queryResults;
+        }
+    }
+
+    #endregion Envelope Sums View Query
+
+
+    #region AEBalancee Sums View Query
+
+    public class AEBalanceSums
+    {
+        public short accountID;
+        public short envelopeID;
+        public bool creditDebit;
+        public decimal balance;
+    }
+
+    partial class FFDBDataSet
+    {
+        static public List<AEBalanceSums> myGetAEBalanceSums()
+        {
+            List<AEBalanceSums> queryResults = new List<AEBalanceSums>();
+            SqlCeConnection connection;
+            SqlCeCommand command;
+            string query;
+
+            query = "  SELECT LineItem.accountID, SubLineItem.envelopeID, LineItem.creditDebit, SUM(SubLineItem.amount) as [sum] ";
+            query += " FROM LineItem INNER JOIN SubLineItem ON LineItem.id = SubLineItem.lineItemID ";
+            query += " GROUP BY LineItem.accountID, SubLineItem.envelopeID, LineItem.creditDebit ";
+
+            connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            command = new SqlCeCommand(query, connection);
+            connection.Open();
+            SqlCeDataReader reader = command.ExecuteReader();
+
+            try
+            {
+                // Iterate through the results
+                while (reader.Read())
+                {
+                    AEBalanceSums ad = new AEBalanceSums();
+                    ad.accountID = reader.GetInt16(0);
+                    ad.envelopeID = reader.GetInt16(1);
+                    ad.creditDebit = reader.GetBoolean(2);
+                    ad.balance = reader.GetDecimal(3);
+
+                    queryResults.Add(ad);
+                }
+            }
+            finally
+            {
+                // Always call Close the reader and connection when done reading
+                reader.Close();
+                connection.Close();
+            }
+
+            return queryResults;
+        }
+
+        static public List<AEBalanceSums> myGetAEBalanceSumsBeforeDate(DateTime date)
+        {
+            List<AEBalanceSums> queryResults = new List<AEBalanceSums>();
+            SqlCeConnection connection;
+            SqlCeCommand command;
+            string query;
+
+            query = "  SELECT LineItem.accountID, SubLineItem.envelopeID, LineItem.creditDebit, SUM(SubLineItem.amount) as [sum] ";
+            query += " FROM LineItem INNER JOIN SubLineItem ON LineItem.id = SubLineItem.lineItemID ";
+            query += " WHERE LineItem.date < '" + date.Date.ToString("d") + "' ";
+            query += " GROUP BY LineItem.accountID, SubLineItem.envelopeID, LineItem.creditDebit ";
+
+            connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            command = new SqlCeCommand(query, connection);
+            connection.Open();
+            SqlCeDataReader reader = command.ExecuteReader();
+
+            try
+            {
+                // Iterate through the results
+                while (reader.Read())
+                {
+                    AEBalanceSums ad = new AEBalanceSums();
+                    ad.accountID = reader.GetInt16(0);
+                    ad.envelopeID = reader.GetInt16(1);
+                    ad.creditDebit = reader.GetBoolean(2);
+                    ad.balance = reader.GetDecimal(3);
+
+                    queryResults.Add(ad);
+                }
+            }
+            finally
+            {
+                // Always call Close the reader and connection when done reading
+                reader.Close();
+                connection.Close();
+            }
+
+            return queryResults;
+        }
+    }
+
+    #endregion AEBalancee Sums View Query
 
 
     #region Sub Account / Envelope Details View Query
