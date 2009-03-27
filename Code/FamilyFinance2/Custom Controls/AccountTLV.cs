@@ -244,7 +244,7 @@ namespace FamilyFinance2
                     List<SubBalanceDetails> list = FFDBDataSet.myGetSubAccountBalanceDetails(account.accountID);
                     foreach (SubBalanceDetails subBal in list)
                     {
-                        MyTreeListNode subEnv = makeBalanceNode(subBal.name, subBal.id, account.accountID, subBal.id);
+                        MyTreeListNode subEnv = makeBalanceNode(subBal.name, subBal.subCurrentBalance, account.accountID, subBal.id);
                         subEnv.ImageId = (int)ImageID.Envelope;
                         accNode.Nodes.Add(subEnv);
                     }
@@ -374,18 +374,30 @@ namespace FamilyFinance2
 
         public void updateBalanceInTheTreeView(int accountID, int envelopeID, decimal newAmount)
         {
+            bool found = false;
+
             foreach (MyTreeListNode child in this.Nodes)
             {
-                updateNode(child, accountID, envelopeID, newAmount, "");
+                if (updateNode(child, accountID, envelopeID, newAmount, "") == true)
+                    found = true; // Do not break-out if found, sub envelopes might be in two places.
             }
+
+            if (found == false)
+                this.buildTheTree();
         }
 
         public void updateNameInTheTreeView(int accountID, int envelopeID, string newName)
         {
+            bool found = false;
+
             foreach (MyTreeListNode child in this.Nodes)
             {
-                updateNode(child, accountID, envelopeID, 0.0m, newName);
+                if (updateNode(child, accountID, envelopeID, 0.0m, newName) == true)
+                    found = true; // Do not break-out if found, sub envelopes might be in two places.
             }
+
+            if (found == false)
+                this.buildTheTree();
         }
 
         public void myRefresh()
