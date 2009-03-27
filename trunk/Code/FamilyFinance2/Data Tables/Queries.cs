@@ -444,7 +444,7 @@ namespace FamilyFinance2
 
             query = "  SELECT AEBalance.envelopeID, Envelope.fullName, AEBalance.currentBalance ";
             query += " FROM AEBalance INNER JOIN Envelope ON AEBalance.envelopeID = Envelope.id ";
-            query += " WHERE AEBalance.accountID = " + accountID.ToString();
+            query += " WHERE AEBalance.currentBalance <> 0.0 AND AEBalance.accountID = " + accountID.ToString();
             query += " ORDER BY Envelope.fullName ";
 
             connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
@@ -484,7 +484,7 @@ namespace FamilyFinance2
 
             query = "  SELECT AEBalance.accountID, Account.name, AEBalance.currentBalance ";
             query += " FROM AEBalance INNER JOIN Account ON AEBalance.accountID = Account.id ";
-            query += " WHERE AEBalance.envelopeID = " + envelopeID.ToString();
+            query += " WHERE AEBalance.currentBalance <> 0.0 AND AEBalance.envelopeID = " + envelopeID.ToString();
             query += " ORDER BY Account.name ";
 
             connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);

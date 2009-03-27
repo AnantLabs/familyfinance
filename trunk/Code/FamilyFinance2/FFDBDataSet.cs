@@ -72,39 +72,6 @@ namespace FamilyFinance2
             
         }
 
-        static private object myNewID(string table, string column)
-        {
-            SqlCeConnection connection;
-            SqlCeCommand command;
-            object result;
-            string select;
-
-            connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
-            connection.Open();
-
-            select = "SELECT MAX( " + column + " ) FROM " + table;
-            command = new SqlCeCommand(select, connection);
-
-            try
-            {
-                result = command.ExecuteScalar();
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Caught a bad SQL Line <" + select + ">", e);
-            }
-            finally
-            {
-                connection.Close();
-            }
-
-            if (result == DBNull.Value)
-                result = 1;
-
-            return result;
-        }
-
-
 
         static public bool myCreateDBFile()
         {
