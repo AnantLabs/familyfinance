@@ -37,7 +37,7 @@ namespace FamilyFinance2
 			query +=            " WHERE transactionError = 1 OR lineError = 1 ";
 		    query +=        " ) AS Errors ";
 		    query +=        " ON Account.id = Errors.accountID ";
-            query += " WHERE Account.id > 0 AND Account.catagoryID = " + catagory.ToString();
+            query += " WHERE Account.closed = 0 AND Account.id > 0 AND Account.catagoryID = " + catagory.ToString();
             query += " ORDER BY AccountType.name, Account.name ";
 
             connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
@@ -103,7 +103,7 @@ namespace FamilyFinance2
 			query += "              WHERE transactionError = 1 OR lineError = 1 ) AS l ";
 			query += "          ON SubLineItem.lineItemID = l.id ) AS Errors ";
 		    query += "      ON Envelope.id = Errors.envelopeID ";
-            query += " WHERE Envelope.id > 0 AND Envelope.parentEnvelope = " + parentID.ToString();
+            query += " WHERE Envelope.closed = 0 AND Envelope.id > 0 AND Envelope.parentEnvelope = " + parentID.ToString();
             query += " ORDER BY Envelope.name";
 
             connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);

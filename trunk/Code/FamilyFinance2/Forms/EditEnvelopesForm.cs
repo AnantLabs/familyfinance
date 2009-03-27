@@ -52,9 +52,6 @@ namespace FamilyFinance2.Forms
             MyTreeNode node = e.Node as MyTreeNode;
             short envelopeID = node.ID;
 
-            this.parentEnvelopeBindingSource.Filter = "";
-            this.envelopeBindingSource.Filter = "id = " + envelopeID.ToString();
-
             filter = "id <> -2 AND id <> 0 AND id <> " + envelopeID.ToString();
             idList = this.fFDBDataSet.Envelope.myGetAllChildEnvelopeIDList(envelopeID);
 
@@ -62,6 +59,7 @@ namespace FamilyFinance2.Forms
                 filter += " AND id <> " + id.ToString();
 
             this.parentEnvelopeBindingSource.Filter = filter;
+            this.envelopeBindingSource.Filter = "id = " + envelopeID.ToString();
                         
         }
 
