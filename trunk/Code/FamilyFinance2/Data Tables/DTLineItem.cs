@@ -58,10 +58,10 @@ namespace FamilyFinance2
                         maxTransID = row.transactionID;
                 }
 
-                if (maxID > 0)
+                if (maxID < 0)
                     maxID = 0;
                 
-                if (maxTransID > 0)
+                if (maxTransID < 0)
                     maxTransID = 0;
 
                 lineItemRow.id = maxID + 1;
@@ -73,7 +73,7 @@ namespace FamilyFinance2
                 lineItemRow.description = "";
                 lineItemRow.confirmationNumber = "";
                 lineItemRow.envelopeID = SpclEnvelope.NULL;
-                lineItemRow.complete = LineState.PENDING;          // (' ' - Null, 'C' - Complete, 'R' - Reconciled)
+                lineItemRow.complete = LineState.PENDING;
                 lineItemRow.creditAmount = 0.0m;
                 lineItemRow.lineError = false;
                 lineItemRow.transactionError = false;

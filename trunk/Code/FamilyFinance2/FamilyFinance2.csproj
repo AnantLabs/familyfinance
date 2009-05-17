@@ -69,10 +69,31 @@
     <Compile Include="Custom Controls\AccountTLV.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Custom Controls\CalanderColumn.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Custom Controls\CDLinesDGV.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Custom Controls\MyDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Custom Controls\LineItemDGV.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Custom Controls\MultiDataGridViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Custom Controls\MultiDataGridViewControl.Designer.cs">
+      <DependentUpon>MultiDataGridViewControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Custom Controls\RegistrySplitContainer.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Custom Controls\GlobalClasses.cs" />
+    <Compile Include="Custom Controls\SubLineDGV.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Custom Controls\TreeList\Tracing.cs" />
     <Compile Include="Custom Controls\TreeList\TreeListColumn.cs" />
     <Compile Include="Custom Controls\TreeList\TreeListColumn.Design.cs" />
@@ -154,6 +175,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Custom Controls\MultiDataGridViewControl.resx">
+      <DependentUpon>MultiDataGridViewControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\EditAccountsForm.resx">
       <DependentUpon>EditAccountsForm.cs</DependentUpon>
     </EmbeddedResource>

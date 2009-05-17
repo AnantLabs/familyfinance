@@ -266,10 +266,10 @@ namespace FamilyFinance2
     public delegate void SelectedAccountEnvelopeChangedEventHandler(Object sender, SelectedAccountEnvelopeChangedEventArgs e);
     public class SelectedAccountEnvelopeChangedEventArgs : EventArgs
     {
-        public int AccountID;
-        public int EnvelopeID;
+        public short AccountID;
+        public short EnvelopeID;
 
-        public SelectedAccountEnvelopeChangedEventArgs(int accountID, int envelopeID)
+        public SelectedAccountEnvelopeChangedEventArgs(short accountID, short envelopeID)
         {
             AccountID = accountID;
             EnvelopeID = envelopeID;
