@@ -14,6 +14,7 @@ namespace FamilyFinance2
         //   Local Variables
         ///////////////////////////////////////////////////////////////////////
         private AccountTLV accountTLV;
+        private MultiDataGridViewControl multiDGV;
 
         private Label temp;
 
@@ -23,8 +24,10 @@ namespace FamilyFinance2
         private void accountTLV_SelectedAccountEnvelopeChanged(object sender, SelectedAccountEnvelopeChangedEventArgs e)
         {
             temp.Text = "AccountID = " + e.AccountID.ToString() + "  EnvelopeID = " + e.EnvelopeID.ToString();
+            this.multiDGV.setEnvelopeAndAccount(e.AccountID, e.EnvelopeID);
         }
  
+
         ///////////////////////////////////////////////////////////////////////
         //   Functions Private
         ///////////////////////////////////////////////////////////////////////
@@ -42,8 +45,12 @@ namespace FamilyFinance2
 
             this.accountTLV = new AccountTLV();
             this.accountTLV.Text = "accountTLV";
-            this.accountTLV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.accountTLV.Dock = DockStyle.Fill;
             this.Panel1.Controls.Add(this.accountTLV);
+
+            this.multiDGV = new MultiDataGridViewControl();
+            this.multiDGV.Dock = DockStyle.Fill;
+            this.Panel2.Controls.Add(this.multiDGV);
 
             this.accountTLV.SelectedAccountEnvelopeChanged += new SelectedAccountEnvelopeChangedEventHandler(accountTLV_SelectedAccountEnvelopeChanged);
         }
@@ -52,10 +59,14 @@ namespace FamilyFinance2
         {
         }
 
-        public void myRefresh()
+        public void myRefreshTree()
         {
             accountTLV.myRefresh();
         }
 
+        public void myRefreshMultiDGV()
+        {
+
+        }
     }
 }

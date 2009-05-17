@@ -37,14 +37,14 @@ namespace FamilyFinance2
         {
             EditEnvelopesForm eef = new EditEnvelopesForm();
             eef.ShowDialog();
-            this.registrySplitCont.myRefresh();
+            this.registrySplitCont.myRefreshTree();
         }
 
         private void accountsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             EditAccountsForm eaf = new EditAccountsForm();
             eaf.ShowDialog();
-            this.registrySplitCont.myRefresh();
+            this.registrySplitCont.myRefreshTree();
         }
 
         private void MainForm_Load(object sender, EventArgs e)

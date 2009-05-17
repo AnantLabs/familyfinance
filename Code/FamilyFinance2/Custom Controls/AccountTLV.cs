@@ -89,8 +89,8 @@ namespace FamilyFinance2
         {
             MyTreeListNode temp = this.FocusedNode as MyTreeListNode;
 
-            int accountID = temp.AccountID;
-            int envelopeID = temp.EnvelopeID;
+            short accountID = temp.AccountID;
+            short envelopeID = temp.EnvelopeID;
 
             if (accountID != selectedAccountID || envelopeID != selectedEnvelopeID)
                 OnSelectedAccountEnvelopeChanged(new SelectedAccountEnvelopeChangedEventArgs(accountID, envelopeID));
