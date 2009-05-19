@@ -65,6 +65,7 @@ namespace FamilyFinance2
             FFDBDataSet.myResetAccountBalances();
             FFDBDataSet.myResetEnvelopeBalances();
             FFDBDataSet.myResetAEBalance();
+            FFDBDataSet.myFindAllErrors();
 
             
             this.registrySplitCont = new RegistySplitContainer();
@@ -76,5 +77,6 @@ namespace FamilyFinance2
 
             InitializeComponent();
         }
+
     }
 }

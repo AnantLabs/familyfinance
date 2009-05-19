@@ -213,6 +213,8 @@ namespace FamilyFinance2
         ////////////////////////////////////////////////////////////////////////////////////////////
         public SubLineDGV()
         {
+            fFDBDataSet.LineItem.myFill();
+
             // Binding Sources
             this.SubLineDGVBindingSource = new BindingSource(this.fFDBDataSet, "SubLineView");
 
