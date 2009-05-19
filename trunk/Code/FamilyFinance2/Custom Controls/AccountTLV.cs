@@ -121,6 +121,7 @@ namespace FamilyFinance2
             this.ViewOptions.ShowLine = true;
             this.Font = new Font(FontFamily.GenericSansSerif, 10, FontStyle.Regular);
             this.RowOptions.ItemHeight = 20;
+            this.ViewOptions.Indent = 10;
             this.Dock = DockStyle.Fill;
             this.AfterSelect += new TreeViewEventHandler(theTreeListView_AfterSelect);
 

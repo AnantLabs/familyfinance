@@ -22,6 +22,12 @@ namespace FamilyFinance2
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Properties
         ////////////////////////////////////////////////////////////////////////////////////////////
+        private dgv dgvType;
+        public dgv CurrentDGVType
+        {
+            get { return dgvType; }
+        }        
+        
         public bool ShowTypeColumn
         {
             get
@@ -63,7 +69,7 @@ namespace FamilyFinance2
 
         public int CurrentTransactionID
         {
-            get 
+            get
             {
                 if (dgvType == dgv.LineItem)
                     return lineItemDGV.CurrentTransactionID;
@@ -72,97 +78,32 @@ namespace FamilyFinance2
             }
         }
 
-        public int CurrentSubLineID
-        {
-            get { return subLineDGV.CurrentSubLineID; }
-        }
 
-        private dgv dgvType;
-        public dgv CurrentDGVType
-        {
-            get { return dgvType; }
-        }
         
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Internal Events
         ////////////////////////////////////////////////////////////////////////////////////////////
-        //private void Envelope_EnvelopeEndingBalanceChanged(object sender, BalanceChangedEventArgs e)
-        //{
-        //    int envelopeID = e.EnvelopeID;
-        //    decimal newAmount = e.NewAmount;
 
-        //    if (this.dgvType == dgv.SubLine)
-        //        if (envelopeID == this.subLineDGV.CurrentEnvelopeID)
-        //            if (SpclAccount.NULL == this.subLineDGV.CurrentAccountID)
-        //                this.setAccountEnvelope(SpclAccount.NULL, envelopeID);
-        //}
-
-        //private void AEBalance_AEBalanceChangedEvent(object sender, BalanceChangedEventArgs e)
-        //{
-        //    int envelopeID = e.EnvelopeID;
-        //    int accountID = e.AccountID;
-        //    decimal newAmount = e.NewAmount;
-
-        //    if (this.dgvType == dgv.SubLine)
-        //        if (envelopeID == this.subLineDGV.CurrentEnvelopeID)
-        //            if (accountID == this.subLineDGV.CurrentAccountID)
-        //                this.setAccountEnvelope(accountID, envelopeID);
-        //}
-
-        //private void Account_AccountEndingBalanceChangedEvent(object sender, BalanceChangedEventArgs e)
-        //{
-        //    int accountID = e.AccountID;
-        //    decimal newAmount = e.NewAmount;
-
-        //    if (this.dgvType == dgv.LineItem)
-        //        if (accountID == this.lineItemDGV.CurrentAccountID)
-        //            this.setAccount(accountID);
-        //}
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Private
         ////////////////////////////////////////////////////////////////////////////////////////////
-        private void myInit()
-        {
-            this.SuspendLayout();
-
-            this.lineItemDGV = new LineItemDGV();
-            this.lineItemDGV.Dock = DockStyle.Fill;
-            this.lineItemDGV.setAccountID(SpclAccount.NULL);
-
-            //this.subLineDGV = new SubLineDGV();
-            //this.subLineDGV.Dock = DockStyle.Fill;
-            //this.subLineDGV.Visible = false;
-            //this.subLineDGV.setAccountEnvelopeID(SpclAccount.NULL, SpclEnvelope.NULL);
-
-            this.dgvType = dgv.LineItem;
-            this.Controls.Add(this.lineItemDGV);
-            this.Controls.Add(this.subLineDGV);
-
-            //this.globalDataSet.Account.AccountEndingBalanceChanged += new BalanceChangedEventHandler(Account_AccountEndingBalanceChangedEvent);
-            //this.globalDataSet.AEBalance.AEBalanceChanged += new BalanceChangedEventHandler(AEBalance_AEBalanceChangedEvent);
-            //this.globalDataSet.Envelope.EnvelopeEndingBalanceChanged += new BalanceChangedEventHandler(Envelope_EnvelopeEndingBalanceChanged);
-        
-
-            this.ResumeLayout();
-        }
-
         private void setAccount(short accountID)
         {
             this.dgvType = dgv.LineItem;
             this.lineItemDGV.setAccountID(accountID);
-            //this.subLineDGV.Visible = false;
             this.lineItemDGV.Visible = true;
+            this.subLineDGV.Visible = false;
         }
 
-        private void setAccountEnvelope(int accountID, int envelopeID)
+        private void setAccountEnvelope(short accountID, short envelopeID)
         {
             this.dgvType = dgv.SubLine;
             this.subLineDGV.setAccountEnvelopeID(accountID, envelopeID);
-            this.lineItemDGV.Visible = false;
             this.subLineDGV.Visible = true;
+            this.lineItemDGV.Visible = false;
         }
 
 
@@ -172,14 +113,26 @@ namespace FamilyFinance2
         ////////////////////////////////////////////////////////////////////////////////////////////
         public MultiDataGridViewControl()
         {
-            myInit();
+            this.SuspendLayout();
+
+            this.lineItemDGV = new LineItemDGV();
+            this.lineItemDGV.Dock = DockStyle.Fill;
+            this.lineItemDGV.setAccountID(SpclAccount.NULL);
+
+            this.subLineDGV = new SubLineDGV();
+            this.subLineDGV.Dock = DockStyle.Fill;
+            this.subLineDGV.Visible = false;
+            this.subLineDGV.setAccountEnvelopeID(SpclAccount.NULL, SpclEnvelope.NULL);
+
+            this.dgvType = dgv.LineItem;
+            this.Controls.Add(this.lineItemDGV);
+            this.Controls.Add(this.subLineDGV);
+
+            this.ResumeLayout();
         }
 
         ~MultiDataGridViewControl()
         {
-            //this.globalDataSet.Account.AccountEndingBalanceChanged -= new BalanceChangedEventHandler(Account_AccountEndingBalanceChangedEvent);
-            //this.globalDataSet.AEBalance.AEBalanceChanged -= new BalanceChangedEventHandler(AEBalance_AEBalanceChangedEvent);
-            //this.globalDataSet.Envelope.EnvelopeEndingBalanceChanged -= new BalanceChangedEventHandler(Envelope_EnvelopeEndingBalanceChanged);
         }
 
         public void setEnvelopeAndAccount(short accountID, short envelopeID)

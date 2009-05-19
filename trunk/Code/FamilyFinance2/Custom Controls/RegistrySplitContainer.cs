@@ -53,6 +53,12 @@ namespace FamilyFinance2
             this.Panel2.Controls.Add(this.multiDGV);
 
             this.accountTLV.SelectedAccountEnvelopeChanged += new SelectedAccountEnvelopeChangedEventHandler(accountTLV_SelectedAccountEnvelopeChanged);
+            this.SplitterMoved += new SplitterEventHandler(RegistySplitContainer_SplitterMoved);
+        }
+
+        void RegistySplitContainer_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            temp.Text = "Splitter value = " + this.SplitterDistance.ToString();
         }
 
         ~RegistySplitContainer()

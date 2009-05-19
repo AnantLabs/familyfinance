@@ -176,21 +176,107 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             //   Function Public
             ///////////////////////////////////////////////////////////////////////
-            public void myFillTA()
+            public void myFillTAByAccount(short accountID)
             {
-                this.thisTableAdapter.Fill(this);
-                autoChange = false;
+                bool accountCD;
+                decimal balance;
+                decimal endingBalance;
 
-                foreach (LineItemRow row in this)
+                // Turn off the auto change and fillup the table.
+                autoChange = false;
+                this.thisTableAdapter.FillByAccount(this, accountID);
+
+                // If this is empty there is nothing to do.
+                if (this.Rows.Count <= 0)
+                    return;
+
+                // Set the balances and get the accounts CD.
+                balance = 0.0m;
+                endingBalance = (this.Rows[0] as LineItemRow).AccountRowByFK_Line_accountID.endingBalance;
+                accountCD = (this.Rows[0] as LineItemRow).AccountRowByFK_Line_accountID.creditDebit;
+
+                // Set balances By going down the list
+                if (accountCD == LineCD.DEBIT)
                 {
-                    if (row.creditDebit == LineCD.DEBIT)
-                        row.debitAmount = row.amount;
-                    else
-                        row.creditAmount = row.amount;
+                    foreach (LineItemRow row in this)
+                        if (row.creditDebit == LineCD.DEBIT)
+                        {
+                            row.debitAmount = row.amount;
+                            row.SetcreditAmountNull();
+                            row.balanceAmount = balance += row.amount;
+                        }
+                        else
+                        {
+                            row.creditAmount = row.amount;
+                            row.SetdebitAmountNull();
+                            row.balanceAmount = balance -= row.amount;
+                        }
+                }
+                else
+                {
+                    foreach (LineItemRow row in this)
+                        if (row.creditDebit == LineCD.DEBIT)
+                        {
+                            row.debitAmount = row.amount;
+                            row.SetcreditAmountNull();
+                            row.balanceAmount = balance -= row.amount;
+                        }
+                        else
+                        {
+                            row.creditAmount = row.amount;
+                            row.SetdebitAmountNull();
+                            row.balanceAmount = balance += row.amount;
+                        }
                 }
 
-                autoChange = true;
+                //if(endingBalance != balance)
+
                 this.AcceptChanges();
+                autoChange = true;
+            }
+
+            public void myFillBalance()
+            {
+                bool accountCD;
+                decimal balance;
+                decimal endingBalance;
+
+                // Turn off the auto change.
+                autoChange = false;
+
+                // If this is empty there is nothing to do.
+                if (this.Rows.Count <= 0)
+                    return;
+
+                // Set the balances and get the accounts CD.
+                balance = 0.0m;
+                endingBalance = (this.Rows[0] as LineItemRow).AccountRowByFK_Line_accountID.endingBalance;
+                accountCD = (this.Rows[0] as LineItemRow).AccountRowByFK_Line_accountID.creditDebit;
+
+                // Set balances By going down the list
+                if (accountCD == LineCD.DEBIT)
+                {
+                    foreach (LineItemRow row in this)
+                        if (row.creditDebit == LineCD.DEBIT)
+                            row.balanceAmount = balance += row.amount;
+                        
+                        else
+                            row.balanceAmount = balance -= row.amount;
+                }
+                else
+                {
+                    foreach (LineItemRow row in this)
+                        if (row.creditDebit == LineCD.DEBIT)
+                            row.balanceAmount = balance -= row.amount;
+                        
+                        else
+                            row.balanceAmount = balance += row.amount;
+                }
+
+                //if(endingBalance != balance)
+
+                this.AcceptChanges();
+                autoChange = true;
             }
 
             public void myUpdateTA()

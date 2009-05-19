@@ -67,9 +67,12 @@ namespace FamilyFinance2
             FFDBDataSet.myResetAEBalance();
 
             
-            registrySplitCont = new RegistySplitContainer();
-            registrySplitCont.Dock = DockStyle.Fill;
+            this.registrySplitCont = new RegistySplitContainer();
             this.Controls.Add(registrySplitCont);
+            this.registrySplitCont.Dock = DockStyle.Fill;
+            this.registrySplitCont.FixedPanel = FixedPanel.Panel1;
+            this.registrySplitCont.SplitterDistance = 300;
+            
 
             InitializeComponent();
         }

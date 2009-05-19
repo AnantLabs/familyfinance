@@ -326,62 +326,7 @@ namespace FamilyFinance2
         ///////////////////////////////////////////////////////////////////////
         //   Functions Public 
         ///////////////////////////////////////////////////////////////////////
-        public void myFillLineItemBalance(short accountID, string sort)
-        {
-            string col;
-            string table;
-            string filter;
-            bool accountCD;
-            decimal balance;
-            List<int> idList;
 
-            if (this.Account.FindByid(accountID) == null)
-                return;
-
-            balance = 0.0m;
-            accountCD = this.Account.FindByid(accountID).creditDebit;
-
-            col = "id, date, creditDebit";
-            table = "LineItem";
-            filter = "accountID = " + accountID.ToString();
-            idList = FFDBDataSet.myDBGetIDList(col, table, filter, sort);
-
-
-            // Set balances By going down the list
-            if (accountCD == LineCD.DEBIT)
-            {
-                foreach (int lineID in idList)
-                {
-                    LineItemRow row = this.LineItem.FindByid(lineID);
-
-                    if (row.creditDebit == LineCD.CREDIT)
-                        balance -= row.amount;
-                    else
-                        balance += row.amount;
-
-                    row.balanceAmount = balance;
-                }
-            }
-            else
-            {
-                foreach (int lineID in idList)
-                {
-                    LineItemRow row = this.LineItem.FindByid(lineID);
-
-                    if (row.creditDebit == LineCD.CREDIT)
-                        balance += row.amount;
-                    else
-                        balance -= row.amount;
-
-                    row.balanceAmount = balance;
-                }
-            }
-
-            //if (balance != this.Account.FindByid(accountID).endingBalance)
-            //    this.Account.mySetEndingBalance(accountID, balance);
-
-            this.LineItem.AcceptChanges();
-        }
 
 
     }
