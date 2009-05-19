@@ -125,6 +125,9 @@
     <Compile Include="Data Tables\DTSubLineItem.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Data Tables\DTSubLineView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Data Tables\Queries.cs">
       <SubType>Component</SubType>
     </Compile>

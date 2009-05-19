@@ -5,104 +5,32 @@ using System.Windows.Forms;
 
 namespace FamilyFinance2
 {
-    class SubLineDGV : DataGridView
+    class SubLineDGV : MyDataGridView
     {
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Local Constants and variables
         ////////////////////////////////////////////////////////////////////////////////////////////
-        public const string SORT_SUBin = "date, creditDebit DESC, subLineID";
-        public const string SORT_SUBdb = "date, creditDebit DESC, SubLineItem.id";
-
-        private FFDBDataSet fFDBDataSet;
-
-        // row valuse used in painting cells
-        private bool rowLineError;
-        private bool rowNegativeBalance;
-        private string rowErrorText;
 
         // Binding Sources
-        private BindingSource theDGVBindingSource;
+        private BindingSource SubLineDGVBindingSource;
 
         // Columns
-        private DataGridViewTextBoxColumn subLineIDColumn;
         private DataGridViewTextBoxColumn lineItemIDColumn;
         private DataGridViewTextBoxColumn transactionIDColumn;
-        private DataGridViewTextBoxColumn envelopeIDColumn;
         private DataGridViewTextBoxColumn dateColumn;
         private DataGridViewTextBoxColumn lineTypeColumn;
-        private DataGridViewTextBoxColumn accountIDColumn;
-        private DataGridViewTextBoxColumn descriptionColumn;
-        private DataGridViewTextBoxColumn completeColumn;
-        private DataGridViewTextBoxColumn debitAmountColumn;
-        private DataGridViewTextBoxColumn creditAmountColumn;
-        private DataGridViewTextBoxColumn balanceAmountColumn;
         private DataGridViewTextBoxColumn sourceColumn;
         private DataGridViewTextBoxColumn destinationColumn;
+        private DataGridViewTextBoxColumn descriptionColumn;
+        private DataGridViewTextBoxColumn debitAmountColumn;
+        private DataGridViewTextBoxColumn completeColumn;
+        private DataGridViewTextBoxColumn creditAmountColumn;
+        private DataGridViewTextBoxColumn balanceAmountColumn;
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Properties
         ////////////////////////////////////////////////////////////////////////////////////////////
-        public bool ShowTypeColumn
-        {
-            get { return this.lineTypeColumn.Visible; }
-            set { this.lineTypeColumn.Visible = value; }
-        }
-
-        public int CurrentSubLineID
-        {
-            get
-            {
-                int subLineID = -1;
-
-                try
-                {
-                    subLineID = Convert.ToInt32(this.CurrentRow.Cells[subLineIDColumn.Index].Value);
-                }
-                catch
-                {
-                }
-
-                return subLineID;
-            }
-        }
-
-        public int CurrentLineID
-        {
-            get
-            {
-                int lineID = -1;
-
-                try
-                {
-                    lineID = Convert.ToInt32(this.CurrentRow.Cells[lineItemIDColumn.Index].Value);
-                }
-                catch
-                {
-                }
-
-                return lineID;
-            }
-        }
-
-        public int CurrentTransactionID
-        {
-            get
-            {
-                int transID = -1;
-
-                try
-                {
-                    transID = Convert.ToInt32(this.CurrentRow.Cells[transactionIDColumn.Index].Value);
-                }
-                catch
-                {
-                }
-
-                return transID;
-            }
-        }
-
         private int currentAccountID;
         public int CurrentAccountID
         {
@@ -114,7 +42,6 @@ namespace FamilyFinance2
         {
             get { return currentEnvelopeID; }
         }
-
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -148,112 +75,12 @@ namespace FamilyFinance2
             //}
         }
 
-        private void SubLineDGV_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
-        {
-            //bool rowTransactionError;
-            //decimal subLineBalance = Convert.ToDecimal(this["balanceAmountColumn", e.RowIndex].Value);
-            //int subLineID = Convert.ToInt32(this["subLineIDColumn", e.RowIndex].Value);
-            //fFDBDataSet.SubLineItemRow subLineRow = this.globalDataSet.SubLineItem.FindByid(subLineID);
-            //System.Drawing.Color backColor;
-            //System.Drawing.Color foreColor;
-
-            //// Defaults. Usually for new line
-            //this.rowNegativeBalance = false;
-            //this.rowLineError = false;
-            //backColor = this.globalDataSet.MyColors.DGVBack;
-            //foreColor = this.globalDataSet.MyColors.DGVFore;
-
-            //if (subLineRow != null)
-            //{
-            //    // Set error flags
-            //    this.rowLineError = subLineRow.LineItemRow.lineError;
-            //    rowTransactionError = subLineRow.LineItemRow.transactionError;
-
-            //    if (subLineBalance < 0.0m)
-            //        this.rowNegativeBalance = true;
-
-
-            //    // Set default row back and fore colors
-            //    if (rowTransactionError)
-            //    {
-            //        backColor = this.globalDataSet.MyColors.DGVErrorBack;
-            //        foreColor = this.globalDataSet.MyColors.DGVErrorFore;
-            //        this.rowErrorText = "This transaction needs attention. ";
-            //    }
-            //    else if (subLineRow.LineItemRow.date > DateTime.Today) // future Date
-            //    {
-            //        backColor = this.globalDataSet.MyColors.DGVFutureBack;
-            //        foreColor = this.globalDataSet.MyColors.DGVFutureFore;
-            //    }
-            //    else // else this is a regular transaction in the past
-            //    {
-            //        if (e.RowIndex % 2 == 0) // if this is an even number set normal
-            //        {
-            //            backColor = this.globalDataSet.MyColors.DGVBack;
-            //            foreColor = this.globalDataSet.MyColors.DGVFore;
-            //        }
-            //        else // else set alternating color
-            //        {
-            //            backColor = this.globalDataSet.MyColors.DGVAlternateBack;
-            //            foreColor = this.globalDataSet.MyColors.DGVAlternateFore;
-            //        }
-            //    }
-            //}
-
-            //this.Rows[e.RowIndex].DefaultCellStyle.BackColor = backColor;
-            //this.Rows[e.RowIndex].DefaultCellStyle.ForeColor = foreColor;
-        }
-
-        private void SubLineDGV_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            //int col = e.ColumnIndex;
-            //int row = e.RowIndex;
-
-            //// If negative balance
-            //if (col == balanceAmountColumn.Index && this.rowNegativeBalance)
-            //{
-            //    e.CellStyle.ForeColor = this.globalDataSet.MyColors.DGVNegativeBalanceFore;
-            //}
-            
-            //// If Line  Error
-            //if (col == this.envelopeIDColumn.Index && this.rowLineError)
-            //{
-            //    e.CellStyle.BackColor = this.globalDataSet.MyColors.DGVErrorBack;
-            //    e.CellStyle.ForeColor = this.globalDataSet.MyColors.DGVErrorFore;
-            //    this.rowErrorText += "The Sub-Lines need attention. ";
-            //}
-
-            //this[col, row].ToolTipText = this.rowErrorText;
-        }
-
         
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Private
         ////////////////////////////////////////////////////////////////////////////////////////////
-        private void myInit()
-        {
-            this.SuspendLayout();
-
-            this.buildTheDataGridView();
-
-            this.ResumeLayout();
-        }
-
         private void buildTheDataGridView()
         {
-
-            // Binding Sources
-            this.theDGVBindingSource = new BindingSource(this.fFDBDataSet, "SubLineView");
-            this.theDGVBindingSource.Sort = SORT_SUBin;
-
-         
-            // subLineIDColumn
-            this.subLineIDColumn = new DataGridViewTextBoxColumn();
-            this.subLineIDColumn.Name = "subLineIDColumn";
-            this.subLineIDColumn.HeaderText = "subLineID";
-            this.subLineIDColumn.DataPropertyName = "subLineID";
-            this.subLineIDColumn.Visible = false;
-
             // lineItemIDColumn
             this.lineItemIDColumn = new DataGridViewTextBoxColumn();
             this.lineItemIDColumn.Name = "lineItemIDColumn";
@@ -268,22 +95,6 @@ namespace FamilyFinance2
             this.transactionIDColumn.DataPropertyName = "transactionID";
             this.transactionIDColumn.Visible = false;
 
-            // envelopeIDColumn
-            this.envelopeIDColumn = new DataGridViewTextBoxColumn();
-            this.envelopeIDColumn.Name = "envelopeIDColumn";
-            this.envelopeIDColumn.HeaderText = "envelopeID";
-            this.envelopeIDColumn.DataPropertyName = "envelopID";
-            this.envelopeIDColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.envelopeIDColumn.Visible = false;
-
-            // accountIDColumn
-            this.accountIDColumn = new DataGridViewTextBoxColumn();
-            this.accountIDColumn.Name = "accountIDColumn";
-            this.accountIDColumn.HeaderText = "accountID";
-            this.accountIDColumn.DataPropertyName = "accountID";
-            this.accountIDColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.accountIDColumn.Visible = false;
-
             // dateColumn
             this.dateColumn = new DataGridViewTextBoxColumn();
             this.dateColumn.Name = "dateColumn";
@@ -291,7 +102,7 @@ namespace FamilyFinance2
             this.dateColumn.DataPropertyName = "date";
             this.dateColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
             this.dateColumn.Visible = true;
-            this.dateColumn.Width = 70;
+            this.dateColumn.Width = 85;
 
             // lineTypeslColumn
             this.lineTypeColumn = new DataGridViewTextBoxColumn();
@@ -299,8 +110,7 @@ namespace FamilyFinance2
             this.lineTypeColumn.HeaderText = "Type";
             this.lineTypeColumn.DataPropertyName = "lineType";
             this.lineTypeColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.lineTypeColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            this.lineTypeColumn.FillWeight = 25;
+            this.lineTypeColumn.Width = 80;
             this.lineTypeColumn.Visible = true;
 
             // sourceColumn
@@ -336,10 +146,10 @@ namespace FamilyFinance2
             // creditAmountColumn
             this.creditAmountColumn = new DataGridViewTextBoxColumn();
             this.creditAmountColumn.Name = "creditAmountColumn";
-            this.creditAmountColumn.HeaderText = "Credit Amount";
+            this.creditAmountColumn.HeaderText = "Credit";
             this.creditAmountColumn.DataPropertyName = "creditAmount";
             this.creditAmountColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            //this.creditAmountColumn.DefaultCellStyle = new CellStyles().Money;
+            this.creditAmountColumn.DefaultCellStyle = CellStyleMoney;
             this.creditAmountColumn.Visible = true;
             this.creditAmountColumn.Width = 65;
 
@@ -356,10 +166,10 @@ namespace FamilyFinance2
             // debitAmountColumn
             this.debitAmountColumn = new DataGridViewTextBoxColumn();
             this.debitAmountColumn.Name = "debitAmountColumn";
-            this.debitAmountColumn.HeaderText = "Debit Amount";
+            this.debitAmountColumn.HeaderText = "Debit";
             this.debitAmountColumn.DataPropertyName = "debitAmount";
             this.debitAmountColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            //this.debitAmountColumn.DefaultCellStyle = new CellStyles().Money;
+            this.debitAmountColumn.DefaultCellStyle = CellStyleMoney;
             this.debitAmountColumn.Visible = true;
             this.debitAmountColumn.Width = 65;
 
@@ -369,35 +179,21 @@ namespace FamilyFinance2
             this.balanceAmountColumn.HeaderText = "Balance";
             this.balanceAmountColumn.DataPropertyName = "balanceAmount";
             this.balanceAmountColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            //this.balanceAmountColumn.DefaultCellStyle = new CellStyles().Money;
+            this.balanceAmountColumn.DefaultCellStyle = CellStyleMoney;
             this.balanceAmountColumn.Visible = true;
             this.balanceAmountColumn.Width = 75;
 
             // theDataGridView
-            this.Name = "theDataGridView";
-            this.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            this.Dock = DockStyle.Fill;
             this.AllowUserToAddRows = false;
-            this.AutoGenerateColumns = false;
-            this.AllowUserToOrderColumns = false;
-            this.AllowUserToDeleteRows = false;
-            this.AllowUserToResizeRows = false;
-            this.RowHeadersVisible = false;
-            this.ShowCellErrors = false;
             this.ReadOnly = true;
-            this.DataSource = this.theDGVBindingSource;
-            //this.AlternatingRowsDefaultCellStyle = new CellStyles().AlternatingRow;
+            this.DataSource = this.SubLineDGVBindingSource;
             this.Columns.AddRange(
                 new DataGridViewColumn[] 
                 {
                     this.dateColumn,
-                    this.subLineIDColumn,
                     this.lineItemIDColumn,
                     this.transactionIDColumn,
-                    this.envelopeIDColumn,
                     this.lineTypeColumn,
-                    this.accountIDColumn,
                     this.sourceColumn,
                     this.destinationColumn,
                     this.descriptionColumn,
@@ -408,75 +204,53 @@ namespace FamilyFinance2
                 }
                 );
 
-            //this.CellDoubleClick += new DataGridViewCellEventHandler(SubLineDGV_CellDoubleClick);
-            //this.CellFormatting += new DataGridViewCellFormattingEventHandler(SubLineDGV_CellFormatting);
-            //this.RowPrePaint += new DataGridViewRowPrePaintEventHandler(SubLineDGV_RowPrePaint);
-
+            this.CellDoubleClick += new DataGridViewCellEventHandler(SubLineDGV_CellDoubleClick);
         }
 
-        
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Public
         ////////////////////////////////////////////////////////////////////////////////////////////
         public SubLineDGV()
         {
-            fFDBDataSet = new FFDBDataSet();
+            // Binding Sources
+            this.SubLineDGVBindingSource = new BindingSource(this.fFDBDataSet, "SubLineView");
 
-            fFDBDataSet.Account.myFillTA();
-            fFDBDataSet.Envelope.myFillTA();
-            fFDBDataSet.LineType.myFillTA();
-            //fFDBDataSet.LineItem.myFillTA();
-
-            myInit();
+            //this.SuspendLayout();
+            this.buildTheDataGridView();
+            //this.ResumeLayout();
         }
 
-        public void setAccountEnvelopeID(int accountID, int envelopeID)
+        public void setAccountEnvelopeID(short accountID, short envelopeID)
         {
             const int INVALID = 0;
-
-            string filter;
-
-            //this.fFDBDataSet.myFillSubLineView();
 
             if (envelopeID > INVALID && accountID > INVALID)
             {
                 this.currentEnvelopeID = envelopeID;
                 this.currentAccountID = accountID;
 
-                filter = "envelopeID = " + envelopeID.ToString();
-                filter += " AND accountID = " + accountID.ToString();
-                //this.fFDBDataSet.myFillSubLineViewBalance(currentAccountID, currentEnvelopeID, SORT_SUBdb);
-                this.theDGVBindingSource.Filter = filter;
-                this.theDGVBindingSource.Sort = SORT_SUBin;
+                this.fFDBDataSet.SubLineView.myFillTAByEnvelopeAndAccount(envelopeID, accountID);                
 
                 //this.debitAmountColumn.HeaderText = this.globalDataSet.Envelope.FindByid(envelopeID).debitColumnName;
                 //this.creditAmountColumn.HeaderText = this.globalDataSet.Envelope.FindByid(envelopeID).creditColumnName;
-                this.debitAmountColumn.HeaderText = "Debit";
-                this.creditAmountColumn.HeaderText = "Credit";
             }
             else if (envelopeID > INVALID)
             {
                 this.currentEnvelopeID = envelopeID;
                 this.currentAccountID = SpclAccount.NULL;
 
-                filter = "envelopeID = " + envelopeID.ToString();
-                //this.fFDBDataSet.myFillSubLineViewBalance(currentAccountID, currentEnvelopeID, SORT_SUBdb);
-                this.theDGVBindingSource.Filter = filter;
-                this.theDGVBindingSource.Sort = SORT_SUBin;
+                this.fFDBDataSet.SubLineView.myFillTAByEnvelope(envelopeID);
 
                 //this.debitAmountColumn.HeaderText = this.globalDataSet.Envelope.FindByid(envelopeID).debitColumnName;
                 //this.creditAmountColumn.HeaderText = this.globalDataSet.Envelope.FindByid(envelopeID).creditColumnName;
-                this.debitAmountColumn.HeaderText = "Debit";
-                this.creditAmountColumn.HeaderText = "Credit";
             }
             else 
             {
                 this.currentEnvelopeID = SpclEnvelope.NULL;
                 this.currentAccountID = SpclAccount.NULL;
 
-                filter = "subLineID = -100";
-                this.theDGVBindingSource.Filter = filter;
+                this.fFDBDataSet.SubLineView.myFillTAByEnvelope(-100);
 
                 this.debitAmountColumn.HeaderText = "Debit";
                 this.creditAmountColumn.HeaderText = "Credit";
