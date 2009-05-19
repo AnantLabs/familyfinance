@@ -4,18 +4,18 @@ LineItem
 +Add Column debitAmount - Decimal
 +Add Column balanceAmount - Decimal
 
-+Modify the fill method
++Add the fill method
 	FillByAccount
-SELECT [id], [transactionID], [date], [lineTypeID], [accountID], [oppAccountID], [description], [confirmationNumber], [envelopeID], [complete], [amount], [creditDebit], [transactionError], [lineError] 
-FROM [LineItem]
-WHERE accountID = @aID
+SELECT   id, transactionID, date, lineTypeID, accountID, oppAccountID, description, confirmationNumber, envelopeID, complete, amount, creditDebit, transactionError, lineError
+FROM     LineItem
+WHERE    (accountID = @aID)
 ORDER BY date, creditDebit DESC, id
 
 
 
 *******************************************
 Account
-+Add Query 
++Add the fill method
 	FillByZero
 SELECT id, name, accountTypeID, catagoryID, closed, creditDebit, envelopes, 0.0 AS currentBalance, 0.0 AS endingBalance 
 FROM Account
@@ -24,7 +24,7 @@ FROM Account
 
 *******************************************
 Envelope 
-+Add Query 
++Add the fill method 
 	FillByZero
 SELECT id, name, fullName, parentEnvelope, closed, 0.0 AS currentBalance, 0.0 AS endingBalance
 FROM Envelope

@@ -6783,7 +6783,7 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlServerCe.SqlCeCommand[1];
+            this._commandCollection = new global::System.Data.SqlServerCe.SqlCeCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = @"SELECT [id], [transactionID], [date], [lineTypeID], [accountID], [oppAccountID], [description], [confirmationNumber], [envelopeID], [complete], [amount], [creditDebit], [transactionError], [lineError] 
@@ -6792,6 +6792,12 @@ WHERE accountID = @aID
 ORDER BY date, creditDebit DESC, id";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@aID", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, true, 0, 0, "accountID", global::System.Data.DataRowVersion.Current, null));
+            this._commandCollection[1] = new global::System.Data.SqlServerCe.SqlCeCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "SELECT        id, transactionID, date, lineTypeID, accountID, oppAccountID, descr" +
+                "iption, confirmationNumber, envelopeID, complete, amount, creditDebit, transacti" +
+                "onError, \r\n                         lineError\r\nFROM            LineItem";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6813,6 +6819,28 @@ ORDER BY date, creditDebit DESC, id";
         public virtual FFDBDataSet.LineItemDataTable GetDataByAccount(short aID) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             this.Adapter.SelectCommand.Parameters[0].Value = ((short)(aID));
+            FFDBDataSet.LineItemDataTable dataTable = new FFDBDataSet.LineItemDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int Fill(FFDBDataSet.LineItemDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual FFDBDataSet.LineItemDataTable GetData() {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
             FFDBDataSet.LineItemDataTable dataTable = new FFDBDataSet.LineItemDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;

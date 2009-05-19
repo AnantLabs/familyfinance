@@ -176,6 +176,11 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             //   Function Public
             ///////////////////////////////////////////////////////////////////////
+            public void myFill()
+            {
+                this.thisTableAdapter.Fill(this);
+            }
+
             public void myFillTAByAccount(short accountID)
             {
                 bool accountCD;
