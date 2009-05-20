@@ -401,7 +401,7 @@ namespace FamilyFinance2
                 this.buildTheTree();
         }
 
-        public void myRefresh()
+        public void myRebuildTree()
         {
             this.buildTheTree();
         }

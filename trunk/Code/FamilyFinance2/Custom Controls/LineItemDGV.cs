@@ -363,10 +363,7 @@ namespace FamilyFinance2
             this.showEnvelopeColumn = true;
 
             // Fill the tables
-            fFDBDataSet.Account.myFillTA();
-            fFDBDataSet.Envelope.myFillTA();
-            fFDBDataSet.LineType.myFillTA();
-            fFDBDataSet.LineItem.myFillTAByAccount(SpclAccount.NULL); // an empty set.
+            this.myReloadTables(SpclAccount.NULL);
 
             ///////////////////////////////////////////////////////////////////
             // Setup the Bindings
@@ -411,6 +408,14 @@ namespace FamilyFinance2
                 this.debitAmountColumn.HeaderText = "Debit";
                 this.creditAmountColumn.HeaderText = "Credit";
             }
+        }
+
+        public void myReloadTables(short accountID)
+        {
+            fFDBDataSet.Account.myFillTA();
+            fFDBDataSet.Envelope.myFillTA();
+            fFDBDataSet.LineType.myFillTA();
+            fFDBDataSet.LineItem.myFillTAByAccount(accountID); // an empty set.
         }
 
     }

@@ -14,6 +14,7 @@ namespace FamilyFinance2
             //   Local Variables
             ////////////////////////////////////////////////////////////////////////////////////////////
             private FFDBDataSetTableAdapters.AEBalanceTableAdapter thisTableAdapter;
+            private int newID;
 
             
             ///////////////////////////////////////////////////////////////////////
@@ -21,8 +22,9 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
 
 
+
             ////////////////////////////////////////////////////////////////////////////////////////////
-            //   Functions Override
+            //   Overriden Functions 
             ////////////////////////////////////////////////////////////////////////////////////////////
             public override void EndInit()
             {
@@ -32,6 +34,7 @@ namespace FamilyFinance2
                 this.thisTableAdapter.ClearBeforeFill = true;
 
                 this.TableNewRow += new DataTableNewRowEventHandler(AEBalanceDataTable_TableNewRow);
+                newID = 1;
             }
 
 
@@ -46,8 +49,13 @@ namespace FamilyFinance2
             private void AEBalanceDataTable_TableNewRow(object sender, DataTableNewRowEventArgs e)
             {
                 AEBalanceRow aEBalanceRow = e.Row as AEBalanceRow;
+                int id = FFDBDataSet.myDBGetNewID("id", "AEBalance");
 
-                aEBalanceRow.id = FFDBDataSet.myDBGetNewID("id", "AEBalance");
+                if (id > newID)
+                    newID = (aEBalanceRow.id = id) + 1;
+                else
+                    aEBalanceRow.id = newID++;
+
                 aEBalanceRow.accountID = SpclAccount.NULL;
                 aEBalanceRow.envelopeID = SpclEnvelope.NULL;
                 aEBalanceRow.endingBalance = 0.0m;
@@ -58,7 +66,7 @@ namespace FamilyFinance2
             ////////////////////////////////////////////////////////////////////////////////////////////
             //   Functions Private
             ////////////////////////////////////////////////////////////////////////////////////////////
-            
+
 
 
             ////////////////////////////////////////////////////////////////////////////////////////////

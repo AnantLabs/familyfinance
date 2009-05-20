@@ -65,14 +65,10 @@ namespace FamilyFinance2
         {
         }
 
-        public void myRefreshTree()
+        public void myReloadTables()
         {
-            accountTLV.myRefresh();
-        }
-
-        public void myRefreshMultiDGV()
-        {
-
+            accountTLV.myRebuildTree();
+            multiDGV.myReloadTables();
         }
     }
 }

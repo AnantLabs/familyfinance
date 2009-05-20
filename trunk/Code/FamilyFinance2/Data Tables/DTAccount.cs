@@ -11,10 +11,10 @@ namespace FamilyFinance2
         partial class AccountDataTable
         {
             ///////////////////////////////////////////////////////////////////////
-            //   LocalVariables
+            //   Local Variables
             ///////////////////////////////////////////////////////////////////////
             private FFDBDataSetTableAdapters.AccountTableAdapter thisTableAdapter;
-
+            private short newID;
             private bool autoChange;
 
             ///////////////////////////////////////////////////////////////////////
@@ -33,9 +33,10 @@ namespace FamilyFinance2
                 this.thisTableAdapter = new FFDBDataSetTableAdapters.AccountTableAdapter();
                 this.thisTableAdapter.ClearBeforeFill = true;
 
-                this.TableNewRow += new System.Data.DataTableNewRowEventHandler(AccountDataTable_TableNewRow);
+                this.TableNewRow += new DataTableNewRowEventHandler(AccountDataTable_TableNewRow);
                 this.ColumnChanged += new DataColumnChangeEventHandler(AccountDataTable_ColumnChanged);
 
+                newID = 1;
                 autoChange = true;
             }
 
@@ -46,8 +47,16 @@ namespace FamilyFinance2
             private void AccountDataTable_TableNewRow(object sender, System.Data.DataTableNewRowEventArgs e)
             {
                 AccountRow accountRow = e.Row as AccountRow;
+                short id = Convert.ToInt16(FFDBDataSet.myDBGetNewID("id", "Account"));
 
-                accountRow.id = Convert.ToInt16(FFDBDataSet.myDBGetNewID("id", "Account"));
+                if (id > newID)
+                {
+                    accountRow.id = id++;
+                    newID = id;
+                }
+                else
+                    accountRow.id = newID++;
+
                 accountRow.name = "";
                 accountRow.accountTypeID = SpclAccountType.NULL;
                 accountRow.catagoryID = SpclAccountCat.ACCOUNT;

@@ -14,6 +14,7 @@ namespace FamilyFinance2
             //   Local Variables
             ///////////////////////////////////////////////////////////////////////
             private FFDBDataSetTableAdapters.LineTypeTableAdapter thisTableAdapter;
+            private short newID;
             private bool autoChange;
 
 
@@ -35,6 +36,7 @@ namespace FamilyFinance2
                 this.TableNewRow += new DataTableNewRowEventHandler(LineTypeDataTable_TableNewRow);
                 this.TableNewRow +=new DataTableNewRowEventHandler(LineTypeDataTable_TableNewRow);
 
+                newID = 1;
                 autoChange = true;
             }
 
@@ -45,8 +47,16 @@ namespace FamilyFinance2
             private void LineTypeDataTable_TableNewRow(object sender, DataTableNewRowEventArgs e)
             {
                 LineTypeRow lineTypeRow = e.Row as LineTypeRow;
+                short id = Convert.ToInt16(FFDBDataSet.myDBGetNewID("id", "LineType"));
 
-                lineTypeRow.id = Convert.ToInt16(FFDBDataSet.myDBGetNewID("id", "LineType"));
+                if (id > newID)
+                {
+                    lineTypeRow.id = id++;
+                    newID = id;
+                }
+                else
+                    lineTypeRow.id = newID++;
+
                 lineTypeRow.name = "";
             }
 

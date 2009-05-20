@@ -14,6 +14,7 @@ namespace FamilyFinance2
             //   Local Variables
             ///////////////////////////////////////////////////////////////////////
             private FFDBDataSetTableAdapters.SubLineItemTableAdapter thisTableAdapter;
+            private int newID;
             private bool autoChange;
 
 
@@ -35,6 +36,7 @@ namespace FamilyFinance2
                 this.TableNewRow += new DataTableNewRowEventHandler(SubLineItemDataTable_TableNewRow);
                 this.ColumnChanged += new DataColumnChangeEventHandler(SubLineItemDataTable_ColumnChanged);
 
+                newID = 1;
                 autoChange = true;
             }
 
@@ -45,8 +47,13 @@ namespace FamilyFinance2
             private void SubLineItemDataTable_TableNewRow(object sender, DataTableNewRowEventArgs e)
             {
                 SubLineItemRow subLineItemRow = e.Row as SubLineItemRow;
+                int id = FFDBDataSet.myDBGetNewID("id", "SubLineItem");
 
-                subLineItemRow.id = FFDBDataSet.myDBGetNewID("id", "SubLineItem");
+                if (id > newID)
+                    newID = (subLineItemRow.id = id) + 1;
+                else
+                    subLineItemRow.id = newID++;
+
                 subLineItemRow.envelopeID = SpclEnvelope.NULL;
                 subLineItemRow.description = "";
                 subLineItemRow.amount = 0.0m;

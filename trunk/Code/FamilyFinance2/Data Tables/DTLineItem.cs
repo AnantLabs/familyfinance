@@ -14,6 +14,7 @@ namespace FamilyFinance2
             //   Local Variables
             ///////////////////////////////////////////////////////////////////////
             private FFDBDataSetTableAdapters.LineItemTableAdapter thisTableAdapter;
+            private int newID;
             private bool autoChange;
 
 
@@ -32,11 +33,10 @@ namespace FamilyFinance2
                 this.thisTableAdapter = new FFDBDataSetTableAdapters.LineItemTableAdapter();
                 this.thisTableAdapter.ClearBeforeFill = true;
 
-                this.TableNewRow += new System.Data.DataTableNewRowEventHandler(LineItemDataTable_TableNewRow);
+                this.TableNewRow += new DataTableNewRowEventHandler(LineItemDataTable_TableNewRow);
                 this.ColumnChanged += new DataColumnChangeEventHandler(LineItemDataTable_ColumnChanged);
 
-                this._newLineID = Convert.ToInt32(FFDBDataSet.myDBGetNewID("id", "LineItem"));
-
+                newID = 1;
                 autoChange = true;
             }
 
@@ -47,8 +47,13 @@ namespace FamilyFinance2
             private void LineItemDataTable_TableNewRow(object sender, System.Data.DataTableNewRowEventArgs e)
             {
                 LineItemRow lineItemRow = e.Row as LineItemRow;
+                int lineID = FFDBDataSet.myDBGetNewID("id", "LineItem");
 
-                lineItemRow.id = FFDBDataSet.myDBGetNewID("id", "LineItem");
+                if (lineID > newID)
+                    newID = (lineItemRow.id = lineID) + 1;
+                else
+                    lineItemRow.id = newID++;
+
                 lineItemRow.transactionID = FFDBDataSet.myDBGetNewID("transactionID", "LineItem");
                 lineItemRow.date = DateTime.Now.Date;
                 lineItemRow.lineTypeID = SpclLineType.NULL;

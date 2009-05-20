@@ -107,7 +107,6 @@ namespace FamilyFinance2
         }
 
 
-
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Public
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -144,6 +143,11 @@ namespace FamilyFinance2
                 setAccountEnvelope(accountID, envelopeID);
         }
 
+        public void myReloadTables()
+        {
+            this.lineItemDGV.myReloadTables(this.lineItemDGV.CurrentAccountID);
+            this.subLineDGV.myReloadTables();
+        }
 
 
     }// END public partial class multiDataGridView

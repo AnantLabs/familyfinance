@@ -14,7 +14,7 @@ namespace FamilyFinance2
             //   Local Variables
             ///////////////////////////////////////////////////////////////////////
             private FFDBDataSetTableAdapters.EnvelopeTableAdapter thisTableAdapter;
-
+            private short newID;
             private bool autoChange;
 
 
@@ -33,9 +33,10 @@ namespace FamilyFinance2
                 this.thisTableAdapter = new FFDBDataSetTableAdapters.EnvelopeTableAdapter();
                 this.thisTableAdapter.ClearBeforeFill = true;
 
-                this.TableNewRow += new System.Data.DataTableNewRowEventHandler(EnvelopeDataTable_TableNewRow);
+                this.TableNewRow += new DataTableNewRowEventHandler(EnvelopeDataTable_TableNewRow);
                 this.ColumnChanged += new DataColumnChangeEventHandler(EnvelopeDataTable_ColumnChanged);
 
+                newID = 1;
                 autoChange = true;
             }
 
@@ -46,10 +47,18 @@ namespace FamilyFinance2
             private void EnvelopeDataTable_TableNewRow(object sender, System.Data.DataTableNewRowEventArgs e)
             {
                 autoChange = false;
-
                 EnvelopeRow envelopeRow = e.Row as EnvelopeRow;
-                    
-                envelopeRow.id = Convert.ToInt16(FFDBDataSet.myDBGetNewID("id", "Envelope"));
+
+                short id = Convert.ToInt16(FFDBDataSet.myDBGetNewID("id", "Envelope"));
+
+                if (id > newID)
+                {
+                    envelopeRow.id = id++;
+                    newID = id;
+                }
+                else
+                    envelopeRow.id = newID++;
+
                 envelopeRow.name = "";
                 envelopeRow.fullName = "";
                 envelopeRow.parentEnvelope = SpclEnvelope.NULL;
