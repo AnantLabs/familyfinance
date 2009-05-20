@@ -329,14 +329,15 @@ namespace FamilyFinance2
             selectCmd.Connection = connection;
             selectCmd.CommandText = "SELECT MAX(" + col + ") FROM " + table + " ;";
             result = selectCmd.ExecuteScalar();
-            num = Convert.ToInt32(result);
 
             connection.Close();
 
-            if (result == null)
+            if (result == DBNull.Value)
                 return 1;
 
-            else if (num <= 0)
+            num = Convert.ToInt32(result);
+
+            if (num <= 0)
                 return 1;
 
             return num + 1;

@@ -213,7 +213,7 @@ namespace FamilyFinance2
         ////////////////////////////////////////////////////////////////////////////////////////////
         public SubLineDGV()
         {
-            fFDBDataSet.LineItem.myFill();
+            myReloadTables();
 
             // Binding Sources
             this.SubLineDGVBindingSource = new BindingSource(this.fFDBDataSet, "SubLineView");
@@ -257,8 +257,12 @@ namespace FamilyFinance2
                 this.debitAmountColumn.HeaderText = "Debit";
                 this.creditAmountColumn.HeaderText = "Credit";
             }
+
         }
 
-
+        public void myReloadTables()
+        {
+            fFDBDataSet.LineItem.myFill();
+        }
     }
 }

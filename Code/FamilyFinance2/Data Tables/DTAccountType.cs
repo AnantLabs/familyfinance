@@ -14,9 +14,8 @@ namespace FamilyFinance2
             //   Local Variables
             ///////////////////////////////////////////////////////////////////////
             private FFDBDataSetTableAdapters.AccountTypeTableAdapter thisTableAdapter;
-
+            private short newID;
             private bool autoChange;
-
 
             ///////////////////////////////////////////////////////////////////////
             //   Properties
@@ -37,6 +36,7 @@ namespace FamilyFinance2
                 this.TableNewRow += new DataTableNewRowEventHandler(AccountTypeDataTable_TableNewRow);
                 this.ColumnChanged += new DataColumnChangeEventHandler(AccountTypeDataTable_ColumnChanged);
 
+                newID = 1;
                 autoChange = true;
             }
 
@@ -47,8 +47,16 @@ namespace FamilyFinance2
             private void AccountTypeDataTable_TableNewRow(object sender, DataTableNewRowEventArgs e)
             {
                 AccountTypeRow accountTypeRow = e.Row as AccountTypeRow;
+                short id = Convert.ToInt16(FFDBDataSet.myDBGetNewID("id", "AccountType"));
 
-                accountTypeRow.id = Convert.ToInt16(FFDBDataSet.myDBGetNewID("id", "AccountType"));
+                if (id > newID)
+                {
+                    accountTypeRow.id = id++;
+                    newID = id;
+                }
+                else
+                    accountTypeRow.id = newID++;
+
                 accountTypeRow.name = "";
             }
 
