@@ -317,6 +317,31 @@ namespace FamilyFinance2
             return idList;
         }
 
+        static private int myDBGetNewID(string col, string table)
+        {
+            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            SqlCeCommand selectCmd = new SqlCeCommand();
+            object result;
+            int num;
+
+            connection.Open();
+
+            selectCmd.Connection = connection;
+            selectCmd.CommandText = "SELECT MAX(" + col + ") FROM " + table + " ;";
+            result = selectCmd.ExecuteScalar();
+            num = Convert.ToInt32(result);
+
+            connection.Close();
+
+            if (result == null)
+                return 1;
+
+            else if (num <= 0)
+                return 1;
+
+            return num + 1;
+        }
+
 
         ///////////////////////////////////////////////////////////////////////
         //   Functions Private 

@@ -48,16 +48,8 @@ namespace FamilyFinance2
                 autoChange = false;
 
                 EnvelopeRow envelopeRow = e.Row as EnvelopeRow;
-                short newID = -1;
-
-                if (this.Count > 0)
-                    newID = Convert.ToInt16(this[this.Count - 1].id + 1);
-
-                if (newID > 0)
-                    envelopeRow.id = newID;
-                else
-                    envelopeRow.id = 1;
-
+                    
+                envelopeRow.id = Convert.ToInt16(FFDBDataSet.myDBGetNewID("id", "Envelope"));
                 envelopeRow.name = "";
                 envelopeRow.fullName = "";
                 envelopeRow.parentEnvelope = SpclEnvelope.NULL;
