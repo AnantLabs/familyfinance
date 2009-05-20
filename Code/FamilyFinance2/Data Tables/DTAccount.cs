@@ -46,16 +46,8 @@ namespace FamilyFinance2
             private void AccountDataTable_TableNewRow(object sender, System.Data.DataTableNewRowEventArgs e)
             {
                 AccountRow accountRow = e.Row as AccountRow;
-                short newID = -1;
 
-                if (this.Count > 0)
-                    newID = Convert.ToInt16(this[this.Count - 1].id + 1);
-                
-                if (newID > 0)
-                    accountRow.id = newID;
-                else
-                    accountRow.id = 1;
-
+                accountRow.id = Convert.ToInt16(FFDBDataSet.myDBGetNewID("id", "Account"));
                 accountRow.name = "";
                 accountRow.accountTypeID = SpclAccountType.NULL;
                 accountRow.catagoryID = SpclAccountCat.ACCOUNT;

@@ -35,6 +35,8 @@ namespace FamilyFinance2
                 this.TableNewRow += new System.Data.DataTableNewRowEventHandler(LineItemDataTable_TableNewRow);
                 this.ColumnChanged += new DataColumnChangeEventHandler(LineItemDataTable_ColumnChanged);
 
+                this._newLineID = Convert.ToInt32(FFDBDataSet.myDBGetNewID("id", "LineItem"));
+
                 autoChange = true;
             }
 
@@ -45,27 +47,9 @@ namespace FamilyFinance2
             private void LineItemDataTable_TableNewRow(object sender, System.Data.DataTableNewRowEventArgs e)
             {
                 LineItemRow lineItemRow = e.Row as LineItemRow;
-                int maxID = -1;
-                int maxTransID = -1;
 
-                // Find new ID and transactionID values
-                foreach (LineItemRow row in this)
-                {
-                    if (maxID < row.id)
-                        maxID = row.id;
-
-                    if (maxTransID < row.transactionID)
-                        maxTransID = row.transactionID;
-                }
-
-                if (maxID < 0)
-                    maxID = 0;
-                
-                if (maxTransID < 0)
-                    maxTransID = 0;
-
-                lineItemRow.id = maxID + 1;
-                lineItemRow.transactionID = maxTransID + 1;
+                lineItemRow.id = FFDBDataSet.myDBGetNewID("id", "LineItem");
+                lineItemRow.transactionID = FFDBDataSet.myDBGetNewID("transactionID", "LineItem");
                 lineItemRow.date = DateTime.Now.Date;
                 lineItemRow.lineTypeID = SpclLineType.NULL;
                 lineItemRow.accountID = SpclAccount.NULL;
@@ -75,9 +59,8 @@ namespace FamilyFinance2
                 lineItemRow.envelopeID = SpclEnvelope.NULL;
                 lineItemRow.complete = LineState.PENDING;
                 lineItemRow.creditAmount = 0.0m;
-                lineItemRow.lineError = false;
                 lineItemRow.transactionError = false;
-
+                lineItemRow.lineError = false;
             }
 
             private void LineItemDataTable_ColumnChanged(object sender, DataColumnChangeEventArgs e)

@@ -45,16 +45,8 @@ namespace FamilyFinance2
             private void LineTypeDataTable_TableNewRow(object sender, DataTableNewRowEventArgs e)
             {
                 LineTypeRow lineTypeRow = e.Row as LineTypeRow;
-                int newID = -1;
 
-                if (this.Count > 0)
-                    newID = this[this.Count - 1].id + 1;
-
-                if (newID > 0)
-                    lineTypeRow.id = (short)newID;
-                else
-                    lineTypeRow.id = 1;
-
+                lineTypeRow.id = Convert.ToInt16(FFDBDataSet.myDBGetNewID("id", "LineType"));
                 lineTypeRow.name = "";
             }
 

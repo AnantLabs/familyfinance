@@ -45,18 +45,8 @@ namespace FamilyFinance2
             private void SubLineItemDataTable_TableNewRow(object sender, DataTableNewRowEventArgs e)
             {
                 SubLineItemRow subLineItemRow = e.Row as SubLineItemRow;
-                int newID = -1;
 
-                autoChange = false;
-
-                if (this.Count > 0)
-                    newID = this[this.Count - 1].id + 1;
-
-                if (newID > 0)
-                    subLineItemRow.id = newID;
-                else
-                    subLineItemRow.id = 1;
-
+                subLineItemRow.id = FFDBDataSet.myDBGetNewID("id", "SubLineItem");
                 subLineItemRow.envelopeID = SpclEnvelope.NULL;
                 subLineItemRow.description = "";
                 subLineItemRow.amount = 0.0m;

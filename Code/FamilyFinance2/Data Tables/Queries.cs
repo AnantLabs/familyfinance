@@ -519,7 +519,7 @@ namespace FamilyFinance2
     #endregion Sub Account Details Query
 
 
-    #region My Find All Errors
+    #region My Find All Transaction and Line Errors
 
     partial class FFDBDataSet
     {
