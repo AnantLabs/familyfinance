@@ -47,26 +47,26 @@ DELETE FROM AEBalance
 SubLineView
 +Add Table Adapter -Change the following columns from Readonly: source, destination, cAmount, dAmount, balAmount.
 	FillByEnvelopeAndAccount
-SELECT   LineItem.id AS lineItemID, LineItem.transactionID, LineItem.date, LineType.name AS lineType, Account.name AS sourceAccount, 
-              Account_1.name AS destinationAccount, SubLineItem.description, LineItem.creditDebit, SubLineItem.amount, LineItem.complete, 0.0 AS creditAmount, 
-              0.0 AS debitAmount, 0.0 AS balanceAmount
+SELECT   SubLineItem.id AS subLineItemID, LineItem.transactionID, LineItem.date, LineType.name AS lineType, Account.name AS sourceAccount, 
+             LineItem.transactionError | LineItem.lineError AS lineError, Account_1.name AS destinationAccount, SubLineItem.description, LineItem.creditDebit, 
+             SubLineItem.amount, LineItem.complete, 0.0 AS creditAmount, 0.0 AS debitAmount, 0.0 AS balanceAmount
 FROM     LineItem INNER JOIN
-              LineType ON LineItem.lineTypeID = LineType.id INNER JOIN
-              Account ON LineItem.accountID = Account.id INNER JOIN
-              Account AS Account_1 ON LineItem.oppAccountID = Account_1.id INNER JOIN
-              SubLineItem ON LineItem.id = SubLineItem.lineItemID
+             LineType ON LineItem.lineTypeID = LineType.id INNER JOIN
+             Account ON LineItem.accountID = Account.id INNER JOIN
+             Account AS Account_1 ON LineItem.oppAccountID = Account_1.id INNER JOIN
+             SubLineItem ON LineItem.id = SubLineItem.lineItemID
 WHERE    (SubLineItem.envelopeID = @eID) AND (LineItem.accountID = @aID)
-ORDER BY LineItem.date, LineItem.creditDebit DESC, SubLineItem.id
+ORDER BY LineItem.date, LineItem.creditDebit DESC, subLineItemID
 
 	FillByEnvelope
-SELECT   LineItem.id AS lineItemID, LineItem.transactionID, LineItem.date, LineType.name AS lineType, Account.name AS sourceAccount, 
-              Account_1.name AS destinationAccount, SubLineItem.description, LineItem.creditDebit, SubLineItem.amount, LineItem.complete, 0.0 AS creditAmount, 
-              0.0 AS debitAmount, 0.0 AS balanceAmount
+SELECT   SubLineItem.id AS subLineItemID, LineItem.transactionID, LineItem.date, LineType.name AS lineType, Account.name AS sourceAccount, 
+              LineItem.transactionError | LineItem.lineError AS lineError, Account_1.name AS destinationAccount, SubLineItem.description, LineItem.creditDebit, 
+              SubLineItem.amount, LineItem.complete, 0.0 AS creditAmount, 0.0 AS debitAmount, 0.0 AS balanceAmount
 FROM     LineItem INNER JOIN
               LineType ON LineItem.lineTypeID = LineType.id INNER JOIN
               Account ON LineItem.accountID = Account.id INNER JOIN
               Account AS Account_1 ON LineItem.oppAccountID = Account_1.id INNER JOIN
               SubLineItem ON LineItem.id = SubLineItem.lineItemID
 WHERE    SubLineItem.envelopeID = @eID
-ORDER BY LineItem.date, LineItem.creditDebit DESC, SubLineItem.id
+ORDER BY LineItem.date, LineItem.creditDebit DESC, subLineItemID
                        

@@ -14,7 +14,7 @@ namespace FamilyFinance2
         ///////////////////////////////////////////////////////////////////////
         //   Functions STATIC 
         ///////////////////////////////////////////////////////////////////////
-        static private void myExecuteFile(string fileAsString, bool catchExceptions)
+        static public void myExecuteFile(string fileAsString, bool catchExceptions)
         {
             SqlCeConnection connection;
             SqlCeCommand command;

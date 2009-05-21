@@ -190,7 +190,40 @@ namespace FamilyFinance2
             inRowValidating = false;
         }
 
+        private void LineItemDGV_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            int lineID = Convert.ToInt32(this[lineItemIDColumn.Index, e.RowIndex].Value);
+            FFDBDataSet.LineItemRow thisLine = this.fFDBDataSet.LineItem.FindByid(lineID);
 
+            // Defaults. Used for new lines.
+            this.rowError = false;
+            this.rowEnvelopeError = false;
+            this.rowNegativeBalance = false;
+            this.rowSplitEnvelope = false;
+            this.rowMultipleAccounts = false;
+            this.rowFutureDate = false;
+
+            if (thisLine != null)
+            {
+                // Set row Flags
+                rowError = thisLine.transactionError;
+                rowEnvelopeError = thisLine.lineError;
+
+                if (thisLine.balanceAmount < 0.0m)
+                    this.rowNegativeBalance = true;
+
+                if (thisLine.oppAccountID == SpclAccount.MULTIPLE)
+                    this.rowMultipleAccounts = true;
+
+                if (thisLine.envelopeID == SpclEnvelope.SPLIT)
+                    this.rowSplitEnvelope = true;
+
+                if (thisLine.date > DateTime.Today) // future Date
+                    this.rowFutureDate = true;
+            }
+        }
+
+        
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Private
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -348,9 +381,6 @@ namespace FamilyFinance2
                 );
 
 
-            this.CellDoubleClick += new DataGridViewCellEventHandler(LineItemDGV_CellDoubleClick);
-            this.RowValidating += new DataGridViewCellCancelEventHandler(LineItemDGV_RowValidating);
-            //this.CellValueChanged += new DataGridViewCellEventHandler(LineItemDGV_CellValueChanged);
         }
 
 
@@ -362,10 +392,13 @@ namespace FamilyFinance2
             this.inRowValidating = false;
             this.showEnvelopeColumn = true;
 
+            ////////////////////////////////////
             // Fill the tables
-            this.myReloadTables(SpclAccount.NULL);
+            this.myReloadLineTypes();
+            this.myReloadAccounts();
+            this.myReloadEnvelopes();
 
-            ///////////////////////////////////////////////////////////////////
+            ////////////////////////////////////
             // Setup the Bindings
             this.lineItemDGVBindingSource = new BindingSource(this.fFDBDataSet, "LineItem");
 
@@ -379,44 +412,55 @@ namespace FamilyFinance2
 
             this.buildTheDataGridView();
 
+            ////////////////////////////////////
+            // Subscribe to event.
+            this.CellDoubleClick += new DataGridViewCellEventHandler(LineItemDGV_CellDoubleClick);
+            this.RowValidating += new DataGridViewCellCancelEventHandler(LineItemDGV_RowValidating);
+            this.RowPrePaint += new DataGridViewRowPrePaintEventHandler(LineItemDGV_RowPrePaint);
+            //this.CellValueChanged += new DataGridViewCellEventHandler(LineItemDGV_CellValueChanged);
         }
 
         public void setAccountID(short accountID)
         {
             const int INVALID = 0;
 
-            accountUsesEnvelopes = this.fFDBDataSet.Account.FindByid(accountID).envelopes;
-
             if (accountID > INVALID)
             {
-                this.fFDBDataSet.LineItem.myFillTAByAccount(accountID);
                 this.currentAccountID = accountID;
+                this.accountUsesEnvelopes = this.fFDBDataSet.Account.FindByid(accountID).envelopes;
+                this.fFDBDataSet.LineItem.myFillTAByAccount(accountID);
                 this.ShowEnvelopeColumn = showEnvelopeColumn;
                 this.AllowUserToAddRows = true;
-
-                //this.debitAmountColumn.HeaderText = this.fFDBDataSet.Account.FindByid(accountID).debitColumnName;
-                //this.creditAmountColumn.HeaderText = this.fFDBDataSet.Account.FindByid(accountID).creditColumnName;
 
             }
             else
             {
+                this.accountUsesEnvelopes = false;
                 this.fFDBDataSet.LineItem.myFillTAByAccount(SpclAccount.NULL);
                 this.currentAccountID = SpclAccount.NULL;
                 this.ShowEnvelopeColumn = showEnvelopeColumn;
                 this.AllowUserToAddRows = false;
-
-                this.debitAmountColumn.HeaderText = "Debit";
-                this.creditAmountColumn.HeaderText = "Credit";
             }
         }
 
-        public void myReloadTables(short accountID)
+        public void myReloadLineItems()
         {
-            fFDBDataSet.Account.myFillTA();
-            fFDBDataSet.Envelope.myFillTA();
-            fFDBDataSet.LineType.myFillTA();
-            fFDBDataSet.LineItem.myFillTAByAccount(accountID); // an empty set.
+            fFDBDataSet.LineItem.myFillTAByAccount(this.currentAccountID); // an empty set.
         }
 
+        public void myReloadAccounts()
+        {
+            fFDBDataSet.Account.myFillTA();
+        }
+
+        public void myReloadEnvelopes()
+        {
+            fFDBDataSet.Envelope.myFillTA();
+        }
+
+        public void myReloadLineTypes()
+        {
+            fFDBDataSet.LineType.myFillTA();
+        }
     }
 }

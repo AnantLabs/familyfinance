@@ -89,8 +89,10 @@
             // envelopeTreeView
             // 
             this.envelopeTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.envelopeTreeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.envelopeTreeView.FullRowSelect = true;
             this.envelopeTreeView.HideSelection = false;
+            this.envelopeTreeView.Indent = 10;
             this.envelopeTreeView.Location = new System.Drawing.Point(0, 0);
             this.envelopeTreeView.Name = "envelopeTreeView";
             this.envelopeTreeView.Size = new System.Drawing.Size(267, 369);

@@ -14,7 +14,7 @@
     <Shape ID="DesignTable:LineItem" ZOrder="6" X="845" Y="-14" Height="402" Width="174" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="349" />
     <Shape ID="DesignTable:LineType" ZOrder="5" X="633" Y="-23" Height="115" Width="134" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="64" />
     <Shape ID="DesignTable:SubLineItem" ZOrder="4" X="620" Y="133" Height="172" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="121" />
-    <Shape ID="DesignTable:SubLineView" ZOrder="2" X="1412" Y="4" Height="343" Width="162" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="273" />
+    <Shape ID="DesignTable:SubLineView" ZOrder="2" X="1412" Y="4" Height="381" Width="162" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="294" />
   </Shapes>
   <Connectors>
     <Connector ID="DesignRelation:FK_Account_catID" ZOrder="20" LineWidth="11">

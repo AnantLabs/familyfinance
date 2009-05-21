@@ -19,7 +19,6 @@ namespace FamilyFinance2.Forms
         private void TypeForm_Load(object sender, EventArgs e)
         {
             this.accountTypeTableAdapter.Fill(this.fFDBDataSet.AccountType);
-
         }
 
         private void accountTypeBindingNavigatorSaveItem_Click(object sender, EventArgs e)

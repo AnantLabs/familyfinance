@@ -10,12 +10,11 @@ namespace FamilyFinance2
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Local Constants and variables
         ////////////////////////////////////////////////////////////////////////////////////////////
-
         // Binding Sources
         private BindingSource SubLineDGVBindingSource;
 
         // Columns
-        private DataGridViewTextBoxColumn lineItemIDColumn;
+        private DataGridViewTextBoxColumn subLineItemIDColumn;
         private DataGridViewTextBoxColumn transactionIDColumn;
         private DataGridViewTextBoxColumn dateColumn;
         private DataGridViewTextBoxColumn lineTypeColumn;
@@ -31,14 +30,14 @@ namespace FamilyFinance2
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Properties
         ////////////////////////////////////////////////////////////////////////////////////////////
-        private int currentAccountID;
-        public int CurrentAccountID
+        private short currentAccountID;
+        public short CurrentAccountID
         {
             get { return currentAccountID; }
         }
-        
-        private int currentEnvelopeID;
-        public int CurrentEnvelopeID
+
+        private short currentEnvelopeID;
+        public short CurrentEnvelopeID
         {
             get { return currentEnvelopeID; }
         }
@@ -75,6 +74,32 @@ namespace FamilyFinance2
             //}
         }
 
+        void SubLineDGV_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            int subLineID = Convert.ToInt32(this[subLineItemIDColumn.Index, e.RowIndex].Value);
+            FFDBDataSet.SubLineViewRow thisSubLine = this.fFDBDataSet.SubLineView.FindBysubLineItemID(subLineID);
+
+            // Defaults. Used for new lines.
+            this.rowError = false;
+            this.rowEnvelopeError = false;
+            this.rowNegativeBalance = false;
+            this.rowSplitEnvelope = false;
+            this.rowMultipleAccounts = false;
+            this.rowFutureDate = false;
+
+            if (thisSubLine != null)
+            {
+                // Set row Flags
+                rowError = thisSubLine.lineError;
+
+                if (thisSubLine.balanceAmount < 0.0m)
+                    this.rowNegativeBalance = true;
+
+                if (thisSubLine.date > DateTime.Today) // future Date
+                    this.rowFutureDate = true;
+            }
+        }
+
         
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Private
@@ -82,11 +107,11 @@ namespace FamilyFinance2
         private void buildTheDataGridView()
         {
             // lineItemIDColumn
-            this.lineItemIDColumn = new DataGridViewTextBoxColumn();
-            this.lineItemIDColumn.Name = "lineItemIDColumn";
-            this.lineItemIDColumn.HeaderText = "lineItemID";
-            this.lineItemIDColumn.DataPropertyName = "lineItemID";
-            this.lineItemIDColumn.Visible = false;
+            this.subLineItemIDColumn = new DataGridViewTextBoxColumn();
+            this.subLineItemIDColumn.Name = "subLineItemIDColumn";
+            this.subLineItemIDColumn.HeaderText = "subLineItemID";
+            this.subLineItemIDColumn.DataPropertyName = "subLineItemID";
+            this.subLineItemIDColumn.Visible = false;
 
             // transactionIDColumn
             this.transactionIDColumn = new DataGridViewTextBoxColumn();
@@ -191,7 +216,7 @@ namespace FamilyFinance2
                 new DataGridViewColumn[] 
                 {
                     this.dateColumn,
-                    this.lineItemIDColumn,
+                    this.subLineItemIDColumn,
                     this.transactionIDColumn,
                     this.lineTypeColumn,
                     this.sourceColumn,
@@ -203,8 +228,6 @@ namespace FamilyFinance2
                     this.balanceAmountColumn
                 }
                 );
-
-            this.CellDoubleClick += new DataGridViewCellEventHandler(SubLineDGV_CellDoubleClick);
         }
 
 
@@ -213,19 +236,18 @@ namespace FamilyFinance2
         ////////////////////////////////////////////////////////////////////////////////////////////
         public SubLineDGV()
         {
-            myReloadTables();
-
             // Binding Sources
             this.SubLineDGVBindingSource = new BindingSource(this.fFDBDataSet, "SubLineView");
 
-            //this.SuspendLayout();
             this.buildTheDataGridView();
-            //this.ResumeLayout();
+
+            this.CellDoubleClick += new DataGridViewCellEventHandler(SubLineDGV_CellDoubleClick);
+            this.RowPrePaint += new DataGridViewRowPrePaintEventHandler(SubLineDGV_RowPrePaint);
         }
 
         public void setAccountEnvelopeID(short accountID, short envelopeID)
         {
-            const int INVALID = 0;
+            const short INVALID = 0;
 
             if (envelopeID > INVALID && accountID > INVALID)
             {
@@ -233,9 +255,6 @@ namespace FamilyFinance2
                 this.currentAccountID = accountID;
 
                 this.fFDBDataSet.SubLineView.myFillTAByEnvelopeAndAccount(envelopeID, accountID);                
-
-                //this.debitAmountColumn.HeaderText = this.globalDataSet.Envelope.FindByid(envelopeID).debitColumnName;
-                //this.creditAmountColumn.HeaderText = this.globalDataSet.Envelope.FindByid(envelopeID).creditColumnName;
             }
             else if (envelopeID > INVALID)
             {
@@ -243,26 +262,21 @@ namespace FamilyFinance2
                 this.currentAccountID = SpclAccount.NULL;
 
                 this.fFDBDataSet.SubLineView.myFillTAByEnvelope(envelopeID);
-
-                //this.debitAmountColumn.HeaderText = this.globalDataSet.Envelope.FindByid(envelopeID).debitColumnName;
-                //this.creditAmountColumn.HeaderText = this.globalDataSet.Envelope.FindByid(envelopeID).creditColumnName;
             }
             else 
             {
                 this.currentEnvelopeID = SpclEnvelope.NULL;
                 this.currentAccountID = SpclAccount.NULL;
 
-                this.fFDBDataSet.SubLineView.myFillTAByEnvelope(-100);
-
-                this.debitAmountColumn.HeaderText = "Debit";
-                this.creditAmountColumn.HeaderText = "Credit";
+                this.fFDBDataSet.SubLineView.myFillTAByEnvelope(SpclEnvelope.NULL);
             }
 
         }
 
-        public void myReloadTables()
+        public void myReloadSubLineView()
         {
-            fFDBDataSet.LineItem.myFill();
+            this.setAccountEnvelopeID(this.currentAccountID, this.currentEnvelopeID);
         }
+
     }
 }

@@ -3087,7 +3087,7 @@ namespace FamilyFinance2 {
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class SubLineViewDataTable : global::System.Data.TypedTableBase<SubLineViewRow> {
             
-            private global::System.Data.DataColumn columnlineItemID;
+            private global::System.Data.DataColumn columnsubLineItemID;
             
             private global::System.Data.DataColumn columntransactionID;
             
@@ -3096,6 +3096,8 @@ namespace FamilyFinance2 {
             private global::System.Data.DataColumn columnlineType;
             
             private global::System.Data.DataColumn columnsourceAccount;
+            
+            private global::System.Data.DataColumn columnlineError;
             
             private global::System.Data.DataColumn columndestinationAccount;
             
@@ -3144,9 +3146,9 @@ namespace FamilyFinance2 {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public global::System.Data.DataColumn lineItemIDColumn {
+            public global::System.Data.DataColumn subLineItemIDColumn {
                 get {
-                    return this.columnlineItemID;
+                    return this.columnsubLineItemID;
                 }
             }
             
@@ -3175,6 +3177,13 @@ namespace FamilyFinance2 {
             public global::System.Data.DataColumn sourceAccountColumn {
                 get {
                     return this.columnsourceAccount;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn lineErrorColumn {
+                get {
+                    return this.columnlineError;
                 }
             }
             
@@ -3263,14 +3272,15 @@ namespace FamilyFinance2 {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public SubLineViewRow AddSubLineViewRow(int lineItemID, int transactionID, System.DateTime date, string lineType, string sourceAccount, string destinationAccount, string description, bool creditDebit, decimal amount, string complete, decimal creditAmount, decimal debitAmount, decimal balanceAmount) {
+            public SubLineViewRow AddSubLineViewRow(int subLineItemID, int transactionID, System.DateTime date, string lineType, string sourceAccount, bool lineError, string destinationAccount, string description, bool creditDebit, decimal amount, string complete, decimal creditAmount, decimal debitAmount, decimal balanceAmount) {
                 SubLineViewRow rowSubLineViewRow = ((SubLineViewRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        lineItemID,
+                        subLineItemID,
                         transactionID,
                         date,
                         lineType,
                         sourceAccount,
+                        lineError,
                         destinationAccount,
                         description,
                         creditDebit,
@@ -3282,6 +3292,12 @@ namespace FamilyFinance2 {
                 rowSubLineViewRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowSubLineViewRow);
                 return rowSubLineViewRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public SubLineViewRow FindBysubLineItemID(int subLineItemID) {
+                return ((SubLineViewRow)(this.Rows.Find(new object[] {
+                            subLineItemID})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3298,11 +3314,12 @@ namespace FamilyFinance2 {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             internal void InitVars() {
-                this.columnlineItemID = base.Columns["lineItemID"];
+                this.columnsubLineItemID = base.Columns["subLineItemID"];
                 this.columntransactionID = base.Columns["transactionID"];
                 this.columndate = base.Columns["date"];
                 this.columnlineType = base.Columns["lineType"];
                 this.columnsourceAccount = base.Columns["sourceAccount"];
+                this.columnlineError = base.Columns["lineError"];
                 this.columndestinationAccount = base.Columns["destinationAccount"];
                 this.columndescription = base.Columns["description"];
                 this.columncreditDebit = base.Columns["creditDebit"];
@@ -3315,8 +3332,8 @@ namespace FamilyFinance2 {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             private void InitClass() {
-                this.columnlineItemID = new global::System.Data.DataColumn("lineItemID", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnlineItemID);
+                this.columnsubLineItemID = new global::System.Data.DataColumn("subLineItemID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnsubLineItemID);
                 this.columntransactionID = new global::System.Data.DataColumn("transactionID", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columntransactionID);
                 this.columndate = new global::System.Data.DataColumn("date", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
@@ -3325,6 +3342,8 @@ namespace FamilyFinance2 {
                 base.Columns.Add(this.columnlineType);
                 this.columnsourceAccount = new global::System.Data.DataColumn("sourceAccount", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnsourceAccount);
+                this.columnlineError = new global::System.Data.DataColumn("lineError", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnlineError);
                 this.columndestinationAccount = new global::System.Data.DataColumn("destinationAccount", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columndestinationAccount);
                 this.columndescription = new global::System.Data.DataColumn("description", typeof(string), null, global::System.Data.MappingType.Element);
@@ -3341,12 +3360,17 @@ namespace FamilyFinance2 {
                 base.Columns.Add(this.columndebitAmount);
                 this.columnbalanceAmount = new global::System.Data.DataColumn("balanceAmount", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnbalanceAmount);
-                this.columnlineItemID.ReadOnly = true;
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnsubLineItemID}, true));
+                this.columnsubLineItemID.AllowDBNull = false;
+                this.columnsubLineItemID.ReadOnly = true;
+                this.columnsubLineItemID.Unique = true;
                 this.columntransactionID.ReadOnly = true;
                 this.columndate.ReadOnly = true;
                 this.columnlineType.ReadOnly = true;
                 this.columnlineType.MaxLength = 15;
                 this.columnsourceAccount.MaxLength = 30;
+                this.columnlineError.ReadOnly = true;
                 this.columndestinationAccount.MaxLength = 30;
                 this.columndescription.ReadOnly = true;
                 this.columndescription.MaxLength = 536870911;
@@ -4406,17 +4430,12 @@ namespace FamilyFinance2 {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public int lineItemID {
+            public int subLineItemID {
                 get {
-                    try {
-                        return ((int)(this[this.tableSubLineView.lineItemIDColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'lineItemID\' in table \'SubLineView\' is DBNull.", e);
-                    }
+                    return ((int)(this[this.tableSubLineView.subLineItemIDColumn]));
                 }
                 set {
-                    this[this.tableSubLineView.lineItemIDColumn] = value;
+                    this[this.tableSubLineView.subLineItemIDColumn] = value;
                 }
             }
             
@@ -4477,6 +4496,21 @@ namespace FamilyFinance2 {
                 }
                 set {
                     this[this.tableSubLineView.sourceAccountColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool lineError {
+                get {
+                    try {
+                        return ((bool)(this[this.tableSubLineView.lineErrorColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'lineError\' in table \'SubLineView\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSubLineView.lineErrorColumn] = value;
                 }
             }
             
@@ -4601,16 +4635,6 @@ namespace FamilyFinance2 {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public bool IslineItemIDNull() {
-                return this.IsNull(this.tableSubLineView.lineItemIDColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public void SetlineItemIDNull() {
-                this[this.tableSubLineView.lineItemIDColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public bool IstransactionIDNull() {
                 return this.IsNull(this.tableSubLineView.transactionIDColumn);
             }
@@ -4648,6 +4672,16 @@ namespace FamilyFinance2 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public void SetsourceAccountNull() {
                 this[this.tableSubLineView.sourceAccountColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IslineErrorNull() {
+                return this.IsNull(this.tableSubLineView.lineErrorColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetlineErrorNull() {
+                this[this.tableSubLineView.lineErrorColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7700,11 +7734,12 @@ ORDER BY date, creditDebit DESC, id";
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "SubLineView";
-            tableMapping.ColumnMappings.Add("lineItemID", "lineItemID");
+            tableMapping.ColumnMappings.Add("subLineItemID", "subLineItemID");
             tableMapping.ColumnMappings.Add("transactionID", "transactionID");
             tableMapping.ColumnMappings.Add("date", "date");
             tableMapping.ColumnMappings.Add("lineType", "lineType");
             tableMapping.ColumnMappings.Add("sourceAccount", "sourceAccount");
+            tableMapping.ColumnMappings.Add("lineError", "lineError");
             tableMapping.ColumnMappings.Add("destinationAccount", "destinationAccount");
             tableMapping.ColumnMappings.Add("description", "description");
             tableMapping.ColumnMappings.Add("creditDebit", "creditDebit");
@@ -7727,31 +7762,31 @@ ORDER BY date, creditDebit DESC, id";
             this._commandCollection = new global::System.Data.SqlServerCe.SqlCeCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"SELECT        LineItem.id AS lineItemID, LineItem.transactionID, LineItem.date, LineType.name AS lineType, Account.name AS sourceAccount, 
-                         Account_1.name AS destinationAccount, SubLineItem.description, LineItem.creditDebit, SubLineItem.amount, LineItem.complete, 0.0 AS creditAmount, 
-                         0.0 AS debitAmount, 0.0 AS balanceAmount
+            this._commandCollection[0].CommandText = @"SELECT        SubLineItem.id AS subLineItemID, LineItem.transactionID, LineItem.date, LineType.name AS lineType, Account.name AS sourceAccount, 
+                         LineItem.transactionError | LineItem.lineError AS lineError, Account_1.name AS destinationAccount, SubLineItem.description, LineItem.creditDebit, 
+                         SubLineItem.amount, LineItem.complete, 0.0 AS creditAmount, 0.0 AS debitAmount, 0.0 AS balanceAmount
 FROM            LineItem INNER JOIN
                          LineType ON LineItem.lineTypeID = LineType.id INNER JOIN
                          Account ON LineItem.accountID = Account.id INNER JOIN
                          Account AS Account_1 ON LineItem.oppAccountID = Account_1.id INNER JOIN
                          SubLineItem ON LineItem.id = SubLineItem.lineItemID
 WHERE        (SubLineItem.envelopeID = @eID) AND (LineItem.accountID = @aID)
-ORDER BY LineItem.date, LineItem.creditDebit DESC, SubLineItem.id";
+ORDER BY LineItem.date, LineItem.creditDebit DESC, subLineItemID";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@eID", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, true, 0, 0, "envelopeID", global::System.Data.DataRowVersion.Current, null));
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@aID", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, true, 0, 0, "accountID", global::System.Data.DataRowVersion.Current, null));
             this._commandCollection[1] = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = @"SELECT        LineItem.id AS lineItemID, LineItem.transactionID, LineItem.date, LineType.name AS lineType, Account.name AS sourceAccount, 
-                         Account_1.name AS destinationAccount, SubLineItem.description, LineItem.creditDebit, SubLineItem.amount, LineItem.complete, 0.0 AS creditAmount, 
-                         0.0 AS debitAmount, 0.0 AS balanceAmount
+            this._commandCollection[1].CommandText = @"SELECT        SubLineItem.id AS subLineItemID, LineItem.transactionID, LineItem.date, LineType.name AS lineType, Account.name AS sourceAccount, 
+                         LineItem.transactionError | LineItem.lineError AS lineError, Account_1.name AS destinationAccount, SubLineItem.description, LineItem.creditDebit, 
+                         SubLineItem.amount, LineItem.complete, 0.0 AS creditAmount, 0.0 AS debitAmount, 0.0 AS balanceAmount
 FROM            LineItem INNER JOIN
                          LineType ON LineItem.lineTypeID = LineType.id INNER JOIN
                          Account ON LineItem.accountID = Account.id INNER JOIN
                          Account AS Account_1 ON LineItem.oppAccountID = Account_1.id INNER JOIN
                          SubLineItem ON LineItem.id = SubLineItem.lineItemID
-WHERE        SubLineItem.envelopeID = @eID
-ORDER BY LineItem.date, LineItem.creditDebit DESC, SubLineItem.id";
+WHERE        (SubLineItem.envelopeID = @eID)
+ORDER BY LineItem.date, LineItem.creditDebit DESC, subLineItemID";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@eID", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, true, 0, 0, "envelopeID", global::System.Data.DataRowVersion.Current, null));
         }

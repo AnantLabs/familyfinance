@@ -15,8 +15,6 @@ namespace FamilyFinance2
         //   Local Variables
         ///////////////////////////////////////////////////////////////////////
         private enum ImageID {Bank = 0, Envelope = 1, Money = 2, ErrorFlag = 3};
-
-        private FFDBDataSet fFDBDataSet;
         
         private TreeListColumn nameColumn;
         private TreeListColumn balanceColumn;
@@ -352,14 +350,6 @@ namespace FamilyFinance2
         ///////////////////////////////////////////////////////////////////////
         public AccountTLV()
         {
-            fFDBDataSet = new FFDBDataSet();
-
-            fFDBDataSet.AccountType.myFillTA();
-            fFDBDataSet.AccountCatagory.myFillTA();
-            fFDBDataSet.Account.myFillTA();
-            fFDBDataSet.Envelope.myFillTA();
-
-
             // Set Defaults
             showIncome = true;
             showExpense = true;
@@ -380,20 +370,6 @@ namespace FamilyFinance2
             foreach (MyTreeListNode child in this.Nodes)
             {
                 if (updateNode(child, accountID, envelopeID, newAmount, "") == true)
-                    found = true; // Do not break-out if found, sub envelopes might be in two places.
-            }
-
-            if (found == false)
-                this.buildTheTree();
-        }
-
-        public void updateNameInTheTreeView(int accountID, int envelopeID, string newName)
-        {
-            bool found = false;
-
-            foreach (MyTreeListNode child in this.Nodes)
-            {
-                if (updateNode(child, accountID, envelopeID, 0.0m, newName) == true)
                     found = true; // Do not break-out if found, sub envelopes might be in two places.
             }
 

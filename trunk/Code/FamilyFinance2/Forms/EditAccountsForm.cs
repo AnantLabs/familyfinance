@@ -55,6 +55,11 @@ namespace FamilyFinance2.Forms
                 this.accountBindingSource.Filter = "id = " + accountID.ToString();
         }
 
+        private void EditAccountsForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            saveChanges();
+        }
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Private

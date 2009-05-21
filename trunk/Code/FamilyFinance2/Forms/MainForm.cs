@@ -25,26 +25,28 @@ namespace FamilyFinance2
         {
             AccountTypeForm atf = new AccountTypeForm();
             atf.ShowDialog();
+            this.registrySplitCont.myReloadAccountTypes();
         }
 
         private void transactionTypesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LineTypeForm ltf = new LineTypeForm();
             ltf.ShowDialog();
+            this.registrySplitCont.myReloadLineType();
         }
 
         private void envelopesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             EditEnvelopesForm eef = new EditEnvelopesForm();
             eef.ShowDialog();
-            this.registrySplitCont.myReloadTables();
+            this.registrySplitCont.myReloadEnvelope();
         }
 
         private void accountsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             EditAccountsForm eaf = new EditAccountsForm();
             eaf.ShowDialog();
-            this.registrySplitCont.myReloadTables();
+            this.registrySplitCont.myReloadAccount();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
