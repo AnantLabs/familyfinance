@@ -143,12 +143,26 @@ namespace FamilyFinance2
                 setAccountEnvelope(accountID, envelopeID);
         }
 
-        public void myReloadTables()
+        public void myReloadAccounts()
         {
-            this.lineItemDGV.myReloadTables(this.lineItemDGV.CurrentAccountID);
-            this.subLineDGV.myReloadTables();
+            this.lineItemDGV.myReloadAccounts();
         }
 
+        public void myReloadEnvelopes()
+        {
+            this.lineItemDGV.myReloadEnvelopes();
+        }
+
+        public void myReloadLineTypes()
+        {
+            this.lineItemDGV.myReloadLineTypes();
+        }
+
+        public void myReloadLineItems()
+        {
+            this.lineItemDGV.myReloadLineItems();
+            this.subLineDGV.myReloadSubLineView();
+        }
 
     }// END public partial class multiDataGridView
 }// END namespace FamilyFinance.Custom_Controls

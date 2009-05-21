@@ -162,8 +162,10 @@
             // accountTreeView
             // 
             this.accountTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.accountTreeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.accountTreeView.FullRowSelect = true;
             this.accountTreeView.HideSelection = false;
+            this.accountTreeView.Indent = 10;
             this.accountTreeView.Location = new System.Drawing.Point(0, 0);
             this.accountTreeView.Name = "accountTreeView";
             this.accountTreeView.Size = new System.Drawing.Size(248, 376);
@@ -354,6 +356,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Accounts";
             this.Load += new System.EventHandler(this.EditAccountsForm_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditAccountsForm_FormClosing);
             this.splitContainer.Panel1.ResumeLayout(false);
             this.splitContainer.Panel2.ResumeLayout(false);
             this.splitContainer.Panel2.PerformLayout();

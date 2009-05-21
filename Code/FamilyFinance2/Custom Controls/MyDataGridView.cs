@@ -20,11 +20,12 @@ namespace FamilyFinance2
 
 
         // row flags used in painting cells
-        protected bool rowTransactionError;
-        protected bool rowLineError;
+        protected bool rowError;
+        protected bool rowEnvelopeError;
         protected bool rowNegativeBalance;
         protected bool rowSplitEnvelope;
         protected bool rowMultipleAccounts;
+        protected bool rowFutureDate;
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Properties
@@ -81,53 +82,6 @@ namespace FamilyFinance2
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Internal Events
         ////////////////////////////////////////////////////////////////////////////////////////////
-        private void MyDataGridView_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
-        {
-            int lineID = Convert.ToInt32(this["lineItemIDColumn", e.RowIndex].Value);
-            FFDBDataSet.LineItemRow thisLine = this.fFDBDataSet.LineItem.FindByid(lineID);
-            System.Drawing.Color backColor = this.Rows[e.RowIndex].DefaultCellStyle.BackColor;
-            System.Drawing.Color foreColor = this.Rows[e.RowIndex].DefaultCellStyle.ForeColor;
-
-            // Defaults. Used for new lines.
-            this.rowTransactionError = false;
-            this.rowLineError = false;
-            this.rowNegativeBalance = false;
-            this.rowSplitEnvelope = false;
-            this.rowMultipleAccounts = false;
-
-
-            if (thisLine != null)
-            {
-                // Set row Flags
-                rowTransactionError = thisLine.transactionError;
-                rowLineError = thisLine.lineError;
-
-                if (thisLine.balanceAmount < 0.0m)
-                    this.rowNegativeBalance = true;
-
-                if (thisLine.oppAccountID == SpclAccount.MULTIPLE)
-                    this.rowMultipleAccounts = true;
-
-                if (thisLine.envelopeID == SpclEnvelope.SPLIT)
-                    this.rowSplitEnvelope = true;
-
-                // Set default row back and fore colors
-                if (rowTransactionError)
-                {
-                    backColor = this.CellStyleError.BackColor;
-                    foreColor = this.CellStyleError.ForeColor;
-                }
-                else if (thisLine.date > DateTime.Today) // future Date
-                {
-                    backColor = this.CellStyleFuture.BackColor;
-                    foreColor = this.CellStyleFuture.ForeColor;
-                }
-            }
-
-            this.Rows[e.RowIndex].DefaultCellStyle.BackColor = backColor;
-            this.Rows[e.RowIndex].DefaultCellStyle.ForeColor = foreColor;
-        }
-
         private void MyDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             int col = e.ColumnIndex;
@@ -135,32 +89,35 @@ namespace FamilyFinance2
 
             if (col < 0 || row < 0)
                 return;
-            
-            bool readOnlyCell = false;
+
             string colName = this.Columns[col].Name;
+            bool readOnlyCell = false;
             string toolTipText = "";
 
-            // Row Errors
-            if (this.rowTransactionError)
-                toolTipText = "This transaction needs attention.";
-
-            else if (colName == "envelopeIDColumn" && this.rowLineError)
+            // Set the back ground and the tool tip.
+            if (this.rowError)
             {
                 e.CellStyle.BackColor = CellStyleError.BackColor;
-                object temp = this[col, row].Value;
-                toolTipText = "The sub transactions need attention. ";
+                toolTipText = "This transaction needs attention.";
             }
+            else if (this.rowEnvelopeError && colName == "envelopeIDColumn")
+            {
+                e.CellStyle.BackColor = CellStyleError.BackColor;
+                toolTipText = "The sub transactions need attention.";
+            }
+            else if (this.rowFutureDate)
+                e.CellStyle.BackColor = CellStyleFuture.BackColor;
 
             // rowNegativeBalance
-            if (colName == "balanceAmountColumn" && this.rowNegativeBalance)
+            if (this.rowNegativeBalance && colName == "balanceAmountColumn")
                 e.CellStyle.ForeColor = CellStyleMoney.ForeColor;
 
             // rowMultipleAccounts
-            if (colName == "oppAccountIDColumn" && this.rowMultipleAccounts)
+            if (this.rowMultipleAccounts && colName == "oppAccountIDColumn")
                 readOnlyCell = true;
 
             // rowSplitEnvelope
-            if (colName == "envelopeIDColumn" && this.rowSplitEnvelope)
+            if (this.rowSplitEnvelope && colName == "envelopeIDColumn")
                 readOnlyCell = true;
 
             this[col, row].ToolTipText = toolTipText;
@@ -171,6 +128,7 @@ namespace FamilyFinance2
         {
             string temp = "stop";
         }
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Private
@@ -223,7 +181,6 @@ namespace FamilyFinance2
             this.ShowRowErrors = false;
             this.MultiSelect = false;
 
-            this.RowPrePaint += new DataGridViewRowPrePaintEventHandler(MyDataGridView_RowPrePaint);
             this.CellFormatting += new DataGridViewCellFormattingEventHandler(MyDataGridView_CellFormatting);
             this.DataError += new DataGridViewDataErrorEventHandler(MyDataGridView_DataError);
         }

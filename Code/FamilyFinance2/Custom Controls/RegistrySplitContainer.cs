@@ -65,10 +65,31 @@ namespace FamilyFinance2
         {
         }
 
-        public void myReloadTables()
+        public void myReloadAccount()
+        {
+            multiDGV.myReloadAccounts();
+            accountTLV.myRebuildTree();
+        }
+
+        public void myReloadAccountTypes()
         {
             accountTLV.myRebuildTree();
-            multiDGV.myReloadTables();
+        }
+
+        public void myReloadEnvelope()
+        {
+            multiDGV.myReloadEnvelopes();
+            accountTLV.myRebuildTree();
+        }
+
+        public void myReloadLineItem()
+        {
+            multiDGV.myReloadLineItems();
+        }
+
+        public void myReloadLineType()
+        {
+            multiDGV.myReloadLineTypes();
         }
     }
 }
