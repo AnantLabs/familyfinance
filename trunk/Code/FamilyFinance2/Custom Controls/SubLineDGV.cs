@@ -10,6 +10,7 @@ namespace FamilyFinance2
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Local Constants and variables
         ////////////////////////////////////////////////////////////////////////////////////////////
+
         // Binding Sources
         private BindingSource SubLineDGVBindingSource;
 
@@ -80,23 +81,23 @@ namespace FamilyFinance2
             FFDBDataSet.SubLineViewRow thisSubLine = this.fFDBDataSet.SubLineView.FindBysubLineItemID(subLineID);
 
             // Defaults. Used for new lines.
-            this.rowError = false;
-            this.rowEnvelopeError = false;
-            this.rowNegativeBalance = false;
-            this.rowSplitEnvelope = false;
-            this.rowMultipleAccounts = false;
-            this.rowFutureDate = false;
+            this.flagTransactionError = false;
+            this.flagLineError = false;
+            this.flagNegativeBalance = false;
+            this.flagReadOnlyEnvelope = false;
+            this.flagReadOnlyAccounts = false;
+            this.flagFutureDate = false;
 
             if (thisSubLine != null)
             {
                 // Set row Flags
-                rowError = thisSubLine.lineError;
+                flagTransactionError = thisSubLine.lineError;
 
                 if (thisSubLine.balanceAmount < 0.0m)
-                    this.rowNegativeBalance = true;
+                    this.flagNegativeBalance = true;
 
                 if (thisSubLine.date > DateTime.Today) // future Date
-                    this.rowFutureDate = true;
+                    this.flagFutureDate = true;
             }
         }
 

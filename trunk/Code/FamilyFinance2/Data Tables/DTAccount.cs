@@ -47,16 +47,8 @@ namespace FamilyFinance2
             private void AccountDataTable_TableNewRow(object sender, System.Data.DataTableNewRowEventArgs e)
             {
                 AccountRow accountRow = e.Row as AccountRow;
-                short id = Convert.ToInt16(FFDBDataSet.myDBGetNewID("id", "Account"));
 
-                if (id > newID)
-                {
-                    accountRow.id = id++;
-                    newID = id;
-                }
-                else
-                    accountRow.id = newID++;
-
+                accountRow.id = newID++;
                 accountRow.name = "";
                 accountRow.accountTypeID = SpclAccountType.NULL;
                 accountRow.catagoryID = SpclAccountCat.ACCOUNT;
@@ -108,7 +100,10 @@ namespace FamilyFinance2
             //   Functions Public 
             ///////////////////////////////////////////////////////////////////////
             public void myFillTA()
-            { this.thisTableAdapter.Fill(this); }
+            {
+                this.thisTableAdapter.Fill(this);
+                this.newID = Convert.ToInt16(FFDBDataSet.myDBGetNewID("id", "Account"));
+            }
 
             public void myUpdateTA()
             {

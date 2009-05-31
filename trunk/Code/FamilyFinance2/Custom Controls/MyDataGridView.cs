@@ -20,12 +20,12 @@ namespace FamilyFinance2
 
 
         // row flags used in painting cells
-        protected bool rowError;
-        protected bool rowEnvelopeError;
-        protected bool rowNegativeBalance;
-        protected bool rowSplitEnvelope;
-        protected bool rowMultipleAccounts;
-        protected bool rowFutureDate;
+        protected bool flagTransactionError;
+        protected bool flagLineError;
+        protected bool flagNegativeBalance;
+        protected bool flagReadOnlyEnvelope;
+        protected bool flagReadOnlyAccounts;
+        protected bool flagFutureDate;
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Properties
@@ -91,33 +91,33 @@ namespace FamilyFinance2
                 return;
 
             string colName = this.Columns[col].Name;
-            bool readOnlyCell = false;
-            string toolTipText = "";
+            bool readOnlyCell = this[col, row].ReadOnly;
+            string toolTipText = this[col, row].ToolTipText;
 
             // Set the back ground and the tool tip.
-            if (this.rowError)
+            if (this.flagTransactionError)
             {
                 e.CellStyle.BackColor = CellStyleError.BackColor;
                 toolTipText = "This transaction needs attention.";
             }
-            else if (this.rowEnvelopeError && colName == "envelopeIDColumn")
+            else if (this.flagLineError && colName == "envelopeIDColumn")
             {
                 e.CellStyle.BackColor = CellStyleError.BackColor;
                 toolTipText = "The sub transactions need attention.";
             }
-            else if (this.rowFutureDate)
+            else if (this.flagFutureDate)
                 e.CellStyle.BackColor = CellStyleFuture.BackColor;
 
             // rowNegativeBalance
-            if (this.rowNegativeBalance && colName == "balanceAmountColumn")
+            if (this.flagNegativeBalance && colName == "balanceAmountColumn")
                 e.CellStyle.ForeColor = CellStyleMoney.ForeColor;
 
             // rowMultipleAccounts
-            if (this.rowMultipleAccounts && colName == "oppAccountIDColumn")
+            if (this.flagReadOnlyAccounts && colName == "oppAccountIDColumn")
                 readOnlyCell = true;
 
             // rowSplitEnvelope
-            if (this.rowSplitEnvelope && colName == "envelopeIDColumn")
+            if (this.flagReadOnlyEnvelope && colName == "envelopeIDColumn")
                 readOnlyCell = true;
 
             this[col, row].ToolTipText = toolTipText;
@@ -141,8 +141,6 @@ namespace FamilyFinance2
         ////////////////////////////////////////////////////////////////////////////////////////////
         public MyDataGridView()
         {
-            fFDBDataSet = new FFDBDataSet();
-
             ///////////////////////////////////////////////////////////////////
             // Setup the Cell Styles
             CellStyleNormal = new DataGridViewCellStyle();
@@ -163,6 +161,14 @@ namespace FamilyFinance2
             CellStyleError = new DataGridViewCellStyle();
             CellStyleError.BackColor = System.Drawing.Color.Red;
 
+            ///////////////////////////////////////////////////////////////////
+            // Initial Flag values
+            this.flagTransactionError = false;
+            this.flagLineError = false;
+            this.flagNegativeBalance = false;
+            this.flagReadOnlyEnvelope = false;
+            this.flagReadOnlyAccounts = false;
+            this.flagFutureDate = false;
 
             ///////////////////////////////////////////////////////////////////
             // Build theDataGridView
@@ -184,10 +190,6 @@ namespace FamilyFinance2
             this.CellFormatting += new DataGridViewCellFormattingEventHandler(MyDataGridView_CellFormatting);
             this.DataError += new DataGridViewDataErrorEventHandler(MyDataGridView_DataError);
         }
-
-
-
-
 
     }
 }

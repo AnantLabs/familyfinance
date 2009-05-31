@@ -11,6 +11,23 @@ FROM     LineItem
 WHERE    (accountID = @aID)
 ORDER BY date, creditDebit DESC, id
 
++Add the fill method
+	FillByTransaction
+SELECT   id, transactionID, date, lineTypeID, accountID, oppAccountID, description, confirmationNumber, envelopeID, complete, amount, creditDebit, transactionError, 
+         lineError
+FROM     LineItem
+WHERE    (transactionID = @tID)
+
+
+
+*******************************************
+SubLineItem
++Add the fill method
+	FillByTransactionID
+SELECT   SubLineItem.id, SubLineItem.lineItemID, SubLineItem.envelopeID, SubLineItem.description, SubLineItem.amount
+FROM     SubLineItem INNER JOIN LineItem ON LineItem.id = SubLineItem.lineItemID
+WHERE    (LineItem.transactionID = @transID)
+
 
 
 *******************************************
@@ -36,11 +53,13 @@ FROM     Envelope
 ORDER BY fullName
 
 
+
 *******************************************
 AEBalance
 +Add Query
 	DeleteQuery
 DELETE FROM AEBalance
+
 
 
 *******************************************

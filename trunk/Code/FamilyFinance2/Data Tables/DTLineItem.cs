@@ -47,13 +47,8 @@ namespace FamilyFinance2
             private void LineItemDataTable_TableNewRow(object sender, System.Data.DataTableNewRowEventArgs e)
             {
                 LineItemRow lineItemRow = e.Row as LineItemRow;
-                int lineID = FFDBDataSet.myDBGetNewID("id", "LineItem");
-
-                if (lineID > newID)
-                    newID = (lineItemRow.id = lineID) + 1;
-                else
-                    lineItemRow.id = newID++;
-
+                
+                lineItemRow.id = newID++;
                 lineItemRow.transactionID = FFDBDataSet.myDBGetNewID("transactionID", "LineItem");
                 lineItemRow.date = DateTime.Now.Date;
                 lineItemRow.lineTypeID = SpclLineType.NULL;
@@ -167,6 +162,7 @@ namespace FamilyFinance2
             public void myFill()
             {
                 this.thisTableAdapter.Fill(this);
+                this.newID = FFDBDataSet.myDBGetNewID("id", "LineItem");
             }
 
             public void myFillTAByAccount(short accountID)
@@ -178,6 +174,7 @@ namespace FamilyFinance2
                 // Turn off the auto change and fillup the table.
                 autoChange = false;
                 this.thisTableAdapter.FillByAccount(this, accountID);
+                this.newID = FFDBDataSet.myDBGetNewID("id", "LineItem");
 
                 // If this is empty there is nothing to do.
                 if (this.Rows.Count <= 0)
@@ -226,6 +223,12 @@ namespace FamilyFinance2
 
                 this.AcceptChanges();
                 autoChange = true;
+            }
+
+            public void myFillByTransaction(int transactionID)
+            {
+                this.thisTableAdapter.FillByTransaction(this, transactionID);
+                this.newID = FFDBDataSet.myDBGetNewID("id", "LineItem");
             }
 
             public void myFillBalance()
@@ -275,7 +278,6 @@ namespace FamilyFinance2
             public void myUpdateTA()
             { this.thisTableAdapter.Update(this); }
 
-            
 
         }//END partial class LineItemDataTable
     }// END FamilyFinanceDBDataSet Partial Class
