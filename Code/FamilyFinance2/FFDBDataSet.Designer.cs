@@ -6817,7 +6817,7 @@ namespace FamilyFinance2.FFDBDataSetTableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlServerCe.SqlCeCommand[2];
+            this._commandCollection = new global::System.Data.SqlServerCe.SqlCeCommand[3];
             this._commandCollection[0] = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = @"SELECT [id], [transactionID], [date], [lineTypeID], [accountID], [oppAccountID], [description], [confirmationNumber], [envelopeID], [complete], [amount], [creditDebit], [transactionError], [lineError] 
@@ -6832,6 +6832,14 @@ ORDER BY date, creditDebit DESC, id";
                 "iption, confirmationNumber, envelopeID, complete, amount, creditDebit, transacti" +
                 "onError, \r\n                         lineError\r\nFROM            LineItem";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[2] = new global::System.Data.SqlServerCe.SqlCeCommand();
+            this._commandCollection[2].Connection = this.Connection;
+            this._commandCollection[2].CommandText = @"SELECT        id, transactionID, date, lineTypeID, accountID, oppAccountID, description, confirmationNumber, envelopeID, complete, amount, creditDebit, transactionError, 
+                         lineError
+FROM            LineItem
+WHERE        (transactionID = @tID)";
+            this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@tID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, true, 0, 0, "transactionID", global::System.Data.DataRowVersion.Current, null));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6875,6 +6883,30 @@ ORDER BY date, creditDebit DESC, id";
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
         public virtual FFDBDataSet.LineItemDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[1];
+            FFDBDataSet.LineItemDataTable dataTable = new FFDBDataSet.LineItemDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillByTransaction(FFDBDataSet.LineItemDataTable dataTable, int tID) {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(tID));
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual FFDBDataSet.LineItemDataTable GetDataByTransaction(int tID) {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(tID));
             FFDBDataSet.LineItemDataTable dataTable = new FFDBDataSet.LineItemDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -7474,12 +7506,20 @@ ORDER BY date, creditDebit DESC, id";
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlServerCe.SqlCeCommand[1];
+            this._commandCollection = new global::System.Data.SqlServerCe.SqlCeCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT [id], [lineItemID], [envelopeID], [description], [amount] FROM [SubLineIte" +
                 "m]";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1] = new global::System.Data.SqlServerCe.SqlCeCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = @"SELECT        SubLineItem.id, SubLineItem.lineItemID, SubLineItem.envelopeID, SubLineItem.description, SubLineItem.amount
+FROM            SubLineItem INNER JOIN
+                         LineItem ON LineItem.id = SubLineItem.lineItemID
+WHERE        (LineItem.transactionID = @transID)";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@transID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, true, 0, 0, "transactionID", global::System.Data.DataRowVersion.Current, null));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7499,6 +7539,30 @@ ORDER BY date, creditDebit DESC, id";
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual FFDBDataSet.SubLineItemDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            FFDBDataSet.SubLineItemDataTable dataTable = new FFDBDataSet.SubLineItemDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillByTransactionID(FFDBDataSet.SubLineItemDataTable dataTable, int transID) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(transID));
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual FFDBDataSet.SubLineItemDataTable GetDataByTransactionID(int transID) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(transID));
             FFDBDataSet.SubLineItemDataTable dataTable = new FFDBDataSet.SubLineItemDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;

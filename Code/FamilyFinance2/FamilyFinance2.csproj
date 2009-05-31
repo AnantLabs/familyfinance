@@ -94,6 +94,9 @@
     <Compile Include="Custom Controls\SubLineDGV.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Custom Controls\SubTransactionDGV.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Custom Controls\TreeList\Tracing.cs" />
     <Compile Include="Custom Controls\TreeList\TreeListColumn.cs" />
     <Compile Include="Custom Controls\TreeList\TreeListColumn.Design.cs" />
@@ -176,6 +179,12 @@
     <Compile Include="Forms\AccountTypeForm.Designer.cs">
       <DependentUpon>AccountTypeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\TransactionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TransactionForm.Designer.cs">
+      <DependentUpon>TransactionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Custom Controls\MultiDataGridViewControl.resx">
@@ -201,6 +210,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AccountTypeForm.resx">
       <DependentUpon>AccountTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TransactionForm.resx">
+      <DependentUpon>TransactionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

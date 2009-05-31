@@ -49,16 +49,7 @@ namespace FamilyFinance2
                 autoChange = false;
                 EnvelopeRow envelopeRow = e.Row as EnvelopeRow;
 
-                short id = Convert.ToInt16(FFDBDataSet.myDBGetNewID("id", "Envelope"));
-
-                if (id > newID)
-                {
-                    envelopeRow.id = id++;
-                    newID = id;
-                }
-                else
-                    envelopeRow.id = newID++;
-
+                envelopeRow.id = newID++;
                 envelopeRow.name = "";
                 envelopeRow.fullName = "";
                 envelopeRow.parentEnvelope = SpclEnvelope.NULL;
@@ -171,6 +162,7 @@ namespace FamilyFinance2
             public void myFillTA()
             {
                 this.thisTableAdapter.Fill(this);
+                this.newID = Convert.ToInt16(FFDBDataSet.myDBGetNewID("id", "Envelope"));
             }
 
 

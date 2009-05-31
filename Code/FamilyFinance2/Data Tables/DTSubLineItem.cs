@@ -47,13 +47,8 @@ namespace FamilyFinance2
             private void SubLineItemDataTable_TableNewRow(object sender, DataTableNewRowEventArgs e)
             {
                 SubLineItemRow subLineItemRow = e.Row as SubLineItemRow;
-                int id = FFDBDataSet.myDBGetNewID("id", "SubLineItem");
 
-                if (id > newID)
-                    newID = (subLineItemRow.id = id) + 1;
-                else
-                    subLineItemRow.id = newID++;
-
+                subLineItemRow.id = newID++;
                 subLineItemRow.envelopeID = SpclEnvelope.NULL;
                 subLineItemRow.description = "";
                 subLineItemRow.amount = 0.0m;
@@ -94,7 +89,16 @@ namespace FamilyFinance2
             //   Function Public
             ///////////////////////////////////////////////////////////////////////
             public void myFillTA()
-            { this.thisTableAdapter.Fill(this); }
+            { 
+                this.thisTableAdapter.Fill(this);
+                this.newID = FFDBDataSet.myDBGetNewID("id", "SubLineItem");
+            }
+
+            public void myFillTAByTransactionID(int transID)
+            {
+                this.thisTableAdapter.FillByTransactionID(this, transID);
+                this.newID = FFDBDataSet.myDBGetNewID("id", "SubLineItem");
+            }
 
             public void myUpdateTA()
             { this.thisTableAdapter.Update(this); }

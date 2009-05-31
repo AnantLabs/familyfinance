@@ -49,13 +49,8 @@ namespace FamilyFinance2
             private void AEBalanceDataTable_TableNewRow(object sender, DataTableNewRowEventArgs e)
             {
                 AEBalanceRow aEBalanceRow = e.Row as AEBalanceRow;
-                int id = FFDBDataSet.myDBGetNewID("id", "AEBalance");
 
-                if (id > newID)
-                    newID = (aEBalanceRow.id = id) + 1;
-                else
-                    aEBalanceRow.id = newID++;
-
+                aEBalanceRow.id = newID++;
                 aEBalanceRow.accountID = SpclAccount.NULL;
                 aEBalanceRow.envelopeID = SpclEnvelope.NULL;
                 aEBalanceRow.endingBalance = 0.0m;
@@ -73,7 +68,10 @@ namespace FamilyFinance2
             //   Functions Public
             ////////////////////////////////////////////////////////////////////////////////////////////
             public void myFillTA()
-            { this.thisTableAdapter.Fill(this); }
+            {
+                this.thisTableAdapter.Fill(this);
+                this.newID = FFDBDataSet.myDBGetNewID("id", "AEBalance");
+            }
 
             public void myUpdateTA()
             { this.thisTableAdapter.Update(this); }

@@ -47,16 +47,8 @@ namespace FamilyFinance2
             private void LineTypeDataTable_TableNewRow(object sender, DataTableNewRowEventArgs e)
             {
                 LineTypeRow lineTypeRow = e.Row as LineTypeRow;
-                short id = Convert.ToInt16(FFDBDataSet.myDBGetNewID("id", "LineType"));
 
-                if (id > newID)
-                {
-                    lineTypeRow.id = id++;
-                    newID = id;
-                }
-                else
-                    lineTypeRow.id = newID++;
-
+                lineTypeRow.id = newID++;
                 lineTypeRow.name = "";
             }
 
@@ -95,7 +87,10 @@ namespace FamilyFinance2
             //   Function Public
             ///////////////////////////////////////////////////////////////////////
             public void myFillTA()
-            { this.thisTableAdapter.Fill(this); }
+            {
+                this.thisTableAdapter.Fill(this);
+                this.newID = Convert.ToInt16(FFDBDataSet.myDBGetNewID("id", "LineType"));
+            }
 
             public void myUpdateTA()
             { this.thisTableAdapter.Update(this); }

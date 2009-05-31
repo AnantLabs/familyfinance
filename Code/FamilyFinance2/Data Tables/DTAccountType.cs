@@ -17,6 +17,7 @@ namespace FamilyFinance2
             private short newID;
             private bool autoChange;
 
+
             ///////////////////////////////////////////////////////////////////////
             //   Properties
             ///////////////////////////////////////////////////////////////////////
@@ -47,16 +48,8 @@ namespace FamilyFinance2
             private void AccountTypeDataTable_TableNewRow(object sender, DataTableNewRowEventArgs e)
             {
                 AccountTypeRow accountTypeRow = e.Row as AccountTypeRow;
-                short id = Convert.ToInt16(FFDBDataSet.myDBGetNewID("id", "AccountType"));
 
-                if (id > newID)
-                {
-                    accountTypeRow.id = id++;
-                    newID = id;
-                }
-                else
-                    accountTypeRow.id = newID++;
-
+                accountTypeRow.id = newID++;
                 accountTypeRow.name = "";
             }
 
@@ -91,7 +84,10 @@ namespace FamilyFinance2
             //   Functions Public
             ///////////////////////////////////////////////////////////////////////
             public void myFillTA()
-            { this.thisTableAdapter.Fill(this); }
+            {
+                this.thisTableAdapter.Fill(this);
+                this.newID = Convert.ToInt16(FFDBDataSet.myDBGetNewID("id", "AccountType"));
+            }
 
             public void myUpdateTA()
             {

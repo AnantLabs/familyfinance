@@ -196,30 +196,30 @@ namespace FamilyFinance2
             FFDBDataSet.LineItemRow thisLine = this.fFDBDataSet.LineItem.FindByid(lineID);
 
             // Defaults. Used for new lines.
-            this.rowError = false;
-            this.rowEnvelopeError = false;
-            this.rowNegativeBalance = false;
-            this.rowSplitEnvelope = false;
-            this.rowMultipleAccounts = false;
-            this.rowFutureDate = false;
+            this.flagTransactionError = false;
+            this.flagLineError = false;
+            this.flagNegativeBalance = false;
+            this.flagReadOnlyEnvelope = false;
+            this.flagReadOnlyAccounts = false;
+            this.flagFutureDate = false;
 
             if (thisLine != null)
             {
                 // Set row Flags
-                rowError = thisLine.transactionError;
-                rowEnvelopeError = thisLine.lineError;
+                flagTransactionError = thisLine.transactionError;
+                flagLineError = thisLine.lineError;
 
                 if (thisLine.balanceAmount < 0.0m)
-                    this.rowNegativeBalance = true;
+                    this.flagNegativeBalance = true;
 
                 if (thisLine.oppAccountID == SpclAccount.MULTIPLE)
-                    this.rowMultipleAccounts = true;
+                    this.flagReadOnlyAccounts = true;
 
                 if (thisLine.envelopeID == SpclEnvelope.SPLIT)
-                    this.rowSplitEnvelope = true;
+                    this.flagReadOnlyEnvelope = true;
 
                 if (thisLine.date > DateTime.Today) // future Date
-                    this.rowFutureDate = true;
+                    this.flagFutureDate = true;
             }
         }
 
@@ -389,6 +389,7 @@ namespace FamilyFinance2
         ////////////////////////////////////////////////////////////////////////////////////////////
         public LineItemDGV()
         {
+            fFDBDataSet = new FFDBDataSet();
             this.inRowValidating = false;
             this.showEnvelopeColumn = true;
 

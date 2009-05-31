@@ -11,9 +11,9 @@
     <Shape ID="DesignTable:AccountType" ZOrder="8" X="1082" Y="-10" Height="115" Width="127" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="64" />
     <Shape ID="DesignTable:AEBalance" ZOrder="7" X="1012" Y="442" Height="191" Width="204" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="121" />
     <Shape ID="DesignTable:Envelope" ZOrder="1" X="641" Y="417" Height="229" Width="197" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="159" />
-    <Shape ID="DesignTable:LineItem" ZOrder="6" X="845" Y="-14" Height="402" Width="174" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="349" />
+    <Shape ID="DesignTable:LineItem" ZOrder="6" X="845" Y="-14" Height="438" Width="183" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="349" />
     <Shape ID="DesignTable:LineType" ZOrder="5" X="633" Y="-23" Height="115" Width="134" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="64" />
-    <Shape ID="DesignTable:SubLineItem" ZOrder="4" X="620" Y="133" Height="172" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="121" />
+    <Shape ID="DesignTable:SubLineItem" ZOrder="4" X="620" Y="133" Height="191" Width="157" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="121" />
     <Shape ID="DesignTable:SubLineView" ZOrder="2" X="1412" Y="4" Height="381" Width="162" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="294" />
   </Shapes>
   <Connectors>
@@ -92,12 +92,16 @@
     <Connector ID="DesignRelation:FK_Line_accountID" ZOrder="16" LineWidth="11">
       <RoutePoints>
         <Point>
-          <X>1089</X>
-          <Y>197</Y>
+          <X>1137</X>
+          <Y>146</Y>
         </Point>
         <Point>
-          <X>1019</X>
-          <Y>197</Y>
+          <X>1137</X>
+          <Y>129</Y>
+        </Point>
+        <Point>
+          <X>1028</X>
+          <Y>129</Y>
         </Point>
       </RoutePoints>
     </Connector>
@@ -120,12 +124,16 @@
     <Connector ID="DesignRelation:FK_Line_oppAccountID" ZOrder="14" LineWidth="11">
       <RoutePoints>
         <Point>
-          <X>1089</X>
-          <Y>207</Y>
+          <X>1145</X>
+          <Y>146</Y>
         </Point>
         <Point>
-          <X>1019</X>
-          <Y>207</Y>
+          <X>1145</X>
+          <Y>121</Y>
+        </Point>
+        <Point>
+          <X>1028</X>
+          <Y>121</Y>
         </Point>
       </RoutePoints>
     </Connector>
@@ -149,7 +157,7 @@
         </Point>
         <Point>
           <X>720</X>
-          <Y>305</Y>
+          <Y>324</Y>
         </Point>
       </RoutePoints>
     </Connector>
@@ -157,11 +165,15 @@
       <RoutePoints>
         <Point>
           <X>845</X>
-          <Y>162</Y>
+          <Y>113</Y>
         </Point>
         <Point>
-          <X>770</X>
-          <Y>162</Y>
+          <X>777</X>
+          <Y>113</Y>
+        </Point>
+        <Point>
+          <X>777</X>
+          <Y>133</Y>
         </Point>
       </RoutePoints>
     </Connector>
