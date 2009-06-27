@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using System.Data;
+using System.Linq;
 using System.Data.SqlServerCe;
 using System.Collections.Generic;
 
@@ -231,6 +232,20 @@ namespace FamilyFinance2
                 this.newID = FFDBDataSet.myDBGetNewID("id", "LineItem");
             }
 
+            public void mySaveChanges()
+            {
+                thisTableAdapter.Update(this);
+            }
+
+            public void mySaveNewLines()
+            {
+                foreach (LineItemRow line in this)
+                {
+                    if (line.RowState == DataRowState.Added)
+                        thisTableAdapter.Update(line);
+                }
+            }
+
             public void myFillBalance()
             {
                 bool accountCD;
@@ -275,8 +290,20 @@ namespace FamilyFinance2
                 autoChange = true;
             }
 
-            public void myUpdateTA()
-            { this.thisTableAdapter.Update(this); }
+            public decimal myGetTransCDSum(int transID, bool creditDebit)
+            {
+                decimal sum = 0.0m;
+
+                var amounts = from line in this
+                          where line.transactionID == transID && line.creditDebit == creditDebit
+                          select line.amount;
+
+                foreach (var amount in amounts)
+                    sum += amount;
+
+                return sum;
+            }
+
 
 
         }//END partial class LineItemDataTable

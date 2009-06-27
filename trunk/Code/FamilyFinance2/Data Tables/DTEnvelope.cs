@@ -154,9 +154,9 @@ namespace FamilyFinance2
             ////////////////////////////////////////////////////////////////////////////////////////////
             //   Functions Public
             ////////////////////////////////////////////////////////////////////////////////////////////
-            public void myUpdateTA()
+            public void mySaveChanges()
             {
-                this.thisTableAdapter.Update(this);
+                thisTableAdapter.Update(this);
             }
 
             public void myFillTA()

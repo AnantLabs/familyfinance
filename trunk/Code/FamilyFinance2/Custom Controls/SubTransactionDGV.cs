@@ -17,10 +17,10 @@ namespace FamilyFinance2
         private BindingSource envelopeColBindingSource;
 
         // Columns
-        private DataGridViewTextBoxColumn lineItemIDColumn;
-        private DataGridViewComboBoxColumn envelopeIDColumn;
-        private DataGridViewTextBoxColumn descriptionColumn;
-        private DataGridViewTextBoxColumn amountColumn;
+        public DataGridViewTextBoxColumn lineItemIDColumn;
+        public DataGridViewComboBoxColumn envelopeIDColumn;
+        public DataGridViewTextBoxColumn descriptionColumn;
+        public DataGridViewTextBoxColumn amountColumn;
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,14 +32,6 @@ namespace FamilyFinance2
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Internal Events
         ////////////////////////////////////////////////////////////////////////////////////////////
-        void SubTransactionDGV_UserAddedRow(object sender, DataGridViewRowEventArgs e)
-        {
-            for (int row = 0; row < this.Rows.Count; row++)
-            {
-                if (this[lineItemIDColumn.Index, row].Value == DBNull.Value)
-                    this[lineItemIDColumn.Index, row].Value = this.currentLineID;
-            }
-        }
 
         
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -86,7 +78,7 @@ namespace FamilyFinance2
             this.amountColumn.HeaderText = "Amount";
             this.amountColumn.DataPropertyName = "amount";
             this.amountColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.amountColumn.DefaultCellStyle = this.CellStyleMoney;
+            this.amountColumn.DefaultCellStyle = this.MyCellStyleMoney;
             this.amountColumn.Width = 65;
 
             // theDataGridView
@@ -118,13 +110,12 @@ namespace FamilyFinance2
             // Binding Sources
             this.subLineDGVBindingSource = new BindingSource(this.fFDBDataSet, "SubLineItem");
             this.envelopeColBindingSource = new BindingSource(this.fFDBDataSet, "Envelope");
+            this.envelopeColBindingSource.Filter = "id <> " + SpclEnvelope.SPLIT.ToString();
 
             this.mySetLineID(-1);   // Empty set
 
             this.buildTheDataGridView();
 
-            // Subscride to events
-            this.UserAddedRow += new DataGridViewRowEventHandler(SubTransactionDGV_UserAddedRow);
         }
 
         public void mySetLineID(int lineID)

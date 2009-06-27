@@ -11,24 +11,26 @@ namespace FamilyFinance2
         //   Local Constants and variables
         ////////////////////////////////////////////////////////////////////////////////////////////
         private readonly bool thisCreditDebit;
+        private readonly int thisTransactionID;
 
         // Binding Sources
-        public BindingSource lineItemDGVBindingSource;
-        public BindingSource lineTypeColBindingSource;
-        public BindingSource accountColBindingSource;
-        public BindingSource envelopeColBindingSource;
+        private BindingSource lineItemDGVBindingSource;
+        private BindingSource lineTypeColBindingSource;
+        private BindingSource accountColBindingSource;
+        private BindingSource envelopeColBindingSource;
 
         // Columns
-        private DataGridViewTextBoxColumn lineItemIDColumn;
-        private DataGridViewTextBoxColumn transactionIDColumn;
-        private CalendarColumn dateColumn;
-        private DataGridViewComboBoxColumn typeIDColumn;
-        private DataGridViewComboBoxColumn accountIDColumn;
-        private DataGridViewTextBoxColumn descriptionColumn;
-        private DataGridViewTextBoxColumn confermationNumColumn;
-        private DataGridViewComboBoxColumn envelopeIDColumn;
-        private DataGridViewTextBoxColumn completeColumn;
-        private DataGridViewTextBoxColumn amountColumn;
+        public DataGridViewTextBoxColumn lineItemIDColumn;
+        public DataGridViewTextBoxColumn transactionIDColumn;
+        public CalendarColumn dateColumn;
+        public DataGridViewComboBoxColumn typeIDColumn;
+        public DataGridViewComboBoxColumn accountIDColumn;
+        public DataGridViewTextBoxColumn descriptionColumn;
+        public DataGridViewTextBoxColumn confermationNumColumn;
+        public DataGridViewComboBoxColumn envelopeIDColumn;
+        public DataGridViewTextBoxColumn completeColumn;
+        public DataGridViewTextBoxColumn creditDebitColumn;
+        public DataGridViewTextBoxColumn amountColumn;
 
 
 
@@ -84,15 +86,6 @@ namespace FamilyFinance2
 
                 if (thisLine.date > DateTime.Today) // future Date
                     this.flagFutureDate = true;
-            }
-        }
-
-        void CDLinesDGV_UserAddedRow(object sender, DataGridViewRowEventArgs e)
-        {
-            for (int row = 0; row < this.Rows.Count; row++)
-            {
-                if (this[lineItemIDColumn.Index, row].Value == DBNull.Value)
-                    this[lineItemIDColumn.Index, row].Value = this.currentLineID;
             }
         }
 
@@ -203,13 +196,21 @@ namespace FamilyFinance2
             this.completeColumn.Width = 25;
             this.completeColumn.ReadOnly = true;
 
-            // debitAmountColumn
+            // creditDebitColumn
+            this.creditDebitColumn = new DataGridViewTextBoxColumn();
+            this.creditDebitColumn.Name = "creditDebitColumn";
+            this.creditDebitColumn.HeaderText = "CD";
+            this.creditDebitColumn.DataPropertyName = "creditDebit";
+            this.creditDebitColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            this.creditDebitColumn.Width = 20;
+
+            // amountColumn
             this.amountColumn = new DataGridViewTextBoxColumn();
             this.amountColumn.Name = "amountColumn";
             this.amountColumn.HeaderText = "Amount";
             this.amountColumn.DataPropertyName = "amount";
             this.amountColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.amountColumn.DefaultCellStyle = this.CellStyleMoney;
+            this.amountColumn.DefaultCellStyle = this.MyCellStyleMoney;
             this.amountColumn.Width = 65;
 
             // theDataGridView
@@ -226,6 +227,7 @@ namespace FamilyFinance2
                     this.confermationNumColumn,
                     this.envelopeIDColumn,
                     this.completeColumn,
+                    this.creditDebitColumn,
                     this.amountColumn
                 }
                 );
@@ -241,10 +243,11 @@ namespace FamilyFinance2
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Public
         ////////////////////////////////////////////////////////////////////////////////////////////
-        public CDLinesDGV(bool creditDebit, ref FFDBDataSet ffDataSet)
+        public CDLinesDGV(int transID, bool creditDebit, ref FFDBDataSet ffDataSet)
         {
             this.fFDBDataSet = ffDataSet;
             this.thisCreditDebit = creditDebit;
+            this.thisTransactionID = transID;
 
             ////////////////////////////////////
             // Setup the Bindings
@@ -266,10 +269,37 @@ namespace FamilyFinance2
             // Subscribe to event.
             this.CellDoubleClick += new DataGridViewCellEventHandler(LineItemDGV_CellDoubleClick);
             this.RowPrePaint += new DataGridViewRowPrePaintEventHandler(LineItemDGV_RowPrePaint);
-            this.UserAddedRow += new DataGridViewRowEventHandler(CDLinesDGV_UserAddedRow);
         }
 
+        public void myHighlightOn()
+        {
+            if (this.CurrentCell != null)
+            {
+                this.CurrentCell.Style.SelectionBackColor = this.MyCellStyleNormal.SelectionBackColor;
+                this.CurrentCell.Style.SelectionForeColor = this.MyCellStyleNormal.SelectionForeColor;
+            }
 
+            if (this.DefaultCellStyle != null)
+            {
+                this.DefaultCellStyle.SelectionBackColor = this.MyCellStyleNormal.SelectionBackColor;
+                this.DefaultCellStyle.SelectionForeColor = this.MyCellStyleNormal.SelectionForeColor;
+            }
+        }
+
+        public void myHighlightOff()
+        {
+            if (this.CurrentCell != null)
+            {
+                this.CurrentCell.Style.SelectionBackColor = this.MyCellStyleNormal.BackColor;
+                this.CurrentCell.Style.SelectionForeColor = this.MyCellStyleNormal.ForeColor;
+            }
+
+            if (this.DefaultCellStyle != null)
+            {
+                this.DefaultCellStyle.SelectionBackColor = this.MyCellStyleNormal.BackColor;
+                this.DefaultCellStyle.SelectionForeColor = this.MyCellStyleNormal.ForeColor;
+            }
+        }
 
     }
 }

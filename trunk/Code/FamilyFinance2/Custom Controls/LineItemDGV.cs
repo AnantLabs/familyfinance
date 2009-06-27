@@ -328,7 +328,7 @@ namespace FamilyFinance2
             this.debitAmountColumn.HeaderText = "Debit";
             this.debitAmountColumn.DataPropertyName = "debitAmount";
             this.debitAmountColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.debitAmountColumn.DefaultCellStyle = this.CellStyleMoney;
+            this.debitAmountColumn.DefaultCellStyle = this.MyCellStyleMoney;
             this.debitAmountColumn.Width = 65;
             
             // completeColumn
@@ -347,7 +347,7 @@ namespace FamilyFinance2
             this.creditAmountColumn.HeaderText = "Credit";
             this.creditAmountColumn.DataPropertyName = "creditAmount";
             this.creditAmountColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.creditAmountColumn.DefaultCellStyle = this.CellStyleMoney;
+            this.creditAmountColumn.DefaultCellStyle = this.MyCellStyleMoney;
             this.creditAmountColumn.Width = 65;
 
             // balanceAmountColumn
@@ -356,7 +356,7 @@ namespace FamilyFinance2
             this.balanceAmountColumn.HeaderText = "Balance";
             this.balanceAmountColumn.DataPropertyName = "balanceAmount";
             this.balanceAmountColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.balanceAmountColumn.DefaultCellStyle = this.CellStyleMoney;
+            this.balanceAmountColumn.DefaultCellStyle = this.MyCellStyleMoney;
             this.balanceAmountColumn.Width = 75;
             this.balanceAmountColumn.ReadOnly = true;
 
@@ -463,5 +463,6 @@ namespace FamilyFinance2
         {
             fFDBDataSet.LineType.myFillTA();
         }
+
     }
 }

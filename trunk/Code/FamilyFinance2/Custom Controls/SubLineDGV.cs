@@ -175,7 +175,7 @@ namespace FamilyFinance2
             this.creditAmountColumn.HeaderText = "Credit";
             this.creditAmountColumn.DataPropertyName = "creditAmount";
             this.creditAmountColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.creditAmountColumn.DefaultCellStyle = CellStyleMoney;
+            this.creditAmountColumn.DefaultCellStyle = MyCellStyleMoney;
             this.creditAmountColumn.Visible = true;
             this.creditAmountColumn.Width = 65;
 
@@ -195,7 +195,7 @@ namespace FamilyFinance2
             this.debitAmountColumn.HeaderText = "Debit";
             this.debitAmountColumn.DataPropertyName = "debitAmount";
             this.debitAmountColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.debitAmountColumn.DefaultCellStyle = CellStyleMoney;
+            this.debitAmountColumn.DefaultCellStyle = MyCellStyleMoney;
             this.debitAmountColumn.Visible = true;
             this.debitAmountColumn.Width = 65;
 
@@ -205,7 +205,7 @@ namespace FamilyFinance2
             this.balanceAmountColumn.HeaderText = "Balance";
             this.balanceAmountColumn.DataPropertyName = "balanceAmount";
             this.balanceAmountColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.balanceAmountColumn.DefaultCellStyle = CellStyleMoney;
+            this.balanceAmountColumn.DefaultCellStyle = MyCellStyleMoney;
             this.balanceAmountColumn.Visible = true;
             this.balanceAmountColumn.Width = 75;
 
@@ -237,11 +237,16 @@ namespace FamilyFinance2
         ////////////////////////////////////////////////////////////////////////////////////////////
         public SubLineDGV()
         {
+            fFDBDataSet = new FFDBDataSet();
+
+            ////////////////////////////////////
             // Binding Sources
             this.SubLineDGVBindingSource = new BindingSource(this.fFDBDataSet, "SubLineView");
 
             this.buildTheDataGridView();
 
+            ////////////////////////////////////
+            // Subscribe to event.
             this.CellDoubleClick += new DataGridViewCellEventHandler(SubLineDGV_CellDoubleClick);
             this.RowPrePaint += new DataGridViewRowPrePaintEventHandler(SubLineDGV_RowPrePaint);
         }

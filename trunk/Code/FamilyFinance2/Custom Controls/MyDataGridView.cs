@@ -12,11 +12,11 @@ namespace FamilyFinance2
         ////////////////////////////////////////////////////////////////////////////////////////////
         protected FFDBDataSet fFDBDataSet;
 
-        protected readonly DataGridViewCellStyle CellStyleNormal;
-        protected readonly DataGridViewCellStyle CellStyleMoney;
-        protected readonly DataGridViewCellStyle CellStyleAlternatingRow;
-        protected readonly DataGridViewCellStyle CellStyleError;
-        protected readonly DataGridViewCellStyle CellStyleFuture;
+        protected readonly DataGridViewCellStyle MyCellStyleNormal;
+        protected readonly DataGridViewCellStyle MyCellStyleMoney;
+        protected readonly DataGridViewCellStyle MyCellStyleAlternatingRow;
+        protected readonly DataGridViewCellStyle MyCellStyleError;
+        protected readonly DataGridViewCellStyle MyCellStyleFuture;
 
 
         // row flags used in painting cells
@@ -32,8 +32,14 @@ namespace FamilyFinance2
         ////////////////////////////////////////////////////////////////////////////////////////////
         public bool ShowTypeColumn
         {
-            get { return this.Columns["typeIDColumn"].Visible; }
-            set { this.Columns["typeIDColumn"].Visible = value; }
+            get 
+            {
+                return this.Columns["typeIDColumn"].Visible;
+            }
+            set 
+            { 
+                this.Columns["typeIDColumn"].Visible = value; 
+            }
         }
 
         public bool ShowConfermationColumn
@@ -97,20 +103,20 @@ namespace FamilyFinance2
             // Set the back ground and the tool tip.
             if (this.flagTransactionError)
             {
-                e.CellStyle.BackColor = CellStyleError.BackColor;
+                e.CellStyle.BackColor = MyCellStyleError.BackColor;
                 toolTipText = "This transaction needs attention.";
             }
             else if (this.flagLineError && colName == "envelopeIDColumn")
             {
-                e.CellStyle.BackColor = CellStyleError.BackColor;
+                e.CellStyle.BackColor = MyCellStyleError.BackColor;
                 toolTipText = "The sub transactions need attention.";
             }
             else if (this.flagFutureDate)
-                e.CellStyle.BackColor = CellStyleFuture.BackColor;
+                e.CellStyle.BackColor = MyCellStyleFuture.BackColor;
 
             // rowNegativeBalance
             if (this.flagNegativeBalance && colName == "balanceAmountColumn")
-                e.CellStyle.ForeColor = CellStyleMoney.ForeColor;
+                e.CellStyle.ForeColor = MyCellStyleMoney.ForeColor;
 
             // rowMultipleAccounts
             if (this.flagReadOnlyAccounts && colName == "oppAccountIDColumn")
@@ -143,23 +149,27 @@ namespace FamilyFinance2
         {
             ///////////////////////////////////////////////////////////////////
             // Setup the Cell Styles
-            CellStyleNormal = new DataGridViewCellStyle();
+            MyCellStyleNormal = new DataGridViewCellStyle();
+            MyCellStyleNormal.BackColor = System.Drawing.SystemColors.Window;
+            MyCellStyleNormal.ForeColor = System.Drawing.SystemColors.ControlText;
+            MyCellStyleNormal.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            MyCellStyleNormal.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 
-            CellStyleMoney = new DataGridViewCellStyle();
-            CellStyleMoney.Alignment = DataGridViewContentAlignment.TopRight;
-            CellStyleMoney.Format = "C2";
+            MyCellStyleMoney = new DataGridViewCellStyle();
+            MyCellStyleMoney.Alignment = DataGridViewContentAlignment.TopRight;
+            MyCellStyleMoney.Format = "C2";
 
-            CellStyleAlternatingRow = new DataGridViewCellStyle();
+            MyCellStyleAlternatingRow = new DataGridViewCellStyle();
             //ButtonFace / Control is a nise soft greay color.
             //GradientInactiveCaption is a baby blue color
             //InactiveBorder nice very soft blue color.
-            CellStyleAlternatingRow.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            MyCellStyleAlternatingRow.BackColor = System.Drawing.SystemColors.InactiveBorder;
 
-            CellStyleFuture = new DataGridViewCellStyle();
-            CellStyleFuture.BackColor = System.Drawing.Color.LightGray;
+            MyCellStyleFuture = new DataGridViewCellStyle();
+            MyCellStyleFuture.BackColor = System.Drawing.Color.LightGray;
 
-            CellStyleError = new DataGridViewCellStyle();
-            CellStyleError.BackColor = System.Drawing.Color.Red;
+            MyCellStyleError = new DataGridViewCellStyle();
+            MyCellStyleError.BackColor = System.Drawing.Color.Red;
 
             ///////////////////////////////////////////////////////////////////
             // Initial Flag values
@@ -175,7 +185,7 @@ namespace FamilyFinance2
             this.Name = "theDataGridView";
             this.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            this.AlternatingRowsDefaultCellStyle = this.CellStyleAlternatingRow;
+            this.AlternatingRowsDefaultCellStyle = this.MyCellStyleAlternatingRow;
             this.Dock = DockStyle.Fill;
             this.AutoGenerateColumns = false;
             this.AllowUserToOrderColumns = false;

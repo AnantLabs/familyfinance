@@ -92,8 +92,10 @@ namespace FamilyFinance2
                 this.newID = Convert.ToInt16(FFDBDataSet.myDBGetNewID("id", "LineType"));
             }
 
-            public void myUpdateTA()
-            { this.thisTableAdapter.Update(this); }
+            public void mySaveChanges()
+            {
+                thisTableAdapter.Update(this);
+            }
 
             //public int myAddType(string name)
             //{
