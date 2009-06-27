@@ -26,9 +26,12 @@ namespace FamilyFinance2
 
     #else
             AppDomain.CurrentDomain.SetData("DataDirectory", Path.GetDirectoryName(Application.ExecutablePath));
+
             if(FFDBDataSet.myCreateDBFile())
                 FFDBDataSet.myExecuteFile(Properties.Resources.Test_Data, true);
+
             Application.Run(new MainForm());
+            //Application.Run(new TransactionForm(2));
             return;
 
     #endif

@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using System.Data;
+using System.Linq;
 using System.Data.SqlServerCe;
 using System.Collections.Generic;
 
@@ -100,8 +101,45 @@ namespace FamilyFinance2
                 this.newID = FFDBDataSet.myDBGetNewID("id", "SubLineItem");
             }
 
-            public void myUpdateTA()
+            public void mySaveChanges()
             { this.thisTableAdapter.Update(this); }
+
+            public decimal mySubLineSum(int lineID)
+            {
+                decimal sum = 0.0m;
+
+                var amounts = from line in this
+                              where line.lineItemID == lineID
+                              select line.amount;
+
+                foreach (var amount in amounts)
+                    sum += amount;
+
+                return sum;
+            }
+
+            public decimal mySubLineSum(int lineID, out int count, out short envelopeID)
+            {
+                decimal sum = 0.0m;
+
+                var results = from line in this
+                              where line.lineItemID == lineID
+                              select new { line.amount, line.envelopeID };
+
+                foreach (var row in results)
+                    sum += row.amount;
+
+                count = results.Count();
+
+                if (count <= 0)
+                    envelopeID = SpclEnvelope.NULL;
+                else if (count == 1)
+                    envelopeID = results.ElementAt(0).envelopeID;
+                else 
+                    envelopeID = SpclEnvelope.SPLIT;
+
+                return sum;
+            }
 
 
         }// END endpartial class SubLineItemDataTable

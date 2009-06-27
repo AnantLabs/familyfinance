@@ -73,7 +73,7 @@ namespace FamilyFinance2
                 this.newID = FFDBDataSet.myDBGetNewID("id", "AEBalance");
             }
 
-            public void myUpdateTA()
+            public void mySaveChanges()
             { this.thisTableAdapter.Update(this); }
 
             public AEBalanceRow myGetRow(short accountID, short envelopeID)
