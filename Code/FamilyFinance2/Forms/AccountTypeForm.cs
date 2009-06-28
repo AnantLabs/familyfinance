@@ -18,14 +18,14 @@ namespace FamilyFinance2.Forms
 
         private void TypeForm_Load(object sender, EventArgs e)
         {
-            this.accountTypeTableAdapter.Fill(this.fFDBDataSet.AccountType);
+            this.fFDBDataSet.AccountType.myFillTA();
         }
 
         private void accountTypeBindingNavigatorSaveItem_Click(object sender, EventArgs e)
         {
             this.Validate();
             this.accountTypeBindingSource.EndEdit();
-            this.accountTypeTableAdapter.Update(this.fFDBDataSet.AccountType);
+            this.fFDBDataSet.AccountType.mySaveChanges();
         }
     }
 }
