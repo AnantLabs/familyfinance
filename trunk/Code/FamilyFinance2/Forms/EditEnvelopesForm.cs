@@ -17,7 +17,7 @@ namespace FamilyFinance2.Forms
         ////////////////////////////////////////////////////////////////////////////////////////////
         private void EditEnvelopesForm_Load(object sender, EventArgs e)
         {
-            this.envelopeTableAdapter.Fill(this.fFDBDataSet.Envelope);
+            this.fFDBDataSet.Envelope.myFillTA();
             buildEnvelopeTree();
 
             if (this.envelopeTreeView.Nodes.Count > 0)
@@ -109,7 +109,7 @@ namespace FamilyFinance2.Forms
         {
             this.Validate();
             this.envelopeBindingSource.EndEdit();
-            this.envelopeTableAdapter.Update(this.fFDBDataSet.Envelope);
+            this.fFDBDataSet.Envelope.mySaveChanges();
 
             this.buildEnvelopeTree();
         }

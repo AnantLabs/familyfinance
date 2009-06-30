@@ -45,7 +45,6 @@
             this.parentEnvelopeComboBox = new System.Windows.Forms.ComboBox();
             this.parentEnvelopeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.closedCheckBox = new System.Windows.Forms.CheckBox();
-            this.envelopeTableAdapter = new FamilyFinance2.FFDBDataSetTableAdapters.EnvelopeTableAdapter();
             nameLabel = new System.Windows.Forms.Label();
             parentEnvelopeLabel = new System.Windows.Forms.Label();
             closedLabel = new System.Windows.Forms.Label();
@@ -229,10 +228,6 @@
             this.closedCheckBox.TabIndex = 5;
             this.closedCheckBox.UseVisualStyleBackColor = true;
             // 
-            // envelopeTableAdapter
-            // 
-            this.envelopeTableAdapter.ClearBeforeFill = true;
-            // 
             // EditEnvelopesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -268,7 +263,6 @@
         private System.Windows.Forms.SplitContainer splitContainer;
         private FFDBDataSet fFDBDataSet;
         private System.Windows.Forms.BindingSource envelopeBindingSource;
-        private FamilyFinance2.FFDBDataSetTableAdapters.EnvelopeTableAdapter envelopeTableAdapter;
         private System.Windows.Forms.BindingNavigator envelopeBindingNavigator;
         private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem;
