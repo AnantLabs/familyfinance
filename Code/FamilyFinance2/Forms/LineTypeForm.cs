@@ -20,12 +20,12 @@ namespace FamilyFinance2.Forms
         {
             this.Validate();
             this.lineTypeBindingSource.EndEdit();
-            this.lineTypeTableAdapter.Update(this.fFDBDataSet.LineType);
+            this.fFDBDataSet.LineType.mySaveChanges();
         }
 
         private void LineTypeForm_Load(object sender, EventArgs e)
         {
-            this.lineTypeTableAdapter.Fill(this.fFDBDataSet.LineType);
+            this.fFDBDataSet.LineType.myFillTA();
 
         }
     }

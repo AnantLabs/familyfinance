@@ -32,7 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LineTypeForm));
             this.fFDBDataSet = new FamilyFinance2.FFDBDataSet();
             this.lineTypeBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.lineTypeTableAdapter = new FamilyFinance2.FFDBDataSetTableAdapters.LineTypeTableAdapter();
             this.lineTypeBindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
@@ -57,10 +56,6 @@
             this.lineTypeBindingSource.DataSource = this.fFDBDataSet;
             this.lineTypeBindingSource.Filter = "id > 0";
             this.lineTypeBindingSource.Sort = "name";
-            // 
-            // lineTypeTableAdapter
-            // 
-            this.lineTypeTableAdapter.ClearBeforeFill = true;
             // 
             // lineTypeBindingNavigator
             // 
@@ -176,7 +171,6 @@
 
         private FFDBDataSet fFDBDataSet;
         private System.Windows.Forms.BindingSource lineTypeBindingSource;
-        private FamilyFinance2.FFDBDataSetTableAdapters.LineTypeTableAdapter lineTypeTableAdapter;
         private System.Windows.Forms.BindingNavigator lineTypeBindingNavigator;
         private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem;

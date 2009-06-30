@@ -54,9 +54,6 @@
             this.accountBindingNavigatorSaveItem = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.modifyAccountTypesTSB = new System.Windows.Forms.ToolStripButton();
-            this.accountTableAdapter = new FamilyFinance2.FFDBDataSetTableAdapters.AccountTableAdapter();
-            this.accountTypeTableAdapter = new FamilyFinance2.FFDBDataSetTableAdapters.AccountTypeTableAdapter();
-            this.accountCatagoryTableAdapter = new FamilyFinance2.FFDBDataSetTableAdapters.AccountCatagoryTableAdapter();
             nameLabel = new System.Windows.Forms.Label();
             accountTypeIDLabel = new System.Windows.Forms.Label();
             catagoryLabel = new System.Windows.Forms.Label();
@@ -331,18 +328,6 @@
             this.modifyAccountTypesTSB.Text = "Modify Account Types";
             this.modifyAccountTypesTSB.Click += new System.EventHandler(this.modifyAccountTypesTSB_Click);
             // 
-            // accountTableAdapter
-            // 
-            this.accountTableAdapter.ClearBeforeFill = true;
-            // 
-            // accountTypeTableAdapter
-            // 
-            this.accountTypeTableAdapter.ClearBeforeFill = true;
-            // 
-            // accountCatagoryTableAdapter
-            // 
-            this.accountCatagoryTableAdapter.ClearBeforeFill = true;
-            // 
             // EditAccountsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -378,7 +363,6 @@
         private System.Windows.Forms.TreeView accountTreeView;
         private FFDBDataSet fFDBDataSet;
         private System.Windows.Forms.BindingSource accountBindingSource;
-        private FamilyFinance2.FFDBDataSetTableAdapters.AccountTableAdapter accountTableAdapter;
         private System.Windows.Forms.BindingNavigator accountBindingNavigator;
         private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem;
@@ -388,12 +372,10 @@
         private System.Windows.Forms.ComboBox catagoryComboBox;
         private System.Windows.Forms.CheckBox closedCheckBox;
         private System.Windows.Forms.CheckBox envelopesCheckBox;
-        private FamilyFinance2.FFDBDataSetTableAdapters.AccountTypeTableAdapter accountTypeTableAdapter;
         private System.Windows.Forms.BindingSource accountTypeBindingSource;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton modifyAccountTypesTSB;
         private System.Windows.Forms.BindingSource accountCatagoryBindingSource;
-        private FamilyFinance2.FFDBDataSetTableAdapters.AccountCatagoryTableAdapter accountCatagoryTableAdapter;
         private System.Windows.Forms.CheckBox checkBox1;
 
     }
