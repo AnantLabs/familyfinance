@@ -13,14 +13,6 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             //   Local Variables
             ///////////////////////////////////////////////////////////////////////
-            private FFDBDataSetTableAdapters.AccountCatagoryTableAdapter thisTableAdapter;
-
-
-            ///////////////////////////////////////////////////////////////////////
-            //   Properties
-            ///////////////////////////////////////////////////////////////////////
-
-
 
             ///////////////////////////////////////////////////////////////////////
             //   Overriden Functions 
@@ -28,9 +20,6 @@ namespace FamilyFinance2
             public override void EndInit()
             {
                 base.EndInit();
-
-                this.thisTableAdapter = new FFDBDataSetTableAdapters.AccountCatagoryTableAdapter();
-                this.thisTableAdapter.ClearBeforeFill = true;
             }
 
 
@@ -42,8 +31,32 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             //   Functions Public
             ///////////////////////////////////////////////////////////////////////
-            public void myFillTA()
-            { this.thisTableAdapter.Fill(this); }
+            public void myFill()
+            {
+                string query = "SELECT * FROM AccountCatagory;";
+                object[] newRow = new object[2];
+
+                this.Rows.Clear();
+
+                SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+                connection.Open();
+                SqlCeCommand command = new SqlCeCommand(query, connection);
+                SqlCeDataReader reader = command.ExecuteReader();
+
+                // Iterate through the results
+                while (reader.Read())
+                {
+                    reader.GetValues(newRow);
+                    this.Rows.Add(newRow);
+                }
+
+                // Always call Close the reader and connection when done reading
+                reader.Close();
+                connection.Close();
+                this.AcceptChanges();
+            }
+
+
 
 
         }// END partial class AccountTypeDataTable

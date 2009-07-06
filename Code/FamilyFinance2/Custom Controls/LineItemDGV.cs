@@ -429,7 +429,7 @@ namespace FamilyFinance2
             {
                 this.currentAccountID = accountID;
                 this.accountUsesEnvelopes = this.fFDBDataSet.Account.FindByid(accountID).envelopes;
-                this.fFDBDataSet.LineItem.myFillTAByAccount(accountID);
+                this.fFDBDataSet.LineItem.myFillByAccount(accountID);
                 this.ShowEnvelopeColumn = showEnvelopeColumn;
                 this.AllowUserToAddRows = true;
 
@@ -437,7 +437,7 @@ namespace FamilyFinance2
             else
             {
                 this.accountUsesEnvelopes = false;
-                this.fFDBDataSet.LineItem.myFillTAByAccount(SpclAccount.NULL);
+                this.fFDBDataSet.LineItem.myFillByAccount(SpclAccount.NULL);
                 this.currentAccountID = SpclAccount.NULL;
                 this.ShowEnvelopeColumn = showEnvelopeColumn;
                 this.AllowUserToAddRows = false;
@@ -446,22 +446,22 @@ namespace FamilyFinance2
 
         public void myReloadLineItems()
         {
-            fFDBDataSet.LineItem.myFillTAByAccount(this.currentAccountID); // an empty set.
+            fFDBDataSet.LineItem.myFillByAccount(this.currentAccountID); // an empty set.
         }
 
         public void myReloadAccounts()
         {
-            fFDBDataSet.Account.myFillTA();
+            fFDBDataSet.Account.myFill();
         }
 
         public void myReloadEnvelopes()
         {
-            fFDBDataSet.Envelope.myFillTA();
+            fFDBDataSet.Envelope.myFill();
         }
 
         public void myReloadLineTypes()
         {
-            fFDBDataSet.LineType.myFillTA();
+            fFDBDataSet.LineType.myFill();
         }
 
     }

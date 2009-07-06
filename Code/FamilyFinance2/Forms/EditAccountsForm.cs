@@ -23,9 +23,9 @@ namespace FamilyFinance2.Forms
         ////////////////////////////////////////////////////////////////////////////////////////////
         private void EditAccountsForm_Load(object sender, EventArgs e)
         {
-            this.fFDBDataSet.AccountCatagory.myFillTA();
-            this.fFDBDataSet.AccountType.myFillTA();
-            this.fFDBDataSet.Account.myFillTA();
+            this.fFDBDataSet.AccountCatagory.myFill();
+            this.fFDBDataSet.AccountType.myFill();
+            this.fFDBDataSet.Account.myFill();
 
             this.accountTreeView.Nodes.Clear();
 
@@ -43,7 +43,7 @@ namespace FamilyFinance2.Forms
         {
             AccountTypeForm atf = new AccountTypeForm();
             atf.ShowDialog();
-            this.fFDBDataSet.AccountType.myFillTA();
+            this.fFDBDataSet.AccountType.myFill();
         }
 
         private void accountTreeView_AfterSelect(object sender, TreeViewEventArgs e)

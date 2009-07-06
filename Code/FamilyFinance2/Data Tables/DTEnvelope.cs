@@ -13,14 +13,7 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             //   Local Variables
             ///////////////////////////////////////////////////////////////////////
-            private FFDBDataSetTableAdapters.EnvelopeTableAdapter thisTableAdapter;
             private short newID;
-            private bool autoChange;
-
-
-            ///////////////////////////////////////////////////////////////////////
-            //   Properties
-            ///////////////////////////////////////////////////////////////////////
 
 
             ////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,14 +23,10 @@ namespace FamilyFinance2
             {
                 base.EndInit();
 
-                this.thisTableAdapter = new FFDBDataSetTableAdapters.EnvelopeTableAdapter();
-                this.thisTableAdapter.ClearBeforeFill = true;
-
                 this.TableNewRow += new DataTableNewRowEventHandler(EnvelopeDataTable_TableNewRow);
                 this.ColumnChanged += new DataColumnChangeEventHandler(EnvelopeDataTable_ColumnChanged);
 
-                newID = 1;
-                autoChange = true;
+                this.newID = 1;
             }
 
 
@@ -46,10 +35,10 @@ namespace FamilyFinance2
             ////////////////////////////////////////////////////////////////////////////////////////////
             private void EnvelopeDataTable_TableNewRow(object sender, System.Data.DataTableNewRowEventArgs e)
             {
-                autoChange = false;
                 EnvelopeRow envelopeRow = e.Row as EnvelopeRow;
+                envelopeRow.BeginEdit();
 
-                envelopeRow.id = newID++;
+                envelopeRow.id = this.newID++;
                 envelopeRow.name = "";
                 envelopeRow.fullName = "";
                 envelopeRow.parentEnvelope = SpclEnvelope.NULL;
@@ -57,45 +46,34 @@ namespace FamilyFinance2
                 envelopeRow.endingBalance = 0.0m;
                 envelopeRow.currentBalance = 0.0m;
 
-                autoChange = true;
+                envelopeRow.EndEdit();
             }
 
             private void EnvelopeDataTable_ColumnChanged(object sender, DataColumnChangeEventArgs e)
             {
-                EnvelopeRow row;
                 string tmp;
                 int maxLen;
-
-                if (autoChange == false)
-                    return;
-
-                autoChange = false;
-
-                row = e.Row as EnvelopeRow;
-
+                EnvelopeRow row = e.Row as EnvelopeRow;
+                row.BeginEdit();
 
                 switch (e.Column.ColumnName)
                 {
                     case "name":
-                        {
-                            tmp = e.ProposedValue as string;
-                            maxLen = this.nameColumn.MaxLength;
+                        tmp = e.ProposedValue as string;
+                        maxLen = this.nameColumn.MaxLength;
 
-                            if (tmp.Length > maxLen)
-                                row.name = tmp.Substring(0, maxLen);
+                        if (tmp.Length > maxLen)
+                            row.name = tmp.Substring(0, maxLen);
 
-                            mySetFullName(ref row);
-                            break;
-                        }
+                        mySetFullName(ref row);
+                        break;
 
                     case "parentEnvelope":
-                        {
-                            mySetFullName(ref row);
-                            break;
-                        }
+                        mySetFullName(ref row);
+                        break;
                 }
 
-                autoChange = true;
+                row.EndEdit();
             }
 
 
@@ -150,19 +128,117 @@ namespace FamilyFinance2
                 }
             }
 
-
-            ////////////////////////////////////////////////////////////////////////////////////////////
-            //   Functions Public
-            ////////////////////////////////////////////////////////////////////////////////////////////
-            public void mySaveChanges()
+            private void mySaveAddedRow(ref SqlCeCommand command, ref EnvelopeRow row)
             {
-                thisTableAdapter.Update(this);
+                string query;
+
+                // INSERT INTO table_name (column1, column2, column3,...)
+                // VALUES (value1, value2, value3,...)
+
+                query = "INSERT INTO Envelope VALUES (";
+                query += row.id.ToString() + ", ";
+                query += "'" + row.name.Replace("'", "''") + "', ";
+                query += "'" + row.fullName.Replace("'", "''") + "', ";
+                query += row.parentEnvelope.ToString() + ", ";
+                query += Convert.ToInt16(row.closed).ToString() + ", ";
+                query += row.currentBalance.ToString() + ", ";
+                query += row.endingBalance.ToString() + ");";
+
+                command.CommandText = query;
+                command.ExecuteNonQuery();
             }
 
-            public void myFillTA()
+            private void myRemoveDeletedRow(ref SqlCeCommand command, ref EnvelopeRow row)
             {
-                this.thisTableAdapter.Fill(this);
-                this.newID = Convert.ToInt16(FFDBDataSet.myDBGetNewID("id", "Envelope"));
+                //string query;
+
+                //query = "DELETE FROM Envelope WHERE id = " + row.id.ToString() + ";";
+
+                //command.CommandText = query;
+                //command.ExecuteNonQuery();
+
+                throw new Exception("Deleting is not handled yet.");
+            }
+
+            private void mySaveModifiedRow(ref SqlCeCommand command, ref EnvelopeRow row)
+            {
+                string query;
+
+                // UPDATE table_name
+                // SET column1=value, column2=value2,...
+                // WHERE some_column=some_value
+
+                query = "UPDATE Envelope SET ";
+                query += "name = '" + row.name.Replace("'", "''") + "', ";
+                query += "fullName = '" + row.fullName.Replace("'", "''") + "', ";
+                query += "parentEnvelope = " + row.parentEnvelope.ToString() + ", ";
+                query += "closed = " + Convert.ToInt16(row.closed).ToString() + ", ";
+                query += "currentBalance = " + row.currentBalance.ToString() + ", ";
+                query += "endingBalance = " + row.endingBalance.ToString() + " ";
+                query += "WHERE id = " + row.id.ToString() + ";";
+
+                command.CommandText = query;
+                command.ExecuteNonQuery();
+            }
+
+
+            ///////////////////////////////////////////////////////////////////////
+            //   Functions Public 
+            ///////////////////////////////////////////////////////////////////////
+            public void myFill()
+            {
+                string query = "SELECT * FROM Envelope;";
+                object[] newRow = new object[7];
+
+                this.Rows.Clear();
+
+                SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+                connection.Open();
+                SqlCeCommand command = new SqlCeCommand(query, connection);
+                SqlCeDataReader reader = command.ExecuteReader();
+
+                // Iterate through the results
+                while (reader.Read())
+                {
+                    reader.GetValues(newRow);
+                    this.Rows.Add(newRow);
+                }
+
+                // Always call Close the reader and connection when done reading
+                reader.Close();
+                connection.Close();
+                this.AcceptChanges();
+                this.newID = (short)FFDBDataSet.myDBGetNewID("id", "Envelope");
+            }
+
+            public void mySaveChanges()
+            {
+                SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+                SqlCeCommand command = new SqlCeCommand("", connection);
+                connection.Open();
+
+                for (int index = 0; index < this.Rows.Count; index++)
+                {
+                    EnvelopeRow row = this.Rows[index] as EnvelopeRow;
+
+                    switch (row.RowState)
+                    {
+                        case DataRowState.Added:
+                            this.mySaveAddedRow(ref command, ref row);
+                            break;
+                        case DataRowState.Deleted:
+                            this.myRemoveDeletedRow(ref command, ref row);
+                            break;
+                        case DataRowState.Modified:
+                            this.mySaveModifiedRow(ref command, ref row);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                this.AcceptChanges();
+                connection.Close();
             }
 
 
@@ -178,8 +254,6 @@ namespace FamilyFinance2
                 else
                     row.endingBalance -= oldAmount;
 
-                //OnEnvelopeEndingBalanceChanged(new BalanceChangedEventArgs(SpclAccount.NULL, row.id, row.endingBalance));
-
             }
 
             public void myUpdateEnvelopeEBDo(short newEnvelopeID, bool newCD, decimal newAmount)
@@ -193,7 +267,6 @@ namespace FamilyFinance2
                 else
                     row.endingBalance += newAmount;
 
-                //OnEnvelopeEndingBalanceChanged(new BalanceChangedEventArgs(SpclAccount.NULL, row.id, row.endingBalance));
             }
 
             public void myUpdateEnvelopeEBUndoDo(short oldEnvelopeID, bool oldCD, decimal oldAmount, short newEnvelopeID, bool newCD, decimal newAmount)
@@ -216,16 +289,6 @@ namespace FamilyFinance2
                 else
                     newEnvelopeRow.endingBalance += newAmount;
 
-
-                //if (oldEnvelopeID == newEnvelopeID)
-                //{
-                //    OnEnvelopeEndingBalanceChanged(new BalanceChangedEventArgs(SpclAccount.NULL, newEnvelopeID, newEnvelopeRow.endingBalance));
-                //}
-                //else
-                //{
-                //    OnEnvelopeEndingBalanceChanged(new BalanceChangedEventArgs(SpclAccount.NULL, newEnvelopeID, newEnvelopeRow.endingBalance));
-                //    OnEnvelopeEndingBalanceChanged(new BalanceChangedEventArgs(SpclAccount.NULL, oldEnvelopeID, oldEnvelopeRow.endingBalance));
-                //}
 
             }
 

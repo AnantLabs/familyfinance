@@ -13,15 +13,7 @@ namespace FamilyFinance2
             ////////////////////////////////////////////////////////////////////////////////////////////
             //   Local Variables
             ////////////////////////////////////////////////////////////////////////////////////////////
-            private FFDBDataSetTableAdapters.AEBalanceTableAdapter thisTableAdapter;
             private int newID;
-
-            
-            ///////////////////////////////////////////////////////////////////////
-            //   Properties
-            ///////////////////////////////////////////////////////////////////////
-
-
 
             ////////////////////////////////////////////////////////////////////////////////////////////
             //   Overriden Functions 
@@ -30,17 +22,15 @@ namespace FamilyFinance2
             {
                 base.EndInit();
 
-                this.thisTableAdapter = new FFDBDataSetTableAdapters.AEBalanceTableAdapter();
-                this.thisTableAdapter.ClearBeforeFill = true;
-
                 this.TableNewRow += new DataTableNewRowEventHandler(AEBalanceDataTable_TableNewRow);
-                newID = 1;
+
+                this.newID = 1;
             }
 
 
-            ///////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////////////////////////////
             //   External Events
-            ///////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////////////////////////////
  
 
             ////////////////////////////////////////////////////////////////////////////////////////////
@@ -49,32 +39,130 @@ namespace FamilyFinance2
             private void AEBalanceDataTable_TableNewRow(object sender, DataTableNewRowEventArgs e)
             {
                 AEBalanceRow aEBalanceRow = e.Row as AEBalanceRow;
+                aEBalanceRow.BeginEdit();
 
-                aEBalanceRow.id = newID++;
+                aEBalanceRow.id = this.newID++;
                 aEBalanceRow.accountID = SpclAccount.NULL;
                 aEBalanceRow.envelopeID = SpclEnvelope.NULL;
                 aEBalanceRow.endingBalance = 0.0m;
                 aEBalanceRow.currentBalance = 0.0m;
+
+                aEBalanceRow.EndEdit();
             }
 
 
-            ////////////////////////////////////////////////////////////////////////////////////////////
-            //   Functions Private
-            ////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-            ////////////////////////////////////////////////////////////////////////////////////////////
-            //   Functions Public
-            ////////////////////////////////////////////////////////////////////////////////////////////
-            public void myFillTA()
+            ///////////////////////////////////////////////////////////////////////
+            //   Functions Private 
+            ///////////////////////////////////////////////////////////////////////
+            private void mySaveAddedRow(ref SqlCeCommand command, ref AEBalanceRow row)
             {
-                this.thisTableAdapter.Fill(this);
+                string query;
+
+                // INSERT INTO table_name (column1, column2, column3,...)
+                // VALUES (value1, value2, value3,...)
+
+                query = "INSERT INTO AEBalance VALUES (";
+                query += row.id.ToString() + ", ";
+                query += row.accountID.ToString() + "', ";
+                query += row.envelopeID.ToString() + ", ";
+                query += row.currentBalance.ToString() + ", ";
+                query += row.endingBalance.ToString() + ");";
+
+                command.CommandText = query;
+                command.ExecuteNonQuery();
+            }
+
+            private void myRemoveDeletedRow(ref SqlCeCommand command, ref AEBalanceRow row)
+            {
+                //string query;
+
+                //query = "DELETE FROM AEBalance WHERE id = " + row.id.ToString() + ";";
+
+                //command.CommandText = query;
+                //command.ExecuteNonQuery();
+
+                throw new Exception("Deleting is not handled yet.");
+            }
+
+            private void mySaveModifiedRow(ref SqlCeCommand command, ref AEBalanceRow row)
+            {
+                string query;
+
+                // UPDATE table_name
+                // SET column1=value, column2=value2,...
+                // WHERE some_column=some_value
+
+                query = "UPDATE AEBalance SET ";
+                query += "accountID = " + row.accountID.ToString() + ", ";
+                query += "envelopeID = " + row.envelopeID.ToString() + ", ";
+                query += "currentBalance = " + row.currentBalance.ToString() + ", ";
+                query += "endingBalance = " + row.endingBalance.ToString() + " ";
+                query += "WHERE id = " + row.id.ToString() + ";";
+
+                command.CommandText = query;
+                command.ExecuteNonQuery();
+            }
+
+
+            ///////////////////////////////////////////////////////////////////////
+            //   Functions Public 
+            ///////////////////////////////////////////////////////////////////////
+            public void myFill()
+            {
+                string query = "SELECT * FROM AEBalance;";
+                object[] newRow = new object[5];
+
+                this.Rows.Clear();
+
+                SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+                connection.Open();
+                SqlCeCommand command = new SqlCeCommand(query, connection);
+                SqlCeDataReader reader = command.ExecuteReader();
+
+                // Iterate through the results
+                while (reader.Read())
+                {
+                    reader.GetValues(newRow);
+                    this.Rows.Add(newRow);
+                }
+
+                // Always call Close the reader and connection when done reading
+                reader.Close();
+                connection.Close();
+                this.AcceptChanges();
                 this.newID = FFDBDataSet.myDBGetNewID("id", "AEBalance");
             }
 
             public void mySaveChanges()
-            { this.thisTableAdapter.Update(this); }
+            {
+                SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+                SqlCeCommand command = new SqlCeCommand("", connection);
+                connection.Open();
+
+                for (int index = 0; index < this.Rows.Count; index++)
+                {
+                    AEBalanceRow row = this.Rows[index] as AEBalanceRow;
+
+                    switch (row.RowState)
+                    {
+                        case DataRowState.Added:
+                            this.mySaveAddedRow(ref command, ref row);
+                            break;
+                        case DataRowState.Deleted:
+                            this.myRemoveDeletedRow(ref command, ref row);
+                            break;
+                        case DataRowState.Modified:
+                            this.mySaveModifiedRow(ref command, ref row);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                this.AcceptChanges();
+                connection.Close();
+            }
+
 
             public AEBalanceRow myGetRow(short accountID, short envelopeID)
             {
@@ -83,13 +171,17 @@ namespace FamilyFinance2
                         return row;
 
                 AEBalanceRow newRow = this.NewAEBalanceRow();
+                newRow.BeginEdit();
+
                 newRow.accountID = accountID;
                 newRow.envelopeID = envelopeID;
 
                 this.Rows.Add(newRow);
+                newRow.EndEdit();
 
                 return newRow;
             }
+
 
             public void myUpdateAEBalanceUndo(short oldAccountID, short oldEnvelopeID, bool oldCD, decimal oldAmount)
             {
@@ -105,7 +197,7 @@ namespace FamilyFinance2
                 else
                     row.endingBalance -= oldAmount;
 
-                this.thisTableAdapter.Update(row);
+                //this.thisTableAdapter.Update(row);
             }
 
             public void myUpdateAEBalanceDo(short newAccountID, short newEnvelopeID, bool newCD, decimal newAmount)
@@ -122,7 +214,7 @@ namespace FamilyFinance2
                 else
                     row.endingBalance += newAmount;
 
-                this.thisTableAdapter.Update(row);
+                //this.thisTableAdapter.Update(row);
             }
 
             public void myUpdateAEBalanceUndoDo(short oldAccountID, short oldEnvelopeID, bool oldCD, decimal oldAmount, short newAccountID, short newEnvelopeID, bool newCD, decimal newAmount)
@@ -149,15 +241,15 @@ namespace FamilyFinance2
                     newRow.endingBalance += newAmount;
 
 
-                if (oldRow.id == newRow.id)
-                {
-                    this.thisTableAdapter.Update(newRow);
-                }
-                else
-                {
-                    this.thisTableAdapter.Update(newRow);
-                    this.thisTableAdapter.Update(oldRow);
-                }
+                //if (oldRow.id == newRow.id)
+                //{
+                //    this.thisTableAdapter.Update(newRow);
+                //}
+                //else
+                //{
+                //    this.thisTableAdapter.Update(newRow);
+                //    this.thisTableAdapter.Update(oldRow);
+                //}
             }
 
             

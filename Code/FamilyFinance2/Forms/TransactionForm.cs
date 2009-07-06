@@ -140,17 +140,17 @@ namespace FamilyFinance2.Forms
         ////////////////////////////////////////////////////////////////////////////////////////////
         private void myReloadLineTypes()
         {
-            fFDBDataSet.LineType.myFillTA();
+            fFDBDataSet.LineType.myFill();
         }
         
         private void myReloadAccounts()
         {
-            fFDBDataSet.Account.myFillTA();
+            fFDBDataSet.Account.myFill();
         }
 
         private void myReloadEnvelopes()
         {
-            fFDBDataSet.Envelope.myFillTA();
+            fFDBDataSet.Envelope.myFill();
         }
 
         private void myResetValues()
@@ -224,7 +224,7 @@ namespace FamilyFinance2.Forms
             this.myReloadAccounts();
             this.myReloadEnvelopes();
             this.fFDBDataSet.LineItem.myFillByTransaction(transactionID);
-            this.fFDBDataSet.SubLineItem.myFillTAByTransactionID(transactionID);
+            this.fFDBDataSet.SubLineItem.myFillByTransaction(transactionID);
 
             // Credit DGV (Top)
             this.creditDGV = new CDLinesDGV(transactionID, LineCD.CREDIT, ref this.fFDBDataSet);
