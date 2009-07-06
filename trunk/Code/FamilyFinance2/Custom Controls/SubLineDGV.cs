@@ -260,21 +260,21 @@ namespace FamilyFinance2
                 this.currentEnvelopeID = envelopeID;
                 this.currentAccountID = accountID;
 
-                this.fFDBDataSet.SubLineView.myFillTAByEnvelopeAndAccount(envelopeID, accountID);                
+                this.fFDBDataSet.SubLineView.myFillByEnvelopeAndAccount(envelopeID, accountID);                
             }
             else if (envelopeID > INVALID)
             {
                 this.currentEnvelopeID = envelopeID;
                 this.currentAccountID = SpclAccount.NULL;
 
-                this.fFDBDataSet.SubLineView.myFillTAByEnvelope(envelopeID);
+                this.fFDBDataSet.SubLineView.myFillByEnvelope(envelopeID);
             }
             else 
             {
                 this.currentEnvelopeID = SpclEnvelope.NULL;
                 this.currentAccountID = SpclAccount.NULL;
 
-                this.fFDBDataSet.SubLineView.myFillTAByEnvelope(SpclEnvelope.NULL);
+                this.fFDBDataSet.SubLineView.myFillByEnvelope(SpclEnvelope.NULL);
             }
 
         }

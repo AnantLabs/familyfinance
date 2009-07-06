@@ -13,15 +13,7 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             //   Local Variables
             ///////////////////////////////////////////////////////////////////////
-            private FFDBDataSetTableAdapters.AccountTypeTableAdapter thisTableAdapter;
             private short newID;
-            private bool autoChange;
-
-
-            ///////////////////////////////////////////////////////////////////////
-            //   Properties
-            ///////////////////////////////////////////////////////////////////////
-
 
 
             ///////////////////////////////////////////////////////////////////////
@@ -31,14 +23,10 @@ namespace FamilyFinance2
             {
                 base.EndInit();
 
-                this.thisTableAdapter = new FFDBDataSetTableAdapters.AccountTypeTableAdapter();
-                this.thisTableAdapter.ClearBeforeFill = true;
-
                 this.TableNewRow += new DataTableNewRowEventHandler(AccountTypeDataTable_TableNewRow);
                 this.ColumnChanged += new DataColumnChangeEventHandler(AccountTypeDataTable_ColumnChanged);
 
-                newID = 1;
-                autoChange = true;
+                this.newID = 1;
             }
 
 
@@ -48,24 +36,22 @@ namespace FamilyFinance2
             private void AccountTypeDataTable_TableNewRow(object sender, DataTableNewRowEventArgs e)
             {
                 AccountTypeRow accountTypeRow = e.Row as AccountTypeRow;
+                accountTypeRow.BeginEdit();
 
-                accountTypeRow.id = newID++;
+                accountTypeRow.id = this.newID++;
                 accountTypeRow.name = "";
+
+                accountTypeRow.EndEdit();
             }
 
             private void AccountTypeDataTable_ColumnChanged(object sender, DataColumnChangeEventArgs e)
             {
-
                 AccountTypeRow row;
                 string tmp;
                 int maxLen;
 
-                if (autoChange == false)
-                    return;
-
-                autoChange = false;
-
                 row = e.Row as AccountTypeRow;
+                row.BeginEdit();
 
                 if (e.Column.ColumnName == "name")
                 {
@@ -76,22 +62,114 @@ namespace FamilyFinance2
                         row.name = tmp.Substring(0, maxLen);
                 }
 
-                autoChange = true;
+                row.EndEdit();
             }
 
 
             ///////////////////////////////////////////////////////////////////////
-            //   Functions Public
+            //   Functions Private 
             ///////////////////////////////////////////////////////////////////////
-            public void myFillTA()
+            private void mySaveAddedRow(ref SqlCeCommand command, ref AccountTypeRow row)
             {
-                this.thisTableAdapter.Fill(this);
-                this.newID = Convert.ToInt16(FFDBDataSet.myDBGetNewID("id", "AccountType"));
+                string query;
+
+                // INSERT INTO table_name (column1, column2, column3,...)
+                // VALUES (value1, value2, value3,...)
+
+                query = "INSERT INTO AccountType VALUES (";
+                query += row.id.ToString() + ", ";
+                query += "'" + row.name.Replace("'", "''") + "');";
+
+                command.CommandText = query;
+                command.ExecuteNonQuery();
+            }
+
+            private void myRemoveDeletedRow(ref SqlCeCommand command, ref AccountTypeRow row)
+            {
+                //string query;
+
+                //query = "DELETE FROM AccountType WHERE id = " + row.id.ToString() + ";";
+
+                //command.CommandText = query;
+                //command.ExecuteNonQuery();
+
+                throw new Exception("Deleting an account type is not handled yet.");
+            }
+
+            private void mySaveModifiedRow(ref SqlCeCommand command, ref AccountTypeRow row)
+            {
+                string query;
+
+                // UPDATE table_name
+                // SET column1=value, column2=value2,...
+                // WHERE some_column=some_value
+
+                query = "UPDATE AccountType SET ";
+                query += "name = '" + row.name.Replace("'", "''") + "' ";
+                query += "WHERE id = " + row.id.ToString() + ";";
+
+                command.CommandText = query;
+                command.ExecuteNonQuery();
+            }
+
+
+            ///////////////////////////////////////////////////////////////////////
+            //   Functions Public 
+            ///////////////////////////////////////////////////////////////////////
+            public void myFill()
+            {
+                string query = "SELECT * FROM AccountType;";
+                object[] newRow = new object[2];
+
+                this.Rows.Clear();
+
+                SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+                connection.Open();
+                SqlCeCommand command = new SqlCeCommand(query, connection);
+                SqlCeDataReader reader = command.ExecuteReader();
+
+                // Iterate through the results
+                while (reader.Read())
+                {
+                    reader.GetValues(newRow);
+                    this.Rows.Add(newRow);
+                }
+
+                // Always call Close the reader and connection when done reading
+                reader.Close();
+                connection.Close();
+                this.AcceptChanges();
+                this.newID = (short)FFDBDataSet.myDBGetNewID("id", "AccountType");
             }
 
             public void mySaveChanges()
             {
-                this.thisTableAdapter.Update(this);
+                SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+                SqlCeCommand command = new SqlCeCommand("", connection);
+                connection.Open();
+
+                for (int index = 0; index < this.Rows.Count; index++)
+                {
+                    AccountTypeRow row = this.Rows[index] as AccountTypeRow;
+
+                    switch (row.RowState)
+                    {
+                        case DataRowState.Added:
+                            this.mySaveAddedRow(ref command, ref row);
+                            break;
+                        case DataRowState.Deleted:
+                            this.myRemoveDeletedRow(ref command, ref row);
+                            break;
+                        case DataRowState.Modified:
+                            this.mySaveModifiedRow(ref command, ref row);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                this.AcceptChanges();
+                connection.Close();
             }
 
             //public int myAddType(string newTypeName)

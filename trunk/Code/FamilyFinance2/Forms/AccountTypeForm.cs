@@ -18,7 +18,7 @@ namespace FamilyFinance2.Forms
 
         private void TypeForm_Load(object sender, EventArgs e)
         {
-            this.fFDBDataSet.AccountType.myFillTA();
+            this.fFDBDataSet.AccountType.myFill();
         }
 
         private void accountTypeBindingNavigatorSaveItem_Click(object sender, EventArgs e)

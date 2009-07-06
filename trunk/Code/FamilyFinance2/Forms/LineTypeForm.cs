@@ -25,7 +25,7 @@ namespace FamilyFinance2.Forms
 
         private void LineTypeForm_Load(object sender, EventArgs e)
         {
-            this.fFDBDataSet.LineType.myFillTA();
+            this.fFDBDataSet.LineType.myFill();
 
         }
     }

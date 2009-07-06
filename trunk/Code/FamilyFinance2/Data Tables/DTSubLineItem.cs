@@ -14,14 +14,7 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             //   Local Variables
             ///////////////////////////////////////////////////////////////////////
-            private FFDBDataSetTableAdapters.SubLineItemTableAdapter thisTableAdapter;
             private int newID;
-            private bool autoChange;
-
-
-            ///////////////////////////////////////////////////////////////////////
-            //   Properties
-            ///////////////////////////////////////////////////////////////////////
 
 
             ///////////////////////////////////////////////////////////////////////
@@ -31,14 +24,9 @@ namespace FamilyFinance2
             {
                 base.EndInit();
 
-                this.thisTableAdapter = new FFDBDataSetTableAdapters.SubLineItemTableAdapter();
-                this.thisTableAdapter.ClearBeforeFill = true;
-
                 this.TableNewRow += new DataTableNewRowEventHandler(SubLineItemDataTable_TableNewRow);
                 this.ColumnChanged += new DataColumnChangeEventHandler(SubLineItemDataTable_ColumnChanged);
-
-                newID = 1;
-                autoChange = true;
+                this.newID = 1;
             }
 
 
@@ -47,25 +35,23 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             private void SubLineItemDataTable_TableNewRow(object sender, DataTableNewRowEventArgs e)
             {
-                SubLineItemRow subLineItemRow = e.Row as SubLineItemRow;
+                SubLineItemRow newRow = e.Row as SubLineItemRow;
+                newRow.BeginEdit();
 
-                subLineItemRow.id = newID++;
-                subLineItemRow.envelopeID = SpclEnvelope.NULL;
-                subLineItemRow.description = "";
-                subLineItemRow.amount = 0.0m;
+                newRow.id = this.newID++;
+                newRow.envelopeID = SpclEnvelope.NULL;
+                newRow.description = "";
+                newRow.amount = 0.0m;
 
-                autoChange = true;
+                newRow.EndEdit();
             }
 
             private void SubLineItemDataTable_ColumnChanged(object sender, DataColumnChangeEventArgs e)
             {
                 SubLineItemRow row;
 
-                if (autoChange == false)
-                    return;
-
-                autoChange = false;
                 row = e.Row as SubLineItemRow;
+                row.BeginEdit();
 
                 if (e.Column.ColumnName == "amount")
                 {
@@ -82,27 +68,125 @@ namespace FamilyFinance2
                     row.amount = newValue;
                 }
 
-                autoChange = true;
+                row.EndEdit();
+            }
+
+
+            ///////////////////////////////////////////////////////////////////////
+            //   Function Private
+            ///////////////////////////////////////////////////////////////////////
+            private void mySaveAddedRow(ref SqlCeCommand command, ref SubLineItemRow row)
+            {
+                string query;
+
+                // INSERT INTO table_name (column1, column2, column3,...)
+                // VALUES (value1, value2, value3,...)
+
+                query = "INSERT INTO SubLineItem VALUES (";
+                query += row.id.ToString() + ", ";
+                query += row.lineItemID.ToString() + ", ";
+                query += row.envelopeID.ToString() + ", ";
+                query += "'" + row.description.Replace("'", "''") + "', ";
+                query += row.amount.ToString() + ");";
+
+                command.CommandText = query;
+                command.ExecuteNonQuery();
+            }
+
+            private void myRemoveDeletedRow(ref SqlCeCommand command, ref SubLineItemRow row)
+            {
+                //string query;
+
+                //query = "DELETE FROM Account WHERE id = " + row.id.ToString() + ";";
+
+                //command.CommandText = query;
+                //command.ExecuteNonQuery();
+
+                throw new Exception("Deleting is not handled yet.");
+            }
+
+            private void mySaveModifiedRow(ref SqlCeCommand command, ref SubLineItemRow row)
+            {
+                string query;
+
+                // UPDATE table_name
+                // SET column1=value, column2=value2,...
+                // WHERE some_column=some_value
+
+                query = "UPDATE SubLineItem SET ";
+                query += "lineItemID = " + row.lineItemID.ToString() + ", ";
+                query += "envelopeID = " + row.envelopeID.ToString() + ", ";
+                query += "description = '" + row.description.Replace("'", "''") + "', ";
+                query += "amount = " + row.amount.ToString() + ", ";
+                query += "WHERE id = " + row.id.ToString() + ";";
+
+                command.CommandText = query;
+                command.ExecuteNonQuery();
             }
 
 
             ///////////////////////////////////////////////////////////////////////
             //   Function Public
             ///////////////////////////////////////////////////////////////////////
-            public void myFillTA()
-            { 
-                this.thisTableAdapter.Fill(this);
-                this.newID = FFDBDataSet.myDBGetNewID("id", "SubLineItem");
-            }
-
-            public void myFillTAByTransactionID(int transID)
+            public void myFillByTransaction(int transactionID)
             {
-                this.thisTableAdapter.FillByTransactionID(this, transID);
+                string query;
+                object[] values = new object[5];
+
+                this.Rows.Clear();
+
+                query = "SELECT s.id, s.lineItemID, s.envelopeID, s.description, s.amount ";
+                query += " FROM SubLineItem AS s INNER JOIN LineItem AS l ON l.id = s.lineItemID ";
+                query += " WHERE transactionID = " + transactionID.ToString() + ";";
+
+                SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+                connection.Open();
+                SqlCeCommand command = new SqlCeCommand(query, connection);
+                SqlCeDataReader reader = command.ExecuteReader();
+
+                // Iterate through the results
+                while (reader.Read())
+                {
+                    reader.GetValues(values);
+                    this.Rows.Add(values);
+                }
+
+                // Always call Close the reader and connection when done reading
+                reader.Close();
+                connection.Close();
+                this.AcceptChanges();
                 this.newID = FFDBDataSet.myDBGetNewID("id", "SubLineItem");
             }
 
             public void mySaveChanges()
-            { this.thisTableAdapter.Update(this); }
+            {
+                SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+                connection.Open();
+                SqlCeCommand command = new SqlCeCommand("", connection);
+
+                for (int index = 0; index < this.Rows.Count; index++)
+                {
+                    SubLineItemRow row = this.Rows[index] as SubLineItemRow;
+
+                    switch (row.RowState)
+                    {
+                        case DataRowState.Added:
+                            this.mySaveAddedRow(ref command, ref row);
+                            break;
+                        case DataRowState.Deleted:
+                            this.myRemoveDeletedRow(ref command, ref row);
+                            break;
+                        case DataRowState.Modified:
+                            this.mySaveModifiedRow(ref command, ref row);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                this.AcceptChanges();
+                connection.Close();
+            }
 
             public decimal mySubLineSum(int lineID)
             {
