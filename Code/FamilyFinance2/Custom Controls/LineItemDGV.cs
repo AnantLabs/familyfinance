@@ -120,6 +120,15 @@ namespace FamilyFinance2
                 else
                     this[col, row].Value = LineState.PENDING;
             }
+            else if (row >= 0)
+            {
+                int transID = Convert.ToInt32(this["transactionIDColumn", row].Value);
+
+                Forms.TransactionForm tf = new FamilyFinance2.Forms.TransactionForm(transID);
+                tf.ShowDialog();
+                this.myReloadLineItems();
+            }
+
 
             //else if (col == debitAmountColumn.Index && row == -1 && currentAccountID != -1)
             //{

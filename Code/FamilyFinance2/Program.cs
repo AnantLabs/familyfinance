@@ -30,8 +30,8 @@ namespace FamilyFinance2
             if(FFDBDataSet.myCreateDBFile())
                 FFDBDataSet.myExecuteFile(Properties.Resources.Test_Data, true);
 
-            Application.Run(new MainForm());
-            //Application.Run(new TransactionForm(2));
+            //Application.Run(new MainForm());
+            Application.Run(new TransactionForm(2));
             return;
 
     #endif

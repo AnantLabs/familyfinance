@@ -14,6 +14,7 @@ namespace FamilyFinance2
             //   Local Variables
             ///////////////////////////////////////////////////////////////////////
             private short newID;
+            private bool stayOut;
 
 
             ////////////////////////////////////////////////////////////////////////////////////////////
@@ -27,6 +28,7 @@ namespace FamilyFinance2
                 this.ColumnChanged += new DataColumnChangeEventHandler(EnvelopeDataTable_ColumnChanged);
 
                 this.newID = 1;
+                this.stayOut = false;
             }
 
 
@@ -35,8 +37,8 @@ namespace FamilyFinance2
             ////////////////////////////////////////////////////////////////////////////////////////////
             private void EnvelopeDataTable_TableNewRow(object sender, System.Data.DataTableNewRowEventArgs e)
             {
+                stayOut = true;
                 EnvelopeRow envelopeRow = e.Row as EnvelopeRow;
-                envelopeRow.BeginEdit();
 
                 envelopeRow.id = this.newID++;
                 envelopeRow.name = "";
@@ -46,15 +48,18 @@ namespace FamilyFinance2
                 envelopeRow.endingBalance = 0.0m;
                 envelopeRow.currentBalance = 0.0m;
 
-                envelopeRow.EndEdit();
+                stayOut = false;
             }
 
             private void EnvelopeDataTable_ColumnChanged(object sender, DataColumnChangeEventArgs e)
             {
+                if (stayOut)
+                    return;
+
+                stayOut = true;
+                EnvelopeRow row = e.Row as EnvelopeRow;
                 string tmp;
                 int maxLen;
-                EnvelopeRow row = e.Row as EnvelopeRow;
-                row.BeginEdit();
 
                 switch (e.Column.ColumnName)
                 {
@@ -68,12 +73,20 @@ namespace FamilyFinance2
                         mySetFullName(ref row);
                         break;
 
+                    case "fullName":
+                        tmp = e.ProposedValue as string;
+                        maxLen = this.fullNameColumn.MaxLength;
+
+                        if (tmp.Length > maxLen)
+                            row.name = tmp.Substring(0, maxLen);
+                        break;
+
                     case "parentEnvelope":
                         mySetFullName(ref row);
                         break;
                 }
 
-                row.EndEdit();
+                stayOut = false;
             }
 
 
@@ -89,25 +102,14 @@ namespace FamilyFinance2
             ////////////////////////////////////////////////////////////////////////////////////////////
             private void mySetFullName(ref EnvelopeRow thisEnvelope)
             {
-                string fullName;
-                List<short> childIDList;
-                int maxLen = this.fullNameColumn.MaxLength;
-
                 if (thisEnvelope == null)
                     return;
 
-                // Get this envelope Full Name
-                fullName = this.myGetFullName(ref thisEnvelope);
-
-                // Truncate if too long
-                if (fullName.Length > maxLen)
-                    fullName = fullName.Substring(0, maxLen);
-
-                // Set the Full name
-                thisEnvelope.fullName = fullName;
+                // Get this envelope Full Name and set it
+                thisEnvelope.fullName = this.myGetFullName(ref thisEnvelope);
 
                 // Find all the child envelopes and update their full names too.
-                childIDList = this.myGetChildEnvelopeIDList(thisEnvelope.id);
+                List<short> childIDList = this.myGetChildEnvelopeIDList(thisEnvelope.id);
 
                 foreach (short id in childIDList)
                 {
@@ -127,6 +129,7 @@ namespace FamilyFinance2
                     return this.myGetFullName(ref parent) + ":" + thisEnvelope.name;
                 }
             }
+
 
             private void mySaveAddedRow(ref SqlCeCommand command, ref EnvelopeRow row)
             {

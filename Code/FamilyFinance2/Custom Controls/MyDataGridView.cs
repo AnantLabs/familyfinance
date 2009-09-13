@@ -133,7 +133,9 @@ namespace FamilyFinance2
         private void MyDataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             string temp = "stop";
+            temp = temp + temp;
         }
+
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -199,6 +201,9 @@ namespace FamilyFinance2
 
             this.CellFormatting += new DataGridViewCellFormattingEventHandler(MyDataGridView_CellFormatting);
             this.DataError += new DataGridViewDataErrorEventHandler(MyDataGridView_DataError);
+
+
+
         }
 
     }

@@ -14,6 +14,7 @@ namespace FamilyFinance2
             //   Local Variables
             ///////////////////////////////////////////////////////////////////////
             private short newID;
+            private bool stayOut;
 
 
             ///////////////////////////////////////////////////////////////////////
@@ -27,6 +28,7 @@ namespace FamilyFinance2
                 this.ColumnChanged += new DataColumnChangeEventHandler(LineTypeDataTable_ColumnChanged);
 
                 this.newID = 1;
+                this.stayOut = false;
             }
 
 
@@ -35,23 +37,24 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             private void LineTypeDataTable_TableNewRow(object sender, DataTableNewRowEventArgs e)
             {
+                stayOut = true;
                 LineTypeRow lineTypeRow = e.Row as LineTypeRow;
-                lineTypeRow.BeginEdit();
                 
                 lineTypeRow.id = newID++;
                 lineTypeRow.name = "";
-                
-                lineTypeRow.EndEdit();
+
+                stayOut = false;
             }
 
             private void LineTypeDataTable_ColumnChanged(object sender, DataColumnChangeEventArgs e)
             {
-                LineTypeRow row;
+                if (stayOut)
+                    return;
+
+                stayOut = true;
+                LineTypeRow row = e.Row as LineTypeRow;
                 string tmp;
                 int maxLen;
-
-                row = e.Row as LineTypeRow;
-                row.BeginEdit();
 
                 if (e.Column.ColumnName == "name")
                 {
@@ -62,7 +65,7 @@ namespace FamilyFinance2
                         row.name = tmp.Substring(0, maxLen);
                 }
 
-                row.EndEdit();
+                stayOut = false;
             }
 
 

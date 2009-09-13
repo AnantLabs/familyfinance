@@ -14,6 +14,8 @@ namespace FamilyFinance2
             //   Local Variables
             ////////////////////////////////////////////////////////////////////////////////////////////
             private int newID;
+            private bool stayOut;
+
 
             ////////////////////////////////////////////////////////////////////////////////////////////
             //   Overriden Functions 
@@ -25,6 +27,7 @@ namespace FamilyFinance2
                 this.TableNewRow += new DataTableNewRowEventHandler(AEBalanceDataTable_TableNewRow);
 
                 this.newID = 1;
+                this.stayOut = false;
             }
 
 
@@ -38,8 +41,8 @@ namespace FamilyFinance2
             ////////////////////////////////////////////////////////////////////////////////////////////
             private void AEBalanceDataTable_TableNewRow(object sender, DataTableNewRowEventArgs e)
             {
+                stayOut = true;
                 AEBalanceRow aEBalanceRow = e.Row as AEBalanceRow;
-                aEBalanceRow.BeginEdit();
 
                 aEBalanceRow.id = this.newID++;
                 aEBalanceRow.accountID = SpclAccount.NULL;
@@ -47,7 +50,7 @@ namespace FamilyFinance2
                 aEBalanceRow.endingBalance = 0.0m;
                 aEBalanceRow.currentBalance = 0.0m;
 
-                aEBalanceRow.EndEdit();
+                stayOut = false;
             }
 
 
@@ -171,14 +174,11 @@ namespace FamilyFinance2
                         return row;
 
                 AEBalanceRow newRow = this.NewAEBalanceRow();
-                newRow.BeginEdit();
 
                 newRow.accountID = accountID;
                 newRow.envelopeID = envelopeID;
 
                 this.Rows.Add(newRow);
-                newRow.EndEdit();
-
                 return newRow;
             }
 

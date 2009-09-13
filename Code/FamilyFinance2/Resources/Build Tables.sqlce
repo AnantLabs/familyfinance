@@ -82,7 +82,7 @@ CREATE TABLE AEBalance
 -------------------------------------------------------------------------------
 CREATE TABLE LineType
 (
-	id					smallint			NOT NULL,
+	id					smallint		NOT NULL,
 	[name]				nvarchar(15)	NOT NULL,
 	CONSTRAINT PK_LineType_id     PRIMARY KEY (id)
 );
