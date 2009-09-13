@@ -38,38 +38,34 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             private void LineItemDataTable_TableNewRow(object sender, System.Data.DataTableNewRowEventArgs e)
             {
-                LineItemRow lineItemRow = e.Row as LineItemRow;
-                lineItemRow.BeginEdit();
+                stayOut = true;
+                LineItemRow newRow = e.Row as LineItemRow;
                 
-                lineItemRow.id = newID++;
-                lineItemRow.transactionID = FFDBDataSet.myDBGetNewID("transactionID", "LineItem");
-                lineItemRow.date = DateTime.Now.Date;
-                lineItemRow.lineTypeID = SpclLineType.NULL;
-                lineItemRow.accountID = SpclAccount.NULL;
-                lineItemRow.oppAccountID = SpclAccount.NULL;
-                lineItemRow.description = "";
-                lineItemRow.confirmationNumber = "";
-                lineItemRow.envelopeID = SpclEnvelope.NULL;
-                lineItemRow.complete = LineState.PENDING;
-                lineItemRow.creditAmount = 0.0m;
-                lineItemRow.transactionError = false;
-                lineItemRow.lineError = false;
+                newRow.id = newID++;
+                newRow.transactionID = FFDBDataSet.myDBGetNewID("transactionID", "LineItem");
+                newRow.date = DateTime.Now.Date;
+                newRow.lineTypeID = SpclLineType.NULL;
+                newRow.accountID = SpclAccount.NULL;
+                newRow.oppAccountID = SpclAccount.NULL;
+                newRow.description = "";
+                newRow.confirmationNumber = "";
+                newRow.envelopeID = SpclEnvelope.NULL;
+                newRow.complete = LineState.PENDING;
+                newRow.amount = 0.0m;
+                newRow.creditDebit = LineCD.CREDIT;
+                newRow.transactionError = false;
+                newRow.lineError = false;
 
-                lineItemRow.EndEdit();
+                stayOut = false;
             }
 
             private void LineItemDataTable_ColumnChanged(object sender, DataColumnChangeEventArgs e)
             {
-                LineItemRow row;
-                string tmp;
-
                 if (stayOut)
                     return;
 
                 stayOut = true;
-
-                row = e.Row as LineItemRow;
-                row.BeginEdit();
+                LineItemRow row = e.Row as LineItemRow;
 
                 switch (e.Column.ColumnName)
                 {
@@ -90,15 +86,12 @@ namespace FamilyFinance2
                         break;
 
                     case "complete":
-                        tmp = e.ProposedValue as string;
+                        string tmp = e.ProposedValue as string;
                         if (tmp.Length > 1)
-                        {
                             row.complete = tmp.Substring(0, 1);
-                        }
                         break;
                 }
 
-                row.EndEdit();
                 stayOut = false;
             }
 
@@ -108,21 +101,16 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             private void myValidateAmount(ref LineItemRow row, bool newCD, decimal newAmount)
             {
-                int temp;
-
                 if (newAmount < 0)
                 {
                     newAmount = newAmount * -1;
                     newCD = !newCD;
                 }
 
-                // Keep only to the Penny.
-                temp = Convert.ToInt32(newAmount * 100);
-                newAmount = temp / 100.0m;
+                // Keep only to the penny.
+                newAmount = Convert.ToInt32(newAmount * 100) / 100.0m;
 
-                row.BeginEdit();
-
-                if( newAmount == 0)
+                if (newAmount == 0)
                 {
                     row.amount = newAmount;
                     row.creditDebit = newCD;
@@ -143,8 +131,6 @@ namespace FamilyFinance2
                     row.creditAmount = newAmount;
                     row.SetdebitAmountNull();
                 }
-
-                row.EndEdit();
             }
 
             private void mySaveAddedRow(ref SqlCeCommand command, ref LineItemRow row)
@@ -157,14 +143,23 @@ namespace FamilyFinance2
                 query = "INSERT INTO LineItem VALUES (";
                 query += row.id.ToString() + ", ";
                 query += row.transactionID.ToString() + ", ";
-                query += row.date.ToString() + ", ";
+                query += "'" + row.date.ToString("d") + "', ";
                 query += row.lineTypeID.ToString() + ", ";
                 query += row.accountID.ToString() + ", ";
                 query += row.oppAccountID.ToString() + ", ";
-                query += "'" + row.description.Replace("'", "''") + "', ";
-                query += "'" + row.confirmationNumber.Replace("'", "''") + "', ";
+
+                if(row.IsdescriptionNull())
+                    query += "null, ";
+                else
+                    query += "'" + row.description.Replace("'", "''") + "', ";
+
+                if (row.IsconfirmationNumberNull())
+                    query += "null, ";
+                else
+                    query += "'" + row.confirmationNumber.Replace("'", "''") + "', ";
+
                 query += row.envelopeID.ToString() + ", ";
-                query += Convert.ToInt16(row.complete).ToString() + ", ";
+                query += "'" + row.complete + "', ";
                 query += row.amount.ToString() + ", ";
                 query += Convert.ToInt16(row.creditDebit).ToString() + ", ";
                 query += Convert.ToInt16(row.transactionError).ToString() + ", ";
@@ -176,9 +171,7 @@ namespace FamilyFinance2
 
             private void myRemoveDeletedRow(ref SqlCeCommand command, ref LineItemRow row)
             {
-                //string query;
-
-                //query = "DELETE FROM Account WHERE id = " + row.id.ToString() + ";";
+                //string queryquery = "DELETE FROM LineItem WHERE id = " + row.id.ToString() + ";";
 
                 //command.CommandText = query;
                 //command.ExecuteNonQuery();
@@ -196,14 +189,23 @@ namespace FamilyFinance2
 
                 query = "UPDATE LineItem SET ";
                 query += "transactionID = " + row.transactionID.ToString() + ", ";
-                query += "date = " + row.date.ToString() + ", ";
+                query += "date = '" + row.date.ToString("d") + "', ";
                 query += "lineTypeID = " + row.lineTypeID.ToString() + ", ";
                 query += "accountID = " + row.accountID.ToString() + ", ";
                 query += "oppAccountID = " + row.oppAccountID.ToString() + ", ";
-                query += "description = '" + row.description.Replace("'", "''") + "', ";
-                query += "confermationNumber = '" + row.confirmationNumber.Replace("'", "''") + "', ";
+
+                if (row.IsdescriptionNull())
+                    query += "description = null, ";
+                else
+                    query += "description = '" + row.description.Replace("'", "''") + "', ";
+
+                if (row.IsconfirmationNumberNull())
+                    query += "confirmationNumber = null, ";
+                else
+                    query += "confirmationNumber = '" + row.confirmationNumber.Replace("'", "''") + "', ";
+
                 query += "envelopeID = " + row.envelopeID.ToString() + ", ";
-                query += "complete = " + row.complete + ", ";
+                query += "complete = '" + row.complete + "', ";
                 query += "amount = " + row.amount.ToString() + ", ";
                 query += "creditDebit = " + Convert.ToInt16(row.creditDebit).ToString() + ", ";
                 query += "transactionError = " + Convert.ToInt16(row.transactionError).ToString() + ", ";
@@ -275,19 +277,15 @@ namespace FamilyFinance2
                     foreach (LineItemRow row in this)
                         if (row.creditDebit == LineCD.DEBIT)
                         {
-                            row.BeginEdit();
                             row.debitAmount = row.amount;
                             row.SetcreditAmountNull();
                             row.balanceAmount = balance += row.amount;
-                            row.EndEdit();
                         }
                         else
                         {
-                            row.BeginEdit();
                             row.creditAmount = row.amount;
                             row.SetdebitAmountNull();
                             row.balanceAmount = balance -= row.amount;
-                            row.EndEdit();
                         }
                 }
                 else
@@ -295,19 +293,15 @@ namespace FamilyFinance2
                     foreach (LineItemRow row in this)
                         if (row.creditDebit == LineCD.DEBIT)
                         {
-                            row.BeginEdit();
                             row.debitAmount = row.amount;
                             row.SetcreditAmountNull();
                             row.balanceAmount = balance -= row.amount;
-                            row.EndEdit();
                         }
                         else
                         {
-                            row.BeginEdit();
                             row.creditAmount = row.amount;
                             row.SetdebitAmountNull();
                             row.balanceAmount = balance += row.amount;
-                            row.EndEdit();
                         }
                 }
 
@@ -402,6 +396,8 @@ namespace FamilyFinance2
                 if (this.Rows.Count <= 0)
                     return;
 
+                stayOut = true;
+
                 // Set the balances and get the accounts CD.
                 balance = 0.0m;
                 accountCD = (this.Rows[0] as LineItemRow).AccountRowByFK_Line_accountID.creditDebit;
@@ -410,49 +406,40 @@ namespace FamilyFinance2
                 if (accountCD == LineCD.DEBIT)
                 {
                     foreach (LineItemRow row in this)
-                    {
-                        row.BeginEdit();
-
                         if (row.creditDebit == LineCD.DEBIT)
                             row.balanceAmount = balance += row.amount;
 
                         else
                             row.balanceAmount = balance -= row.amount;
-
-                        row.EndEdit();
-                    }
                 }
                 else
                 {
                     foreach (LineItemRow row in this)
-                    {
-                        row.BeginEdit();
-
                         if (row.creditDebit == LineCD.DEBIT)
                             row.balanceAmount = balance -= row.amount;
-
                         else
                             row.balanceAmount = balance += row.amount;
-
-                        row.EndEdit();
-                    }
                 }
 
                 this.AcceptChanges();
+                stayOut = false;
             }
 
-            public decimal myGetTransCDSum(int transID, bool creditDebit)
+            public void myGetTransCDSum(int transID, out decimal creditSum, out decimal debitSum)
             {
-                decimal sum = 0.0m;
+                creditSum = 0.00m;
+                debitSum = 0.00m;
 
-                var amounts = from line in this
-                          where line.transactionID == transID && line.creditDebit == creditDebit
-                          select line.amount;
-
-                foreach (var amount in amounts)
-                    sum += amount;
-
-                return sum;
+                foreach (LineItemRow line in this)
+                {
+                    if(line.RowState != DataRowState.Deleted && line.transactionID == transID)
+                    {
+                        if(line.creditDebit == LineCD.CREDIT)
+                            creditSum += line.amount;
+                        else
+                            debitSum += line.amount;
+                    }
+                }
             }
 
 

@@ -15,6 +15,7 @@ namespace FamilyFinance2
             //   Local Variables
             ///////////////////////////////////////////////////////////////////////
             private int newID;
+            private bool stayOut;
 
 
             ///////////////////////////////////////////////////////////////////////
@@ -26,7 +27,9 @@ namespace FamilyFinance2
 
                 this.TableNewRow += new DataTableNewRowEventHandler(SubLineItemDataTable_TableNewRow);
                 this.ColumnChanged += new DataColumnChangeEventHandler(SubLineItemDataTable_ColumnChanged);
+
                 this.newID = 1;
+                this.stayOut = false;
             }
 
 
@@ -35,23 +38,24 @@ namespace FamilyFinance2
             ///////////////////////////////////////////////////////////////////////
             private void SubLineItemDataTable_TableNewRow(object sender, DataTableNewRowEventArgs e)
             {
+                stayOut = true;
                 SubLineItemRow newRow = e.Row as SubLineItemRow;
-                newRow.BeginEdit();
 
                 newRow.id = this.newID++;
                 newRow.envelopeID = SpclEnvelope.NULL;
                 newRow.description = "";
                 newRow.amount = 0.0m;
 
-                newRow.EndEdit();
+                stayOut = false;
             }
 
             private void SubLineItemDataTable_ColumnChanged(object sender, DataColumnChangeEventArgs e)
             {
-                SubLineItemRow row;
+                if (stayOut)
+                    return;
 
-                row = e.Row as SubLineItemRow;
-                row.BeginEdit();
+                stayOut = true;
+                SubLineItemRow row = e.Row as SubLineItemRow;
 
                 if (e.Column.ColumnName == "amount")
                 {
@@ -68,7 +72,7 @@ namespace FamilyFinance2
                     row.amount = newValue;
                 }
 
-                row.EndEdit();
+                stayOut = false;
             }
 
 
@@ -86,7 +90,12 @@ namespace FamilyFinance2
                 query += row.id.ToString() + ", ";
                 query += row.lineItemID.ToString() + ", ";
                 query += row.envelopeID.ToString() + ", ";
-                query += "'" + row.description.Replace("'", "''") + "', ";
+
+                if (row.IsdescriptionNull())
+                    query += "null, ";
+                else
+                    query += "'" + row.description.Replace("'", "''") + "', ";
+
                 query += row.amount.ToString() + ");";
 
                 command.CommandText = query;
@@ -116,7 +125,12 @@ namespace FamilyFinance2
                 query = "UPDATE SubLineItem SET ";
                 query += "lineItemID = " + row.lineItemID.ToString() + ", ";
                 query += "envelopeID = " + row.envelopeID.ToString() + ", ";
-                query += "description = '" + row.description.Replace("'", "''") + "', ";
+
+                if (row.IsdescriptionNull())
+                    query += "description = null, ";
+                else
+                    query += "description = '" + row.description.Replace("'", "''") + "', ";
+
                 query += "amount = " + row.amount.ToString() + ", ";
                 query += "WHERE id = " + row.id.ToString() + ";";
 
@@ -184,8 +198,8 @@ namespace FamilyFinance2
                     }
                 }
 
-                this.AcceptChanges();
                 connection.Close();
+                this.AcceptChanges();
             }
 
             public decimal mySubLineSum(int lineID)

@@ -89,6 +89,7 @@ namespace FamilyFinance2
             }
         }
 
+
         
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Private
@@ -240,6 +241,7 @@ namespace FamilyFinance2
         }
 
 
+
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Public
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -248,6 +250,7 @@ namespace FamilyFinance2
             this.fFDBDataSet = ffDataSet;
             this.thisCreditDebit = creditDebit;
             this.thisTransactionID = transID;
+            this.AllowUserToAddRows = false;
 
             ////////////////////////////////////
             // Setup the Bindings
@@ -265,8 +268,9 @@ namespace FamilyFinance2
 
             this.buildTheDataGridView();
 
+
             ////////////////////////////////////
-            // Subscribe to event.
+            // Subscribe to events.
             this.CellDoubleClick += new DataGridViewCellEventHandler(LineItemDGV_CellDoubleClick);
             this.RowPrePaint += new DataGridViewRowPrePaintEventHandler(LineItemDGV_RowPrePaint);
         }

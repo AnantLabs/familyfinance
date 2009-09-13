@@ -367,7 +367,7 @@ namespace FamilyFinance2
             // Gather information from the transaction
             foreach (LineItemRow line in this.LineItem)
             {
-                if (line.transactionID == transID && line.RowState != DataRowState.Deleted && line.RowState != DataRowState.Detached)
+                if (line.RowState != DataRowState.Deleted && line.transactionID == transID && line.RowState != DataRowState.Detached)
                 {
                     if (line.creditDebit == LineCD.CREDIT)
                     {
