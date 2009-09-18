@@ -45,7 +45,7 @@ namespace FamilyFinance2
             this.lineItemIDColumn.HeaderText = "lineItemID";
             this.lineItemIDColumn.DataPropertyName = "lineItemID";
             this.lineItemIDColumn.Width = 40;
-            this.lineItemIDColumn.Visible = true;
+            this.lineItemIDColumn.Visible = false;
 
             // envelopeIDColumn
             this.envelopeIDColumn = new DataGridViewComboBoxColumn();
@@ -87,8 +87,8 @@ namespace FamilyFinance2
             this.Columns.AddRange(
                 new DataGridViewColumn[] 
                 {
-                    this.lineItemIDColumn,
                     this.envelopeIDColumn,
+                    this.lineItemIDColumn,
                     this.descriptionColumn,
                     this.amountColumn
                 }

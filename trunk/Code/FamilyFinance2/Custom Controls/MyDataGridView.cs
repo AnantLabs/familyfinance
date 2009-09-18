@@ -22,10 +22,13 @@ namespace FamilyFinance2
         // row flags used in painting cells
         protected bool flagTransactionError;
         protected bool flagLineError;
+        protected bool flagAccountError;
         protected bool flagNegativeBalance;
         protected bool flagReadOnlyEnvelope;
         protected bool flagReadOnlyAccounts;
         protected bool flagFutureDate;
+
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Properties
@@ -109,7 +112,12 @@ namespace FamilyFinance2
             else if (this.flagLineError && colName == "envelopeIDColumn")
             {
                 e.CellStyle.BackColor = MyCellStyleError.BackColor;
-                toolTipText = "The sub transactions need attention.";
+                toolTipText = "The sub lines need attention.";
+            }
+            else if (this.flagAccountError && colName == "accountIDColumn")
+            {
+                e.CellStyle.BackColor = MyCellStyleError.BackColor;
+                toolTipText = "Please choose an account.";
             }
             else if (this.flagFutureDate)
                 e.CellStyle.BackColor = MyCellStyleFuture.BackColor;
@@ -177,6 +185,7 @@ namespace FamilyFinance2
             // Initial Flag values
             this.flagTransactionError = false;
             this.flagLineError = false;
+            this.flagAccountError = false;
             this.flagNegativeBalance = false;
             this.flagReadOnlyEnvelope = false;
             this.flagReadOnlyAccounts = false;
