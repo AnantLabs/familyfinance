@@ -131,7 +131,7 @@ namespace FamilyFinance2
                 else
                     query += "description = '" + row.description.Replace("'", "''") + "', ";
 
-                query += "amount = " + row.amount.ToString() + ", ";
+                query += "amount = " + row.amount.ToString() + " ";
                 query += "WHERE id = " + row.id.ToString() + ";";
 
                 command.CommandText = query;

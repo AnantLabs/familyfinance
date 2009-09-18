@@ -74,7 +74,7 @@ namespace FamilyFinance2.Forms
 
 
 
-        private void ContextMenuStrip_Opening(object sender, CancelEventArgs e)
+        private void creditDebitDGVContextMenu_Opening(object sender, CancelEventArgs e)
         {
             string text;
             FFDBDataSet.LineItemRow line = this.fFDBDataSet.LineItem.FindByid(this.currentLineID);
@@ -90,7 +90,6 @@ namespace FamilyFinance2.Forms
             text += ", \"" + line.description + "\")";
 
             this.deleteLineToolStripMenuItem.Text = text;
-
         }
 
         private void showConfermationColMenu_Click(object sender, EventArgs e)
@@ -173,6 +172,7 @@ namespace FamilyFinance2.Forms
         private void DoneButton_Click(object sender, EventArgs e)
         {
             this.fFDBDataSet.mySaveTransaction();
+            this.Close();
         }
 
 
@@ -291,29 +291,32 @@ namespace FamilyFinance2.Forms
 
             
             ////////////////////////////////////
-            // Build the context menu
-            this.ContextMenuStrip = new ContextMenuStrip();
-            this.ContextMenuStrip.ShowImageMargin = false;
-            this.ContextMenuStrip.ShowCheckMargin = true;
-            this.ContextMenuStrip.AutoSize = true;
-            this.ContextMenuStrip.Opening += new CancelEventHandler(ContextMenuStrip_Opening);
+            // Build the creditDGV/debitDGV context menus
+            this.creditDGV.ContextMenuStrip = new ContextMenuStrip();
+            this.creditDGV.ContextMenuStrip.ShowImageMargin = false;
+            this.creditDGV.ContextMenuStrip.ShowCheckMargin = true;
+            this.creditDGV.ContextMenuStrip.AutoSize = true;
+            this.creditDGV.ContextMenuStrip.Opening += new CancelEventHandler(creditDebitDGVContextMenu_Opening);
 
             this.showConfermationColToolStripMenuItem = new ToolStripMenuItem("Show Confermation Column", null, showConfermationColMenu_Click);
             this.showConfermationColToolStripMenuItem.Checked = true;
-            this.ContextMenuStrip.Items.Add(this.showConfermationColToolStripMenuItem);
+            this.creditDGV.ContextMenuStrip.Items.Add(this.showConfermationColToolStripMenuItem);
 
-            this.ContextMenuStrip.Items.Add(new ToolStripSeparator());
+            this.creditDGV.ContextMenuStrip.Items.Add(new ToolStripSeparator());
 
             this.newSourceLineToolStripMenuItem = new ToolStripMenuItem("New Source Line", null, newCreditLineMenu_Click);
-            this.ContextMenuStrip.Items.Add(this.newSourceLineToolStripMenuItem);
+            this.creditDGV.ContextMenuStrip.Items.Add(this.newSourceLineToolStripMenuItem);
 
             this.newDestinationLineToolStripMenuItem = new ToolStripMenuItem("New Destination Line", null, newDebitLineMenu_Click);
-            this.ContextMenuStrip.Items.Add(this.newDestinationLineToolStripMenuItem);
+            this.creditDGV.ContextMenuStrip.Items.Add(this.newDestinationLineToolStripMenuItem);
 
-            this.ContextMenuStrip.Items.Add(new ToolStripSeparator());
+            this.creditDGV.ContextMenuStrip.Items.Add(new ToolStripSeparator());
 
             this.deleteLineToolStripMenuItem = new ToolStripMenuItem("Delete Line", null, deleteLineMenu_Click);
-            this.ContextMenuStrip.Items.Add(this.deleteLineToolStripMenuItem);
+            this.creditDGV.ContextMenuStrip.Items.Add(this.deleteLineToolStripMenuItem);
+
+            this.debitDGV.ContextMenuStrip = this.creditDGV.ContextMenuStrip;
+
 
             this.CurrentLineID = this.debitDGV.CurrentLineID;
 

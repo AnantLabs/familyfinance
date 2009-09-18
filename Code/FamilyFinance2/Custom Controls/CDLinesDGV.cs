@@ -69,6 +69,7 @@ namespace FamilyFinance2
             // Defaults. Used for new lines.
             this.flagTransactionError = false;
             this.flagLineError = false;
+            this.flagAccountError = false;
             this.flagNegativeBalance = false;
             this.flagReadOnlyEnvelope = false;
             this.flagReadOnlyAccounts = false;
@@ -80,6 +81,9 @@ namespace FamilyFinance2
                 bool thisLineUsesEnvelopes = thisLine.AccountRowByFK_Line_accountID.envelopes;
 
                 this.flagLineError = thisLine.lineError;
+
+                if (thisLine.accountID == SpclAccount.NULL)
+                    this.flagAccountError = true;
 
                 if (thisLine.envelopeID == SpclEnvelope.SPLIT || !thisLineUsesEnvelopes)
                     this.flagReadOnlyEnvelope = true;
@@ -102,7 +106,7 @@ namespace FamilyFinance2
             this.lineItemIDColumn.HeaderText = "lineItemID";
             this.lineItemIDColumn.DataPropertyName = "id";
             this.lineItemIDColumn.Width = 40;
-            this.lineItemIDColumn.Visible = true;
+            this.lineItemIDColumn.Visible = false;
 
             // transactionIDColumn
             this.transactionIDColumn = new DataGridViewTextBoxColumn();
@@ -110,7 +114,7 @@ namespace FamilyFinance2
             this.transactionIDColumn.HeaderText = "transactionID";
             this.transactionIDColumn.DataPropertyName = "transactionID";
             this.transactionIDColumn.Width = 40;
-            this.transactionIDColumn.Visible = true;
+            this.transactionIDColumn.Visible = false;
 
             // dateColumn
             this.dateColumn = new CalendarColumn();
@@ -137,7 +141,7 @@ namespace FamilyFinance2
             this.typeIDColumn.Width = 80;
             this.typeIDColumn.Visible = true;
 
-            // oppAccountIDColumn
+            // accountIDColumn
             this.accountIDColumn = new DataGridViewComboBoxColumn();
             this.accountIDColumn.Name = "accountIDColumn";
             this.accountIDColumn.HeaderText = "Source / Destination";
@@ -204,6 +208,7 @@ namespace FamilyFinance2
             this.creditDebitColumn.DataPropertyName = "creditDebit";
             this.creditDebitColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
             this.creditDebitColumn.Width = 20;
+            this.creditDebitColumn.Visible = false;
 
             // amountColumn
             this.amountColumn = new DataGridViewTextBoxColumn();

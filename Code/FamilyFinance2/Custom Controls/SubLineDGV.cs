@@ -52,6 +52,15 @@ namespace FamilyFinance2
             int row = e.RowIndex;
             int col = e.ColumnIndex;
 
+            if (row >= 0)
+            {
+                int transID = Convert.ToInt32(this["transactionIDColumn", row].Value);
+
+                Forms.TransactionForm tf = new FamilyFinance2.Forms.TransactionForm(transID);
+                tf.ShowDialog();
+                this.myReloadSubLineView();
+            }
+
             //if (col == debitAmountColumn.Index && row == -1 && currentEnvelopeID != -1)
             //{
             //    string oldName = this.globalDataSet.Account.FindByid(currentEnvelopeID).debitColumnName;
