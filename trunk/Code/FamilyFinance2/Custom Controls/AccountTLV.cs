@@ -24,32 +24,13 @@ namespace FamilyFinance2
         private MyTreeListNode incomeRootNode;
         private MyTreeListNode envelopeRootNode;
 
+        private ToolStripMenuItem showIncomeMenuItem;
+        private ToolStripMenuItem showExpenseMenuItem;
+
 
         ///////////////////////////////////////////////////////////////////////
         //   Properties
         ///////////////////////////////////////////////////////////////////////
-        private bool showExpense;
-        public bool ShowExpense
-        {
-            get { return showExpense; }
-            set
-            {
-                showExpense = value;
-                buildTheTree();
-            }
-        }
-
-        private bool showIncome;
-        public bool ShowIncome
-        {
-            get { return showIncome; }
-            set
-            {
-                showIncome = value;
-                buildTheTree();
-            }
-        }
-
         private int selectedAccountID;
         public int SelectedAccountID
         {
@@ -94,6 +75,17 @@ namespace FamilyFinance2
                 OnSelectedAccountEnvelopeChanged(new SelectedAccountEnvelopeChangedEventArgs(accountID, envelopeID));
         }
 
+        private void showIncomeMenuItem_Click(object sender, EventArgs e)
+        {
+            this.buildTheTree();
+        }
+
+        private void showExpenseMenuItem_Click(object sender, EventArgs e)
+        {
+            this.buildTheTree();
+        }
+
+
  
         ///////////////////////////////////////////////////////////////////////
         //   Functions Private
@@ -103,7 +95,6 @@ namespace FamilyFinance2
             this.SuspendLayout();
 
             // Defaults
-            //groupByAccountType = false;
 
             // Build theTreeListView
             this.Images = new ImageList();
@@ -155,6 +146,34 @@ namespace FamilyFinance2
             this.ResumeLayout();
         }
 
+        private void buildContextMenu()
+        {
+
+            // showIncome
+            showIncomeMenuItem = new ToolStripMenuItem();
+            showIncomeMenuItem.Name = "envelopesToolStripMenuItem";
+            showIncomeMenuItem.Text = "Show Incomes";
+            showIncomeMenuItem.CheckOnClick = true;
+            showIncomeMenuItem.Checked = false;
+            showIncomeMenuItem.Click += new EventHandler(showIncomeMenuItem_Click);
+
+            // showExpenses
+            showExpenseMenuItem = new ToolStripMenuItem();
+            showExpenseMenuItem.Name = "envelopesToolStripMenuItem";
+            showExpenseMenuItem.Size = new System.Drawing.Size(170, 22);
+            showExpenseMenuItem.Text = "Show Expences";
+            showExpenseMenuItem.CheckOnClick = true;
+            showExpenseMenuItem.Checked = false;
+            showExpenseMenuItem.Click += new EventHandler(showExpenseMenuItem_Click);
+
+            // Context Menu for the AccountTreeListView
+            this.ContextMenuStrip = new ContextMenuStrip();
+            this.ContextMenuStrip.Items.Add(showIncomeMenuItem);
+            this.ContextMenuStrip.Items.Add(showExpenseMenuItem);
+
+
+        }
+
         private void buildTheTree()
         {
             // Clear the nodes
@@ -164,13 +183,13 @@ namespace FamilyFinance2
             this.Nodes.Add(this.accountRootNode);
             this.addTypeNodes(this.accountRootNode, SpclAccountCat.ACCOUNT);
 
-            if (showExpense)
+            if (this.showExpenseMenuItem.Checked == true)
             {
                 this.Nodes.Add(this.expenseRootNode);
                 this.addTypeNodes(this.expenseRootNode, SpclAccountCat.EXPENSE);
             }
 
-            if (showIncome)
+            if (this.showIncomeMenuItem.Checked == true)
             {
                 this.Nodes.Add(this.incomeRootNode);
                 this.addTypeNodes(this.incomeRootNode, SpclAccountCat.INCOME);
@@ -183,9 +202,11 @@ namespace FamilyFinance2
 
             //Expand account and envelope Nodes
             
-            this.EndUpdate();
-            this.ResumeLayout();
+            //this.EndUpdate();
+            //this.ResumeLayout();
         }
+
+
 
         private void addTypeNodes(MyTreeListNode pNode, byte catagory)
         {
@@ -293,7 +314,7 @@ namespace FamilyFinance2
                 addEnvelopeNodes(childNode, envelope.envelopeID);
             }
         }
-
+                     
         private MyTreeListNode makeBalanceNode(string name, decimal balance, short accID, short envID)
         {
             MyTreeListNode newNode = new MyTreeListNode();
@@ -318,7 +339,9 @@ namespace FamilyFinance2
             return newNode;
         }
 
-        private bool updateNode(MyTreeListNode pNode, int accountID, int envelopeID, decimal newAmount, string newName)
+
+        
+        private bool updateBalance(MyTreeListNode pNode, int accountID, int envelopeID, decimal newAmount)
         {
             foreach (MyTreeListNode child in pNode.Nodes)
             {
@@ -327,15 +350,11 @@ namespace FamilyFinance2
 
                 if (aID == accountID && eID == envelopeID)
                 {
-                    if (string.IsNullOrEmpty(newName))
-                        child[1] = newAmount.ToString("C2");
-                    else
-                        child[0] = newName;
-
+                    child[1] = newAmount.ToString("C2");
                     return true;
                 }
 
-                if (updateNode(child, accountID, envelopeID, newAmount, newName))
+                if (updateBalance(child, accountID, envelopeID, newAmount))
                     return true;
                 else
                     return false;
@@ -351,16 +370,14 @@ namespace FamilyFinance2
         public AccountTLV()
         {
             // Set Defaults
-            showIncome = true;
-            showExpense = true;
             selectedAccountID = SpclAccount.NULL;
             selectedEnvelopeID = SpclEnvelope.NULL;
 
-            myInit();
-        }
+            this.buildContextMenu();
+            this.myInit();
 
-        ~AccountTLV()
-        {
+            this.accountRootNode.Expand();
+            this.envelopeRootNode.Expand();
         }
 
         public void updateBalanceInTheTreeView(int accountID, int envelopeID, decimal newAmount)
@@ -369,8 +386,8 @@ namespace FamilyFinance2
 
             foreach (MyTreeListNode child in this.Nodes)
             {
-                if (updateNode(child, accountID, envelopeID, newAmount, "") == true)
-                    found = true; // Do not break-out if found, sub envelopes might be in two places.
+                found = updateBalance(child, accountID, envelopeID, newAmount);
+                // Do not break-out if found, sub envelopes are in accounts and envleopes be in two places.
             }
 
             if (found == false)

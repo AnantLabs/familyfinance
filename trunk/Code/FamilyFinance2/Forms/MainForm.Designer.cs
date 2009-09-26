@@ -44,6 +44,7 @@
             this.editTSMI});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
+            this.mainMenuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.mainMenuStrip.Size = new System.Drawing.Size(984, 24);
             this.mainMenuStrip.TabIndex = 0;
             this.mainMenuStrip.Text = "mainMenuStrip";
