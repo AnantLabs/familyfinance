@@ -75,6 +75,7 @@ namespace FamilyFinance2
             this.registrySplitCont.Dock = DockStyle.Fill;
             this.registrySplitCont.FixedPanel = FixedPanel.Panel1;
             this.registrySplitCont.SplitterDistance = 300;
+
             
 
             InitializeComponent();

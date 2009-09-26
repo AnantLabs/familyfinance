@@ -16,6 +16,7 @@ namespace FamilyFinance2
         private AccountTLV accountTLV;
         private MultiDataGridViewControl multiDGV;
 
+
         private Label temp;
 
         ///////////////////////////////////////////////////////////////////////
@@ -34,6 +35,7 @@ namespace FamilyFinance2
 
 
 
+
         ///////////////////////////////////////////////////////////////////////
         //   Functions Public
         ///////////////////////////////////////////////////////////////////////
@@ -43,26 +45,22 @@ namespace FamilyFinance2
             this.temp.AutoSize = true;
             this.Panel2.Controls.Add(temp);
 
+            // SplitContainer
+            this.BorderStyle = BorderStyle.Fixed3D;
+
+            // The Account Tree List View
             this.accountTLV = new AccountTLV();
             this.accountTLV.Text = "accountTLV";
             this.accountTLV.Dock = DockStyle.Fill;
+            this.accountTLV.SelectedAccountEnvelopeChanged += new SelectedAccountEnvelopeChangedEventHandler(accountTLV_SelectedAccountEnvelopeChanged);
             this.Panel1.Controls.Add(this.accountTLV);
 
+            // the Multi Data Grid View
             this.multiDGV = new MultiDataGridViewControl();
             this.multiDGV.Dock = DockStyle.Fill;
             this.Panel2.Controls.Add(this.multiDGV);
 
-            this.accountTLV.SelectedAccountEnvelopeChanged += new SelectedAccountEnvelopeChangedEventHandler(accountTLV_SelectedAccountEnvelopeChanged);
-            this.SplitterMoved += new SplitterEventHandler(RegistySplitContainer_SplitterMoved);
-        }
 
-        void RegistySplitContainer_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-            temp.Text = "Splitter value = " + this.SplitterDistance.ToString();
-        }
-
-        ~RegistySplitContainer()
-        {
         }
 
         public void myReloadAccount()
