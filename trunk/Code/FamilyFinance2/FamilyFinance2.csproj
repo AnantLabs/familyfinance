@@ -66,83 +66,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FFDBDataSet.cs">
-      <DependentUpon>FFDBDataSet.xsd</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="FFDBDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FFDBDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Form_AccountType\AccountTypeForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form_AccountType\AccountTypeForm.Designer.cs">
-      <DependentUpon>AccountTypeForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Form_EditAccounts\EditAccountsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form_EditAccounts\EditAccountsForm.Designer.cs">
-      <DependentUpon>EditAccountsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Form_EditEnvelopes\EditEnvelopesForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form_EditEnvelopes\EditEnvelopesForm.Designer.cs">
-      <DependentUpon>EditEnvelopesForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Form_FindDB\FindDBForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form_FindDB\FindDBForm.Designer.cs">
-      <DependentUpon>FindDBForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Form_LineType\LineTypeForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form_LineType\LineTypeForm.Designer.cs">
-      <DependentUpon>LineTypeForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Form_Main\MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form_Main\MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Form_Transaction\TransactionForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form_Transaction\TransactionForm.Designer.cs">
-      <DependentUpon>TransactionForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form_AccountType\AccountTypeForm.af.resx">
-      <DependentUpon>AccountTypeForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form_AccountType\AccountTypeForm.resx">
-      <DependentUpon>AccountTypeForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form_EditAccounts\EditAccountsForm.resx">
-      <DependentUpon>EditAccountsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form_EditEnvelopes\EditEnvelopesForm.resx">
-      <DependentUpon>EditEnvelopesForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form_FindDB\FindDBForm.resx">
-      <DependentUpon>FindDBForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form_LineType\LineTypeForm.resx">
-      <DependentUpon>LineTypeForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form_Main\MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form_Transaction\TransactionForm.resx">
-      <DependentUpon>TransactionForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -154,17 +79,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
-    <None Include="FFDBDataSet.xsc">
-      <DependentUpon>FFDBDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="FFDBDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>FFDBDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="FFDBDataSet.xss">
-      <DependentUpon>FFDBDataSet.xsd</DependentUpon>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -178,6 +92,24 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="SharedElements\CalanderColumn.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SharedElements\DTAccount.cs" />
+    <Compile Include="SharedElements\DTAccountCatagory.cs" />
+    <Compile Include="SharedElements\DTAccountType.cs" />
+    <Compile Include="SharedElements\DTAEBalance.cs" />
+    <Compile Include="SharedElements\DTEnvelope.cs" />
+    <Compile Include="SharedElements\DTLineItem.cs" />
+    <Compile Include="SharedElements\DTLineType.cs" />
+    <Compile Include="SharedElements\DTSubLineItem.cs" />
+    <Compile Include="SharedElements\DTSubLineView.cs" />
+    <Compile Include="SharedElements\MyDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SharedElements\oldFFDBDataSet.cs" />
+    <Compile Include="SharedElements\Pieces.cs" />
+    <Compile Include="SharedElements\Queries.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -216,7 +148,8 @@
     <None Include="Resources\TLVBank.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Form_Main\Tabs\" />
+    <Folder Include="Forms\" />
+    <Folder Include="Tabs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
