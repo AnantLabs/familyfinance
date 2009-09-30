@@ -26,7 +26,7 @@ namespace FamilyFinance2
         public DataGridViewComboBoxColumn typeIDColumn;
         public DataGridViewComboBoxColumn accountIDColumn;
         public DataGridViewTextBoxColumn descriptionColumn;
-        public DataGridViewTextBoxColumn confermationNumColumn;
+        public DataGridViewTextBoxColumn confirmationNumColumn;
         public DataGridViewComboBoxColumn envelopeIDColumn;
         public DataGridViewTextBoxColumn completeColumn;
         public DataGridViewTextBoxColumn creditDebitColumn;
@@ -166,15 +166,15 @@ namespace FamilyFinance2
             this.descriptionColumn.FillWeight = 200;
             this.descriptionColumn.Visible = true;
 
-            // confermationNumColumn
-            this.confermationNumColumn = new DataGridViewTextBoxColumn();
-            this.confermationNumColumn.Name = "confermationNumColumn";
-            this.confermationNumColumn.HeaderText = "Confermation #";
-            this.confermationNumColumn.DataPropertyName = "confirmationNumber";
-            this.confermationNumColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.confermationNumColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            this.confermationNumColumn.FillWeight = 100;
-            this.confermationNumColumn.Visible = true;
+            // confirmationNumColumn
+            this.confirmationNumColumn = new DataGridViewTextBoxColumn();
+            this.confirmationNumColumn.Name = "confirmationNumColumn";
+            this.confirmationNumColumn.HeaderText = "Confirmation #";
+            this.confirmationNumColumn.DataPropertyName = "confirmationNumber";
+            this.confirmationNumColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            this.confirmationNumColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.confirmationNumColumn.FillWeight = 100;
+            this.confirmationNumColumn.Visible = true;
 
             // envelopeIDColumn
             this.envelopeIDColumn = new DataGridViewComboBoxColumn();
@@ -230,7 +230,7 @@ namespace FamilyFinance2
                     this.typeIDColumn,
                     this.accountIDColumn,
                     this.descriptionColumn,
-                    this.confermationNumColumn,
+                    this.confirmationNumColumn,
                     this.envelopeIDColumn,
                     this.completeColumn,
                     this.creditDebitColumn,

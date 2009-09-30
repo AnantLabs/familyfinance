@@ -62,12 +62,12 @@ namespace FamilyFinance2
                     decimal newValue;
                     int tempValue;
 
+                    // only keep two decimal points
                     newValue = Convert.ToDecimal(e.ProposedValue);
                     tempValue = Convert.ToInt32(newValue * 100);
                     newValue = Convert.ToDecimal(tempValue) / 100;
 
-                    if (newValue < 0)
-                        newValue = newValue * -1;
+                    // allow negative values in this column
 
                     row.amount = newValue;
                 }

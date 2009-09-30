@@ -344,6 +344,39 @@ namespace FamilyFinance2
             return num + 1;
         }
 
+        static private decimal myDBGetSubSum(int lineID, out int subCount, out short envelopeID)
+        {
+            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            SqlCeCommand selectCmd = new SqlCeCommand();
+            SqlCeDataReader reader;
+            decimal sum;
+
+            sum = 0.0m;
+            subCount = 0;
+            envelopeID = SpclEnvelope.NULL;
+
+            connection.Open();
+
+            selectCmd.Connection = connection;
+            selectCmd.CommandText = "SELECT amount, envelopeID FROM SubLineItem WHERE lineItemID = " + lineID.ToString() + ";";
+            reader = selectCmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                sum += reader.GetDecimal(0);
+                subCount++;
+                envelopeID = reader.GetInt16(1);
+            }
+
+            if (subCount > 1)
+                envelopeID = SpclEnvelope.SPLIT;
+
+            reader.Close();
+            connection.Close();
+
+            return sum;
+        }
+
 
         ///////////////////////////////////////////////////////////////////////
         //   Functions Private 
@@ -353,7 +386,7 @@ namespace FamilyFinance2
         ///////////////////////////////////////////////////////////////////////
         //   Functions Public 
         ///////////////////////////////////////////////////////////////////////
-        public void myCheckTransaction(int transID)
+        public void myCheckTransactionInTable(int transID)
         {
             List<int> lineIDList = new List<int>();
             decimal creditSum = 0.0m;
@@ -418,29 +451,35 @@ namespace FamilyFinance2
                     lineError = true;
 
                 // Set the Line Error if needed
-                if(line.lineError != lineError)
+                if (line.lineError != lineError)
                     line.lineError = lineError;
 
                 // Set the Transaction Error if needed
-                if(line.transactionError != transError)
+                if (line.transactionError != transError)
                     line.transactionError = transError;
-                
+
                 // Set the OppacountID if needed
-                if(line.creditDebit == LineCD.CREDIT)
+                if (line.creditDebit == LineCD.CREDIT)
                 {
-                    if(line.oppAccountID != creditOppAccountID)
+                    if (line.oppAccountID != creditOppAccountID)
                         line.oppAccountID = creditOppAccountID;
                 }
                 else
                 {
-                    if(line.oppAccountID != debitOppAccountID)
+                    if (line.oppAccountID != debitOppAccountID)
                         line.oppAccountID = debitOppAccountID;
                 }
 
                 // Set the EnvelopeID if needed
-                if(line.envelopeID != envelopeID)
+                if (line.envelopeID != envelopeID)
                     line.envelopeID = envelopeID;
             }
+        }
+
+        public void myCheckTransactionInDataBase(int lineID, int transID)
+        {
+
+            
         }
 
         public void mySaveTransaction()

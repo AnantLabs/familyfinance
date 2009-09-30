@@ -21,7 +21,7 @@ namespace FamilyFinance2.Forms
         private SubTransactionDGV subTransDGV;
 
         // Menu Items
-        private ToolStripMenuItem showConfermationColToolStripMenuItem;
+        private ToolStripMenuItem showConfirmationColToolStripMenuItem;
         private ToolStripMenuItem newSourceLineToolStripMenuItem;
         private ToolStripMenuItem newDestinationLineToolStripMenuItem;
         private ToolStripMenuItem deleteLineToolStripMenuItem;
@@ -92,19 +92,19 @@ namespace FamilyFinance2.Forms
             this.deleteLineToolStripMenuItem.Text = text;
         }
 
-        private void showConfermationColMenu_Click(object sender, EventArgs e)
+        private void showConfirmationColMenu_Click(object sender, EventArgs e)
         {
-            if (this.showConfermationColToolStripMenuItem.Checked == true)
+            if (this.showConfirmationColToolStripMenuItem.Checked == true)
             {
-                this.debitDGV.ShowConfermationColumn = false;
-                this.creditDGV.ShowConfermationColumn = false;
-                this.showConfermationColToolStripMenuItem.Checked = false;
+                this.debitDGV.ShowConfirmationColumn = false;
+                this.creditDGV.ShowConfirmationColumn = false;
+                this.showConfirmationColToolStripMenuItem.Checked = false;
             }
             else
             {
-                this.debitDGV.ShowConfermationColumn = true;
-                this.creditDGV.ShowConfermationColumn = true;
-                this.showConfermationColToolStripMenuItem.Checked = true;
+                this.debitDGV.ShowConfirmationColumn = true;
+                this.creditDGV.ShowConfirmationColumn = true;
+                this.showConfirmationColToolStripMenuItem.Checked = true;
             }
         }
 
@@ -171,7 +171,7 @@ namespace FamilyFinance2.Forms
 
         private void DoneButton_Click(object sender, EventArgs e)
         {
-            this.fFDBDataSet.mySaveTransaction();
+            //this.fFDBDataSet.mySaveAndCheckTransaction(this.thisTransactionID);
             this.Close();
         }
 
@@ -208,7 +208,8 @@ namespace FamilyFinance2.Forms
             else
                 sourceSumLabel.ForeColor = destinationSumLabel.ForeColor = System.Drawing.SystemColors.ControlText;
 
-            this.fFDBDataSet.myCheckTransaction(thisTransactionID);
+            //this.fFDBDataSet.mySaveAndCheckTransaction(thisTransactionID);
+            //this.fFDBDataSet.LineItem.myFillByTransaction(thisTransactionID);
 
             /////////////////////////////////
             // Update the subLineSum and lineAmount.
@@ -298,9 +299,9 @@ namespace FamilyFinance2.Forms
             this.creditDGV.ContextMenuStrip.AutoSize = true;
             this.creditDGV.ContextMenuStrip.Opening += new CancelEventHandler(creditDebitDGVContextMenu_Opening);
 
-            this.showConfermationColToolStripMenuItem = new ToolStripMenuItem("Show Confermation Column", null, showConfermationColMenu_Click);
-            this.showConfermationColToolStripMenuItem.Checked = true;
-            this.creditDGV.ContextMenuStrip.Items.Add(this.showConfermationColToolStripMenuItem);
+            this.showConfirmationColToolStripMenuItem = new ToolStripMenuItem("Show Confermation Column", null, showConfirmationColMenu_Click);
+            this.showConfirmationColToolStripMenuItem.Checked = true;
+            this.creditDGV.ContextMenuStrip.Items.Add(this.showConfirmationColToolStripMenuItem);
 
             this.creditDGV.ContextMenuStrip.Items.Add(new ToolStripSeparator());
 

@@ -26,7 +26,7 @@ namespace FamilyFinance2
         private DataGridViewComboBoxColumn typeIDColumn;
         private DataGridViewComboBoxColumn oppAccountIDColumn;
         private DataGridViewTextBoxColumn descriptionColumn;
-        private DataGridViewTextBoxColumn confermationNumColumn;
+        private DataGridViewTextBoxColumn confirmationNumColumn;
         private DataGridViewComboBoxColumn envelopeIDColumn;
         private DataGridViewTextBoxColumn debitAmountColumn;
         private DataGridViewTextBoxColumn completeColumn;
@@ -165,7 +165,7 @@ namespace FamilyFinance2
             int oppAccount = Convert.ToInt32(this[oppAccountIDColumn.Index, row].Value);
             int envelope = Convert.ToInt32(this[envelopeIDColumn.Index, row].Value);
             string description = Convert.ToString(this[descriptionColumn.Index, row].Value);
-            string confNum = Convert.ToString(this[confermationNumColumn.Index, row].Value);
+            string confNum = Convert.ToString(this[confirmationNumColumn.Index, row].Value);
 
             bool allNull = (
                             typeID == SpclLineType.NULL
@@ -189,14 +189,22 @@ namespace FamilyFinance2
                     e.Cancel = true;
                 }
             }
-            else if(currentAccountID != SpclAccount.NULL)  // Save the changes
+
+            inRowValidating = false;
+        }
+
+        private void LineItemDGV_RowValidated(object sender, DataGridViewCellEventArgs e)
+        {
+            int transID = Convert.ToInt32(this[transactionIDColumn.Index, e.RowIndex].Value);
+
+            if (currentAccountID != SpclAccount.NULL)  // Save the changes
             {
                 lineItemDGVBindingSource.EndEdit();
                 //this.fFDBDataSet.myCommitSingleLineChanges(lineID, currentAccountID);
-                this.fFDBDataSet.LineItem.myFillBalance();
+                //this.fFDBDataSet.mySaveAndCheckTransaction(transID);
+                //this.fFDBDataSet.LineItem.myFillByAccount(this.currentAccountID);
+                //this.fFDBDataSet.LineItem.myFillBalance();
             }
-
-            inRowValidating = false;
         }
 
         private void LineItemDGV_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
@@ -306,15 +314,15 @@ namespace FamilyFinance2
             this.descriptionColumn.FillWeight = 200;
             this.descriptionColumn.Visible = true;
 
-            // confermationNumColumn
-            this.confermationNumColumn = new DataGridViewTextBoxColumn();
-            this.confermationNumColumn.Name = "confermationNumColumn";
-            this.confermationNumColumn.HeaderText = "Confermation #";
-            this.confermationNumColumn.DataPropertyName = "confirmationNumber";
-            this.confermationNumColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.confermationNumColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            this.confermationNumColumn.FillWeight = 100;
-            this.confermationNumColumn.Visible = true;
+            // confirmationNumColumn
+            this.confirmationNumColumn = new DataGridViewTextBoxColumn();
+            this.confirmationNumColumn.Name = "confirmationNumColumn";
+            this.confirmationNumColumn.HeaderText = "Confirmation #";
+            this.confirmationNumColumn.DataPropertyName = "confirmationNumber";
+            this.confirmationNumColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            this.confirmationNumColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.confirmationNumColumn.FillWeight = 100;
+            this.confirmationNumColumn.Visible = true;
 
             // envelopeIDColumn
             this.envelopeIDColumn = new DataGridViewComboBoxColumn();
@@ -380,7 +388,7 @@ namespace FamilyFinance2
                     this.typeIDColumn,
                     this.oppAccountIDColumn,
                     this.descriptionColumn,
-                    this.confermationNumColumn,
+                    this.confirmationNumColumn,
                     this.envelopeIDColumn,
                     this.creditAmountColumn,
                     this.completeColumn,
@@ -426,6 +434,7 @@ namespace FamilyFinance2
             // Subscribe to event.
             this.CellDoubleClick += new DataGridViewCellEventHandler(LineItemDGV_CellDoubleClick);
             this.RowValidating += new DataGridViewCellCancelEventHandler(LineItemDGV_RowValidating);
+            this.RowValidated += new DataGridViewCellEventHandler(LineItemDGV_RowValidated);
             this.RowPrePaint += new DataGridViewRowPrePaintEventHandler(LineItemDGV_RowPrePaint);
             //this.CellValueChanged += new DataGridViewCellEventHandler(LineItemDGV_CellValueChanged);
         }

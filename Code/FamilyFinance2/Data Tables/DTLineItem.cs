@@ -218,6 +218,130 @@ namespace FamilyFinance2
 
 
             ///////////////////////////////////////////////////////////////////////
+            //   Check, Ripple and Save the transactions
+            ///////////////////////////////////////////////////////////////////////
+            public bool myIsMinorSave;
+            public bool myIsMajorSave;
+
+            private int myC_TransactionID;
+            private int myC_LineID;
+
+            private int myC_creditCount;
+            private int myC_debitCount; 
+            private short myC_creditOppAccountID;
+            private short myC_debitOppAccountID;
+            private decimal myC_creditSum;
+            private decimal myC_debitSum;
+
+            private decimal myC_subSum;
+            private int myC_subCount;
+            private short myC_envelopeID;
+            
+            private void myGetOtherLinesInfoInDB(int transID, int lineID)
+            {
+                // Initialize values
+                myC_TransactionID = transID;
+                myC_LineID = lineID;
+                myC_creditSum = 0.0m;
+                myC_debitSum = 0.0m;
+                myC_creditOppAccountID = SpclAccount.NULL;
+                myC_debitOppAccountID = SpclAccount.NULL;
+                myC_creditCount = 0;
+                myC_debitCount = 0;
+
+                // DB queries
+                List<OtherLineDetails> otherLines = FFDBDataSet.myGetOtherLinesInTrans(lineID, transID);
+                myC_subSum = FFDBDataSet.myDBGetSubSum(lineID, out myC_subCount, out myC_envelopeID);
+
+                // Gather information from the other lines
+                foreach (OtherLineDetails otherLine in otherLines)
+                {
+                    if (otherLine.creditDebit == LineCD.CREDIT)
+                    {
+                        myC_creditCount++;
+                        myC_creditSum += otherLine.amount;
+                        myC_debitOppAccountID = otherLine.accountID; // This is usefull when there is only one credit
+                    }
+                    else
+                    {
+                        myC_debitCount++;
+                        myC_debitSum += otherLine.amount;
+                        myC_creditOppAccountID = otherLine.accountID; // This is usefull when there is only one debit
+                    }
+                }
+            }
+
+            public void mySaveLine(int lineID)
+            {
+                LineItemRow thisLine = this.FindByid(lineID);
+                bool usesEnvelopes = thisLine.AccountRowByFK_Line_accountID.envelopes;
+                bool lineError;
+                bool transError;
+
+                if (thisLine == null)
+                    return;
+
+                // Gather information from this line
+                if (thisLine.creditDebit == LineCD.CREDIT)
+                {
+                    myC_creditCount++;
+                    myC_creditSum += thisLine.amount;
+                    myC_debitOppAccountID = thisLine.accountID; // This is usefull when there is only one credit
+                }
+                else
+                {
+                    myC_debitCount++;
+                    myC_debitSum += thisLine.amount;
+                    myC_creditOppAccountID = thisLine.accountID; // This is usefull when there is only one debit
+                }
+
+                // Determine transaction and line errors.
+                transError = (myC_creditSum != myC_debitSum);
+
+                if ((usesEnvelopes && thisLine.amount == myC_subSum) || (!usesEnvelopes && myC_subSum == 0.0m))
+                    lineError = false;
+                else
+                    lineError = true;
+
+                // Set the errors in this line
+                if (thisLine.transactionError != transError)
+                    thisLine.transactionError = transError;
+
+                if (thisLine.lineError != lineError)
+                    thisLine.lineError = lineError;
+
+
+                // TODO: Ripple oppAccount changes.
+
+                // Determine the oppAccount values for complex transactions ELSE oppAccount has the correct accountID
+                if (myC_creditCount > 1)
+                    myC_debitOppAccountID = SpclAccount.MULTIPLE;
+
+                if (myC_debitCount > 1)
+                    myC_creditOppAccountID = SpclAccount.MULTIPLE;
+
+
+                // Set the OppAcountID if needed
+                if (thisLine.creditDebit == LineCD.CREDIT)
+                {
+                    if (thisLine.oppAccountID != myC_creditOppAccountID)
+                        thisLine.oppAccountID = myC_creditOppAccountID;
+                }
+                else
+                {
+                    if (thisLine.oppAccountID != myC_debitOppAccountID)
+                        thisLine.oppAccountID = myC_debitOppAccountID;
+                }
+
+                // Set the EnvelopeID if needed
+                if (thisLine.envelopeID != envelopeID)
+                    thisLine.envelopeID = envelopeID;
+            }
+            
+
+
+
+            ///////////////////////////////////////////////////////////////////////
             //   Functions Public 
             ///////////////////////////////////////////////////////////////////////
             public void myFillByAccount(short accountID)
