@@ -45,10 +45,10 @@ namespace FamilyFinance2
             }
         }
 
-        public bool ShowConfermationColumn
+        public bool ShowConfirmationColumn
         {
-            get { return this.Columns["confermationNumColumn"].Visible; }
-            set { this.Columns["confermationNumColumn"].Visible = value; }
+            get { return this.Columns["confirmationNumColumn"].Visible; }
+            set { this.Columns["confirmationNumColumn"].Visible = value; }
         }
 
         public int CurrentLineID

@@ -44,10 +44,10 @@ namespace FamilyFinance2
             }
         }
 
-        public bool ShowConfermationColumn
+        public bool ShowConfirmationColumn
         {
-            get { return this.lineItemDGV.ShowConfermationColumn; }
-            set { this.lineItemDGV.ShowConfermationColumn = value; }
+            get { return this.lineItemDGV.ShowConfirmationColumn; }
+            set { this.lineItemDGV.ShowConfirmationColumn = value; }
         }
 
         public bool ShowEnvelopeColumn

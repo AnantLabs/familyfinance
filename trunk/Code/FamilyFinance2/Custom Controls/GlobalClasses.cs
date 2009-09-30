@@ -172,7 +172,7 @@ namespace FamilyFinance2
     //    public string Type;
     //    public int AccountID;
     //    public string Description;
-    //    public string ConfermationNumber;
+    //    public string ConfirmationNumber;
     //    public string Complete;
     //    public decimal Amount;
     //    public bool CreditDebit;
@@ -185,7 +185,7 @@ namespace FamilyFinance2
     //        Type = "";
     //        AccountID = SpclAccount.NULL;
     //        Description = "";
-    //        ConfermationNumber = "";
+    //        ConfirmationNumber = "";
     //        Complete = LineState.PENDING;
     //        Amount = 0;
     //        CreditDebit = LineCD.DEBIT;

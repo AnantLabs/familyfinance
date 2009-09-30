@@ -568,6 +568,65 @@ namespace FamilyFinance2
     #endregion My Find All Errors
 
 
+    #region My Get Remaining Transaction Details
+
+    public class OtherLineDetails
+    {
+        public int id;
+        public bool creditDebit;
+        public short accountID;
+        public decimal amount;
+    }
+
+    partial class FFDBDataSet
+    {
+        static public List<OtherLineDetails> myGetOtherLinesInTrans(int lineID, int transID)
+        {
+            List<OtherLineDetails> queryResults = new List<OtherLineDetails>();
+            SqlCeConnection connection;
+            SqlCeCommand command;
+            string query;
+
+            // Get the details of the other line in the transaction
+            query = " SELECT id, accountID, creditDebit, amount";
+            query += " FROM LineItem ";
+            query += " WHERE transactionID = " + transID.ToString() + " AND id <> " + lineID.ToString();
+
+            connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            command = new SqlCeCommand(query, connection);
+            connection.Open();
+            SqlCeDataReader reader = command.ExecuteReader();
+
+            try
+            {
+                // Iterate through the results
+                while (reader.Read())
+                {
+                    OtherLineDetails ad = new OtherLineDetails();
+                    ad.id = reader.GetInt32(0);
+                    ad.accountID = reader.GetInt16(1);
+                    ad.creditDebit = reader.GetBoolean(2);
+                    ad.amount = reader.GetDecimal(3);
+
+                    queryResults.Add(ad);
+                }
+            }
+            finally
+            {
+                // Always call Close the reader and connection when done reading
+                reader.Close();
+                connection.Close();
+            }
+
+            return queryResults;
+
+
+
+        }
+    }
+
+    #endregion My Get Remaining Transaction Details
+
 
 } // END namespace FamilyFinance
 
