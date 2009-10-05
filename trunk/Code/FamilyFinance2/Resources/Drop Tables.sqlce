@@ -5,7 +5,6 @@ DROP TABLE AEBalance;
 DROP TABLE Envelope;
 DROP TABLE Account;
 DROP TABLE AccountType;
-DROP TABLE AccountCatagory;
 
 
 

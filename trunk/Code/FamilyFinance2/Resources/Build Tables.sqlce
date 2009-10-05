@@ -1,21 +1,21 @@
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-CREATE TABLE AccountCatagory
-(
-	id					tinyint			NOT NULL,
-	[name]				nvarchar(10)	NOT NULL,
-	CONSTRAINT PK_AccountCatagory_id    PRIMARY KEY (id)
-);
-INSERT INTO AccountCatagory VALUES (0, 'NULL');
-INSERT INTO AccountCatagory VALUES (1, 'Income');
-INSERT INTO AccountCatagory VALUES (2, 'Account');
-INSERT INTO AccountCatagory VALUES (3, 'Expense');
+--CREATE TABLE AccountCatagory
+--(
+--	id					tinyint			NOT NULL,
+--	[name]				nvarchar(10)	NOT NULL,
+--	CONSTRAINT PK_AccountCatagory_id    PRIMARY KEY (id)
+--);
+--INSERT INTO AccountCatagory VALUES (0, 'NULL');
+--INSERT INTO AccountCatagory VALUES (1, 'Income');
+--INSERT INTO AccountCatagory VALUES (2, 'Account');
+--INSERT INTO AccountCatagory VALUES (3, 'Expense');
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
 CREATE TABLE AccountType
 (
-	id					smallint		NOT NULL,
+	id					int				NOT NULL,
 	[name]				nvarchar(30)	NOT NULL,
 	CONSTRAINT PK_AccountType_id        PRIMARY KEY (id)
 );
@@ -26,18 +26,17 @@ INSERT INTO AccountType VALUES (-1, ' '); -- Null Account Type
 -------------------------------------------------------------------------------
 CREATE TABLE Account
 (
-	id					smallint		NOT NULL,
+	id					int				NOT NULL,
 	[name]				nvarchar(30)	NOT NULL,
-	accountTypeID		smallint		NOT NULL,
-	catagoryID			tinyint			NOT NULL,	--(1 = Income, 2 = Account, 3 = Expence)
+	accountTypeID		int				NOT NULL,
+	catagoryID			tinyint			NOT NULL,	--(0 = NULL, 1 = Income, 2 = Account, 3 = Expence)
 	closed				bit				NOT NULL,	--(0 = NO , 1 = YES)
 	creditDebit			bit				NOT NULL,	--(0 = Credit, 1 = Debit (normal))
 	envelopes			bit				NOT NULL,	--(0 = NO , 1 = YES)
 	currentBalance		money			NOT NULL,
 	endingBalance		money			NOT NULL,
 	CONSTRAINT PK_Account_id     PRIMARY KEY (id),
-	CONSTRAINT FK_Account_typeID FOREIGN KEY (accountTypeID) REFERENCES  AccountType(id),
-	CONSTRAINT FK_Account_catID  FOREIGN KEY (catagoryID)    REFERENCES  AccountCatagory(id)
+	CONSTRAINT FK_Account_typeID FOREIGN KEY (accountTypeID) REFERENCES  AccountType(id)
 );
 INSERT INTO Account VALUES (-2, '-Multiple-', -1, 0, 0, 1, 0, 0.0, 0.0);
 INSERT INTO Account VALUES (-1, ' ', -1, 0, 0, 1, 0, 0.0, 0.0); -- NULL Account
@@ -48,10 +47,10 @@ INSERT INTO Account VALUES (-1, ' ', -1, 0, 0, 1, 0, 0.0, 0.0); -- NULL Account
 -------------------------------------------------------------------------------
 CREATE TABLE Envelope
 (
-	id					smallint		NOT NULL,
+	id					int				NOT NULL,
 	[name]				nvarchar(30)	NOT NULL,
 	fullName			nvarchar(300)	NOT NULL,
-	parentEnvelope		smallint		NOT NULL,
+	parentEnvelope		int				NOT NULL,
 	closed				bit				NOT NULL,
 	currentBalance		money			NOT NULL,
 	endingBalance		money			NOT NULL,
@@ -68,8 +67,8 @@ INSERT INTO Envelope VALUES (0, '-No Envelope-', '-No Envelope-', -1, 0, 0.0, 0.
 CREATE TABLE AEBalance
 (
 	id					int				NOT NULL,
-	accountID			smallint		NOT NULL,
-	envelopeID			smallint		NOT NULL,
+	accountID			int				NOT NULL,
+	envelopeID			int				NOT NULL,
 	currentBalance		money			NOT NULL,
 	endingBalance		money			NOT NULL,
 	CONSTRAINT PK_AEBalance_id        PRIMARY KEY (id),
@@ -82,7 +81,7 @@ CREATE TABLE AEBalance
 -------------------------------------------------------------------------------
 CREATE TABLE LineType
 (
-	id					smallint		NOT NULL,
+	id					int				NOT NULL,
 	[name]				nvarchar(15)	NOT NULL,
 	CONSTRAINT PK_LineType_id     PRIMARY KEY (id)
 );
@@ -99,17 +98,17 @@ CREATE TABLE LineItem
 	id					int				NOT NULL,
 	transactionID		int				NOT NULL,
 	date				datetime		NOT NULL,
-	lineTypeID			smallint		NOT NULL,
-	accountID			smallint		NOT NULL,
-	oppAccountID		smallint		NOT NULL,
+	lineTypeID			int				NOT NULL,
+	accountID			int				NOT NULL,
+	oppAccountID		int				NOT NULL,
 	description			ntext			NULL,
 	confirmationNumber	ntext			NULL,
-	envelopeID			smallint		NOT NULL,
+	envelopeID			int				NOT NULL,
 	complete			nchar(1)		NOT NULL,		-- (" " Null, "C" Complete, "R" Reconciled)
 	amount				money			NOT NULL,
 	creditDebit			bit				NOT NULL,		-- (0 = Credit (out), 1 = Debit (in))
-	transactionError	bit				NOT NULL,		-- (0 = Credit (out), 1 = Debit (in))
-	lineError			bit				NOT NULL,		-- (0 = Credit (out), 1 = Debit (in))
+	transactionError	bit				NOT NULL,		-- (0 = No, 1 = Yes)
+	lineError			bit				NOT NULL,		-- (0 = No, 1 = Yes)
 	CONSTRAINT PK_Line_id			PRIMARY KEY (id),
 	CONSTRAINT FK_Line_accountID	FOREIGN KEY (accountID)	REFERENCES  Account(id),
 	CONSTRAINT FK_Line_oppAccountID FOREIGN KEY (oppAccountID) REFERENCES  Account(id),
@@ -128,7 +127,7 @@ CREATE TABLE SubLineItem
 (
 	id					int				NOT NULL,
 	lineItemID			int				NOT NULL,
-	envelopeID			smallint		NOT NULL,
+	envelopeID			int				NOT NULL,
 	description			ntext			NULL,
 	amount				money			NOT NULL,
 	CONSTRAINT PK_SubLine_id         PRIMARY KEY (id),

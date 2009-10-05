@@ -38,64 +38,47 @@ namespace FamilyFinance2
 
     public class SpclAccountType
     {
-        public const short NULL = -1;
+        public const int NULL = -1;
     }
 
     public class SpclEnvelope
     {
-        public const short SPLIT = -2;
-        public const short NULL = -1;
-        public const short NOENVELOPE = 0;
+        public const int SPLIT = -2;
+        public const int NULL = -1;
+        public const int NOENVELOPE = 0;
     }
 
     public class SpclLineType
     {
-        public const short NULL = -1;
+        public const int NULL = -1;
     }
 
 
 
     /////////////////////////////////
     // Custom List items, Passing variables and sorting classes
+    public enum DBTables { Account, AccountType, AEBalance, Envelope, LineItem, LineType, SubLineItem }
+    public class Changes
+    {
+        public List<DBTables> Tables;
 
+        public Changes()
+        {
+            Tables = new List<DBTables>();
+        }
 
-    //public class DetailedErrorParam
-    //{
-    //    public int ErrorID;
-    //    public string Type;
-    //    public string Description;
-    //    public int RefID;
+        public void AddTable(DBTables table)
+        {
+            Tables.Add(table);
+        }
 
-    //    public DetailedErrorParam(int errorID, string type, int refID, string description)
-    //    {
-    //        ErrorID = errorID;
-    //        Type = type;
-    //        RefID = refID;
-    //        Description = description;
-    //    }
-    //}
+        public void Copy(Changes otherChanges)
+        {
+            foreach (DBTables table in otherChanges.Tables)
+                this.Tables.Add(table);
+        }
+    }
 
-    //public class ErrorParam
-    //{
-    //    public int ErrorID;
-    //    public string Type;
-    //    public int RefID;
-
-    //    public ErrorParam(int errorID, string type, int refID)
-    //    {
-    //        ErrorID = errorID;
-    //        Type = type;
-    //        RefID = refID;
-    //    }
-    //}
-
-    //public class ErrorParamComparer : IComparer<ErrorParam>
-    //{
-    //    public int Compare(ErrorParam x, ErrorParam y)
-    //    {
-    //        return x.Type.CompareTo(y.Type);
-    //    }
-    //}
 
     //public class EnvelopesIDandName
     //{
@@ -235,13 +218,24 @@ namespace FamilyFinance2
 
     public class MyTreeNode : TreeNode
     {
-        public short ID;
+        public int ID;
+
+        public MyTreeNode(string text, int id):base(text)
+        {
+            this.ID = id;
+        }
     }
 
     public class MyTreeListNode : TreeList.Node
     {
-        public short EnvelopeID;
-        public short AccountID;
+        public int EnvelopeID;
+        public int AccountID;
+
+        public MyTreeListNode(string text, int envelopeID, int accountID) : base(text)
+        {
+            this.EnvelopeID = envelopeID;
+            this.AccountID = accountID;
+        }
     }
 
 

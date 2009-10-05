@@ -1,4 +1,4 @@
-﻿namespace FamilyFinance2.Forms
+﻿namespace FamilyFinance2.Forms.AccountType
 {
     partial class AccountTypeForm
     {
@@ -30,35 +30,38 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AccountTypeForm));
-            this.button1 = new System.Windows.Forms.Button();
+            this.accountTypeDataSet = new FamilyFinance2.Forms.AccountType.AccountTypeDataSet();
+            this.accountTypeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.accountTypeBindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
-            this.accountTypeBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.fFDBDataSet = new FamilyFinance2.FFDBDataSet();
             this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
             this.accountTypeBindingNavigatorSaveItem = new System.Windows.Forms.ToolStripButton();
             this.accountTypeDataGridView = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.accountTypeDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.accountTypeBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.accountTypeBindingNavigator)).BeginInit();
             this.accountTypeBindingNavigator.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.accountTypeBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fFDBDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.accountTypeDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
+            // accountTypeDataSet
             // 
-            resources.ApplyResources(this.button1, "button1");
-            this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.accountTypeDataSet.DataSetName = "AccountTypeDataSet";
+            this.accountTypeDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // accountTypeBindingSource
+            // 
+            this.accountTypeBindingSource.DataMember = "AccountType";
+            this.accountTypeBindingSource.DataSource = this.accountTypeDataSet;
+            this.accountTypeBindingSource.Filter = "";
             // 
             // accountTypeBindingNavigator
             // 
             this.accountTypeBindingNavigator.AddNewItem = this.bindingNavigatorAddNewItem;
             this.accountTypeBindingNavigator.BindingSource = this.accountTypeBindingSource;
             this.accountTypeBindingNavigator.CountItem = null;
-            this.accountTypeBindingNavigator.DeleteItem = this.bindingNavigatorDeleteItem;
+            this.accountTypeBindingNavigator.DeleteItem = null;
             this.accountTypeBindingNavigator.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.accountTypeBindingNavigator.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorAddNewItem,
@@ -78,23 +81,12 @@
             resources.ApplyResources(this.bindingNavigatorAddNewItem, "bindingNavigatorAddNewItem");
             this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
             // 
-            // accountTypeBindingSource
-            // 
-            this.accountTypeBindingSource.DataMember = "AccountType";
-            this.accountTypeBindingSource.DataSource = this.fFDBDataSet;
-            this.accountTypeBindingSource.Filter = "id > 0";
-            this.accountTypeBindingSource.Sort = "name";
-            // 
-            // fFDBDataSet
-            // 
-            this.fFDBDataSet.DataSetName = "FFDBDataSet";
-            this.fFDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // bindingNavigatorDeleteItem
             // 
             this.bindingNavigatorDeleteItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             resources.ApplyResources(this.bindingNavigatorDeleteItem, "bindingNavigatorDeleteItem");
             this.bindingNavigatorDeleteItem.Name = "bindingNavigatorDeleteItem";
+            this.bindingNavigatorDeleteItem.Click += new System.EventHandler(this.bindingNavigatorDeleteItem_Click);
             // 
             // accountTypeBindingNavigatorSaveItem
             // 
@@ -112,37 +104,21 @@
             this.accountTypeDataGridView.AutoGenerateColumns = false;
             this.accountTypeDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.accountTypeDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn2});
+            this.NameColumn});
             this.accountTypeDataGridView.DataSource = this.accountTypeBindingSource;
             resources.ApplyResources(this.accountTypeDataGridView, "accountTypeDataGridView");
             this.accountTypeDataGridView.MultiSelect = false;
             this.accountTypeDataGridView.Name = "accountTypeDataGridView";
             this.accountTypeDataGridView.RowHeadersVisible = false;
-            this.accountTypeDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.accountTypeDataGridView.ShowCellErrors = false;
-            this.accountTypeDataGridView.ShowCellToolTips = false;
             this.accountTypeDataGridView.ShowEditingIcon = false;
             this.accountTypeDataGridView.ShowRowErrors = false;
             // 
-            // dataGridViewTextBoxColumn2
+            // NameColumn
             // 
-            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "name";
-            resources.ApplyResources(this.dataGridViewTextBoxColumn2, "dataGridViewTextBoxColumn2");
-            this.dataGridViewTextBoxColumn2.MaxInputLength = 30;
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "name";
-            resources.ApplyResources(this.dataGridViewTextBoxColumn1, "dataGridViewTextBoxColumn1");
-            this.dataGridViewTextBoxColumn1.MaxInputLength = 30;
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.NameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.NameColumn.DataPropertyName = "name";
+            resources.ApplyResources(this.NameColumn, "NameColumn");
+            this.NameColumn.Name = "NameColumn";
             // 
             // AccountTypeForm
             // 
@@ -150,18 +126,17 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.accountTypeDataGridView);
             this.Controls.Add(this.accountTypeBindingNavigator);
-            this.Controls.Add(this.button1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AccountTypeForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Load += new System.EventHandler(this.TypeForm_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AccountTypeForm_FormClosing);
+            ((System.ComponentModel.ISupportInitialize)(this.accountTypeDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.accountTypeBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.accountTypeBindingNavigator)).EndInit();
             this.accountTypeBindingNavigator.ResumeLayout(false);
             this.accountTypeBindingNavigator.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.accountTypeBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fFDBDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.accountTypeDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -170,16 +145,14 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private FFDBDataSet fFDBDataSet;
+        private FamilyFinance2.Forms.AccountType.AccountTypeDataSet accountTypeDataSet;
         private System.Windows.Forms.BindingSource accountTypeBindingSource;
         private System.Windows.Forms.BindingNavigator accountTypeBindingNavigator;
         private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem;
         private System.Windows.Forms.ToolStripButton accountTypeBindingNavigatorSaveItem;
         private System.Windows.Forms.DataGridView accountTypeDataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NameColumn;
 
     }
 }

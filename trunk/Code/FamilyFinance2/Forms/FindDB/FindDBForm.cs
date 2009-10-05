@@ -7,7 +7,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace FamilyFinance2.Forms
+namespace FamilyFinance2.Forms.FindDB
 {
     public partial class FindDBForm : Form
     {

@@ -1,4 +1,4 @@
-﻿namespace FamilyFinance2.Forms
+﻿namespace FamilyFinance2.Forms.EditAccounts
 {
     partial class EditAccountsForm
     {
@@ -31,104 +31,102 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label nameLabel;
             System.Windows.Forms.Label accountTypeIDLabel;
-            System.Windows.Forms.Label catagoryLabel;
+            System.Windows.Forms.Label catagoryIDLabel;
             System.Windows.Forms.Label closedLabel;
             System.Windows.Forms.Label creditDebitLabel;
             System.Windows.Forms.Label envelopesLabel;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditAccountsForm));
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.accountTreeView = new System.Windows.Forms.TreeView();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.creditRadioButton = new System.Windows.Forms.RadioButton();
+            this.accountBindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
+            this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
             this.accountBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.fFDBDataSet = new FamilyFinance2.FFDBDataSet();
+            this.eADataSet = new FamilyFinance2.Forms.EditAccounts.EADataSet();
+            this.accountBindingNavigatorSaveItem = new System.Windows.Forms.ToolStripButton();
+            this.editAccountTypeTSB = new System.Windows.Forms.ToolStripButton();
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.accountTypeIDComboBox = new System.Windows.Forms.ComboBox();
             this.accountTypeBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.catagoryComboBox = new System.Windows.Forms.ComboBox();
-            this.accountCatagoryBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.catagoryIDComboBox = new System.Windows.Forms.ComboBox();
             this.closedCheckBox = new System.Windows.Forms.CheckBox();
+            this.debitRadioButton = new System.Windows.Forms.RadioButton();
             this.envelopesCheckBox = new System.Windows.Forms.CheckBox();
-            this.accountBindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
-            this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
-            this.accountBindingNavigatorSaveItem = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.modifyAccountTypesTSB = new System.Windows.Forms.ToolStripButton();
             nameLabel = new System.Windows.Forms.Label();
             accountTypeIDLabel = new System.Windows.Forms.Label();
-            catagoryLabel = new System.Windows.Forms.Label();
+            catagoryIDLabel = new System.Windows.Forms.Label();
             closedLabel = new System.Windows.Forms.Label();
             creditDebitLabel = new System.Windows.Forms.Label();
             envelopesLabel = new System.Windows.Forms.Label();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.accountBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fFDBDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.accountTypeBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.accountCatagoryBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.accountBindingNavigator)).BeginInit();
             this.accountBindingNavigator.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.accountBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eADataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.accountTypeBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // nameLabel
             // 
             nameLabel.AutoSize = true;
-            nameLabel.Location = new System.Drawing.Point(51, 35);
+            nameLabel.Location = new System.Drawing.Point(52, 36);
             nameLabel.Name = "nameLabel";
             nameLabel.Size = new System.Drawing.Size(38, 13);
-            nameLabel.TabIndex = 1;
+            nameLabel.TabIndex = 0;
             nameLabel.Text = "Name:";
             // 
             // accountTypeIDLabel
             // 
             accountTypeIDLabel.AutoSize = true;
-            accountTypeIDLabel.Location = new System.Drawing.Point(55, 88);
+            accountTypeIDLabel.Location = new System.Drawing.Point(56, 64);
             accountTypeIDLabel.Name = "accountTypeIDLabel";
             accountTypeIDLabel.Size = new System.Drawing.Size(34, 13);
-            accountTypeIDLabel.TabIndex = 3;
+            accountTypeIDLabel.TabIndex = 2;
             accountTypeIDLabel.Text = "Type:";
             // 
-            // catagoryLabel
+            // catagoryIDLabel
             // 
-            catagoryLabel.AutoSize = true;
-            catagoryLabel.Location = new System.Drawing.Point(37, 61);
-            catagoryLabel.Name = "catagoryLabel";
-            catagoryLabel.Size = new System.Drawing.Size(52, 13);
-            catagoryLabel.TabIndex = 5;
-            catagoryLabel.Text = "Catagory:";
+            catagoryIDLabel.AutoSize = true;
+            catagoryIDLabel.Location = new System.Drawing.Point(38, 92);
+            catagoryIDLabel.Name = "catagoryIDLabel";
+            catagoryIDLabel.Size = new System.Drawing.Size(52, 13);
+            catagoryIDLabel.TabIndex = 4;
+            catagoryIDLabel.Text = "Catagory:";
             // 
             // closedLabel
             // 
             closedLabel.AutoSize = true;
-            closedLabel.Location = new System.Drawing.Point(47, 176);
+            closedLabel.Location = new System.Drawing.Point(48, 120);
             closedLabel.Name = "closedLabel";
             closedLabel.Size = new System.Drawing.Size(42, 13);
-            closedLabel.TabIndex = 7;
+            closedLabel.TabIndex = 6;
             closedLabel.Text = "Closed:";
             // 
             // creditDebitLabel
             // 
             creditDebitLabel.AutoSize = true;
-            creditDebitLabel.Location = new System.Drawing.Point(3, 117);
+            creditDebitLabel.Location = new System.Drawing.Point(4, 148);
             creditDebitLabel.Name = "creditDebitLabel";
             creditDebitLabel.Size = new System.Drawing.Size(86, 13);
-            creditDebitLabel.TabIndex = 9;
+            creditDebitLabel.TabIndex = 8;
             creditDebitLabel.Text = "Account Normal:";
             // 
             // envelopesLabel
             // 
             envelopesLabel.AutoSize = true;
-            envelopesLabel.Location = new System.Drawing.Point(29, 146);
+            envelopesLabel.Location = new System.Drawing.Point(30, 176);
             envelopesLabel.Name = "envelopesLabel";
             envelopesLabel.Size = new System.Drawing.Size(60, 13);
-            envelopesLabel.TabIndex = 11;
+            envelopesLabel.TabIndex = 10;
             envelopesLabel.Text = "Envelopes:";
             // 
             // splitContainer
             // 
             this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainer.IsSplitterFixed = true;
             this.splitContainer.Location = new System.Drawing.Point(0, 0);
             this.splitContainer.Name = "splitContainer";
             // 
@@ -139,21 +137,22 @@
             // splitContainer.Panel2
             // 
             this.splitContainer.Panel2.AutoScroll = true;
-            this.splitContainer.Panel2.Controls.Add(this.checkBox1);
+            this.splitContainer.Panel2.Controls.Add(this.creditRadioButton);
+            this.splitContainer.Panel2.Controls.Add(this.accountBindingNavigator);
             this.splitContainer.Panel2.Controls.Add(nameLabel);
             this.splitContainer.Panel2.Controls.Add(this.nameTextBox);
             this.splitContainer.Panel2.Controls.Add(accountTypeIDLabel);
             this.splitContainer.Panel2.Controls.Add(this.accountTypeIDComboBox);
-            this.splitContainer.Panel2.Controls.Add(catagoryLabel);
-            this.splitContainer.Panel2.Controls.Add(this.catagoryComboBox);
+            this.splitContainer.Panel2.Controls.Add(catagoryIDLabel);
+            this.splitContainer.Panel2.Controls.Add(this.catagoryIDComboBox);
             this.splitContainer.Panel2.Controls.Add(closedLabel);
             this.splitContainer.Panel2.Controls.Add(this.closedCheckBox);
             this.splitContainer.Panel2.Controls.Add(creditDebitLabel);
+            this.splitContainer.Panel2.Controls.Add(this.debitRadioButton);
             this.splitContainer.Panel2.Controls.Add(envelopesLabel);
             this.splitContainer.Panel2.Controls.Add(this.envelopesCheckBox);
-            this.splitContainer.Panel2.Controls.Add(this.accountBindingNavigator);
-            this.splitContainer.Size = new System.Drawing.Size(566, 376);
-            this.splitContainer.SplitterDistance = 248;
+            this.splitContainer.Size = new System.Drawing.Size(490, 296);
+            this.splitContainer.SplitterDistance = 257;
             this.splitContainer.TabIndex = 0;
             // 
             // accountTreeView
@@ -165,114 +164,31 @@
             this.accountTreeView.Indent = 10;
             this.accountTreeView.Location = new System.Drawing.Point(0, 0);
             this.accountTreeView.Name = "accountTreeView";
-            this.accountTreeView.Size = new System.Drawing.Size(248, 376);
+            this.accountTreeView.Size = new System.Drawing.Size(257, 296);
             this.accountTreeView.TabIndex = 0;
             this.accountTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.accountTreeView_AfterSelect);
             // 
-            // checkBox1
+            // creditRadioButton
             // 
-            this.checkBox1.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.accountBindingSource, "creditDebit", true));
-            this.checkBox1.Location = new System.Drawing.Point(95, 112);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(121, 24);
-            this.checkBox1.TabIndex = 13;
-            this.checkBox1.Text = "Debit";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // accountBindingSource
-            // 
-            this.accountBindingSource.DataMember = "Account";
-            this.accountBindingSource.DataSource = this.fFDBDataSet;
-            // 
-            // fFDBDataSet
-            // 
-            this.fFDBDataSet.DataSetName = "FFDBDataSet";
-            this.fFDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // nameTextBox
-            // 
-            this.nameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.nameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.accountBindingSource, "name", true));
-            this.nameTextBox.Location = new System.Drawing.Point(95, 32);
-            this.nameTextBox.Name = "nameTextBox";
-            this.nameTextBox.Size = new System.Drawing.Size(207, 20);
-            this.nameTextBox.TabIndex = 2;
-            // 
-            // accountTypeIDComboBox
-            // 
-            this.accountTypeIDComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.accountTypeIDComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.accountBindingSource, "accountTypeID", true));
-            this.accountTypeIDComboBox.DataSource = this.accountTypeBindingSource;
-            this.accountTypeIDComboBox.DisplayMember = "name";
-            this.accountTypeIDComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.accountTypeIDComboBox.FormattingEnabled = true;
-            this.accountTypeIDComboBox.Location = new System.Drawing.Point(95, 85);
-            this.accountTypeIDComboBox.Name = "accountTypeIDComboBox";
-            this.accountTypeIDComboBox.Size = new System.Drawing.Size(207, 21);
-            this.accountTypeIDComboBox.TabIndex = 4;
-            this.accountTypeIDComboBox.ValueMember = "id";
-            // 
-            // accountTypeBindingSource
-            // 
-            this.accountTypeBindingSource.DataMember = "AccountType";
-            this.accountTypeBindingSource.DataSource = this.fFDBDataSet;
-            this.accountTypeBindingSource.Filter = "id > 0";
-            this.accountTypeBindingSource.Sort = "name";
-            // 
-            // catagoryComboBox
-            // 
-            this.catagoryComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.catagoryComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.accountBindingSource, "catagoryID", true));
-            this.catagoryComboBox.DataSource = this.accountCatagoryBindingSource;
-            this.catagoryComboBox.DisplayMember = "name";
-            this.catagoryComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.catagoryComboBox.FormattingEnabled = true;
-            this.catagoryComboBox.Location = new System.Drawing.Point(95, 58);
-            this.catagoryComboBox.Name = "catagoryComboBox";
-            this.catagoryComboBox.Size = new System.Drawing.Size(207, 21);
-            this.catagoryComboBox.TabIndex = 6;
-            this.catagoryComboBox.ValueMember = "id";
-            // 
-            // accountCatagoryBindingSource
-            // 
-            this.accountCatagoryBindingSource.DataMember = "AccountCatagory";
-            this.accountCatagoryBindingSource.DataSource = this.fFDBDataSet;
-            this.accountCatagoryBindingSource.Filter = "id > 0";
-            // 
-            // closedCheckBox
-            // 
-            this.closedCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.accountBindingSource, "closed", true));
-            this.closedCheckBox.Location = new System.Drawing.Point(95, 171);
-            this.closedCheckBox.Name = "closedCheckBox";
-            this.closedCheckBox.Size = new System.Drawing.Size(121, 24);
-            this.closedCheckBox.TabIndex = 8;
-            this.closedCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // envelopesCheckBox
-            // 
-            this.envelopesCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.accountBindingSource, "envelopes", true));
-            this.envelopesCheckBox.Location = new System.Drawing.Point(95, 141);
-            this.envelopesCheckBox.Name = "envelopesCheckBox";
-            this.envelopesCheckBox.Size = new System.Drawing.Size(121, 24);
-            this.envelopesCheckBox.TabIndex = 12;
-            this.envelopesCheckBox.UseVisualStyleBackColor = true;
+            this.creditRadioButton.Location = new System.Drawing.Point(158, 142);
+            this.creditRadioButton.Name = "creditRadioButton";
+            this.creditRadioButton.Size = new System.Drawing.Size(56, 24);
+            this.creditRadioButton.TabIndex = 12;
+            this.creditRadioButton.TabStop = true;
+            this.creditRadioButton.Text = "Credit";
+            this.creditRadioButton.UseVisualStyleBackColor = true;
             // 
             // accountBindingNavigator
             // 
             this.accountBindingNavigator.AddNewItem = this.bindingNavigatorAddNewItem;
             this.accountBindingNavigator.BindingSource = this.accountBindingSource;
             this.accountBindingNavigator.CountItem = null;
-            this.accountBindingNavigator.DeleteItem = this.bindingNavigatorDeleteItem;
+            this.accountBindingNavigator.DeleteItem = null;
             this.accountBindingNavigator.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.accountBindingNavigator.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorAddNewItem,
-            this.bindingNavigatorDeleteItem,
             this.accountBindingNavigatorSaveItem,
-            this.toolStripSeparator1,
-            this.modifyAccountTypesTSB});
+            this.editAccountTypeTSB});
             this.accountBindingNavigator.Location = new System.Drawing.Point(0, 0);
             this.accountBindingNavigator.MoveFirstItem = null;
             this.accountBindingNavigator.MoveLastItem = null;
@@ -280,7 +196,8 @@
             this.accountBindingNavigator.MovePreviousItem = null;
             this.accountBindingNavigator.Name = "accountBindingNavigator";
             this.accountBindingNavigator.PositionItem = null;
-            this.accountBindingNavigator.Size = new System.Drawing.Size(314, 25);
+            this.accountBindingNavigator.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.accountBindingNavigator.Size = new System.Drawing.Size(229, 25);
             this.accountBindingNavigator.TabIndex = 1;
             this.accountBindingNavigator.Text = "bindingNavigator1";
             // 
@@ -293,16 +210,15 @@
             this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 22);
             this.bindingNavigatorAddNewItem.Text = "Add new";
             // 
-            // bindingNavigatorDeleteItem
+            // accountBindingSource
             // 
-            this.bindingNavigatorDeleteItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorDeleteItem.Enabled = false;
-            this.bindingNavigatorDeleteItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorDeleteItem.Image")));
-            this.bindingNavigatorDeleteItem.Name = "bindingNavigatorDeleteItem";
-            this.bindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorDeleteItem.Text = "Delete";
-            this.bindingNavigatorDeleteItem.Visible = false;
+            this.accountBindingSource.DataMember = "Account";
+            this.accountBindingSource.DataSource = this.eADataSet;
+            // 
+            // eADataSet
+            // 
+            this.eADataSet.DataSetName = "EADataSet";
+            this.eADataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // accountBindingNavigatorSaveItem
             // 
@@ -313,46 +229,106 @@
             this.accountBindingNavigatorSaveItem.Text = "Save Data";
             this.accountBindingNavigatorSaveItem.Click += new System.EventHandler(this.accountBindingNavigatorSaveItem_Click);
             // 
-            // toolStripSeparator1
+            // editAccountTypeTSB
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            this.editAccountTypeTSB.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.editAccountTypeTSB.Image = ((System.Drawing.Image)(resources.GetObject("editAccountTypeTSB.Image")));
+            this.editAccountTypeTSB.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.editAccountTypeTSB.Name = "editAccountTypeTSB";
+            this.editAccountTypeTSB.Size = new System.Drawing.Size(113, 22);
+            this.editAccountTypeTSB.Text = "Edit Account Types";
+            this.editAccountTypeTSB.Click += new System.EventHandler(this.modifyAccountTypesTSB_Click);
             // 
-            // modifyAccountTypesTSB
+            // nameTextBox
             // 
-            this.modifyAccountTypesTSB.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.modifyAccountTypesTSB.Image = ((System.Drawing.Image)(resources.GetObject("modifyAccountTypesTSB.Image")));
-            this.modifyAccountTypesTSB.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.modifyAccountTypesTSB.Name = "modifyAccountTypesTSB";
-            this.modifyAccountTypesTSB.Size = new System.Drawing.Size(131, 22);
-            this.modifyAccountTypesTSB.Text = "Modify Account Types";
-            this.modifyAccountTypesTSB.Click += new System.EventHandler(this.modifyAccountTypesTSB_Click);
+            this.nameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.accountBindingSource, "name", true));
+            this.nameTextBox.Location = new System.Drawing.Point(96, 33);
+            this.nameTextBox.Name = "nameTextBox";
+            this.nameTextBox.Size = new System.Drawing.Size(121, 20);
+            this.nameTextBox.TabIndex = 1;
+            // 
+            // accountTypeIDComboBox
+            // 
+            this.accountTypeIDComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.accountBindingSource, "accountTypeID", true));
+            this.accountTypeIDComboBox.DataSource = this.accountTypeBindingSource;
+            this.accountTypeIDComboBox.DisplayMember = "name";
+            this.accountTypeIDComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.accountTypeIDComboBox.FormattingEnabled = true;
+            this.accountTypeIDComboBox.Location = new System.Drawing.Point(96, 61);
+            this.accountTypeIDComboBox.Name = "accountTypeIDComboBox";
+            this.accountTypeIDComboBox.Size = new System.Drawing.Size(121, 21);
+            this.accountTypeIDComboBox.TabIndex = 3;
+            this.accountTypeIDComboBox.ValueMember = "id";
+            // 
+            // accountTypeBindingSource
+            // 
+            this.accountTypeBindingSource.DataMember = "AccountType";
+            this.accountTypeBindingSource.DataSource = this.eADataSet;
+            // 
+            // catagoryIDComboBox
+            // 
+            this.catagoryIDComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.accountBindingSource, "catagoryID", true));
+            this.catagoryIDComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.catagoryIDComboBox.FormattingEnabled = true;
+            this.catagoryIDComboBox.Location = new System.Drawing.Point(96, 89);
+            this.catagoryIDComboBox.Name = "catagoryIDComboBox";
+            this.catagoryIDComboBox.Size = new System.Drawing.Size(121, 21);
+            this.catagoryIDComboBox.TabIndex = 5;
+            // 
+            // closedCheckBox
+            // 
+            this.closedCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.accountBindingSource, "closed", true));
+            this.closedCheckBox.Location = new System.Drawing.Point(93, 115);
+            this.closedCheckBox.Name = "closedCheckBox";
+            this.closedCheckBox.Size = new System.Drawing.Size(121, 24);
+            this.closedCheckBox.TabIndex = 7;
+            this.closedCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // debitRadioButton
+            // 
+            this.debitRadioButton.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.accountBindingSource, "creditDebit", true));
+            this.debitRadioButton.Location = new System.Drawing.Point(96, 142);
+            this.debitRadioButton.Name = "debitRadioButton";
+            this.debitRadioButton.Size = new System.Drawing.Size(56, 24);
+            this.debitRadioButton.TabIndex = 9;
+            this.debitRadioButton.TabStop = true;
+            this.debitRadioButton.Text = "Debit";
+            this.debitRadioButton.UseVisualStyleBackColor = true;
+            this.debitRadioButton.CheckedChanged += new System.EventHandler(this.debitRadioButton_CheckedChanged);
+            // 
+            // envelopesCheckBox
+            // 
+            this.envelopesCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.accountBindingSource, "envelopes", true));
+            this.envelopesCheckBox.Location = new System.Drawing.Point(96, 171);
+            this.envelopesCheckBox.Name = "envelopesCheckBox";
+            this.envelopesCheckBox.Size = new System.Drawing.Size(121, 24);
+            this.envelopesCheckBox.TabIndex = 11;
+            this.envelopesCheckBox.UseVisualStyleBackColor = true;
             // 
             // EditAccountsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(566, 376);
+            this.ClientSize = new System.Drawing.Size(490, 296);
             this.Controls.Add(this.splitContainer);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(402, 265);
             this.Name = "EditAccountsForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Accounts";
-            this.Load += new System.EventHandler(this.EditAccountsForm_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditAccountsForm_FormClosing);
             this.splitContainer.Panel1.ResumeLayout(false);
             this.splitContainer.Panel2.ResumeLayout(false);
             this.splitContainer.Panel2.PerformLayout();
             this.splitContainer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.accountBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fFDBDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.accountTypeBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.accountCatagoryBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.accountBindingNavigator)).EndInit();
             this.accountBindingNavigator.ResumeLayout(false);
             this.accountBindingNavigator.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.accountBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eADataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.accountTypeBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -361,22 +337,20 @@
 
         private System.Windows.Forms.SplitContainer splitContainer;
         private System.Windows.Forms.TreeView accountTreeView;
-        private FFDBDataSet fFDBDataSet;
+        private FamilyFinance2.Forms.EditAccounts.EADataSet eADataSet;
         private System.Windows.Forms.BindingSource accountBindingSource;
         private System.Windows.Forms.BindingNavigator accountBindingNavigator;
         private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem;
         private System.Windows.Forms.ToolStripButton accountBindingNavigatorSaveItem;
         private System.Windows.Forms.TextBox nameTextBox;
         private System.Windows.Forms.ComboBox accountTypeIDComboBox;
-        private System.Windows.Forms.ComboBox catagoryComboBox;
+        private System.Windows.Forms.ComboBox catagoryIDComboBox;
         private System.Windows.Forms.CheckBox closedCheckBox;
+        private System.Windows.Forms.RadioButton debitRadioButton;
         private System.Windows.Forms.CheckBox envelopesCheckBox;
         private System.Windows.Forms.BindingSource accountTypeBindingSource;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton modifyAccountTypesTSB;
-        private System.Windows.Forms.BindingSource accountCatagoryBindingSource;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.ToolStripButton editAccountTypeTSB;
+        private System.Windows.Forms.RadioButton creditRadioButton;
 
     }
 }

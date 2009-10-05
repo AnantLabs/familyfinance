@@ -1,4 +1,4 @@
-﻿namespace FamilyFinance2.Forms
+﻿namespace FamilyFinance2.Forms.EditEnvelopes
 {
     partial class EditEnvelopesForm
     {
@@ -38,7 +38,7 @@
             this.envelopeBindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
             this.envelopeBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.fFDBDataSet = new FamilyFinance2.FFDBDataSet();
+            this.eEDataSet = new FamilyFinance2.Forms.EditEnvelopes.EEDataSet();
             this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
             this.envelopeBindingNavigatorSaveItem = new System.Windows.Forms.ToolStripButton();
             this.nameTextBox = new System.Windows.Forms.TextBox();
@@ -54,7 +54,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.envelopeBindingNavigator)).BeginInit();
             this.envelopeBindingNavigator.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.envelopeBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fFDBDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eEDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.parentEnvelopeBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -126,7 +126,7 @@
             this.envelopeBindingNavigator.AddNewItem = this.bindingNavigatorAddNewItem;
             this.envelopeBindingNavigator.BindingSource = this.envelopeBindingSource;
             this.envelopeBindingNavigator.CountItem = null;
-            this.envelopeBindingNavigator.DeleteItem = this.bindingNavigatorDeleteItem;
+            this.envelopeBindingNavigator.DeleteItem = null;
             this.envelopeBindingNavigator.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.envelopeBindingNavigator.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorAddNewItem,
@@ -157,25 +157,24 @@
             // envelopeBindingSource
             // 
             this.envelopeBindingSource.DataMember = "Envelope";
-            this.envelopeBindingSource.DataSource = this.fFDBDataSet;
+            this.envelopeBindingSource.DataSource = this.eEDataSet;
             this.envelopeBindingSource.Filter = "";
             // 
-            // fFDBDataSet
+            // eEDataSet
             // 
-            this.fFDBDataSet.DataSetName = "FFDBDataSet";
-            this.fFDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            this.eEDataSet.DataSetName = "FFDBDataSet";
+            this.eEDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // bindingNavigatorDeleteItem
             // 
             this.bindingNavigatorDeleteItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorDeleteItem.Enabled = false;
             this.bindingNavigatorDeleteItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorDeleteItem.Image")));
             this.bindingNavigatorDeleteItem.Name = "bindingNavigatorDeleteItem";
             this.bindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(23, 22);
             this.bindingNavigatorDeleteItem.Text = "Delete";
             this.bindingNavigatorDeleteItem.ToolTipText = "Delete This Envelope";
-            this.bindingNavigatorDeleteItem.Visible = false;
+            this.bindingNavigatorDeleteItem.Click += new System.EventHandler(this.bindingNavigatorDeleteItem_Click);
             // 
             // envelopeBindingNavigatorSaveItem
             // 
@@ -215,7 +214,7 @@
             // parentEnvelopeBindingSource
             // 
             this.parentEnvelopeBindingSource.DataMember = "Envelope";
-            this.parentEnvelopeBindingSource.DataSource = this.fFDBDataSet;
+            this.parentEnvelopeBindingSource.DataSource = this.eEDataSet;
             this.parentEnvelopeBindingSource.Filter = "";
             this.parentEnvelopeBindingSource.Sort = "fullName";
             // 
@@ -241,7 +240,6 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Envelopes";
-            this.Load += new System.EventHandler(this.EditEnvelopesForm_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditEnvelopesForm_FormClosing);
             this.splitContainer.Panel1.ResumeLayout(false);
             this.splitContainer.Panel2.ResumeLayout(false);
@@ -251,7 +249,7 @@
             this.envelopeBindingNavigator.ResumeLayout(false);
             this.envelopeBindingNavigator.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.envelopeBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fFDBDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eEDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.parentEnvelopeBindingSource)).EndInit();
             this.ResumeLayout(false);
 
@@ -261,7 +259,7 @@
 
         private System.Windows.Forms.TreeView envelopeTreeView;
         private System.Windows.Forms.SplitContainer splitContainer;
-        private FFDBDataSet fFDBDataSet;
+        private EEDataSet eEDataSet;
         private System.Windows.Forms.BindingSource envelopeBindingSource;
         private System.Windows.Forms.BindingNavigator envelopeBindingNavigator;
         private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;

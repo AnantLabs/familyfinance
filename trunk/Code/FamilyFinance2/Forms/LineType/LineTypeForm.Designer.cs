@@ -1,4 +1,4 @@
-﻿namespace FamilyFinance2.Forms
+﻿namespace FamilyFinance2.Forms.LineType
 {
     partial class LineTypeForm
     {
@@ -30,39 +30,38 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LineTypeForm));
-            this.fFDBDataSet = new FamilyFinance2.FFDBDataSet();
+            this.lineTypeDataSet = new FamilyFinance2.Forms.LineType.LineTypeDataSet();
             this.lineTypeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.lineTypeBindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
             this.lineTypeBindingNavigatorSaveItem = new System.Windows.Forms.ToolStripButton();
             this.lineTypeDataGridView = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.fFDBDataSet)).BeginInit();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.lineTypeDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lineTypeBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lineTypeBindingNavigator)).BeginInit();
             this.lineTypeBindingNavigator.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lineTypeDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
-            // fFDBDataSet
+            // lineTypeDataSet
             // 
-            this.fFDBDataSet.DataSetName = "FFDBDataSet";
-            this.fFDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            this.lineTypeDataSet.DataSetName = "LineTypeDataSet";
+            this.lineTypeDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // lineTypeBindingSource
             // 
             this.lineTypeBindingSource.DataMember = "LineType";
-            this.lineTypeBindingSource.DataSource = this.fFDBDataSet;
-            this.lineTypeBindingSource.Filter = "id > 0";
-            this.lineTypeBindingSource.Sort = "name";
+            this.lineTypeBindingSource.DataSource = this.lineTypeDataSet;
             // 
             // lineTypeBindingNavigator
             // 
             this.lineTypeBindingNavigator.AddNewItem = this.bindingNavigatorAddNewItem;
             this.lineTypeBindingNavigator.BindingSource = this.lineTypeBindingSource;
             this.lineTypeBindingNavigator.CountItem = null;
-            this.lineTypeBindingNavigator.DeleteItem = this.bindingNavigatorDeleteItem;
+            this.lineTypeBindingNavigator.DeleteItem = null;
             this.lineTypeBindingNavigator.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.lineTypeBindingNavigator.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorAddNewItem,
@@ -75,7 +74,8 @@
             this.lineTypeBindingNavigator.MovePreviousItem = null;
             this.lineTypeBindingNavigator.Name = "lineTypeBindingNavigator";
             this.lineTypeBindingNavigator.PositionItem = null;
-            this.lineTypeBindingNavigator.Size = new System.Drawing.Size(153, 25);
+            this.lineTypeBindingNavigator.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.lineTypeBindingNavigator.Size = new System.Drawing.Size(309, 25);
             this.lineTypeBindingNavigator.TabIndex = 0;
             this.lineTypeBindingNavigator.Text = "bindingNavigator1";
             // 
@@ -86,7 +86,7 @@
             this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
             this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorAddNewItem.Text = "Add a new Transaction Type";
+            this.bindingNavigatorAddNewItem.Text = "Add new";
             // 
             // bindingNavigatorDeleteItem
             // 
@@ -96,7 +96,7 @@
             this.bindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(23, 22);
             this.bindingNavigatorDeleteItem.Text = "Delete";
-            this.bindingNavigatorDeleteItem.Visible = false;
+            this.bindingNavigatorDeleteItem.Click += new System.EventHandler(this.bindingNavigatorDeleteItem_Click);
             // 
             // lineTypeBindingNavigatorSaveItem
             // 
@@ -104,8 +104,7 @@
             this.lineTypeBindingNavigatorSaveItem.Image = ((System.Drawing.Image)(resources.GetObject("lineTypeBindingNavigatorSaveItem.Image")));
             this.lineTypeBindingNavigatorSaveItem.Name = "lineTypeBindingNavigatorSaveItem";
             this.lineTypeBindingNavigatorSaveItem.Size = new System.Drawing.Size(23, 22);
-            this.lineTypeBindingNavigatorSaveItem.Text = "Save Changes";
-            this.lineTypeBindingNavigatorSaveItem.Click += new System.EventHandler(this.lineTypeBindingNavigatorSaveItem_Click);
+            this.lineTypeBindingNavigatorSaveItem.Text = "Save Data";
             // 
             // lineTypeDataGridView
             // 
@@ -113,39 +112,44 @@
             this.lineTypeDataGridView.AllowUserToDeleteRows = false;
             this.lineTypeDataGridView.AllowUserToResizeColumns = false;
             this.lineTypeDataGridView.AllowUserToResizeRows = false;
+            this.lineTypeDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.lineTypeDataGridView.AutoGenerateColumns = false;
             this.lineTypeDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.lineTypeDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn2});
+            this.NameColumn});
             this.lineTypeDataGridView.DataSource = this.lineTypeBindingSource;
-            this.lineTypeDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lineTypeDataGridView.Location = new System.Drawing.Point(0, 25);
             this.lineTypeDataGridView.MultiSelect = false;
             this.lineTypeDataGridView.Name = "lineTypeDataGridView";
             this.lineTypeDataGridView.RowHeadersVisible = false;
-            this.lineTypeDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.lineTypeDataGridView.ShowCellErrors = false;
             this.lineTypeDataGridView.ShowCellToolTips = false;
             this.lineTypeDataGridView.ShowEditingIcon = false;
             this.lineTypeDataGridView.ShowRowErrors = false;
-            this.lineTypeDataGridView.Size = new System.Drawing.Size(153, 203);
+            this.lineTypeDataGridView.Size = new System.Drawing.Size(309, 306);
             this.lineTypeDataGridView.TabIndex = 1;
             // 
-            // dataGridViewTextBoxColumn2
+            // dataGridViewTextBoxColumn1
             // 
-            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "name";
-            this.dataGridViewTextBoxColumn2.HeaderText = "Type";
-            this.dataGridViewTextBoxColumn2.MaxInputLength = 10;
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "name";
+            this.dataGridViewTextBoxColumn1.HeaderText = "Transaction Type";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            // 
+            // NameColumn
+            // 
+            this.NameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.NameColumn.DataPropertyName = "name";
+            this.NameColumn.HeaderText = "Transaction Type";
+            this.NameColumn.Name = "NameColumn";
             // 
             // LineTypeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(153, 228);
+            this.ClientSize = new System.Drawing.Size(309, 331);
             this.Controls.Add(this.lineTypeDataGridView);
             this.Controls.Add(this.lineTypeBindingNavigator);
             this.MaximizeBox = false;
@@ -154,9 +158,9 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Transaction Type";
-            this.Load += new System.EventHandler(this.LineTypeForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.fFDBDataSet)).EndInit();
+            this.Text = "Edit Transaction Types";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LineTypeForm_FormClosing);
+            ((System.ComponentModel.ISupportInitialize)(this.lineTypeDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lineTypeBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lineTypeBindingNavigator)).EndInit();
             this.lineTypeBindingNavigator.ResumeLayout(false);
@@ -169,13 +173,15 @@
 
         #endregion
 
-        private FFDBDataSet fFDBDataSet;
+        private LineTypeDataSet lineTypeDataSet;
         private System.Windows.Forms.BindingSource lineTypeBindingSource;
         private System.Windows.Forms.BindingNavigator lineTypeBindingNavigator;
         private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem;
         private System.Windows.Forms.ToolStripButton lineTypeBindingNavigatorSaveItem;
         private System.Windows.Forms.DataGridView lineTypeDataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NameColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+
     }
 }
