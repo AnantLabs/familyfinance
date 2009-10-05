@@ -19,7 +19,7 @@ namespace FamilyFinance2
         public bool error;
     }
 
-    partial class FFDBDataSet
+    partial class FFDataBase
     {
         static public List<AccountBalanceDetails> myGetAccountBalanceDetails(byte catagory)
         {
@@ -84,7 +84,7 @@ namespace FamilyFinance2
         public decimal balance;
     }
 
-    partial class FFDBDataSet
+    partial class FFDataBase
     {
         static public List<AccountSums> myGetAccountSums()
         {
@@ -179,7 +179,7 @@ namespace FamilyFinance2
         public decimal balance;
     }
 
-    partial class FFDBDataSet
+    partial class FFDataBase
     {
         static public List<EnvelopeBalanceDetails> myGetChildEnvelopeBalanceDetails(short parentID)
         {
@@ -242,7 +242,7 @@ namespace FamilyFinance2
         public decimal balance;
     }
 
-    partial class FFDBDataSet
+    partial class FFDataBase
     {
         static public List<EnvelopeSums> myGetEnvelopeSums()
         {
@@ -337,7 +337,7 @@ namespace FamilyFinance2
         public decimal balance;
     }
 
-    partial class FFDBDataSet
+    partial class FFDataBase
     {
         static public List<AEBalanceSums> myGetAEBalanceSums()
         {
@@ -433,7 +433,7 @@ namespace FamilyFinance2
         public decimal subCurrentBalance;
     }
 
-    partial class FFDBDataSet
+    partial class FFDataBase
     {
         static public List<SubBalanceDetails> myGetSubAccountBalanceDetails(short accountID)
         {
@@ -519,55 +519,6 @@ namespace FamilyFinance2
     #endregion Sub Account Details Query
 
 
-    #region My Find All Transaction and Line Errors
-
-    partial class FFDBDataSet
-    {
-        static public void myFindAllErrors()
-        {
-            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
-            SqlCeCommand command = new SqlCeCommand();
-            string query;
-            int result;
-
-            connection.Open();
-            command.Connection = connection;
-
-            // Remove all the errors
-            query = "UPDATE LineItem SET transactionError = 0, lineError = 0";
-            command.CommandText = query;
-            result = command.ExecuteNonQuery();
-
-            // Find all the transaction errors
-            query = " UPDATE LineItem SET transactionError = 1 WHERE transactionID IN";
-            query += "   (SELECT t1.transactionID FROM ";
-            query += "      (SELECT SUM(amount) AS [Sum], transactionID FROM LineItem WHERE creditDebit = 0 GROUP BY transactionID) AS t1";
-            query += "    INNER JOIN ";
-            query += "      (SELECT SUM(amount) AS [Sum], transactionID FROM LineItem WHERE creditDebit = 1 GROUP BY transactionID) AS t2 ";
-            query += "    ON t1.transactionID = t2.transactionID ";
-            query += "    WHERE t1.Sum <> t2.sum)";
-            command.CommandText = query;
-            result = command.ExecuteNonQuery();
-
-            // Find all the line errors
-            query = " UPDATE LineItem SET lineError = 1 WHERE id IN ";
-            query += "   (SELECT Line.id FROM ";
-            query += "      (SELECT id, amount FROM LineItem) AS Line ";
-            query += "    INNER JOIN ";
-            query += "      (SELECT lineItemID, SUM(amount) AS [Sum] FROM SubLineItem GROUP BY lineItemID) AS SubLine ";
-            query += "    ON Line.id = SubLine.lineItemID ";
-            query += "    WHERE Line.amount <> SubLine.Sum) ";
-            command.CommandText = query;
-            result = command.ExecuteNonQuery();
-
-
-            connection.Close();
-        }
-    }
-
-    #endregion My Find All Errors
-
-
     #region My Get Remaining Transaction Details
 
     public class OtherLineDetails
@@ -578,7 +529,7 @@ namespace FamilyFinance2
         public decimal amount;
     }
 
-    partial class FFDBDataSet
+    partial class FFDataBase
     {
         static public List<OtherLineDetails> myGetOtherLinesInTrans(int lineID, int transID)
         {

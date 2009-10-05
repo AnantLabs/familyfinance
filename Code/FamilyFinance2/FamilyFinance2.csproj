@@ -66,8 +66,92 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\AccountType\AccountTypeDataSet.cs">
+      <DependentUpon>AccountTypeDataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\AccountType\AccountTypeDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AccountTypeDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AccountType\AccountTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AccountType\AccountTypeForm.Designer.cs">
+      <DependentUpon>AccountTypeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EditAccounts\EADataSet.cs">
+      <DependentUpon>EADataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\EditAccounts\EADataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EADataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EditAccounts\EditAccountsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EditAccounts\EditAccountsForm.Designer.cs">
+      <DependentUpon>EditAccountsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EditEnvelopes\EditEnvelopesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EditEnvelopes\EditEnvelopesForm.Designer.cs">
+      <DependentUpon>EditEnvelopesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EditEnvelopes\EEDataSet.cs">
+      <DependentUpon>EEDataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\EditEnvelopes\EEDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EEDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FindDB\FindDBForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FindDB\FindDBForm.Designer.cs">
+      <DependentUpon>FindDBForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\LineType\LineTypeDataSet.cs">
+      <DependentUpon>LineTypeDataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\LineType\LineTypeDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LineTypeDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\LineType\LineTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LineType\LineTypeForm.Designer.cs">
+      <DependentUpon>LineTypeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\AccountType\AccountTypeForm.af.resx">
+      <DependentUpon>AccountTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AccountType\AccountTypeForm.resx">
+      <DependentUpon>AccountTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EditAccounts\EditAccountsForm.resx">
+      <DependentUpon>EditAccountsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EditEnvelopes\EditEnvelopesForm.resx">
+      <DependentUpon>EditEnvelopesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FindDB\FindDBForm.resx">
+      <DependentUpon>FindDBForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LineType\LineTypeForm.resx">
+      <DependentUpon>LineTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -95,21 +179,19 @@
     <Compile Include="SharedElements\CalanderColumn.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="SharedElements\DTAccount.cs" />
-    <Compile Include="SharedElements\DTAccountCatagory.cs" />
-    <Compile Include="SharedElements\DTAccountType.cs" />
-    <Compile Include="SharedElements\DTAEBalance.cs" />
-    <Compile Include="SharedElements\DTEnvelope.cs" />
-    <Compile Include="SharedElements\DTLineItem.cs" />
-    <Compile Include="SharedElements\DTLineType.cs" />
-    <Compile Include="SharedElements\DTSubLineItem.cs" />
-    <Compile Include="SharedElements\DTSubLineView.cs" />
-    <Compile Include="SharedElements\MyDataGridView.cs">
+    <Compile Include="SharedElements\DB_Commands.cs" />
+    <Compile Include="SharedElements\DB_Queries.cs" />
+    <Compile Include="SharedElements\Pieces.cs" />
+    <Compile Include="Tabs\RegistrySplit\TreeList\Tracing.cs" />
+    <Compile Include="Tabs\RegistrySplit\TreeList\TreeListColumn.cs" />
+    <Compile Include="Tabs\RegistrySplit\TreeList\TreeListColumn.Design.cs" />
+    <Compile Include="Tabs\RegistrySplit\TreeList\TreeListNode.cs" />
+    <Compile Include="Tabs\RegistrySplit\TreeList\TreeListOptions.cs" />
+    <Compile Include="Tabs\RegistrySplit\TreeList\TreeListPainter.cs" />
+    <Compile Include="Tabs\RegistrySplit\TreeList\TreeListView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="SharedElements\oldFFDBDataSet.cs" />
-    <Compile Include="SharedElements\Pieces.cs" />
-    <Compile Include="SharedElements\Queries.cs" />
+    <Compile Include="Tabs\RegistrySplit\TreeList\Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -142,14 +224,54 @@
     <Content Include="FamilyFinanceDB.sdf">
     </Content>
     <Content Include="Resources\DataSetModifications.txt" />
+    <None Include="Forms\AccountType\AccountTypeDataSet.xsc">
+      <DependentUpon>AccountTypeDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Forms\AccountType\AccountTypeDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>AccountTypeDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Forms\AccountType\AccountTypeDataSet.xss">
+      <DependentUpon>AccountTypeDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Forms\EditAccounts\EADataSet.xsc">
+      <DependentUpon>EADataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Forms\EditAccounts\EADataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>EADataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Forms\EditAccounts\EADataSet.xss">
+      <DependentUpon>EADataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Forms\EditEnvelopes\EEDataSet.xsc">
+      <DependentUpon>EEDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Forms\EditEnvelopes\EEDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>EEDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Forms\EditEnvelopes\EEDataSet.xss">
+      <DependentUpon>EEDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Forms\LineType\LineTypeDataSet.xsc">
+      <DependentUpon>LineTypeDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Forms\LineType\LineTypeDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>LineTypeDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Forms\LineType\LineTypeDataSet.xss">
+      <DependentUpon>LineTypeDataSet.xsd</DependentUpon>
+    </None>
     <None Include="Resources\TLVRedFlag.png" />
     <None Include="Resources\TLVMoney.png" />
     <None Include="Resources\TLVEnvelope.png" />
     <None Include="Resources\TLVBank.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Forms\" />
-    <Folder Include="Tabs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

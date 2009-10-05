@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Data.SqlServerCe;
 using System.Linq;
-using FamilyFinance2.Forms;
+using FamilyFinance2.Forms.FindDB;
 
 namespace FamilyFinance2
 {
@@ -27,10 +27,12 @@ namespace FamilyFinance2
     #else
             AppDomain.CurrentDomain.SetData("DataDirectory", Path.GetDirectoryName(Application.ExecutablePath));
 
-            if(FFDBDataSet.myCreateDBFile())
-                FFDBDataSet.myExecuteFile(Properties.Resources.Test_Data, true);
+            if (FFDataBase.myCreateDBFile())
+                FFDataBase.myExecuteFile(Properties.Resources.Test_Data, true);
 
-            Application.Run(new MainForm());
+            FamilyFinance2.Forms.EditEnvelopes.EditEnvelopesForm app = new FamilyFinance2.Forms.EditEnvelopes.EditEnvelopesForm();
+            Application.Run(app);
+            //Application.Run(new MainForm());
             //Application.Run(new TransactionForm(2));
             return;
 
@@ -115,7 +117,7 @@ namespace FamilyFinance2
 
             AppDomain.CurrentDomain.SetData("DataDirectory", Properties.Settings.Default.DataDirectory);
 
-            try { result = FFDBDataSet.myGoodPath(); }
+            try { result = FFDataBase.myGoodPath(); }
 
             catch
             {
@@ -125,7 +127,7 @@ namespace FamilyFinance2
 
             if (result == false)
             {
-                try { result = FFDBDataSet.myCreateDBFile(); }
+                try { result = FFDataBase.myCreateDBFile(); }
 
                 catch { result = false; }
 

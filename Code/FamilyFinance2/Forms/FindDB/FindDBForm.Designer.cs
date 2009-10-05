@@ -1,4 +1,4 @@
-namespace FamilyFinance2.Forms
+namespace FamilyFinance2.Forms.FindDB
 {
     partial class FindDBForm
     {
