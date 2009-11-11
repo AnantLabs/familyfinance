@@ -135,6 +135,9 @@
     <Compile Include="Forms\Transaction\CDLinesDGV.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Forms\Transaction\MyDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\Transaction\SubTransactionDGV.cs">
       <SubType>Component</SubType>
     </Compile>

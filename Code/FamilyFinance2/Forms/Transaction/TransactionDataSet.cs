@@ -15,6 +15,12 @@ namespace FamilyFinance2.Forms.Transaction
         private EnvelopeTableAdapter EnvelopeTA;
         private LineTypeTableAdapter LineTypeTA;
 
+        private decimal creditSum;
+        public decimal CreditSum { get { return this.creditSum; } }
+
+        private decimal debitSum;
+        public decimal DebitSum { get { return this.debitSum; } }
+
 
         /////////////////////////
         //   Functions private 
@@ -75,8 +81,8 @@ namespace FamilyFinance2.Forms.Transaction
 
         public void myCheckTransaction()
         {
-            decimal creditSum = 0.00m;
-            decimal debitSum = 0.00m;
+            this.creditSum = 0.00m;
+            this.debitSum = 0.00m;
             bool transError = false;
 
             // Find credit and debit sums
@@ -85,13 +91,13 @@ namespace FamilyFinance2.Forms.Transaction
                 if (line.RowState != DataRowState.Deleted)
                 {
                     if (line.creditDebit == LineCD.CREDIT)
-                        creditSum += line.amount;
+                        this.creditSum += line.amount;
                     else
-                        debitSum += line.amount;
+                        this.debitSum += line.amount;
                 }
             }
 
-            if (creditSum != debitSum)
+            if (this.creditSum != this.debitSum)
                 transError = true;
             else 
                 transError = false;

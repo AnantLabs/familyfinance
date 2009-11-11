@@ -11,16 +11,12 @@ namespace FamilyFinance2.Forms.Transaction
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Local Constants and variables
         ////////////////////////////////////////////////////////////////////////////////////////////
-        private readonly bool thisCreditDebit;
-        private readonly int thisTransactionID;
 
-        // Binding Sources
-        public BindingSource lineItemDGVBindingSource;
-        public BindingSource lineTypeColBindingSource;
-        public BindingSource accountColBindingSource;
-        public BindingSource envelopeColBindingSource;
+        public BindingSource BindingSourceLineItemDGV;
+        public BindingSource BindingSourceLineTypeIDCol;
+        public BindingSource BindingSourceAccountIDCol;
+        public BindingSource BindingSourceEnvelopeIDCol;
 
-        // Columns
         private DataGridViewTextBoxColumn lineItemIDColumn;
         private DataGridViewTextBoxColumn transactionIDColumn;
         private CalendarColumn dateColumn;
@@ -33,11 +29,6 @@ namespace FamilyFinance2.Forms.Transaction
         private DataGridViewTextBoxColumn creditDebitColumn;
         private DataGridViewTextBoxColumn amountColumn;
 
-
-
-        ////////////////////////////////////////////////////////////////////////////////////////////
-        //   Properties
-        ////////////////////////////////////////////////////////////////////////////////////////////
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -66,9 +57,11 @@ namespace FamilyFinance2.Forms.Transaction
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Private
         ////////////////////////////////////////////////////////////////////////////////////////////
-        private void buildTheDataGridView()
+        private void buildTheDataGridView(bool thisCD)
         {
-            this.DataSource = this.lineItemDGVBindingSource;
+            // This Data Grid View
+            this.AllowUserToAddRows = false;
+            this.DataSource = this.BindingSourceLineItemDGV;
 
             // lineItemIDColumn
             this.lineItemIDColumn = new DataGridViewTextBoxColumn();
@@ -100,7 +93,7 @@ namespace FamilyFinance2.Forms.Transaction
             this.typeIDColumn = new DataGridViewComboBoxColumn();
             this.typeIDColumn.Name = "typeIDColumn";
             this.typeIDColumn.HeaderText = "Type";
-            this.typeIDColumn.DataSource = this.lineTypeColBindingSource;
+            this.typeIDColumn.DataSource = this.BindingSourceLineTypeIDCol;
             this.typeIDColumn.DataPropertyName = "lineTypeID";
             this.typeIDColumn.DisplayMember = "name";
             this.typeIDColumn.ValueMember = "id";
@@ -115,7 +108,7 @@ namespace FamilyFinance2.Forms.Transaction
             this.accountIDColumn = new DataGridViewComboBoxColumn();
             this.accountIDColumn.Name = "accountIDColumn";
             this.accountIDColumn.HeaderText = "Source / Destination";
-            this.accountIDColumn.DataSource = this.accountColBindingSource;
+            this.accountIDColumn.DataSource = this.BindingSourceAccountIDCol;
             this.accountIDColumn.DataPropertyName = "accountID";
             this.accountIDColumn.DisplayMember = "name";
             this.accountIDColumn.ValueMember = "id";
@@ -150,7 +143,7 @@ namespace FamilyFinance2.Forms.Transaction
             this.envelopeIDColumn = new DataGridViewComboBoxColumn();
             this.envelopeIDColumn.Name = "envelopeIDColumn";
             this.envelopeIDColumn.HeaderText = "Envelope";
-            this.envelopeIDColumn.DataSource = this.envelopeColBindingSource;
+            this.envelopeIDColumn.DataSource = this.BindingSourceEnvelopeIDCol;
             this.envelopeIDColumn.DataPropertyName = "envelopeID";
             this.envelopeIDColumn.DisplayMember = "fullName";
             this.envelopeIDColumn.ValueMember = "id";
@@ -207,7 +200,7 @@ namespace FamilyFinance2.Forms.Transaction
                 }
                 );
 
-            if(this.thisCreditDebit)
+            if (thisCD)
                 this.accountIDColumn.HeaderText = "Destination Account";
             else
                 this.accountIDColumn.HeaderText = "Source Account";
@@ -218,34 +211,22 @@ namespace FamilyFinance2.Forms.Transaction
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Public
         ////////////////////////////////////////////////////////////////////////////////////////////
-        public CDLinesDGV(ref TransactionDataSet dataSet, int transID, bool creditDebit)
+        public CDLinesDGV(bool creditDebit)
         {
-            this.thisCreditDebit = creditDebit;
-            this.thisTransactionID = transID;
-            this.AllowUserToAddRows = false;
+            // Initialize the Binding Sources
+            this.BindingSourceLineItemDGV = new BindingSource();
+            this.BindingSourceAccountIDCol = new BindingSource();
+            this.BindingSourceEnvelopeIDCol = new BindingSource();
+            this.BindingSourceLineTypeIDCol = new BindingSource();
 
-            // Setup the Binding Sources
-            this.lineItemDGVBindingSource = new BindingSource(dataSet, "LineItem");
-            this.lineItemDGVBindingSource.Filter = "creditDebit = " + Convert.ToInt16(LineCD.CREDIT).ToString();
-
-            this.accountColBindingSource = new BindingSource(dataSet, "Account");
-            this.accountColBindingSource.Sort = "name";
-            this.accountColBindingSource.Filter = "id <> " + SpclAccount.MULTIPLE;
-
-            this.envelopeColBindingSource = new BindingSource(dataSet, "Envelope");
-            this.envelopeColBindingSource.Sort = "fullName";
-
-            this.lineTypeColBindingSource = new BindingSource(dataSet, "LineType");
-            this.lineTypeColBindingSource.Sort = "name";
-
-            this.buildTheDataGridView();
+            this.buildTheDataGridView(creditDebit);
 
             ////////////////////////////////////
             // Subscribe to events.
             this.CellDoubleClick += new DataGridViewCellEventHandler(LineItemDGV_CellDoubleClick);
         }
 
-        public void myHighlightOn()
+        public void myHighLightOn()
         {
             this.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             
@@ -262,7 +243,7 @@ namespace FamilyFinance2.Forms.Transaction
             }
         }
 
-        public void myHighlightOff()
+        public void myHighLightOff()
         {
             this.SelectionMode = DataGridViewSelectionMode.CellSelect;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 
-namespace FamilyFinance2.SharedElements
+namespace FamilyFinance2.Forms.Transaction 
 {
     class MyDataGridView : DataGridView
     {
@@ -15,10 +15,10 @@ namespace FamilyFinance2.SharedElements
         public bool flagTransactionError;
         public bool flagLineError;
         public bool flagAccountError;
-        public bool flagNegativeBalance;
-        public bool flagReadOnlyEnvelope;
-        public bool flagReadOnlyAccount;
         public bool flagFutureDate;
+        public bool flagNegativeBalance;
+        public bool flagReadOnlyAccount;
+        public bool flagReadOnlyEnvelope;
 
 
 
@@ -100,7 +100,7 @@ namespace FamilyFinance2.SharedElements
                 e.CellStyle.BackColor = System.Drawing.Color.Red;
                 toolTipText = "The sub lines need attention.";
             }
-            else if (this.flagAccountError && colName == "accountIDColumn")
+            else if (this.flagAccountError && (colName == "accountIDColumn" || colName == "oppAccountIDColumn"))
             {
                 e.CellStyle.BackColor = System.Drawing.Color.Red;
                 toolTipText = "Please choose an account.";
@@ -165,7 +165,7 @@ namespace FamilyFinance2.SharedElements
             this.AllowUserToOrderColumns = false;
             this.AllowUserToDeleteRows = false;
             this.AllowUserToResizeRows = false;
-            this.AllowUserToAddRows = true;
+            this.AllowUserToAddRows = false;
             this.RowHeadersVisible = false;
             this.ShowCellErrors = false;
             this.ShowRowErrors = false;
