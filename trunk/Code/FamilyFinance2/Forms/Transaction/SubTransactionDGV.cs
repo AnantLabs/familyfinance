@@ -2,25 +2,25 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
+using FamilyFinance2.SharedElements;
 
-namespace FamilyFinance2
+namespace FamilyFinance2.Forms.Transaction
 {
-    class SubTransactionDGV : MyDataGridView
+    class SubTransactionDGV : DataGridView
     {
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Local Constants and variables
         ////////////////////////////////////////////////////////////////////////////////////////////
-        private int currentLineID;
 
         // Binding Sources
-        private BindingSource subLineDGVBindingSource;
-        private BindingSource envelopeColBindingSource;
+        public BindingSource subLineDGVBindingSource;
+        public BindingSource envelopeColBindingSource;
 
         // Columns
-        public DataGridViewTextBoxColumn lineItemIDColumn;
-        public DataGridViewComboBoxColumn envelopeIDColumn;
-        public DataGridViewTextBoxColumn descriptionColumn;
-        public DataGridViewTextBoxColumn amountColumn;
+        private DataGridViewTextBoxColumn lineItemIDColumn;
+        private DataGridViewComboBoxColumn envelopeIDColumn;
+        private DataGridViewTextBoxColumn descriptionColumn;
+        private DataGridViewTextBoxColumn amountColumn;
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,6 +32,7 @@ namespace FamilyFinance2
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Internal Events
         ////////////////////////////////////////////////////////////////////////////////////////////
+
 
         
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,7 +79,7 @@ namespace FamilyFinance2
             this.amountColumn.HeaderText = "Amount";
             this.amountColumn.DataPropertyName = "amount";
             this.amountColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.amountColumn.DefaultCellStyle = this.MyCellStyleMoney;
+            this.amountColumn.DefaultCellStyle = new MyCellStyleMoney();
             this.amountColumn.Width = 65;
 
             // theDataGridView
@@ -99,29 +100,23 @@ namespace FamilyFinance2
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Public
         ////////////////////////////////////////////////////////////////////////////////////////////
-        public SubTransactionDGV()
+        public SubTransactionDGV(ref TransactionDataSet dataSet)
         {
-        }
-
-        public void myInit(ref FFDBDataSet ffDataSet)
-        {
-            fFDBDataSet = ffDataSet;
-
             // Binding Sources
-            this.subLineDGVBindingSource = new BindingSource(this.fFDBDataSet, "SubLineItem");
-            this.envelopeColBindingSource = new BindingSource(this.fFDBDataSet, "Envelope");
+            this.subLineDGVBindingSource = new BindingSource(dataSet, "SubLineItem");
+
+            this.envelopeColBindingSource = new BindingSource(dataSet, "Envelope");
             this.envelopeColBindingSource.Filter = "id <> " + SpclEnvelope.SPLIT.ToString();
 
             this.mySetLineID(-1);   // Empty set
 
             this.buildTheDataGridView();
-
         }
+
 
         public void mySetLineID(int lineID)
         {
             bool lineAccountUsesEnvelopes;
-            this.currentLineID = lineID;
 
             try
             {
@@ -142,7 +137,6 @@ namespace FamilyFinance2
                 this.AllowUserToAddRows = false;
                 this.Enabled = false;
             }
-
         }
 
 

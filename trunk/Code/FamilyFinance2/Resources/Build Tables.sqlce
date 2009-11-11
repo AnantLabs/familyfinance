@@ -33,13 +33,12 @@ CREATE TABLE Account
 	closed				bit				NOT NULL,	--(0 = NO , 1 = YES)
 	creditDebit			bit				NOT NULL,	--(0 = Credit, 1 = Debit (normal))
 	envelopes			bit				NOT NULL,	--(0 = NO , 1 = YES)
-	currentBalance		money			NOT NULL,
 	endingBalance		money			NOT NULL,
 	CONSTRAINT PK_Account_id     PRIMARY KEY (id),
 	CONSTRAINT FK_Account_typeID FOREIGN KEY (accountTypeID) REFERENCES  AccountType(id)
 );
-INSERT INTO Account VALUES (-2, '-Multiple-', -1, 0, 0, 1, 0, 0.0, 0.0);
-INSERT INTO Account VALUES (-1, ' ', -1, 0, 0, 1, 0, 0.0, 0.0); -- NULL Account
+INSERT INTO Account VALUES (-2, '-Multiple-', -1, 0, 0, 1, 0, 0.0);
+INSERT INTO Account VALUES (-1, ' ', -1, 0, 0, 1, 0, 0.0); -- NULL Account
 
 
 
@@ -52,26 +51,23 @@ CREATE TABLE Envelope
 	fullName			nvarchar(300)	NOT NULL,
 	parentEnvelope		int				NOT NULL,
 	closed				bit				NOT NULL,
-	currentBalance		money			NOT NULL,
 	endingBalance		money			NOT NULL,
 	CONSTRAINT PK_Envelope_id       PRIMARY KEY (id),
 	CONSTRAINT FK_Envelope_parentID FOREIGN KEY (parentEnvelope) REFERENCES  Envelope(id)
 );
-INSERT INTO Envelope VALUES (-1, ' ', ' ', -1, 0, 0.0, 0.0); --NULL Value "Not assigned yet."
-INSERT INTO Envelope VALUES (-2, '-Split-', '-Split-', -1, 0, 0.0, 0.0);
-INSERT INTO Envelope VALUES (0, '-No Envelope-', '-No Envelope-', -1, 0, 0.0, 0.0); --No Envelope "Exception Envelope. Not tracked in reports."
+INSERT INTO Envelope VALUES (-1, ' ', ' ', -1, 0, 0.0); --NULL Value "Not assigned yet."
+INSERT INTO Envelope VALUES (-2, '-Split-', '-Split-', -1, 0, 0.0);
+INSERT INTO Envelope VALUES (0, '-No Envelope-', '-No Envelope-', -1, 0, 0.0); --No Envelope "Exception Envelope. Not tracked in reports."
 
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
 CREATE TABLE AEBalance
 (
-	id					int				NOT NULL,
 	accountID			int				NOT NULL,
 	envelopeID			int				NOT NULL,
-	currentBalance		money			NOT NULL,
 	endingBalance		money			NOT NULL,
-	CONSTRAINT PK_AEBalance_id        PRIMARY KEY (id),
+	CONSTRAINT PK_AEBalance_id        PRIMARY KEY (accountID, envelopeID),
 	CONSTRAINT FK_AEBalance_accountID FOREIGN KEY (accountID) REFERENCES  Account(id),
 	CONSTRAINT FK_AEBalance_envelopeID FOREIGN KEY (envelopeID) REFERENCES  Envelope(id)
 );

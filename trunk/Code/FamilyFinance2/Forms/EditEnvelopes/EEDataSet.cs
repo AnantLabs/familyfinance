@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Collections.Generic;
+using FamilyFinance2.SharedElements;
 using FamilyFinance2.Forms.EditEnvelopes.EEDataSetTableAdapters;
 
 namespace FamilyFinance2.Forms.EditEnvelopes 
@@ -70,7 +71,6 @@ namespace FamilyFinance2.Forms.EditEnvelopes
                 envelopeRow.parentEnvelope = SpclEnvelope.NULL;
                 envelopeRow.closed = false;
                 envelopeRow.endingBalance = 0.0m;
-                envelopeRow.currentBalance = 0.0m;
 
                 stayOut = false;
             }

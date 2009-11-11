@@ -3,30 +3,22 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 
-namespace FamilyFinance2
+namespace FamilyFinance2.SharedElements
 {
     class MyDataGridView : DataGridView
     {
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Local Constants and variables
         ////////////////////////////////////////////////////////////////////////////////////////////
-        protected FFDBDataSet fFDBDataSet;
-
-        protected readonly DataGridViewCellStyle MyCellStyleNormal;
-        protected readonly DataGridViewCellStyle MyCellStyleMoney;
-        protected readonly DataGridViewCellStyle MyCellStyleAlternatingRow;
-        protected readonly DataGridViewCellStyle MyCellStyleError;
-        protected readonly DataGridViewCellStyle MyCellStyleFuture;
-
 
         // row flags used in painting cells
-        protected bool flagTransactionError;
-        protected bool flagLineError;
-        protected bool flagAccountError;
-        protected bool flagNegativeBalance;
-        protected bool flagReadOnlyEnvelope;
-        protected bool flagReadOnlyAccounts;
-        protected bool flagFutureDate;
+        public bool flagTransactionError;
+        public bool flagLineError;
+        public bool flagAccountError;
+        public bool flagNegativeBalance;
+        public bool flagReadOnlyEnvelope;
+        public bool flagReadOnlyAccount;
+        public bool flagFutureDate;
 
 
 
@@ -35,14 +27,8 @@ namespace FamilyFinance2
         ////////////////////////////////////////////////////////////////////////////////////////////
         public bool ShowTypeColumn
         {
-            get 
-            {
-                return this.Columns["typeIDColumn"].Visible;
-            }
-            set 
-            { 
-                this.Columns["typeIDColumn"].Visible = value; 
-            }
+            get { return this.Columns["typeIDColumn"].Visible; }
+            set  {  this.Columns["typeIDColumn"].Visible = value; }
         }
 
         public bool ShowConfirmationColumn
@@ -106,28 +92,28 @@ namespace FamilyFinance2
             // Set the back ground and the tool tip.
             if (this.flagTransactionError)
             {
-                e.CellStyle.BackColor = MyCellStyleError.BackColor;
+                e.CellStyle.BackColor = System.Drawing.Color.Red;
                 toolTipText = "This transaction needs attention.";
             }
             else if (this.flagLineError && colName == "envelopeIDColumn")
             {
-                e.CellStyle.BackColor = MyCellStyleError.BackColor;
+                e.CellStyle.BackColor = System.Drawing.Color.Red;
                 toolTipText = "The sub lines need attention.";
             }
             else if (this.flagAccountError && colName == "accountIDColumn")
             {
-                e.CellStyle.BackColor = MyCellStyleError.BackColor;
+                e.CellStyle.BackColor = System.Drawing.Color.Red;
                 toolTipText = "Please choose an account.";
             }
             else if (this.flagFutureDate)
-                e.CellStyle.BackColor = MyCellStyleFuture.BackColor;
+                e.CellStyle.BackColor = System.Drawing.Color.LightGray;
 
             // rowNegativeBalance
             if (this.flagNegativeBalance && colName == "balanceAmountColumn")
-                e.CellStyle.ForeColor = MyCellStyleMoney.ForeColor;
+                e.CellStyle.ForeColor = System.Drawing.Color.Red;
 
             // rowMultipleAccounts
-            if (this.flagReadOnlyAccounts && colName == "oppAccountIDColumn")
+            if (this.flagReadOnlyAccount && colName == "oppAccountIDColumn")
                 readOnlyCell = true;
 
             // rowSplitEnvelope
@@ -157,29 +143,6 @@ namespace FamilyFinance2
         ////////////////////////////////////////////////////////////////////////////////////////////
         public MyDataGridView()
         {
-            ///////////////////////////////////////////////////////////////////
-            // Setup the Cell Styles
-            MyCellStyleNormal = new DataGridViewCellStyle();
-            MyCellStyleNormal.BackColor = System.Drawing.SystemColors.Window;
-            MyCellStyleNormal.ForeColor = System.Drawing.SystemColors.ControlText;
-            MyCellStyleNormal.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            MyCellStyleNormal.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-
-            MyCellStyleMoney = new DataGridViewCellStyle();
-            MyCellStyleMoney.Alignment = DataGridViewContentAlignment.TopRight;
-            MyCellStyleMoney.Format = "C2";
-
-            MyCellStyleAlternatingRow = new DataGridViewCellStyle();
-            //ButtonFace / Control is a nise soft greay color.
-            //GradientInactiveCaption is a baby blue color
-            //InactiveBorder nice very soft blue color.
-            MyCellStyleAlternatingRow.BackColor = System.Drawing.SystemColors.InactiveBorder;
-
-            MyCellStyleFuture = new DataGridViewCellStyle();
-            MyCellStyleFuture.BackColor = System.Drawing.Color.LightGray;
-
-            MyCellStyleError = new DataGridViewCellStyle();
-            MyCellStyleError.BackColor = System.Drawing.Color.Red;
 
             ///////////////////////////////////////////////////////////////////
             // Initial Flag values
@@ -188,7 +151,7 @@ namespace FamilyFinance2
             this.flagAccountError = false;
             this.flagNegativeBalance = false;
             this.flagReadOnlyEnvelope = false;
-            this.flagReadOnlyAccounts = false;
+            this.flagReadOnlyAccount = false;
             this.flagFutureDate = false;
 
             ///////////////////////////////////////////////////////////////////
@@ -196,7 +159,7 @@ namespace FamilyFinance2
             this.Name = "theDataGridView";
             this.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            this.AlternatingRowsDefaultCellStyle = this.MyCellStyleAlternatingRow;
+            //this.AlternatingRowsDefaultCellStyle = this.MyCellStyleAlternatingRow;
             this.Dock = DockStyle.Fill;
             this.AutoGenerateColumns = false;
             this.AllowUserToOrderColumns = false;
@@ -210,8 +173,6 @@ namespace FamilyFinance2
 
             this.CellFormatting += new DataGridViewCellFormattingEventHandler(MyDataGridView_CellFormatting);
             this.DataError += new DataGridViewDataErrorEventHandler(MyDataGridView_DataError);
-
-
 
         }
 

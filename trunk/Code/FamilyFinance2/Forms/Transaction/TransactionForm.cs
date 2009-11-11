@@ -5,6 +5,8 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using FamilyFinance2.Forms.Transaction;
+using FamilyFinance2.SharedElements;
 
 namespace FamilyFinance2.Forms
 {
@@ -13,12 +15,14 @@ namespace FamilyFinance2.Forms
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Local Constants and variables
         ////////////////////////////////////////////////////////////////////////////////////////////
-        private FFDBDataSet fFDBDataSet;
+        private TransactionDataSet tDataSet;
         private readonly int thisTransactionID;
 
         private CDLinesDGV creditDGV;
         private CDLinesDGV debitDGV;
         private SubTransactionDGV subTransDGV;
+
+
 
         // Menu Items
         private ToolStripMenuItem showConfirmationColToolStripMenuItem;
@@ -46,6 +50,39 @@ namespace FamilyFinance2.Forms
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Internal Events
         ////////////////////////////////////////////////////////////////////////////////////////////
+        private void cdDGV_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            CDLinesDGV lineDGV = sender as CDLinesDGV;
+            int lineID = lineDGV.CurrentLineID;
+            TransactionDataSet.LineItemRow thisLine = this.tDataSet.LineItem.FindByid(lineID);
+
+            // Defaults. Used for new lines.
+            lineDGV.flagTransactionError = false;
+            lineDGV.flagLineError = false;
+            lineDGV.flagAccountError = false;
+            lineDGV.flagNegativeBalance = false;
+            lineDGV.flagReadOnlyEnvelope = false;
+            lineDGV.flagReadOnlyAccount = false;
+            lineDGV.flagFutureDate = false;
+
+            // Set Flags
+            if (thisLine != null)
+            {
+                bool thisLineUsesEnvelopes = thisLine.AccountRowByFK_Line_accountID.envelopes;
+
+                lineDGV.flagLineError = thisLine.lineError;
+
+                if (thisLine.accountID == SpclAccount.NULL)
+                    lineDGV.flagAccountError = true;
+
+                if (thisLine.envelopeID == SpclEnvelope.SPLIT || !thisLineUsesEnvelopes)
+                    lineDGV.flagReadOnlyEnvelope = true;
+
+                if (thisLine.date > DateTime.Today) // future Date
+                    lineDGV.flagFutureDate = true;
+            }
+        }
+
         private void creditDGV_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -77,7 +114,7 @@ namespace FamilyFinance2.Forms
         private void creditDebitDGVContextMenu_Opening(object sender, CancelEventArgs e)
         {
             string text;
-            FFDBDataSet.LineItemRow line = this.fFDBDataSet.LineItem.FindByid(this.currentLineID);
+            TransactionDataSet.LineItemRow line = this.tDataSet.LineItem.FindByid(this.currentLineID);
 
             if (line.creditDebit == LineCD.CREDIT)
                 text = "Delete source line ";
@@ -111,7 +148,7 @@ namespace FamilyFinance2.Forms
         private void newCreditLineMenu_Click(object sender, EventArgs e)
         {
             decimal difference = this.debitSum - this.creditSum;
-            FFDBDataSet.LineItemRow newLine = this.fFDBDataSet.LineItem.NewLineItemRow();
+            TransactionDataSet.LineItemRow newLine = this.tDataSet.LineItem.NewLineItemRow();
 
             newLine.transactionID = this.thisTransactionID;
             newLine.creditDebit = LineCD.CREDIT;
@@ -121,7 +158,7 @@ namespace FamilyFinance2.Forms
             else
                 newLine.amount = 0.0m;
 
-            this.fFDBDataSet.LineItem.Rows.Add(newLine);
+            this.tDataSet.LineItem.Rows.Add(newLine);
 
             myResetValues();
         }
@@ -129,7 +166,7 @@ namespace FamilyFinance2.Forms
         private void newDebitLineMenu_Click(object sender, EventArgs e)
         {
             decimal difference = this.creditSum - this.debitSum;
-            FFDBDataSet.LineItemRow newLine = this.fFDBDataSet.LineItem.NewLineItemRow();
+            TransactionDataSet.LineItemRow newLine = this.tDataSet.LineItem.NewLineItemRow();
 
             newLine.transactionID = this.thisTransactionID;
             newLine.creditDebit = LineCD.DEBIT;
@@ -139,26 +176,14 @@ namespace FamilyFinance2.Forms
             else
                 newLine.amount = 0.0m;
 
-            this.fFDBDataSet.LineItem.Rows.Add(newLine);
+            this.tDataSet.LineItem.Rows.Add(newLine);
 
             myResetValues();
         }
 
         private void deleteLineMenu_Click(object sender, EventArgs e)
         {
-            this.fFDBDataSet.LineItem.FindByid(this.currentLineID).Delete();
-
-            myResetValues();
-        }
-
-
-        private void subTransactionDGV_UserAddedRow(object sender, DataGridViewRowEventArgs e)
-        {
-            for (int row = 0; row < this.subTransDGV.Rows.Count - 1; row++)
-            {
-                if (this.subTransDGV[this.subTransDGV.lineItemIDColumn.Index, row].Value == DBNull.Value)
-                    this.subTransDGV[this.subTransDGV.lineItemIDColumn.Index, row].Value = this.currentLineID;
-            }
+            this.tDataSet.LineItem.FindByid(this.currentLineID).Delete();
 
             myResetValues();
         }
@@ -182,24 +207,24 @@ namespace FamilyFinance2.Forms
         ////////////////////////////////////////////////////////////////////////////////////////////
         private void myReloadLineTypes()
         {
-            fFDBDataSet.LineType.myFill();
+            tDataSet.myFillLineTypeTable();
         }
         
         private void myReloadAccounts()
         {
-            fFDBDataSet.Account.myFill();
+            tDataSet.myFillAccountTable();
         }
 
         private void myReloadEnvelopes()
         {
-            fFDBDataSet.Envelope.myFill();
+            tDataSet.myFillEnvelopeTable();
         }
 
         private void myResetValues()
         {
             /////////////////////////////////
             // Update the Source and Destination sums.
-            this.fFDBDataSet.LineItem.myGetTransCDSum(thisTransactionID, out creditSum , out debitSum);
+            //this.tDataSet.LineItem.myGetTransCDSum(thisTransactionID, out creditSum , out debitSum);
             sourceSumLabel.Text = creditSum.ToString("C2");
             destinationSumLabel.Text = debitSum.ToString("C2");
 
@@ -222,9 +247,9 @@ namespace FamilyFinance2.Forms
             }
             try
             {
-                bool envelopes = this.fFDBDataSet.LineItem.FindByid(this.currentLineID).AccountRowByFK_Line_accountID.envelopes;
-                subLineSum = this.fFDBDataSet.SubLineItem.mySubLineSum(this.currentLineID);
-                lineAmount = this.fFDBDataSet.LineItem.FindByid(this.currentLineID).amount;
+                bool envelopes = this.tDataSet.LineItem.FindByid(this.currentLineID).AccountRowByFK_Line_accountID.envelopes;
+                subLineSum = this.tDataSet.SubLineItem.mySubLineSum(this.currentLineID);
+                lineAmount = this.tDataSet.LineItem.FindByid(this.currentLineID).amount;
 
                 if (envelopes)
                 {
@@ -261,34 +286,34 @@ namespace FamilyFinance2.Forms
 
             ////////////////////////////////////
             // Initialize the dataset and fill the appropriate tables.
-            this.fFDBDataSet = new FFDBDataSet();
-            this.myReloadLineTypes();
-            this.myReloadAccounts();
-            this.myReloadEnvelopes();
-            this.fFDBDataSet.LineItem.myFillByTransaction(transactionID);
-            this.fFDBDataSet.SubLineItem.myFillByTransaction(transactionID);
+            this.tDataSet = new TransactionDataSet();
+            this.tDataSet.myFillAccountTable();
+            this.tDataSet.myFillEnvelopeTable();
+            this.tDataSet.myFillLineTypeTable();
+            this.tDataSet.myFillLineItemAndSubLine(transactionID);
 
             // Credit DGV (Top)
-            this.creditDGV = new CDLinesDGV(transactionID, LineCD.CREDIT, ref this.fFDBDataSet);
+            this.creditDGV = new CDLinesDGV(ref tDataSet, transactionID, LineCD.CREDIT);
             this.creditDGV.Dock = DockStyle.Fill;
             this.transactionLayoutPanel.Controls.Add(this.creditDGV, 0, 1);
             this.transactionLayoutPanel.SetColumnSpan(this.creditDGV, 6);
             this.creditDGV.RowEnter += new DataGridViewCellEventHandler(creditDGV_RowEnter);
+            this.creditDGV.RowPrePaint += new DataGridViewRowPrePaintEventHandler(cdDGV_RowPrePaint);
 
             // Debit DGV (Bottom)
-            this.debitDGV = new CDLinesDGV(transactionID, LineCD.DEBIT, ref this.fFDBDataSet);
+            this.debitDGV = new CDLinesDGV(ref tDataSet, transactionID, LineCD.DEBIT);
             this.debitDGV.Dock = DockStyle.Fill;
             this.transactionLayoutPanel.Controls.Add(this.debitDGV, 0, 3);
             this.transactionLayoutPanel.SetColumnSpan(this.debitDGV, 6);
             this.debitDGV.RowEnter += new DataGridViewCellEventHandler(debitDGV_RowEnter);
+            this.debitDGV.RowPrePaint += new DataGridViewRowPrePaintEventHandler(cdDGV_RowPrePaint);
 
             // SubTransactions
-            this.subTransDGV = new SubTransactionDGV();
+            this.subTransDGV = new SubTransactionDGV(ref tDataSet);
             this.subTransDGV.Dock = DockStyle.Fill;
             this.transactionLayoutPanel.Controls.Add(this.subTransDGV, 0, 5);
             this.transactionLayoutPanel.SetRowSpan(this.subTransDGV, 3);
-            this.subTransDGV.myInit(ref fFDBDataSet);
-            this.subTransDGV.UserAddedRow += new DataGridViewRowEventHandler(subTransactionDGV_UserAddedRow);
+           // this.subTransDGV.myInit(ref tDataSet);
 
             
             ////////////////////////////////////

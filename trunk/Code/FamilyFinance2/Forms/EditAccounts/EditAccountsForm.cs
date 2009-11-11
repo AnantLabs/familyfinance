@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using FamilyFinance2.SharedElements;
 
 using FamilyFinance2.Forms.AccountType;
 

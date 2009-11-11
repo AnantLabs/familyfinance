@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
+using FamilyFinance2.SharedElements;
 
-namespace FamilyFinance2
+namespace FamilyFinance2.Forms.Transaction
 {
     class CDLinesDGV : MyDataGridView
     {
@@ -14,23 +15,23 @@ namespace FamilyFinance2
         private readonly int thisTransactionID;
 
         // Binding Sources
-        private BindingSource lineItemDGVBindingSource;
-        private BindingSource lineTypeColBindingSource;
-        private BindingSource accountColBindingSource;
-        private BindingSource envelopeColBindingSource;
+        public BindingSource lineItemDGVBindingSource;
+        public BindingSource lineTypeColBindingSource;
+        public BindingSource accountColBindingSource;
+        public BindingSource envelopeColBindingSource;
 
         // Columns
-        public DataGridViewTextBoxColumn lineItemIDColumn;
-        public DataGridViewTextBoxColumn transactionIDColumn;
-        public CalendarColumn dateColumn;
-        public DataGridViewComboBoxColumn typeIDColumn;
-        public DataGridViewComboBoxColumn accountIDColumn;
-        public DataGridViewTextBoxColumn descriptionColumn;
-        public DataGridViewTextBoxColumn confirmationNumColumn;
-        public DataGridViewComboBoxColumn envelopeIDColumn;
-        public DataGridViewTextBoxColumn completeColumn;
-        public DataGridViewTextBoxColumn creditDebitColumn;
-        public DataGridViewTextBoxColumn amountColumn;
+        private DataGridViewTextBoxColumn lineItemIDColumn;
+        private DataGridViewTextBoxColumn transactionIDColumn;
+        private CalendarColumn dateColumn;
+        private DataGridViewComboBoxColumn typeIDColumn;
+        private DataGridViewComboBoxColumn accountIDColumn;
+        private DataGridViewTextBoxColumn descriptionColumn;
+        private DataGridViewTextBoxColumn confirmationNumColumn;
+        private DataGridViewComboBoxColumn envelopeIDColumn;
+        private DataGridViewTextBoxColumn completeColumn;
+        private DataGridViewTextBoxColumn creditDebitColumn;
+        private DataGridViewTextBoxColumn amountColumn;
 
 
 
@@ -61,45 +62,14 @@ namespace FamilyFinance2
             }
         }
 
-        private void LineItemDGV_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
-        {
-            int lineID = Convert.ToInt32(this[lineItemIDColumn.Index, e.RowIndex].Value);
-            FFDBDataSet.LineItemRow thisLine = this.fFDBDataSet.LineItem.FindByid(lineID);
-
-            // Defaults. Used for new lines.
-            this.flagTransactionError = false;
-            this.flagLineError = false;
-            this.flagAccountError = false;
-            this.flagNegativeBalance = false;
-            this.flagReadOnlyEnvelope = false;
-            this.flagReadOnlyAccounts = false;
-            this.flagFutureDate = false;
-
-            // Set Flags
-            if (thisLine != null)
-            {
-                bool thisLineUsesEnvelopes = thisLine.AccountRowByFK_Line_accountID.envelopes;
-
-                this.flagLineError = thisLine.lineError;
-
-                if (thisLine.accountID == SpclAccount.NULL)
-                    this.flagAccountError = true;
-
-                if (thisLine.envelopeID == SpclEnvelope.SPLIT || !thisLineUsesEnvelopes)
-                    this.flagReadOnlyEnvelope = true;
-
-                if (thisLine.date > DateTime.Today) // future Date
-                    this.flagFutureDate = true;
-            }
-        }
-
-
-        
+       
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Private
         ////////////////////////////////////////////////////////////////////////////////////////////
         private void buildTheDataGridView()
         {
+            this.DataSource = this.lineItemDGVBindingSource;
+
             // lineItemIDColumn
             this.lineItemIDColumn = new DataGridViewTextBoxColumn();
             this.lineItemIDColumn.Name = "lineItemIDColumn";
@@ -130,8 +100,8 @@ namespace FamilyFinance2
             this.typeIDColumn = new DataGridViewComboBoxColumn();
             this.typeIDColumn.Name = "typeIDColumn";
             this.typeIDColumn.HeaderText = "Type";
-            this.typeIDColumn.DataPropertyName = "lineTypeID";
             this.typeIDColumn.DataSource = this.lineTypeColBindingSource;
+            this.typeIDColumn.DataPropertyName = "lineTypeID";
             this.typeIDColumn.DisplayMember = "name";
             this.typeIDColumn.ValueMember = "id";
             this.typeIDColumn.AutoComplete = true;
@@ -145,8 +115,8 @@ namespace FamilyFinance2
             this.accountIDColumn = new DataGridViewComboBoxColumn();
             this.accountIDColumn.Name = "accountIDColumn";
             this.accountIDColumn.HeaderText = "Source / Destination";
-            this.accountIDColumn.DataPropertyName = "accountID";
             this.accountIDColumn.DataSource = this.accountColBindingSource;
+            this.accountIDColumn.DataPropertyName = "accountID";
             this.accountIDColumn.DisplayMember = "name";
             this.accountIDColumn.ValueMember = "id";
             this.accountIDColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -180,8 +150,8 @@ namespace FamilyFinance2
             this.envelopeIDColumn = new DataGridViewComboBoxColumn();
             this.envelopeIDColumn.Name = "envelopeIDColumn";
             this.envelopeIDColumn.HeaderText = "Envelope";
-            this.envelopeIDColumn.DataPropertyName = "envelopeID";
             this.envelopeIDColumn.DataSource = this.envelopeColBindingSource;
+            this.envelopeIDColumn.DataPropertyName = "envelopeID";
             this.envelopeIDColumn.DisplayMember = "fullName";
             this.envelopeIDColumn.ValueMember = "id";
             this.envelopeIDColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -216,11 +186,10 @@ namespace FamilyFinance2
             this.amountColumn.HeaderText = "Amount";
             this.amountColumn.DataPropertyName = "amount";
             this.amountColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.amountColumn.DefaultCellStyle = this.MyCellStyleMoney;
+            this.amountColumn.DefaultCellStyle = new MyCellStyleMoney();
             this.amountColumn.Width = 65;
 
             // theDataGridView
-            this.DataSource = this.lineItemDGVBindingSource;
             this.Columns.AddRange(
                 new DataGridViewColumn[] 
                 {
@@ -246,67 +215,67 @@ namespace FamilyFinance2
         }
 
 
-
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Public
         ////////////////////////////////////////////////////////////////////////////////////////////
-        public CDLinesDGV(int transID, bool creditDebit, ref FFDBDataSet ffDataSet)
+        public CDLinesDGV(ref TransactionDataSet dataSet, int transID, bool creditDebit)
         {
-            this.fFDBDataSet = ffDataSet;
             this.thisCreditDebit = creditDebit;
             this.thisTransactionID = transID;
             this.AllowUserToAddRows = false;
 
-            ////////////////////////////////////
-            // Setup the Bindings
-            this.lineItemDGVBindingSource = new BindingSource(this.fFDBDataSet, "LineItem");
-            this.lineItemDGVBindingSource.Filter = "creditDebit = " + Convert.ToInt16(creditDebit).ToString();
+            // Setup the Binding Sources
+            this.lineItemDGVBindingSource = new BindingSource(dataSet, "LineItem");
+            this.lineItemDGVBindingSource.Filter = "creditDebit = " + Convert.ToInt16(LineCD.CREDIT).ToString();
 
-            this.accountColBindingSource = new BindingSource(this.fFDBDataSet, "Account");
-            this.accountColBindingSource.Sort = "catagoryID, name";
+            this.accountColBindingSource = new BindingSource(dataSet, "Account");
+            this.accountColBindingSource.Sort = "name";
             this.accountColBindingSource.Filter = "id <> " + SpclAccount.MULTIPLE;
 
-            this.envelopeColBindingSource = new BindingSource(this.fFDBDataSet, "Envelope");
+            this.envelopeColBindingSource = new BindingSource(dataSet, "Envelope");
+            this.envelopeColBindingSource.Sort = "fullName";
 
-            this.lineTypeColBindingSource = new BindingSource(this.fFDBDataSet, "LineType");
+            this.lineTypeColBindingSource = new BindingSource(dataSet, "LineType");
             this.lineTypeColBindingSource.Sort = "name";
 
             this.buildTheDataGridView();
 
-
             ////////////////////////////////////
             // Subscribe to events.
             this.CellDoubleClick += new DataGridViewCellEventHandler(LineItemDGV_CellDoubleClick);
-            this.RowPrePaint += new DataGridViewRowPrePaintEventHandler(LineItemDGV_RowPrePaint);
         }
 
         public void myHighlightOn()
         {
+            this.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            
             if (this.CurrentCell != null)
             {
-                this.CurrentCell.Style.SelectionBackColor = this.MyCellStyleNormal.SelectionBackColor;
-                this.CurrentCell.Style.SelectionForeColor = this.MyCellStyleNormal.SelectionForeColor;
+                this.CurrentCell.Style.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+                this.CurrentCell.Style.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             }
 
             if (this.DefaultCellStyle != null)
             {
-                this.DefaultCellStyle.SelectionBackColor = this.MyCellStyleNormal.SelectionBackColor;
-                this.DefaultCellStyle.SelectionForeColor = this.MyCellStyleNormal.SelectionForeColor;
+                this.DefaultCellStyle.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+                this.DefaultCellStyle.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             }
         }
 
         public void myHighlightOff()
         {
+            this.SelectionMode = DataGridViewSelectionMode.CellSelect;
+
             if (this.CurrentCell != null)
             {
-                this.CurrentCell.Style.SelectionBackColor = this.MyCellStyleNormal.BackColor;
-                this.CurrentCell.Style.SelectionForeColor = this.MyCellStyleNormal.ForeColor;
+                this.CurrentCell.Style.SelectionBackColor = System.Drawing.SystemColors.Window;
+                this.CurrentCell.Style.SelectionForeColor = System.Drawing.SystemColors.ControlText;
             }
 
             if (this.DefaultCellStyle != null)
             {
-                this.DefaultCellStyle.SelectionBackColor = this.MyCellStyleNormal.BackColor;
-                this.DefaultCellStyle.SelectionForeColor = this.MyCellStyleNormal.ForeColor;
+                this.DefaultCellStyle.SelectionBackColor = System.Drawing.SystemColors.Window;
+                this.DefaultCellStyle.SelectionForeColor = System.Drawing.SystemColors.ControlText;
             }
         }
 
