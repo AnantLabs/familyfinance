@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using TreeList;
 
-namespace FamilyFinance2
+namespace FamilyFinance2.SharedElements
 {
     /////////////////////////////////
     // Constants
@@ -197,8 +197,61 @@ namespace FamilyFinance2
     //}
 
 
+
+
     ///////////////////////////////////////
-    // Special DataTypes
+    //  Special Celltypes
+    public class MyCellStyleNormal : DataGridViewCellStyle
+    {
+        public MyCellStyleNormal() : base()
+        {
+            this.BackColor = System.Drawing.SystemColors.Window;
+            this.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            this.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+        }
+    }
+    
+    public class MyCellStyleMoney : DataGridViewCellStyle
+    {
+        public MyCellStyleMoney() : base()
+        {
+            this.Alignment = DataGridViewContentAlignment.TopRight;
+            this.Format = "C2";
+        }
+    }
+    
+    public class MyCellStyleAlternatingRow : DataGridViewCellStyle
+    {
+        public MyCellStyleAlternatingRow() : base()
+        {
+            //ButtonFace / Control is a nise soft greay color.
+            //GradientInactiveCaption is a baby blue color
+            //InactiveBorder nice very soft blue color.
+            this.BackColor = System.Drawing.SystemColors.InactiveBorder;
+        }
+    }
+    
+    public class MyCellStyleError : DataGridViewCellStyle
+    {
+        public MyCellStyleError() : base()
+        {
+            this.BackColor = System.Drawing.Color.Red;
+        }
+    }
+    
+    public class MyCellStyleFuture : DataGridViewCellStyle
+    {
+        public MyCellStyleFuture() : base()
+        {
+            this.BackColor = System.Drawing.Color.LightGray;
+        }
+    }
+
+
+
+    ///////////////////////////////////////
+    //  Special DataTypes
     public class MyComboBoxItem
     {
         public int ID;

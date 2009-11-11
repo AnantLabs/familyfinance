@@ -4,6 +4,7 @@ using System.Text;
 using System.Data;
 using System.Data.SqlServerCe;
 using System.Collections.Generic;
+using FamilyFinance2.SharedElements;
 
 namespace FamilyFinance2
 {

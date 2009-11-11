@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Collections.Generic;
 using FamilyFinance2.Forms.EditAccounts.EADataSetTableAdapters;
+using FamilyFinance2.SharedElements;
 
 namespace FamilyFinance2.Forms.EditAccounts 
 {
@@ -103,7 +104,6 @@ namespace FamilyFinance2.Forms.EditAccounts
                 accountRow.creditDebit = LineCD.DEBIT;
                 accountRow.envelopes = false;
                 accountRow.endingBalance = 0.0m;
-                accountRow.currentBalance = 0.0m;
 
                 stayOut = false;
             }
