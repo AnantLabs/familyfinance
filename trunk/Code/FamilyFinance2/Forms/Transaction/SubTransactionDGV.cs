@@ -11,23 +11,12 @@ namespace FamilyFinance2.Forms.Transaction
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Local Constants and variables
         ////////////////////////////////////////////////////////////////////////////////////////////
+        public BindingSource BindingSourceSubLineDGV;
+        public BindingSource BindingSourceEnvelopeCol;
 
-        // Binding Sources
-        public BindingSource subLineDGVBindingSource;
-        public BindingSource envelopeColBindingSource;
-
-        // Columns
-        private DataGridViewTextBoxColumn lineItemIDColumn;
         private DataGridViewComboBoxColumn envelopeIDColumn;
         private DataGridViewTextBoxColumn descriptionColumn;
         private DataGridViewTextBoxColumn amountColumn;
-
-
-        ////////////////////////////////////////////////////////////////////////////////////////////
-        //   Properties
-        ////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Internal Events
@@ -40,20 +29,12 @@ namespace FamilyFinance2.Forms.Transaction
         ////////////////////////////////////////////////////////////////////////////////////////////
         private void buildTheDataGridView()
         {
-            // lineItemIDColumn
-            this.lineItemIDColumn = new DataGridViewTextBoxColumn();
-            this.lineItemIDColumn.Name = "lineItemIDColumn";
-            this.lineItemIDColumn.HeaderText = "lineItemID";
-            this.lineItemIDColumn.DataPropertyName = "lineItemID";
-            this.lineItemIDColumn.Width = 40;
-            this.lineItemIDColumn.Visible = false;
-
             // envelopeIDColumn
             this.envelopeIDColumn = new DataGridViewComboBoxColumn();
             this.envelopeIDColumn.Name = "envelopeIDColumn";
             this.envelopeIDColumn.HeaderText = "Envelope";
             this.envelopeIDColumn.DataPropertyName = "envelopeID";
-            this.envelopeIDColumn.DataSource = this.envelopeColBindingSource;
+            this.envelopeIDColumn.DataSource = this.BindingSourceEnvelopeCol;
             this.envelopeIDColumn.DisplayMember = "fullName";
             this.envelopeIDColumn.ValueMember = "id";
             this.envelopeIDColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -83,13 +64,24 @@ namespace FamilyFinance2.Forms.Transaction
             this.amountColumn.Width = 65;
 
             // theDataGridView
+            this.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.SelectionMode = DataGridViewSelectionMode.CellSelect;
+            this.Dock = DockStyle.Fill;
+            this.AutoGenerateColumns = false;
+            this.AllowUserToOrderColumns = false;
+            this.AllowUserToDeleteRows = false;
+            this.AllowUserToResizeRows = false;
             this.AllowUserToAddRows = true;
-            this.DataSource = this.subLineDGVBindingSource;
+            this.RowHeadersVisible = false;
+            this.ShowCellErrors = false;
+            this.ShowRowErrors = false;
+            this.MultiSelect = false;
+
+            this.DataSource = this.BindingSourceSubLineDGV;
             this.Columns.AddRange(
                 new DataGridViewColumn[] 
                 {
                     this.envelopeIDColumn,
-                    this.lineItemIDColumn,
                     this.descriptionColumn,
                     this.amountColumn
                 }
@@ -100,44 +92,17 @@ namespace FamilyFinance2.Forms.Transaction
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Public
         ////////////////////////////////////////////////////////////////////////////////////////////
-        public SubTransactionDGV(ref TransactionDataSet dataSet)
+        public SubTransactionDGV()
         {
-            // Binding Sources
-            this.subLineDGVBindingSource = new BindingSource(dataSet, "SubLineItem");
-
-            this.envelopeColBindingSource = new BindingSource(dataSet, "Envelope");
-            this.envelopeColBindingSource.Filter = "id <> " + SpclEnvelope.SPLIT.ToString();
-
-            this.mySetLineID(-1);   // Empty set
-
+            // Initialise Binding Sources
+            this.BindingSourceSubLineDGV = new BindingSource();
+            this.BindingSourceEnvelopeCol = new BindingSource();
+            
             this.buildTheDataGridView();
         }
 
 
-        public void mySetLineID(int lineID)
-        {
-            bool lineAccountUsesEnvelopes;
 
-            try
-            {
-                lineAccountUsesEnvelopes = this.fFDBDataSet.LineItem.FindByid(lineID).AccountRowByFK_Line_accountID.envelopes;
-
-                if (lineAccountUsesEnvelopes)
-                {
-                    this.subLineDGVBindingSource.Filter = "lineItemID = " + lineID.ToString();
-                    this.AllowUserToAddRows = true;
-                    this.Enabled = true;
-                }
-            }
-            catch { lineAccountUsesEnvelopes = false; }
-
-            if (!lineAccountUsesEnvelopes)
-            {
-                this.subLineDGVBindingSource.Filter = "id = -1";
-                this.AllowUserToAddRows = false;
-                this.Enabled = false;
-            }
-        }
 
 
 

@@ -1,5 +1,5 @@
 ﻿
-namespace FamilyFinance2.Forms
+namespace FamilyFinance2.Forms.Transaction
 {
     partial class TransactionForm
     {

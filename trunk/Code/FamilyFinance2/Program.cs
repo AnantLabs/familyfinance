@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.IO;
 using System.Data.SqlServerCe;
-using System.Linq;
 using FamilyFinance2.Forms.FindDB;
 
 namespace FamilyFinance2
@@ -30,10 +29,8 @@ namespace FamilyFinance2
             if (FFDataBase.myCreateDBFile())
                 FFDataBase.myExecuteFile(Properties.Resources.Test_Data, true);
 
-            FamilyFinance2.Forms.EditEnvelopes.EditEnvelopesForm app = new FamilyFinance2.Forms.EditEnvelopes.EditEnvelopesForm();
-            Application.Run(app);
             //Application.Run(new MainForm());
-            //Application.Run(new TransactionForm(2));
+            Application.Run(new FamilyFinance2.Forms.Transaction.TransactionForm(2));
             return;
 
     #endif
