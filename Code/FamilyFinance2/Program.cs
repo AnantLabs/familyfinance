@@ -39,7 +39,7 @@ namespace FamilyFinance2
 
             if (canRun())
                 if (findPath())
-                    runProgram();
+                    Application.Run(new FamilyFinance2.Forms.Transaction.TransactionForm(2));
 
 #endif
 

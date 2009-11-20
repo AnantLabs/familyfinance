@@ -29,8 +29,6 @@ namespace FamilyFinance2.Forms.Transaction
         private DataGridViewTextBoxColumn creditDebitColumn;
         private DataGridViewTextBoxColumn amountColumn;
 
-
-
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Internal Events
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -69,7 +67,7 @@ namespace FamilyFinance2.Forms.Transaction
             this.lineItemIDColumn.HeaderText = "lineItemID";
             this.lineItemIDColumn.DataPropertyName = "id";
             this.lineItemIDColumn.Width = 40;
-            this.lineItemIDColumn.Visible = false;
+            this.lineItemIDColumn.Visible = true;
 
             // transactionIDColumn
             this.transactionIDColumn = new DataGridViewTextBoxColumn();
@@ -153,6 +151,7 @@ namespace FamilyFinance2.Forms.Transaction
             this.envelopeIDColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.envelopeIDColumn.FillWeight = 100;
             this.envelopeIDColumn.Visible = true;
+            this.envelopeIDColumn.ReadOnly = true;
             
             // completeColumn
             this.completeColumn = new DataGridViewTextBoxColumn();
@@ -226,9 +225,9 @@ namespace FamilyFinance2.Forms.Transaction
             this.CellDoubleClick += new DataGridViewCellEventHandler(LineItemDGV_CellDoubleClick);
         }
 
-        public void myHighLightOn()
+        public void myHighLightCellOn()
         {
-            this.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            this.SelectionMode = DataGridViewSelectionMode.CellSelect;
             
             if (this.CurrentCell != null)
             {
@@ -241,6 +240,27 @@ namespace FamilyFinance2.Forms.Transaction
                 this.DefaultCellStyle.SelectionBackColor = System.Drawing.SystemColors.Highlight;
                 this.DefaultCellStyle.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             }
+
+            this.Refresh();
+        }
+
+        public void myHighLightRowOn()
+        {
+            this.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            if (this.CurrentCell != null)
+            {
+                this.CurrentCell.Style.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+                this.CurrentCell.Style.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            }
+
+            if (this.DefaultCellStyle != null)
+            {
+                this.DefaultCellStyle.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+                this.DefaultCellStyle.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            }
+
+            this.Refresh();
         }
 
         public void myHighLightOff()
@@ -258,6 +278,8 @@ namespace FamilyFinance2.Forms.Transaction
                 this.DefaultCellStyle.SelectionBackColor = System.Drawing.SystemColors.Window;
                 this.DefaultCellStyle.SelectionForeColor = System.Drawing.SystemColors.ControlText;
             }
+
+            this.Refresh();
         }
 
     }
