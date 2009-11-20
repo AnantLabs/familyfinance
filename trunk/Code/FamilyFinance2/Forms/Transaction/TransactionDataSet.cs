@@ -15,11 +15,6 @@ namespace FamilyFinance2.Forms.Transaction
         private EnvelopeTableAdapter EnvelopeTA;
         private LineTypeTableAdapter LineTypeTA;
 
-        private decimal creditSum;
-        public decimal CreditSum { get { return this.creditSum; } }
-
-        private decimal debitSum;
-        public decimal DebitSum { get { return this.debitSum; } }
 
 
         /////////////////////////
@@ -81,8 +76,14 @@ namespace FamilyFinance2.Forms.Transaction
 
         public void myCheckTransaction()
         {
-            this.creditSum = 0.00m;
-            this.debitSum = 0.00m;
+            decimal temp, temp2;
+            myCheckTransaction(out temp, out temp2);
+        }
+
+        public void myCheckTransaction(out decimal creditSum, out decimal debitSum)
+        {
+            creditSum = 0.00m;
+            debitSum = 0.00m;
             bool transError = false;
 
             // Find credit and debit sums
@@ -91,13 +92,13 @@ namespace FamilyFinance2.Forms.Transaction
                 if (line.RowState != DataRowState.Deleted)
                 {
                     if (line.creditDebit == LineCD.CREDIT)
-                        this.creditSum += line.amount;
+                        creditSum += line.amount;
                     else
-                        this.debitSum += line.amount;
+                        debitSum += line.amount;
                 }
             }
 
-            if (this.creditSum != this.debitSum)
+            if (creditSum != debitSum)
                 transError = true;
             else 
                 transError = false;
@@ -585,11 +586,12 @@ namespace FamilyFinance2.Forms.Transaction
                 switch (e.Column.ColumnName)
                 {
                     case "amount":
-                        myValidateAmount(ref row, row.creditDebit, row.amount);
-                        break;
+                        // Do not accept negative numbers in this column
+                        if (row.amount < 0)
+                            row.amount = decimal.Negate(row.amount);
 
-                    case "creditDebit":
-                        myValidateAmount(ref row, row.creditDebit, row.amount);
+                        // Keep only to the penny.
+                        row.amount = decimal.Round(row.amount, 2);
                         break;
 
                     case "complete":
@@ -605,20 +607,7 @@ namespace FamilyFinance2.Forms.Transaction
 
             /////////////////////////
             //   Private Functions
-            private void myValidateAmount(ref LineItemRow row, bool newCD, decimal newAmount)
-            {
-                if (newAmount < 0)
-                {
-                    newAmount = newAmount * -1;
-                    newCD = !newCD;
-                }
 
-                // Keep only to the penny.
-                newAmount = Convert.ToInt32(newAmount * 100) / 100.0m;
-
-                row.amount = newAmount;
-                row.creditDebit = newCD;
-            }
 
 
             /////////////////////////
@@ -649,6 +638,7 @@ namespace FamilyFinance2.Forms.Transaction
             {
                 this.LineItemTA.Update(this);
             }
+
         }
 
         ///////////////////////////////////////////////////////////////////////
