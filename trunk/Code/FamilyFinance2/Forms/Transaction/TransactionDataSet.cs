@@ -36,14 +36,6 @@ namespace FamilyFinance2.Forms.Transaction
 
             this.LineTypeTA = new LineTypeTableAdapter();
             this.LineTypeTA.ClearBeforeFill = true;
-
-            this.LineItem.myInit();
-            this.SubLineItem.myInit();
-        }
-
-        public void mySetCurrentLineID(int lineID)
-        {
-            this.SubLineItem.mySetCurrentLineID(lineID);
         }
 
 
@@ -73,6 +65,28 @@ namespace FamilyFinance2.Forms.Transaction
             this.SubLineItem.myFill(transID);
         }
 
+
+
+        public void mySetCurrentLineID(int lineID)
+        {
+            this.SubLineItem.mySetCurrentLineID(lineID);
+        }
+
+        public void myDeleteLine(int lineID)
+        {
+            LineItemRow line = this.LineItem.FindByid(lineID);
+
+            if (line != null)
+                line.Delete();
+
+            foreach (SubLineItemRow subLine in this.SubLineItem)
+            {
+                if (subLine.RowState != DataRowState.Deleted)
+                    if(subLine.lineItemID == lineID)
+                        subLine.Delete();
+            }
+
+        }
 
         public void myCheckTransaction()
         {
@@ -109,7 +123,8 @@ namespace FamilyFinance2.Forms.Transaction
                 if (line.RowState != DataRowState.Deleted)
                 {
                     bool lineError = false;
-                    decimal subSum = this.SubLineItem.mySubLineSum(line.id);
+                    int envelopeID;
+                    decimal subSum = this.SubLineItem.mySubLineSum(line.id, out envelopeID);
 
                     if (line.AccountRowByFK_Line_accountID.envelopes && line.amount == subSum)
                         lineError = false;
@@ -118,12 +133,15 @@ namespace FamilyFinance2.Forms.Transaction
                     else
                         lineError = true;
 
-                    // Set transaction and line errors if they need to be changed
+                    // Set transaction and line errors and envelope if needed
                     if (line.lineError != lineError)
                         line.lineError = lineError;
 
                     if(line.transactionError != transError)
                         line.transactionError = transError;
+
+                    if (line.envelopeID != envelopeID)
+                        line.envelopeID = envelopeID;
                 }
             }
         }
@@ -544,6 +562,9 @@ namespace FamilyFinance2.Forms.Transaction
                 this.TableNewRow += new DataTableNewRowEventHandler(LineItemDataTable_TableNewRow);
                 this.ColumnChanged += new DataColumnChangeEventHandler(LineItemDataTable_ColumnChanged);
 
+                this.LineItemTA = new LineItemTableAdapter();
+                this.LineItemTA.ClearBeforeFill = true;
+
                 this.newLineID = -1;
                 this.transactionID = -1;
                 this.stayOut = false;
@@ -612,12 +633,6 @@ namespace FamilyFinance2.Forms.Transaction
 
             /////////////////////////
             //   Public Functions
-            public void myInit()
-            {
-                this.LineItemTA = new LineItemTableAdapter();
-                this.LineItemTA.ClearBeforeFill = true;
-            }
-            
             public void myFill(int transID)
             {
                 this.LineItemTA.FillByTransID(this, transID);
@@ -663,6 +678,9 @@ namespace FamilyFinance2.Forms.Transaction
                 this.TableNewRow += new DataTableNewRowEventHandler(SubLineItemDataTable_TableNewRow);
                 this.ColumnChanged += new DataColumnChangeEventHandler(SubLineItemDataTable_ColumnChanged);
 
+                this.SubLineTA = new SubLineItemTableAdapter();
+                this.SubLineTA.ClearBeforeFill = true;
+            
                 this.newID = -1;
                 this.stayOut = false;
             }
@@ -713,12 +731,6 @@ namespace FamilyFinance2.Forms.Transaction
 
             /////////////////////////
             //   Function Public
-            public void myInit()
-            {
-                this.SubLineTA = new SubLineItemTableAdapter();
-                this.SubLineTA.ClearBeforeFill = true;
-            }
-
             public void myFill(int transID)
             {
                 this.SubLineTA.FillByTransID(this, transID);
@@ -737,11 +749,26 @@ namespace FamilyFinance2.Forms.Transaction
 
             public decimal mySubLineSum(int lineID)
             {
+                int temp;
+                return mySubLineSum(lineID, out temp);
+            }
+
+            public decimal mySubLineSum(int lineID, out int envelopeID)
+            {
                 decimal sum = 0.0m;
+                int subCount = 0;
+                envelopeID = SpclEnvelope.NULL; // correct for when subLineCount == 0
 
                 foreach (SubLineItemRow subLine in this)
-                    if(subLine.RowState != DataRowState.Deleted && subLine.lineItemID == lineID)
+                    if (subLine.RowState != DataRowState.Deleted && subLine.lineItemID == lineID)
+                    {
                         sum += subLine.amount;
+                        subCount++;
+                        envelopeID = subLine.envelopeID;
+                    }
+
+                if (subCount > 1)
+                    envelopeID = SpclEnvelope.SPLIT;
 
                 return sum;
             }

@@ -158,7 +158,7 @@ namespace FamilyFinance2.Forms.EditEnvelopes
                 else
                 {
                     EnvelopeRow parent = this.FindByid(thisEnvelope.parentEnvelope);
-                    return this.myGetFullName(ref parent) + ":" + thisEnvelope.name;
+                    return this.myGetFullName(ref parent) + ": " + thisEnvelope.name;
                 }
             }
 

@@ -14,13 +14,40 @@ namespace FamilyFinance2.Forms.Transaction
         public BindingSource BindingSourceSubLineDGV;
         public BindingSource BindingSourceEnvelopeCol;
 
+        private DataGridViewTextBoxColumn subLineIDColumn;
         private DataGridViewComboBoxColumn envelopeIDColumn;
         private DataGridViewTextBoxColumn descriptionColumn;
         private DataGridViewTextBoxColumn amountColumn;
 
+        // Row flags used in painting cells
+        public bool flagEnvelopeError;
+        public bool flagNegativeAmount;
+
+
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Internal Events
         ////////////////////////////////////////////////////////////////////////////////////////////
+        private void SubTransactionDGV_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            int col = e.ColumnIndex;
+            int row = e.RowIndex;
+
+            if (col < 0 || row < 0)
+                return;
+
+            string colName = this.Columns[col].Name;
+
+            // Set the back ground and the tool tip.
+            if (this.flagEnvelopeError && colName == "envelopeIDColumn")
+            {
+                e.CellStyle.BackColor = System.Drawing.Color.Red;
+                this[col, row].ToolTipText = "Please choose an envelope.";
+            }
+
+            // rowNegativeBalance
+            if (this.flagNegativeAmount && colName == "amountColumn")
+                e.CellStyle.ForeColor = System.Drawing.Color.Red;
+        }
 
 
         
@@ -29,6 +56,14 @@ namespace FamilyFinance2.Forms.Transaction
         ////////////////////////////////////////////////////////////////////////////////////////////
         private void buildTheDataGridView()
         {
+            // lineItemIDColumn
+            this.subLineIDColumn = new DataGridViewTextBoxColumn();
+            this.subLineIDColumn.Name = "subLineIDColumn";
+            this.subLineIDColumn.HeaderText = "SubLineID";
+            this.subLineIDColumn.DataPropertyName = "id";
+            this.subLineIDColumn.Width = 40;
+            this.subLineIDColumn.Visible = false;
+
             // envelopeIDColumn
             this.envelopeIDColumn = new DataGridViewComboBoxColumn();
             this.envelopeIDColumn.Name = "envelopeIDColumn";
@@ -71,7 +106,7 @@ namespace FamilyFinance2.Forms.Transaction
             this.AllowUserToOrderColumns = false;
             this.AllowUserToDeleteRows = false;
             this.AllowUserToResizeRows = false;
-            this.AllowUserToAddRows = true;
+            this.AllowUserToAddRows = false;
             this.RowHeadersVisible = false;
             this.ShowCellErrors = false;
             this.ShowRowErrors = false;
@@ -81,6 +116,7 @@ namespace FamilyFinance2.Forms.Transaction
             this.Columns.AddRange(
                 new DataGridViewColumn[] 
                 {
+                    this.subLineIDColumn,
                     this.envelopeIDColumn,
                     this.descriptionColumn,
                     this.amountColumn
@@ -99,6 +135,38 @@ namespace FamilyFinance2.Forms.Transaction
             this.BindingSourceEnvelopeCol = new BindingSource();
             
             this.buildTheDataGridView();
+
+            this.CellFormatting += new DataGridViewCellFormattingEventHandler(SubTransactionDGV_CellFormatting);
+        }
+
+        public void myHighLightOn()
+        {
+            if (this.CurrentCell != null)
+            {
+                this.CurrentCell.Style.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+                this.CurrentCell.Style.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            }
+
+            if (this.DefaultCellStyle != null)
+            {
+                this.DefaultCellStyle.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+                this.DefaultCellStyle.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            }
+        }
+
+        public void myHighLightOff()
+        {
+            if (this.CurrentCell != null)
+            {
+                this.CurrentCell.Style.SelectionBackColor = System.Drawing.SystemColors.Window;
+                this.CurrentCell.Style.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            }
+
+            if (this.DefaultCellStyle != null)
+            {
+                this.DefaultCellStyle.SelectionBackColor = System.Drawing.SystemColors.Window;
+                this.DefaultCellStyle.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            }
         }
 
 
