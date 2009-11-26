@@ -5,7 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using FamilyFinance2.Forms.Transaction;
 using FamilyFinance2.SharedElements;
 
 namespace FamilyFinance2.Forms.Transaction
@@ -25,9 +24,20 @@ namespace FamilyFinance2.Forms.Transaction
             set 
             {
                 _currentLineID = value;
-                this.label9.Text = value.ToString();
+                //this.label9.Text = value.ToString();
                 this.mySetSubLineDGVFilter(value);
                 this.tDataSet.mySetCurrentLineID(value);
+            }
+        }
+
+        private int _currentSubLineID;
+        private int CurrentSubLineID
+        {
+            get { return _currentSubLineID; }
+            set
+            {
+                _currentSubLineID = value;
+                //this.label11.Text = value.ToString();
             }
         }
 
@@ -77,13 +87,39 @@ namespace FamilyFinance2.Forms.Transaction
             }
         }
 
+        private void subTransDGV_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            int subLineID = -1;
+
+            // Defaults. Used for new lines.
+            subTransDGV.flagEnvelopeError = false;
+            subTransDGV.flagNegativeAmount = false;
+
+            // try to get the current row lineID
+            try { subLineID = Convert.ToInt32(subTransDGV["subLineIDColumn", e.RowIndex].Value); }
+            catch { return; }
+
+            TransactionDataSet.SubLineItemRow thisSubLine = this.tDataSet.SubLineItem.FindByid(subLineID);
+
+            // Set Flags
+            if (thisSubLine != null)
+            {
+                if (thisSubLine.envelopeID == SpclEnvelope.NULL)
+                    subTransDGV.flagEnvelopeError = true;
+
+                if (thisSubLine.amount < 0.00m)
+                    subTransDGV.flagNegativeAmount = true;
+            }
+        }
+
         private void creditDGV_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
                 mySetCurrentLineID(LineCD.CREDIT, e.RowIndex);
 
-            creditDGV.myHighLightCellOn();
+            creditDGV.myHighLightOn();
             debitDGV.myHighLightOff();
+            subTransDGV.myHighLightOff();
 
             myResetValues();
         }
@@ -93,13 +129,21 @@ namespace FamilyFinance2.Forms.Transaction
             if (e.RowIndex >= 0)
                 mySetCurrentLineID(LineCD.DEBIT, e.RowIndex);
 
-            debitDGV.myHighLightCellOn();
+            debitDGV.myHighLightOn();
             creditDGV.myHighLightOff();
+            subTransDGV.myHighLightOff();
 
             myResetValues();
         }
 
+        private void subTransDGV_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.subTransDGV.myHighLightOn();
 
+            myResetValues();
+        }
+
+        
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Context Menu Events
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,38 +151,27 @@ namespace FamilyFinance2.Forms.Transaction
         {
             bool found = false;
 
-            for (int row = 0; row < this.creditDGV.Rows.Count; row++)
+            for (int row = 0; row < this.creditDGV.RowCount; row++)
             {
-                if (this.creditDGV.GetRowDisplayRectangle(row, true).Contains(this.creditDGV.PointToClient(MousePosition)))
+                for (int col = 0; col < this.creditDGV.ColumnCount; col++)
                 {
-                    mySetCurrentLineID(LineCD.CREDIT, row);
-                    found = true;
-                    break;
+                    if (this.creditDGV.GetCellDisplayRectangle(col, row, true).Contains(this.creditDGV.PointToClient(MousePosition)))
+                    {
+                        this.creditDGV.CurrentCell = this.creditDGV[col, row];
+                        this.creditDGV.myHighLightOn();
+                        this.debitDGV.myHighLightOff();
+
+                        mySetCurrentLineID(LineCD.CREDIT, row);
+                        found = true;
+                        break;
+                    } 
                 }
+                if (found)
+                    break;
             }
 
             if (!found)
                 mySetCurrentLineID(LineCD.CREDIT, -1);
-
-            this.updateCM();
-        }
-
-        private void debitContextMenuStrip_Opening(object sender, CancelEventArgs e)
-        {
-            bool found = false;
-
-            for (int row = 0; row < this.debitDGV.Rows.Count; row++)
-            {
-                if(this.debitDGV.GetRowDisplayRectangle(row, true).Contains(this.debitDGV.PointToClient(MousePosition)))
-                {
-                    mySetCurrentLineID(LineCD.DEBIT, row);
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found)
-                mySetCurrentLineID(LineCD.DEBIT, -1);
 
             this.updateCM();
         }
@@ -149,11 +182,42 @@ namespace FamilyFinance2.Forms.Transaction
             e.ContextMenuStrip = this.creditDGV.ContextMenuStrip;
         }
 
+
+        private void debitContextMenuStrip_Opening(object sender, CancelEventArgs e)
+        {
+            bool found = false;
+
+            for (int row = 0; row < this.debitDGV.RowCount; row++)
+            {
+                for (int col = 0; col < this.debitDGV.ColumnCount; col++)
+                {
+                    if (this.debitDGV.GetCellDisplayRectangle(col, row, true).Contains(this.debitDGV.PointToClient(MousePosition)))
+                    {
+                        this.debitDGV.CurrentCell = this.debitDGV[col, row];
+                        this.debitDGV.myHighLightOn();
+                        this.creditDGV.myHighLightOff();
+
+                        mySetCurrentLineID(LineCD.DEBIT, row);
+                        found = true;
+                        break;
+                    }
+                }
+                if (found)
+                    break;
+            }
+
+            if (!found)
+                mySetCurrentLineID(LineCD.DEBIT, -1);
+
+            this.updateCM();
+        }
+
         private void debitDGV_CellContextMenuStripNeeded(object sender, DataGridViewCellContextMenuStripNeededEventArgs e)
         {
             mySetCurrentLineID(LineCD.DEBIT, e.RowIndex);
             e.ContextMenuStrip = this.debitDGV.ContextMenuStrip;
         }
+
 
         private void newLineMenu_Click(object sender, EventArgs e)
         {
@@ -163,7 +227,7 @@ namespace FamilyFinance2.Forms.Transaction
             string menuText = (sender as ToolStripMenuItem).Text;
             TransactionDataSet.LineItemRow newLine = this.tDataSet.LineItem.NewLineItemRow();
             
-            newLine.transactionID = this.thisTransactionID;
+            //newLine.transactionID = this.thisTransactionID;
             this.tDataSet.myCheckTransaction(out creditSum, out debitSum);
 
             if (menuText.Contains("Source"))
@@ -204,13 +268,7 @@ namespace FamilyFinance2.Forms.Transaction
 
         private void deleteLineMenu_Click(object sender, EventArgs e)
         {
-            TransactionDataSet.LineItemRow line = this.tDataSet.LineItem.FindByid(this.CurrentLineID);
-
-            if (line != null)
-            {
-                line.Delete();
-            } 
-
+            this.tDataSet.myDeleteLine(this.CurrentLineID);
             myResetValues();
         }
 
@@ -227,6 +285,61 @@ namespace FamilyFinance2.Forms.Transaction
                 this.creditDGV.ShowConfirmationColumn = true;
             }
         }
+
+
+        private void subLineContextMenuStrip_Opening(object sender, CancelEventArgs e)
+        {
+            object value;
+            bool isEnabled = false;
+
+            // Find the row that was clicked
+            for (int row = 0; row < this.subTransDGV.RowCount; row++)
+            {
+                if (this.subTransDGV.GetRowDisplayRectangle(row, true).Contains(this.subTransDGV.PointToClient(MousePosition)))
+                {
+                    try
+                    {
+                        value = this.subTransDGV["subLineIDColumn", row].Value;
+                        this.CurrentSubLineID = Convert.ToInt32(value);
+                        isEnabled = true;
+                    }
+                    catch 
+                    { 
+                        this.CurrentSubLineID = -1; 
+                    }
+                    break;
+                }
+                else
+                {
+                    this.CurrentSubLineID = -1;
+                }
+            }
+
+            // Disable or enable the delete menu item
+            this.subTransDGV.ContextMenuStrip.Items[1].Enabled = isEnabled; 
+        }
+
+        private void newSubLineMenu_Click(object sender, EventArgs e)
+        {
+
+            decimal lineAmount = this.tDataSet.LineItem.FindByid(this.CurrentLineID).amount;
+            decimal subSum = this.tDataSet.SubLineItem.mySubLineSum(this.CurrentLineID);
+            decimal difference = lineAmount - subSum;
+            TransactionDataSet.SubLineItemRow newSubLine = this.tDataSet.SubLineItem.NewSubLineItemRow();
+
+            newSubLine.amount = difference;
+
+            this.tDataSet.SubLineItem.Rows.Add(newSubLine);
+
+            myResetValues();
+        }
+
+        private void deleteSubLineMenu_Click(object sender, EventArgs e)
+        {
+            this.tDataSet.SubLineItem.FindByid(this.CurrentSubLineID).Delete();
+            myResetValues();
+        }
+
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -321,7 +434,11 @@ namespace FamilyFinance2.Forms.Transaction
             this.subTransDGV.BindingSourceEnvelopeCol.DataSource = this.tDataSet;
             this.subTransDGV.BindingSourceEnvelopeCol.DataMember = "Envelope";
             this.subTransDGV.BindingSourceEnvelopeCol.Filter = "id <> " + SpclEnvelope.SPLIT.ToString();
+
+            this.subTransDGV.RowPrePaint += new DataGridViewRowPrePaintEventHandler(subTransDGV_RowPrePaint);
+            this.subTransDGV.CellClick += new DataGridViewCellEventHandler(subTransDGV_CellClick);
         }
+
 
         private void buildCMs()
         {
@@ -352,6 +469,18 @@ namespace FamilyFinance2.Forms.Transaction
             this.debitDGV.ContextMenuStrip.Items.Add(new ToolStripMenuItem("Show Confermation Column", null, showConfirmationColMenu_Click));
 
             this.debitDGV.ContextMenuStrip.Opening += new CancelEventHandler(debitContextMenuStrip_Opening);
+
+
+            // Sub Lines Context Menu
+            this.subTransDGV.ContextMenuStrip = new ContextMenuStrip();
+            this.subTransDGV.ContextMenuStrip.ShowImageMargin = false;
+            this.subTransDGV.ContextMenuStrip.ShowCheckMargin = false;
+            this.subTransDGV.ContextMenuStrip.AutoSize = true;
+
+            this.subTransDGV.ContextMenuStrip.Items.Add(new ToolStripMenuItem("New Sub Line", null, newSubLineMenu_Click));
+            this.subTransDGV.ContextMenuStrip.Items.Add(new ToolStripMenuItem("Delete Sub Line", null, deleteSubLineMenu_Click));
+
+            this.subTransDGV.ContextMenuStrip.Opening += new CancelEventHandler(subLineContextMenuStrip_Opening);
         }
 
         private void updateCM()
@@ -374,6 +503,7 @@ namespace FamilyFinance2.Forms.Transaction
             (this.creditDGV.ContextMenuStrip.Items[4] as ToolStripMenuItem).Checked = this.debitDGV.ShowConfirmationColumn;
             (this.debitDGV.ContextMenuStrip.Items[4] as ToolStripMenuItem).Checked = this.debitDGV.ShowConfirmationColumn;
         }
+
 
         private void myReloadLineTypes()
         {
@@ -484,13 +614,11 @@ namespace FamilyFinance2.Forms.Transaction
             if (lineAccountUsesEnvelopes)
             {
                 this.subTransDGV.BindingSourceSubLineDGV.Filter = "lineItemID = " + lineID.ToString();
-                this.subTransDGV.AllowUserToAddRows = true;
                 this.subTransDGV.Enabled = true;
             }
             else
             {
                 this.subTransDGV.BindingSourceSubLineDGV.Filter = "id = -1";
-                this.subTransDGV.AllowUserToAddRows = false;
                 this.subTransDGV.Enabled = false;
             }
         }

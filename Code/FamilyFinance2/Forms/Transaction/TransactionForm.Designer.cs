@@ -39,10 +39,14 @@ namespace FamilyFinance2.Forms.Transaction
             this.label9 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.sourceSumLabel = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.destinationSumLabel = new System.Windows.Forms.Label();
             this.DoneButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.destinationSumLabel = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.transactionLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,12 +69,16 @@ namespace FamilyFinance2.Forms.Transaction
             this.transactionLayoutPanel.Controls.Add(this.label4, 1, 6);
             this.transactionLayoutPanel.Controls.Add(this.label1, 1, 5);
             this.transactionLayoutPanel.Controls.Add(this.label9, 0, 0);
-            this.transactionLayoutPanel.Controls.Add(this.label5, 4, 2);
-            this.transactionLayoutPanel.Controls.Add(this.sourceSumLabel, 5, 2);
-            this.transactionLayoutPanel.Controls.Add(this.label8, 4, 4);
-            this.transactionLayoutPanel.Controls.Add(this.destinationSumLabel, 5, 4);
             this.transactionLayoutPanel.Controls.Add(this.DoneButton, 5, 7);
             this.transactionLayoutPanel.Controls.Add(this.cancelButton, 4, 7);
+            this.transactionLayoutPanel.Controls.Add(this.label2, 1, 7);
+            this.transactionLayoutPanel.Controls.Add(this.label3, 2, 7);
+            this.transactionLayoutPanel.Controls.Add(this.label8, 4, 5);
+            this.transactionLayoutPanel.Controls.Add(this.destinationSumLabel, 5, 5);
+            this.transactionLayoutPanel.Controls.Add(this.sourceSumLabel, 5, 4);
+            this.transactionLayoutPanel.Controls.Add(this.label5, 4, 4);
+            this.transactionLayoutPanel.Controls.Add(this.label6, 4, 6);
+            this.transactionLayoutPanel.Controls.Add(this.label7, 5, 6);
             this.transactionLayoutPanel.Location = new System.Drawing.Point(12, 12);
             this.transactionLayoutPanel.Name = "transactionLayoutPanel";
             this.transactionLayoutPanel.RowCount = 8;
@@ -91,9 +99,9 @@ namespace FamilyFinance2.Forms.Transaction
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.label11.Location = new System.Drawing.Point(3, 255);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(71, 17);
+            this.label11.Size = new System.Drawing.Size(105, 17);
             this.label11.TabIndex = 11;
-            this.label11.Text = "Sub Lines";
+            this.label11.Text = "Envelope Lines";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label10
@@ -138,9 +146,9 @@ namespace FamilyFinance2.Forms.Transaction
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.label4.Location = new System.Drawing.Point(352, 295);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(88, 15);
+            this.label4.Size = new System.Drawing.Size(88, 20);
             this.label4.TabIndex = 3;
-            this.label4.Text = "Sub Line Sum:";
+            this.label4.Text = "Envelope Line Sum:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label1
@@ -171,7 +179,7 @@ namespace FamilyFinance2.Forms.Transaction
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.label5.Location = new System.Drawing.Point(663, 127);
+            this.label5.Location = new System.Drawing.Point(663, 255);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(78, 15);
             this.label5.TabIndex = 4;
@@ -183,36 +191,12 @@ namespace FamilyFinance2.Forms.Transaction
             this.sourceSumLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.sourceSumLabel.AutoSize = true;
             this.sourceSumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.sourceSumLabel.Location = new System.Drawing.Point(769, 127);
+            this.sourceSumLabel.Location = new System.Drawing.Point(769, 255);
             this.sourceSumLabel.Name = "sourceSumLabel";
             this.sourceSumLabel.Size = new System.Drawing.Size(66, 15);
             this.sourceSumLabel.TabIndex = 6;
             this.sourceSumLabel.Text = "$99999.99";
             this.sourceSumLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label8
-            // 
-            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.label8.Location = new System.Drawing.Point(640, 255);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(101, 15);
-            this.label8.TabIndex = 8;
-            this.label8.Text = "Destination Sum:";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // destinationSumLabel
-            // 
-            this.destinationSumLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.destinationSumLabel.AutoSize = true;
-            this.destinationSumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.destinationSumLabel.Location = new System.Drawing.Point(769, 255);
-            this.destinationSumLabel.Name = "destinationSumLabel";
-            this.destinationSumLabel.Size = new System.Drawing.Size(66, 15);
-            this.destinationSumLabel.TabIndex = 7;
-            this.destinationSumLabel.Text = "$99999.99";
-            this.destinationSumLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // DoneButton
             // 
@@ -235,6 +219,78 @@ namespace FamilyFinance2.Forms.Transaction
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.label2.Location = new System.Drawing.Point(374, 315);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(66, 15);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "Difference:";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.label3.Location = new System.Drawing.Point(466, 315);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(66, 15);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "$99999.99";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label8
+            // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.label8.Location = new System.Drawing.Point(640, 275);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(101, 15);
+            this.label8.TabIndex = 8;
+            this.label8.Text = "Destination Sum:";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // destinationSumLabel
+            // 
+            this.destinationSumLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.destinationSumLabel.AutoSize = true;
+            this.destinationSumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.destinationSumLabel.Location = new System.Drawing.Point(769, 275);
+            this.destinationSumLabel.Name = "destinationSumLabel";
+            this.destinationSumLabel.Size = new System.Drawing.Size(66, 15);
+            this.destinationSumLabel.TabIndex = 7;
+            this.destinationSumLabel.Text = "$99999.99";
+            this.destinationSumLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label6
+            // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.label6.Location = new System.Drawing.Point(675, 295);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(66, 15);
+            this.label6.TabIndex = 16;
+            this.label6.Text = "Difference:";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label7
+            // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.label7.Location = new System.Drawing.Point(769, 295);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(66, 15);
+            this.label7.TabIndex = 17;
+            this.label7.Text = "$99999.99";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TransactionForm
             // 
@@ -266,6 +322,10 @@ namespace FamilyFinance2.Forms.Transaction
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button DoneButton;
         private System.Windows.Forms.Button cancelButton;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
 
     }
 }
