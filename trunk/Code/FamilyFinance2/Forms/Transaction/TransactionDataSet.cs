@@ -15,7 +15,7 @@ namespace FamilyFinance2.Forms.Transaction
         private EnvelopeTableAdapter EnvelopeTA;
         private LineTypeTableAdapter LineTypeTA;
 
-
+        public bool TransactionError;
 
         /////////////////////////
         //   Functions private 
@@ -62,30 +62,43 @@ namespace FamilyFinance2.Forms.Transaction
         public void myFillLineItemAndSubLine(int transID)
         {
             this.LineItem.myFill(transID);
-            this.SubLineItem.myFill(transID);
+            this.EnvelopeLine.myFill(transID);
         }
 
 
-
-        public void mySetCurrentLineID(int lineID)
-        {
-            this.SubLineItem.mySetCurrentLineID(lineID);
-        }
 
         public void myDeleteLine(int lineID)
         {
-            LineItemRow line = this.LineItem.FindByid(lineID);
-
-            if (line != null)
-                line.Delete();
-
-            foreach (SubLineItemRow subLine in this.SubLineItem)
+            try
             {
-                if (subLine.RowState != DataRowState.Deleted)
-                    if(subLine.lineItemID == lineID)
-                        subLine.Delete();
-            }
+                // Delete the Envelope Lines
+                foreach (EnvelopeLineRow envLine in this.EnvelopeLine)
+                {
+                    if (envLine.RowState != DataRowState.Deleted)
+                        if (envLine.lineItemID == lineID)
+                            envLine.Delete();
+                }
 
+                // Delete the line
+                this.LineItem.FindByid(lineID).Delete();
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        public void myDeleteEnvelopeLine(int envLineID)
+        {
+            try
+            {
+                // Delete the Envelope Line
+                this.EnvelopeLine.FindByid(envLineID).Delete();
+            }
+            catch
+            {
+                return;
+            }
         }
 
         public void myCheckTransaction()
@@ -98,13 +111,27 @@ namespace FamilyFinance2.Forms.Transaction
         {
             creditSum = 0.00m;
             debitSum = 0.00m;
-            bool transError = false;
 
-            // Find credit and debit sums
             foreach (LineItemRow line in this.LineItem)
             {
                 if (line.RowState != DataRowState.Deleted)
                 {
+                    bool lineError = false;
+                    decimal envSum = this.EnvelopeLine.myEnvelopeLineSum(line.id);
+
+                    // Determine if there is a line error
+                    if (line.AccountRowByFK_Line_accountID.envelopes && line.amount == envSum)
+                        lineError = false;
+                    else if (!line.AccountRowByFK_Line_accountID.envelopes && 0.00m == envSum)
+                        lineError = false;
+                    else
+                        lineError = true;
+
+                    // Set line error if needed
+                    if (line.lineError != lineError)
+                        line.lineError = lineError;
+
+                    // Find credit and debit sums
                     if (line.creditDebit == LineCD.CREDIT)
                         creditSum += line.amount;
                     else
@@ -112,38 +139,11 @@ namespace FamilyFinance2.Forms.Transaction
                 }
             }
 
+            // Determin if there is a transaction error.
             if (creditSum != debitSum)
-                transError = true;
-            else 
-                transError = false;
-
-            // Determine if there is a line error
-            foreach (LineItemRow line in this.LineItem)
-            {
-                if (line.RowState != DataRowState.Deleted)
-                {
-                    bool lineError = false;
-                    int envelopeID;
-                    decimal subSum = this.SubLineItem.mySubLineSum(line.id, out envelopeID);
-
-                    if (line.AccountRowByFK_Line_accountID.envelopes && line.amount == subSum)
-                        lineError = false;
-                    else if (!line.AccountRowByFK_Line_accountID.envelopes && 0.00m == subSum)
-                        lineError = false;
-                    else
-                        lineError = true;
-
-                    // Set transaction and line errors and envelope if needed
-                    if (line.lineError != lineError)
-                        line.lineError = lineError;
-
-                    if(line.transactionError != transError)
-                        line.transactionError = transError;
-
-                    if (line.envelopeID != envelopeID)
-                        line.envelopeID = envelopeID;
-                }
-            }
+                this.TransactionError = true;
+            else
+                this.TransactionError = false;
         }
 
         public void myRippleBalanceChanges()
@@ -198,7 +198,7 @@ namespace FamilyFinance2.Forms.Transaction
                 } // end switch
             } // end foreach LineItem
 
-            foreach (SubLineItemRow subLine in this.SubLineItem)
+            foreach (EnvelopeLineRow subLine in this.EnvelopeLine)
             {
                 switch (subLine.RowState)
                 {
@@ -259,7 +259,7 @@ namespace FamilyFinance2.Forms.Transaction
             int subLineCount = 0;
 
             // Count the subLines
-            foreach (SubLineItemRow subLine in this.SubLineItem)
+            foreach (EnvelopeLineRow subLine in this.EnvelopeLine)
                 if (subLine.lineItemID == line.id)
                     subLineCount++;
 
@@ -268,7 +268,7 @@ namespace FamilyFinance2.Forms.Transaction
 
             if (delete)
             {
-                foreach (SubLineItemRow subLine in this.SubLineItem)
+                foreach (EnvelopeLineRow subLine in this.EnvelopeLine)
                 {
                     if (subLine.lineItemID == line.id)
                         subLine.Delete();
@@ -282,7 +282,7 @@ namespace FamilyFinance2.Forms.Transaction
 
                 if (envelopes && validID)
                 {
-                    SubLineItemRow newRow = this.SubLineItem.NewSubLineItemRow();
+                    EnvelopeLineRow newRow = this.EnvelopeLine.NewEnvelopeLineRow();
 
                     newRow.lineItemID = line.id;
                     newRow.envelopeID = line.envelopeID;
@@ -291,13 +291,13 @@ namespace FamilyFinance2.Forms.Transaction
 
                     subLineCount++;
 
-                    this.SubLineItem.Rows.Add(newRow);
+                    this.EnvelopeLine.Rows.Add(newRow);
                 }
             }
             // If there is one subLine forward simple changes from LineItem to SublineItem.
             else if (subLineCount == 1)
             {
-                foreach (SubLineItemRow subLine in this.SubLineItem)
+                foreach (EnvelopeLineRow subLine in this.EnvelopeLine)
                 {
                     if (subLine.lineItemID == line.id)
                     {
@@ -320,7 +320,7 @@ namespace FamilyFinance2.Forms.Transaction
             this.AEBalanceTA.Update(this.AEBalance);
 
             this.LineItem.mySaveNewLines();
-            this.SubLineItem.mySaveChanges();
+            this.EnvelopeLine.mySaveChanges();
             this.LineItem.mySaveChanges();
         }
 
@@ -548,7 +548,6 @@ namespace FamilyFinance2.Forms.Transaction
             /////////////////////////
             //   Local Variables
             private LineItemTableAdapter LineItemTA;
-            private int transactionID;
             private int newLineID;
             private bool stayOut;
 
@@ -566,7 +565,6 @@ namespace FamilyFinance2.Forms.Transaction
                 this.LineItemTA.ClearBeforeFill = true;
 
                 this.newLineID = -1;
-                this.transactionID = -1;
                 this.stayOut = false;
             }
 
@@ -579,7 +577,7 @@ namespace FamilyFinance2.Forms.Transaction
                 LineItemRow newRow = e.Row as LineItemRow;
 
                 newRow.id = newLineID++;
-                newRow.transactionID = this.transactionID;
+                //newRow.transactionID = this.transactionID;
                 newRow.date = DateTime.Now.Date;
                 newRow.lineTypeID = SpclLineType.NULL;
                 newRow.accountID = SpclAccount.NULL;
@@ -590,7 +588,6 @@ namespace FamilyFinance2.Forms.Transaction
                 newRow.complete = LineState.PENDING;
                 newRow.amount = 0.0m;
                 newRow.creditDebit = LineCD.CREDIT;
-                newRow.transactionError = false;
                 newRow.lineError = false;
 
                 stayOut = false;
@@ -635,8 +632,7 @@ namespace FamilyFinance2.Forms.Transaction
             //   Public Functions
             public void myFill(int transID)
             {
-                this.LineItemTA.FillByTransID(this, transID);
-                this.transactionID = transID;
+                this.LineItemTA.FillByTransactionID(this, transID);
                 this.newLineID = FFDataBase.myDBGetNewID("id", "LineItem");
             }
 
@@ -657,14 +653,13 @@ namespace FamilyFinance2.Forms.Transaction
         }
 
         ///////////////////////////////////////////////////////////////////////
-        //   SubLineItem Data Table 
+        //   Envelope Line Data Table 
         ///////////////////////////////////////////////////////////////////////
-        partial class SubLineItemDataTable
+        partial class EnvelopeLineDataTable
         {
             /////////////////////////
             //   Local Variables
-            private SubLineItemTableAdapter SubLineTA;
-            public int currentLineID;
+            private EnvelopeLineTableAdapter EnvelopeLineTA;
             private int newID;
             private bool stayOut;
 
@@ -675,11 +670,11 @@ namespace FamilyFinance2.Forms.Transaction
             {
                 base.EndInit();
 
-                this.TableNewRow += new DataTableNewRowEventHandler(SubLineItemDataTable_TableNewRow);
-                this.ColumnChanged += new DataColumnChangeEventHandler(SubLineItemDataTable_ColumnChanged);
+                this.TableNewRow += new DataTableNewRowEventHandler(EnvelopeLineDataTable_TableNewRow);
+                this.ColumnChanged += new DataColumnChangeEventHandler(EnvelopeLineDataTable_ColumnChanged);
 
-                this.SubLineTA = new SubLineItemTableAdapter();
-                this.SubLineTA.ClearBeforeFill = true;
+                this.EnvelopeLineTA = new EnvelopeLineTableAdapter();
+                this.EnvelopeLineTA.ClearBeforeFill = true;
             
                 this.newID = -1;
                 this.stayOut = false;
@@ -688,13 +683,13 @@ namespace FamilyFinance2.Forms.Transaction
 
             /////////////////////////
             //   Internal Events
-            private void SubLineItemDataTable_TableNewRow(object sender, DataTableNewRowEventArgs e)
+            private void EnvelopeLineDataTable_TableNewRow(object sender, DataTableNewRowEventArgs e)
             {
                 stayOut = true;
-                SubLineItemRow newRow = e.Row as SubLineItemRow;
+                EnvelopeLineRow newRow = e.Row as EnvelopeLineRow;
 
                 newRow.id = this.newID++;
-                newRow.lineItemID = this.currentLineID;
+                //newRow.lineItemID = this.currentLineID;
                 newRow.envelopeID = SpclEnvelope.NULL;
                 newRow.description = "";
                 newRow.amount = 0.0m;
@@ -702,13 +697,13 @@ namespace FamilyFinance2.Forms.Transaction
                 stayOut = false;
             }
 
-            private void SubLineItemDataTable_ColumnChanged(object sender, DataColumnChangeEventArgs e)
+            private void EnvelopeLineDataTable_ColumnChanged(object sender, DataColumnChangeEventArgs e)
             {
                 if (stayOut)
                     return;
 
                 stayOut = true;
-                SubLineItemRow row = e.Row as SubLineItemRow;
+                EnvelopeLineRow row = e.Row as EnvelopeLineRow;
 
                 if (e.Column.ColumnName == "amount")
                 {
@@ -733,42 +728,26 @@ namespace FamilyFinance2.Forms.Transaction
             //   Function Public
             public void myFill(int transID)
             {
-                this.SubLineTA.FillByTransID(this, transID);
-                this.newID = FFDataBase.myDBGetNewID("id", "SubLineItem");
+                this.EnvelopeLineTA.FillByTransactionID(this, transID);
+                this.newID = FFDataBase.myDBGetNewID("id", "EnvelopeLine");
             }
 
             public void mySaveChanges()
             {
-                this.SubLineTA.Update(this);
+                this.EnvelopeLineTA.Update(this);
             }
 
-            public void mySetCurrentLineID(int lineID)
-            {
-                this.currentLineID = lineID;
-            }
-
-            public decimal mySubLineSum(int lineID)
-            {
-                int temp;
-                return mySubLineSum(lineID, out temp);
-            }
-
-            public decimal mySubLineSum(int lineID, out int envelopeID)
+            public decimal myEnvelopeLineSum(int lineID)
             {
                 decimal sum = 0.0m;
                 int subCount = 0;
-                envelopeID = SpclEnvelope.NULL; // correct for when subLineCount == 0
 
-                foreach (SubLineItemRow subLine in this)
-                    if (subLine.RowState != DataRowState.Deleted && subLine.lineItemID == lineID)
+                foreach (EnvelopeLineRow envLine in this)
+                    if (envLine.RowState != DataRowState.Deleted && envLine.lineItemID == lineID)
                     {
-                        sum += subLine.amount;
+                        sum += envLine.amount;
                         subCount++;
-                        envelopeID = subLine.envelopeID;
                     }
-
-                if (subCount > 1)
-                    envelopeID = SpclEnvelope.SPLIT;
 
                 return sum;
             }

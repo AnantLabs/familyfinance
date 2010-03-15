@@ -64,7 +64,7 @@ namespace FamilyFinance2.Forms.Transaction
             this.lineItemIDColumn.HeaderText = "lineItemID";
             this.lineItemIDColumn.DataPropertyName = "id";
             this.lineItemIDColumn.Width = 40;
-            this.lineItemIDColumn.Visible = true;
+            this.lineItemIDColumn.Visible = false;
 
             // transactionIDColumn
             this.transactionIDColumn = new DataGridViewTextBoxColumn();
@@ -147,7 +147,7 @@ namespace FamilyFinance2.Forms.Transaction
             this.envelopeIDColumn.Resizable = DataGridViewTriState.True;
             this.envelopeIDColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.envelopeIDColumn.FillWeight = 100;
-            this.envelopeIDColumn.Visible = true;
+            this.envelopeIDColumn.Visible = false;
             this.envelopeIDColumn.ReadOnly = true;
             
             // completeColumn

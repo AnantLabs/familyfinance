@@ -2,74 +2,38 @@
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
---TABLE (id, name(30), typeID, catagory(1), eBalance, closed(b), creditDebit(b), envelopes(b), creditColumnName(15), debitColumnName(15))
-INSERT INTO Account VALUES (101, 'Main Checking', 4, 2, 0, 1, 1, 0.0);
-INSERT INTO Account VALUES (102, 'Vacation Savings', 5, 2, 0, 1, 1, 0.0);
-INSERT INTO Account VALUES (103, 'Local Bank MC', 6, 2, 0, 0, 1, 0.0);
-INSERT INTO Account VALUES (104, 'Car Loan', 3, 2, 0, 0, 0, 0.0);
-INSERT INTO Account VALUES (105, 'Stan''s Cash', 2, 2, 0, 1, 1, 0.0);
-INSERT INTO Account VALUES (106, 'The Factory', 8, 1, 0, 0, 0, 0.0);
-INSERT INTO Account VALUES (107, 'Target', 7, 3, 0, 1, 0, 0.0);
-INSERT INTO Account VALUES (108, 'KMart', 7, 3, 0, 1, 0, 0.0);
-INSERT INTO Account VALUES (109, 'Rental Apartment', 9, 3, 0, 1, 0, 0.0);
-INSERT INTO Account VALUES (110, 'Taxes', 9, 3, 0, 1, 0, 0.0);
-INSERT INTO Account VALUES (111, 'Savings 2', 5, 2, 0, 1, 1, 0.0);
-INSERT INTO Account VALUES (112, 'John V', 1, 3, 0, 1, 0, 0.0);
-INSERT INTO Account VALUES (113, 'Mary V', 1, 3, 0, 1, 0, 0.0);
-INSERT INTO Account VALUES (114, 'Quick Stop', 7, 3, 0, 1, 0, 0.0);
-INSERT INTO Account VALUES (115, 'Side Job', 8, 1, 0, 0, 0, 0.0);
+--TABLE (id, name(30), typeID, catagory(1), closed(b), creditDebit(b), envelopes(b))
+INSERT INTO Account VALUES (101, 'Main Checking', 4, 2, 0, 1, 1);
+INSERT INTO Account VALUES (102, 'Vacation Savings', 5, 2, 0, 1, 1);
+INSERT INTO Account VALUES (103, 'Local Bank MC', 6, 2, 0, 0, 1);
+INSERT INTO Account VALUES (104, 'Car Loan', 3, 2, 0, 0, 0);
+INSERT INTO Account VALUES (105, 'Stan''s Cash', 2, 2, 0, 1, 1);
+INSERT INTO Account VALUES (106, 'The Factory', 8, 1, 0, 0, 0);
+INSERT INTO Account VALUES (107, 'Target', 7, 3, 0, 1, 0);
+INSERT INTO Account VALUES (108, 'KMart', 7, 3, 0, 1, 0);
+INSERT INTO Account VALUES (109, 'Rental Apartment', 9, 3, 0, 1, 0);
+INSERT INTO Account VALUES (110, 'Taxes', 9, 3, 0, 1, 0);
+INSERT INTO Account VALUES (111, 'Savings 2', 5, 2, 0, 1, 1);
+INSERT INTO Account VALUES (112, 'John V', 1, 3, 0, 1, 0);
+INSERT INTO Account VALUES (113, 'Mary V', 1, 3, 0, 1, 0);
+INSERT INTO Account VALUES (114, 'Quick Stop', 7, 3, 0, 1, 0);
+INSERT INTO Account VALUES (115, 'Side Job', 8, 1, 0, 0, 0);
 
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
---TABLE Envelope (id, name(30), fullName(500), parentEnvelope, sBalance, eBalance, closed(b), creditColumnName(15), debitColumnName(15))
-INSERT INTO Envelope VALUES (1, 'Food', 'Food', -1, 0, 0.0);
-INSERT INTO Envelope VALUES (2, 'Car', 'Car', -1, 0, 0.0);
-INSERT INTO Envelope VALUES (3, 'Insurance', 'Car:Insurance', 2, 0, 0.0);
-INSERT INTO Envelope VALUES (4, 'Gasoline', 'Car:Gasoline', 2, 0, 0.0);
-INSERT INTO Envelope VALUES (5, 'Rent', 'Rent', -1, 0, 0.0);
-INSERT INTO Envelope VALUES (6, 'Utilities', 'Utilities', -1, 0, 0.0);
-INSERT INTO Envelope VALUES (7, 'Electric', 'Utilities:Electric', 6, 0, 0.0);
-INSERT INTO Envelope VALUES (8, 'Gas', 'Utilities:Gas', 6, 0, 0.0);
-INSERT INTO Envelope VALUES (9, 'Phone', 'Utilities:Phone', 6, 0, 0.0);
-INSERT INTO Envelope VALUES (10, 'Internet', 'Utilities:Internet', 6, 0, 0.0);
-INSERT INTO Envelope VALUES (11, 'School', 'School', -1, 0, 0.0);
-INSERT INTO Envelope VALUES (12, 'Retirement', 'Retirement', -1, 0, 0.0);
-INSERT INTO Envelope VALUES (13, 'Misc.', 'Misc.', -1, 0, 0.0);
-
-
-
-
-
--------------------------------------------------------------------------------
--------------------------------------------------------------------------------
---TABLE LineItem (id, transID, date, typeID, accID, oppAccID, description(t), confNumber(t), envelopeID, complete(A-1), amount, creditDebit, creditA, debitA, balanceA)
-INSERT INTO LineItem VALUES (1, 1, '12/30/07', -1, 106,  -2, 'Paycheck',          null, -1, ' ', 1200.00, 0, 0, 0);
-INSERT INTO LineItem VALUES (2, 1, '12/30/07',  1, 101, 106, 'Paycheck from Job', null, -2, ' ', 1000.00, 1, 0, 0);
-INSERT INTO LineItem VALUES (3, 1, '12/30/07',  1, 110, 106, 'Taxes from Job',    null, -1, ' ',  200.00, 1, 0, 0);
-
-INSERT INTO LineItem VALUES (4, 2, '03/04/08', 2, 101, 107, 'T1 Purchased a Picture frame from Target', null, 13, 'C', 10.00, 0, 0, 0);
-INSERT INTO LineItem VALUES (5, 2, '03/04/08', 2, 107, 101, 'T1 Purchased a Picture frame from Target', null, -1, 'C', 10.00, 1, 0, 0);
-
-INSERT INTO LineItem VALUES (6, 3, '03/04/08', 6, 101, 108, 'Return from K-Mart', null, 13, 'C', 20.00, 1, 0, 0);
-INSERT INTO LineItem VALUES (7, 3, '03/04/08', 6, 108, 101, 'Return from K-Mart', null, -1, 'C', 20.00, 0, 0, 0);
-
-INSERT INTO LineItem VALUES (8, 4, '03/06/08', 5, 101, 112, 'Money to John for the Weekend', null, 13, 'C', 10.00, 0, 0, 0);
-INSERT INTO LineItem VALUES (9, 4, '03/06/08', 5, 112, 101, 'Money to John for the Weekend', null, -1, 'C', 10.00, 1, 0, 0);
-
-INSERT INTO LineItem VALUES (10, 5, '03/07/09', 5, 101,  -2, 'Childrens weekly allowance 2', null, 13, 'C', 30.00, 0, 0, 0);
-INSERT INTO LineItem VALUES (11, 5, '03/07/09', 5, 112, 101, 'Childrens weekly allowance 2', null, -1, 'C', 15.00, 1, 0, 0);
-INSERT INTO LineItem VALUES (12, 5, '03/07/09', 5, 113, 101, 'Childrens weekly allowance 2', null, -1, 'C', 15.00, 1, 0, 0);
-
-INSERT INTO LineItem VALUES (13, 6, '03/18/09', 3, 101, 109, 'Money for Rent', null,  5, 'C', 400.00, 0, 0, 0);
-INSERT INTO LineItem VALUES (14, 6, '03/18/09', 1, 109, 101, 'Money for Rent', null, -1, 'C', 400.00, 1, 0, 0);
-
-INSERT INTO LineItem VALUES (15, 7, '03/20/09', 7, 103, 114, 'Gasoline', null, 4, ' ', 50.00, 0, 0, 0);
-INSERT INTO LineItem VALUES (16, 7, '03/20/09', 7, 114, 103, 'Gasoline', null, -1, ' ', 50.00, 1, 0, 0);
-
-INSERT INTO LineItem VALUES (17, 8, '03/30/09', 1, 101,  -2, '2 Paychecks',           null, -2, ' ', 600.00, 1, 0, 0);
-INSERT INTO LineItem VALUES (18, 8, '03/30/09', 1, 106, 101, 'Paycheck from Job',     null, -1, ' ', 500.00, 0, 0, 0);
-INSERT INTO LineItem VALUES (19, 8, '03/30/09', 1, 115, 101, 'Paycheck from 2nd Job', null, -1, ' ', 100.00, 0, 0, 0);
+--TABLE Envelope (id, name(30), envelopeGroup, closed(b))
+INSERT INTO Envelope VALUES (1, 'Food', 1, 0);
+INSERT INTO Envelope VALUES (2, 'Car', 1, 0);
+INSERT INTO Envelope VALUES (3, 'Insurance', 1, 0);
+INSERT INTO Envelope VALUES (4, 'Rent', 1, 0);
+INSERT INTO Envelope VALUES (5, 'Electric', 1, 0);
+INSERT INTO Envelope VALUES (6, 'Natural Gas', 1, 0);
+INSERT INTO Envelope VALUES (7, 'Phone', 1, 0);
+INSERT INTO Envelope VALUES (8, 'Internet', 2, 0);
+INSERT INTO Envelope VALUES (9, 'School', 1, 0);
+INSERT INTO Envelope VALUES (10, 'Retirement', 1, 0);
+INSERT INTO Envelope VALUES (11, 'Misc.', 3, 0);
 
 
 
@@ -77,28 +41,62 @@ INSERT INTO LineItem VALUES (19, 8, '03/30/09', 1, 115, 101, 'Paycheck from 2nd 
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
---TABLE SubLineItem (id, lineItemID, envelopeID, description, amount)
+--TABLE LineItem (id, transID, date, typeID, accID, description(t), confNumber(t), complete(c), amount, creditDebit)
+INSERT INTO LineItem VALUES (1, 1, '12/30/07', -1, 106, 'Paycheck',          null, ' ', 1200.00, 0);
+INSERT INTO LineItem VALUES (2, 1, '12/30/07',  1, 101, 'Paycheck from Job', null, ' ', 1000.00, 1);
+INSERT INTO LineItem VALUES (3, 1, '12/30/07',  1, 110, 'Taxes from Job',    null, ' ',  200.00, 1);
 
-INSERT INTO SubLineItem VALUES (1 , 2, 1, 'Food Money', 300.00);
-INSERT INTO SubLineItem VALUES (2 , 2, 4, 'Gas Money', 100.00);
-INSERT INTO SubLineItem VALUES (3 , 2, 5, 'Rent', 400.00);
-INSERT INTO SubLineItem VALUES (4 , 2, 6, 'Unilities', 100.00);
-INSERT INTO SubLineItem VALUES (5 , 2, 13, 'Allowance', 80.00);
-INSERT INTO SubLineItem VALUES (6 , 2, 13, 'Household', 20.00);
+INSERT INTO LineItem VALUES (4, 2, '03/04/08', 2, 101, 'T1 Purchased a Picture frame from Target', null, 'C', 10.00, 0);
+INSERT INTO LineItem VALUES (5, 2, '03/04/08', 2, 107, 'T1 Purchased a Picture frame from Target', null, 'C', 10.00, 1);
 
-INSERT INTO SubLineItem VALUES (7 , 4, 13, 'Picture', 10.00);
+INSERT INTO LineItem VALUES (6, 3, '03/04/08', 6, 101, 'Return from K-Mart', null, 'C', 20.00, 1);
+INSERT INTO LineItem VALUES (7, 3, '03/04/08', 6, 108, 'Return from K-Mart', null, 'C', 20.00, 0);
 
-INSERT INTO SubLineItem VALUES (8 , 6, 13, 'Return', 20.00);
+INSERT INTO LineItem VALUES (8, 4, '03/06/08', 5, 101, 'Money to John for the Weekend', null, 'C', 10.00, 0);
+INSERT INTO LineItem VALUES (9, 4, '03/06/08', 5, 112, 'Money to John for the Weekend', null, 'C', 10.00, 1);
 
-INSERT INTO SubLineItem VALUES (9 , 8, 13, 'Money for the Weekend', 10.00);
+INSERT INTO LineItem VALUES (10, 5, '03/07/09', 5, 101, 'Childrens weekly allowance 2', null, 'C', 30.00, 0);
+INSERT INTO LineItem VALUES (11, 5, '03/07/09', 5, 112, 'Childrens weekly allowance 2', null, 'C', 15.00, 1);
+INSERT INTO LineItem VALUES (12, 5, '03/07/09', 5, 113, 'Childrens weekly allowance 2', null, 'C', 15.00, 1);
 
-INSERT INTO SubLineItem VALUES (10 , 10, 13, 'Allowance', 30.00);
+INSERT INTO LineItem VALUES (13, 6, '03/18/09', 3, 101, 'Money for Rent', null, 'C', 400.00, 0);
+INSERT INTO LineItem VALUES (14, 6, '03/18/09', 1, 109, 'Money for Rent', null, 'C', 400.00, 1);
 
-INSERT INTO SubLineItem VALUES (11 , 13, 5, 'Paid Rent', 400.00);
+INSERT INTO LineItem VALUES (15, 7, '03/20/09', 7, 103, 'Gasoline', null, ' ', 50.00, 0);
+INSERT INTO LineItem VALUES (16, 7, '03/20/09', 7, 114, 'Gasoline', null, ' ', 50.00, 1);
 
-INSERT INTO SubLineItem VALUES (12 , 15, 4, 'Gasoline', 50.00);
+INSERT INTO LineItem VALUES (17, 8, '03/30/09', 1, 101, '2 Paychecks',           null, ' ', 600.00, 1);
+INSERT INTO LineItem VALUES (18, 8, '03/30/09', 1, 106, 'Paycheck from Job',     null, ' ', 500.00, 0);
+INSERT INTO LineItem VALUES (19, 8, '03/30/09', 1, 115, 'Paycheck from 2nd Job', null, ' ', 100.00, 0);
 
-INSERT INTO SubLineItem VALUES (13 , 17, 5, 'Rent', 300.00);
-INSERT INTO SubLineItem VALUES (14 , 17, 13, 'Misc.', 100.00);
-INSERT INTO SubLineItem VALUES (15 , 17, 1, 'Food', 200.00);
+
+
+
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+--TABLE EnvelopeLine (id, lineItemID, envelopeID, description, amount)
+
+INSERT INTO EnvelopeLine VALUES (1 , 2, 1, 'Food Money', 300.00);
+INSERT INTO EnvelopeLine VALUES (2 , 2, 4, 'Gas Money', 100.00);
+INSERT INTO EnvelopeLine VALUES (3 , 2, 5, 'Rent', 400.00);
+INSERT INTO EnvelopeLine VALUES (4 , 2, 6, 'Unilities', 100.00);
+INSERT INTO EnvelopeLine VALUES (5 , 2, 11, 'Allowance', 80.00);
+INSERT INTO EnvelopeLine VALUES (6 , 2, 11, 'Household', 20.00);
+
+INSERT INTO EnvelopeLine VALUES (7 , 4, 11, 'Picture', 10.00);
+
+INSERT INTO EnvelopeLine VALUES (8 , 6, 11, 'Return', 20.00);
+
+INSERT INTO EnvelopeLine VALUES (9 , 8, 11, 'Money for the Weekend', 10.00);
+
+INSERT INTO EnvelopeLine VALUES (10 , 10, 11, 'Allowance', 30.00);
+
+INSERT INTO EnvelopeLine VALUES (11 , 13, 5, 'Paid Rent', 400.00);
+
+INSERT INTO EnvelopeLine VALUES (12 , 15, 4, 'Gasoline', 50.00);
+
+INSERT INTO EnvelopeLine VALUES (13 , 17, 5, 'Rent', 300.00);
+INSERT INTO EnvelopeLine VALUES (14 , 17, 11, 'Misc.', 100.00);
+INSERT INTO EnvelopeLine VALUES (15 , 17, 1, 'Food', 200.00);
 

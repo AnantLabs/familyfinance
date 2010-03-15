@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SqlServerCe;
 using System.Collections.Generic;
 
-namespace FamilyFinance2
+namespace FamilyFinance2.SharedElements
 {
 
     #region Account Details View Query

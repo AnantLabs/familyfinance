@@ -95,10 +95,10 @@ namespace FamilyFinance2.Forms.Transaction
                 e.CellStyle.BackColor = System.Drawing.Color.Red;
                 toolTipText = "This transaction needs attention.";
             }
-            else if (this.flagLineError && colName == "envelopeIDColumn")
+            else if (this.flagLineError && (colName == "envelopeIDColumn" || colName == "amountColumn"))
             {
                 e.CellStyle.BackColor = System.Drawing.Color.Red;
-                toolTipText = "The sub lines need attention.";
+                toolTipText = "This line amount and its envelope sum need to match.";
             }
             else if (this.flagAccountError && (colName == "accountIDColumn" || colName == "oppAccountIDColumn"))
             {
@@ -165,7 +165,7 @@ namespace FamilyFinance2.Forms.Transaction
             this.AllowUserToOrderColumns = false;
             this.AllowUserToDeleteRows = false;
             this.AllowUserToResizeRows = false;
-            this.AllowUserToAddRows = false;
+            this.AllowUserToAddRows = true;
             this.RowHeadersVisible = false;
             this.ShowCellErrors = false;
             this.ShowRowErrors = false;

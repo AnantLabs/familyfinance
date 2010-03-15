@@ -1,9 +1,9 @@
-DROP TABLE SubLineItem;
+DROP TABLE EnvelopeLine;
 DROP TABLE LineItem;
-DROP TABLE LineType;
-DROP TABLE AEBalance;
 DROP TABLE Envelope;
 DROP TABLE Account;
+DROP TABLE LineType;
+DROP TABLE EnvelopeGroup;
 DROP TABLE AccountType;
 
 

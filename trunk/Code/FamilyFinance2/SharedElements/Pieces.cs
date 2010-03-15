@@ -69,13 +69,27 @@ namespace FamilyFinance2.SharedElements
 
         public void AddTable(DBTables table)
         {
-            Tables.Add(table);
+            bool found = false;
+
+            foreach (DBTables tab in this.Tables)
+            {
+                if (tab == table)
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+                this.Tables.Add(table);
         }
 
         public void Copy(Changes otherChanges)
         {
-            foreach (DBTables table in otherChanges.Tables)
-                this.Tables.Add(table);
+            foreach (DBTables tab in otherChanges.Tables)
+	        {
+                this.AddTable(tab);
+	        }
+
         }
     }
 

@@ -6,6 +6,9 @@ using System.Windows.Forms;
 using System.IO;
 using System.Data.SqlServerCe;
 using FamilyFinance2.Forms.FindDB;
+using FamilyFinance2.Forms.Main;
+using FamilyFinance2.SharedElements;
+using FamilyFinance2.Testing;
 
 namespace FamilyFinance2
 {
@@ -29,8 +32,8 @@ namespace FamilyFinance2
             if (FFDataBase.myCreateDBFile())
                 FFDataBase.myExecuteFile(Properties.Resources.Test_Data, true);
 
+            //Application.Run(new FamilyFinance2.Forms.Transaction.TransactionForm(3));
             //Application.Run(new MainForm());
-            Application.Run(new FamilyFinance2.Forms.Transaction.TransactionForm(2));
             return;
 
     #endif
@@ -39,7 +42,12 @@ namespace FamilyFinance2
 
             if (canRun())
                 if (findPath())
-                    Application.Run(new FamilyFinance2.Forms.Transaction.TransactionForm(2));
+                {
+                    //Testing.Testing test = new FamilyFinance2.Testing.Testing();
+                    //test.stressFillDataBase();
+
+                    Application.Run(new FamilyFinance2.Forms.Transaction.TransactionForm(3));
+                }
 
 #endif
 
@@ -64,15 +72,6 @@ namespace FamilyFinance2
             catch
             {
                 message = "It appears this computer does not yet have SQLServerCE3-5-1.msi installed.\n Please get it installed before running Family Finance.";
-                caption = "Error";
-                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                return false;
-            }
-
-            // See if 64 bit machine
-            if (IntPtr.Size == 8)
-            {
-                message = "Family Finance is not yet supported in 64-bit versions of Windows.\n";
                 caption = "Error";
                 MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return false;

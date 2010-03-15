@@ -4,9 +4,8 @@ using System.Text;
 using System.Data;
 using System.Data.SqlServerCe;
 using System.Collections.Generic;
-using FamilyFinance2.SharedElements;
 
-namespace FamilyFinance2
+namespace FamilyFinance2.SharedElements
 {
     public partial class FFDataBase
     {
