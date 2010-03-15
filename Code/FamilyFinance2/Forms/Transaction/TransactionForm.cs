@@ -26,26 +26,77 @@ namespace FamilyFinance2.Forms.Transaction
                 _currentLineID = value;
                 //this.label9.Text = value.ToString();
                 this.mySetSubLineDGVFilter(value);
-                this.tDataSet.mySetCurrentLineID(value);
             }
         }
 
-        private int _currentSubLineID;
-        private int CurrentSubLineID
+        private int _currentEnvelopeLineID;
+        private int CurrentEnvelopeLineID
+
         {
-            get { return _currentSubLineID; }
+            get { return _currentEnvelopeLineID; }
             set
             {
-                _currentSubLineID = value;
+                _currentEnvelopeLineID = value;
                 //this.label11.Text = value.ToString();
             }
         }
 
         private CDLinesDGV creditDGV;
         private CDLinesDGV debitDGV;
-        private SubTransactionDGV subTransDGV;
+        private EnvelopeLineDGV envLinesDGV;
 
 
+
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        //   Data table events
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        private void LineItem_TableNewRow(object sender, DataTableNewRowEventArgs e)
+        {
+            decimal debitSum;
+            decimal creditSum;
+            decimal difference;
+            TransactionDataSet.LineItemRow line = e.Row as TransactionDataSet.LineItemRow;
+
+            this.tDataSet.myCheckTransaction(out creditSum, out debitSum);
+
+            if (this.creditDGV.Focused)
+            {
+                line.creditDebit = LineCD.CREDIT;
+                difference = debitSum - creditSum;
+            }
+            else if (this.debitDGV.Focused)
+            {
+                line.creditDebit = LineCD.DEBIT;
+                difference = creditSum - debitSum;
+            }
+            else
+                return;
+
+            line.transactionID = this.thisTransactionID;
+
+            if (difference > 0.0m)
+                line.amount = difference;
+            else
+                line.amount = 0.0m;
+
+
+            myResetValues();
+        }
+        
+        private void EnvelopeLine_TableNewRow(object sender, DataTableNewRowEventArgs e)
+        {
+            TransactionDataSet.EnvelopeLineRow eLine = e.Row as TransactionDataSet.EnvelopeLineRow;
+            decimal lineAmount = this.tDataSet.LineItem.FindByid(this.CurrentLineID).amount;
+            decimal envSum = this.tDataSet.EnvelopeLine.myEnvelopeLineSum(this.CurrentLineID);
+            decimal difference = lineAmount - envSum;
+
+            eLine.lineItemID = this.CurrentLineID;
+            eLine.amount = difference;
+
+            myResetValues();
+        }
+
+        
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Data Grid View events
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -87,30 +138,31 @@ namespace FamilyFinance2.Forms.Transaction
             }
         }
 
-        private void subTransDGV_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        private void envLinesDGV_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
             int subLineID = -1;
 
             // Defaults. Used for new lines.
-            subTransDGV.flagEnvelopeError = false;
-            subTransDGV.flagNegativeAmount = false;
+            envLinesDGV.flagEnvelopeError = false;
+            envLinesDGV.flagNegativeAmount = false;
 
             // try to get the current row lineID
-            try { subLineID = Convert.ToInt32(subTransDGV["subLineIDColumn", e.RowIndex].Value); }
+            try { subLineID = Convert.ToInt32(envLinesDGV["EnvelopeLineIDColumn", e.RowIndex].Value); }
             catch { return; }
 
-            TransactionDataSet.SubLineItemRow thisSubLine = this.tDataSet.SubLineItem.FindByid(subLineID);
+            TransactionDataSet.EnvelopeLineRow thisSubLine = this.tDataSet.EnvelopeLine.FindByid(subLineID);
 
             // Set Flags
             if (thisSubLine != null)
             {
                 if (thisSubLine.envelopeID == SpclEnvelope.NULL)
-                    subTransDGV.flagEnvelopeError = true;
+                    envLinesDGV.flagEnvelopeError = true;
 
                 if (thisSubLine.amount < 0.00m)
-                    subTransDGV.flagNegativeAmount = true;
+                    envLinesDGV.flagNegativeAmount = true;
             }
         }
+
 
         private void creditDGV_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -119,7 +171,7 @@ namespace FamilyFinance2.Forms.Transaction
 
             creditDGV.myHighLightOn();
             debitDGV.myHighLightOff();
-            subTransDGV.myHighLightOff();
+            envLinesDGV.myHighLightOff();
 
             myResetValues();
         }
@@ -131,14 +183,14 @@ namespace FamilyFinance2.Forms.Transaction
 
             debitDGV.myHighLightOn();
             creditDGV.myHighLightOff();
-            subTransDGV.myHighLightOff();
+            envLinesDGV.myHighLightOff();
 
             myResetValues();
         }
 
         private void subTransDGV_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            this.subTransDGV.myHighLightOn();
+            this.envLinesDGV.myHighLightOn();
 
             myResetValues();
         }
@@ -219,40 +271,6 @@ namespace FamilyFinance2.Forms.Transaction
         }
 
 
-        private void newLineMenu_Click(object sender, EventArgs e)
-        {
-            decimal debitSum;
-            decimal creditSum;
-            decimal difference;
-            string menuText = (sender as ToolStripMenuItem).Text;
-            TransactionDataSet.LineItemRow newLine = this.tDataSet.LineItem.NewLineItemRow();
-            
-            //newLine.transactionID = this.thisTransactionID;
-            this.tDataSet.myCheckTransaction(out creditSum, out debitSum);
-
-            if (menuText.Contains("Source"))
-            {
-                newLine.creditDebit = LineCD.CREDIT;
-                difference = debitSum - creditSum;
-            }
-            else if (menuText.Contains("Destination"))
-            {
-                newLine.creditDebit = LineCD.DEBIT;
-                difference = creditSum - debitSum;
-            }
-            else
-                return;
-
-            if (difference > 0.0m)
-                newLine.amount = difference;
-            else
-                newLine.amount = 0.0m;
-
-            this.tDataSet.LineItem.Rows.Add(newLine);
-
-            myResetValues();
-        }
-
         private void changeLineMenu_Click(object sender, EventArgs e)
         {
             TransactionDataSet.LineItemRow line = this.tDataSet.LineItem.FindByid(this.CurrentLineID);
@@ -287,56 +305,41 @@ namespace FamilyFinance2.Forms.Transaction
         }
 
 
-        private void subLineContextMenuStrip_Opening(object sender, CancelEventArgs e)
+        private void envLineContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
             object value;
             bool isEnabled = false;
 
             // Find the row that was clicked
-            for (int row = 0; row < this.subTransDGV.RowCount; row++)
+            for (int row = 0; row < this.envLinesDGV.RowCount; row++)
             {
-                if (this.subTransDGV.GetRowDisplayRectangle(row, true).Contains(this.subTransDGV.PointToClient(MousePosition)))
+                if (this.envLinesDGV.GetRowDisplayRectangle(row, true).Contains(this.envLinesDGV.PointToClient(MousePosition)))
                 {
                     try
                     {
-                        value = this.subTransDGV["subLineIDColumn", row].Value;
-                        this.CurrentSubLineID = Convert.ToInt32(value);
+                        value = this.envLinesDGV["subLineIDColumn", row].Value;
+                        this.CurrentEnvelopeLineID = Convert.ToInt32(value);
                         isEnabled = true;
                     }
                     catch 
                     { 
-                        this.CurrentSubLineID = -1; 
+                        this.CurrentEnvelopeLineID = -1; 
                     }
                     break;
                 }
                 else
                 {
-                    this.CurrentSubLineID = -1;
+                    this.CurrentEnvelopeLineID = -1;
                 }
             }
 
             // Disable or enable the delete menu item
-            this.subTransDGV.ContextMenuStrip.Items[1].Enabled = isEnabled; 
-        }
-
-        private void newSubLineMenu_Click(object sender, EventArgs e)
-        {
-
-            decimal lineAmount = this.tDataSet.LineItem.FindByid(this.CurrentLineID).amount;
-            decimal subSum = this.tDataSet.SubLineItem.mySubLineSum(this.CurrentLineID);
-            decimal difference = lineAmount - subSum;
-            TransactionDataSet.SubLineItemRow newSubLine = this.tDataSet.SubLineItem.NewSubLineItemRow();
-
-            newSubLine.amount = difference;
-
-            this.tDataSet.SubLineItem.Rows.Add(newSubLine);
-
-            myResetValues();
+            this.envLinesDGV.ContextMenuStrip.Items[0].Enabled = isEnabled; 
         }
 
         private void deleteSubLineMenu_Click(object sender, EventArgs e)
         {
-            this.tDataSet.SubLineItem.FindByid(this.CurrentSubLineID).Delete();
+            this.tDataSet.EnvelopeLine.FindByid(this.CurrentEnvelopeLineID).Delete();
             myResetValues();
         }
 
@@ -424,19 +427,19 @@ namespace FamilyFinance2.Forms.Transaction
 
             ////////////////////////////////////
             // SubTransactions DGV
-            this.subTransDGV = new SubTransactionDGV();
-            this.transactionLayoutPanel.Controls.Add(this.subTransDGV, 0, 5);
-            this.transactionLayoutPanel.SetRowSpan(this.subTransDGV, 3);
+            this.envLinesDGV = new EnvelopeLineDGV();
+            this.transactionLayoutPanel.Controls.Add(this.envLinesDGV, 0, 5);
+            this.transactionLayoutPanel.SetRowSpan(this.envLinesDGV, 3);
 
-            this.subTransDGV.BindingSourceSubLineDGV.DataSource = this.tDataSet;
-            this.subTransDGV.BindingSourceSubLineDGV.DataMember = "SubLineItem";
+            this.envLinesDGV.BindingSourceEnvelopeLineDGV.DataSource = this.tDataSet;
+            this.envLinesDGV.BindingSourceEnvelopeLineDGV.DataMember = "EnvelopeLine";
 
-            this.subTransDGV.BindingSourceEnvelopeCol.DataSource = this.tDataSet;
-            this.subTransDGV.BindingSourceEnvelopeCol.DataMember = "Envelope";
-            this.subTransDGV.BindingSourceEnvelopeCol.Filter = "id <> " + SpclEnvelope.SPLIT.ToString();
+            this.envLinesDGV.BindingSourceEnvelopeCol.DataSource = this.tDataSet;
+            this.envLinesDGV.BindingSourceEnvelopeCol.DataMember = "Envelope";
+            this.envLinesDGV.BindingSourceEnvelopeCol.Filter = "id <> " + SpclEnvelope.SPLIT.ToString();
 
-            this.subTransDGV.RowPrePaint += new DataGridViewRowPrePaintEventHandler(subTransDGV_RowPrePaint);
-            this.subTransDGV.CellClick += new DataGridViewCellEventHandler(subTransDGV_CellClick);
+            this.envLinesDGV.RowPrePaint += new DataGridViewRowPrePaintEventHandler(envLinesDGV_RowPrePaint);
+            this.envLinesDGV.CellClick += new DataGridViewCellEventHandler(subTransDGV_CellClick);
         }
 
 
@@ -448,7 +451,6 @@ namespace FamilyFinance2.Forms.Transaction
             this.creditDGV.ContextMenuStrip.ShowCheckMargin = true;
             this.creditDGV.ContextMenuStrip.AutoSize = true;
 
-            this.creditDGV.ContextMenuStrip.Items.Add(new ToolStripMenuItem("New Source Line", null, newLineMenu_Click));
             this.creditDGV.ContextMenuStrip.Items.Add(new ToolStripMenuItem("Change to Destination Line", null, changeLineMenu_Click));
             this.creditDGV.ContextMenuStrip.Items.Add(new ToolStripMenuItem("Delete Line", null, deleteLineMenu_Click));
             this.creditDGV.ContextMenuStrip.Items.Add(new ToolStripSeparator()); // -------------------
@@ -462,7 +464,6 @@ namespace FamilyFinance2.Forms.Transaction
             this.debitDGV.ContextMenuStrip.ShowCheckMargin = true;
             this.debitDGV.ContextMenuStrip.AutoSize = true;
 
-            this.debitDGV.ContextMenuStrip.Items.Add(new ToolStripMenuItem("New Destination Line", null, newLineMenu_Click));
             this.debitDGV.ContextMenuStrip.Items.Add(new ToolStripMenuItem("Change to Source Line", null, changeLineMenu_Click));
             this.debitDGV.ContextMenuStrip.Items.Add(new ToolStripMenuItem("Delete Line", null, deleteLineMenu_Click));
             this.debitDGV.ContextMenuStrip.Items.Add(new ToolStripSeparator()); // -------------------
@@ -472,52 +473,35 @@ namespace FamilyFinance2.Forms.Transaction
 
 
             // Sub Lines Context Menu
-            this.subTransDGV.ContextMenuStrip = new ContextMenuStrip();
-            this.subTransDGV.ContextMenuStrip.ShowImageMargin = false;
-            this.subTransDGV.ContextMenuStrip.ShowCheckMargin = false;
-            this.subTransDGV.ContextMenuStrip.AutoSize = true;
+            this.envLinesDGV.ContextMenuStrip = new ContextMenuStrip();
+            this.envLinesDGV.ContextMenuStrip.ShowImageMargin = false;
+            this.envLinesDGV.ContextMenuStrip.ShowCheckMargin = false;
+            this.envLinesDGV.ContextMenuStrip.AutoSize = true;
 
-            this.subTransDGV.ContextMenuStrip.Items.Add(new ToolStripMenuItem("New Sub Line", null, newSubLineMenu_Click));
-            this.subTransDGV.ContextMenuStrip.Items.Add(new ToolStripMenuItem("Delete Sub Line", null, deleteSubLineMenu_Click));
+            this.envLinesDGV.ContextMenuStrip.Items.Add(new ToolStripMenuItem("Delete Sub Line", null, deleteSubLineMenu_Click));
 
-            this.subTransDGV.ContextMenuStrip.Opening += new CancelEventHandler(subLineContextMenuStrip_Opening);
+            this.envLinesDGV.ContextMenuStrip.Opening += new CancelEventHandler(envLineContextMenuStrip_Opening);
         }
 
         private void updateCM()
         {
             if (this.CurrentLineID <= 0)
             {
+                this.creditDGV.ContextMenuStrip.Items[0].Enabled = false;
                 this.creditDGV.ContextMenuStrip.Items[1].Enabled = false;
-                this.creditDGV.ContextMenuStrip.Items[2].Enabled = false;
+                this.debitDGV.ContextMenuStrip.Items[0].Enabled = false;
                 this.debitDGV.ContextMenuStrip.Items[1].Enabled = false;
-                this.debitDGV.ContextMenuStrip.Items[2].Enabled = false;
             }
             else
             {
+                this.creditDGV.ContextMenuStrip.Items[0].Enabled = true;
                 this.creditDGV.ContextMenuStrip.Items[1].Enabled = true;
-                this.creditDGV.ContextMenuStrip.Items[2].Enabled = true;
+                this.debitDGV.ContextMenuStrip.Items[0].Enabled = true;
                 this.debitDGV.ContextMenuStrip.Items[1].Enabled = true;
-                this.debitDGV.ContextMenuStrip.Items[2].Enabled = true;
             }
 
-            (this.creditDGV.ContextMenuStrip.Items[4] as ToolStripMenuItem).Checked = this.debitDGV.ShowConfirmationColumn;
-            (this.debitDGV.ContextMenuStrip.Items[4] as ToolStripMenuItem).Checked = this.debitDGV.ShowConfirmationColumn;
-        }
-
-
-        private void myReloadLineTypes()
-        {
-            tDataSet.myFillLineTypeTable();
-        }
-        
-        private void myReloadAccounts()
-        {
-            tDataSet.myFillAccountTable();
-        }
-
-        private void myReloadEnvelopes()
-        {
-            tDataSet.myFillEnvelopeTable();
+            (this.creditDGV.ContextMenuStrip.Items[3] as ToolStripMenuItem).Checked = this.debitDGV.ShowConfirmationColumn;
+            (this.debitDGV.ContextMenuStrip.Items[3] as ToolStripMenuItem).Checked = this.debitDGV.ShowConfirmationColumn;
         }
 
 
@@ -525,7 +509,7 @@ namespace FamilyFinance2.Forms.Transaction
         {
             decimal creditSum;
             decimal debitSum;
-            decimal subLineSum;
+            decimal envLineSum;
             decimal lineAmount;
 
             /////////////////////////////////
@@ -536,34 +520,31 @@ namespace FamilyFinance2.Forms.Transaction
             destinationSumLabel.Text = debitSum.ToString("C2");
 
             if (creditSum != debitSum)
+            {
                 sourceSumLabel.ForeColor = destinationSumLabel.ForeColor = System.Drawing.Color.Red;
+            }
             else
+            {
                 sourceSumLabel.ForeColor = destinationSumLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+            }
 
 
             /////////////////////////////////
             // Update the subLineSum and lineAmount.
-            if (this.CurrentLineID == -1)
-            {
-                subLineSumLabel.Enabled = false;
-                lineAmountLabel.Enabled = false;
-                subLineSumLabel.Text = "$0.00";
-                lineAmountLabel.Text = "$0.00";
-            }
             try
             {
                 bool envelopes = this.tDataSet.LineItem.FindByid(this.CurrentLineID).AccountRowByFK_Line_accountID.envelopes;
-                subLineSum = this.tDataSet.SubLineItem.mySubLineSum(this.CurrentLineID);
+                envLineSum = this.tDataSet.EnvelopeLine.myEnvelopeLineSum(this.CurrentLineID);
                 lineAmount = this.tDataSet.LineItem.FindByid(this.CurrentLineID).amount;
 
                 if (envelopes)
                 {
                     subLineSumLabel.Enabled = true;
                     lineAmountLabel.Enabled = true;
-                    subLineSumLabel.Text = subLineSum.ToString("C2");
+                    subLineSumLabel.Text = envLineSum.ToString("C2");
                     lineAmountLabel.Text = lineAmount.ToString("C2");
 
-                    if (lineAmount != subLineSum)
+                    if (lineAmount != envLineSum)
                         lineAmountLabel.ForeColor = subLineSumLabel.ForeColor = System.Drawing.Color.Red;
                     else
                         lineAmountLabel.ForeColor = subLineSumLabel.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -576,7 +557,13 @@ namespace FamilyFinance2.Forms.Transaction
                     lineAmountLabel.Text = "$0.00";
                 }
             }
-            catch { return; }
+            catch
+            {
+                subLineSumLabel.Enabled = false;
+                lineAmountLabel.Enabled = false;
+                subLineSumLabel.Text = "$0.00";
+                lineAmountLabel.Text = "$0.00";
+            }
         }
 
         private void mySetCurrentLineID(bool creditDebit, int row)
@@ -613,13 +600,15 @@ namespace FamilyFinance2.Forms.Transaction
 
             if (lineAccountUsesEnvelopes)
             {
-                this.subTransDGV.BindingSourceSubLineDGV.Filter = "lineItemID = " + lineID.ToString();
-                this.subTransDGV.Enabled = true;
+                this.envLinesDGV.BindingSourceEnvelopeLineDGV.Filter = "lineItemID = " + lineID.ToString();
+                this.envLinesDGV.Enabled = true;
+                this.envLinesDGV.AllowUserToAddRows = true;
             }
             else
             {
-                this.subTransDGV.BindingSourceSubLineDGV.Filter = "id = -1";
-                this.subTransDGV.Enabled = false;
+                this.envLinesDGV.BindingSourceEnvelopeLineDGV.Filter = "id = -1";
+                this.envLinesDGV.Enabled = false;
+                this.envLinesDGV.AllowUserToAddRows = false;
             }
         }
 
@@ -641,6 +630,9 @@ namespace FamilyFinance2.Forms.Transaction
             this.tDataSet.myFillEnvelopeTable();
             this.tDataSet.myFillLineTypeTable();
             this.tDataSet.myFillLineItemAndSubLine(transactionID);
+
+            this.tDataSet.LineItem.TableNewRow += new DataTableNewRowEventHandler(LineItem_TableNewRow);
+            this.tDataSet.EnvelopeLine.TableNewRow += new DataTableNewRowEventHandler(EnvelopeLine_TableNewRow);
 
             this.buildDGVs();
             this.buildCMs();

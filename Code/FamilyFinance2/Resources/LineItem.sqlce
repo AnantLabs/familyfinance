@@ -1,0 +1,42 @@
+SELECT li.id, li.transactionID, li.date, li.typeID, li.accountID, op.accountID AS oppAccountID, li.description, li.confirmationNumber, el.envelopeID AS envelopID, li.complete, li.amount, li.creditDebit
+FROM 
+(
+	SELECT *
+	FROM LineItem
+	WHERE accountID = 5
+) AS li  
+LEFT OUTER JOIN
+(
+	SELECT transactionID, creditDebit, -2 as accountID
+	FROM LineItem
+	WHERE transactionID IN (SELECT transactionID FROM LineItem WHERE accountID = 5)
+	GROUP BY transactionID, creditDebit
+	HAVING COUNT(1) > 1
+
+	UNION 
+
+	SELECT transactionID, creditDebit, SUM(accountID) as accountID
+	FROM LineItem
+	WHERE transactionID IN (SELECT transactionID FROM LineItem WHERE accountID = 5)
+	GROUP BY transactionID, creditDebit
+	HAVING COUNT(1) = 1
+) AS op ON li.transactionID = op.transactionID AND li.creditDebit != op.creditDebit
+LEFT OUTER JOIN
+(
+	SELECT lineItemID, -2 as envelopeID
+	FROM EnvelopeLine
+	WHERE lineItemID IN (SELECT id FROM LineItem WHERE accountID = 5)
+	GROUP BY lineItemID
+	HAVING COUNT(1) > 1
+
+	UNION 
+
+	SELECT lineItemID, SUM(envelopeID) as envelopeID
+	FROM EnvelopeLine
+	WHERE lineItemID IN (SELECT id FROM LineItem WHERE accountID = 5)
+	GROUP BY lineItemID
+	HAVING COUNT(1) = 1
+) AS el ON li.id = el.lineItemID
+ORDER BY li.date ASC, li.creditDebit DESC, li.id ASC
+
+

@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using FamilyFinance2.Forms.LineType.LineTypeDataSetTableAdapters;
+using FamilyFinance2.SharedElements;
 
 namespace FamilyFinance2.Forms.LineType 
 {

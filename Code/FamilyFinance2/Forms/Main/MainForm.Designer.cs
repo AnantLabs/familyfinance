@@ -1,4 +1,4 @@
-﻿namespace FamilyFinance2
+﻿namespace FamilyFinance2.Forms.Main
 {
     partial class MainForm
     {

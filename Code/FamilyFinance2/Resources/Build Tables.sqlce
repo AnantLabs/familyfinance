@@ -1,18 +1,5 @@
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
---CREATE TABLE AccountCatagory
---(
---	id					tinyint			NOT NULL,
---	[name]				nvarchar(10)	NOT NULL,
---	CONSTRAINT PK_AccountCatagory_id    PRIMARY KEY (id)
---);
---INSERT INTO AccountCatagory VALUES (0, 'NULL');
---INSERT INTO AccountCatagory VALUES (1, 'Income');
---INSERT INTO AccountCatagory VALUES (2, 'Account');
---INSERT INTO AccountCatagory VALUES (3, 'Expense');
-
--------------------------------------------------------------------------------
--------------------------------------------------------------------------------
 CREATE TABLE AccountType
 (
 	id					int				NOT NULL,
@@ -24,53 +11,13 @@ INSERT INTO AccountType VALUES (-1, ' '); -- Null Account Type
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-CREATE TABLE Account
+CREATE TABLE EnvelopeGroup
 (
 	id					int				NOT NULL,
 	[name]				nvarchar(30)	NOT NULL,
-	accountTypeID		int				NOT NULL,
-	catagoryID			tinyint			NOT NULL,	--(0 = NULL, 1 = Income, 2 = Account, 3 = Expence)
-	closed				bit				NOT NULL,	--(0 = NO , 1 = YES)
-	creditDebit			bit				NOT NULL,	--(0 = Credit, 1 = Debit (normal))
-	envelopes			bit				NOT NULL,	--(0 = NO , 1 = YES)
-	endingBalance		money			NOT NULL,
-	CONSTRAINT PK_Account_id     PRIMARY KEY (id),
-	CONSTRAINT FK_Account_typeID FOREIGN KEY (accountTypeID) REFERENCES  AccountType(id)
+	CONSTRAINT PK_EnvelopeGroup_id      PRIMARY KEY (id)
 );
-INSERT INTO Account VALUES (-2, '-Multiple-', -1, 0, 0, 1, 0, 0.0);
-INSERT INTO Account VALUES (-1, ' ', -1, 0, 0, 1, 0, 0.0); -- NULL Account
-
-
-
--------------------------------------------------------------------------------
--------------------------------------------------------------------------------
-CREATE TABLE Envelope
-(
-	id					int				NOT NULL,
-	[name]				nvarchar(30)	NOT NULL,
-	fullName			nvarchar(300)	NOT NULL,
-	parentEnvelope		int				NOT NULL,
-	closed				bit				NOT NULL,
-	endingBalance		money			NOT NULL,
-	CONSTRAINT PK_Envelope_id       PRIMARY KEY (id),
-	CONSTRAINT FK_Envelope_parentID FOREIGN KEY (parentEnvelope) REFERENCES  Envelope(id)
-);
-INSERT INTO Envelope VALUES (-1, ' ', ' ', -1, 0, 0.0); --NULL Value "Not assigned yet."
-INSERT INTO Envelope VALUES (-2, '-Split-', '-Split-', -1, 0, 0.0);
-INSERT INTO Envelope VALUES (0, '-No Envelope-', '-No Envelope-', -1, 0, 0.0); --No Envelope "Exception Envelope. Not tracked in reports."
-
-
--------------------------------------------------------------------------------
--------------------------------------------------------------------------------
-CREATE TABLE AEBalance
-(
-	accountID			int				NOT NULL,
-	envelopeID			int				NOT NULL,
-	endingBalance		money			NOT NULL,
-	CONSTRAINT PK_AEBalance_id        PRIMARY KEY (accountID, envelopeID),
-	CONSTRAINT FK_AEBalance_accountID FOREIGN KEY (accountID) REFERENCES  Account(id),
-	CONSTRAINT FK_AEBalance_envelopeID FOREIGN KEY (envelopeID) REFERENCES  Envelope(id)
-);
+INSERT INTO EnvelopeGroup VALUES (-1, ' '); -- Null Envelope Group
 
 
 -------------------------------------------------------------------------------
@@ -84,7 +31,38 @@ CREATE TABLE LineType
 INSERT INTO LineType VALUES (-1, ' '); -- Null Line Type
 
 
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+CREATE TABLE Account
+(
+	id					int				NOT NULL,
+	[name]				nvarchar(30)	NOT NULL,
+	typeID				int				NOT NULL,
+	catagory			tinyint			NOT NULL,	--(0 = NULL, 1 = Income, 2 = Account, 3 = Expence)
+	closed				bit				NOT NULL,	--(0 = NO , 1 = YES)
+	creditDebit			bit				NOT NULL,	--(0 = Credit, 1 = Debit (normal))
+	envelopes			bit				NOT NULL,	--(0 = NO , 1 = YES)
+	CONSTRAINT PK_Account_id     PRIMARY KEY (id),
+	CONSTRAINT FK_Account_typeID FOREIGN KEY (typeID) REFERENCES  AccountType(id)
+);
+INSERT INTO Account VALUES (-2, '-Multiple-', -1, 0, 0, 1, 0);
+INSERT INTO Account VALUES (-1, ' ', -1, 0, 0, 1, 0); -- NULL Account
 
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+CREATE TABLE Envelope
+(
+	id					int				NOT NULL,
+	[name]				nvarchar(30)	NOT NULL,
+	groupID				int				NOT NULL,
+	closed				bit				NOT NULL,
+	CONSTRAINT PK_Envelope_id       PRIMARY KEY (id),
+	CONSTRAINT FK_Envelope_groupID  FOREIGN KEY (groupID) REFERENCES  EnvelopeGroup(id)
+);
+INSERT INTO Envelope VALUES (-1, ' ', -1, 0); --NULL Value "Not assigned yet."
+INSERT INTO Envelope VALUES (-2, '-Split-', -1, 0);
+INSERT INTO Envelope VALUES (0, '-No Envelope-', -1, 0); --The Exception Envelope. Not tracked in reports.
 
 
 -------------------------------------------------------------------------------
@@ -94,43 +72,37 @@ CREATE TABLE LineItem
 	id					int				NOT NULL,
 	transactionID		int				NOT NULL,
 	date				datetime		NOT NULL,
-	lineTypeID			int				NOT NULL,
+	typeID				int				NOT NULL,
 	accountID			int				NOT NULL,
-	oppAccountID		int				NOT NULL,
 	description			ntext			NULL,
 	confirmationNumber	ntext			NULL,
-	envelopeID			int				NOT NULL,
 	complete			nchar(1)		NOT NULL,		-- (" " Null, "C" Complete, "R" Reconciled)
 	amount				money			NOT NULL,
 	creditDebit			bit				NOT NULL,		-- (0 = Credit (out), 1 = Debit (in))
-	transactionError	bit				NOT NULL,		-- (0 = No, 1 = Yes)
-	lineError			bit				NOT NULL,		-- (0 = No, 1 = Yes)
 	CONSTRAINT PK_Line_id			PRIMARY KEY (id),
 	CONSTRAINT FK_Line_accountID	FOREIGN KEY (accountID)	REFERENCES  Account(id),
-	CONSTRAINT FK_Line_oppAccountID FOREIGN KEY (oppAccountID) REFERENCES  Account(id),
-	CONSTRAINT FK_Line_typeID		FOREIGN KEY (lineTypeID) REFERENCES  LineType(id),
-	CONSTRAINT FK_Line_envelopeID	FOREIGN KEY (envelopeID) REFERENCES  Envelope(id)
+	CONSTRAINT FK_Line_typeID		FOREIGN KEY (typeID) REFERENCES  LineType(id)
 );
---CREATE NONCLUSTERED INDEX IN_LineItem_transactionID ON LineItem (transactionID ASC);
---CREATE NONCLUSTERED INDEX IN_LineItem_register ON LineItem (accountID ASC, date ASC, creditDebit DESC, id ASC);
+CREATE INDEX IN_LineItem_transactionID ON LineItem (transactionID);
+CREATE INDEX IN_LineItem_accountID ON LineItem (accountID);
 
 
 
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-CREATE TABLE SubLineItem
+CREATE TABLE EnvelopeLine
 (
 	id					int				NOT NULL,
 	lineItemID			int				NOT NULL,
 	envelopeID			int				NOT NULL,
 	description			ntext			NULL,
 	amount				money			NOT NULL,
-	CONSTRAINT PK_SubLine_id         PRIMARY KEY (id),
-	CONSTRAINT FK_SubLine_lineID	 FOREIGN KEY (lineItemID) REFERENCES  LineItem(id),
-	CONSTRAINT FK_SubLine_envelopeID FOREIGN KEY (envelopeID) REFERENCES  Envelope(id)
+	CONSTRAINT PK_EnvelopeLine_id         PRIMARY KEY (id),
+	CONSTRAINT FK_EnvelopeLine_lineID	  FOREIGN KEY (lineItemID) REFERENCES  LineItem(id),
+	CONSTRAINT FK_EnvelopeLine_envelopeID FOREIGN KEY (envelopeID) REFERENCES  Envelope(id)
 );
-
+CREATE INDEX IN_EnvelopeLine_lineItemID ON EnvelopeLine (lineItemID);
 
 
 
@@ -168,3 +140,16 @@ INSERT INTO LineType VALUES (7, 'Withdrawl');
 INSERT INTO LineType VALUES (8, 'Refund');
 
 
+
+-- Default Envelope Types
+INSERT INTO EnvelopeGroup VALUES (1, 'Charity');
+INSERT INTO EnvelopeGroup VALUES (2, 'Saving');
+INSERT INTO EnvelopeGroup VALUES (3, 'Housing');
+INSERT INTO EnvelopeGroup VALUES (4, 'Utilities');
+INSERT INTO EnvelopeGroup VALUES (5, 'Food');
+INSERT INTO EnvelopeGroup VALUES (6, 'Transportation');
+INSERT INTO EnvelopeGroup VALUES (7, 'Clothing');
+INSERT INTO EnvelopeGroup VALUES (8, 'Medical/Health');
+INSERT INTO EnvelopeGroup VALUES (9, 'Personal');
+INSERT INTO EnvelopeGroup VALUES (10, 'Recreation');
+INSERT INTO EnvelopeGroup VALUES (11, 'Debts');
