@@ -1,4 +1,4 @@
-SELECT li.id, li.transactionID, li.date, li.typeID, li.accountID, op.accountID AS oppAccountID, li.description, li.confirmationNumber, el.envelopeID AS envelopID, li.complete, li.amount, li.creditDebit
+SELECT li.id, li.transactionID, li.date, li.typeID, li.accountID, CASE WHEN op.accountID IS NULL THEN -1 ELSE op.accountID END as oppAccountID, li.description, li.confirmationNumber, CASE WHEN el.envelopeID IS NULL THEN -1 ELSE el.envelopeID END  AS envelopID, li.complete, li.amount, li.creditDebit
 FROM 
 (
 	SELECT *
