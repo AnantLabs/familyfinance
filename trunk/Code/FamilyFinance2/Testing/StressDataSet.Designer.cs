@@ -49,6 +49,10 @@ namespace FamilyFinance2.Testing {
         
         private global::System.Data.DataRelation relationFK_Line_accountID;
         
+        private global::System.Data.DataRelation relationFK_Line_envelopeID;
+        
+        private global::System.Data.DataRelation relationFK_Line_oppAccountID;
+        
         private global::System.Data.DataRelation relationFK_Line_typeID;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
@@ -336,6 +340,8 @@ namespace FamilyFinance2.Testing {
             this.relationFK_EnvelopeLine_envelopeID = this.Relations["FK_EnvelopeLine_envelopeID"];
             this.relationFK_EnvelopeLine_lineID = this.Relations["FK_EnvelopeLine_lineID"];
             this.relationFK_Line_accountID = this.Relations["FK_Line_accountID"];
+            this.relationFK_Line_envelopeID = this.Relations["FK_Line_envelopeID"];
+            this.relationFK_Line_oppAccountID = this.Relations["FK_Line_oppAccountID"];
             this.relationFK_Line_typeID = this.Relations["FK_Line_typeID"];
         }
         
@@ -380,6 +386,14 @@ namespace FamilyFinance2.Testing {
                         this.tableAccount.idColumn}, new global::System.Data.DataColumn[] {
                         this.tableLineItem.accountIDColumn}, false);
             this.Relations.Add(this.relationFK_Line_accountID);
+            this.relationFK_Line_envelopeID = new global::System.Data.DataRelation("FK_Line_envelopeID", new global::System.Data.DataColumn[] {
+                        this.tableEnvelope.idColumn}, new global::System.Data.DataColumn[] {
+                        this.tableLineItem.envelopeIDColumn}, false);
+            this.Relations.Add(this.relationFK_Line_envelopeID);
+            this.relationFK_Line_oppAccountID = new global::System.Data.DataRelation("FK_Line_oppAccountID", new global::System.Data.DataColumn[] {
+                        this.tableAccount.idColumn}, new global::System.Data.DataColumn[] {
+                        this.tableLineItem.oppAccountIDColumn}, false);
+            this.Relations.Add(this.relationFK_Line_oppAccountID);
             this.relationFK_Line_typeID = new global::System.Data.DataRelation("FK_Line_typeID", new global::System.Data.DataColumn[] {
                         this.tableLineType.idColumn}, new global::System.Data.DataColumn[] {
                         this.tableLineItem.typeIDColumn}, false);
@@ -1897,9 +1911,13 @@ namespace FamilyFinance2.Testing {
             
             private global::System.Data.DataColumn columnaccountID;
             
+            private global::System.Data.DataColumn columnoppAccountID;
+            
             private global::System.Data.DataColumn columndescription;
             
             private global::System.Data.DataColumn columnconfirmationNumber;
+            
+            private global::System.Data.DataColumn columnenvelopeID;
             
             private global::System.Data.DataColumn columncomplete;
             
@@ -1973,6 +1991,13 @@ namespace FamilyFinance2.Testing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn oppAccountIDColumn {
+                get {
+                    return this.columnoppAccountID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public global::System.Data.DataColumn descriptionColumn {
                 get {
                     return this.columndescription;
@@ -1983,6 +2008,13 @@ namespace FamilyFinance2.Testing {
             public global::System.Data.DataColumn confirmationNumberColumn {
                 get {
                     return this.columnconfirmationNumber;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn envelopeIDColumn {
+                get {
+                    return this.columnenvelopeID;
                 }
             }
             
@@ -2036,7 +2068,7 @@ namespace FamilyFinance2.Testing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public LineItemRow AddLineItemRow(int id, int transactionID, System.DateTime date, LineTypeRow parentLineTypeRowByFK_Line_typeID, AccountRow parentAccountRowByFK_Line_accountID, string description, string confirmationNumber, string complete, decimal amount, bool creditDebit) {
+            public LineItemRow AddLineItemRow(int id, int transactionID, System.DateTime date, LineTypeRow parentLineTypeRowByFK_Line_typeID, AccountRow parentAccountRowByFK_Line_accountID, AccountRow parentAccountRowByFK_Line_oppAccountID, string description, string confirmationNumber, EnvelopeRow parentEnvelopeRowByFK_Line_envelopeID, string complete, decimal amount, bool creditDebit) {
                 LineItemRow rowLineItemRow = ((LineItemRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         id,
@@ -2044,8 +2076,10 @@ namespace FamilyFinance2.Testing {
                         date,
                         null,
                         null,
+                        null,
                         description,
                         confirmationNumber,
+                        null,
                         complete,
                         amount,
                         creditDebit};
@@ -2054,6 +2088,12 @@ namespace FamilyFinance2.Testing {
                 }
                 if ((parentAccountRowByFK_Line_accountID != null)) {
                     columnValuesArray[4] = parentAccountRowByFK_Line_accountID[0];
+                }
+                if ((parentAccountRowByFK_Line_oppAccountID != null)) {
+                    columnValuesArray[5] = parentAccountRowByFK_Line_oppAccountID[0];
+                }
+                if ((parentEnvelopeRowByFK_Line_envelopeID != null)) {
+                    columnValuesArray[8] = parentEnvelopeRowByFK_Line_envelopeID[0];
                 }
                 rowLineItemRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowLineItemRow);
@@ -2085,8 +2125,10 @@ namespace FamilyFinance2.Testing {
                 this.columndate = base.Columns["date"];
                 this.columntypeID = base.Columns["typeID"];
                 this.columnaccountID = base.Columns["accountID"];
+                this.columnoppAccountID = base.Columns["oppAccountID"];
                 this.columndescription = base.Columns["description"];
                 this.columnconfirmationNumber = base.Columns["confirmationNumber"];
+                this.columnenvelopeID = base.Columns["envelopeID"];
                 this.columncomplete = base.Columns["complete"];
                 this.columnamount = base.Columns["amount"];
                 this.columncreditDebit = base.Columns["creditDebit"];
@@ -2104,10 +2146,14 @@ namespace FamilyFinance2.Testing {
                 base.Columns.Add(this.columntypeID);
                 this.columnaccountID = new global::System.Data.DataColumn("accountID", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnaccountID);
+                this.columnoppAccountID = new global::System.Data.DataColumn("oppAccountID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnoppAccountID);
                 this.columndescription = new global::System.Data.DataColumn("description", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columndescription);
                 this.columnconfirmationNumber = new global::System.Data.DataColumn("confirmationNumber", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnconfirmationNumber);
+                this.columnenvelopeID = new global::System.Data.DataColumn("envelopeID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnenvelopeID);
                 this.columncomplete = new global::System.Data.DataColumn("complete", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncomplete);
                 this.columnamount = new global::System.Data.DataColumn("amount", typeof(decimal), null, global::System.Data.MappingType.Element);
@@ -2122,8 +2168,10 @@ namespace FamilyFinance2.Testing {
                 this.columndate.AllowDBNull = false;
                 this.columntypeID.AllowDBNull = false;
                 this.columnaccountID.AllowDBNull = false;
+                this.columnoppAccountID.AllowDBNull = false;
                 this.columndescription.MaxLength = 536870911;
                 this.columnconfirmationNumber.MaxLength = 536870911;
+                this.columnenvelopeID.AllowDBNull = false;
                 this.columncomplete.AllowDBNull = false;
                 this.columncomplete.MaxLength = 1;
                 this.columnamount.AllowDBNull = false;
@@ -2588,12 +2636,22 @@ namespace FamilyFinance2.Testing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public LineItemRow[] GetLineItemRows() {
+            public LineItemRow[] GetLineItemRowsByFK_Line_accountID() {
                 if ((this.Table.ChildRelations["FK_Line_accountID"] == null)) {
                     return new LineItemRow[0];
                 }
                 else {
                     return ((LineItemRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Line_accountID"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public LineItemRow[] GetLineItemRowsByFK_Line_oppAccountID() {
+                if ((this.Table.ChildRelations["FK_Line_oppAccountID"] == null)) {
+                    return new LineItemRow[0];
+                }
+                else {
+                    return ((LineItemRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Line_oppAccountID"])));
                 }
             }
         }
@@ -2714,6 +2772,16 @@ namespace FamilyFinance2.Testing {
                 }
                 else {
                     return ((EnvelopeLineRow[])(base.GetChildRows(this.Table.ChildRelations["FK_EnvelopeLine_envelopeID"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public LineItemRow[] GetLineItemRows() {
+                if ((this.Table.ChildRelations["FK_Line_envelopeID"] == null)) {
+                    return new LineItemRow[0];
+                }
+                else {
+                    return ((LineItemRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Line_envelopeID"])));
                 }
             }
         }
@@ -2928,6 +2996,16 @@ namespace FamilyFinance2.Testing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public int oppAccountID {
+                get {
+                    return ((int)(this[this.tableLineItem.oppAccountIDColumn]));
+                }
+                set {
+                    this[this.tableLineItem.oppAccountIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public string description {
                 get {
                     try {
@@ -2954,6 +3032,16 @@ namespace FamilyFinance2.Testing {
                 }
                 set {
                     this[this.tableLineItem.confirmationNumberColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public int envelopeID {
+                get {
+                    return ((int)(this[this.tableLineItem.envelopeIDColumn]));
+                }
+                set {
+                    this[this.tableLineItem.envelopeIDColumn] = value;
                 }
             }
             
@@ -2988,12 +3076,32 @@ namespace FamilyFinance2.Testing {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public AccountRow AccountRow {
+            public AccountRow AccountRowByFK_Line_accountID {
                 get {
                     return ((AccountRow)(this.GetParentRow(this.Table.ParentRelations["FK_Line_accountID"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_Line_accountID"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public EnvelopeRow EnvelopeRow {
+                get {
+                    return ((EnvelopeRow)(this.GetParentRow(this.Table.ParentRelations["FK_Line_envelopeID"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_Line_envelopeID"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public AccountRow AccountRowByFK_Line_oppAccountID {
+                get {
+                    return ((AccountRow)(this.GetParentRow(this.Table.ParentRelations["FK_Line_oppAccountID"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_Line_oppAccountID"]);
                 }
             }
             
@@ -4902,8 +5010,10 @@ namespace FamilyFinance2.Testing.StressDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("date", "date");
             tableMapping.ColumnMappings.Add("typeID", "typeID");
             tableMapping.ColumnMappings.Add("accountID", "accountID");
+            tableMapping.ColumnMappings.Add("oppAccountID", "oppAccountID");
             tableMapping.ColumnMappings.Add("description", "description");
             tableMapping.ColumnMappings.Add("confirmationNumber", "confirmationNumber");
+            tableMapping.ColumnMappings.Add("envelopeID", "envelopeID");
             tableMapping.ColumnMappings.Add("complete", "complete");
             tableMapping.ColumnMappings.Add("amount", "amount");
             tableMapping.ColumnMappings.Add("creditDebit", "creditDebit");
@@ -4915,37 +5025,40 @@ namespace FamilyFinance2.Testing.StressDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p1", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Original, null));
             this._adapter.InsertCommand = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [LineItem] ([id], [transactionID], [date], [typeID], [accountID], [de" +
-                "scription], [confirmationNumber], [complete], [amount], [creditDebit]) VALUES (@" +
-                "p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10)";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [LineItem] ([id], [transactionID], [date], [typeID], [accountID], [op" +
+                "pAccountID], [description], [confirmationNumber], [envelopeID], [complete], [amo" +
+                "unt], [creditDebit]) VALUES (@p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, " +
+                "@p11, @p12)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p1", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Current, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p2", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "transactionID", global::System.Data.DataRowVersion.Current, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p3", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "date", global::System.Data.DataRowVersion.Current, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p4", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "typeID", global::System.Data.DataRowVersion.Current, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p5", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "accountID", global::System.Data.DataRowVersion.Current, null));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p6", global::System.Data.SqlDbType.NText, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "description", global::System.Data.DataRowVersion.Current, null));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p7", global::System.Data.SqlDbType.NText, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "confirmationNumber", global::System.Data.DataRowVersion.Current, null));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p8", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "complete", global::System.Data.DataRowVersion.Current, null));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p9", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "amount", global::System.Data.DataRowVersion.Current, null));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p10", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "creditDebit", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p6", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "oppAccountID", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p7", global::System.Data.SqlDbType.NText, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "description", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p8", global::System.Data.SqlDbType.NText, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "confirmationNumber", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p9", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "envelopeID", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p10", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "complete", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p11", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "amount", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p12", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "creditDebit", global::System.Data.DataRowVersion.Current, null));
             this._adapter.UpdateCommand = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE [LineItem] SET [id] = @p1, [transactionID] = @p2, [date] = @p3, [typeID] =" +
-                " @p4, [accountID] = @p5, [description] = @p6, [confirmationNumber] = @p7, [compl" +
-                "ete] = @p8, [amount] = @p9, [creditDebit] = @p10 WHERE (([id] = @p11))";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [LineItem] SET [id] = @p1, [transactionID] = @p2, [date] = @p3, [typeID] = @p4, [accountID] = @p5, [oppAccountID] = @p6, [description] = @p7, [confirmationNumber] = @p8, [envelopeID] = @p9, [complete] = @p10, [amount] = @p11, [creditDebit] = @p12 WHERE (([id] = @p13))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p1", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Current, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p2", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "transactionID", global::System.Data.DataRowVersion.Current, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p3", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "date", global::System.Data.DataRowVersion.Current, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p4", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "typeID", global::System.Data.DataRowVersion.Current, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p5", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "accountID", global::System.Data.DataRowVersion.Current, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p6", global::System.Data.SqlDbType.NText, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "description", global::System.Data.DataRowVersion.Current, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p7", global::System.Data.SqlDbType.NText, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "confirmationNumber", global::System.Data.DataRowVersion.Current, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p8", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "complete", global::System.Data.DataRowVersion.Current, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p9", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "amount", global::System.Data.DataRowVersion.Current, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p10", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "creditDebit", global::System.Data.DataRowVersion.Current, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p11", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Original, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p6", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "oppAccountID", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p7", global::System.Data.SqlDbType.NText, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "description", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p8", global::System.Data.SqlDbType.NText, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "confirmationNumber", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p9", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "envelopeID", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p10", global::System.Data.SqlDbType.NChar, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "complete", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p11", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "amount", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p12", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "creditDebit", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p13", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Original, null));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4959,8 +5072,9 @@ namespace FamilyFinance2.Testing.StressDataSetTableAdapters {
             this._commandCollection = new global::System.Data.SqlServerCe.SqlCeCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT [id], [transactionID], [date], [typeID], [accountID], [description], [conf" +
-                "irmationNumber], [complete], [amount], [creditDebit] FROM [LineItem]";
+            this._commandCollection[0].CommandText = "SELECT [id], [transactionID], [date], [typeID], [accountID], [oppAccountID], [des" +
+                "cription], [confirmationNumber], [envelopeID], [complete], [amount], [creditDebi" +
+                "t] FROM [LineItem]";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -5035,18 +5149,13 @@ namespace FamilyFinance2.Testing.StressDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(int p1, int p2, System.DateTime p3, int p4, int p5, string p6, string p7, string p8, decimal p9, bool p10) {
+        public virtual int Insert(int p1, int p2, System.DateTime p3, int p4, int p5, int p6, string p7, string p8, int p9, string p10, decimal p11, bool p12) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((int)(p1));
             this.Adapter.InsertCommand.Parameters[1].Value = ((int)(p2));
             this.Adapter.InsertCommand.Parameters[2].Value = ((System.DateTime)(p3));
             this.Adapter.InsertCommand.Parameters[3].Value = ((int)(p4));
             this.Adapter.InsertCommand.Parameters[4].Value = ((int)(p5));
-            if ((p6 == null)) {
-                this.Adapter.InsertCommand.Parameters[5].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[5].Value = ((string)(p6));
-            }
+            this.Adapter.InsertCommand.Parameters[5].Value = ((int)(p6));
             if ((p7 == null)) {
                 this.Adapter.InsertCommand.Parameters[6].Value = global::System.DBNull.Value;
             }
@@ -5054,13 +5163,20 @@ namespace FamilyFinance2.Testing.StressDataSetTableAdapters {
                 this.Adapter.InsertCommand.Parameters[6].Value = ((string)(p7));
             }
             if ((p8 == null)) {
-                throw new global::System.ArgumentNullException("p8");
+                this.Adapter.InsertCommand.Parameters[7].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.InsertCommand.Parameters[7].Value = ((string)(p8));
             }
-            this.Adapter.InsertCommand.Parameters[8].Value = ((decimal)(p9));
-            this.Adapter.InsertCommand.Parameters[9].Value = ((bool)(p10));
+            this.Adapter.InsertCommand.Parameters[8].Value = ((int)(p9));
+            if ((p10 == null)) {
+                throw new global::System.ArgumentNullException("p10");
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[9].Value = ((string)(p10));
+            }
+            this.Adapter.InsertCommand.Parameters[10].Value = ((decimal)(p11));
+            this.Adapter.InsertCommand.Parameters[11].Value = ((bool)(p12));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -5080,18 +5196,13 @@ namespace FamilyFinance2.Testing.StressDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int p1, int p2, System.DateTime p3, int p4, int p5, string p6, string p7, string p8, decimal p9, bool p10, int p11) {
+        public virtual int Update(int p1, int p2, System.DateTime p3, int p4, int p5, int p6, string p7, string p8, int p9, string p10, decimal p11, bool p12, int p13) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(p1));
             this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(p2));
             this.Adapter.UpdateCommand.Parameters[2].Value = ((System.DateTime)(p3));
             this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(p4));
             this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(p5));
-            if ((p6 == null)) {
-                this.Adapter.UpdateCommand.Parameters[5].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(p6));
-            }
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(p6));
             if ((p7 == null)) {
                 this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
             }
@@ -5099,14 +5210,21 @@ namespace FamilyFinance2.Testing.StressDataSetTableAdapters {
                 this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(p7));
             }
             if ((p8 == null)) {
-                throw new global::System.ArgumentNullException("p8");
+                this.Adapter.UpdateCommand.Parameters[7].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(p8));
             }
-            this.Adapter.UpdateCommand.Parameters[8].Value = ((decimal)(p9));
-            this.Adapter.UpdateCommand.Parameters[9].Value = ((bool)(p10));
-            this.Adapter.UpdateCommand.Parameters[10].Value = ((int)(p11));
+            this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(p9));
+            if ((p10 == null)) {
+                throw new global::System.ArgumentNullException("p10");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(p10));
+            }
+            this.Adapter.UpdateCommand.Parameters[10].Value = ((decimal)(p11));
+            this.Adapter.UpdateCommand.Parameters[11].Value = ((bool)(p12));
+            this.Adapter.UpdateCommand.Parameters[12].Value = ((int)(p13));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -5126,8 +5244,8 @@ namespace FamilyFinance2.Testing.StressDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int p2, System.DateTime p3, int p4, int p5, string p6, string p7, string p8, decimal p9, bool p10, int p11) {
-            return this.Update(p11, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11);
+        public virtual int Update(int p2, System.DateTime p3, int p4, int p5, int p6, string p7, string p8, int p9, string p10, decimal p11, bool p12, int p13) {
+            return this.Update(p13, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13);
         }
     }
     
@@ -5671,21 +5789,21 @@ namespace FamilyFinance2.Testing.StressDataSetTableAdapters {
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._lineItemTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.LineItem.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._lineItemTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
             if ((this._envelopeTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.Envelope.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
                     result = (result + this._envelopeTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this._lineItemTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.LineItem.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._lineItemTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -5739,19 +5857,19 @@ namespace FamilyFinance2.Testing.StressDataSetTableAdapters {
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._lineItemTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.LineItem.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._lineItemTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
             if ((this._envelopeTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.Envelope.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._envelopeTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._lineItemTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.LineItem.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._lineItemTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -5780,19 +5898,19 @@ namespace FamilyFinance2.Testing.StressDataSetTableAdapters {
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-            if ((this._envelopeTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.Envelope.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._envelopeTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
             if ((this._lineItemTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.LineItem.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._lineItemTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._envelopeTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.Envelope.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._envelopeTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }

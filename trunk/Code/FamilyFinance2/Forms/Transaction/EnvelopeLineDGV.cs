@@ -69,7 +69,7 @@ namespace FamilyFinance2.Forms.Transaction
             this.envelopeIDColumn.HeaderText = "Envelope";
             this.envelopeIDColumn.DataPropertyName = "envelopeID";
             this.envelopeIDColumn.DataSource = this.BindingSourceEnvelopeCol;
-            this.envelopeIDColumn.DisplayMember = "fullName";
+            this.envelopeIDColumn.DisplayMember = "name";
             this.envelopeIDColumn.ValueMember = "id";
             this.envelopeIDColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
             this.envelopeIDColumn.DisplayStyleForCurrentCellOnly = true;

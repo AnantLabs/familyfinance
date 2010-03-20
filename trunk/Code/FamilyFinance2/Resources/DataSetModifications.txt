@@ -6,14 +6,14 @@ LineItem
 
 +Add the fill method
 	FillByAccount
-SELECT   id, transactionID, date, lineTypeID, accountID, oppAccountID, description, confirmationNumber, envelopeID, complete, amount, creditDebit, transactionError, lineError
+SELECT   id, transactionID, date, typeID, accountID, oppAccountID, description, confirmationNumber, envelopeID, complete, amount, creditDebit, transactionError, lineError
 FROM     LineItem
 WHERE    (accountID = @aID)
 ORDER BY date, creditDebit DESC, id
 
 +Add the fill method
 	FillByTransaction
-SELECT   id, transactionID, date, lineTypeID, accountID, oppAccountID, description, confirmationNumber, envelopeID, complete, amount, creditDebit, transactionError, 
+SELECT   id, transactionID, date, typeID, accountID, oppAccountID, description, confirmationNumber, envelopeID, complete, amount, creditDebit, transactionError, 
          lineError
 FROM     LineItem
 WHERE    (transactionID = @tID)
@@ -43,14 +43,14 @@ FROM Account
 Envelope 
 +Add the fill method 
 	FillByZero
-SELECT id, name, fullName, parentEnvelope, closed, 0.0 AS currentBalance, 0.0 AS endingBalance
+SELECT id, name, parentEnvelope, closed, 0.0 AS currentBalance, 0.0 AS endingBalance
 FROM Envelope
 
 +Modify the Fill Method
 	Fill
-SELECT   id, name, fullName, parentEnvelope, closed, currentBalance, endingBalance
+SELECT   id, name, parentEnvelope, closed, currentBalance, endingBalance
 FROM     Envelope
-ORDER BY fullName
+ORDER BY name
 
 
 
@@ -70,7 +70,7 @@ SELECT   SubLineItem.id AS subLineItemID, LineItem.transactionID, LineItem.date,
              LineItem.transactionError | LineItem.lineError AS lineError, Account_1.name AS destinationAccount, SubLineItem.description, LineItem.creditDebit, 
              SubLineItem.amount, LineItem.complete, 0.0 AS creditAmount, 0.0 AS debitAmount, 0.0 AS balanceAmount
 FROM     LineItem INNER JOIN
-             LineType ON LineItem.lineTypeID = LineType.id INNER JOIN
+             LineType ON LineItem.typeID = LineType.id INNER JOIN
              Account ON LineItem.accountID = Account.id INNER JOIN
              Account AS Account_1 ON LineItem.oppAccountID = Account_1.id INNER JOIN
              SubLineItem ON LineItem.id = SubLineItem.lineItemID
@@ -82,7 +82,7 @@ SELECT   SubLineItem.id AS subLineItemID, LineItem.transactionID, LineItem.date,
               LineItem.transactionError | LineItem.lineError AS lineError, Account_1.name AS destinationAccount, SubLineItem.description, LineItem.creditDebit, 
               SubLineItem.amount, LineItem.complete, 0.0 AS creditAmount, 0.0 AS debitAmount, 0.0 AS balanceAmount
 FROM     LineItem INNER JOIN
-              LineType ON LineItem.lineTypeID = LineType.id INNER JOIN
+              LineType ON LineItem.typeID = LineType.id INNER JOIN
               Account ON LineItem.accountID = Account.id INNER JOIN
               Account AS Account_1 ON LineItem.oppAccountID = Account_1.id INNER JOIN
               SubLineItem ON LineItem.id = SubLineItem.lineItemID

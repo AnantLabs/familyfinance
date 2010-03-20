@@ -10,8 +10,9 @@ namespace FamilyFinance2.Forms.Transaction
     {
         //////////////////////////
         //   Local Variables
+
+        // Simple tables (for reference only) have their adapters here.
         private AccountTableAdapter AccountTA;
-        private AEBalanceTableAdapter AEBalanceTA;
         private EnvelopeTableAdapter EnvelopeTA;
         private LineTypeTableAdapter LineTypeTA;
 
@@ -27,9 +28,6 @@ namespace FamilyFinance2.Forms.Transaction
         {
             this.AccountTA = new AccountTableAdapter();
             this.AccountTA.ClearBeforeFill = true;
-
-            this.AEBalanceTA = new AEBalanceTableAdapter();
-            this.AEBalanceTA.ClearBeforeFill = true;
 
             this.EnvelopeTA = new EnvelopeTableAdapter();
             this.EnvelopeTA.ClearBeforeFill = true;
@@ -47,11 +45,6 @@ namespace FamilyFinance2.Forms.Transaction
         public void myFillEnvelopeTable()
         {
             this.EnvelopeTA.Fill(this.Envelope);
-        }
-
-        public void myFillAEBalanceTable()
-        {
-            this.AEBalanceTA.Fill(this.AEBalance);
         }
 
         public void myFillLineTypeTable()
@@ -146,114 +139,6 @@ namespace FamilyFinance2.Forms.Transaction
                 this.TransactionError = false;
         }
 
-        public void myRippleBalanceChanges()
-        {
-            // Assumes all lineItems in a transaction are finished being updated. Now push
-            // the balance changes to the other tables and save the changes to the database.
-
-            foreach (LineItemRow line in this.LineItem)
-            {
-                switch (line.RowState)
-                {
-                    // Handle New lines
-                    case System.Data.DataRowState.Added:
-                        {
-                            int newAccountID = line.accountID;
-                            bool newCD = line.creditDebit;
-                            decimal newAmount = line.amount;
-
-                            this.Account.myDoTransaction(newAccountID, newCD, newAmount);
-                            continue;
-                        }
-                    // Handle modified lines
-                    case System.Data.DataRowState.Modified:
-                        {
-                            int newAccountID = line.accountID;
-                            bool newCD = line.creditDebit;
-                            decimal newAmount = line.amount;
-
-                            int oldAccountID = Convert.ToInt32(line["accountID", System.Data.DataRowVersion.Original]);
-                            bool oldCD = Convert.ToBoolean(line["creditDebit", System.Data.DataRowVersion.Original]);
-                            decimal oldAmount = Convert.ToDecimal(line["amount", System.Data.DataRowVersion.Original]);
-
-                            bool criticalChanges = (newAccountID != oldAccountID || newCD != oldCD || newAmount != oldAmount);
-
-                            if (criticalChanges)
-                                this.Account.myUndoDoTransaction(oldAccountID, oldCD, oldAmount, newAccountID, newCD, newAmount);
-                            
-                            continue;
-                        }
-
-                    // Handle deleted lines
-                    case System.Data.DataRowState.Deleted:
-                        {
-                            int oldAccountID = Convert.ToInt32(line["accountID", System.Data.DataRowVersion.Original]);
-                            bool oldCD = Convert.ToBoolean(line["creditDebit", System.Data.DataRowVersion.Original]);
-                            decimal oldAmount = Convert.ToDecimal(line["amount", System.Data.DataRowVersion.Original]);
-
-                            this.Account.myUndoTransaction(oldAccountID, oldCD, oldAmount);
-                        }
-                        continue;
-
-                } // end switch
-            } // end foreach LineItem
-
-            foreach (EnvelopeLineRow subLine in this.EnvelopeLine)
-            {
-                switch (subLine.RowState)
-                {
-                    // Handle New SubLines
-                    case System.Data.DataRowState.Added:
-                        {
-                            decimal newAmount = subLine.amount;
-                            int newEnvelopeID = subLine.envelopeID;
-                            int newAccountID = subLine.LineItemRow.accountID;
-                            bool newCD = subLine.LineItemRow.creditDebit;
-
-                            this.Envelope.myDoTransaction(newEnvelopeID, newCD, newAmount);
-                            this.AEBalance.myDoTransaction(newAccountID, newEnvelopeID, newCD, newAmount);
-                            continue;
-                        }
-                    // Handle Modified SubLines
-                    case System.Data.DataRowState.Modified:
-                        {
-                            decimal newAmount = subLine.amount;
-                            int newEnvelopeID = subLine.envelopeID;
-                            int newAccountID = subLine.LineItemRow.accountID;
-                            bool newCD = subLine.LineItemRow.creditDebit;
-                            decimal oldAmount = Convert.ToDecimal(subLine["amount", System.Data.DataRowVersion.Original]);
-                            int oldEnvelopeID = Convert.ToInt32(subLine["envelopeID", System.Data.DataRowVersion.Original]);
-                            int oldAccountID = Convert.ToInt32(subLine.LineItemRow["accountID", System.Data.DataRowVersion.Original]);
-                            bool oldCD = Convert.ToBoolean(subLine.LineItemRow["creditDebit", System.Data.DataRowVersion.Original]);
-
-                            bool criticalChanges = (newAccountID != oldAccountID
-                                             || newEnvelopeID != oldEnvelopeID
-                                             || newCD != oldCD
-                                             || newAmount != oldAmount);
-
-                            if (criticalChanges)
-                            {
-                                this.Envelope.myUndoDoTransaction(oldEnvelopeID, oldCD, oldAmount, newEnvelopeID, newCD, newAmount);
-                                this.AEBalance.myUndoDoTransaction(oldAccountID, oldEnvelopeID, oldCD, oldAmount, newAccountID, newEnvelopeID, newCD, newAmount);
-                            }
-                            continue;
-                        }
-                    // Handle deleted SubLines
-                    case System.Data.DataRowState.Deleted:
-                        {
-                            decimal oldAmount = Convert.ToDecimal(subLine["amount", System.Data.DataRowVersion.Original]);
-                            int oldEnvelopeID = Convert.ToInt32(subLine["envelopeID", System.Data.DataRowVersion.Original]);
-                            int oldAccountID = Convert.ToInt32(subLine.LineItemRow["accountID", System.Data.DataRowVersion.Original]);
-                            bool oldCD = Convert.ToBoolean(subLine.LineItemRow["creditDebit", System.Data.DataRowVersion.Original]);
-
-                            this.Envelope.myUndoTransaction(oldEnvelopeID, oldCD, oldAmount);
-                            this.AEBalance.myUndoTransaction(oldAccountID, oldEnvelopeID, oldCD, oldAmount);
-                            continue;
-                        }
-                } // END switch
-            } // END foreach subLines
-        }
-
         public void myQuickFinish(ref LineItemRow line)
         {
             int subLineCount = 0;
@@ -315,230 +200,12 @@ namespace FamilyFinance2.Forms.Transaction
 
         public void mySaveChanges()
         {
-            this.AccountTA.Update(this.Account);
-            this.EnvelopeTA.Update(this.Envelope);
-            this.AEBalanceTA.Update(this.AEBalance);
-
+            // only changes to the lines and envelopeLines
             this.LineItem.mySaveNewLines();
             this.EnvelopeLine.mySaveChanges();
             this.LineItem.mySaveChanges();
         }
 
-
-        ///////////////////////////////////////////////////////////////////////
-        //   Account Data Table 
-        ///////////////////////////////////////////////////////////////////////
-        partial class AccountDataTable
-        {
-            public void myUndoTransaction(int oldAccountID, bool oldCD, decimal oldAmount)
-            {
-                AccountRow row = FindByid(oldAccountID);
-
-                // Undo the old Amount
-                if (row.creditDebit == LineCD.DEBIT)
-                {
-                    if (oldCD == LineCD.CREDIT)
-                        row.endingBalance += oldAmount;
-                    else
-                        row.endingBalance -= oldAmount;
-                }
-                else
-                {
-                    if (oldCD == LineCD.CREDIT)
-                        row.endingBalance -= oldAmount;
-                    else
-                        row.endingBalance += oldAmount;
-                }
-            }
-
-            public void myDoTransaction(int newAccountID, bool newCD, decimal newAmount)
-            {
-                AccountRow row = FindByid(newAccountID);
-
-                //  Update to the new amount
-                if (row.creditDebit == LineCD.DEBIT)
-                {
-                    if (newCD == LineCD.CREDIT)
-                        row.endingBalance -= newAmount;
-                    else
-                        row.endingBalance += newAmount;
-                }
-                else
-                {
-                    if (newCD == LineCD.CREDIT)
-                        row.endingBalance += newAmount;
-                    else
-                        row.endingBalance -= newAmount;
-                }
-            }
-
-            public void myUndoDoTransaction(int oldAccountID, bool oldCD, decimal oldAmount, int newAccountID, bool newCD, decimal newAmount)
-            {
-                AccountRow oldRow = FindByid(oldAccountID);
-                AccountRow newRow = FindByid(newAccountID);
-
-                // Undo the old Amount
-                if (oldRow.creditDebit == LineCD.DEBIT)
-                {
-                    if (oldCD == LineCD.CREDIT)
-                        oldRow.endingBalance += oldAmount;
-                    else
-                        oldRow.endingBalance -= oldAmount;
-                }
-                else
-                {
-                    if (oldCD == LineCD.CREDIT)
-                        oldRow.endingBalance -= oldAmount;
-                    else
-                        oldRow.endingBalance += oldAmount;
-                }
-
-                //  Update to the new amount
-                if (newRow.creditDebit == LineCD.DEBIT)
-                {
-                    if (newCD == LineCD.CREDIT)
-                        newRow.endingBalance -= newAmount;
-                    else
-                        newRow.endingBalance += newAmount;
-                }
-                else
-                {
-                    if (newCD == LineCD.CREDIT)
-                        newRow.endingBalance += newAmount;
-                    else
-                        newRow.endingBalance -= newAmount;
-                }
-            }
-        }
-
-        ///////////////////////////////////////////////////////////////////////
-        //   Envelope Data Table 
-        ///////////////////////////////////////////////////////////////////////
-        partial class EnvelopeDataTable
-        {
-            public void myUndoTransaction(int oldEnvelopeID, bool oldCD, decimal oldAmount)
-            {
-                EnvelopeRow row = this.FindByid(oldEnvelopeID);
-
-                // Undo the old Amount
-                if (oldCD == LineCD.CREDIT)
-                    row.endingBalance += oldAmount;
-
-                else
-                    row.endingBalance -= oldAmount;
-            }
-
-            public void myDoTransaction(int newEnvelopeID, bool newCD, decimal newAmount)
-            {
-                EnvelopeRow row = FindByid(newEnvelopeID);
-
-                //  Update to the new amount
-                if (newCD == LineCD.CREDIT)
-                    row.endingBalance -= newAmount;
-
-                else
-                    row.endingBalance += newAmount;
-            }
-
-            public void myUndoDoTransaction(int oldEnvelopeID, bool oldCD, decimal oldAmount, int newEnvelopeID, bool newCD, decimal newAmount)
-            {
-                EnvelopeRow oldEnvelopeRow = FindByid(oldEnvelopeID);
-                EnvelopeRow newEnvelopeRow = FindByid(newEnvelopeID);
-
-                // Undo the old Amount
-                if (oldCD == LineCD.CREDIT)
-                    oldEnvelopeRow.endingBalance += oldAmount;
-
-                else
-                    oldEnvelopeRow.endingBalance -= oldAmount;
-
-
-                //  Update to the new amount
-                if (newCD == LineCD.CREDIT)
-                    newEnvelopeRow.endingBalance -= newAmount;
-
-                else
-                    newEnvelopeRow.endingBalance += newAmount;
-            }
-        }
-
-        ///////////////////////////////////////////////////////////////////////
-        //   AEBalance Data Table 
-        ///////////////////////////////////////////////////////////////////////
-        partial class AEBalanceDataTable
-        {
-            public AEBalanceRow myGetRow(int accountID, int envelopeID)
-            {
-                AEBalanceRow row = this.FindByaccountIDenvelopeID(accountID, envelopeID);
-
-                if (row == null)
-                {
-                    row = this.NewAEBalanceRow();
-
-                    row.accountID = accountID;
-                    row.envelopeID = envelopeID;
-                    row.endingBalance = 0.0m;
-
-                    this.Rows.Add(row);
-                }
-
-                return row;
-            }
-
-            public void myUndoTransaction(int oldAccountID, int oldEnvelopeID, bool oldCD, decimal oldAmount)
-            {
-                AEBalanceRow row = this.myGetRow(oldAccountID, oldEnvelopeID);
-
-                if (row == null)
-                    return;
-
-                // Undo the old Amount
-                if (oldCD == LineCD.CREDIT)
-                    row.endingBalance += oldAmount;
-
-                else
-                    row.endingBalance -= oldAmount;
-            }
-
-            public void myDoTransaction(int newAccountID, int newEnvelopeID, bool newCD, decimal newAmount)
-            {
-                AEBalanceRow row = this.myGetRow(newAccountID, newEnvelopeID);
-
-                if (row == null)
-                    return;
-
-                // Do the new Amount
-                if (newCD == LineCD.CREDIT)
-                    row.endingBalance -= newAmount;
-
-                else
-                    row.endingBalance += newAmount;
-            }
-
-            public void myUndoDoTransaction(int oldAccountID, int oldEnvelopeID, bool oldCD, decimal oldAmount, int newAccountID, int newEnvelopeID, bool newCD, decimal newAmount)
-            {
-                AEBalanceRow oldRow = this.myGetRow(oldAccountID, oldEnvelopeID);
-                AEBalanceRow newRow = this.myGetRow(newAccountID, newEnvelopeID);
-
-                if (oldRow == null || newRow == null)
-                    return;
-
-                // Undo the old Amount
-                if (oldCD == LineCD.CREDIT)
-                    oldRow.endingBalance += oldAmount;
-
-                else
-                    oldRow.endingBalance -= oldAmount;
-
-
-                // Do the new Amount
-                if (newCD == LineCD.CREDIT)
-                    newRow.endingBalance -= newAmount;
-
-                else
-                    newRow.endingBalance += newAmount;
-            }
-        }
 
         ///////////////////////////////////////////////////////////////////////
         //   LineItem Data Table 
@@ -579,7 +246,7 @@ namespace FamilyFinance2.Forms.Transaction
                 newRow.id = newLineID++;
                 //newRow.transactionID = this.transactionID;
                 newRow.date = DateTime.Now.Date;
-                newRow.lineTypeID = SpclLineType.NULL;
+                newRow.typeID = SpclLineType.NULL;
                 newRow.accountID = SpclAccount.NULL;
                 newRow.oppAccountID = SpclAccount.NULL;
                 newRow.description = "";
@@ -632,7 +299,7 @@ namespace FamilyFinance2.Forms.Transaction
             //   Public Functions
             public void myFill(int transID)
             {
-                this.LineItemTA.FillByTransactionID(this, transID);
+                this.LineItemTA.FillByTransID(this, transID);
                 this.newLineID = FFDataBase.myDBGetNewID("id", "LineItem");
             }
 
@@ -728,7 +395,7 @@ namespace FamilyFinance2.Forms.Transaction
             //   Function Public
             public void myFill(int transID)
             {
-                this.EnvelopeLineTA.FillByTransactionID(this, transID);
+                this.EnvelopeLineTA.FillByTransID(this, transID);
                 this.newID = FFDataBase.myDBGetNewID("id", "EnvelopeLine");
             }
 
@@ -756,4 +423,3 @@ namespace FamilyFinance2.Forms.Transaction
 
     }
 }
-

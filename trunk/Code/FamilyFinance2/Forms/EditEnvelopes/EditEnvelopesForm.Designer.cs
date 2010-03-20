@@ -202,7 +202,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.parentEnvelopeComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.envelopeBindingSource, "parentEnvelope", true));
             this.parentEnvelopeComboBox.DataSource = this.parentEnvelopeBindingSource;
-            this.parentEnvelopeComboBox.DisplayMember = "fullName";
+            this.parentEnvelopeComboBox.DisplayMember = "name";
             this.parentEnvelopeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.parentEnvelopeComboBox.FormattingEnabled = true;
             this.parentEnvelopeComboBox.Location = new System.Drawing.Point(123, 54);
@@ -216,7 +216,7 @@
             this.parentEnvelopeBindingSource.DataMember = "Envelope";
             this.parentEnvelopeBindingSource.DataSource = this.eEDataSet;
             this.parentEnvelopeBindingSource.Filter = "";
-            this.parentEnvelopeBindingSource.Sort = "fullName";
+            this.parentEnvelopeBindingSource.Sort = "name";
             // 
             // closedCheckBox
             // 

@@ -6,14 +6,14 @@ using FamilyFinance2.SharedElements;
 
 namespace FamilyFinance2.Forms.Transaction
 {
-    class CDLinesDGV : MyDataGridView
+    class CDLinesDGV : DataGridView
     {
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Local Constants and variables
         ////////////////////////////////////////////////////////////////////////////////////////////
 
         public BindingSource BindingSourceLineItemDGV;
-        public BindingSource BindingSourceLineTypeIDCol;
+        public BindingSource BindingSourceTypeIDCol;
         public BindingSource BindingSourceAccountIDCol;
         public BindingSource BindingSourceEnvelopeIDCol;
 
@@ -29,9 +29,91 @@ namespace FamilyFinance2.Forms.Transaction
         private DataGridViewTextBoxColumn creditDebitColumn;
         private DataGridViewTextBoxColumn amountColumn;
 
+        // row flags used in painting cells
+        public bool flagLineError;
+        public bool flagAccountError;
+
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        //   Properties
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        public bool ShowTypeColumn
+        {
+            get { return this.Columns["typeIDColumn"].Visible; }
+            set { this.Columns["typeIDColumn"].Visible = value; }
+        }
+
+        public bool ShowConfirmationColumn
+        {
+            get { return this.Columns["confirmationNumColumn"].Visible; }
+            set { this.Columns["confirmationNumColumn"].Visible = value; }
+        }
+
+        public int CurrentLineID
+        {
+            get
+            {
+                int lineID = -1;
+
+                try
+                {
+                    lineID = Convert.ToInt32(this.CurrentRow.Cells["lineItemIDColumn"].Value);
+                }
+                catch
+                {
+                }
+
+                return lineID;
+            }
+        }
+
+        public int CurrentTransactionID
+        {
+            get
+            {
+                int transID = -1;
+
+                try
+                {
+                    transID = Convert.ToInt32(this.CurrentRow.Cells["transactionIDColumn"].Value);
+                }
+                catch
+                {
+                }
+
+                return transID;
+            }
+        }
+
+
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Internal Events
         ////////////////////////////////////////////////////////////////////////////////////////////
+        private void MyDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            int col = e.ColumnIndex;
+            int row = e.RowIndex;
+
+            if (col < 0 || row < 0)
+                return;
+
+            string colName = this.Columns[col].Name;
+            string toolTipText = this[col, row].ToolTipText;
+
+            // Set the back ground and the tool tip.
+            if (this.flagLineError && (colName == "amountColumn"))
+            {
+                e.CellStyle.BackColor = System.Drawing.Color.Red;
+                toolTipText = "This line amount and its envelope sum need to match.";
+            }
+            else if (this.flagAccountError && colName == "accountIDColumn")
+            {
+                e.CellStyle.BackColor = System.Drawing.Color.Red;
+                toolTipText = "Please choose an account.";
+            }
+
+            this[col, row].ToolTipText = toolTipText;
+        }
+
         private void LineItemDGV_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             int row = e.RowIndex;
@@ -51,7 +133,13 @@ namespace FamilyFinance2.Forms.Transaction
             }
         }
 
-       
+        private void MyDataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            string temp = "stop";
+            temp = temp + temp;
+        }
+
+
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Private
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -88,8 +176,8 @@ namespace FamilyFinance2.Forms.Transaction
             this.typeIDColumn = new DataGridViewComboBoxColumn();
             this.typeIDColumn.Name = "typeIDColumn";
             this.typeIDColumn.HeaderText = "Type";
-            this.typeIDColumn.DataSource = this.BindingSourceLineTypeIDCol;
-            this.typeIDColumn.DataPropertyName = "lineTypeID";
+            this.typeIDColumn.DataSource = this.BindingSourceTypeIDCol;
+            this.typeIDColumn.DataPropertyName = "typeID";
             this.typeIDColumn.DisplayMember = "name";
             this.typeIDColumn.ValueMember = "id";
             this.typeIDColumn.AutoComplete = true;
@@ -140,7 +228,7 @@ namespace FamilyFinance2.Forms.Transaction
             this.envelopeIDColumn.HeaderText = "Envelope";
             this.envelopeIDColumn.DataSource = this.BindingSourceEnvelopeIDCol;
             this.envelopeIDColumn.DataPropertyName = "envelopeID";
-            this.envelopeIDColumn.DisplayMember = "fullName";
+            this.envelopeIDColumn.DisplayMember = "name";
             this.envelopeIDColumn.ValueMember = "id";
             this.envelopeIDColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
             this.envelopeIDColumn.DisplayStyleForCurrentCellOnly = true;
@@ -179,9 +267,21 @@ namespace FamilyFinance2.Forms.Transaction
             this.amountColumn.Width = 65;
 
             // This Data Grid View
-            this.AllowUserToAddRows = true;
+            this.Name = "theDataGridView";
             this.DataSource = this.BindingSourceLineItemDGV;
+            this.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.SelectionMode = DataGridViewSelectionMode.CellSelect;
+            this.Dock = DockStyle.Fill;
+            this.AutoGenerateColumns = false;
+            this.AllowUserToOrderColumns = false;
+            this.AllowUserToDeleteRows = false;
+            this.AllowUserToResizeRows = false;
+            this.AllowUserToAddRows = true;
+            this.RowHeadersVisible = false;
+            this.ShowCellErrors = false;
+            this.ShowRowErrors = false;
+            this.MultiSelect = false;
+
             this.Columns.AddRange(
                 new DataGridViewColumn[] 
                 {
@@ -211,17 +311,28 @@ namespace FamilyFinance2.Forms.Transaction
         ////////////////////////////////////////////////////////////////////////////////////////////
         public CDLinesDGV(bool creditDebit)
         {
+            ///////////////////////////////////////////////////////////////////
+            // Initial Flag values
+            this.flagLineError = false;
+            this.flagAccountError = false;
+
+            ///////////////////////////////////////////////////////////////////
+            // Build theDataGridView
+
+
             // Initialize the Binding Sources
             this.BindingSourceLineItemDGV = new BindingSource();
             this.BindingSourceAccountIDCol = new BindingSource();
             this.BindingSourceEnvelopeIDCol = new BindingSource();
-            this.BindingSourceLineTypeIDCol = new BindingSource();
+            this.BindingSourceTypeIDCol = new BindingSource();
 
             this.buildTheDataGridView(creditDebit);
 
             ////////////////////////////////////
             // Subscribe to events.
             this.CellDoubleClick += new DataGridViewCellEventHandler(LineItemDGV_CellDoubleClick);
+            this.CellFormatting += new DataGridViewCellFormattingEventHandler(MyDataGridView_CellFormatting);
+            this.DataError += new DataGridViewDataErrorEventHandler(MyDataGridView_DataError);
         }
 
         public void myHighLightOn()

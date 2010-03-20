@@ -442,7 +442,7 @@ namespace FamilyFinance2.SharedElements
             SqlCeCommand command;
             string query;
 
-            query = "  SELECT AEBalance.envelopeID, Envelope.fullName, AEBalance.currentBalance ";
+            query = "  SELECT AEBalance.envelopeID, Envelope.name, AEBalance.currentBalance ";
             query += " FROM AEBalance INNER JOIN Envelope ON AEBalance.envelopeID = Envelope.id ";
             query += " WHERE AEBalance.currentBalance <> 0.0 AND AEBalance.accountID = " + accountID.ToString();
             query += " ORDER BY Envelope.fullName ";
