@@ -128,13 +128,13 @@ namespace FamilyFinance2.Forms.EditAccounts
                 if (true == acc.closed)
                     this.addToRootNode(ref this.closedRootNode, acc.AccountTypeRow.name, acc.name, acc.id);
 
-                else if (SpclAccountCat.INCOME == acc.catagoryID)
+                else if (SpclAccountCat.INCOME == acc.catagory)
                     this.addToRootNode(ref this.incomeRootNode, acc.AccountTypeRow.name, acc.name, acc.id);
 
-                else if (SpclAccountCat.EXPENSE == acc.catagoryID)
+                else if (SpclAccountCat.EXPENSE == acc.catagory)
                     this.addToRootNode(ref this.expenseRootNode, acc.AccountTypeRow.name, acc.name, acc.id);
 
-                else if (SpclAccountCat.ACCOUNT == acc.catagoryID)
+                else if (SpclAccountCat.ACCOUNT == acc.catagory)
                     this.addToRootNode(ref this.accountRootNode, acc.AccountTypeRow.name, acc.name, acc.id);
             }
 
