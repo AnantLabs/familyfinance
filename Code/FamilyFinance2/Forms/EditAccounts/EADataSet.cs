@@ -98,12 +98,11 @@ namespace FamilyFinance2.Forms.EditAccounts
 
                 accountRow.id = this.newID++;
                 accountRow.name = "New Account";
-                accountRow.accountTypeID = SpclAccountType.NULL;
-                accountRow.catagoryID = SpclAccountCat.ACCOUNT;
+                accountRow.typeID = SpclAccountType.NULL;
+                accountRow.catagory = SpclAccountCat.ACCOUNT;
                 accountRow.closed = false;
                 accountRow.creditDebit = LineCD.DEBIT;
                 accountRow.envelopes = false;
-                accountRow.endingBalance = 0.0m;
 
                 stayOut = false;
             }

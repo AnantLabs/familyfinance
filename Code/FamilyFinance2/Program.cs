@@ -33,6 +33,7 @@ namespace FamilyFinance2
                 FFDataBase.myExecuteFile(Properties.Resources.Test_Data, true);
 
             //Application.Run(new FamilyFinance2.Forms.Transaction.TransactionForm(3));
+            Application.Run(new FamilyFinance2.Forms.EditAccounts.EditAccountsForm());
             //Application.Run(new MainForm());
             return;
 
