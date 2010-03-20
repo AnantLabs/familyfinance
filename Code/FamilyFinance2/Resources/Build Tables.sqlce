@@ -74,13 +74,17 @@ CREATE TABLE LineItem
 	date				datetime		NOT NULL,
 	typeID				int				NOT NULL,
 	accountID			int				NOT NULL,
+	oppAccountID		int				NOT NULL,
 	description			ntext			NULL,
 	confirmationNumber	ntext			NULL,
+	envelopeID			int				NOT NULL,
 	complete			nchar(1)		NOT NULL,		-- (" " Null, "C" Complete, "R" Reconciled)
 	amount				money			NOT NULL,
 	creditDebit			bit				NOT NULL,		-- (0 = Credit (out), 1 = Debit (in))
 	CONSTRAINT PK_Line_id			PRIMARY KEY (id),
 	CONSTRAINT FK_Line_accountID	FOREIGN KEY (accountID)	REFERENCES  Account(id),
+	CONSTRAINT FK_Line_oppAccountID	FOREIGN KEY (oppAccountID)	REFERENCES  Account(id),
+	CONSTRAINT FK_Line_envelopeID	FOREIGN KEY (envelopeID)	REFERENCES  Envelope(id),
 	CONSTRAINT FK_Line_typeID		FOREIGN KEY (typeID) REFERENCES  LineType(id)
 );
 CREATE INDEX IN_LineItem_transactionID ON LineItem (transactionID);
@@ -103,6 +107,7 @@ CREATE TABLE EnvelopeLine
 	CONSTRAINT FK_EnvelopeLine_envelopeID FOREIGN KEY (envelopeID) REFERENCES  Envelope(id)
 );
 CREATE INDEX IN_EnvelopeLine_lineItemID ON EnvelopeLine (lineItemID);
+CREATE INDEX IN_EnvelopeLine_envelopeID ON EnvelopeLine (envelopeID);
 
 
 

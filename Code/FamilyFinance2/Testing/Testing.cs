@@ -56,15 +56,15 @@ namespace FamilyFinance2.Testing
             lineTA.Fill(stressDS.LineItem);
             envLineTA.Fill(stressDS.EnvelopeLine);
 
-            accountID = FFDataBase.myDBGetNewID("id", "Account") - 1;
-            aTypeID = FFDataBase.myDBGetNewID("id", "AccountType") - 1;
-            envelopeID = FFDataBase.myDBGetNewID("id", "Envelope") - 1;
-            eGroupID = FFDataBase.myDBGetNewID("id", "EnvelopeGroup") - 1;
-            eLineID = FFDataBase.myDBGetNewID("id", "EnvelopeLine") - 1;
-            lTypeID = FFDataBase.myDBGetNewID("id", "LineType") - 1;
+            accountID = FFDataBase.myDBGetNewID("id", "Account");
+            aTypeID = FFDataBase.myDBGetNewID("id", "AccountType");
+            envelopeID = FFDataBase.myDBGetNewID("id", "Envelope");
+            eGroupID = FFDataBase.myDBGetNewID("id", "EnvelopeGroup");
+            eLineID = FFDataBase.myDBGetNewID("id", "EnvelopeLine");
+            lTypeID = FFDataBase.myDBGetNewID("id", "LineType");
 
-            lineID = FFDataBase.myDBGetNewID("id", "LineItem") - 1;
-            transID = FFDataBase.myDBGetNewID("transactionID", "LineItem") - 1;
+            lineID = FFDataBase.myDBGetNewID("id", "LineItem");
+            transID = FFDataBase.myDBGetNewID("transactionID", "LineItem");
             date = DateTime.Now.AddMonths(-12*100).Date;
 
             addAccount();
@@ -128,23 +128,20 @@ namespace FamilyFinance2.Testing
 
                 if (num == 0)
                     addAccountType();
-
                 else if (num == 1)
                     addLineType();
-
                 else if (num == 2)
                     addEnvelopeGroup();
 
-                else if (num <= 10)
+                if (10 < num && num < 15)
                     addAccount();
 
-                else if (num <= 6)
+                if (30 < num && num < 34)
                     addEnvelope();
 
 
-                if (num <= 200)
+                if (100 < num && num < 200)
                     complexTrans();
-
                 else
                     simpleTrans();
             }
@@ -161,20 +158,20 @@ namespace FamilyFinance2.Testing
 
         private void addAccountType()
         {
-            aTypeID++;
             stressDS.AccountType.AddAccountTypeRow(aTypeID, "aType" + aTypeID.ToString());
+            aTypeID++;
         }
 
         private void addLineType()
         {
-            lTypeID++;
             stressDS.LineType.AddLineTypeRow(lTypeID, "lType" + lTypeID.ToString());
+            lTypeID++;
         }
 
         private void addEnvelopeGroup()
         {
-            eGroupID++;
             stressDS.EnvelopeGroup.AddEnvelopeGroupRow(eGroupID, "group" + eGroupID.ToString());
+            eGroupID++;
         }
 
         private void addAccount()
@@ -188,16 +185,16 @@ namespace FamilyFinance2.Testing
             if (catagory == SpclAccountCat.ACCOUNT)
                 envelopes = true; // Convert.ToBoolean(rnd.Next(0, 2));
 
-            accountID++;
             stressDS.Account.AddAccountRow(accountID, "account" + accountID.ToString(), stressDS.AccountType.FindByid(aType), catagory, open, creditDebit, envelopes);
+            accountID++;
         }
 
         private void addEnvelope()
         {
             int eGroup = rnd.Next(1, eGroupID);
 
-            envelopeID++;
             stressDS.Envelope.AddEnvelopeRow(envelopeID, "envelope" + envelopeID.ToString(), stressDS.EnvelopeGroup.FindByid(eGroup), false);
+            envelopeID++;
         }
 
         private void simpleTrans()
@@ -207,43 +204,40 @@ namespace FamilyFinance2.Testing
 
             decimal amount = rnd.Next(1, 100000) / 100.0m;
 
-            transID++;
-            lineID++;
-
             if (rnd.Next(0, 5) == 0)
                 date = date.AddDays(-3);
             else
                 date = date.AddDays(1);
 
             lineRowC.id = lineID;
+            lineRowD.id = lineID + 1;
             lineRowC.transactionID = transID;
+            lineRowD.transactionID = transID;
             lineRowC.date = date;
+            lineRowD.date = date;
             lineRowC.amount = amount;
+            lineRowD.amount = amount;
             lineRowC.description = "";
+            lineRowD.description = "";
             lineRowC.confirmationNumber = "";
+            lineRowD.confirmationNumber = "";
             lineRowC.complete = LineState.CLEARED;
+            lineRowD.complete = LineState.CLEARED;
             lineRowC.creditDebit = LineCD.DEBIT;
+            lineRowD.creditDebit = LineCD.CREDIT;
             lineRowC.typeID = rnd.Next(1, lTypeID);
-            lineRowC.accountID = rnd.Next(1, accountID);
+            lineRowD.typeID = rnd.Next(1, lTypeID);
+            lineRowC.accountID = lineRowD.oppAccountID = rnd.Next(1, accountID);
+            lineRowD.accountID = lineRowC.oppAccountID = rnd.Next(1, accountID);
+
+            this.addEnvLines(ref lineRowC);
+            this.addEnvLines(ref lineRowD);
 
             this.stressDS.LineItem.AddLineItemRow(lineRowC);
-            this.addEnvLines(ref lineRowC);
-            
-            lineID++;
-
-            lineRowD.id = lineID;
-            lineRowD.transactionID = transID;
-            lineRowD.date = date;
-            lineRowD.amount = amount;
-            lineRowD.description = "";
-            lineRowD.confirmationNumber = "";
-            lineRowD.complete = LineState.CLEARED;
-            lineRowD.creditDebit = LineCD.CREDIT;
-            lineRowD.typeID = rnd.Next(1, lTypeID);
-            lineRowD.accountID = rnd.Next(1, accountID);
-
             this.stressDS.LineItem.AddLineItemRow(lineRowD);
-            this.addEnvLines(ref lineRowD);
+            
+            transID++;
+            lineID += 2;
         }
 
         private void complexTrans()
@@ -251,14 +245,16 @@ namespace FamilyFinance2.Testing
             StressDataSet.LineItemRow lineRow;
             decimal cSum = 0.0m;
             decimal dSum = 0.0m;
+            int creditAccount = 0;
+            int debitAccount = 0;
+            int creditCount = 0;
+            int debitCount = 0;
             int num = rnd.Next(3, 8);
 
-            transID++;
             date = date.AddDays(1.0);
 
             for (int i = 0; i < num; i++)
             {
-                lineID++;
 
                 lineRow = stressDS.LineItem.NewLineItemRow();
                 lineRow.id = lineID;
@@ -267,47 +263,89 @@ namespace FamilyFinance2.Testing
                 lineRow.description = "";
                 lineRow.confirmationNumber = "";
                 lineRow.complete = LineState.CLEARED;
-                lineRow.creditDebit = Convert.ToBoolean(rnd.Next(0, 2));
                 lineRow.typeID = rnd.Next(1, lTypeID);
-                lineRow.accountID = rnd.Next(1, accountID);
+                lineRow.oppAccountID = SpclAccount.MULTIPLE; // ASSUME it is going to be split
 
                 if (i + 1 == num && cSum > dSum)
                 {
                     lineRow.amount = cSum - dSum;
                     lineRow.creditDebit = LineCD.DEBIT;
+                    debitCount++;
+                    lineRow.accountID = debitAccount = rnd.Next(1, accountID);
                 }
                 else if (i + 1 == num && dSum >= cSum)
                 {
                     lineRow.amount = dSum - cSum;
-                    if(rnd.Next(0,5) == 0)
-                        lineRow.creditDebit = LineCD.DEBIT; //Error transaction
-                    else
-                        lineRow.creditDebit = LineCD.CREDIT;
-
+                    lineRow.creditDebit = LineCD.CREDIT;
+                    creditCount++;
+                    lineRow.accountID = creditAccount = rnd.Next(1, accountID);
                 }
                 else 
                 {
                     lineRow.amount = rnd.Next(1, 100000) / 100.0m;
 
-                    if (lineRow.creditDebit == LineCD.CREDIT)
+                    if (Convert.ToBoolean(rnd.Next(0, 2)))
+                    {
+                        lineRow.creditDebit = LineCD.CREDIT;
+                        creditCount++;
                         cSum += lineRow.amount;
+                        lineRow.accountID = creditAccount = rnd.Next(1, accountID);
+                    }
                     else
+                    {
+                        lineRow.creditDebit = LineCD.DEBIT;
+                        debitCount++;
                         dSum += lineRow.amount;
+                        lineRow.accountID = debitAccount = rnd.Next(1, accountID);
+                    }
                 }
 
-                this.stressDS.LineItem.AddLineItemRow(lineRow);
                 this.addEnvLines(ref lineRow);
+                this.stressDS.LineItem.AddLineItemRow(lineRow);
+                lineID++;
+            } // END For loop
+
+            // loop backwards and update the oppAccount fields for this transaction
+            if (creditCount == 1)
+            {
+                int id = lineID;
+                while (true)
+                {
+                    id--;
+                    lineRow = stressDS.LineItem.FindByid(id);
+
+                    if(lineRow.transactionID != transID)
+                        break;
+
+                    if (lineRow.creditDebit == LineCD.DEBIT)
+                        lineRow.oppAccountID = creditAccount;
+                }
             }
+
+            if (debitCount == 1)
+            {
+                int id = lineID;
+                while (true)
+                {
+                    id--;
+                    lineRow = stressDS.LineItem.FindByid(id);
+
+                    if (lineRow.transactionID != transID)
+                        break;
+
+                    if (lineRow.creditDebit == LineCD.CREDIT)
+                        lineRow.oppAccountID = debitAccount;
+                }
+            }
+
+            transID++;
         }
 
         private void addEnvLines(ref StressDataSet.LineItemRow line)
         {
-            if (false == line.AccountRow.envelopes)
+            if (false == line.AccountRowByFK_Line_accountID.envelopes)
             {
-                return;
-            }
-            else if (rnd.Next(0, 10) == 0) 
-            {
+                line.envelopeID = SpclEnvelope.NULL;
                 return;
             }
             else
@@ -338,6 +376,12 @@ namespace FamilyFinance2.Testing
 
                     this.stressDS.EnvelopeLine.AddEnvelopeLineRow(eRow);
                 }
+
+                if (num == 1)
+                    line.envelopeID = eRow.envelopeID;
+                else
+                    line.envelopeID = SpclEnvelope.SPLIT;
+
             }
         }
 

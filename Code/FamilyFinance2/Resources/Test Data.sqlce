@@ -42,32 +42,32 @@ INSERT INTO Envelope VALUES (11, 'Misc.', 3, 0);
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
 --TABLE LineItem (id, transID, date, typeID, accID, description(t), confNumber(t), complete(c), amount, creditDebit)
-INSERT INTO LineItem VALUES (1, 1, '12/30/07', -1, 106, 'Paycheck',          null, ' ', 1200.00, 0);
-INSERT INTO LineItem VALUES (2, 1, '12/30/07',  1, 101, 'Paycheck from Job', null, ' ', 1000.00, 1);
-INSERT INTO LineItem VALUES (3, 1, '12/30/07',  1, 110, 'Taxes from Job',    null, ' ',  200.00, 1);
+INSERT INTO LineItem VALUES (1, 1, '12/30/07', -1, 106,  -2, 'Paycheck',          null, -1, ' ', 1200.00, 0);
+INSERT INTO LineItem VALUES (2, 1, '12/30/07',  1, 101, 106, 'Paycheck from Job', null, -2, ' ', 1000.00, 1);
+INSERT INTO LineItem VALUES (3, 1, '12/30/07',  1, 110, 106, 'Taxes from Job',    null, -1, ' ',  200.00, 1);
 
-INSERT INTO LineItem VALUES (4, 2, '03/04/08', 2, 101, 'T1 Purchased a Picture frame from Target', null, 'C', 10.00, 0);
-INSERT INTO LineItem VALUES (5, 2, '03/04/08', 2, 107, 'T1 Purchased a Picture frame from Target', null, 'C', 10.00, 1);
+INSERT INTO LineItem VALUES (4, 2, '03/04/08', 2, 101, 107, 'T1 Purchased a Picture frame from Target', null, 11, 'C', 10.00, 0);
+INSERT INTO LineItem VALUES (5, 2, '03/04/08', 2, 107, 101, 'T1 Purchased a Picture frame from Target', null, -1, 'C', 10.00, 1);
 
-INSERT INTO LineItem VALUES (6, 3, '03/04/08', 6, 101, 'Return from K-Mart', null, 'C', 20.00, 1);
-INSERT INTO LineItem VALUES (7, 3, '03/04/08', 6, 108, 'Return from K-Mart', null, 'C', 20.00, 0);
+INSERT INTO LineItem VALUES (6, 3, '03/04/08', 6, 101, 108, 'Return from K-Mart', null, 11, 'C', 20.00, 1);
+INSERT INTO LineItem VALUES (7, 3, '03/04/08', 6, 108, 101, 'Return from K-Mart', null, -1, 'C', 20.00, 0);
 
-INSERT INTO LineItem VALUES (8, 4, '03/06/08', 5, 101, 'Money to John for the Weekend', null, 'C', 10.00, 0);
-INSERT INTO LineItem VALUES (9, 4, '03/06/08', 5, 112, 'Money to John for the Weekend', null, 'C', 10.00, 1);
+INSERT INTO LineItem VALUES (8, 4, '03/06/08', 5, 101, 112, 'Money to John for the Weekend', null, 11, 'C', 10.00, 0);
+INSERT INTO LineItem VALUES (9, 4, '03/06/08', 5, 112, 101, 'Money to John for the Weekend', null, -1, 'C', 10.00, 1);
 
-INSERT INTO LineItem VALUES (10, 5, '03/07/09', 5, 101, 'Childrens weekly allowance 2', null, 'C', 30.00, 0);
-INSERT INTO LineItem VALUES (11, 5, '03/07/09', 5, 112, 'Childrens weekly allowance 2', null, 'C', 15.00, 1);
-INSERT INTO LineItem VALUES (12, 5, '03/07/09', 5, 113, 'Childrens weekly allowance 2', null, 'C', 15.00, 1);
+INSERT INTO LineItem VALUES (10, 5, '03/07/09', 5, 101,  -2, 'Childrens weekly allowance 2', null, 11, 'C', 30.00, 0);
+INSERT INTO LineItem VALUES (11, 5, '03/07/09', 5, 112, 101, 'Childrens weekly allowance 2', null, -1, 'C', 15.00, 1);
+INSERT INTO LineItem VALUES (12, 5, '03/07/09', 5, 113, 101, 'Childrens weekly allowance 2', null, -1, 'C', 15.00, 1);
 
-INSERT INTO LineItem VALUES (13, 6, '03/18/09', 3, 101, 'Money for Rent', null, 'C', 400.00, 0);
-INSERT INTO LineItem VALUES (14, 6, '03/18/09', 1, 109, 'Money for Rent', null, 'C', 400.00, 1);
+INSERT INTO LineItem VALUES (13, 6, '03/18/09', 3, 101, 109, 'Money for Rent', null, 5, 'C', 400.00, 0);
+INSERT INTO LineItem VALUES (14, 6, '03/18/09', 1, 109, 101, 'Money for Rent', null, -1, 'C', 400.00, 1);
 
-INSERT INTO LineItem VALUES (15, 7, '03/20/09', 7, 103, 'Gasoline', null, ' ', 50.00, 0);
-INSERT INTO LineItem VALUES (16, 7, '03/20/09', 7, 114, 'Gasoline', null, ' ', 50.00, 1);
+INSERT INTO LineItem VALUES (15, 7, '03/20/09', 7, 103, 114, 'Gasoline', null,  4, ' ', 50.00, 0);
+INSERT INTO LineItem VALUES (16, 7, '03/20/09', 7, 114, 103, 'Gasoline', null, -1, ' ', 50.00, 1);
 
-INSERT INTO LineItem VALUES (17, 8, '03/30/09', 1, 101, '2 Paychecks',           null, ' ', 600.00, 1);
-INSERT INTO LineItem VALUES (18, 8, '03/30/09', 1, 106, 'Paycheck from Job',     null, ' ', 500.00, 0);
-INSERT INTO LineItem VALUES (19, 8, '03/30/09', 1, 115, 'Paycheck from 2nd Job', null, ' ', 100.00, 0);
+INSERT INTO LineItem VALUES (17, 8, '03/30/09', 1, 101,  -2, '2 Paychecks',           null, -2, ' ', 600.00, 1);
+INSERT INTO LineItem VALUES (18, 8, '03/30/09', 1, 106, 101, 'Paycheck from Job',     null, -1, ' ', 500.00, 0);
+INSERT INTO LineItem VALUES (19, 8, '03/30/09', 1, 115, 101, 'Paycheck from 2nd Job', null, -1, ' ', 100.00, 0);
 
 
 

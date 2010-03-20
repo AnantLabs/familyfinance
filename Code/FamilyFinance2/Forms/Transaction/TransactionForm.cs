@@ -106,13 +106,8 @@ namespace FamilyFinance2.Forms.Transaction
             int lineID = -1;
 
             // Defaults. Used for new lines.
-            lineDGV.flagTransactionError = false;
             lineDGV.flagLineError = false;
             lineDGV.flagAccountError = false;
-            lineDGV.flagFutureDate = false;
-            lineDGV.flagNegativeBalance = false;
-            lineDGV.flagReadOnlyEnvelope = false;
-            lineDGV.flagReadOnlyAccount = false;
 
             // try to get the current row lineID
             try { lineID = Convert.ToInt32(lineDGV["lineItemIDColumn", e.RowIndex].Value); }
@@ -130,11 +125,10 @@ namespace FamilyFinance2.Forms.Transaction
                 if (thisLine.accountID == SpclAccount.NULL)
                     lineDGV.flagAccountError = true;
 
-                if (thisLine.envelopeID == SpclEnvelope.SPLIT || !thisLineUsesEnvelopes)
-                    lineDGV.flagReadOnlyEnvelope = true;
+                //if (thisLine.envelopeID == SpclEnvelope.SPLIT || !thisLineUsesEnvelopes)
+                //    lineDGV.flagReadOnlyEnvelope = true;
 
-                if (thisLine.date > DateTime.Today) // future Date
-                    lineDGV.flagFutureDate = true;
+
             }
         }
 
@@ -356,7 +350,6 @@ namespace FamilyFinance2.Forms.Transaction
         private void DoneButton_Click(object sender, EventArgs e)
         {
             this.tDataSet.myCheckTransaction();
-            this.tDataSet.myRippleBalanceChanges();
             this.tDataSet.mySaveChanges();
             this.Close();
         }
@@ -385,11 +378,11 @@ namespace FamilyFinance2.Forms.Transaction
 
             this.creditDGV.BindingSourceEnvelopeIDCol.DataSource = tDataSet;
             this.creditDGV.BindingSourceEnvelopeIDCol.DataMember = "Envelope";
-            this.creditDGV.BindingSourceEnvelopeIDCol.Sort = "fullName";
+            this.creditDGV.BindingSourceEnvelopeIDCol.Sort = "name";
 
-            this.creditDGV.BindingSourceLineTypeIDCol.DataSource = tDataSet;
-            this.creditDGV.BindingSourceLineTypeIDCol.DataMember = "LineType";
-            this.creditDGV.BindingSourceLineTypeIDCol.Sort = "name";
+            this.creditDGV.BindingSourceTypeIDCol.DataSource = tDataSet;
+            this.creditDGV.BindingSourceTypeIDCol.DataMember = "LineType";
+            this.creditDGV.BindingSourceTypeIDCol.Sort = "name";
 
             this.creditDGV.CellClick += new DataGridViewCellEventHandler(creditDGV_CellClick);
             this.creditDGV.RowPrePaint += new DataGridViewRowPrePaintEventHandler(cdDGV_RowPrePaint);
@@ -414,11 +407,11 @@ namespace FamilyFinance2.Forms.Transaction
 
             this.debitDGV.BindingSourceEnvelopeIDCol.DataSource = tDataSet;
             this.debitDGV.BindingSourceEnvelopeIDCol.DataMember = "Envelope";
-            this.debitDGV.BindingSourceEnvelopeIDCol.Sort = "fullName";
+            this.debitDGV.BindingSourceEnvelopeIDCol.Sort = "name";
 
-            this.debitDGV.BindingSourceLineTypeIDCol.DataSource = tDataSet;
-            this.debitDGV.BindingSourceLineTypeIDCol.DataMember = "LineType";
-            this.debitDGV.BindingSourceLineTypeIDCol.Sort = "name";
+            this.debitDGV.BindingSourceTypeIDCol.DataSource = tDataSet;
+            this.debitDGV.BindingSourceTypeIDCol.DataMember = "LineType";
+            this.debitDGV.BindingSourceTypeIDCol.Sort = "name";
 
             this.debitDGV.CellClick += new DataGridViewCellEventHandler(debitDGV_CellClick);
             this.debitDGV.RowPrePaint += new DataGridViewRowPrePaintEventHandler(cdDGV_RowPrePaint);
