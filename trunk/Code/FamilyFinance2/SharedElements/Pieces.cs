@@ -22,6 +22,11 @@ namespace FamilyFinance2.SharedElements
         public const string PENDING = " ";
     }
 
+    public class SpclLineType
+    {
+        public const int NULL = -1;
+    }
+
     public class SpclAccount
     {
         public const int MULTIPLE = -2;
@@ -48,7 +53,7 @@ namespace FamilyFinance2.SharedElements
         public const int NOENVELOPE = 0;
     }
 
-    public class SpclLineType
+    public class SpclEnvelopeGroup
     {
         public const int NULL = -1;
     }
