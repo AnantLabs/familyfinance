@@ -15,7 +15,7 @@ namespace FamilyFinance2.Forms.EditEnvelopes
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Local  Variables
         ////////////////////////////////////////////////////////////////////////////////////////////
-        MyTreeNode ClosedEnvelopesNode;
+        private MyTreeNode ClosedEnvelopesNode;
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Internal Events
@@ -30,20 +30,9 @@ namespace FamilyFinance2.Forms.EditEnvelopes
         private void bindingNavigatorAddNewItem_Click(object sender, EventArgs e)
         {
             // End, save and rebuild filter.
-            this.envelopeBindingSource.EndEdit();
-            this.eEDataSet.myUpdateEnvelopeDB();
-            this.buildEnvelopeTree();
-            this.parentEnvelopeBindingSource.Filter = "closed = 0 AND id <> " + SpclEnvelope.SPLIT.ToString() + " AND id <> " + SpclEnvelope.NOENVELOPE.ToString();
-
-            // Find the newest node (Largest ID) and select it
-            int largestID = SpclEnvelope.NULL;
-            foreach (MyTreeNode node in this.envelopeTreeView.Nodes)
-            {
-                int temp = node.ID;
-                if (temp > largestID)
-                    largestID = temp;
-            }
-            this.envelopeBindingSource.Filter = "id = " + largestID.ToString();
+            this.parentEnvelopeComboBox.Enabled = true;
+            this.nameTextBox.Enabled = true;
+            this.closedCheckBox.Enabled = true;
         }
 
         private void bindingNavigatorDeleteItem_Click(object sender, EventArgs e)
@@ -62,37 +51,32 @@ namespace FamilyFinance2.Forms.EditEnvelopes
 
         private void envelopeTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            string filter;
-            List<int> idList;
             MyTreeNode node = e.Node as MyTreeNode;
             int envelopeID = node.ID;
 
             // End, save 
             this.envelopeBindingSource.EndEdit();
             this.eEDataSet.myUpdateEnvelopeDB();
-
-            // Rebuild Parent Envelope filter
-            idList = this.eEDataSet.Envelope.myGetAllChildEnvelopeIDList(envelopeID);
-
-            filter = "closed = 0";
-            filter += " AND id <> " + SpclEnvelope.SPLIT.ToString();
-            filter += " AND id <> " + SpclEnvelope.NOENVELOPE.ToString();
-            filter += " AND id <> " + envelopeID.ToString();
-
-            foreach (int id in idList)
-                filter += " AND id <> " + id.ToString();
-
-            this.parentEnvelopeBindingSource.Filter = filter;
             
             // Enable or disable the combo box
             EEDataSet.EnvelopeRow eRow = this.eEDataSet.Envelope.FindByid(envelopeID);
-            if (eRow == null || eRow.closed)
+            if (eRow == null || envelopeID == SpclEnvelope.NULL)
             {
                 this.parentEnvelopeComboBox.Enabled = false;
+                this.nameTextBox.Enabled = false;
+                this.closedCheckBox.Enabled = false;
+            }
+            else if (eRow.closed)
+            {
+                this.parentEnvelopeComboBox.Enabled = false;
+                this.nameTextBox.Enabled = true;
+                this.closedCheckBox.Enabled = true;
             }
             else
             {
                 this.parentEnvelopeComboBox.Enabled = true;
+                this.nameTextBox.Enabled = true;
+                this.closedCheckBox.Enabled = true;
             }
             
 
@@ -106,56 +90,78 @@ namespace FamilyFinance2.Forms.EditEnvelopes
         ////////////////////////////////////////////////////////////////////////////////////////////
         private void buildEnvelopeTree()
         {
-            // Add all the root envelopes
+            Font closedFont = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            Color closedForeColor = System.Drawing.Color.DarkSlateGray;
+
             this.envelopeTreeView.Nodes.Clear();
             this.ClosedEnvelopesNode.Nodes.Clear();
-            List<int> idList = eEDataSet.Envelope.myGetChildEnvelopeIDList(SpclEnvelope.NULL);
 
-            // Add all the root nodes to the tree
-            foreach (int id in idList)
+            this.ClosedEnvelopesNode.NodeFont = closedFont;
+            this.ClosedEnvelopesNode.ForeColor = closedForeColor;
+
+            // Add all envelopes to the tree
+            foreach (EEDataSet.EnvelopeRow eRow in eEDataSet.Envelope)
             {
-                MyTreeNode newEnvNode = new MyTreeNode(this.eEDataSet.Envelope.FindByid(id).name, id);
+                if (eRow.id <= SpclEnvelope.NOENVELOPE)
+                    continue;
 
-                if (this.eEDataSet.Envelope.FindByid(id).closed == false)
+                if (eRow.closed)
                 {
-                    newEnvNode.NodeFont = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                    newEnvNode.ForeColor = System.Drawing.Color.Black;
-                    this.envelopeTreeView.Nodes.Add(newEnvNode);
-                    this.addChildEnvelopes(id, ref newEnvNode);
+                    bool found = false;
+                    MyTreeNode newEnv = new MyTreeNode(eRow.name, eRow.id);
+                    newEnv.NodeFont = closedFont;
+                    newEnv.ForeColor = closedForeColor;
+
+                    // Go throu each node in the closed node and add the new Envelope to the corrolating Envelope Group
+                    foreach (MyTreeNode groupNode in this.ClosedEnvelopesNode.Nodes)
+                    {
+                        if (groupNode.Text == eRow.EnvelopeGroupRow.name)
+                        {
+                            // We have found the appropriate node: add the Envelope node, there is nothing else to do.
+                            groupNode.Nodes.Add(newEnv);
+                            found = true;
+                        }
+                    }
+
+                    // If we get here there was no group node matching the new Envelope.   
+                    if (!found)
+                    {
+                        MyTreeNode newGroupNode = new MyTreeNode(eRow.EnvelopeGroupRow.name, SpclEnvelopeGroup.NULL);
+                        newGroupNode.NodeFont = closedFont;
+                        newGroupNode.ForeColor = closedForeColor;
+                        newGroupNode.Nodes.Add(newEnv);
+                        this.ClosedEnvelopesNode.Nodes.Add(newGroupNode);
+                    }
                 }
                 else
                 {
-                    newEnvNode.NodeFont = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                    newEnvNode.ForeColor = System.Drawing.Color.DarkSlateGray;
-                    this.ClosedEnvelopesNode.Nodes.Add(newEnvNode);
+                    bool found = false;
+                    MyTreeNode newEnv = new MyTreeNode(eRow.name, eRow.id);
+
+                    // Go throu each node in the closed node and add the new Envelope to the corrolating Envelope Group
+                    foreach (MyTreeNode groupNode in this.envelopeTreeView.Nodes)
+                    {
+                        if (groupNode.Text == eRow.EnvelopeGroupRow.name)
+                        {
+                            // We have found the appropriate node: add the Envelope node, there is nothing else to do.
+                            groupNode.Nodes.Add(newEnv);
+                            found = true;
+                        }
+                    }
+
+                    // If we get here there was no type node matching the new account.  
+                    if (!found)
+                    {
+                        MyTreeNode newGroupNode = new MyTreeNode(eRow.EnvelopeGroupRow.name, SpclEnvelopeGroup.NULL);
+                        newGroupNode.Nodes.Add(newEnv);
+                        this.envelopeTreeView.Nodes.Add(newGroupNode);
+                    }
                 }
+
             }
 
-            if (this.envelopeTreeView.Nodes.Count > 0)
-                this.envelopeTreeView.ExpandAll();
-
-            this.ClosedEnvelopesNode.NodeFont = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ClosedEnvelopesNode.ForeColor = System.Drawing.Color.DarkSlateGray;
             this.envelopeTreeView.Nodes.Add(this.ClosedEnvelopesNode);
-
-            //this.envelopeTreeView.Sort();
         }
-
-        private void addChildEnvelopes(int parentEnvelopeID, ref MyTreeNode branch)
-        {
-            // Add all the branch nodes
-            List<int> idList = eEDataSet.Envelope.myGetChildEnvelopeIDList(parentEnvelopeID);
-
-            foreach(int id in idList)
-            {
-                MyTreeNode node = new MyTreeNode(this.eEDataSet.Envelope.FindByid(id).name, id);
-                node.NodeFont = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                node.ForeColor = System.Drawing.Color.Black;
-                branch.Nodes.Add(node);
-                this.addChildEnvelopes(id, ref node);
-            }
-        }
-
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -168,13 +174,13 @@ namespace FamilyFinance2.Forms.EditEnvelopes
             // Initialize dataset
             this.eEDataSet.myInit();
             this.eEDataSet.myFillEnvelopTable();
+            this.eEDataSet.myFillGroupTable();
 
-            this.ClosedEnvelopesNode = new MyTreeNode("Closed Envelopes", -100);
+            this.ClosedEnvelopesNode = new MyTreeNode("Closed Envelopes", -10);
             buildEnvelopeTree();
 
             // set the max length on the name text box.
             this.nameTextBox.MaxLength = this.eEDataSet.Envelope.nameColumn.MaxLength;
-
 
 
             // Select the first node if it is there
@@ -184,7 +190,7 @@ namespace FamilyFinance2.Forms.EditEnvelopes
             {
                 // else select nothing
                 this.envelopeBindingSource.AddNew();
-                this.parentEnvelopeBindingSource.Filter = "id = -100";
+                this.envelopeGroupBindingSource.Filter = "id = -10";
             }
         }
 

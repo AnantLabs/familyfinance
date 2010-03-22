@@ -41,9 +41,10 @@
             this.eEDataSet = new FamilyFinance2.Forms.EditEnvelopes.EEDataSet();
             this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
             this.envelopeBindingNavigatorSaveItem = new System.Windows.Forms.ToolStripButton();
+            this.editAccountTypeTSB = new System.Windows.Forms.ToolStripButton();
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.parentEnvelopeComboBox = new System.Windows.Forms.ComboBox();
-            this.parentEnvelopeBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.envelopeGroupBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.closedCheckBox = new System.Windows.Forms.CheckBox();
             nameLabel = new System.Windows.Forms.Label();
             parentEnvelopeLabel = new System.Windows.Forms.Label();
@@ -55,7 +56,7 @@
             this.envelopeBindingNavigator.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.envelopeBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eEDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.parentEnvelopeBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.envelopeGroupBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // nameLabel
@@ -72,9 +73,9 @@
             parentEnvelopeLabel.AutoSize = true;
             parentEnvelopeLabel.Location = new System.Drawing.Point(28, 57);
             parentEnvelopeLabel.Name = "parentEnvelopeLabel";
-            parentEnvelopeLabel.Size = new System.Drawing.Size(89, 13);
+            parentEnvelopeLabel.Size = new System.Drawing.Size(87, 13);
             parentEnvelopeLabel.TabIndex = 2;
-            parentEnvelopeLabel.Text = "Parent Envelope:";
+            parentEnvelopeLabel.Text = "Envelope Group:";
             // 
             // closedLabel
             // 
@@ -94,7 +95,7 @@
             this.envelopeTreeView.Indent = 10;
             this.envelopeTreeView.Location = new System.Drawing.Point(0, 0);
             this.envelopeTreeView.Name = "envelopeTreeView";
-            this.envelopeTreeView.Size = new System.Drawing.Size(267, 369);
+            this.envelopeTreeView.Size = new System.Drawing.Size(289, 369);
             this.envelopeTreeView.TabIndex = 0;
             this.envelopeTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.envelopeTreeView_AfterSelect);
             // 
@@ -110,6 +111,7 @@
             // 
             // splitContainer.Panel2
             // 
+            this.splitContainer.Panel2.AutoScroll = true;
             this.splitContainer.Panel2.Controls.Add(this.envelopeBindingNavigator);
             this.splitContainer.Panel2.Controls.Add(nameLabel);
             this.splitContainer.Panel2.Controls.Add(this.nameTextBox);
@@ -118,7 +120,7 @@
             this.splitContainer.Panel2.Controls.Add(closedLabel);
             this.splitContainer.Panel2.Controls.Add(this.closedCheckBox);
             this.splitContainer.Size = new System.Drawing.Size(615, 369);
-            this.splitContainer.SplitterDistance = 267;
+            this.splitContainer.SplitterDistance = 289;
             this.splitContainer.TabIndex = 1;
             // 
             // envelopeBindingNavigator
@@ -131,7 +133,8 @@
             this.envelopeBindingNavigator.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorAddNewItem,
             this.bindingNavigatorDeleteItem,
-            this.envelopeBindingNavigatorSaveItem});
+            this.envelopeBindingNavigatorSaveItem,
+            this.editAccountTypeTSB});
             this.envelopeBindingNavigator.Location = new System.Drawing.Point(0, 0);
             this.envelopeBindingNavigator.MoveFirstItem = null;
             this.envelopeBindingNavigator.MoveLastItem = null;
@@ -140,7 +143,7 @@
             this.envelopeBindingNavigator.Name = "envelopeBindingNavigator";
             this.envelopeBindingNavigator.PositionItem = null;
             this.envelopeBindingNavigator.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.envelopeBindingNavigator.Size = new System.Drawing.Size(344, 25);
+            this.envelopeBindingNavigator.Size = new System.Drawing.Size(322, 25);
             this.envelopeBindingNavigator.TabIndex = 2;
             this.envelopeBindingNavigator.Text = "bindingNavigator1";
             // 
@@ -185,6 +188,15 @@
             this.envelopeBindingNavigatorSaveItem.Text = "Save Data";
             this.envelopeBindingNavigatorSaveItem.Click += new System.EventHandler(this.envelopeBindingNavigatorSaveItem_Click);
             // 
+            // editAccountTypeTSB
+            // 
+            this.editAccountTypeTSB.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.editAccountTypeTSB.Image = ((System.Drawing.Image)(resources.GetObject("editAccountTypeTSB.Image")));
+            this.editAccountTypeTSB.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.editAccountTypeTSB.Name = "editAccountTypeTSB";
+            this.editAccountTypeTSB.Size = new System.Drawing.Size(72, 22);
+            this.editAccountTypeTSB.Text = "Edit Groups";
+            // 
             // nameTextBox
             // 
             this.nameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -193,30 +205,30 @@
             this.nameTextBox.Location = new System.Drawing.Point(123, 28);
             this.nameTextBox.MaxLength = 30;
             this.nameTextBox.Name = "nameTextBox";
-            this.nameTextBox.Size = new System.Drawing.Size(209, 20);
+            this.nameTextBox.Size = new System.Drawing.Size(187, 20);
             this.nameTextBox.TabIndex = 1;
             // 
             // parentEnvelopeComboBox
             // 
             this.parentEnvelopeComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.parentEnvelopeComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.envelopeBindingSource, "parentEnvelope", true));
-            this.parentEnvelopeComboBox.DataSource = this.parentEnvelopeBindingSource;
+            this.parentEnvelopeComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.envelopeBindingSource, "groupID", true));
+            this.parentEnvelopeComboBox.DataSource = this.envelopeGroupBindingSource;
             this.parentEnvelopeComboBox.DisplayMember = "name";
             this.parentEnvelopeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.parentEnvelopeComboBox.FormattingEnabled = true;
             this.parentEnvelopeComboBox.Location = new System.Drawing.Point(123, 54);
             this.parentEnvelopeComboBox.Name = "parentEnvelopeComboBox";
-            this.parentEnvelopeComboBox.Size = new System.Drawing.Size(209, 21);
+            this.parentEnvelopeComboBox.Size = new System.Drawing.Size(187, 21);
             this.parentEnvelopeComboBox.TabIndex = 3;
             this.parentEnvelopeComboBox.ValueMember = "id";
             // 
-            // parentEnvelopeBindingSource
+            // envelopeGroupBindingSource
             // 
-            this.parentEnvelopeBindingSource.DataMember = "Envelope";
-            this.parentEnvelopeBindingSource.DataSource = this.eEDataSet;
-            this.parentEnvelopeBindingSource.Filter = "";
-            this.parentEnvelopeBindingSource.Sort = "name";
+            this.envelopeGroupBindingSource.DataMember = "EnvelopeGroup";
+            this.envelopeGroupBindingSource.DataSource = this.eEDataSet;
+            this.envelopeGroupBindingSource.Filter = "";
+            this.envelopeGroupBindingSource.Sort = "name";
             // 
             // closedCheckBox
             // 
@@ -250,7 +262,7 @@
             this.envelopeBindingNavigator.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.envelopeBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eEDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.parentEnvelopeBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.envelopeGroupBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -268,6 +280,7 @@
         private System.Windows.Forms.TextBox nameTextBox;
         private System.Windows.Forms.ComboBox parentEnvelopeComboBox;
         private System.Windows.Forms.CheckBox closedCheckBox;
-        private System.Windows.Forms.BindingSource parentEnvelopeBindingSource;
+        private System.Windows.Forms.BindingSource envelopeGroupBindingSource;
+        private System.Windows.Forms.ToolStripButton editAccountTypeTSB;
     }
 }
