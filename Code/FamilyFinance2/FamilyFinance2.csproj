@@ -235,16 +235,6 @@
     <Compile Include="SharedElements\DB_Commands.cs" />
     <Compile Include="SharedElements\DB_Queries.cs" />
     <Compile Include="SharedElements\Pieces.cs" />
-    <Compile Include="Tabs\RegistrySplit\TreeList\Tracing.cs" />
-    <Compile Include="Tabs\RegistrySplit\TreeList\TreeListColumn.cs" />
-    <Compile Include="Tabs\RegistrySplit\TreeList\TreeListColumn.Design.cs" />
-    <Compile Include="Tabs\RegistrySplit\TreeList\TreeListNode.cs" />
-    <Compile Include="Tabs\RegistrySplit\TreeList\TreeListOptions.cs" />
-    <Compile Include="Tabs\RegistrySplit\TreeList\TreeListPainter.cs" />
-    <Compile Include="Tabs\RegistrySplit\TreeList\TreeListView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Tabs\RegistrySplit\TreeList\Util.cs" />
     <Compile Include="Testing\StressDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -32,9 +32,9 @@ namespace FamilyFinance2
             if (FFDataBase.myCreateDBFile())
                 FFDataBase.myExecuteFile(Properties.Resources.Test_Data, true);
 
-            Application.Run(new FamilyFinance2.Forms.EditAccounts.EditAccountsForm());
-            Application.Run(new FamilyFinance2.Forms.EditEnvelopes.EditEnvelopesForm());
-            //Application.Run(new MainForm());
+            //Application.Run(new FamilyFinance2.Forms.EditAccounts.EditAccountsForm());
+            //Application.Run(new FamilyFinance2.Forms.EditEnvelopes.EditEnvelopesForm());
+            Application.Run(new MainForm());
             //Application.Run(new FamilyFinance2.Forms.Transaction.TransactionForm(3));
             return;
 
