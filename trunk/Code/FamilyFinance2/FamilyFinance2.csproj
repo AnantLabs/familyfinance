@@ -111,6 +111,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EEDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Forms\EditGroup\EditGroupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EditGroup\EditGroupForm.Designer.cs">
+      <DependentUpon>EditGroupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EditGroup\GroupDataSet.cs">
+      <DependentUpon>GroupDataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\EditGroup\GroupDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GroupDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FindDB\FindDBForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,9 +137,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\LineType\LineTypeDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>LineTypeDataSet.xsd</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Forms\LineType\LineTypeForm.cs">
       <SubType>Form</SubType>
@@ -175,6 +190,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EditEnvelopes\EditEnvelopesForm.resx">
       <DependentUpon>EditEnvelopesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EditGroup\EditGroupForm.resx">
+      <DependentUpon>EditGroupForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FindDB\FindDBForm.resx">
       <DependentUpon>FindDBForm.cs</DependentUpon>
@@ -298,6 +316,17 @@
     </None>
     <None Include="Forms\EditEnvelopes\EEDataSet.xss">
       <DependentUpon>EEDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Forms\EditGroup\GroupDataSet.xsc">
+      <DependentUpon>GroupDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Forms\EditGroup\GroupDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GroupDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Forms\EditGroup\GroupDataSet.xss">
+      <DependentUpon>GroupDataSet.xsd</DependentUpon>
     </None>
     <None Include="Forms\LineType\LineTypeDataSet.xsc">
       <DependentUpon>LineTypeDataSet.xsd</DependentUpon>

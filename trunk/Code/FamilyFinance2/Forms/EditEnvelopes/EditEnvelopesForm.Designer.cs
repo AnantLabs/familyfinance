@@ -41,7 +41,7 @@
             this.eEDataSet = new FamilyFinance2.Forms.EditEnvelopes.EEDataSet();
             this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
             this.envelopeBindingNavigatorSaveItem = new System.Windows.Forms.ToolStripButton();
-            this.editAccountTypeTSB = new System.Windows.Forms.ToolStripButton();
+            this.editEnvelopeGroupTSB = new System.Windows.Forms.ToolStripButton();
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.parentEnvelopeComboBox = new System.Windows.Forms.ComboBox();
             this.envelopeGroupBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -95,7 +95,7 @@
             this.envelopeTreeView.Indent = 10;
             this.envelopeTreeView.Location = new System.Drawing.Point(0, 0);
             this.envelopeTreeView.Name = "envelopeTreeView";
-            this.envelopeTreeView.Size = new System.Drawing.Size(289, 369);
+            this.envelopeTreeView.Size = new System.Drawing.Size(218, 369);
             this.envelopeTreeView.TabIndex = 0;
             this.envelopeTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.envelopeTreeView_AfterSelect);
             // 
@@ -119,8 +119,8 @@
             this.splitContainer.Panel2.Controls.Add(this.parentEnvelopeComboBox);
             this.splitContainer.Panel2.Controls.Add(closedLabel);
             this.splitContainer.Panel2.Controls.Add(this.closedCheckBox);
-            this.splitContainer.Size = new System.Drawing.Size(615, 369);
-            this.splitContainer.SplitterDistance = 289;
+            this.splitContainer.Size = new System.Drawing.Size(474, 369);
+            this.splitContainer.SplitterDistance = 218;
             this.splitContainer.TabIndex = 1;
             // 
             // envelopeBindingNavigator
@@ -134,7 +134,7 @@
             this.bindingNavigatorAddNewItem,
             this.bindingNavigatorDeleteItem,
             this.envelopeBindingNavigatorSaveItem,
-            this.editAccountTypeTSB});
+            this.editEnvelopeGroupTSB});
             this.envelopeBindingNavigator.Location = new System.Drawing.Point(0, 0);
             this.envelopeBindingNavigator.MoveFirstItem = null;
             this.envelopeBindingNavigator.MoveLastItem = null;
@@ -143,7 +143,7 @@
             this.envelopeBindingNavigator.Name = "envelopeBindingNavigator";
             this.envelopeBindingNavigator.PositionItem = null;
             this.envelopeBindingNavigator.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.envelopeBindingNavigator.Size = new System.Drawing.Size(322, 25);
+            this.envelopeBindingNavigator.Size = new System.Drawing.Size(252, 25);
             this.envelopeBindingNavigator.TabIndex = 2;
             this.envelopeBindingNavigator.Text = "bindingNavigator1";
             // 
@@ -188,14 +188,15 @@
             this.envelopeBindingNavigatorSaveItem.Text = "Save Data";
             this.envelopeBindingNavigatorSaveItem.Click += new System.EventHandler(this.envelopeBindingNavigatorSaveItem_Click);
             // 
-            // editAccountTypeTSB
+            // editEnvelopeGroupTSB
             // 
-            this.editAccountTypeTSB.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.editAccountTypeTSB.Image = ((System.Drawing.Image)(resources.GetObject("editAccountTypeTSB.Image")));
-            this.editAccountTypeTSB.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.editAccountTypeTSB.Name = "editAccountTypeTSB";
-            this.editAccountTypeTSB.Size = new System.Drawing.Size(72, 22);
-            this.editAccountTypeTSB.Text = "Edit Groups";
+            this.editEnvelopeGroupTSB.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.editEnvelopeGroupTSB.Image = ((System.Drawing.Image)(resources.GetObject("editEnvelopeGroupTSB.Image")));
+            this.editEnvelopeGroupTSB.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.editEnvelopeGroupTSB.Name = "editEnvelopeGroupTSB";
+            this.editEnvelopeGroupTSB.Size = new System.Drawing.Size(72, 22);
+            this.editEnvelopeGroupTSB.Text = "Edit Groups";
+            this.editEnvelopeGroupTSB.Click += new System.EventHandler(this.editEnvelopeGroupTSB_Click);
             // 
             // nameTextBox
             // 
@@ -205,7 +206,7 @@
             this.nameTextBox.Location = new System.Drawing.Point(123, 28);
             this.nameTextBox.MaxLength = 30;
             this.nameTextBox.Name = "nameTextBox";
-            this.nameTextBox.Size = new System.Drawing.Size(187, 20);
+            this.nameTextBox.Size = new System.Drawing.Size(117, 20);
             this.nameTextBox.TabIndex = 1;
             // 
             // parentEnvelopeComboBox
@@ -219,7 +220,7 @@
             this.parentEnvelopeComboBox.FormattingEnabled = true;
             this.parentEnvelopeComboBox.Location = new System.Drawing.Point(123, 54);
             this.parentEnvelopeComboBox.Name = "parentEnvelopeComboBox";
-            this.parentEnvelopeComboBox.Size = new System.Drawing.Size(187, 21);
+            this.parentEnvelopeComboBox.Size = new System.Drawing.Size(117, 21);
             this.parentEnvelopeComboBox.TabIndex = 3;
             this.parentEnvelopeComboBox.ValueMember = "id";
             // 
@@ -243,7 +244,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(615, 369);
+            this.ClientSize = new System.Drawing.Size(474, 369);
             this.Controls.Add(this.splitContainer);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -281,6 +282,6 @@
         private System.Windows.Forms.ComboBox parentEnvelopeComboBox;
         private System.Windows.Forms.CheckBox closedCheckBox;
         private System.Windows.Forms.BindingSource envelopeGroupBindingSource;
-        private System.Windows.Forms.ToolStripButton editAccountTypeTSB;
+        private System.Windows.Forms.ToolStripButton editEnvelopeGroupTSB;
     }
 }

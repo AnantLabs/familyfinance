@@ -209,6 +209,7 @@
             this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 22);
             this.bindingNavigatorAddNewItem.Text = "Add new";
+            this.bindingNavigatorAddNewItem.Click += new System.EventHandler(this.bindingNavigatorAddNewItem_Click);
             // 
             // accountBindingSource
             // 
@@ -249,7 +250,7 @@
             // 
             // accountTypeIDComboBox
             // 
-            this.accountTypeIDComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.accountBindingSource, "accountTypeID", true));
+            this.accountTypeIDComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.accountBindingSource, "typeID", true));
             this.accountTypeIDComboBox.DataSource = this.accountTypeBindingSource;
             this.accountTypeIDComboBox.DisplayMember = "name";
             this.accountTypeIDComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -267,7 +268,7 @@
             // 
             // catagoryIDComboBox
             // 
-            this.catagoryIDComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.accountBindingSource, "catagoryID", true));
+            this.catagoryIDComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.accountBindingSource, "catagory", true));
             this.catagoryIDComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.catagoryIDComboBox.FormattingEnabled = true;
             this.catagoryIDComboBox.Location = new System.Drawing.Point(96, 89);

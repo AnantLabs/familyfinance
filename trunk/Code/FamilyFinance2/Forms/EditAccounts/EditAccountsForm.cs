@@ -33,12 +33,23 @@ namespace FamilyFinance2.Forms.EditAccounts
             this.buildAccountTree();
         }
 
+        private void bindingNavigatorAddNewItem_Click(object sender, EventArgs e)
+        {
+            this.nameTextBox.Enabled = true;
+            this.accountTypeIDComboBox.Enabled = true;
+            this.catagoryIDComboBox.Enabled = true;
+            this.closedCheckBox.Enabled = true;
+            this.debitRadioButton.Enabled = true;
+            this.creditRadioButton.Enabled = true;
+            this.envelopesCheckBox.Enabled = true;
+        }
+
         private void modifyAccountTypesTSB_Click(object sender, EventArgs e)
         {
             AccountTypeForm atf = new AccountTypeForm();
             atf.ShowDialog();
 
-            this.Changes.Copy(atf.Changes);
+            //this.Changes.Copy(atf.Changes);
 
             this.eADataSet.myFillAccountTypeTable();
         }
@@ -48,10 +59,46 @@ namespace FamilyFinance2.Forms.EditAccounts
             MyTreeNode node = e.Node as MyTreeNode;
             int accountID = node.ID;
 
-            this.accountBindingSource.EndEdit(); // Required so that things save correctly.
+            // End, save 
+            this.accountBindingSource.EndEdit();
+            this.eADataSet.myUpdateAccountDB();
 
-            if (accountID > 0)
-                this.accountBindingSource.Filter = "id = " + accountID.ToString();
+            // Enable or disable the combo box
+            EADataSet.AccountRow aRow = this.eADataSet.Account.FindByid(accountID);
+            if (aRow == null || accountID == SpclAccount.NULL)
+            {
+                this.nameTextBox.Enabled = false;
+                this.accountTypeIDComboBox.Enabled = false;
+                this.catagoryIDComboBox.Enabled = false;
+                this.closedCheckBox.Enabled = false;
+                this.debitRadioButton.Enabled = false;
+                this.creditRadioButton.Enabled = false;
+                this.envelopesCheckBox.Enabled = false;
+            }
+            else if (aRow.closed)
+            {
+                this.nameTextBox.Enabled = false;
+                this.accountTypeIDComboBox.Enabled = false;
+                this.catagoryIDComboBox.Enabled = false;
+                this.closedCheckBox.Enabled = true;
+                this.debitRadioButton.Enabled = false;
+                this.creditRadioButton.Enabled = false;
+                this.envelopesCheckBox.Enabled = false;
+            }
+            else
+            {
+                this.nameTextBox.Enabled = true;
+                this.accountTypeIDComboBox.Enabled = true;
+                this.catagoryIDComboBox.Enabled = true;
+                this.closedCheckBox.Enabled = true;
+                this.debitRadioButton.Enabled = true;
+                this.creditRadioButton.Enabled = true;
+                this.envelopesCheckBox.Enabled = true;
+            }
+
+
+            // Set Selected Account to the selected Account
+            this.accountBindingSource.Filter = "id = " + accountID.ToString();
         }
 
         private void EditAccountsForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -84,7 +131,7 @@ namespace FamilyFinance2.Forms.EditAccounts
                 this.accountRootNode.NodeFont = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
                 this.accountRootNode.ForeColor = System.Drawing.Color.Black;
                 this.accountTreeView.Nodes.Add(accountRootNode);
-                this.accountRootNode.Expand();
+                //this.accountRootNode.Expand();
             }
 
             // Add the ExpenceRootNode if needed
@@ -94,7 +141,7 @@ namespace FamilyFinance2.Forms.EditAccounts
                 this.expenseRootNode.NodeFont = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
                 this.expenseRootNode.ForeColor = System.Drawing.Color.Black;
                 this.accountTreeView.Nodes.Add(expenseRootNode);
-                this.expenseRootNode.Expand();
+                //this.expenseRootNode.Expand();
             }
 
             // Add the IncomeRootNode if needed
@@ -104,7 +151,7 @@ namespace FamilyFinance2.Forms.EditAccounts
                 this.incomeRootNode.NodeFont = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
                 this.incomeRootNode.ForeColor = System.Drawing.Color.Black;
                 this.accountTreeView.Nodes.Add(incomeRootNode);
-                this.incomeRootNode.Expand();
+                //this.incomeRootNode.Expand();
             }
 
             // Add the ClosedRootNode if needed

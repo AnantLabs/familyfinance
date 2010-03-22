@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using FamilyFinance2.SharedElements;
 
-namespace FamilyFinance2.Forms.AccountType
+namespace FamilyFinance2.Forms.EditGroup
 {
-    public partial class AccountTypeForm : Form
+    public partial class EditGroupForm : Form
     {
         ///////////////////////////////////////////////////////////////////////
         //   Local Variables
@@ -18,18 +18,18 @@ namespace FamilyFinance2.Forms.AccountType
         ///////////////////////////////////////////////////////////////////////
         //   Internal Events 
         ///////////////////////////////////////////////////////////////////////
-        private void accountTypeBindingNavigatorSaveItem_Click(object sender, EventArgs e)
+        private void envelopeGroupBindingNavigatorSaveItem_Click(object sender, EventArgs e)
         {
             this.saveChanges();
         }
-
+        
         private void bindingNavigatorDeleteItem_Click(object sender, EventArgs e)
         {
             //TODO: Finish the deleting of a Account type
             MessageBox.Show("Deleting Account Types is not supported yet.", "Not Supported Yet", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
-        private void AccountTypeForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void EditGroupForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.saveChanges();
         }
@@ -40,23 +40,27 @@ namespace FamilyFinance2.Forms.AccountType
         ///////////////////////////////////////////////////////////////////////
         private void saveChanges()
         {
-            this.accountTypeBindingSource.EndEdit();
-            this.accountTypeDataSet.AccountType.myUpdateDB();
+            this.Validate();
+            this.envelopeGroupBindingSource.EndEdit();
+            this.groupDataSet.EnvelopeGroup.myUpdateDB();
         }
 
 
         ///////////////////////////////////////////////////////////////////////
         //   Functions Public 
         ///////////////////////////////////////////////////////////////////////
-        public AccountTypeForm()
+        public EditGroupForm()
         {
             InitializeComponent();
 
-            this.accountTypeDataSet.AccountType.myFillTable();
+            this.groupDataSet.EnvelopeGroup.myFillTable();
 
-            this.accountTypeBindingSource.Filter = "id > 0";
-            this.accountTypeBindingSource.Sort = "name";
+            this.envelopeGroupBindingSource.Filter = "id > 0";
+            this.envelopeGroupBindingSource.Sort = "name";
         }
+
+
+
 
     }
 }

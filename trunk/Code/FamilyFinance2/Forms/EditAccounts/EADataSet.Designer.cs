@@ -1234,8 +1234,9 @@ namespace FamilyFinance2.Forms.EditAccounts.EADataSetTableAdapters {
             this._commandCollection = new global::System.Data.SqlServerCe.SqlCeCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT [id], [name], [typeID], [catagory], [closed], [creditDebit], [envelopes] F" +
-                "ROM [Account]";
+            this._commandCollection[0].CommandText = "SELECT        a.id, a.name, a.typeID, a.catagory, a.closed, a.creditDebit, a.enve" +
+                "lopes\r\nFROM            Account AS a INNER JOIN\r\n                         Account" +
+                "Type AS t ON a.typeID = t.id\r\nWHERE        (a.id > 0)\r\nORDER BY t.name, a.name";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         

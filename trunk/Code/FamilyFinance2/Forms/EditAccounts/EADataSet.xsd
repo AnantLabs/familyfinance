@@ -33,8 +33,12 @@
                   </DbCommand>
                 </InsertCommand>
                 <SelectCommand>
-                  <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>SELECT [id], [name], [typeID], [catagory], [closed], [creditDebit], [envelopes] FROM [Account]</CommandText>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT        a.id, a.name, a.typeID, a.catagory, a.closed, a.creditDebit, a.envelopes
+FROM            Account AS a INNER JOIN
+                         AccountType AS t ON a.typeID = t.id
+WHERE        (a.id &gt; 0)
+ORDER BY t.name, a.name</CommandText>
                     <Parameters />
                   </DbCommand>
                 </SelectCommand>
@@ -118,30 +122,30 @@
   <xs:element name="EADataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="EADataSet" msprop:Generator_DataSetName="EADataSet" msprop:EnableTableAdapterManager="true">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="Account" msprop:Generator_UserTableName="Account" msprop:Generator_RowDeletedName="AccountRowDeleted" msprop:Generator_TableClassName="AccountDataTable" msprop:Generator_RowChangedName="AccountRowChanged" msprop:Generator_RowClassName="AccountRow" msprop:Generator_RowChangingName="AccountRowChanging" msprop:Generator_RowEvArgName="AccountRowChangeEvent" msprop:Generator_RowEvHandlerName="AccountRowChangeEventHandler" msprop:Generator_TablePropName="Account" msprop:Generator_TableVarName="tableAccount" msprop:Generator_RowDeletingName="AccountRowDeleting">
+        <xs:element name="Account" msprop:Generator_UserTableName="Account" msprop:Generator_RowDeletedName="AccountRowDeleted" msprop:Generator_RowChangedName="AccountRowChanged" msprop:Generator_RowClassName="AccountRow" msprop:Generator_RowChangingName="AccountRowChanging" msprop:Generator_RowEvArgName="AccountRowChangeEvent" msprop:Generator_RowEvHandlerName="AccountRowChangeEventHandler" msprop:Generator_TableClassName="AccountDataTable" msprop:Generator_TableVarName="tableAccount" msprop:Generator_RowDeletingName="AccountRowDeleting" msprop:Generator_TablePropName="Account">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="id" msprop:Generator_UserColumnName="id" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInTable="idColumn" type="xs:int" />
-              <xs:element name="name" msprop:Generator_UserColumnName="name" msprop:Generator_ColumnPropNameInRow="name" msprop:Generator_ColumnVarNameInTable="columnname" msprop:Generator_ColumnPropNameInTable="nameColumn">
+              <xs:element name="id" msprop:Generator_UserColumnName="id" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" type="xs:int" />
+              <xs:element name="name" msprop:Generator_UserColumnName="name" msprop:Generator_ColumnVarNameInTable="columnname" msprop:Generator_ColumnPropNameInRow="name" msprop:Generator_ColumnPropNameInTable="nameColumn">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="30" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="typeID" msprop:Generator_UserColumnName="typeID" msprop:Generator_ColumnPropNameInRow="typeID" msprop:Generator_ColumnVarNameInTable="columntypeID" msprop:Generator_ColumnPropNameInTable="typeIDColumn" type="xs:int" />
-              <xs:element name="catagory" msprop:Generator_UserColumnName="catagory" msprop:Generator_ColumnPropNameInRow="catagory" msprop:Generator_ColumnVarNameInTable="columncatagory" msprop:Generator_ColumnPropNameInTable="catagoryColumn" type="xs:unsignedByte" />
-              <xs:element name="closed" msprop:Generator_UserColumnName="closed" msprop:Generator_ColumnPropNameInRow="closed" msprop:Generator_ColumnVarNameInTable="columnclosed" msprop:Generator_ColumnPropNameInTable="closedColumn" type="xs:boolean" />
-              <xs:element name="creditDebit" msprop:Generator_UserColumnName="creditDebit" msprop:Generator_ColumnPropNameInRow="creditDebit" msprop:Generator_ColumnVarNameInTable="columncreditDebit" msprop:Generator_ColumnPropNameInTable="creditDebitColumn" type="xs:boolean" />
-              <xs:element name="envelopes" msprop:Generator_UserColumnName="envelopes" msprop:Generator_ColumnPropNameInRow="envelopes" msprop:Generator_ColumnVarNameInTable="columnenvelopes" msprop:Generator_ColumnPropNameInTable="envelopesColumn" type="xs:boolean" />
+              <xs:element name="typeID" msprop:Generator_UserColumnName="typeID" msprop:Generator_ColumnVarNameInTable="columntypeID" msprop:Generator_ColumnPropNameInRow="typeID" msprop:Generator_ColumnPropNameInTable="typeIDColumn" type="xs:int" />
+              <xs:element name="catagory" msprop:Generator_UserColumnName="catagory" msprop:Generator_ColumnVarNameInTable="columncatagory" msprop:Generator_ColumnPropNameInRow="catagory" msprop:Generator_ColumnPropNameInTable="catagoryColumn" type="xs:unsignedByte" />
+              <xs:element name="closed" msprop:Generator_UserColumnName="closed" msprop:Generator_ColumnVarNameInTable="columnclosed" msprop:Generator_ColumnPropNameInRow="closed" msprop:Generator_ColumnPropNameInTable="closedColumn" type="xs:boolean" />
+              <xs:element name="creditDebit" msprop:Generator_UserColumnName="creditDebit" msprop:Generator_ColumnVarNameInTable="columncreditDebit" msprop:Generator_ColumnPropNameInRow="creditDebit" msprop:Generator_ColumnPropNameInTable="creditDebitColumn" type="xs:boolean" />
+              <xs:element name="envelopes" msprop:Generator_UserColumnName="envelopes" msprop:Generator_ColumnVarNameInTable="columnenvelopes" msprop:Generator_ColumnPropNameInRow="envelopes" msprop:Generator_ColumnPropNameInTable="envelopesColumn" type="xs:boolean" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="AccountType" msprop:Generator_UserTableName="AccountType" msprop:Generator_RowDeletedName="AccountTypeRowDeleted" msprop:Generator_TableClassName="AccountTypeDataTable" msprop:Generator_RowChangedName="AccountTypeRowChanged" msprop:Generator_RowClassName="AccountTypeRow" msprop:Generator_RowChangingName="AccountTypeRowChanging" msprop:Generator_RowEvArgName="AccountTypeRowChangeEvent" msprop:Generator_RowEvHandlerName="AccountTypeRowChangeEventHandler" msprop:Generator_TablePropName="AccountType" msprop:Generator_TableVarName="tableAccountType" msprop:Generator_RowDeletingName="AccountTypeRowDeleting">
+        <xs:element name="AccountType" msprop:Generator_UserTableName="AccountType" msprop:Generator_RowDeletedName="AccountTypeRowDeleted" msprop:Generator_RowChangedName="AccountTypeRowChanged" msprop:Generator_RowClassName="AccountTypeRow" msprop:Generator_RowChangingName="AccountTypeRowChanging" msprop:Generator_RowEvArgName="AccountTypeRowChangeEvent" msprop:Generator_RowEvHandlerName="AccountTypeRowChangeEventHandler" msprop:Generator_TableClassName="AccountTypeDataTable" msprop:Generator_TableVarName="tableAccountType" msprop:Generator_RowDeletingName="AccountTypeRowDeleting" msprop:Generator_TablePropName="AccountType">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="id" msprop:Generator_UserColumnName="id" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInTable="idColumn" type="xs:int" />
-              <xs:element name="name" msprop:Generator_UserColumnName="name" msprop:Generator_ColumnPropNameInRow="name" msprop:Generator_ColumnVarNameInTable="columnname" msprop:Generator_ColumnPropNameInTable="nameColumn">
+              <xs:element name="id" msprop:Generator_UserColumnName="id" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" type="xs:int" />
+              <xs:element name="name" msprop:Generator_UserColumnName="name" msprop:Generator_ColumnVarNameInTable="columnname" msprop:Generator_ColumnPropNameInRow="name" msprop:Generator_ColumnPropNameInTable="nameColumn">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="30" />
