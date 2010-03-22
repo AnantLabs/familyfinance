@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace FamilyFinance2.Forms.LineType {
+namespace FamilyFinance2.Forms.EditGroup {
     
     
     /// <summary>
@@ -21,16 +21,16 @@ namespace FamilyFinance2.Forms.LineType {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("LineTypeDataSet")]
+    [global::System.Xml.Serialization.XmlRootAttribute("GroupDataSet")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class LineTypeDataSet : global::System.Data.DataSet {
+    public partial class GroupDataSet : global::System.Data.DataSet {
         
-        private LineTypeDataTable tableLineType;
+        private EnvelopeGroupDataTable tableEnvelopeGroup;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public LineTypeDataSet() {
+        public GroupDataSet() {
             this.BeginInit();
             this.InitClass();
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -40,7 +40,7 @@ namespace FamilyFinance2.Forms.LineType {
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        protected LineTypeDataSet(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+        protected GroupDataSet(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
@@ -53,8 +53,8 @@ namespace FamilyFinance2.Forms.LineType {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["LineType"] != null)) {
-                    base.Tables.Add(new LineTypeDataTable(ds.Tables["LineType"]));
+                if ((ds.Tables["EnvelopeGroup"] != null)) {
+                    base.Tables.Add(new EnvelopeGroupDataTable(ds.Tables["EnvelopeGroup"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -77,9 +77,9 @@ namespace FamilyFinance2.Forms.LineType {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public LineTypeDataTable LineType {
+        public EnvelopeGroupDataTable EnvelopeGroup {
             get {
-                return this.tableLineType;
+                return this.tableEnvelopeGroup;
             }
         }
         
@@ -120,7 +120,7 @@ namespace FamilyFinance2.Forms.LineType {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public override global::System.Data.DataSet Clone() {
-            LineTypeDataSet cln = ((LineTypeDataSet)(base.Clone()));
+            GroupDataSet cln = ((GroupDataSet)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -142,8 +142,8 @@ namespace FamilyFinance2.Forms.LineType {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["LineType"] != null)) {
-                    base.Tables.Add(new LineTypeDataTable(ds.Tables["LineType"]));
+                if ((ds.Tables["EnvelopeGroup"] != null)) {
+                    base.Tables.Add(new EnvelopeGroupDataTable(ds.Tables["EnvelopeGroup"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -175,27 +175,27 @@ namespace FamilyFinance2.Forms.LineType {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         internal void InitVars(bool initTable) {
-            this.tableLineType = ((LineTypeDataTable)(base.Tables["LineType"]));
+            this.tableEnvelopeGroup = ((EnvelopeGroupDataTable)(base.Tables["EnvelopeGroup"]));
             if ((initTable == true)) {
-                if ((this.tableLineType != null)) {
-                    this.tableLineType.InitVars();
+                if ((this.tableEnvelopeGroup != null)) {
+                    this.tableEnvelopeGroup.InitVars();
                 }
             }
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         private void InitClass() {
-            this.DataSetName = "LineTypeDataSet";
+            this.DataSetName = "GroupDataSet";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/LineTypeDataSet.xsd";
+            this.Namespace = "http://tempuri.org/GroupDataSet.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tableLineType = new LineTypeDataTable();
-            base.Tables.Add(this.tableLineType);
+            this.tableEnvelopeGroup = new EnvelopeGroupDataTable();
+            base.Tables.Add(this.tableEnvelopeGroup);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        private bool ShouldSerializeLineType() {
+        private bool ShouldSerializeEnvelopeGroup() {
             return false;
         }
         
@@ -208,7 +208,7 @@ namespace FamilyFinance2.Forms.LineType {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            LineTypeDataSet ds = new LineTypeDataSet();
+            GroupDataSet ds = new GroupDataSet();
             global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
             global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
             global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
@@ -252,7 +252,7 @@ namespace FamilyFinance2.Forms.LineType {
             return type;
         }
         
-        public delegate void LineTypeRowChangeEventHandler(object sender, LineTypeRowChangeEvent e);
+        public delegate void EnvelopeGroupRowChangeEventHandler(object sender, EnvelopeGroupRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -260,22 +260,22 @@ namespace FamilyFinance2.Forms.LineType {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class LineTypeDataTable : global::System.Data.TypedTableBase<LineTypeRow> {
+        public partial class EnvelopeGroupDataTable : global::System.Data.TypedTableBase<EnvelopeGroupRow> {
             
             private global::System.Data.DataColumn columnid;
             
             private global::System.Data.DataColumn columnname;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public LineTypeDataTable() {
-                this.TableName = "LineType";
+            public EnvelopeGroupDataTable() {
+                this.TableName = "EnvelopeGroup";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            internal LineTypeDataTable(global::System.Data.DataTable table) {
+            internal EnvelopeGroupDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -291,7 +291,7 @@ namespace FamilyFinance2.Forms.LineType {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            protected LineTypeDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected EnvelopeGroupDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
@@ -319,52 +319,52 @@ namespace FamilyFinance2.Forms.LineType {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public LineTypeRow this[int index] {
+            public EnvelopeGroupRow this[int index] {
                 get {
-                    return ((LineTypeRow)(this.Rows[index]));
+                    return ((EnvelopeGroupRow)(this.Rows[index]));
                 }
             }
             
-            public event LineTypeRowChangeEventHandler LineTypeRowChanging;
+            public event EnvelopeGroupRowChangeEventHandler EnvelopeGroupRowChanging;
             
-            public event LineTypeRowChangeEventHandler LineTypeRowChanged;
+            public event EnvelopeGroupRowChangeEventHandler EnvelopeGroupRowChanged;
             
-            public event LineTypeRowChangeEventHandler LineTypeRowDeleting;
+            public event EnvelopeGroupRowChangeEventHandler EnvelopeGroupRowDeleting;
             
-            public event LineTypeRowChangeEventHandler LineTypeRowDeleted;
+            public event EnvelopeGroupRowChangeEventHandler EnvelopeGroupRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public void AddLineTypeRow(LineTypeRow row) {
+            public void AddEnvelopeGroupRow(EnvelopeGroupRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public LineTypeRow AddLineTypeRow(int id, string name) {
-                LineTypeRow rowLineTypeRow = ((LineTypeRow)(this.NewRow()));
+            public EnvelopeGroupRow AddEnvelopeGroupRow(int id, string name) {
+                EnvelopeGroupRow rowEnvelopeGroupRow = ((EnvelopeGroupRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         id,
                         name};
-                rowLineTypeRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowLineTypeRow);
-                return rowLineTypeRow;
+                rowEnvelopeGroupRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowEnvelopeGroupRow);
+                return rowEnvelopeGroupRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public LineTypeRow FindByid(int id) {
-                return ((LineTypeRow)(this.Rows.Find(new object[] {
+            public EnvelopeGroupRow FindByid(int id) {
+                return ((EnvelopeGroupRow)(this.Rows.Find(new object[] {
                             id})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public override global::System.Data.DataTable Clone() {
-                LineTypeDataTable cln = ((LineTypeDataTable)(base.Clone()));
+                EnvelopeGroupDataTable cln = ((EnvelopeGroupDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new LineTypeDataTable();
+                return new EnvelopeGroupDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -384,58 +384,58 @@ namespace FamilyFinance2.Forms.LineType {
                 this.columnid.AllowDBNull = false;
                 this.columnid.Unique = true;
                 this.columnname.AllowDBNull = false;
-                this.columnname.MaxLength = 15;
+                this.columnname.MaxLength = 30;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public LineTypeRow NewLineTypeRow() {
-                return ((LineTypeRow)(this.NewRow()));
+            public EnvelopeGroupRow NewEnvelopeGroupRow() {
+                return ((EnvelopeGroupRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new LineTypeRow(builder);
+                return new EnvelopeGroupRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             protected override global::System.Type GetRowType() {
-                return typeof(LineTypeRow);
+                return typeof(EnvelopeGroupRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.LineTypeRowChanged != null)) {
-                    this.LineTypeRowChanged(this, new LineTypeRowChangeEvent(((LineTypeRow)(e.Row)), e.Action));
+                if ((this.EnvelopeGroupRowChanged != null)) {
+                    this.EnvelopeGroupRowChanged(this, new EnvelopeGroupRowChangeEvent(((EnvelopeGroupRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.LineTypeRowChanging != null)) {
-                    this.LineTypeRowChanging(this, new LineTypeRowChangeEvent(((LineTypeRow)(e.Row)), e.Action));
+                if ((this.EnvelopeGroupRowChanging != null)) {
+                    this.EnvelopeGroupRowChanging(this, new EnvelopeGroupRowChangeEvent(((EnvelopeGroupRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.LineTypeRowDeleted != null)) {
-                    this.LineTypeRowDeleted(this, new LineTypeRowChangeEvent(((LineTypeRow)(e.Row)), e.Action));
+                if ((this.EnvelopeGroupRowDeleted != null)) {
+                    this.EnvelopeGroupRowDeleted(this, new EnvelopeGroupRowChangeEvent(((EnvelopeGroupRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.LineTypeRowDeleting != null)) {
-                    this.LineTypeRowDeleting(this, new LineTypeRowChangeEvent(((LineTypeRow)(e.Row)), e.Action));
+                if ((this.EnvelopeGroupRowDeleting != null)) {
+                    this.EnvelopeGroupRowDeleting(this, new EnvelopeGroupRowChangeEvent(((EnvelopeGroupRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public void RemoveLineTypeRow(LineTypeRow row) {
+            public void RemoveEnvelopeGroupRow(EnvelopeGroupRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -443,7 +443,7 @@ namespace FamilyFinance2.Forms.LineType {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                LineTypeDataSet ds = new LineTypeDataSet();
+                GroupDataSet ds = new GroupDataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -461,7 +461,7 @@ namespace FamilyFinance2.Forms.LineType {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "LineTypeDataTable";
+                attribute2.FixedValue = "EnvelopeGroupDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -506,33 +506,33 @@ namespace FamilyFinance2.Forms.LineType {
         ///Represents strongly named DataRow class.
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
-        public partial class LineTypeRow : global::System.Data.DataRow {
+        public partial class EnvelopeGroupRow : global::System.Data.DataRow {
             
-            private LineTypeDataTable tableLineType;
+            private EnvelopeGroupDataTable tableEnvelopeGroup;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            internal LineTypeRow(global::System.Data.DataRowBuilder rb) : 
+            internal EnvelopeGroupRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableLineType = ((LineTypeDataTable)(this.Table));
+                this.tableEnvelopeGroup = ((EnvelopeGroupDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public int id {
                 get {
-                    return ((int)(this[this.tableLineType.idColumn]));
+                    return ((int)(this[this.tableEnvelopeGroup.idColumn]));
                 }
                 set {
-                    this[this.tableLineType.idColumn] = value;
+                    this[this.tableEnvelopeGroup.idColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public string name {
                 get {
-                    return ((string)(this[this.tableLineType.nameColumn]));
+                    return ((string)(this[this.tableEnvelopeGroup.nameColumn]));
                 }
                 set {
-                    this[this.tableLineType.nameColumn] = value;
+                    this[this.tableEnvelopeGroup.nameColumn] = value;
                 }
             }
         }
@@ -541,20 +541,20 @@ namespace FamilyFinance2.Forms.LineType {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
-        public class LineTypeRowChangeEvent : global::System.EventArgs {
+        public class EnvelopeGroupRowChangeEvent : global::System.EventArgs {
             
-            private LineTypeRow eventRow;
+            private EnvelopeGroupRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public LineTypeRowChangeEvent(LineTypeRow row, global::System.Data.DataRowAction action) {
+            public EnvelopeGroupRowChangeEvent(EnvelopeGroupRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public LineTypeRow Row {
+            public EnvelopeGroupRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -569,7 +569,7 @@ namespace FamilyFinance2.Forms.LineType {
         }
     }
 }
-namespace FamilyFinance2.Forms.LineType.LineTypeDataSetTableAdapters {
+namespace FamilyFinance2.Forms.EditGroup.GroupDataSetTableAdapters {
     
     
     /// <summary>
@@ -582,7 +582,7 @@ namespace FamilyFinance2.Forms.LineType.LineTypeDataSetTableAdapters {
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class LineTypeTableAdapter : global::System.ComponentModel.Component {
+    public partial class EnvelopeGroupTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.SqlServerCe.SqlCeDataAdapter _adapter;
         
@@ -595,7 +595,7 @@ namespace FamilyFinance2.Forms.LineType.LineTypeDataSetTableAdapters {
         private bool _clearBeforeFill;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public LineTypeTableAdapter() {
+        public EnvelopeGroupTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -686,28 +686,28 @@ namespace FamilyFinance2.Forms.LineType.LineTypeDataSetTableAdapters {
             this._adapter = new global::System.Data.SqlServerCe.SqlCeDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "LineType";
+            tableMapping.DataSetTable = "EnvelopeGroup";
             tableMapping.ColumnMappings.Add("id", "id");
             tableMapping.ColumnMappings.Add("name", "name");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [LineType] WHERE (([id] = @p1))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [EnvelopeGroup] WHERE (([id] = @p1))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p1", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Original, null));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p1", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Original, null));
             this._adapter.InsertCommand = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [LineType] ([id], [name]) VALUES (@p1, @p2)";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [EnvelopeGroup] ([id], [name]) VALUES (@p1, @p2)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p1", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p1", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Current, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "name", global::System.Data.DataRowVersion.Current, null));
             this._adapter.UpdateCommand = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE [LineType] SET [id] = @p1, [name] = @p2 WHERE (([id] = @p3))";
+            this._adapter.UpdateCommand.CommandText = "UPDATE [EnvelopeGroup] SET [id] = @p1, [name] = @p2 WHERE (([id] = @p3))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p1", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p1", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Current, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "name", global::System.Data.DataRowVersion.Current, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p3", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Original, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p3", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "id", global::System.Data.DataRowVersion.Original, null));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -721,14 +721,14 @@ namespace FamilyFinance2.Forms.LineType.LineTypeDataSetTableAdapters {
             this._commandCollection = new global::System.Data.SqlServerCe.SqlCeCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT [id], [name] FROM [LineType]";
+            this._commandCollection[0].CommandText = "SELECT [id], [name] FROM [EnvelopeGroup]";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(LineTypeDataSet.LineTypeDataTable dataTable) {
+        public virtual int Fill(GroupDataSet.EnvelopeGroupDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -740,23 +740,23 @@ namespace FamilyFinance2.Forms.LineType.LineTypeDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual LineTypeDataSet.LineTypeDataTable GetData() {
+        public virtual GroupDataSet.EnvelopeGroupDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            LineTypeDataSet.LineTypeDataTable dataTable = new LineTypeDataSet.LineTypeDataTable();
+            GroupDataSet.EnvelopeGroupDataTable dataTable = new GroupDataSet.EnvelopeGroupDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(LineTypeDataSet.LineTypeDataTable dataTable) {
+        public virtual int Update(GroupDataSet.EnvelopeGroupDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(LineTypeDataSet dataSet) {
-            return this.Adapter.Update(dataSet, "LineType");
+        public virtual int Update(GroupDataSet dataSet) {
+            return this.Adapter.Update(dataSet, "EnvelopeGroup");
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -775,8 +775,8 @@ namespace FamilyFinance2.Forms.LineType.LineTypeDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(short p1) {
-            this.Adapter.DeleteCommand.Parameters[0].Value = ((short)(p1));
+        public virtual int Delete(int p1) {
+            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(p1));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -796,8 +796,8 @@ namespace FamilyFinance2.Forms.LineType.LineTypeDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(short p1, string p2) {
-            this.Adapter.InsertCommand.Parameters[0].Value = ((short)(p1));
+        public virtual int Insert(int p1, string p2) {
+            this.Adapter.InsertCommand.Parameters[0].Value = ((int)(p1));
             if ((p2 == null)) {
                 throw new global::System.ArgumentNullException("p2");
             }
@@ -823,15 +823,15 @@ namespace FamilyFinance2.Forms.LineType.LineTypeDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(short p1, string p2, short p3) {
-            this.Adapter.UpdateCommand.Parameters[0].Value = ((short)(p1));
+        public virtual int Update(int p1, string p2, int p3) {
+            this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(p1));
             if ((p2 == null)) {
                 throw new global::System.ArgumentNullException("p2");
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(p2));
             }
-            this.Adapter.UpdateCommand.Parameters[2].Value = ((short)(p3));
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(p3));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -851,7 +851,7 @@ namespace FamilyFinance2.Forms.LineType.LineTypeDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string p2, short p3) {
+        public virtual int Update(string p2, int p3) {
             return this.Update(p3, p2, p3);
         }
     }
@@ -869,7 +869,7 @@ namespace FamilyFinance2.Forms.LineType.LineTypeDataSetTableAdapters {
         
         private UpdateOrderOption _updateOrder;
         
-        private LineTypeTableAdapter _lineTypeTableAdapter;
+        private EnvelopeGroupTableAdapter _envelopeGroupTableAdapter;
         
         private bool _backupDataSetBeforeUpdate;
         
@@ -889,12 +889,12 @@ namespace FamilyFinance2.Forms.LineType.LineTypeDataSetTableAdapters {
         [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
             "ft.VSDesigner, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" +
             "", "System.Drawing.Design.UITypeEditor")]
-        public LineTypeTableAdapter LineTypeTableAdapter {
+        public EnvelopeGroupTableAdapter EnvelopeGroupTableAdapter {
             get {
-                return this._lineTypeTableAdapter;
+                return this._envelopeGroupTableAdapter;
             }
             set {
-                this._lineTypeTableAdapter = value;
+                this._envelopeGroupTableAdapter = value;
             }
         }
         
@@ -915,9 +915,9 @@ namespace FamilyFinance2.Forms.LineType.LineTypeDataSetTableAdapters {
                 if ((this._connection != null)) {
                     return this._connection;
                 }
-                if (((this._lineTypeTableAdapter != null) 
-                            && (this._lineTypeTableAdapter.Connection != null))) {
-                    return this._lineTypeTableAdapter.Connection;
+                if (((this._envelopeGroupTableAdapter != null) 
+                            && (this._envelopeGroupTableAdapter.Connection != null))) {
+                    return this._envelopeGroupTableAdapter.Connection;
                 }
                 return null;
             }
@@ -931,7 +931,7 @@ namespace FamilyFinance2.Forms.LineType.LineTypeDataSetTableAdapters {
         public int TableAdapterInstanceCount {
             get {
                 int count = 0;
-                if ((this._lineTypeTableAdapter != null)) {
+                if ((this._envelopeGroupTableAdapter != null)) {
                     count = (count + 1);
                 }
                 return count;
@@ -942,14 +942,14 @@ namespace FamilyFinance2.Forms.LineType.LineTypeDataSetTableAdapters {
         ///Update rows in top-down order.
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        private int UpdateUpdatedRows(LineTypeDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateUpdatedRows(GroupDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._lineTypeTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.LineType.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+            if ((this._envelopeGroupTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.EnvelopeGroup.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    result = (result + this._lineTypeTableAdapter.Update(updatedRows));
+                    result = (result + this._envelopeGroupTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -960,13 +960,13 @@ namespace FamilyFinance2.Forms.LineType.LineTypeDataSetTableAdapters {
         ///Insert rows in top-down order.
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        private int UpdateInsertedRows(LineTypeDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateInsertedRows(GroupDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._lineTypeTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.LineType.Select(null, null, global::System.Data.DataViewRowState.Added);
+            if ((this._envelopeGroupTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.EnvelopeGroup.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    result = (result + this._lineTypeTableAdapter.Update(addedRows));
+                    result = (result + this._envelopeGroupTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -977,13 +977,13 @@ namespace FamilyFinance2.Forms.LineType.LineTypeDataSetTableAdapters {
         ///Delete rows in bottom-up order.
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        private int UpdateDeletedRows(LineTypeDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
+        private int UpdateDeletedRows(GroupDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
-            if ((this._lineTypeTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.LineType.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+            if ((this._envelopeGroupTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.EnvelopeGroup.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    result = (result + this._lineTypeTableAdapter.Update(deletedRows));
+                    result = (result + this._envelopeGroupTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -1017,15 +1017,15 @@ namespace FamilyFinance2.Forms.LineType.LineTypeDataSetTableAdapters {
         ///Update all changes to the dataset.
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public virtual int UpdateAll(LineTypeDataSet dataSet) {
+        public virtual int UpdateAll(GroupDataSet dataSet) {
             if ((dataSet == null)) {
                 throw new global::System.ArgumentNullException("dataSet");
             }
             if ((dataSet.HasChanges() == false)) {
                 return 0;
             }
-            if (((this._lineTypeTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._lineTypeTableAdapter.Connection) == false))) {
+            if (((this._envelopeGroupTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._envelopeGroupTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
@@ -1061,13 +1061,13 @@ namespace FamilyFinance2.Forms.LineType.LineTypeDataSetTableAdapters {
             try {
                 // ---- Prepare for update -----------
                 //
-                if ((this._lineTypeTableAdapter != null)) {
-                    revertConnections.Add(this._lineTypeTableAdapter, this._lineTypeTableAdapter.Connection);
-                    this._lineTypeTableAdapter.Connection = ((global::System.Data.SqlServerCe.SqlCeConnection)(workConnection));
-                    this._lineTypeTableAdapter.Transaction = ((global::System.Data.SqlServerCe.SqlCeTransaction)(workTransaction));
-                    if (this._lineTypeTableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._lineTypeTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._lineTypeTableAdapter.Adapter);
+                if ((this._envelopeGroupTableAdapter != null)) {
+                    revertConnections.Add(this._envelopeGroupTableAdapter, this._envelopeGroupTableAdapter.Connection);
+                    this._envelopeGroupTableAdapter.Connection = ((global::System.Data.SqlServerCe.SqlCeConnection)(workConnection));
+                    this._envelopeGroupTableAdapter.Transaction = ((global::System.Data.SqlServerCe.SqlCeTransaction)(workTransaction));
+                    if (this._envelopeGroupTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this._envelopeGroupTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this._envelopeGroupTableAdapter.Adapter);
                     }
                 }
                 // 
@@ -1128,9 +1128,9 @@ namespace FamilyFinance2.Forms.LineType.LineTypeDataSetTableAdapters {
                 if (workConnOpened) {
                     workConnection.Close();
                 }
-                if ((this._lineTypeTableAdapter != null)) {
-                    this._lineTypeTableAdapter.Connection = ((global::System.Data.SqlServerCe.SqlCeConnection)(revertConnections[this._lineTypeTableAdapter]));
-                    this._lineTypeTableAdapter.Transaction = null;
+                if ((this._envelopeGroupTableAdapter != null)) {
+                    this._envelopeGroupTableAdapter.Connection = ((global::System.Data.SqlServerCe.SqlCeConnection)(revertConnections[this._envelopeGroupTableAdapter]));
+                    this._envelopeGroupTableAdapter.Transaction = null;
                 }
                 if ((0 < adaptersWithAcceptChangesDuringUpdate.Count)) {
                     global::System.Data.Common.DataAdapter[] adapters = new System.Data.Common.DataAdapter[adaptersWithAcceptChangesDuringUpdate.Count];

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FamilyFinance2.SharedElements;
+using FamilyFinance2.Forms.EditGroup;
 
 namespace FamilyFinance2.Forms.EditEnvelopes
 {
@@ -29,7 +29,6 @@ namespace FamilyFinance2.Forms.EditEnvelopes
 
         private void bindingNavigatorAddNewItem_Click(object sender, EventArgs e)
         {
-            // End, save and rebuild filter.
             this.parentEnvelopeComboBox.Enabled = true;
             this.nameTextBox.Enabled = true;
             this.closedCheckBox.Enabled = true;
@@ -82,6 +81,16 @@ namespace FamilyFinance2.Forms.EditEnvelopes
 
             // Set Selected Envelope to the selected envelope
             this.envelopeBindingSource.Filter = "id = " + envelopeID.ToString();
+        }
+
+        private void editEnvelopeGroupTSB_Click(object sender, EventArgs e)
+        {
+            EditGroupForm egf = new EditGroupForm();
+            egf.ShowDialog();
+
+            //this.Changes.Copy(atf.Changes);
+
+            this.eEDataSet.myFillGroupTable();
         }
 
 
