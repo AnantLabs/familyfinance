@@ -28,48 +28,84 @@
         /// </summary>
         private void InitializeComponent()
         {
-<<<<<<< .mine
-            this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
-            this.editTSMI = new System.Windows.Forms.ToolStripMenuItem();
-            this.accountsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.envelopesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.transactionTypesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.registySplitContainer1 = new FamilyFinance2.Forms.Main.RegistySplitContainer();
-            this.mainMenuStrip.SuspendLayout();
-=======
->>>>>>> .r107
+            System.Windows.Forms.ToolStripDropDownButton editTSDropDown;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            this.mainToolStrip = new System.Windows.Forms.ToolStrip();
+            this.accoutsTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.envelopesTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.transactionTypesTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            editTSDropDown = new System.Windows.Forms.ToolStripDropDownButton();
+            this.mainToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // registySplitContainer1
+            // mainToolStrip
             // 
-            this.registySplitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.registySplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.registySplitContainer1.Location = new System.Drawing.Point(0, 24);
-            this.registySplitContainer1.Name = "registySplitContainer1";
-            this.registySplitContainer1.Size = new System.Drawing.Size(739, 502);
-            this.registySplitContainer1.TabIndex = 1;
+            this.mainToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.mainToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            editTSDropDown});
+            this.mainToolStrip.Location = new System.Drawing.Point(0, 0);
+            this.mainToolStrip.Name = "mainToolStrip";
+            this.mainToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.mainToolStrip.Size = new System.Drawing.Size(739, 25);
+            this.mainToolStrip.TabIndex = 0;
+            this.mainToolStrip.Text = "toolStrip1";
+            // 
+            // accoutsTSMI
+            // 
+            this.accoutsTSMI.Name = "accoutsTSMI";
+            this.accoutsTSMI.Size = new System.Drawing.Size(170, 22);
+            this.accoutsTSMI.Text = "Accouts";
+            this.accoutsTSMI.Click += new System.EventHandler(this.accountsToolStripMenuItem_Click);
+            // 
+            // envelopesTSMI
+            // 
+            this.envelopesTSMI.Name = "envelopesTSMI";
+            this.envelopesTSMI.Size = new System.Drawing.Size(170, 22);
+            this.envelopesTSMI.Text = "Envelopes";
+            this.envelopesTSMI.Click += new System.EventHandler(this.envelopesToolStripMenuItem_Click);
+            // 
+            // transactionTypesTSMI
+            // 
+            this.transactionTypesTSMI.Name = "transactionTypesTSMI";
+            this.transactionTypesTSMI.Size = new System.Drawing.Size(170, 22);
+            this.transactionTypesTSMI.Text = "Transaction Types";
+            this.transactionTypesTSMI.Click += new System.EventHandler(this.transactionTypesToolStripMenuItem_Click);
+            // 
+            // editTSDropDown
+            // 
+            editTSDropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            editTSDropDown.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.accoutsTSMI,
+            this.envelopesTSMI,
+            this.transactionTypesTSMI});
+            editTSDropDown.Image = ((System.Drawing.Image)(resources.GetObject("editTSDropDown.Image")));
+            editTSDropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
+            editTSDropDown.Name = "editTSDropDown";
+            editTSDropDown.Size = new System.Drawing.Size(40, 22);
+            editTSDropDown.Text = "Edit";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(739, 526);
-<<<<<<< .mine
-            this.Controls.Add(this.registySplitContainer1);
-            this.Controls.Add(this.mainMenuStrip);
-            this.MainMenuStrip = this.mainMenuStrip;
-=======
->>>>>>> .r107
+            this.Controls.Add(this.mainToolStrip);
             this.Name = "MainForm";
             this.Text = "Family Finance";
-            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.mainToolStrip.ResumeLayout(false);
+            this.mainToolStrip.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private RegistySplitContainer registySplitContainer1;
+        private System.Windows.Forms.ToolStrip mainToolStrip;
+        private System.Windows.Forms.ToolStripMenuItem accoutsTSMI;
+        private System.Windows.Forms.ToolStripMenuItem envelopesTSMI;
+        private System.Windows.Forms.ToolStripMenuItem transactionTypesTSMI;
+
     }
 }
 
