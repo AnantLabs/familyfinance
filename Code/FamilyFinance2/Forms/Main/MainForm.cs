@@ -53,12 +53,6 @@ namespace FamilyFinance2.Forms.Main
             eaf.ShowDialog();
             //this.registrySplitCont.myReloadAccount();
         }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            // TODO: This line of code loads data into the 'eADataSet.Account' table. You can move, or remove it, as needed.
-            this.accountTableAdapter.Fill(this.eADataSet.Account);
-        }
         
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,17 +77,8 @@ namespace FamilyFinance2.Forms.Main
             //this.registrySplitCont.FixedPanel = FixedPanel.Panel1;
             //this.registrySplitCont.SplitterDistance = 300;
 
-            
 
             InitializeComponent();
-        }
-
-        private void accountBindingNavigatorSaveItem_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-            this.accountBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.eADataSet);
-
         }
 
     }
