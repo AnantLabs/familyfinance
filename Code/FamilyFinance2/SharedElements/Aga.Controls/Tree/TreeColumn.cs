@@ -231,15 +231,15 @@ namespace Aga.Controls.Tree
 			}
 		}
 
-		internal Bitmap CreateGhostImage(Rectangle bounds, Font font)
-		{
-			Bitmap b = new Bitmap(bounds.Width, bounds.Height, PixelFormat.Format32bppArgb);
-			Graphics gr = Graphics.FromImage(b);
-			gr.FillRectangle(SystemBrushes.ControlDark, bounds);
-			DrawContent(gr, bounds, font);
-			BitmapHelper.SetAlphaChanelValue(b, 150);
-			return b;
-		}
+        //internal Bitmap CreateGhostImage(Rectangle bounds, Font font)
+        //{
+        //    Bitmap b = new Bitmap(bounds.Width, bounds.Height, PixelFormat.Format32bppArgb);
+        //    Graphics gr = Graphics.FromImage(b);
+        //    gr.FillRectangle(SystemBrushes.ControlDark, bounds);
+        //    DrawContent(gr, bounds, font);
+        //    BitmapHelper.SetAlphaChanelValue(b, 150);
+        //    return b;
+        //}
 
 		internal void Draw(Graphics gr, Rectangle bounds, Font font, bool pressed, bool hot)
 		{
