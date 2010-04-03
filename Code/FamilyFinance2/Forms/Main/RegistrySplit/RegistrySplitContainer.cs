@@ -10,7 +10,8 @@ using FamilyFinance2.SharedElements;
 namespace FamilyFinance2.Forms.Main
 {
     public partial class RegistySplitContainer : UserControl
-    {    
+    {
+        private SplitContainer splitContainer1;
         ///////////////////////////////////////////////////////////////////////
         //   Local Variables
         ///////////////////////////////////////////////////////////////////////
@@ -87,5 +88,31 @@ namespace FamilyFinance2.Forms.Main
         {
             //multiDGV.myReloadLineTypes();
         }
+
+        private void InitializeComponent()
+        {
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer1.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Size = new System.Drawing.Size(890, 360);
+            this.splitContainer1.SplitterDistance = 656;
+            this.splitContainer1.TabIndex = 0;
+            // 
+            // RegistySplitContainer
+            // 
+            this.Controls.Add(this.splitContainer1);
+            this.Name = "RegistySplitContainer";
+            this.Size = new System.Drawing.Size(890, 360);
+            this.splitContainer1.ResumeLayout(false);
+            this.ResumeLayout(false);
+
+        }
+
     }
 }
