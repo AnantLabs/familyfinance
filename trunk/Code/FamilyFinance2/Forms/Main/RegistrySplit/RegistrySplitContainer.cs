@@ -10,10 +10,10 @@ using Aga.Controls;
 
 namespace FamilyFinance2.Forms.Main
 {
-    public partial class RegistySplitContainer : UserControl
+    public class RegistySplitContainer : UserControl
     {
         private SplitContainer splitContainer;
-        private FamilyFinance2.Forms.Main.RegistrySplit.TreeView.AccountBrowser accountBrowser1;
+        private FamilyFinance2.Forms.Main.RegistrySplit.TreeView.AccountBrowser accountBrowser;
         ///////////////////////////////////////////////////////////////////////
         //   Local Variables
         ///////////////////////////////////////////////////////////////////////
@@ -47,7 +47,8 @@ namespace FamilyFinance2.Forms.Main
             //this.Panel2.Controls.Add(temp);
 
             // SplitContainer
-            this.BorderStyle = BorderStyle.Fixed3D;
+            this.BorderStyle = BorderStyle.None;
+            this.InitializeComponent();
 
             // The Account Tree List View
             //this.accountTLV = new AccountTLV();
@@ -94,7 +95,7 @@ namespace FamilyFinance2.Forms.Main
         private void InitializeComponent()
         {
             this.splitContainer = new System.Windows.Forms.SplitContainer();
-            this.accountBrowser1 = new Forms.Main.RegistrySplit.TreeView.AccountBrowser();
+            this.accountBrowser = new FamilyFinance2.Forms.Main.RegistrySplit.TreeView.AccountBrowser();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.SuspendLayout();
             this.SuspendLayout();
@@ -107,18 +108,18 @@ namespace FamilyFinance2.Forms.Main
             // 
             // splitContainer.Panel1
             // 
-            this.splitContainer.Panel1.Controls.Add(this.accountBrowser1);
+            this.splitContainer.Panel1.Controls.Add(this.accountBrowser);
             this.splitContainer.Size = new System.Drawing.Size(924, 554);
-            this.splitContainer.SplitterDistance = 305;
+            this.splitContainer.SplitterDistance = 420;
             this.splitContainer.TabIndex = 0;
             // 
-            // accountBrowser1
+            // accountBrowser
             // 
-            this.accountBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.accountBrowser1.Location = new System.Drawing.Point(0, 0);
-            this.accountBrowser1.Name = "accountBrowser1";
-            this.accountBrowser1.Size = new System.Drawing.Size(305, 554);
-            this.accountBrowser1.TabIndex = 0;
+            this.accountBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.accountBrowser.Location = new System.Drawing.Point(0, 0);
+            this.accountBrowser.Name = "accountBrowser";
+            this.accountBrowser.Size = new System.Drawing.Size(420, 554);
+            this.accountBrowser.TabIndex = 0;
             // 
             // RegistySplitContainer
             // 
