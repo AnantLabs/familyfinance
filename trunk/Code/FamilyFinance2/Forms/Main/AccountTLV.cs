@@ -6,8 +6,9 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using TreeList;
+using FamilyFinance2.SharedElements;
 
-namespace FamilyFinance2
+namespace FamilyFinance2.Forms.Main
 {
     public partial class AccountTLV : TreeListView
     {    
@@ -68,8 +69,8 @@ namespace FamilyFinance2
         {
             MyTreeListNode temp = this.FocusedNode as MyTreeListNode;
 
-            short accountID = temp.AccountID;
-            short envelopeID = temp.EnvelopeID;
+            int accountID = temp.AccountID;
+            int envelopeID = temp.EnvelopeID;
 
             if (accountID != selectedAccountID || envelopeID != selectedEnvelopeID)
                 OnSelectedAccountEnvelopeChanged(new SelectedAccountEnvelopeChangedEventArgs(accountID, envelopeID));
@@ -211,7 +212,7 @@ namespace FamilyFinance2
         private void addTypeNodes(MyTreeListNode pNode, byte catagory)
         {
             MyTreeListNode typeNode = new MyTreeListNode();
-            short thisTypeID = SpclAccountType.NULL;
+            int thisTypeID = SpclAccountType.NULL;
             List<AccountBalanceDetails> accList;
 
             // Clear any nodes that might already be hear

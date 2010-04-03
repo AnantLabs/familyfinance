@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 
-namespace FamilyFinance2
+namespace FamilyFinance2.Forms.Main
 {
     class SubLineDGV : MyDataGridView
     {

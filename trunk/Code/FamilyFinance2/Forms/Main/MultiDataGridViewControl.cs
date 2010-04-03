@@ -6,7 +6,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 
-namespace FamilyFinance2
+namespace FamilyFinance2.Forms.Main
 {
     public partial class MultiDataGridViewControl : UserControl
     {
