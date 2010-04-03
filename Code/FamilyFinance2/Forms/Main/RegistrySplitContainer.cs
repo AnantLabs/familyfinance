@@ -5,8 +5,9 @@ using System.Drawing;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
+using FamilyFinance2.SharedElements;
 
-namespace FamilyFinance2
+namespace FamilyFinance2.Forms.Main
 {
     public partial class RegistySplitContainer : SplitContainer
     {    
@@ -14,7 +15,7 @@ namespace FamilyFinance2
         //   Local Variables
         ///////////////////////////////////////////////////////////////////////
         private AccountTLV accountTLV;
-        private MultiDataGridViewControl multiDGV;
+        //private MultiDataGridViewControl multiDGV;
 
 
         private Label temp;
@@ -25,7 +26,7 @@ namespace FamilyFinance2
         private void accountTLV_SelectedAccountEnvelopeChanged(object sender, SelectedAccountEnvelopeChangedEventArgs e)
         {
             temp.Text = "AccountID = " + e.AccountID.ToString() + "  EnvelopeID = " + e.EnvelopeID.ToString();
-            this.multiDGV.setEnvelopeAndAccount(e.AccountID, e.EnvelopeID);
+            //this.multiDGV.setEnvelopeAndAccount(e.AccountID, e.EnvelopeID);
         }
  
 
@@ -56,16 +57,16 @@ namespace FamilyFinance2
             this.Panel1.Controls.Add(this.accountTLV);
 
             // the Multi Data Grid View
-            this.multiDGV = new MultiDataGridViewControl();
-            this.multiDGV.Dock = DockStyle.Fill;
-            this.Panel2.Controls.Add(this.multiDGV);
+            //this.multiDGV = new MultiDataGridViewControl();
+            //this.multiDGV.Dock = DockStyle.Fill;
+            //this.Panel2.Controls.Add(this.multiDGV);
 
 
         }
 
         public void myReloadAccount()
         {
-            multiDGV.myReloadAccounts();
+            //multiDGV.myReloadAccounts();
             accountTLV.myRebuildTree();
         }
 
@@ -76,18 +77,18 @@ namespace FamilyFinance2
 
         public void myReloadEnvelope()
         {
-            multiDGV.myReloadEnvelopes();
+            //multiDGV.myReloadEnvelopes();
             accountTLV.myRebuildTree();
         }
 
         public void myReloadLineItem()
         {
-            multiDGV.myReloadLineItems();
+            //multiDGV.myReloadLineItems();
         }
 
         public void myReloadLineType()
         {
-            multiDGV.myReloadLineTypes();
+            //multiDGV.myReloadLineTypes();
         }
     }
 }

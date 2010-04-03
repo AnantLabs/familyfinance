@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
-using TreeList;
+
 
 namespace FamilyFinance2.SharedElements
 {
@@ -298,17 +298,17 @@ namespace FamilyFinance2.SharedElements
         }
     }
 
-    public class MyTreeListNode : TreeList.Node
-    {
-        public int EnvelopeID;
-        public int AccountID;
+    //public class MyTreeListNode : TreeList.Node
+    //{
+    //    public int EnvelopeID;
+    //    public int AccountID;
 
-        public MyTreeListNode(string text, int envelopeID, int accountID) : base(text)
-        {
-            this.EnvelopeID = envelopeID;
-            this.AccountID = accountID;
-        }
-    }
+    //    public MyTreeListNode(string text, int envelopeID, int accountID) : base(text)
+    //    {
+    //        this.EnvelopeID = envelopeID;
+    //        this.AccountID = accountID;
+    //    }
+    //}
 
 
 
@@ -332,10 +332,10 @@ namespace FamilyFinance2.SharedElements
     public delegate void SelectedAccountEnvelopeChangedEventHandler(Object sender, SelectedAccountEnvelopeChangedEventArgs e);
     public class SelectedAccountEnvelopeChangedEventArgs : EventArgs
     {
-        public short AccountID;
-        public short EnvelopeID;
+        public int AccountID;
+        public int EnvelopeID;
 
-        public SelectedAccountEnvelopeChangedEventArgs(short accountID, short envelopeID)
+        public SelectedAccountEnvelopeChangedEventArgs(int accountID, int envelopeID)
         {
             AccountID = accountID;
             EnvelopeID = envelopeID;
