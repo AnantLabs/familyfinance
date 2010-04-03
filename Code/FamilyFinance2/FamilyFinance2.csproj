@@ -162,9 +162,23 @@
     <Compile Include="Forms\Main\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Main\RegistrySplit\Register\RegistryDataSet.Designer.cs">
+      <DependentUpon>RegistryDataSet.xsd</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Include="Forms\Main\RegistrySplit\RegistrySplitContainer.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Forms\Main\RegistrySplit\TreeView\AccountBrowser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Main\RegistrySplit\TreeView\AccountBrowser.Designer.cs">
+      <DependentUpon>AccountBrowser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Main\RegistrySplit\TreeView\AccountBrowserModel.cs" />
+    <Compile Include="Forms\Main\RegistrySplit\TreeView\AccountItems.cs" />
+    <Compile Include="Forms\Main\RegistrySplit\TreeView\AccountItemSorter.cs" />
     <Compile Include="Forms\Transaction\CDLinesDGV.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -217,6 +231,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Main\RegistrySplit\RegistrySplitContainer.resx">
       <DependentUpon>RegistrySplitContainer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Main\RegistrySplit\TreeView\AccountBrowser.resx">
+      <DependentUpon>AccountBrowser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Transaction\TransactionForm.resx">
       <DependentUpon>TransactionForm.cs</DependentUpon>
@@ -343,6 +360,17 @@
     </None>
     <None Include="Forms\LineType\LineTypeDataSet.xss">
       <DependentUpon>LineTypeDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Forms\Main\RegistrySplit\Register\RegistryDataSet.xsc">
+      <DependentUpon>RegistryDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Forms\Main\RegistrySplit\Register\RegistryDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>RegistryDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Forms\Main\RegistrySplit\Register\RegistryDataSet.xss">
+      <DependentUpon>RegistryDataSet.xsd</DependentUpon>
     </None>
     <None Include="Forms\Transaction\TransactionDataSet.xsc">
       <DependentUpon>TransactionDataSet.xsd</DependentUpon>
