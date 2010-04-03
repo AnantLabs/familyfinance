@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="76869e0f-b26e-4d2f-bef0-918755239b0c" name="Erik Lee@DELL_220S 2010-03-28 19:54:14" runUser="DELL_220S\Erik Lee" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <TestRunConfiguration name="Default Run Configuration" id="e3ea0df0-7962-4387-96b2-f3ada4f2dfca">
+    <Deployment runDeploymentRoot="C:\Users\Erik Lee\Desktop\treeviewadv\TestResults\Erik Lee_DELL_220S 2010-03-28 19_54_14">
+      <DeploymentItem filename="C:\Users\Erik Lee\Desktop\treeviewadv\Aga.Controls\bin\Debug\Aga.Controls.dll" />
+    </Deployment>
+    <Hosts skipUnhostableTests="false" />
+    <TestTypeSpecific />
+  </TestRunConfiguration>
+  <ResultSummary outcome="Completed">
+    <Counters total="7" executed="7" passed="7" error="0" failed="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <Times creation="2010-03-28T19:54:14.6547384-04:00" queuing="2010-03-28T19:54:17.7177384-04:00" start="2010-03-28T19:54:17.9367384-04:00" finish="2010-03-28T19:54:20.3377384-04:00" />
+  <TestDefinitions>
+    <UnitTest name="NodesTest" storage="c:\users\erik lee\desktop\treeviewadv\unittests\bin\debug\aga.controls.unittests.dll" id="9336f7e0-68a3-31ff-24d3-5f3c70329e7d">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <DeploymentItems>
+        <DeploymentItem filename="Aga.Controls.dll" />
+      </DeploymentItems>
+      <Execution id="c776dc58-849d-4f0b-95a4-eb65b2df8988" />
+      <TestMethod codeBase="C:\Users\Erik Lee\Desktop\treeviewadv\UnitTests\bin\Debug\Aga.Controls.UnitTests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Aga.Controls.UnitTests.TreeNodeAdvTest, Aga.Controls.UnitTests" name="NodesTest" />
+    </UnitTest>
+    <UnitTest name="ParentTest" storage="c:\users\erik lee\desktop\treeviewadv\unittests\bin\debug\aga.controls.unittests.dll" id="cc93057b-1ef5-477d-a097-23d484f38aa8">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="28c53c55-4d1d-45dc-b47c-2f2d542c7b75" />
+      <TestMethod codeBase="C:\Users\Erik Lee\Desktop\treeviewadv\UnitTests\bin\Debug\Aga.Controls.UnitTests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Aga.Controls.UnitTests.NodeTest, Aga.Controls.UnitTests" name="ParentTest" />
+    </UnitTest>
+    <UnitTest name="TestMethod" storage="c:\users\erik lee\desktop\treeviewadv\unittests\bin\debug\aga.controls.unittests.dll" id="ec50d02f-2f89-566c-75b6-36fbbaf560f0">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="c8afc654-ddb6-4502-8d8f-01a67b52d3a0" />
+      <TestMethod codeBase="C:\Users\Erik Lee\Desktop\treeviewadv\UnitTests\bin\Debug\Aga.Controls.UnitTests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Aga.Controls.UnitTests.PerformanceTest, Aga.Controls.UnitTests" name="TestMethod" />
+    </UnitTest>
+    <UnitTest name="IndexTest" storage="c:\users\erik lee\desktop\treeviewadv\unittests\bin\debug\aga.controls.unittests.dll" id="29f581d5-ecca-d95a-65a9-29c34c2d8f9b">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="9d455948-b815-49c4-8722-7a69b6412df5" />
+      <TestMethod codeBase="C:\Users\Erik Lee\Desktop\treeviewadv\UnitTests\bin\Debug\Aga.Controls.UnitTests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Aga.Controls.UnitTests.NodeTest, Aga.Controls.UnitTests" name="IndexTest" />
+    </UnitTest>
+    <UnitTest name="TestTreeNodeAdv" storage="c:\users\erik lee\desktop\treeviewadv\unittests\bin\debug\aga.controls.unittests.dll" id="841bbb4a-4826-b534-dc9e-b21c4f52f3e4">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="1e06c02f-4754-4e56-8a8c-6a7ba5d7b2e3" />
+      <TestMethod codeBase="C:\Users\Erik Lee\Desktop\treeviewadv\UnitTests\bin\Debug\Aga.Controls.UnitTests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Aga.Controls.UnitTests.SerializationTest, Aga.Controls.UnitTests" name="TestTreeNodeAdv" />
+    </UnitTest>
+    <UnitTest name="ClearTest" storage="c:\users\erik lee\desktop\treeviewadv\unittests\bin\debug\aga.controls.unittests.dll" id="ac1688d8-3fb6-009a-d7cf-5277e3d98a16">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="43dbee34-dafd-4fae-8855-b968b6eaa376" />
+      <TestMethod codeBase="C:\Users\Erik Lee\Desktop\treeviewadv\UnitTests\bin\Debug\Aga.Controls.UnitTests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Aga.Controls.UnitTests.NodeTest, Aga.Controls.UnitTests" name="ClearTest" />
+    </UnitTest>
+    <UnitTest name="ModelTest" storage="c:\users\erik lee\desktop\treeviewadv\unittests\bin\debug\aga.controls.unittests.dll" id="b04d1df5-36a0-e893-89f9-21b7955a63f3">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="8ea13b81-d1b0-4571-90a4-1af690aaaa22" />
+      <TestMethod codeBase="C:\Users\Erik Lee\Desktop\treeviewadv\UnitTests\bin\Debug\Aga.Controls.UnitTests.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Aga.Controls.UnitTests.NodeTest, Aga.Controls.UnitTests" name="ModelTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="cc93057b-1ef5-477d-a097-23d484f38aa8" executionId="28c53c55-4d1d-45dc-b47c-2f2d542c7b75" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="29f581d5-ecca-d95a-65a9-29c34c2d8f9b" executionId="9d455948-b815-49c4-8722-7a69b6412df5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ac1688d8-3fb6-009a-d7cf-5277e3d98a16" executionId="43dbee34-dafd-4fae-8855-b968b6eaa376" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b04d1df5-36a0-e893-89f9-21b7955a63f3" executionId="8ea13b81-d1b0-4571-90a4-1af690aaaa22" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ec50d02f-2f89-566c-75b6-36fbbaf560f0" executionId="c8afc654-ddb6-4502-8d8f-01a67b52d3a0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="841bbb4a-4826-b534-dc9e-b21c4f52f3e4" executionId="1e06c02f-4754-4e56-8a8c-6a7ba5d7b2e3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9336f7e0-68a3-31ff-24d3-5f3c70329e7d" executionId="c776dc58-849d-4f0b-95a4-eb65b2df8988" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="28c53c55-4d1d-45dc-b47c-2f2d542c7b75" testId="cc93057b-1ef5-477d-a097-23d484f38aa8" testName="ParentTest" computerName="DELL_220S" duration="00:00:00.0145850" startTime="2010-03-28T19:54:18.1127384-04:00" endTime="2010-03-28T19:54:18.6567384-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="9d455948-b815-49c4-8722-7a69b6412df5" testId="29f581d5-ecca-d95a-65a9-29c34c2d8f9b" testName="IndexTest" computerName="DELL_220S" duration="00:00:00.0009744" startTime="2010-03-28T19:54:18.6687384-04:00" endTime="2010-03-28T19:54:18.6737384-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="43dbee34-dafd-4fae-8855-b968b6eaa376" testId="ac1688d8-3fb6-009a-d7cf-5277e3d98a16" testName="ClearTest" computerName="DELL_220S" duration="00:00:00.0757658" startTime="2010-03-28T19:54:18.6777384-04:00" endTime="2010-03-28T19:54:18.7577384-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+        <StdOut>Clear: 0.0163804338260868</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="8ea13b81-d1b0-4571-90a4-1af690aaaa22" testId="b04d1df5-36a0-e893-89f9-21b7955a63f3" testName="ModelTest" computerName="DELL_220S" duration="00:00:00.0026656" startTime="2010-03-28T19:54:18.7617384-04:00" endTime="2010-03-28T19:54:18.7677384-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="c8afc654-ddb6-4502-8d8f-01a67b52d3a0" testId="ec50d02f-2f89-566c-75b6-36fbbaf560f0" testName="TestMethod" computerName="DELL_220S" duration="00:00:01.3539375" startTime="2010-03-28T19:54:18.7717384-04:00" endTime="2010-03-28T19:54:20.1287384-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+        <StdOut>TextRenderer 1.14979522537082
+Graphics 0.201285079528264</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="1e06c02f-4754-4e56-8a8c-6a7ba5d7b2e3" testId="841bbb4a-4826-b534-dc9e-b21c4f52f3e4" testName="TestTreeNodeAdv" computerName="DELL_220S" duration="00:00:00.0080934" startTime="2010-03-28T19:54:20.1347384-04:00" endTime="2010-03-28T19:54:20.1457384-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="c776dc58-849d-4f0b-95a4-eb65b2df8988" testId="9336f7e0-68a3-31ff-24d3-5f3c70329e7d" testName="NodesTest" computerName="DELL_220S" duration="00:00:00.1213186" startTime="2010-03-28T19:54:20.1497384-04:00" endTime="2010-03-28T19:54:20.2747384-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+        <StdOut>Add: 0.104005676699134
+Clear: 0.014636497096698</StdOut>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>
