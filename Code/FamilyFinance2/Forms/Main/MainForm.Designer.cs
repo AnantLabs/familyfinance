@@ -30,25 +30,27 @@
         {
             System.Windows.Forms.ToolStripDropDownButton editTSDropDown;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.mainToolStrip = new System.Windows.Forms.ToolStrip();
             this.accoutsTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.envelopesTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.transactionTypesTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.mainToolStrip = new System.Windows.Forms.ToolStrip();
+            this.registySplitContainer1 = new FamilyFinance2.Forms.Main.RegistySplitContainer();
             editTSDropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.mainToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // mainToolStrip
+            // editTSDropDown
             // 
-            this.mainToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.mainToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            editTSDropDown});
-            this.mainToolStrip.Location = new System.Drawing.Point(0, 0);
-            this.mainToolStrip.Name = "mainToolStrip";
-            this.mainToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.mainToolStrip.Size = new System.Drawing.Size(739, 25);
-            this.mainToolStrip.TabIndex = 0;
-            this.mainToolStrip.Text = "toolStrip1";
+            editTSDropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            editTSDropDown.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.accoutsTSMI,
+            this.envelopesTSMI,
+            this.transactionTypesTSMI});
+            editTSDropDown.Image = ((System.Drawing.Image)(resources.GetObject("editTSDropDown.Image")));
+            editTSDropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
+            editTSDropDown.Name = "editTSDropDown";
+            editTSDropDown.Size = new System.Drawing.Size(40, 22);
+            editTSDropDown.Text = "Edit";
             // 
             // accoutsTSMI
             // 
@@ -71,24 +73,33 @@
             this.transactionTypesTSMI.Text = "Transaction Types";
             this.transactionTypesTSMI.Click += new System.EventHandler(this.transactionTypesToolStripMenuItem_Click);
             // 
-            // editTSDropDown
+            // mainToolStrip
             // 
-            editTSDropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            editTSDropDown.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.accoutsTSMI,
-            this.envelopesTSMI,
-            this.transactionTypesTSMI});
-            editTSDropDown.Image = ((System.Drawing.Image)(resources.GetObject("editTSDropDown.Image")));
-            editTSDropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
-            editTSDropDown.Name = "editTSDropDown";
-            editTSDropDown.Size = new System.Drawing.Size(40, 22);
-            editTSDropDown.Text = "Edit";
+            this.mainToolStrip.BackColor = System.Drawing.SystemColors.Control;
+            this.mainToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.mainToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            editTSDropDown});
+            this.mainToolStrip.Location = new System.Drawing.Point(0, 0);
+            this.mainToolStrip.Name = "mainToolStrip";
+            this.mainToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.mainToolStrip.Size = new System.Drawing.Size(739, 25);
+            this.mainToolStrip.TabIndex = 0;
+            this.mainToolStrip.Text = "toolStrip1";
+            // 
+            // registySplitContainer1
+            // 
+            this.registySplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.registySplitContainer1.Location = new System.Drawing.Point(0, 25);
+            this.registySplitContainer1.Name = "registySplitContainer1";
+            this.registySplitContainer1.Size = new System.Drawing.Size(739, 501);
+            this.registySplitContainer1.TabIndex = 1;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(739, 526);
+            this.Controls.Add(this.registySplitContainer1);
             this.Controls.Add(this.mainToolStrip);
             this.Name = "MainForm";
             this.Text = "Family Finance";
@@ -105,6 +116,7 @@
         private System.Windows.Forms.ToolStripMenuItem accoutsTSMI;
         private System.Windows.Forms.ToolStripMenuItem envelopesTSMI;
         private System.Windows.Forms.ToolStripMenuItem transactionTypesTSMI;
+        private RegistySplitContainer registySplitContainer1;
 
     }
 }
