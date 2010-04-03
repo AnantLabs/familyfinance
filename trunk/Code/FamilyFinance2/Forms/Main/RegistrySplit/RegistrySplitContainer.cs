@@ -9,14 +9,11 @@ using FamilyFinance2.SharedElements;
 
 namespace FamilyFinance2.Forms.Main
 {
-    public partial class RegistySplitContainer : SplitContainer
+    public partial class RegistySplitContainer : UserControl
     {    
         ///////////////////////////////////////////////////////////////////////
         //   Local Variables
         ///////////////////////////////////////////////////////////////////////
-        private AccountTLV accountTLV;
-        //private MultiDataGridViewControl multiDGV;
-
 
         private Label temp;
 
@@ -44,17 +41,17 @@ namespace FamilyFinance2.Forms.Main
         {
             this.temp = new Label();
             this.temp.AutoSize = true;
-            this.Panel2.Controls.Add(temp);
+            //this.Panel2.Controls.Add(temp);
 
             // SplitContainer
             this.BorderStyle = BorderStyle.Fixed3D;
 
             // The Account Tree List View
-            this.accountTLV = new AccountTLV();
-            this.accountTLV.Text = "accountTLV";
-            this.accountTLV.Dock = DockStyle.Fill;
-            this.accountTLV.SelectedAccountEnvelopeChanged += new SelectedAccountEnvelopeChangedEventHandler(accountTLV_SelectedAccountEnvelopeChanged);
-            this.Panel1.Controls.Add(this.accountTLV);
+            //this.accountTLV = new AccountTLV();
+            //this.accountTLV.Text = "accountTLV";
+            //this.accountTLV.Dock = DockStyle.Fill;
+            //this.accountTLV.SelectedAccountEnvelopeChanged += new SelectedAccountEnvelopeChangedEventHandler(accountTLV_SelectedAccountEnvelopeChanged);
+            //this.Panel1.Controls.Add(this.accountTLV);
 
             // the Multi Data Grid View
             //this.multiDGV = new MultiDataGridViewControl();
@@ -67,18 +64,18 @@ namespace FamilyFinance2.Forms.Main
         public void myReloadAccount()
         {
             //multiDGV.myReloadAccounts();
-            accountTLV.myRebuildTree();
+            //accountTLV.myRebuildTree();
         }
 
         public void myReloadAccountTypes()
         {
-            accountTLV.myRebuildTree();
+            //accountTLV.myRebuildTree();
         }
 
         public void myReloadEnvelope()
         {
             //multiDGV.myReloadEnvelopes();
-            accountTLV.myRebuildTree();
+            //accountTLV.myRebuildTree();
         }
 
         public void myReloadLineItem()
