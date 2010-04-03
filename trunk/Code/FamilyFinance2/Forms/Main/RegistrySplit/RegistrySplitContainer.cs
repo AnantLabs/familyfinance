@@ -6,12 +6,14 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using FamilyFinance2.SharedElements;
+using Aga.Controls;
 
 namespace FamilyFinance2.Forms.Main
 {
     public partial class RegistySplitContainer : UserControl
     {
-        private SplitContainer splitContainer1;
+        private SplitContainer splitContainer;
+        private FamilyFinance2.Forms.Main.RegistrySplit.TreeView.AccountBrowser accountBrowser1;
         ///////////////////////////////////////////////////////////////////////
         //   Local Variables
         ///////////////////////////////////////////////////////////////////////
@@ -91,25 +93,40 @@ namespace FamilyFinance2.Forms.Main
 
         private void InitializeComponent()
         {
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer1.SuspendLayout();
+            this.splitContainer = new System.Windows.Forms.SplitContainer();
+            this.accountBrowser1 = new Forms.Main.RegistrySplit.TreeView.AccountBrowser();
+            this.splitContainer.Panel1.SuspendLayout();
+            this.splitContainer.SuspendLayout();
             this.SuspendLayout();
             // 
-            // splitContainer1
+            // splitContainer
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Size = new System.Drawing.Size(890, 360);
-            this.splitContainer1.SplitterDistance = 656;
-            this.splitContainer1.TabIndex = 0;
+            this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer.Name = "splitContainer";
+            // 
+            // splitContainer.Panel1
+            // 
+            this.splitContainer.Panel1.Controls.Add(this.accountBrowser1);
+            this.splitContainer.Size = new System.Drawing.Size(924, 554);
+            this.splitContainer.SplitterDistance = 305;
+            this.splitContainer.TabIndex = 0;
+            // 
+            // accountBrowser1
+            // 
+            this.accountBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.accountBrowser1.Location = new System.Drawing.Point(0, 0);
+            this.accountBrowser1.Name = "accountBrowser1";
+            this.accountBrowser1.Size = new System.Drawing.Size(305, 554);
+            this.accountBrowser1.TabIndex = 0;
             // 
             // RegistySplitContainer
             // 
-            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.splitContainer);
             this.Name = "RegistySplitContainer";
-            this.Size = new System.Drawing.Size(890, 360);
-            this.splitContainer1.ResumeLayout(false);
+            this.Size = new System.Drawing.Size(924, 554);
+            this.splitContainer.Panel1.ResumeLayout(false);
+            this.splitContainer.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
