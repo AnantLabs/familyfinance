@@ -24,14 +24,14 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 
         public System.Collections.IEnumerable GetChildren(TreePath treePath)
         {
-            List<BaseItem> items = null;
-            items = new List<BaseItem>();
+            List<NodeItem> items = null;
+            items = new List<NodeItem>();
 
             if (treePath.IsEmpty())
             {
-                items.Add(new BaseItem("testig", -1, -1, -45.435m));
-                items.Add(new BaseItem("testig2", -1, -1, -45.435m));
-                items.Add(new BaseItem("testig3", -1, -1, -45.435m));
+                items.Add(new NodeItem("testig", -1, -1, -45.435m));
+                items.Add(new NodeItem("testig2", -1, -1, -45.435m));
+                items.Add(new NodeItem("testig3", -1, -1, -45.435m));
                 //if (_cache.ContainsKey("ROOT"))
                 //    items = _cache["ROOT"];
                 //else
@@ -44,7 +44,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             }
             else
             {
-                BaseItem parent = treePath.LastNode as BaseItem;
+                NodeItem parent = treePath.LastNode as NodeItem;
                 //if (parent != null)
                 //{
                 //    if (_cache.ContainsKey(parent.ItemPath))
@@ -78,14 +78,14 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 
         public bool IsLeaf(TreePath treePath)
         {
-            return treePath.LastNode is BaseItem;
+            return treePath.LastNode is NodeItem;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Local Avriables
         ////////////////////////////////////////////////////////////////////////////////////////////
 		private BackgroundWorker bgWorker;
-		private List<BaseItem> _itemsToRead;
+		private List<NodeItem> _itemsToRead;
 		//private Dictionary<string, List<BaseItem>> _cache = new Dictionary<string, List<BaseItem>>();
 
 
@@ -132,7 +132,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Private
         ////////////////////////////////////////////////////////////////////////////////////////////
-        private TreePath GetPath(BaseItem item)
+        private TreePath GetPath(NodeItem item)
         {
             if (item == null)
                 return TreePath.Empty;
@@ -153,7 +153,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
         ////////////////////////////////////////////////////////////////////////////////////////////
         public AccountBrowserModel()
 		{
-			_itemsToRead = new List<BaseItem>();
+            _itemsToRead = new List<NodeItem>();
 
 			bgWorker = new BackgroundWorker();
 			bgWorker.WorkerReportsProgress = true;
@@ -167,7 +167,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 				StructureChanged(this, new TreePathEventArgs());
 		}
 
-		internal void OnNodesChanged(BaseItem item)
+        internal void OnNodesChanged(NodeItem item)
 		{
 			if (NodesChanged != null)
 			{

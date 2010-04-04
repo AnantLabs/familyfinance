@@ -8,7 +8,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 	public class NodeItem
 	{
         public Image Icon;
-        public BaseItem Parent;
+        public NodeItem Parent;
 		public string Name = "";
         public string ItemPath = "";
 
@@ -29,8 +29,9 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             return ItemPath;
 		}
 
-        public NodeItem(string name, int aID, int eID, decimal bal, BaseItem parent)
+        public NodeItem(string name, string path, int aID, int eID, decimal bal, NodeItem parent)
         {
+            this.ItemPath = path;
             this.Name = name;
             this.AccountID = aID;
             this.EnvelopeID = eID;
