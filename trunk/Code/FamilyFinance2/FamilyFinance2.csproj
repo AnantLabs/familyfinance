@@ -179,8 +179,8 @@
     <Compile Include="Forms\Main\RegistrySplit\TreeView\AccountBrowserModel.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Forms\Main\RegistrySplit\TreeView\AccountItems.cs" />
-    <Compile Include="Forms\Main\RegistrySplit\TreeView\AccountItemSorter.cs" />
+    <Compile Include="Forms\Main\RegistrySplit\TreeView\NodeItem.cs" />
+    <Compile Include="Forms\Main\RegistrySplit\TreeView\NodeItemSorter.cs" />
     <Compile Include="Forms\Transaction\CDLinesDGV.cs">
       <SubType>Component</SubType>
     </Compile>
