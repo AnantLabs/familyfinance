@@ -176,7 +176,9 @@
     <Compile Include="Forms\Main\RegistrySplit\TreeView\AccountBrowser.Designer.cs">
       <DependentUpon>AccountBrowser.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Main\RegistrySplit\TreeView\AccountBrowserModel.cs" />
+    <Compile Include="Forms\Main\RegistrySplit\TreeView\AccountBrowserModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Forms\Main\RegistrySplit\TreeView\AccountItems.cs" />
     <Compile Include="Forms\Main\RegistrySplit\TreeView\AccountItemSorter.cs" />
     <Compile Include="Forms\Transaction\CDLinesDGV.cs">
