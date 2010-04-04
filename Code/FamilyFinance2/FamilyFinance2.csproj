@@ -46,10 +46,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aga.Controls, Version=1.7.0.0, Culture=neutral, PublicKeyToken=fcc90fbf924463a3, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\TreeViewAdv\Aga.Controls\bin\Release\Aga.Controls.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="PresentationCore">
@@ -170,17 +166,6 @@
     <Compile Include="Forms\Main\RegistrySplit\RegistrySplitContainer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\Main\RegistrySplit\TreeView\AccountBrowser.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Forms\Main\RegistrySplit\TreeView\AccountBrowser.Designer.cs">
-      <DependentUpon>AccountBrowser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Main\RegistrySplit\TreeView\AccountBrowserModel.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Forms\Main\RegistrySplit\TreeView\NodeItem.cs" />
-    <Compile Include="Forms\Main\RegistrySplit\TreeView\NodeItemSorter.cs" />
     <Compile Include="Forms\Transaction\CDLinesDGV.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -234,9 +219,6 @@
     <EmbeddedResource Include="Forms\Main\RegistrySplit\RegistrySplitContainer.resx">
       <DependentUpon>RegistrySplitContainer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Main\RegistrySplit\TreeView\AccountBrowser.resx">
-      <DependentUpon>AccountBrowser.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Transaction\TransactionForm.resx">
       <DependentUpon>TransactionForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -269,6 +251,16 @@
     <Compile Include="SharedElements\DB_Commands.cs" />
     <Compile Include="SharedElements\DB_Queries.cs" />
     <Compile Include="SharedElements\Pieces.cs" />
+    <Compile Include="SharedElements\TreeList\Tracing.cs" />
+    <Compile Include="SharedElements\TreeList\TreeListColumn.cs" />
+    <Compile Include="SharedElements\TreeList\TreeListColumn.Design.cs" />
+    <Compile Include="SharedElements\TreeList\TreeListNode.cs" />
+    <Compile Include="SharedElements\TreeList\TreeListOptions.cs" />
+    <Compile Include="SharedElements\TreeList\TreeListPainter.cs" />
+    <Compile Include="SharedElements\TreeList\TreeListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SharedElements\TreeList\Util.cs" />
     <Compile Include="Testing\StressDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -400,6 +392,9 @@
     <None Include="Testing\StressDataSet.xss">
       <DependentUpon>StressDataSet.xsd</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Forms\Main\RegistrySplit\TreeView\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
