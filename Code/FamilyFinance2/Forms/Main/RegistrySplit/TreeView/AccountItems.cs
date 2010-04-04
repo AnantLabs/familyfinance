@@ -1,70 +1,41 @@
 using System;
 using System.Drawing;
 using System.IO;
+using FamilyFinance2.SharedElements;
 
 namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 {
-	public abstract class BaseItem
+	public class NodeItem
 	{
-		private string _path = "";
-		public string ItemPath
+        public Image Icon;
+        public BaseItem Parent;
+		public string Name = "";
+        public string ItemPath = "";
+
+        private decimal balance = 0.0m;
+        public string Balance
+        {
+            get
+            {
+                return balance.ToString("C");
+            }
+        }
+
+        public int AccountID = SpclAccount.NULL;
+        public int EnvelopeID = SpclEnvelope.NULL;
+
+		public override string ToString()
 		{
-			get { return _path; }
-			set { _path = value; }
+            return ItemPath;
 		}
 
-		private Image _icon;
-		public Image Icon
-		{
-			get { return _icon; }
-			set { _icon = value; }
-		}
-
-		private long _size = 0;
-		public long Size
-		{
-			get { return _size; }
-			set { _size = value; }
-		}
-
-		private DateTime _date;
-		public DateTime Date
-		{
-			get { return _date; }
-			set { _date = value; }
-		}
-
-		public abstract string Name
-		{
-			get;
-			set;
-		}
-
-		private BaseItem _parent;
-		public BaseItem Parent
-		{
-			get { return _parent; }
-			set { _parent = value; }
-		}
-
-		private bool _isChecked;
-		public bool IsChecked
-		{
-			get { return _isChecked; }
-			set 
-			{ 
-				_isChecked = value;
-				if (Owner != null)
-					Owner.OnNodesChanged(this);
-			}
-		}
-
-		private FolderBrowserModel _owner;
-		public FolderBrowserModel Owner
-		{
-			get { return _owner; }
-			set { _owner = value; }
-		}
+        public NodeItem(string name, int aID, int eID, decimal bal, BaseItem parent)
+        {
+            this.Name = name;
+            this.AccountID = aID;
+            this.EnvelopeID = eID;
+            this.balance = bal;
+        }
 
 		/*public override bool Equals(object obj)
 		{
@@ -78,80 +49,64 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 		{
 			return _path.GetHashCode();
 		}*/
-
-		public override string ToString()
-		{
-			return _path;
-		}
 	}
 
-	public class RootItem : BaseItem
-	{
-		public RootItem(string name, FolderBrowserModel owner)
-		{
-			ItemPath = name;
-			Owner = owner;
-		}
+    //public class RootItem : BaseItem
+    //{
+    //    //public RootItem(string name, AccountBrowserModel owner)
+    //    //{
+    //    //    ItemPath = name;
+    //    //    Owner = owner;
+    //    //}
+    //}
 
-		public override string Name
-		{
-			get
-			{
-				return ItemPath;
-			}
-			set
-			{
-			}
-		}
-	}
+    //public class FolderItem : BaseItem
+    //{
+    //    public override string Name
+    //    {
+    //        get
+    //        {
+    //            return Path.GetFileName(ItemPath);
+    //        }
+    //        set
+    //        {
+    //            string dir = Path.GetDirectoryName(ItemPath);
+    //            string destination = Path.Combine(dir, value);
+    //            Directory.Move(ItemPath, destination);
+    //            ItemPath = destination;
+    //        }
+    //    }
 
-	public class FolderItem : BaseItem
-	{
-		public override string Name
-		{
-			get
-			{
-				return Path.GetFileName(ItemPath);
-			}
-			set
-			{
-				string dir = Path.GetDirectoryName(ItemPath);
-				string destination = Path.Combine(dir, value);
-				Directory.Move(ItemPath, destination);
-				ItemPath = destination;
-			}
-		}
+    //    public FolderItem(string name, BaseItem parent, FolderBrowserModel owner)
+    //    {
+    //        ItemPath = name;
+    //        Parent = parent;
+    //        Owner = owner;
+    //    }
+    //}
 
-		public FolderItem(string name, BaseItem parent, FolderBrowserModel owner)
-		{
-			ItemPath = name;
-			Parent = parent;
-			Owner = owner;
-		}
-	}
+    //public class FileItem : BaseItem
+    //{
+    //    public override string Name
+    //    {
+    //        get
+    //        {
+    //            return Path.GetFileName(ItemPath);
+    //        }
+    //        set
+    //        {
+    //            string dir = Path.GetDirectoryName(ItemPath);
+    //            string destination = Path.Combine(dir, value);
+    //            File.Move(ItemPath, destination);
+    //            ItemPath = destination;
+    //        }
+    //    }
 
-	public class FileItem : BaseItem
-	{
-		public override string Name
-		{
-			get
-			{
-				return Path.GetFileName(ItemPath);
-			}
-			set
-			{
-				string dir = Path.GetDirectoryName(ItemPath);
-				string destination = Path.Combine(dir, value);
-				File.Move(ItemPath, destination);
-				ItemPath = destination;
-			}
-		}
-
-		public FileItem(string name, BaseItem parent, FolderBrowserModel owner)
-		{
-			ItemPath = name;
-			Parent = parent;
-			Owner = owner;
-		}
-	}
+    //    public FileItem(string name, BaseItem parent, FolderBrowserModel owner)
+    //    {
+    //        ItemPath = name;
+    //        Parent = parent;
+    //        Owner = owner;
+    //    }
+    //}
 }
