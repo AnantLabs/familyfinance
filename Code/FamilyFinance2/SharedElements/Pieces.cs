@@ -292,25 +292,12 @@ namespace FamilyFinance2.SharedElements
     {
         public int ID;
 
-        public MyTreeNode(string text, int id):base(text)
+        public MyTreeNode(string text, int id)
+            : base(text)
         {
             this.ID = id;
         }
     }
-
-    //public class MyTreeListNode : TreeList.Node
-    //{
-    //    public int EnvelopeID;
-    //    public int AccountID;
-
-    //    public MyTreeListNode(string text, int envelopeID, int accountID) : base(text)
-    //    {
-    //        this.EnvelopeID = envelopeID;
-    //        this.AccountID = accountID;
-    //    }
-    //}
-
-
 
     ///////////////////////////////////////
     // Delagates and Event Arguments

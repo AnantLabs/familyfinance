@@ -48,7 +48,8 @@ namespace FamilyFinance2
                     //Testing.Testing test = new FamilyFinance2.Testing.Testing();
                     //test.stressFillDataBase();
 
-                    Application.Run(new FamilyFinance2.Forms.Transaction.TransactionForm(3));
+                    //Application.Run(new FamilyFinance2.Forms.Transaction.TransactionForm(3));
+                    Application.Run(new FamilyFinance2.Forms.Main.MainForm());
                 }
 
 #endif
