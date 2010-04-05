@@ -6,19 +6,18 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using FamilyFinance2.SharedElements;
-using Aga.Controls;
+using FamilyFinance2.Forms.Main.RegistrySplit.TreeView;
 
 namespace FamilyFinance2.Forms.Main
 {
     public class RegistySplitContainer : UserControl
     {
-        private SplitContainer splitContainer;
-        private FamilyFinance2.Forms.Main.RegistrySplit.TreeView.AccountBrowser accountBrowser;
         ///////////////////////////////////////////////////////////////////////
         //   Local Variables
         ///////////////////////////////////////////////////////////////////////
-
         private Label temp;
+        private SplitContainer splitContainer;
+        AccountTLV accountTLV = new AccountTLV();
 
         ///////////////////////////////////////////////////////////////////////
         //   Internal Events
@@ -42,20 +41,25 @@ namespace FamilyFinance2.Forms.Main
         ///////////////////////////////////////////////////////////////////////
         public RegistySplitContainer()
         {
-            this.temp = new Label();
-            this.temp.AutoSize = true;
-            //this.Panel2.Controls.Add(temp);
+            // This RegistySplitContainer : UserControl
+            this.InitializeComponent();
+            this.BorderStyle = BorderStyle.None;
 
             // SplitContainer
-            this.BorderStyle = BorderStyle.None;
-            this.InitializeComponent();
+            this.splitContainer.FixedPanel = FixedPanel.Panel1;
+
+
+            this.temp = new Label();
+            this.temp.AutoSize = true;
+            this.splitContainer.Panel2.Controls.Add(temp);
 
             // The Account Tree List View
-            //this.accountTLV = new AccountTLV();
-            //this.accountTLV.Text = "accountTLV";
-            //this.accountTLV.Dock = DockStyle.Fill;
-            //this.accountTLV.SelectedAccountEnvelopeChanged += new SelectedAccountEnvelopeChangedEventHandler(accountTLV_SelectedAccountEnvelopeChanged);
-            //this.Panel1.Controls.Add(this.accountTLV);
+            this.accountTLV = new AccountTLV();
+            this.accountTLV.Text = "accountTLV";
+            this.accountTLV.Dock = DockStyle.Fill;
+            this.accountTLV.SelectedAccountEnvelopeChanged += new SelectedAccountEnvelopeChangedEventHandler(accountTLV_SelectedAccountEnvelopeChanged);
+            this.splitContainer.Panel1.Controls.Add(this.accountTLV);
+            this.accountTLV.myRebuildTree();
 
             // the Multi Data Grid View
             //this.multiDGV = new MultiDataGridViewControl();
@@ -95,38 +99,24 @@ namespace FamilyFinance2.Forms.Main
         private void InitializeComponent()
         {
             this.splitContainer = new System.Windows.Forms.SplitContainer();
-            this.accountBrowser = new FamilyFinance2.Forms.Main.RegistrySplit.TreeView.AccountBrowser();
-            this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer
             // 
             this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer.Location = new System.Drawing.Point(0, 0);
             this.splitContainer.Name = "splitContainer";
-            // 
-            // splitContainer.Panel1
-            // 
-            this.splitContainer.Panel1.Controls.Add(this.accountBrowser);
-            this.splitContainer.Size = new System.Drawing.Size(924, 554);
-            this.splitContainer.SplitterDistance = 420;
+            this.splitContainer.Size = new System.Drawing.Size(900, 554);
+            this.splitContainer.SplitterDistance = 303;
             this.splitContainer.TabIndex = 0;
-            // 
-            // accountBrowser
-            // 
-            this.accountBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.accountBrowser.Location = new System.Drawing.Point(0, 0);
-            this.accountBrowser.Name = "accountBrowser";
-            this.accountBrowser.Size = new System.Drawing.Size(420, 554);
-            this.accountBrowser.TabIndex = 0;
             // 
             // RegistySplitContainer
             // 
             this.Controls.Add(this.splitContainer);
             this.Name = "RegistySplitContainer";
-            this.Size = new System.Drawing.Size(924, 554);
-            this.splitContainer.Panel1.ResumeLayout(false);
+            this.Size = new System.Drawing.Size(900, 554);
             this.splitContainer.ResumeLayout(false);
             this.ResumeLayout(false);
 

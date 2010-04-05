@@ -124,7 +124,7 @@ namespace FamilyFinance2.Testing
             // Make alot of entries
             while (date < DateTime.Now.AddMonths(3).Date)
             {
-                num = rnd.Next(0, 1000);
+                num = rnd.Next(0, 10000);
 
                 if (num == 0)
                     addAccountType();
