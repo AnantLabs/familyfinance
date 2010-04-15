@@ -1,0 +1,11 @@
+SELECT a.id, a.name, (lSum.credit - lSum.debit) AS balance
+FROM Account AS a INNER JOIN (
+	SELECT l.accountID AS aID, SUM(CASE WHEN l.creditDebit = 0 THEN el.amount ELSE 0 END) AS credit, SUM(CASE WHEN l.creditDebit = 1 THEN el.amount ELSE 0 END) AS debit
+	FROM LineItem AS l INNER JOIN EnvelopeLine AS el ON l.id = el.lineItemID
+	WHERE el.envelopeID = @@
+	GROUP BY l.accountID ) AS lSum ON a.id = lSum.aID
+WHERE a.closed = 0 AND lSum.credit <> lSum.debit
+ORDER BY a.name
+
+--@ 3
+--@ 
