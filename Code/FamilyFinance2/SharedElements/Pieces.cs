@@ -39,6 +39,7 @@ namespace FamilyFinance2.SharedElements
         public const byte INCOME = 1;
         public const byte ACCOUNT = 2;
         public const byte EXPENSE = 3;
+        public const byte ENVELOPE = 4;
     }
 
     public class SpclAccountType

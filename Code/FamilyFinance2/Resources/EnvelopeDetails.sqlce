@@ -1,0 +1,11 @@
+SELECT e.id, e.name, (elSum.credit - elSum.debit) AS balance
+FROM Envelope AS e INNER JOIN (
+	SELECT el.envelopeID AS eID, SUM(CASE WHEN l.creditDebit = 0 THEN el.amount ELSE 0 END) AS credit, SUM(CASE WHEN l.creditDebit = 1 THEN el.amount ELSE 0 END) AS debit
+	FROM LineItem AS l INNER JOIN EnvelopeLine AS el ON l.id = el.lineItemID
+	WHERE el.envelopeID IN (SELECT id FROM Envelope WHERE closed = 0 @@)
+	GROUP BY el.envelopeID ) AS elSum ON e.id = elSum.eID
+WHERE elSum.credit <> elSum.debit
+ORDER BY e.name
+
+--@ AND groupID = 2
+--@ 

@@ -1,0 +1,7 @@
+SELECT DISTINCT at.id, at.name
+FROM AccountType AS at INNER JOIN Account AS a ON at.id = a.typeID
+WHERE a.closed = 0 AND a.catagory = @@
+ORDER BY at.name;
+--@ 1
+--@ 2
+--@ 3

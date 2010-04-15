@@ -1,67 +1,116 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using FamilyFinance2.SharedElements;
 
 namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 {
-    public class CatagoryNode : TreeList.Node
+    public enum MyNodes
     {
-        public byte Catagory;
+        Root,
+        AccountType,
+        EnvelopeGroup,
+        Account,
+        Envelope,
+        AENode
+    }
 
-        public CatagoryNode(string text, byte catagory)
-            : base(text)
+    public class BaseNode : TreeList.Node
+    {
+        public readonly MyNodes NodeType;
+
+        protected BaseNode (MyNodes nodeType, String name)
+            : base(name)
+        {
+            this.NodeType = nodeType;
+        }
+    }
+
+    public class RootNode : BaseNode
+    {
+        public readonly byte  Catagory;
+
+        public RootNode(byte catagory, string name)
+            : base(MyNodes.Root, name) 
         {
             this.Catagory = catagory;
         }
     }
 
-    public class TypeNode : TreeList.Node
+    public class TypeNode : BaseNode
     {
-        public byte Catagory;
-        public int TypeID;
+        public readonly byte Catagory;
+        public readonly int TypeID;
 
-        public TypeNode(string text, byte catagory, int typeID)
-            : base(text)
+        public TypeNode(int typeID, string name, byte catagory)
+            : base(MyNodes.AccountType, name)
         {
-            this.Catagory = catagory;
             this.TypeID = typeID;
+            this.Catagory = catagory;
         }
     }
 
-    public class AccountNode : TreeList.Node
+    public class GroupNode : BaseNode
     {
-        public int AccountID;
-        public bool Envelopes;
+        public readonly int GroupID;
 
-        public AccountNode(string text, int accountID, bool envelopes)
-            : base(text)
+        public GroupNode(int groupID, string name)
+            : base(MyNodes.EnvelopeGroup, name)
         {
+            this.GroupID = groupID;
+        }
+    }
+
+    public class AccountNode : BaseNode
+    {
+        public readonly byte Catagory;
+        public readonly int AccountID;
+        public readonly bool Envelopes;
+
+        public AccountNode(int accountID, string name, bool envelopes, decimal balance)
+            : base(MyNodes.Account, name)
+        {
+            this.Catagory = SpclAccountCat.ACCOUNT;
             this.AccountID = accountID;
             this.Envelopes = envelopes;
+            this[0] = name;
+            this[1] = balance.ToString("C2");
         }
-    }
 
-    public class EnvelopeNode : TreeList.Node
-    {
-        public int EnvelopeID;
-
-        public EnvelopeNode(string text, byte catagory, int envelopeID)
-            : base(text)
+        public AccountNode(byte catagory, int accountID, string name)
+            : base(MyNodes.Account, name)
         {
-            this.EnvelopeID = envelopeID;
-        }
-    }
-
-    public class AENode : TreeList.Node
-    {
-        public int EnvelopeID;
-        public int AccountID;
-
-        public AENode(string text, int envelopeID, int accountID)
-            : base(text)
-        {
-            this.EnvelopeID = envelopeID;
+            this.Catagory = catagory;
             this.AccountID = accountID;
+            this.Envelopes = false;
+        }
+    }
+
+    public class EnvelopeNode : BaseNode
+    {
+        public readonly int EnvelopeID;
+
+        public EnvelopeNode(int envelopeID, string name, decimal balance)
+            : base(MyNodes.Envelope, name)
+        {
+            this.EnvelopeID = envelopeID;
+            this[0] = name;
+            this[1] = balance.ToString("C2");
+        }
+    }
+
+    public class AENode : BaseNode
+    {
+        public readonly int EnvelopeID;
+        public readonly int AccountID;
+
+        public AENode(int accountID, int envelopeID, string name, decimal balance)
+            : base(MyNodes.AENode, name)
+        {
+            this.AccountID = accountID;
+            this.EnvelopeID = envelopeID;
+            this[0] = name;
+            this[1] = balance.ToString("C2");
         }
     }
 }

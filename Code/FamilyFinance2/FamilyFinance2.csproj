@@ -382,10 +382,17 @@
     <None Include="Forms\Transaction\TransactionDataSet.xss">
       <DependentUpon>TransactionDataSet.xsd</DependentUpon>
     </None>
+    <None Include="Resources\EnvelopeDetails.sqlce" />
+    <None Include="Resources\Groups.sqlce" />
+    <None Include="Resources\IncomeOrExpense.sqlce" />
+    <None Include="Resources\RealAccountDetails.sqlce" />
+    <None Include="Resources\SubAccountDetails.sqlce" />
+    <None Include="Resources\SubEnvelopeDetails.sqlce" />
     <None Include="Resources\TLVRedFlag.png" />
     <None Include="Resources\TLVMoney.png" />
     <None Include="Resources\TLVEnvelope.png" />
     <None Include="Resources\TLVBank.png" />
+    <None Include="Resources\TypesByCatagory.sqlce" />
     <None Include="Testing\StressDataSet.xsc">
       <DependentUpon>StressDataSet.xsd</DependentUpon>
     </None>

@@ -21,10 +21,10 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
         private TreeListColumn nameColumn;
         private TreeListColumn balanceColumn;
 
-        private CatagoryNode accountRootNode;
-        private CatagoryNode expenseRootNode;
-        private CatagoryNode incomeRootNode;
-        private CatagoryNode envelopeRootNode;
+        private RootNode accountRootNode;
+        private RootNode expenseRootNode;
+        private RootNode incomeRootNode;
+        private RootNode envelopeRootNode;
 
         private ToolStripMenuItem showIncomeMenuItem;
         private ToolStripMenuItem showExpenseMenuItem;
@@ -70,32 +70,106 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
         ///////////////////////////////////////////////////////////////////////
         private void theTreeListView_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            MyTreeListNode temp = this.FocusedNode as MyTreeListNode;
+            int accountID = -1;
+            int envelopeID = -1;
 
-            int accountID = temp.AccountID;
-            int envelopeID = temp.EnvelopeID;
+            MyNodes nodeType = (this.FocusedNode as BaseNode).NodeType;
+
+            switch (nodeType)
+            {
+                case MyNodes.AENode:
+                    AENode aeNode = this.FocusedNode as AENode;
+                    accountID = aeNode.AccountID;
+                    envelopeID = aeNode.EnvelopeID;
+                    break;
+
+                case MyNodes.Account:
+                    accountID = (this.FocusedNode as AccountNode).AccountID;
+                    break;
+
+                case MyNodes.Envelope:
+                    envelopeID = (this.FocusedNode as EnvelopeNode).EnvelopeID;
+                    break;
+
+                case MyNodes.Root:
+                case MyNodes.AccountType:
+                case MyNodes.EnvelopeGroup:
+                    break;
+            }
 
             if (accountID != selectedAccountID || envelopeID != selectedEnvelopeID)
                 OnSelectedAccountEnvelopeChanged(new SelectedAccountEnvelopeChangedEventArgs(accountID, envelopeID));
         }
 
+        private void AccountTLV_NotifyBeforeExpand(Node node, bool isExpanding)
+        {
+            if (!isExpanding || node.Nodes.Count > 0)
+                return;
+
+            MyNodes nodeType = (node as BaseNode).NodeType;
+
+            switch (nodeType)
+            {
+                case MyNodes.Root:
+                    this.handleThisRootNode(node as RootNode);
+                    break;
+
+                case MyNodes.AccountType:
+                    this.handleThisTypeNode(node as TypeNode);
+                    break;
+
+                case MyNodes.EnvelopeGroup:
+                    this.handleThisGroupNode(node as GroupNode);
+                    break;
+
+                case MyNodes.Account:
+                    this.handleThisAccountNode(node as AccountNode);
+                    break;
+
+                case MyNodes.Envelope:
+                    this.handleThisEnvelopeNode(node as EnvelopeNode);
+                    break;
+            }
+
+            if (node.Nodes.Count > 0)
+                node.HasChildren = true;
+            else
+                node.HasChildren = false;
+        }
+
         private void showIncomeMenuItem_Click(object sender, EventArgs e)
         {
-            this.buildTheTree();
+            this.incomeRootNode.Nodes.Clear();
+            this.incomeRootNode.Collapse();
+            this.rePlantTheRoots();
         }
 
         private void showExpenseMenuItem_Click(object sender, EventArgs e)
         {
-            this.buildTheTree();
+            this.expenseRootNode.Nodes.Clear();
+            this.expenseRootNode.Collapse();
+            this.rePlantTheRoots();
         }
 
         private void groupEnvelopesMenuItem_Click(object sender, EventArgs e)
         {
+            this.envelopeRootNode.Nodes.Clear();
+            this.envelopeRootNode.Collapse();
+            this.rePlantTheRoots();
         }
 
         private void groupAccountsMenuItem_Click(object sender, EventArgs e)
         {
+            this.accountRootNode.Nodes.Clear();
+            this.accountRootNode.Collapse();
+            
+            this.incomeRootNode.Nodes.Clear();
+            this.incomeRootNode.Collapse();
 
+            this.expenseRootNode.Nodes.Clear();
+            this.expenseRootNode.Collapse();
+            
+            this.rePlantTheRoots();
         }
 
         
@@ -125,6 +199,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             this.ViewOptions.Indent = 10;
             this.Dock = DockStyle.Fill;
             this.AfterSelect += new TreeViewEventHandler(theTreeListView_AfterSelect);
+            this.NotifyBeforeExpand += new NotifyBeforeExpandHandler(AccountTLV_NotifyBeforeExpand);
 
             // Build the columns
             this.nameColumn = new TreeListColumn("nameColumn");
@@ -143,10 +218,10 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             this.Columns.Add(balanceColumn);
 
             // Make the ROOT nodes
-            this.accountRootNode = new CatagoryNode("Accounts", SpclAccountCat.ACCOUNT);
-            this.expenseRootNode = new CatagoryNode("Expenses", SpclAccountCat.EXPENSE);
-            this.incomeRootNode = new CatagoryNode("Incomes", SpclAccountCat.INCOME);
-            this.envelopeRootNode = new CatagoryNode("Envelopes", SpclAccountCat.NULL); 
+            this.accountRootNode = new RootNode(SpclAccountCat.ACCOUNT, "Accounts");
+            this.expenseRootNode = new RootNode(SpclAccountCat.EXPENSE, "Expenses");
+            this.incomeRootNode = new RootNode(SpclAccountCat.INCOME, "Incomes");
+            this.envelopeRootNode = new RootNode(SpclAccountCat.ENVELOPE, "Envelopes"); 
 
             this.ResumeLayout();
         }
@@ -198,230 +273,172 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 
         }
 
-        private void buildTheTree()
+        private void rePlantTheRoots()
         {
             // Clear the nodes
             this.Nodes.Clear();
 
             // Add the Type Nodes to the catagory Root nodes
+            this.accountRootNode.HasChildren = true;
             this.Nodes.Add(this.accountRootNode);
-            this.addAccountNodes();
 
             if (this.showExpenseMenuItem.Checked == true)
             {
+                this.expenseRootNode.HasChildren = true;
                 this.Nodes.Add(this.expenseRootNode);
-                this.addInExNodes(this.expenseRootNode, SpclAccountCat.EXPENSE);
             }
 
             if (this.showIncomeMenuItem.Checked == true)
             {
+                this.incomeRootNode.HasChildren = true;
                 this.Nodes.Add(this.incomeRootNode);
-                this.addInExNodes(this.incomeRootNode, SpclAccountCat.INCOME);
             }
 
             //Add the Envelope nodes
+            this.envelopeRootNode.HasChildren = true;
             this.Nodes.Add(this.envelopeRootNode);
-            //this.addEnvelopeNodes(this.envelopeRootNode, SpclEnvelope.NULL);
 
-
-            //Expand account and envelope Nodes
-            
-            //this.EndUpdate();
-            //this.ResumeLayout();
         }
 
 
-        private void updateCatagoryNode(CatagoryNode cNode)
+        private void handleThisRootNode(RootNode rNode)
         {
-            // Clear any nodes that might already be here
-            cNode.Nodes.Clear();
+            Boolean groupAcc = this.groupAccountsMenuItem.Checked;
+            Boolean groupEnv = this.groupEnvelopesMenuItem.Checked;
+            byte cat = rNode.Catagory;
 
-            // If we are grouping the accounts pass this on to the types to add the Account root node.
-            if (this.groupAccountsMenuItem.Checked)
+            if (groupEnv && cat == SpclAccountCat.ENVELOPE)
+                this.fillWithTypeOrGroupNodes(rNode);
+
+            else if (!groupEnv && cat == SpclAccountCat.ENVELOPE)
+                this.fillWithEnvelopeNodes(rNode, SpclEnvelopeGroup.NULL);
+
+            else if (groupAcc)
+                this.fillWithTypeOrGroupNodes(rNode);
+
+            else if (cat == SpclAccountCat.ACCOUNT || cat == SpclAccountCat.EXPENSE || cat == SpclAccountCat.INCOME)
+                this.fillWithAccountNodes(rNode, cat, SpclAccountType.NULL);
+        }
+
+        private void handleThisTypeNode(TypeNode tNode)
+        {
+            byte cat = tNode.Catagory;
+            int typeID = tNode.TypeID;
+            this.fillWithAccountNodes(tNode, cat, typeID);
+        }
+
+        private void handleThisGroupNode(GroupNode gNode)
+        {
+            int groupID = gNode.GroupID;
+            this.fillWithEnvelopeNodes(gNode, groupID);
+        }
+
+        private void handleThisAccountNode(AccountNode accNode)
+        {
+            int accountID = accNode.AccountID;
+            byte cat = accNode.Catagory;
+            bool usesEnvelopes = accNode.Envelopes;
+
+            if (!usesEnvelopes)
             {
-                this.updateCatagoryNodeWithTypes(this.accountRootNode);
+                accNode.HasChildren = false;
+                return;
             }
-            else if (cNode.Catagory == SpclAccountCat.ACCOUNT)
+
+            List<SubBalanceDetails> envList = TreeQuery.getSubAccountDetails(accountID);
+
+            foreach (var item in envList)
             {
-                // Else we are going to add all the accounts to the Accounts ROOT node with their balances.
-                List<AccountBalanceDetails> abdList = TreeQuery.getAccountsForCatagoryDetails();
+                AENode aeNode = new AENode(accountID, item.id, item.name, item.subBalance);
+                aeNode.ImageId = (int)ImageID.Envelope;
+                aeNode.HasChildren = false;
+                accNode.Nodes.Add(aeNode);
+            }
+        }
 
-                foreach (AccountBalanceDetails item in abdList)
+        private void handleThisEnvelopeNode(EnvelopeNode envNode)
+        {
+            int envelopeID = envNode.EnvelopeID;
+            envNode.Nodes.Clear();
+
+            List<SubBalanceDetails> envList = TreeQuery.getSubEnvelopeDetails(envelopeID);
+
+            foreach (var item in envList)
+            {
+                AENode aeNode = new AENode(item.id, envelopeID, item.name, item.subBalance);
+                aeNode.ImageId = (int)ImageID.Bank;
+                aeNode.HasChildren = false;
+                envNode.Nodes.Add(aeNode);
+            }
+        }
+
+
+        private void fillWithTypeOrGroupNodes(RootNode rNode)
+        {
+            byte cat = rNode.Catagory;
+
+            if (cat == SpclAccountCat.ENVELOPE)
+                foreach (var item in TreeQuery.getGroups())
                 {
-                    AccountNode accNode = new AccountNode(item.accountName, item.accountID, item.envelopes);
-                    accNode[0] = item.accountName;
-                    accNode[1] = item.balance.ToString("C2");
+                    GroupNode gNode = new GroupNode(item.Key, item.Value);
+                    gNode.HasChildren = true;
+                    rNode.Nodes.Add(gNode);
+                }
+            else
+                foreach (var item in TreeQuery.getTypesByCatagory(cat))
+                {
+                    TypeNode tNode = new TypeNode(item.Key, item.Value, cat);
+                    tNode.HasChildren = true;
+                    rNode.Nodes.Add(tNode);
+                }
+        }
 
-                    accNode.HasChildren = item.envelopes;
+        private void fillWithAccountNodes(BaseNode pNode, byte cat, int typeID)
+        {
+            if (cat == SpclAccountCat.ACCOUNT)
+            {
+                List<AccountBalanceDetails> accList = TreeQuery.getRealAccountsDetails(typeID);
+
+                foreach (var item in accList)
+                {
+                    AccountNode accNode = new AccountNode(item.accountID, item.accountName, item.envelopes, item.balance);
                     accNode.ImageId = (int)ImageID.Bank;
-                    cNode.Nodes.Add(accNode);
+                    accNode.HasChildren = item.envelopes;
+                    pNode.Nodes.Add(accNode);
                 }
             }
             else
             {
-                // Else this is an income or Expense catagory
-                Dictionary<int, string> accList = TreeQuery.getInExForCatagory(cNode.Catagory);
+                Dictionary<int, string> inList = TreeQuery.getAccountNamesByCatAndType(cat, typeID);
 
-                foreach (var item in accList)
+                foreach (var item in inList)
                 {
-                    AccountNode accNode = new AccountNode(item.Value, item.Key, false);
+                    AccountNode accNode = new AccountNode(cat, item.Key, item.Value);
                     accNode.HasChildren = false;
-                    cNode.Nodes.Add(accNode);
+                    pNode.Nodes.Add(accNode);
                 }
             }
         }
 
-        private void updateCatagoryNodeWithTypes(CatagoryNode cNode)
+        private void fillWithEnvelopeNodes(BaseNode pNode, int groupID)
         {
-            cNode.Nodes.Clear();
-            Dictionary<int, string> typeList = TreeQuery.getTypesForCatagory(cNode.Catagory);
+            pNode.Nodes.Clear();
+            List<EnvelopeBalanceDetails> envList = TreeQuery.getEnvelopeDetails(groupID);
 
-            foreach (var item in typeList)
+            foreach (var item in envList)
             {
-                TypeNode tNode = new TypeNode(item.Value, cNode.Catagory, item.Key);
-                tNode.HasChildren = true;
-                cNode.Nodes.Add(tNode);
+                EnvelopeNode eNode = new EnvelopeNode(item.envelopeID, item.envelopeName, item.balance);
+                eNode[0] = item.envelopeName;
+                eNode[1] = item.balance.ToString("C2");
+                eNode.ImageId = (int)ImageID.Envelope;
+                eNode.HasChildren = true;
+                pNode.Nodes.Add(eNode);
             }
         }
 
-        private void addAccountNodes()
-        {
-            // Make the tree structure below.
-            // Accounts  <- Main account ROOT node
-            //  |-> AccountType
-            //       |-> Account
-            //            |-> Envelope
-
-            // Clear any nodes that might already be hear
-            //this.accountRootNode.Nodes.Clear();
-
-            //// Get the list of accounts for the given catagory.
-            //List<AccountBalanceDetails> accList;
-            //accList = TreeQuery.myGetAccountBalanceDetails();
-
-            //int currentTypeID = SpclAccountType.NULL;
-            //MyTreeListNode typeNode = null;
-                
-            //// Add the account type nodes 
-            //foreach (AccountBalanceDetails accItem in accList)
-            //{
-            //    // Add the type node when this is a new type
-            //    if (accItem.typeID != currentTypeID)
-            //    {
-            //        if (typeNode != null)
-            //            this.accountRootNode.Nodes.Add(typeNode);
-
-            //        typeNode = this.makeNameNode(accItem.typeName);
-            //        currentTypeID = accItem.typeID;
-            //    }
-
-            //    // Add the account to the type Node
-            //    MyTreeListNode accNode = this.makeBalanceNode(accItem.accountName, accItem.balance, SpclEnvelope.NULL, accItem.accountID);
-            //    typeNode.Nodes.Add(accNode);
-            //    accNode.ImageId = (int)ImageID.Bank;
-
-                
-            //    // Add the subAccounts/subEnvelopes to this new accNode account.
-            //    if(accItem.envelopes)
-            //    {
-            //        List<SubBalanceDetails> list = TreeQuery.myGetSubAccountBalanceDetails(accItem.accountID);
-            //        foreach (SubBalanceDetails subBal in list)
-            //        {
-            //            MyTreeListNode subEnv = makeBalanceNode(subBal.name, subBal.subBalance, subBal.id, accItem.accountID);
-            //            subEnv.ImageId = (int)ImageID.Envelope;
-            //            accNode.Nodes.Add(subEnv);
-            //        }
-            //    }
-                
-            //}// END foreach (AccountBalanceDetails account in accList)
-        }
-
-        private void addInExNodes(CatagoryNode pNode, byte catagory)
-        {
-            // Make the tree structure below.
-            // Incomes or expenses  <- Main account ROOT nodes
-            //  |-> AccountType
-            //       |-> Account
-            //            |-> Envelope
-
-            // Clear any nodes that might already be hear
-            //pNode.Nodes.Clear();
-
-            //// Get the list of accounts for the given catagory.
-            //List<IncomeExpenseDetails> accList;
-            //accList = TreeQuery.myGetIncomeExpenseDetails(catagory);
-
-            //int currentTypeID = SpclAccountType.NULL;
-            //MyTreeListNode typeNode = null;
-
-            //// Add the account type nodes 
-            //foreach (IncomeExpenseDetails ieItem in accList)
-            //{
-            //    // Add the type node when this is a new type
-            //    if (ieItem.typeID != currentTypeID)
-            //    {
-            //        if (typeNode != null)
-            //            pNode.Nodes.Add(typeNode);
-
-            //        typeNode = this.makeNameNode(ieItem.typeName);
-            //        currentTypeID = ieItem.typeID;
-            //    }
-
-            //    // Add the account to the type Node
-            //    MyTreeListNode ieNode = this.makeNameNode(ieItem.accountName);
-            //    typeNode.Nodes.Add(ieNode);
-
-            //}
-        }
 
 
-
-        private void addEnvelopeNodes(CatagoryNode pNode)
-        {
-            //// Clear any nodes that might already be hear
-            //pNode.Nodes.Clear();
-
-            //// If inside an Envelope add the money node.
-            //if (parentID != SpclEnvelope.NULL)
-            //{
-            //    string pName = (string)pNode[0];
-            //    string pBal = (string)pNode[1];
-            //    pBal = pBal.Replace("$", "");
-            //    pBal = pBal.Replace("(", "");
-            //    pBal = pBal.Replace(")", "");
-            //    decimal bal = Convert.ToDecimal(pBal);
-            //    MyTreeListNode money = makeBalanceNode(pName, bal, parentID, SpclAccount.NULL);
-            //    money.ImageId = (int)ImageID.Money;
-            //    pNode.Nodes.Add(money);
-
-            //    // Add the subAccounts/subEnvelopes to this new money node.
-            //    List<SubBalanceDetails> subList = FFDBDataSet.myGetSubEnvelopeBalanceDetails(parentID);
-            //    foreach (SubBalanceDetails subBal in subList)
-            //    {
-            //        MyTreeListNode subEnv = makeBalanceNode(subBal.name, subBal.subCurrentBalance, parentID, subBal.id);
-            //        subEnv.ImageId = (int)ImageID.Bank;
-            //        money.Nodes.Add(subEnv);
-            //    }
-            //}
-
-            //// Get the list of envelopes with the given parentID;
-            //List<EnvelopeBalanceDetails> list = FFDBDataSet.myGetChildEnvelopeBalanceDetails(parentID);
-
-            //foreach (EnvelopeBalanceDetails envelope in list)
-            //{
-            //    // Add all the envelopes to the parent Node
-            //    MyTreeListNode childNode = makeBalanceNode(envelope.name, envelope.balance, envelope.envelopeID, SpclEnvelope.NULL);
-            //    childNode.ImageId = (int)ImageID.Envelope;
-            //    pNode.Nodes.Add(childNode);
-
-            //    // Recurse and do the same for the children of this new child envelope
-            //    addEnvelopeNodes(childNode, envelope.envelopeID);
-            //}
-        }
-
-
-
-        private bool updateBalance(CatagoryNode pNode, int accountID, int envelopeID, decimal newAmount)
+        private bool updateBalance(BaseNode pNode, int accountID, int envelopeID, decimal newAmount)
         {
             //foreach (MyTreeListNode child in pNode.Nodes)
             //{
@@ -456,27 +473,25 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             this.buildContextMenu();
             this.myInit();
 
-            this.accountRootNode.Expand();
-            this.envelopeRootNode.Expand();
         }
 
         public void updateBalanceInTheTreeView(int accountID, int envelopeID, decimal newAmount)
         {
             bool found = false;
 
-            foreach (MyTreeListNode child in this.Nodes)
-            {
-                found = updateBalance(child, accountID, envelopeID, newAmount);
-                // Do not break-out if found, sub envelopes are in accounts and envleopes be in two places.
-            }
+            //foreach (MyTreeListNode child in this.Nodes)
+            //{
+            //    found = updateBalance(child, accountID, envelopeID, newAmount);
+            //    // Do not break-out if found, sub envelopes are in accounts and envleopes be in two places.
+            //}
 
             if (found == false)
-                this.buildTheTree();
+                this.rePlantTheRoots();
         }
 
         public void myRebuildTree()
         {
-            this.buildTheTree();
+            this.rePlantTheRoots();
         }
 
     }
