@@ -1,4 +1,6 @@
-namespace FamilyFinance2.Forms.Main
+using System.Windows.Forms;
+
+namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
 {
     partial class MultiDataGridViewControl
     {
@@ -31,6 +33,7 @@ namespace FamilyFinance2.Forms.Main
         }
 
         #endregion
+
 
 
     }

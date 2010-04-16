@@ -1,4 +1,6 @@
-﻿namespace FamilyFinance2.Forms.Main
+﻿using FamilyFinance2.Forms.Main.RegistrySplit;
+
+namespace FamilyFinance2.Forms.Main
 {
     partial class MainForm
     {
@@ -34,7 +36,7 @@
             this.envelopesTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.transactionTypesTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.mainToolStrip = new System.Windows.Forms.ToolStrip();
-            this.registySplitContainer1 = new FamilyFinance2.Forms.Main.RegistySplitContainer();
+            this.registySplitContainer1 = new FamilyFinance2.Forms.Main.RegistrySplit.RegistySplitContainer();
             editTSDropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.mainToolStrip.SuspendLayout();
             this.SuspendLayout();

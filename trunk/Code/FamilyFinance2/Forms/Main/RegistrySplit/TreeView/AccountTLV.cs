@@ -153,23 +153,12 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 
         private void groupEnvelopesMenuItem_Click(object sender, EventArgs e)
         {
-            this.envelopeRootNode.Nodes.Clear();
-            this.envelopeRootNode.Collapse();
-            this.rePlantTheRoots();
+            this.myRebuildEnvelopes();
         }
 
         private void groupAccountsMenuItem_Click(object sender, EventArgs e)
         {
-            this.accountRootNode.Nodes.Clear();
-            this.accountRootNode.Collapse();
-            
-            this.incomeRootNode.Nodes.Clear();
-            this.incomeRootNode.Collapse();
-
-            this.expenseRootNode.Nodes.Clear();
-            this.expenseRootNode.Collapse();
-            
-            this.rePlantTheRoots();
+            this.myRebuildAccounts();
         }
 
         
@@ -489,10 +478,44 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
                 this.rePlantTheRoots();
         }
 
+        public void myRebuildAccounts()
+        {
+            this.accountRootNode.Nodes.Clear();
+            this.accountRootNode.Collapse();
+
+            this.incomeRootNode.Nodes.Clear();
+            this.incomeRootNode.Collapse();
+
+            this.expenseRootNode.Nodes.Clear();
+            this.expenseRootNode.Collapse();
+
+            this.rePlantTheRoots();
+        }
+
+        public void myRebuildEnvelopes()
+        {
+            this.envelopeRootNode.Nodes.Clear();
+            this.envelopeRootNode.Collapse();
+            this.rePlantTheRoots();
+        }
+
+        public void myRebuildAccountType()
+        {
+            this.accountRootNode.Nodes.Clear();
+            this.accountRootNode.Collapse();
+
+            this.incomeRootNode.Nodes.Clear();
+            this.incomeRootNode.Collapse();
+
+            this.expenseRootNode.Nodes.Clear();
+            this.expenseRootNode.Collapse();
+
+            this.rePlantTheRoots();
+        }
+
         public void myRebuildTree()
         {
             this.rePlantTheRoots();
         }
-
     }
 }
