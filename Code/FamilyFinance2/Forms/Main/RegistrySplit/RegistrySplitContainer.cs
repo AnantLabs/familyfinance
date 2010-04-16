@@ -7,8 +7,9 @@ using System.Text;
 using System.Windows.Forms;
 using FamilyFinance2.SharedElements;
 using FamilyFinance2.Forms.Main.RegistrySplit.TreeView;
+using FamilyFinance2.Forms.Main.RegistrySplit.Register;
 
-namespace FamilyFinance2.Forms.Main
+namespace FamilyFinance2.Forms.Main.RegistrySplit
 {
     public class RegistySplitContainer : UserControl
     {
@@ -17,7 +18,10 @@ namespace FamilyFinance2.Forms.Main
         ///////////////////////////////////////////////////////////////////////
         private Label temp;
         private SplitContainer splitContainer;
-        AccountTLV accountTLV = new AccountTLV();
+        private AccountTLV accountTLV;
+        private MultiDataGridViewControl multiDGV;
+
+
 
         ///////////////////////////////////////////////////////////////////////
         //   Internal Events
@@ -25,7 +29,7 @@ namespace FamilyFinance2.Forms.Main
         private void accountTLV_SelectedAccountEnvelopeChanged(object sender, SelectedAccountEnvelopeChangedEventArgs e)
         {
             temp.Text = "AccountID = " + e.AccountID.ToString() + "  EnvelopeID = " + e.EnvelopeID.ToString();
-            //this.multiDGV.setEnvelopeAndAccount(e.AccountID, e.EnvelopeID);
+            this.multiDGV.mySetEnvelopeAndAccount(e.AccountID, e.EnvelopeID);
         }
  
 
@@ -62,9 +66,9 @@ namespace FamilyFinance2.Forms.Main
             this.accountTLV.myRebuildTree();
 
             // the Multi Data Grid View
-            //this.multiDGV = new MultiDataGridViewControl();
-            //this.multiDGV.Dock = DockStyle.Fill;
-            //this.Panel2.Controls.Add(this.multiDGV);
+            this.multiDGV = new MultiDataGridViewControl();
+            this.multiDGV.Dock = DockStyle.Fill;
+            this.splitContainer.Panel2.Controls.Add(this.multiDGV);
 
 
         }
@@ -72,18 +76,18 @@ namespace FamilyFinance2.Forms.Main
         public void myReloadAccount()
         {
             //multiDGV.myReloadAccounts();
-            //accountTLV.myRebuildTree();
+            accountTLV.myRebuildAccounts();
         }
 
         public void myReloadAccountTypes()
         {
-            //accountTLV.myRebuildTree();
+            this.accountTLV.myRebuildAccountType();
         }
 
         public void myReloadEnvelope()
         {
             //multiDGV.myReloadEnvelopes();
-            //accountTLV.myRebuildTree();
+            this.accountTLV.myRebuildEnvelopes();
         }
 
         public void myReloadLineItem()

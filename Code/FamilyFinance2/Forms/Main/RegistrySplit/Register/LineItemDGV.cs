@@ -2,21 +2,25 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
+using FamilyFinance2.Forms.Transaction;
+using FamilyFinance2.SharedElements;
 
-namespace FamilyFinance2.Forms.Main
+namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
 {
     class LineItemDGV : MyDataGridView
     {
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Local Constants and variables
         ////////////////////////////////////////////////////////////////////////////////////////////
+        private RegistryDataSet regDataSet;
+
         private bool accountUsesEnvelopes;
         private bool inRowValidating;
 
         // Binding Sources
         private BindingSource lineItemDGVBindingSource;
         private BindingSource lineTypeColBindingSource;
-        private BindingSource accountColBindingSource;
+        private BindingSource oppAccountColBindingSource;
         private BindingSource envelopeColBindingSource;
 
         // Columns
@@ -53,8 +57,8 @@ namespace FamilyFinance2.Forms.Main
             }
         }
 
-        private short currentAccountID;
-        public short CurrentAccountID
+        private int currentAccountID;
+        public int CurrentAccountID
         {
             get { return currentAccountID; }
         }
@@ -124,33 +128,11 @@ namespace FamilyFinance2.Forms.Main
             {
                 int transID = Convert.ToInt32(this["transactionIDColumn", row].Value);
 
-                Forms.TransactionForm tf = new FamilyFinance2.Forms.TransactionForm(transID);
+                TransactionForm tf = new TransactionForm(transID);
                 tf.ShowDialog();
                 this.myReloadLineItems();
             }
 
-
-            //else if (col == debitAmountColumn.Index && row == -1 && currentAccountID != -1)
-            //{
-            //    string oldName = this.globalDataSet.Account.FindByid(currentAccountID).debitColumnName;
-            //    ChangeColumnNameForm ccnf = new ChangeColumnNameForm(LineCD.DEBIT, oldName);
-
-            //    ccnf.ShowDialog();
-
-            //    this.debitAmountColumn.HeaderText = ccnf.NewColumnName;
-            //    this.globalDataSet.myNewColumnName("Account", currentAccountID, LineCD.DEBIT, ccnf.NewColumnName);  
-            //}
-
-            //else if (col == creditAmountColumn.Index && row == -1 && currentAccountID != -1)
-            //{
-            //    string oldName = this.globalDataSet.Account.FindByid(currentAccountID).creditColumnName;
-            //    ChangeColumnNameForm ccnf = new ChangeColumnNameForm(LineCD.CREDIT, oldName);
-
-            //    ccnf.ShowDialog();
-
-            //    this.creditAmountColumn.HeaderText = ccnf.NewColumnName;
-            //    this.globalDataSet.myNewColumnName("Account", currentAccountID, LineCD.CREDIT, ccnf.NewColumnName); 
-            //}
         }
 
         private void LineItemDGV_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
@@ -195,30 +177,31 @@ namespace FamilyFinance2.Forms.Main
 
         private void LineItemDGV_RowValidated(object sender, DataGridViewCellEventArgs e)
         {
-            int transID = Convert.ToInt32(this[transactionIDColumn.Index, e.RowIndex].Value);
+            //int transID = Convert.ToInt32(this[transactionIDColumn.Index, e.RowIndex].Value);
 
-            if (currentAccountID != SpclAccount.NULL)  // Save the changes
-            {
-                lineItemDGVBindingSource.EndEdit();
-                //this.fFDBDataSet.myCommitSingleLineChanges(lineID, currentAccountID);
-                //this.fFDBDataSet.mySaveAndCheckTransaction(transID);
-                //this.fFDBDataSet.LineItem.myFillByAccount(this.currentAccountID);
-                //this.fFDBDataSet.LineItem.myFillBalance();
-            }
+            //if (currentAccountID != SpclAccount.NULL)  // Save the changes
+            //{
+            //    lineItemDGVBindingSource.EndEdit();
+            //    //this.fFDBDataSet.myCommitSingleLineChanges(lineID, currentAccountID);
+            //    //this.fFDBDataSet.mySaveAndCheckTransaction(transID);
+            //    //this.fFDBDataSet.LineItem.myFillByAccount(this.currentAccountID);
+            //    //this.fFDBDataSet.LineItem.myFillBalance();
+            //}
         }
 
         private void LineItemDGV_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
             int lineID = Convert.ToInt32(this[lineItemIDColumn.Index, e.RowIndex].Value);
-            FFDBDataSet.LineItemRow thisLine = this.fFDBDataSet.LineItem.FindByid(lineID);
+            RegistryDataSet.LineItemRow thisLine = this.regDataSet.LineItem.FindByid(lineID);
 
             // Defaults. Used for new lines.
             this.flagTransactionError = false;
             this.flagLineError = false;
             this.flagNegativeBalance = false;
             this.flagReadOnlyEnvelope = false;
-            this.flagReadOnlyAccounts = false;
+            this.flagReadOnlyAccount = false;
             this.flagFutureDate = false;
+            this.flagAccountError = false;
 
             if (thisLine != null)
             {
@@ -230,13 +213,16 @@ namespace FamilyFinance2.Forms.Main
                     this.flagNegativeBalance = true;
 
                 if (thisLine.oppAccountID == SpclAccount.MULTIPLE)
-                    this.flagReadOnlyAccounts = true;
+                    this.flagReadOnlyAccount = true;
 
                 if (thisLine.envelopeID == SpclEnvelope.SPLIT)
                     this.flagReadOnlyEnvelope = true;
 
                 if (thisLine.date > DateTime.Today) // future Date
                     this.flagFutureDate = true;
+
+                if (thisLine.oppAccountID == SpclAccount.NULL)
+                    this.flagAccountError = true;
             }
         }
 
@@ -278,7 +264,7 @@ namespace FamilyFinance2.Forms.Main
             this.typeIDColumn = new DataGridViewComboBoxColumn();
             this.typeIDColumn.Name = "typeIDColumn";
             this.typeIDColumn.HeaderText = "Type";
-            this.typeIDColumn.DataPropertyName = "lineTypeID";
+            this.typeIDColumn.DataPropertyName = "typeID";
             this.typeIDColumn.DataSource = this.lineTypeColBindingSource;
             this.typeIDColumn.DisplayMember = "name";
             this.typeIDColumn.ValueMember = "id";
@@ -294,7 +280,7 @@ namespace FamilyFinance2.Forms.Main
             this.oppAccountIDColumn.Name = "oppAccountIDColumn";
             this.oppAccountIDColumn.HeaderText = "Source / Destination";
             this.oppAccountIDColumn.DataPropertyName = "oppAccountID";
-            this.oppAccountIDColumn.DataSource = this.accountColBindingSource;
+            this.oppAccountIDColumn.DataSource = this.oppAccountColBindingSource;
             this.oppAccountIDColumn.DisplayMember = "name";
             this.oppAccountIDColumn.ValueMember = "id";
             this.oppAccountIDColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -330,7 +316,7 @@ namespace FamilyFinance2.Forms.Main
             this.envelopeIDColumn.HeaderText = "Envelope";
             this.envelopeIDColumn.DataPropertyName = "envelopeID";
             this.envelopeIDColumn.DataSource = this.envelopeColBindingSource;
-            this.envelopeIDColumn.DisplayMember = "fullName";
+            this.envelopeIDColumn.DisplayMember = "name";
             this.envelopeIDColumn.ValueMember = "id";
             this.envelopeIDColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
             this.envelopeIDColumn.DisplayStyleForCurrentCellOnly = true;
@@ -345,7 +331,7 @@ namespace FamilyFinance2.Forms.Main
             this.debitAmountColumn.HeaderText = "Debit";
             this.debitAmountColumn.DataPropertyName = "debitAmount";
             this.debitAmountColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.debitAmountColumn.DefaultCellStyle = this.MyCellStyleMoney;
+            this.debitAmountColumn.DefaultCellStyle = new MyCellStyleMoney();
             this.debitAmountColumn.Width = 65;
             
             // completeColumn
@@ -364,7 +350,7 @@ namespace FamilyFinance2.Forms.Main
             this.creditAmountColumn.HeaderText = "Credit";
             this.creditAmountColumn.DataPropertyName = "creditAmount";
             this.creditAmountColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.creditAmountColumn.DefaultCellStyle = this.MyCellStyleMoney;
+            this.creditAmountColumn.DefaultCellStyle = new MyCellStyleMoney();
             this.creditAmountColumn.Width = 65;
 
             // balanceAmountColumn
@@ -373,7 +359,7 @@ namespace FamilyFinance2.Forms.Main
             this.balanceAmountColumn.HeaderText = "Balance";
             this.balanceAmountColumn.DataPropertyName = "balanceAmount";
             this.balanceAmountColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.balanceAmountColumn.DefaultCellStyle = this.MyCellStyleMoney;
+            this.balanceAmountColumn.DefaultCellStyle = new MyCellStyleMoney();
             this.balanceAmountColumn.Width = 75;
             this.balanceAmountColumn.ReadOnly = true;
 
@@ -406,7 +392,9 @@ namespace FamilyFinance2.Forms.Main
         ////////////////////////////////////////////////////////////////////////////////////////////
         public LineItemDGV()
         {
-            fFDBDataSet = new FFDBDataSet();
+            this.regDataSet = new RegistryDataSet();
+            this.regDataSet.myInit();
+
             this.inRowValidating = false;
             this.showEnvelopeColumn = true;
 
@@ -418,14 +406,15 @@ namespace FamilyFinance2.Forms.Main
 
             ////////////////////////////////////
             // Setup the Bindings
-            this.lineItemDGVBindingSource = new BindingSource(this.fFDBDataSet, "LineItem");
+            this.lineItemDGVBindingSource = new BindingSource(this.regDataSet, "LineItem");
 
-            this.accountColBindingSource = new BindingSource(this.fFDBDataSet, "Account");
-            this.accountColBindingSource.Sort = "catagoryID, name";
+            this.oppAccountColBindingSource = new BindingSource(this.regDataSet, "Account");
+            this.oppAccountColBindingSource.Sort = "name";
 
-            this.envelopeColBindingSource = new BindingSource(this.fFDBDataSet, "Envelope");
+            this.envelopeColBindingSource = new BindingSource(this.regDataSet, "Envelope");
+            this.envelopeColBindingSource.Sort = "name";
 
-            this.lineTypeColBindingSource = new BindingSource(this.fFDBDataSet, "LineType");
+            this.lineTypeColBindingSource = new BindingSource(this.regDataSet, "LineType");
             this.lineTypeColBindingSource.Sort = "name";
 
             this.buildTheDataGridView();
@@ -439,15 +428,15 @@ namespace FamilyFinance2.Forms.Main
             //this.CellValueChanged += new DataGridViewCellEventHandler(LineItemDGV_CellValueChanged);
         }
 
-        public void setAccountID(short accountID)
+        public void setAccountID(int accountID)
         {
             const int INVALID = 0;
 
             if (accountID > INVALID)
             {
                 this.currentAccountID = accountID;
-                this.accountUsesEnvelopes = this.fFDBDataSet.Account.FindByid(accountID).envelopes;
-                this.fFDBDataSet.LineItem.myFillByAccount(accountID);
+                this.accountUsesEnvelopes = this.regDataSet.Account.FindByid(accountID).envelopes;
+                this.regDataSet.myFillLineItemTablebyAccount(accountID);
                 this.ShowEnvelopeColumn = showEnvelopeColumn;
                 this.AllowUserToAddRows = true;
 
@@ -455,7 +444,7 @@ namespace FamilyFinance2.Forms.Main
             else
             {
                 this.accountUsesEnvelopes = false;
-                this.fFDBDataSet.LineItem.myFillByAccount(SpclAccount.NULL);
+                this.regDataSet.myFillLineItemTablebyAccount(SpclAccount.NULL);
                 this.currentAccountID = SpclAccount.NULL;
                 this.ShowEnvelopeColumn = showEnvelopeColumn;
                 this.AllowUserToAddRows = false;
@@ -464,22 +453,22 @@ namespace FamilyFinance2.Forms.Main
 
         public void myReloadLineItems()
         {
-            fFDBDataSet.LineItem.myFillByAccount(this.currentAccountID); // an empty set.
+            this.regDataSet.myFillLineItemTablebyAccount(this.currentAccountID);
         }
 
         public void myReloadAccounts()
         {
-            fFDBDataSet.Account.myFill();
+            this.regDataSet.myFillAccountTable();
         }
 
         public void myReloadEnvelopes()
         {
-            fFDBDataSet.Envelope.myFill();
+            this.regDataSet.myFillEnvelopeTable();
         }
 
         public void myReloadLineTypes()
         {
-            fFDBDataSet.LineType.myFill();
+            this.regDataSet.myFillLineTypeTable();
         }
 
     }

@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 
-namespace FamilyFinance2.Forms.Main
+using FamilyFinance2.Forms.Transaction;
+using FamilyFinance2.SharedElements;
+
+namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
 {
     class SubLineDGV : MyDataGridView
     {
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Local Constants and variables
         ////////////////////////////////////////////////////////////////////////////////////////////
-
-        // Binding Sources
-        private BindingSource SubLineDGVBindingSource;
 
         // Columns
         private DataGridViewTextBoxColumn subLineItemIDColumn;
@@ -31,17 +31,7 @@ namespace FamilyFinance2.Forms.Main
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Properties
         ////////////////////////////////////////////////////////////////////////////////////////////
-        private short currentAccountID;
-        public short CurrentAccountID
-        {
-            get { return currentAccountID; }
-        }
 
-        private short currentEnvelopeID;
-        public short CurrentEnvelopeID
-        {
-            get { return currentEnvelopeID; }
-        }
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -56,7 +46,7 @@ namespace FamilyFinance2.Forms.Main
             {
                 int transID = Convert.ToInt32(this["transactionIDColumn", row].Value);
 
-                Forms.TransactionForm tf = new FamilyFinance2.Forms.TransactionForm(transID);
+                TransactionForm tf = new TransactionForm(transID);
                 tf.ShowDialog();
                 this.myReloadSubLineView();
             }
@@ -87,22 +77,22 @@ namespace FamilyFinance2.Forms.Main
         void SubLineDGV_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
             int subLineID = Convert.ToInt32(this[subLineItemIDColumn.Index, e.RowIndex].Value);
-            FFDBDataSet.SubLineViewRow thisSubLine = this.fFDBDataSet.SubLineView.FindBysubLineItemID(subLineID);
+            RegistryDataSet.SubLineViewRow thisSubLine = this.RegistryDataSet.SubLineView.FindBysubLineItemID(subLineID);
 
             // Defaults. Used for new lines.
             this.flagTransactionError = false;
             this.flagLineError = false;
             this.flagNegativeBalance = false;
             this.flagReadOnlyEnvelope = false;
-            this.flagReadOnlyAccounts = false;
+            //this.flagReadOnlyAccounts = false;
             this.flagFutureDate = false;
 
             if (thisSubLine != null)
             {
                 // Set row Flags
-                flagTransactionError = thisSubLine.lineError;
+                //flagTransactionError = thisSubLine.lineError;
 
-                if (thisSubLine.balanceAmount < 0.0m)
+                if (thisSubLine.amount < 0.0m)
                     this.flagNegativeBalance = true;
 
                 if (thisSubLine.date > DateTime.Today) // future Date
@@ -246,12 +236,6 @@ namespace FamilyFinance2.Forms.Main
         ////////////////////////////////////////////////////////////////////////////////////////////
         public SubLineDGV()
         {
-            fFDBDataSet = new FFDBDataSet();
-
-            ////////////////////////////////////
-            // Binding Sources
-            this.SubLineDGVBindingSource = new BindingSource(this.fFDBDataSet, "SubLineView");
-
             this.buildTheDataGridView();
 
             ////////////////////////////////////
