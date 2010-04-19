@@ -10,13 +10,15 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Local Constants and variables
         ////////////////////////////////////////////////////////////////////////////////////////////
-        TransactionDataSet tDataSet;
+        private TransactionDataSet tDataSet;
 
-        AccountTableAdapter accountTA;
-        EnvelopeTableAdapter envelopeTA;
-        LineItemTableAdapter lineTA;
-        LineTypeTableAdapter lineTypeTA;
-        SubLineViewTableAdapter subLineTA;
+        private AccountTableAdapter accountTA;
+        private EnvelopeTableAdapter envelopeTA;
+        private LineItemTableAdapter lineTA;
+        private LineTypeTableAdapter lineTypeTA;
+
+        private int CurrentLineID;
+
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,8 +32,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
         ////////////////////////////////////////////////////////////////////////////////////////////
         public void myInit()
         {
-            this.tDataSet = new TransactionDataSet();
-
+            // Setup this dataset
             this.accountTA = new AccountTableAdapter();
             this.accountTA.ClearBeforeFill = true;
 
@@ -44,6 +45,15 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
             this.lineTypeTA = new LineTypeTableAdapter();
             this.lineTypeTA.ClearBeforeFill = true;
 
+
+            // Setup the TransactionDataset
+            this.tDataSet = new TransactionDataSet();
+            this.tDataSet.myInit();
+            //this.tDataSet.myFillAccountTable();
+            //this.tDataSet.myFillEnvelopeTable();
+            //this.tDataSet.myFillLineTypeTable();
+
+            //this.CurrentTransID = -1;
         }
 
         public void myFillAccountTable()
@@ -65,27 +75,57 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
 
             decimal bal = 0.0m;
 
-            foreach (LineItemRow row in this.LineItem)
+            if (this.Account.FindByid(accountID).creditDebit == LineCD.DEBIT)
             {
-                if (row.creditDebit == LineCD.CREDIT)
+                foreach (LineItemRow row in this.LineItem)
                 {
-                    bal -= row.amount;
-                    row.creditAmount = row.amount;
-                    row.balanceAmount = bal;
-                }
-                else
-                {
-                    bal += row.amount;
-                    row.debitAmount = row.amount;
-                    row.balanceAmount = bal;
+                    if (row.creditDebit == LineCD.CREDIT)
+                        row.balanceAmount = bal -= row.creditAmount = row.amount;
+                    else
+                        row.balanceAmount = bal += row.debitAmount = row.amount;
                 }
             }
-
+            else
+            {
+                foreach (LineItemRow row in this.LineItem)
+                {
+                    if (row.creditDebit == LineCD.CREDIT)
+                        row.balanceAmount = bal += row.creditAmount = row.amount;
+                    else
+                        row.balanceAmount = bal -= row.debitAmount = row.amount;
+                }
+            }
         }
 
         public void myFillLineTypeTable()
         {
             this.lineTypeTA.Fill(this.LineType);
+        }
+
+
+        public void myDeleteLine(int lineID)
+        {
+            if (lineID != this.CurrentLineID)
+            {
+                this.tDataSet.myFillLineItemAndSubLine(this.LineItem.FindByid(lineID).transactionID);
+                this.tDataSet.myDeleteLine(lineID);
+                this.tDataSet.myCheckTransaction();
+                this.tDataSet.mySaveChanges();
+
+                this.LineItem.FindByid(lineID).Delete();
+                this.LineItem.FindByid(lineID).AcceptChanges();
+            }
+        }
+
+        public void myEditLine(int lineID)
+        {
+            if (lineID != this.CurrentLineID)
+                this.tDataSet.myFillLineItemAndSubLine(this.LineItem.FindByid(lineID).transactionID);
+        }
+
+        public void myFinishEdit()
+        {
+            this.tDataSet.myForwardLineEdits(this.LineItem.FindByid(this.CurrentLineID));
         }
 
     }

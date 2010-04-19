@@ -176,6 +176,18 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="Forms\Main\RegistrySplit\Register\SubLineDataSet.cs">
+      <DependentUpon>SubLineDataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Main\RegistrySplit\Register\SubLineDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SubLineDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Main\RegistrySplit\Register\SubLineDGV.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\Main\RegistrySplit\RegistrySplitContainer.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -385,6 +397,17 @@
     </None>
     <None Include="Forms\Main\RegistrySplit\Register\RegistryDataSet.xss">
       <DependentUpon>RegistryDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Forms\Main\RegistrySplit\Register\SubLineDataSet.xsc">
+      <DependentUpon>SubLineDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Forms\Main\RegistrySplit\Register\SubLineDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SubLineDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Forms\Main\RegistrySplit\Register\SubLineDataSet.xss">
+      <DependentUpon>SubLineDataSet.xsd</DependentUpon>
     </None>
     <None Include="Forms\Transaction\TransactionDataSet.xsc">
       <DependentUpon>TransactionDataSet.xsd</DependentUpon>

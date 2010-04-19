@@ -16,7 +16,6 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
         ///////////////////////////////////////////////////////////////////////
         //   Local Variables
         ///////////////////////////////////////////////////////////////////////
-        private enum ImageID {Bank = 0, Envelope = 1, Money = 2, ErrorFlag = 3};
         
         private TreeListColumn nameColumn;
         private TreeListColumn balanceColumn;
@@ -339,7 +338,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             foreach (var item in envList)
             {
                 AENode aeNode = new AENode(accountID, item.id, item.name, item.subBalance);
-                aeNode.ImageId = (int)ImageID.Envelope;
+                aeNode.ImageId = (int)NodeImage.Envelope;
                 aeNode.HasChildren = false;
                 accNode.Nodes.Add(aeNode);
             }
@@ -355,7 +354,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             foreach (var item in envList)
             {
                 AENode aeNode = new AENode(item.id, envelopeID, item.name, item.subBalance);
-                aeNode.ImageId = (int)ImageID.Bank;
+                aeNode.ImageId = (int)NodeImage.Bank;
                 aeNode.HasChildren = false;
                 envNode.Nodes.Add(aeNode);
             }
@@ -391,7 +390,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
                 foreach (var item in accList)
                 {
                     AccountNode accNode = new AccountNode(item.accountID, item.accountName, item.envelopes, item.balance);
-                    accNode.ImageId = (int)ImageID.Bank;
+                    accNode.ImageId = (int)NodeImage.Bank;
                     accNode.HasChildren = item.envelopes;
                     pNode.Nodes.Add(accNode);
                 }
@@ -419,7 +418,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
                 EnvelopeNode eNode = new EnvelopeNode(item.envelopeID, item.envelopeName, item.balance);
                 eNode[0] = item.envelopeName;
                 eNode[1] = item.balance.ToString("C2");
-                eNode.ImageId = (int)ImageID.Envelope;
+                eNode.ImageId = (int)NodeImage.Envelope;
                 eNode.HasChildren = true;
                 pNode.Nodes.Add(eNode);
             }

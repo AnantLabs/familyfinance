@@ -20,11 +20,9 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
 
         public enum dgv {LineItem, SubLine};
 
-        //private SubLineDGV subLineDGV;
+        private SubLineDGV subLineDGV;
         private LineItemDGV lineItemDGV;
 
-        private int currentAccountID;
-        private int currentEnvelopeID;
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -43,12 +41,12 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
                 if (dgvType == dgv.LineItem)
                     return lineItemDGV.ShowTypeColumn;
                 else
-                    return false;// return subLineDGV.ShowTypeColumn;
+                    return subLineDGV.ShowTypeColumn;
             }
             set 
             { 
                 this.lineItemDGV.ShowTypeColumn = value;
-                //this.subLineDGV.ShowTypeColumn = value;
+                this.subLineDGV.ShowTypeColumn = value;
             }
         }
 
@@ -68,12 +66,10 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
         {
             get
             {
-
-                return lineItemDGV.CurrentLineID;
-                //if (dgvType == dgv.LineItem)
-                //    return lineItemDGV.CurrentLineID;
-                //else
-                //    return subLineDGV.CurrentLineID;
+                if (dgvType == dgv.LineItem)
+                    return lineItemDGV.CurrentLineID;
+                else
+                    return subLineDGV.CurrentLineID;
             }
         }
 
@@ -81,11 +77,10 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
         {
             get
             {
-                return lineItemDGV.CurrentTransactionID;
-                //if (dgvType == dgv.LineItem)
-                //    return lineItemDGV.CurrentTransactionID;
-                //else
-                //    return subLineDGV.CurrentTransactionID;
+                if (dgvType == dgv.LineItem)
+                    return lineItemDGV.CurrentTransactionID;
+                else
+                    return subLineDGV.CurrentTransactionID;
             }
         }
         
@@ -104,14 +99,14 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
             this.dgvType = dgv.LineItem;
             this.lineItemDGV.setAccountID(accountID);
             this.lineItemDGV.Visible = true;
-            //this.subLineDGV.Visible = false;
+            this.subLineDGV.Visible = false;
         }
 
         private void setAccountEnvelope(int accountID, int envelopeID)
         {
             this.dgvType = dgv.SubLine;
-            //this.subLineDGV.setAccountEnvelopeID(accountID, envelopeID);
-            //this.subLineDGV.Visible = true;
+            this.subLineDGV.setAccountEnvelopeID(accountID, envelopeID);
+            this.subLineDGV.Visible = true;
             this.lineItemDGV.Visible = false;
         }
 
@@ -127,15 +122,16 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
             this.lineItemDGV = new LineItemDGV();
             this.lineItemDGV.Dock = DockStyle.Fill;
             this.lineItemDGV.setAccountID(SpclAccount.NULL);
+            this.lineItemDGV.ReadOnly = true;
 
-            //this.subLineDGV = new SubLineDGV();
-            //this.subLineDGV.Dock = DockStyle.Fill;
-            //this.subLineDGV.Visible = false;
-            //this.subLineDGV.setAccountEnvelopeID(SpclAccount.NULL, SpclEnvelope.NULL);
+            this.subLineDGV = new SubLineDGV();
+            this.subLineDGV.Dock = DockStyle.Fill;
+            this.subLineDGV.Visible = false;
+            this.subLineDGV.setAccountEnvelopeID(SpclAccount.NULL, SpclEnvelope.NULL);
 
             this.dgvType = dgv.LineItem;
             this.Controls.Add(this.lineItemDGV);
-            //this.Controls.Add(this.subLineDGV);
+            this.Controls.Add(this.subLineDGV);
 
             this.ResumeLayout();
         }
@@ -170,13 +166,11 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
 
         public void myReloadLineItems()
         {
-            //if (dgvType == dgv.LineItem)
-            //    return lineItemDGV.CurrentTransactionID;
-            //else
-            //    return subLineDGV.CurrentTransactionID;
+            if (dgvType == dgv.LineItem)
+                this.lineItemDGV.myReloadLineItems();
+            else
+                this.subLineDGV.myReloadSubLineView();
 
-            this.lineItemDGV.myReloadLineItems();
-            //this.subLineDGV.myReloadSubLineView();
         }
 
     }// END public partial class multiDataGridView

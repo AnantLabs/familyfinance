@@ -1,0 +1,10 @@
+SELECT LineItem.transactionID, LineItem.id, EnvelopeLine.id AS eLineID, LineItem.date, LineType.name, Account.name AS srcAccount, 
+       OppAccount.name AS dstAccount, LineItem.description, EnvelopeLine.description AS subDescription, LineItem.creditDebit, EnvelopeLine.amount
+FROM EnvelopeLine INNER JOIN
+     LineItem ON EnvelopeLine.lineItemID = LineItem.id INNER JOIN
+     LineType ON LineItem.typeID = LineType.id INNER JOIN
+     Account ON LineItem.accountID = Account.id INNER JOIN
+     Account AS OppAccount ON LineItem.oppAccountID = OppAccount.id
+WHERE EnvelopeLine.envelopeID = @@
+-- 5
+-- 5 AND LineItem.accountID = 13

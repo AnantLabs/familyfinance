@@ -636,6 +636,28 @@ namespace FamilyFinance2.Forms.Transaction
             this.CurrentLineID = -1;
             this.myResetValues();
         }
+
+        public TransactionForm(int transactionID, int lineID)
+            : this(transactionID)
+        {
+
+            if (this.tDataSet.LineItem.FindByid(lineID).creditDebit == LineCD.CREDIT)
+            {
+                creditDGV.myHighLightOn();
+                debitDGV.myHighLightOff();
+                envLinesDGV.myHighLightOff();
+            }
+            else
+            {
+                debitDGV.myHighLightOn();
+                creditDGV.myHighLightOff();
+                envLinesDGV.myHighLightOff();
+            }
+
+            this.CurrentLineID = lineID;
+            myResetValues();
+
+        }
        
 
     }
