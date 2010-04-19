@@ -5,24 +5,44 @@ using FamilyFinance2.SharedElements;
 
 namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 {
-    public enum MyNodes
-    {
-        Root,
-        AccountType,
-        EnvelopeGroup,
-        Account,
-        Envelope,
-        AENode
-    }
+
+    public enum NodeImage { None = -1, Bank = 0, Envelope = 1, Money = 2, ErrorFlag = 3 };
+    public enum MyNodes { Root, AccountType, EnvelopeGroup, Account, Envelope, AENode }
 
     public class BaseNode : TreeList.Node
     {
         public readonly MyNodes NodeType;
+        private int ErrorCount;
+        private int origionalImageID;
 
         protected BaseNode (MyNodes nodeType, String name)
             : base(name)
         {
             this.NodeType = nodeType;
+        }
+
+        public void SetError()
+        {
+            ErrorCount++;
+            setImage();
+        }
+
+        public void RemoveError()
+        {
+            ErrorCount--;
+            setImage();
+        }
+
+        private void setImage()
+        {
+            if (ErrorCount < 0)
+                ErrorCount = 0;
+
+            if (ErrorCount > 0)
+                this.ImageId = (int)NodeImage.ErrorFlag;
+
+            else
+                this.ImageId = this.origionalImageID; ;
         }
     }
 

@@ -13,6 +13,11 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Local Constants and variables
         ////////////////////////////////////////////////////////////////////////////////////////////
+        private SubLineDataSet slDataSet;
+        private BindingSource subLineDGVBindingSource;
+
+        int currentAccountID;
+        int currentEnvelopeID;
 
         // Columns
         private DataGridViewTextBoxColumn subLineItemIDColumn;
@@ -22,6 +27,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
         private DataGridViewTextBoxColumn sourceColumn;
         private DataGridViewTextBoxColumn destinationColumn;
         private DataGridViewTextBoxColumn descriptionColumn;
+        private DataGridViewTextBoxColumn subDescriptionColumn;
         private DataGridViewTextBoxColumn debitAmountColumn;
         private DataGridViewTextBoxColumn completeColumn;
         private DataGridViewTextBoxColumn creditAmountColumn;
@@ -44,53 +50,31 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
 
             if (row >= 0)
             {
-                int transID = Convert.ToInt32(this["transactionIDColumn", row].Value);
+                int transID = this.CurrentTransactionID;
 
                 TransactionForm tf = new TransactionForm(transID);
                 tf.ShowDialog();
                 this.myReloadSubLineView();
             }
 
-            //if (col == debitAmountColumn.Index && row == -1 && currentEnvelopeID != -1)
-            //{
-            //    string oldName = this.globalDataSet.Account.FindByid(currentEnvelopeID).debitColumnName;
-            //    ChangeColumnNameForm ccnf = new ChangeColumnNameForm(LineCD.DEBIT, oldName);
-
-            //    ccnf.ShowDialog();
-
-            //    this.debitAmountColumn.HeaderText = ccnf.NewColumnName;
-            //    this.globalDataSet.myNewColumnName("Envelope", currentEnvelopeID, LineCD.DEBIT, ccnf.NewColumnName);
-            //}
-
-            //else if (col == creditAmountColumn.Index && row == -1 && currentEnvelopeID != -1)
-            //{
-            //    string oldName = this.globalDataSet.Account.FindByid(currentEnvelopeID).creditColumnName;
-            //    ChangeColumnNameForm ccnf = new ChangeColumnNameForm(LineCD.CREDIT, oldName);
-
-            //    ccnf.ShowDialog();
-
-            //    this.creditAmountColumn.HeaderText = ccnf.NewColumnName;
-            //    this.globalDataSet.myNewColumnName("Envelope", currentEnvelopeID, LineCD.CREDIT, ccnf.NewColumnName);
-            //}
         }
 
-        void SubLineDGV_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        private void SubLineDGV_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
             int subLineID = Convert.ToInt32(this[subLineItemIDColumn.Index, e.RowIndex].Value);
-            RegistryDataSet.SubLineViewRow thisSubLine = this.RegistryDataSet.SubLineView.FindBysubLineItemID(subLineID);
+            SubLineDataSet.SubLineViewRow thisSubLine = this.slDataSet.SubLineView.FindByeLineID(subLineID);
 
             // Defaults. Used for new lines.
             this.flagTransactionError = false;
             this.flagLineError = false;
             this.flagNegativeBalance = false;
-            this.flagReadOnlyEnvelope = false;
-            //this.flagReadOnlyAccounts = false;
             this.flagFutureDate = false;
+            this.flagAccountError = false;
 
             if (thisSubLine != null)
             {
                 // Set row Flags
-                //flagTransactionError = thisSubLine.lineError;
+                //flagTransactionError = thisSubLine.tr;
 
                 if (thisSubLine.amount < 0.0m)
                     this.flagNegativeBalance = true;
@@ -108,7 +92,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
         {
             // lineItemIDColumn
             this.subLineItemIDColumn = new DataGridViewTextBoxColumn();
-            this.subLineItemIDColumn.Name = "subLineItemIDColumn";
+            this.subLineItemIDColumn.Name = "eLineIDColumn";
             this.subLineItemIDColumn.HeaderText = "subLineItemID";
             this.subLineItemIDColumn.DataPropertyName = "subLineItemID";
             this.subLineItemIDColumn.Visible = false;
@@ -131,7 +115,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
 
             // lineTypeslColumn
             this.lineTypeColumn = new DataGridViewTextBoxColumn();
-            this.lineTypeColumn.Name = "lineTypeslColumn";
+            this.lineTypeColumn.Name = "lineTypeColumn";
             this.lineTypeColumn.HeaderText = "Type";
             this.lineTypeColumn.DataPropertyName = "lineType";
             this.lineTypeColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -168,13 +152,23 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
             this.descriptionColumn.FillWeight = 50;
             this.descriptionColumn.Visible = true;
 
+            // subDescriptionColumn
+            this.subDescriptionColumn = new DataGridViewTextBoxColumn();
+            this.subDescriptionColumn.Name = "subDescriptionColumn";
+            this.subDescriptionColumn.HeaderText = "Sub Description";
+            this.subDescriptionColumn.DataPropertyName = "subDescription";
+            this.subDescriptionColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            this.subDescriptionColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.subDescriptionColumn.FillWeight = 50;
+            this.subDescriptionColumn.Visible = true;
+
             // creditAmountColumn
             this.creditAmountColumn = new DataGridViewTextBoxColumn();
             this.creditAmountColumn.Name = "creditAmountColumn";
             this.creditAmountColumn.HeaderText = "Credit";
             this.creditAmountColumn.DataPropertyName = "creditAmount";
             this.creditAmountColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.creditAmountColumn.DefaultCellStyle = MyCellStyleMoney;
+            this.creditAmountColumn.DefaultCellStyle = new MyCellStyleMoney();
             this.creditAmountColumn.Visible = true;
             this.creditAmountColumn.Width = 65;
 
@@ -194,7 +188,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
             this.debitAmountColumn.HeaderText = "Debit";
             this.debitAmountColumn.DataPropertyName = "debitAmount";
             this.debitAmountColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.debitAmountColumn.DefaultCellStyle = MyCellStyleMoney;
+            this.debitAmountColumn.DefaultCellStyle = new MyCellStyleMoney();
             this.debitAmountColumn.Visible = true;
             this.debitAmountColumn.Width = 65;
 
@@ -204,14 +198,14 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
             this.balanceAmountColumn.HeaderText = "Balance";
             this.balanceAmountColumn.DataPropertyName = "balanceAmount";
             this.balanceAmountColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            this.balanceAmountColumn.DefaultCellStyle = MyCellStyleMoney;
+            this.balanceAmountColumn.DefaultCellStyle = new MyCellStyleMoney();
             this.balanceAmountColumn.Visible = true;
             this.balanceAmountColumn.Width = 75;
 
             // theDataGridView
             this.AllowUserToAddRows = false;
             this.ReadOnly = true;
-            this.DataSource = this.SubLineDGVBindingSource;
+            this.DataSource = this.subLineDGVBindingSource;
             this.Columns.AddRange(
                 new DataGridViewColumn[] 
                 {
@@ -222,6 +216,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
                     this.sourceColumn,
                     this.destinationColumn,
                     this.descriptionColumn,
+                    this.subDescriptionColumn,
                     this.creditAmountColumn,
                     this.completeColumn,
                     this.debitAmountColumn,
@@ -236,7 +231,17 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
         ////////////////////////////////////////////////////////////////////////////////////////////
         public SubLineDGV()
         {
+            // Setup the Data Set
+            this.slDataSet = new SubLineDataSet();
+            this.slDataSet.myInit();
+
+            ////////////////////////////////////
+            // Setup the Bindings
+            this.subLineDGVBindingSource = new BindingSource(this.slDataSet, "SubLineView");
+
             this.buildTheDataGridView();
+            this.currentAccountID = SpclAccount.NULL;
+            this.currentEnvelopeID = SpclEnvelope.NULL;
 
             ////////////////////////////////////
             // Subscribe to event.
@@ -244,30 +249,15 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
             this.RowPrePaint += new DataGridViewRowPrePaintEventHandler(SubLineDGV_RowPrePaint);
         }
 
-        public void setAccountEnvelopeID(short accountID, short envelopeID)
+        public void setAccountEnvelopeID(int accountID, int envelopeID)
         {
-            const short INVALID = 0;
+            const int NULL = -1;
 
-            if (envelopeID > INVALID && accountID > INVALID)
+            if (envelopeID >= NULL && accountID >= NULL)
             {
                 this.currentEnvelopeID = envelopeID;
                 this.currentAccountID = accountID;
-
-                this.fFDBDataSet.SubLineView.myFillByEnvelopeAndAccount(envelopeID, accountID);                
-            }
-            else if (envelopeID > INVALID)
-            {
-                this.currentEnvelopeID = envelopeID;
-                this.currentAccountID = SpclAccount.NULL;
-
-                this.fFDBDataSet.SubLineView.myFillByEnvelope(envelopeID);
-            }
-            else 
-            {
-                this.currentEnvelopeID = SpclEnvelope.NULL;
-                this.currentAccountID = SpclAccount.NULL;
-
-                this.fFDBDataSet.SubLineView.myFillByEnvelope(SpclEnvelope.NULL);
+                this.slDataSet.myFill(accountID, envelopeID);    
             }
 
         }

@@ -19,7 +19,13 @@ namespace FamilyFinance2.Forms.Transaction
         public bool TransactionError;
 
         /////////////////////////
-        //   Functions private 
+        //   Properties 
+        private int currentTransID;
+        public int CurrentTransactionID
+        {
+            get { return currentTransID; }
+        }
+
 
 
         /////////////////////////
@@ -34,6 +40,8 @@ namespace FamilyFinance2.Forms.Transaction
 
             this.LineTypeTA = new LineTypeTableAdapter();
             this.LineTypeTA.ClearBeforeFill = true;
+
+            this.currentTransID = -1;
         }
 
 
@@ -54,6 +62,7 @@ namespace FamilyFinance2.Forms.Transaction
 
         public void myFillLineItemAndSubLine(int transID)
         {
+            this.currentTransID = transID;
             this.LineItem.myFill(transID);
             this.EnvelopeLine.myFill(transID);
         }
@@ -139,7 +148,60 @@ namespace FamilyFinance2.Forms.Transaction
                 this.TransactionError = false;
         }
 
-        public void myQuickFinish(ref LineItemRow line)
+        public void mySaveChanges()
+        {
+            // only changes to the lines and envelopeLines
+            this.LineItem.mySaveNewLines();
+            this.EnvelopeLine.mySaveChanges();
+            this.LineItem.mySaveChanges();
+        }
+
+
+        ///////////////////////////////////////////
+        // Used by the Registry dataset
+        public void myForwardLineEdits(FamilyFinance2.Forms.Main.RegistrySplit.Register.RegistryDataSet.LineItemRow newRow)
+        {
+            LineItemRow oldRow = this.LineItem.FindByid(newRow.id);
+            int tranSize = this.LineItem.Rows.Count;
+
+            // Copy the simple items.
+            if (oldRow.date != newRow.date)
+                oldRow.date = newRow.date;
+
+            if (oldRow.typeID != newRow.typeID)
+                oldRow.typeID = newRow.typeID;
+
+            if (oldRow.description != newRow.description)
+                oldRow.description = newRow.description;
+
+            if (oldRow.confirmationNumber != newRow.confirmationNumber)
+                oldRow.confirmationNumber = newRow.confirmationNumber;
+
+            if (oldRow.envelopeID != newRow.envelopeID)
+                oldRow.envelopeID = newRow.envelopeID;
+
+            if (oldRow.complete != newRow.complete)
+                oldRow.complete = newRow.complete;
+
+            if (oldRow.accountID != newRow.accountID)
+                oldRow.accountID = newRow.accountID;  //Needs something else
+
+            if (oldRow.oppAccountID != newRow.oppAccountID)
+                oldRow.oppAccountID = newRow.oppAccountID;  //Needs something else
+
+            if (oldRow.amount != newRow.amount)
+                oldRow.amount = newRow.amount;  //Needs something else
+
+            if (oldRow.creditDebit != newRow.creditDebit)
+                oldRow.creditDebit = newRow.creditDebit;  //Needs something else
+
+            // line error 
+            // transaction error
+
+            newRow.AcceptChanges();
+        }
+
+        public void myQuickFinishSubLines(ref LineItemRow line)
         {
             int subLineCount = 0;
 
@@ -149,7 +211,7 @@ namespace FamilyFinance2.Forms.Transaction
                     subLineCount++;
 
             // determine if we should delete the sub lines of this lineitem.
-            bool delete = ( line == null || line.AccountRowByFK_Line_accountID.envelopes == false );
+            bool delete = (line == null || line.AccountRowByFK_Line_accountID.envelopes == false);
 
             if (delete)
             {
@@ -195,15 +257,7 @@ namespace FamilyFinance2.Forms.Transaction
                 }
             }
 
-            
-        }
 
-        public void mySaveChanges()
-        {
-            // only changes to the lines and envelopeLines
-            this.LineItem.mySaveNewLines();
-            this.EnvelopeLine.mySaveChanges();
-            this.LineItem.mySaveChanges();
         }
 
 

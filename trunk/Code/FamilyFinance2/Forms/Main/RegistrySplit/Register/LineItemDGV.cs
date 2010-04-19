@@ -70,41 +70,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
         ////////////////////////////////////////////////////////////////////////////////////////////
         private void LineItemDGV_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            //int col = e.ColumnIndex;
-            //int row = e.RowIndex;
-
-            //if (row < 0 || col < 0)
-            //    return;
-
-            //object cellValue = this[col, row].Value;
-
-            // Check if this is a MULTIPLE value in the OppAccountColumn
-            //if (col == oppAccountIDColumn.Index && row >= 0)
-            //{
-            //    if (Convert.ToInt32(cellValue) == SpclAccount.MULTIPLE)
-            //    {
-            //        int transID = this.CurrentTransactionID;
-
-            //        theDGVBindingSource.EndEdit();
-
-            //        EditTransactionForm ef = new EditTransactionForm(ref globalDataSet, thisViewID, transID);
-            //        ef.ShowDialog();
-            //    }
-            //}
-
-            //// Check if this is a SPLIT value in the EnvelopeIDColumn
-            //else if (col == envelopeIDColumn.Index && row >= 0)
-            //{
-            //    if (Convert.ToInt32(cellValue) == SpclEnvelope.SPLIT)
-            //    {
-            //        int lineID = CurrentLineID;
-
-            //        theDGVBindingSource.EndEdit();
-
-            //        EditSubTransactionForm esf = new EditSubTransactionForm(ref globalDataSet, lineID, thisViewID);
-            //        esf.ShowDialog();
-            //    }
-            //}
+            this.regDataSet.myEditLine(this.CurrentLineID);
         }
 
         private void LineItemDGV_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -126,11 +92,12 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
             }
             else if (row >= 0)
             {
-                int transID = Convert.ToInt32(this["transactionIDColumn", row].Value);
+                int transID = Convert.ToInt32(this[this.transactionIDColumn.Index, row].Value);
+                int lineID = Convert.ToInt32(this[this.lineItemIDColumn.Index, row].Value);
 
-                TransactionForm tf = new TransactionForm(transID);
+                TransactionForm tf = new TransactionForm(transID, lineID);
                 tf.ShowDialog();
-                this.myReloadLineItems();
+                this.myReloadLineItems(); // <- remove this line
             }
 
         }
@@ -209,7 +176,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
                 flagTransactionError = thisLine.transactionError;
                 flagLineError = thisLine.lineError;
 
-                if (thisLine.balanceAmount < 0.0m)
+                if (!thisLine.IsbalanceAmountNull() && thisLine.balanceAmount < 0.0m)
                     this.flagNegativeBalance = true;
 
                 if (thisLine.oppAccountID == SpclAccount.MULTIPLE)
@@ -425,7 +392,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
             this.RowValidating += new DataGridViewCellCancelEventHandler(LineItemDGV_RowValidating);
             this.RowValidated += new DataGridViewCellEventHandler(LineItemDGV_RowValidated);
             this.RowPrePaint += new DataGridViewRowPrePaintEventHandler(LineItemDGV_RowPrePaint);
-            //this.CellValueChanged += new DataGridViewCellEventHandler(LineItemDGV_CellValueChanged);
+            this.CellValueChanged += new DataGridViewCellEventHandler(LineItemDGV_CellValueChanged);
         }
 
         public void setAccountID(int accountID)
