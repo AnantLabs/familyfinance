@@ -1,4 +1,4 @@
 SELECT DISTINCT g.id, g.name
 FROM EnvelopeGroup AS g INNER JOIN Envelope AS e ON g.id = e.groupID
-WHERE e.closed = 0 AND g.id > 0
+WHERE e.closed = 0 AND g.id > -2
 ORDER BY g.name;
