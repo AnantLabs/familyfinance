@@ -1,10 +1,12 @@
-SELECT a.id, a.name, a.creditDebit, a.envelopes, lSum.credit, lSum.debit
-FROM Account AS a INNER JOIN (
-	SELECT accountID AS aID, SUM(CASE WHEN l.creditDebit = 0 THEN l.amount ELSE 0 END) AS credit, SUM(CASE WHEN l.creditDebit = 1 THEN l.amount ELSE 0 END) AS debit
-	FROM LineItem AS l
-	WHERE accountID IN (SELECT id FROM Account WHERE catagory = 2 AND closed = 0 @@
-	) GROUP BY accountID ) AS lSum ON a.id = lSum.aID
- ORDER BY a.name;
+SELECT CASE WHEN Account.creditDebit = 0 THEN lSum.credit - lSum.debit ELSE lSum.debit - lSum.credit END 
+FROM Account 
+	INNER JOIN (
+		SELECT accountID, 
+			   SUM(CASE WHEN LineItem.creditDebit = 0 THEN LineItem.amount ELSE 0 END) AS credit, 
+			   SUM(CASE WHEN LineItem.creditDebit = 1 THEN LineItem.amount ELSE 0 END) AS debit
+		FROM LineItem 
+		WHERE accountID = 5
+		GROUP BY accountID ) AS lSum ON Account.id = lSum.accountID;
 
 --@ AND typeID = 5
 --@
