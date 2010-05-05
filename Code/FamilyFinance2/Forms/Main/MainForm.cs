@@ -11,6 +11,7 @@ using FamilyFinance2.Forms.EditAccounts;
 using FamilyFinance2.Forms.EditEnvelopes;
 using FamilyFinance2.Forms.LineType;
 using FamilyFinance2.Forms.Transaction;
+using FamilyFinance2.Forms.Import.Qif;
 using FamilyFinance2.SharedElements;
 
 namespace FamilyFinance2.Forms.Main
@@ -47,6 +48,16 @@ namespace FamilyFinance2.Forms.Main
         {
             new EditAccountsForm().ShowDialog();
             this.registySplitContainer1.myReloadAccount();
+        }
+
+        private void importQIFToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new ImportQIFForm().ShowDialog();
+            this.registySplitContainer1.myReloadAccount();
+            this.registySplitContainer1.myReloadAccountTypes();
+            this.registySplitContainer1.myReloadEnvelope();
+            this.registySplitContainer1.myReloadLineItem();
+            this.registySplitContainer1.myReloadLineType();
         }
         
 

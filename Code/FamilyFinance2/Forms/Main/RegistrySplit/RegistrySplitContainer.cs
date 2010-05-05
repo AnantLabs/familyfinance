@@ -75,7 +75,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
         public void myReloadAccount()
         {
-            //multiDGV.myReloadAccounts();
+            multiDGV.myReloadAccounts();
             accountTLV.myRebuildAccounts();
         }
 
@@ -86,18 +86,18 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
         public void myReloadEnvelope()
         {
-            //multiDGV.myReloadEnvelopes();
+            multiDGV.myReloadEnvelopes();
             this.accountTLV.myRebuildEnvelopes();
         }
 
         public void myReloadLineItem()
         {
-            //multiDGV.myReloadLineItems();
+            multiDGV.myReloadLineItems();
         }
 
         public void myReloadLineType()
         {
-            //multiDGV.myReloadLineTypes();
+            multiDGV.myReloadLineTypes();
         }
 
         private void InitializeComponent()

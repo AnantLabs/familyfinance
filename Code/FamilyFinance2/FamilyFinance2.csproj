@@ -137,6 +137,24 @@
     <Compile Include="Forms\FindDB\FindDBForm.Designer.cs">
       <DependentUpon>FindDBForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Import\FFDataSet.cs">
+      <DependentUpon>FFDataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Import\FFDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FFDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Import\Qif\ImportQIFForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Import\Qif\ImportQIFForm.Designer.cs">
+      <DependentUpon>ImportQIFForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Import\Qif\ImportQIF.cs">
+    </Compile>
+    <Compile Include="Forms\Import\Qif\QifData.cs" />
     <Compile Include="Forms\LineType\LineTypeDataSet.cs">
       <DependentUpon>LineTypeDataSet.xsd</DependentUpon>
       <SubType>Component</SubType>
@@ -239,6 +257,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FindDB\FindDBForm.resx">
       <DependentUpon>FindDBForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Import\Qif\ImportQIFForm.resx">
+      <DependentUpon>ImportQIFForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LineType\LineTypeForm.resx">
       <DependentUpon>LineTypeForm.cs</DependentUpon>
@@ -375,6 +396,17 @@
     </None>
     <None Include="Forms\EditGroup\GroupDataSet.xss">
       <DependentUpon>GroupDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Forms\Import\FFDataSet.xsc">
+      <DependentUpon>FFDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Forms\Import\FFDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>FFDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Forms\Import\FFDataSet.xss">
+      <DependentUpon>FFDataSet.xsd</DependentUpon>
     </None>
     <None Include="Forms\LineType\LineTypeDataSet.xsc">
       <DependentUpon>LineTypeDataSet.xsd</DependentUpon>
