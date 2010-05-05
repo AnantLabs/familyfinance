@@ -35,6 +35,7 @@ namespace FamilyFinance2.Forms.Main
             this.accoutsTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.envelopesTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.transactionTypesTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.importQifTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.mainToolStrip = new System.Windows.Forms.ToolStrip();
             this.registySplitContainer1 = new FamilyFinance2.Forms.Main.RegistrySplit.RegistySplitContainer();
             editTSDropDown = new System.Windows.Forms.ToolStripDropDownButton();
@@ -47,7 +48,8 @@ namespace FamilyFinance2.Forms.Main
             editTSDropDown.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.accoutsTSMI,
             this.envelopesTSMI,
-            this.transactionTypesTSMI});
+            this.transactionTypesTSMI,
+            this.importQifTSMI});
             editTSDropDown.Image = ((System.Drawing.Image)(resources.GetObject("editTSDropDown.Image")));
             editTSDropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
             editTSDropDown.Name = "editTSDropDown";
@@ -74,6 +76,13 @@ namespace FamilyFinance2.Forms.Main
             this.transactionTypesTSMI.Size = new System.Drawing.Size(170, 22);
             this.transactionTypesTSMI.Text = "Transaction Types";
             this.transactionTypesTSMI.Click += new System.EventHandler(this.transactionTypesToolStripMenuItem_Click);
+            // 
+            // importQifTSMI
+            // 
+            this.importQifTSMI.Name = "importQifTSMI";
+            this.importQifTSMI.Size = new System.Drawing.Size(170, 22);
+            this.importQifTSMI.Text = "Import QIF";
+            this.importQifTSMI.Click += new System.EventHandler(this.importQIFToolStripMenuItem_Click);
             // 
             // mainToolStrip
             // 
@@ -118,6 +127,7 @@ namespace FamilyFinance2.Forms.Main
         private System.Windows.Forms.ToolStripMenuItem accoutsTSMI;
         private System.Windows.Forms.ToolStripMenuItem envelopesTSMI;
         private System.Windows.Forms.ToolStripMenuItem transactionTypesTSMI;
+        private System.Windows.Forms.ToolStripMenuItem importQifTSMI;
         private RegistySplitContainer registySplitContainer1;
 
     }

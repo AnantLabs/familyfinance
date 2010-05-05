@@ -59,7 +59,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
 
         }
 
-        private void SubLineDGV_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        protected override void MyDataGridView_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
             int subLineID = Convert.ToInt32(this[subLineItemIDColumn.Index, e.RowIndex].Value);
             SubLineDataSet.SubLineViewRow thisSubLine = this.slDataSet.SubLineView.FindByeLineID(subLineID);
@@ -246,7 +246,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
             ////////////////////////////////////
             // Subscribe to event.
             this.CellDoubleClick += new DataGridViewCellEventHandler(SubLineDGV_CellDoubleClick);
-            this.RowPrePaint += new DataGridViewRowPrePaintEventHandler(SubLineDGV_RowPrePaint);
+            //this.RowPrePaint += new DataGridViewRowPrePaintEventHandler(SubLineDGV_RowPrePaint);
         }
 
         public void setAccountEnvelopeID(int accountID, int envelopeID)

@@ -5,20 +5,20 @@ using System.Windows.Forms;
 
 namespace FamilyFinance2.Forms.Transaction 
 {
-    class MyDataGridView : DataGridView
+    abstract class MyDataGridView : DataGridView
     {
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Local Constants and variables
         ////////////////////////////////////////////////////////////////////////////////////////////
 
         // row flags used in painting cells
-        public bool flagTransactionError;
-        public bool flagLineError;
-        public bool flagAccountError;
-        public bool flagFutureDate;
-        public bool flagNegativeBalance;
-        public bool flagReadOnlyAccount;
-        public bool flagReadOnlyEnvelope;
+        protected bool flagTransactionError;
+        protected bool flagLineError;
+        protected bool flagAccountError;
+        protected bool flagFutureDate;
+        protected bool flagNegativeBalance;
+        protected bool flagReadOnlyAccount;
+        protected bool flagReadOnlyEnvelope;
 
 
 
@@ -72,6 +72,12 @@ namespace FamilyFinance2.Forms.Transaction
                 return transID;
             }
         }
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        //   Abstract functions
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        protected abstract void MyDataGridView_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e);
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -171,10 +177,12 @@ namespace FamilyFinance2.Forms.Transaction
             this.ShowRowErrors = false;
             this.MultiSelect = false;
 
-            this.CellFormatting += new DataGridViewCellFormattingEventHandler(MyDataGridView_CellFormatting);
             this.DataError += new DataGridViewDataErrorEventHandler(MyDataGridView_DataError);
+            this.CellFormatting += new DataGridViewCellFormattingEventHandler(MyDataGridView_CellFormatting);
+            this.RowPrePaint += new DataGridViewRowPrePaintEventHandler(MyDataGridView_RowPrePaint);
 
         }
+
 
     }
 }

@@ -92,8 +92,8 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
             }
             else if (row >= 0)
             {
-                int transID = Convert.ToInt32(this[this.transactionIDColumn.Index, row].Value);
-                int lineID = Convert.ToInt32(this[this.lineItemIDColumn.Index, row].Value);
+                int transID = Convert.ToInt32(this[transactionIDColumn.Index, row].Value);
+                int lineID = Convert.ToInt32(this[lineItemIDColumn.Index, row].Value);
 
                 TransactionForm tf = new TransactionForm(transID, lineID);
                 tf.ShowDialog();
@@ -156,7 +156,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
             //}
         }
 
-        private void LineItemDGV_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        protected override void MyDataGridView_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
             int lineID = Convert.ToInt32(this[lineItemIDColumn.Index, e.RowIndex].Value);
             RegistryDataSet.LineItemRow thisLine = this.regDataSet.LineItem.FindByid(lineID);
@@ -208,14 +208,14 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
             this.lineItemIDColumn.Name = "lineItemIDColumn";
             this.lineItemIDColumn.HeaderText = "lineItemID";
             this.lineItemIDColumn.DataPropertyName = "id";
-            this.lineItemIDColumn.Visible = false;
+            this.lineItemIDColumn.Visible = true;
 
             // transactionIDColumn
             this.transactionIDColumn = new DataGridViewTextBoxColumn();
             this.transactionIDColumn.Name = "transactionIDColumn";
             this.transactionIDColumn.HeaderText = "transactionID";
             this.transactionIDColumn.DataPropertyName = "transactionID";
-            this.transactionIDColumn.Visible = false;
+            this.transactionIDColumn.Visible = true;
 
             // dateColumn
             this.dateColumn = new CalendarColumn();
@@ -391,7 +391,6 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
             this.CellDoubleClick += new DataGridViewCellEventHandler(LineItemDGV_CellDoubleClick);
             this.RowValidating += new DataGridViewCellCancelEventHandler(LineItemDGV_RowValidating);
             this.RowValidated += new DataGridViewCellEventHandler(LineItemDGV_RowValidated);
-            this.RowPrePaint += new DataGridViewRowPrePaintEventHandler(LineItemDGV_RowPrePaint);
             this.CellValueChanged += new DataGridViewCellEventHandler(LineItemDGV_CellValueChanged);
         }
 
