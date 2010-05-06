@@ -61,6 +61,58 @@ namespace FamilyFinance2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT CASE WHEN Account.creditDebit = 0 THEN lSum.credit - lSum.debit ELSE lSum.debit - lSum.credit END 
+        ///FROM Account 
+        ///	INNER JOIN (
+        ///		SELECT accountID, 
+        ///			   SUM(CASE WHEN LineItem.creditDebit = 0 THEN LineItem.amount ELSE 0 END) AS credit, 
+        ///			   SUM(CASE WHEN LineItem.creditDebit = 1 THEN LineItem.amount ELSE 0 END) AS debit
+        ///		FROM LineItem 
+        ///		WHERE accountID = 5
+        ///		GROUP BY accountID ) AS lSum ON Account.id = lSum.accountID;
+        ///
+        ///--@ AND typeID = 5
+        ///--@
+        ///.
+        /// </summary>
+        internal static string AccountBalances {
+            get {
+                return ResourceManager.GetString("AccountBalances", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT id, name
+        ///FROM Account
+        ///WHERE closed = 0 AND catagory = @@
+        ///ORDER BY name;
+        ///--@ 1 AND typeID = 12
+        ///--@ 3
+        ///-- 2 is not used its the real accounts.
+        ///.
+        /// </summary>
+        internal static string AccountNames {
+            get {
+                return ResourceManager.GetString("AccountNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT DISTINCT AccountType.id, AccountType.name
+        ///FROM AccountType INNER JOIN Account ON AccountType.id = Account.typeID
+        ///WHERE Account.closed = 0 AND Account.catagory = 2
+        ///ORDER BY AccountType.name;
+        ///--@ 1
+        ///--@ 2
+        ///--@ 3.
+        /// </summary>
+        internal static string AccountTypes {
+            get {
+                return ResourceManager.GetString("AccountTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to -------------------------------------------------------------------------------
         ///-------------------------------------------------------------------------------
         ///CREATE TABLE AccountType
@@ -75,9 +127,9 @@ namespace FamilyFinance2.Properties {
         ///-------------------------------------------------------------------------------
         ///---------------------------------------------------- [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string Build_Tables {
+        internal static string BuildTables {
             get {
-                return ResourceManager.GetString("Build_Tables", resourceCulture);
+                return ResourceManager.GetString("BuildTables", resourceCulture);
             }
         }
         
@@ -94,9 +146,61 @@ namespace FamilyFinance2.Properties {
         ///
         ///.
         /// </summary>
-        internal static string Drop_Tables {
+        internal static string DropTables {
             get {
-                return ResourceManager.GetString("Drop_Tables", resourceCulture);
+                return ResourceManager.GetString("DropTables", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT eSum.credit - eSum.debit
+        ///FROM (
+        ///	SELECT SUM(CASE WHEN LineItem.creditDebit = 0 THEN EnvelopeLine.amount ELSE 0 END) AS credit, 
+        ///		   SUM(CASE WHEN LineItem.creditDebit = 1 THEN EnvelopeLine.amount ELSE 0 END) AS debit
+        ///	FROM LineItem  
+        ///		INNER JOIN EnvelopeLine ON LineItem.id = EnvelopeLine.lineItemID
+        ///	WHERE EnvelopeLine.envelopeID = 25
+        ///	GROUP BY EnvelopeLine.envelopeID ) AS eSum;
+        ///
+        ///--@ 52
+        ///--@ .
+        /// </summary>
+        internal static string EnvelopeBalances {
+            get {
+                return ResourceManager.GetString("EnvelopeBalances", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT DISTINCT g.id, g.name
+        ///FROM EnvelopeGroup AS g INNER JOIN Envelope AS e ON g.id = e.groupID
+        ///WHERE e.closed = 0 AND g.id &gt; -2
+        ///ORDER BY g.name;
+        ///.
+        /// </summary>
+        internal static string EnvelopeGroups {
+            get {
+                return ResourceManager.GetString("EnvelopeGroups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT	Account.id, 
+        ///		Account.name, 
+        ///		Account.creditDebit, 
+        ///		Account.envelopes, 
+        ///		CASE WHEN lSum.credit = NULL THEN 0 ELSE lSum.credit END AS credit,
+        ///		CASE WHEN lSum.debit = NULL THEN 0 ELSE lSum.debit END AS debit
+        ///FROM Account LEFT OUTER JOIN (
+        ///	SELECT accountID AS aID, 
+        ///		SUM(CASE WHEN LineItem.creditDebit = 0 THEN LineItem.amount ELSE 0 END) AS credit, 
+        ///		SUM(CASE WHEN LineItem.creditDebit = 1 THEN LineItem.amount ELSE 0 END) AS debit
+        ///	FROM LineItem
+        ///	WHERE accountID IN (SELECT id FROM Acco [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string EnvelopeNames {
+            get {
+                return ResourceManager.GetString("EnvelopeNames", resourceCulture);
             }
         }
         
@@ -105,27 +209,18 @@ namespace FamilyFinance2.Properties {
         ///FROM Envelope AS e INNER JOIN (
         ///	SELECT el.envelopeID AS eID, SUM(CASE WHEN l.creditDebit = 0 THEN el.amount ELSE 0 END) AS credit, SUM(CASE WHEN l.creditDebit = 1 THEN el.amount ELSE 0 END) AS debit
         ///	FROM LineItem AS l INNER JOIN EnvelopeLine AS el ON l.id = el.lineItemID
-        ///	WHERE el.envelopeID IN (SELECT id FROM Envelope WHERE closed = 0 @@)
+        ///	WHERE l.accountID = 25
         ///	GROUP BY el.envelopeID ) AS elSum ON e.id = elSum.eID
-        ///WHERE elSum.credit &lt;&gt; elSum.debit
-        ///ORDER BY e. [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string EnvelopeDetails {
-            get {
-                return ResourceManager.GetString("EnvelopeDetails", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SELECT DISTINCT g.id, g.name
-        ///FROM EnvelopeGroup AS g INNER JOIN Envelope AS e ON g.id = e.groupID
-        ///WHERE e.closed = 0 AND g.id &gt; 0
-        ///ORDER BY g.name;
+        ///WHERE e.closed = 0 AND elSum.credit &lt;&gt; elSum.debit
+        ///ORDER BY e.name
+        ///
+        ///--@ 3
+        ///--@ 
         ///.
         /// </summary>
-        internal static string Groups {
+        internal static string SubAccountBalances {
             get {
-                return ResourceManager.GetString("Groups", resourceCulture);
+                return ResourceManager.GetString("SubAccountBalances", resourceCulture);
             }
         }
         
@@ -134,73 +229,14 @@ namespace FamilyFinance2.Properties {
         ///FROM Account
         ///WHERE closed = 0 AND catagory = @@
         ///ORDER BY name;
-        ///--@@ 1 AND typeID = 12
-        ///--@@ 3
+        ///--@ 1 AND typeID = 12
+        ///--@ 3
         ///-- 2 is not used its the real accounts.
         ///.
         /// </summary>
-        internal static string IncomeOrExpense {
+        internal static string SubEnvelopeBalances {
             get {
-                return ResourceManager.GetString("IncomeOrExpense", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SELECT a.id, a.name, a.creditDebit, a.envelopes, lSum.credit, lSum.debit
-        ///FROM Account AS a INNER JOIN (
-        ///	SELECT accountID AS aID, SUM(CASE WHEN l.creditDebit = 0 THEN l.amount ELSE 0 END) AS credit, SUM(CASE WHEN l.creditDebit = 1 THEN l.amount ELSE 0 END) AS debit
-        ///	FROM LineItem AS l
-        ///	WHERE accountID IN (SELECT id FROM Account WHERE catagory = 2 AND closed = 0 @@
-        ///	) GROUP BY accountID ) AS lSum ON a.id = lSum.aID
-        /// ORDER BY a.name;
-        ///
-        ///--@@ AND typeID = 5
-        ///--@@
-        ///.
-        /// </summary>
-        internal static string RealAccountDetails {
-            get {
-                return ResourceManager.GetString("RealAccountDetails", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SELECT e.id, e.name, (elSum.credit - elSum.debit) AS balance
-        ///FROM Envelope AS e INNER JOIN (
-        ///	SELECT el.envelopeID AS eID, SUM(CASE WHEN l.creditDebit = 0 THEN el.amount ELSE 0 END) AS credit, SUM(CASE WHEN l.creditDebit = 1 THEN el.amount ELSE 0 END) AS debit
-        ///	FROM LineItem AS l INNER JOIN EnvelopeLine AS el ON l.id = el.lineItemID
-        ///	WHERE l.accountID = 3
-        ///	GROUP BY el.envelopeID ) AS elSum ON e.id = elSum.eID
-        ///WHERE e.closed = 0 AND elSum.credit &lt;&gt; elSum.debit
-        ///ORDER BY e.name
-        ///
-        ///--@@ 3
-        ///--@@ 
-        ///.
-        /// </summary>
-        internal static string SubAccountDetails {
-            get {
-                return ResourceManager.GetString("SubAccountDetails", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SELECT a.id, a.name, (lSum.credit - lSum.debit) AS balance
-        ///FROM Account AS a INNER JOIN (
-        ///	SELECT l.accountID AS aID, SUM(CASE WHEN l.creditDebit = 0 THEN el.amount ELSE 0 END) AS credit, SUM(CASE WHEN l.creditDebit = 1 THEN el.amount ELSE 0 END) AS debit
-        ///	FROM LineItem AS l INNER JOIN EnvelopeLine AS el ON l.id = el.lineItemID
-        ///	WHERE el.envelopeID = @@
-        ///	GROUP BY l.accountID ) AS lSum ON a.id = lSum.aID
-        ///WHERE a.closed = 0 AND lSum.credit &lt;&gt; lSum.debit
-        ///ORDER BY a.name
-        ///
-        ///--@@ 3
-        ///--@@ 
-        ///.
-        /// </summary>
-        internal static string SubEnvelopeDetails {
-            get {
-                return ResourceManager.GetString("SubEnvelopeDetails", resourceCulture);
+                return ResourceManager.GetString("SubEnvelopeBalances", resourceCulture);
             }
         }
         
@@ -215,9 +251,9 @@ namespace FamilyFinance2.Properties {
         ///INSERT INTO Account VALUES (103, &apos;Local Bank MC&apos;, 6, 2, 0, 0, 1);
         ///INSERT INTO Account VALUES (104, &apos;Car Loan&apos;, 3, 2, 0, 0, [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string Test_Data {
+        internal static string TestData {
             get {
-                return ResourceManager.GetString("Test_Data", resourceCulture);
+                return ResourceManager.GetString("TestData", resourceCulture);
             }
         }
         
@@ -246,21 +282,6 @@ namespace FamilyFinance2.Properties {
             get {
                 object obj = ResourceManager.GetObject("TLVRedFlag", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SELECT DISTINCT at.id, at.name
-        ///FROM AccountType AS at INNER JOIN Account AS a ON at.id = a.typeID
-        ///WHERE a.closed = 0 AND a.catagory = @@
-        ///ORDER BY at.name;
-        ///--@@ 1
-        ///--@@ 2
-        ///--@@ 3.
-        /// </summary>
-        internal static string TypesByCatagory {
-            get {
-                return ResourceManager.GetString("TypesByCatagory", resourceCulture);
             }
         }
     }
