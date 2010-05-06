@@ -31,11 +31,11 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 
     public class TreeQuery
     {
-        static public Dictionary<int, string> getTypesByCatagory(byte catagory)
+        static public Dictionary<int, string> getAccountTypes(byte catagory)
         {
             Dictionary<int, string> queryResults = new Dictionary<int, string>();
             
-            string query = Properties.Resources.TypesByCatagory.Replace("@@", catagory.ToString());
+            string query = Properties.Resources.AccountTypes.Replace("@@", catagory.ToString());
             
             SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
             SqlCeCommand command = new SqlCeCommand(query, connection);

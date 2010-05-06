@@ -373,7 +373,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
                     rNode.Nodes.Add(gNode);
                 }
             else
-                foreach (var item in TreeQuery.getTypesByCatagory(cat))
+                foreach (var item in TreeQuery.getAccountTypes(cat))
                 {
                     TypeNode tNode = new TypeNode(item.Key, item.Value, cat);
                     tNode.HasChildren = true;

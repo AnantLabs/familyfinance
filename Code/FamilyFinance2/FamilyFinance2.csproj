@@ -291,9 +291,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Resources\Build Tables.sqlce" />
-    <None Include="Resources\Drop Tables.sqlce" />
-    <None Include="Resources\Test Data.sqlce" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -352,7 +349,6 @@
     <Content Include="FamilyFinanceDB.sdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\DataSetModifications.txt" />
     <None Include="Forms\AccountType\AccountTypeDataSet.xsc">
       <DependentUpon>AccountTypeDataSet.xsd</DependentUpon>
     </None>
@@ -452,16 +448,21 @@
     <None Include="Forms\Transaction\TransactionDataSet.xss">
       <DependentUpon>TransactionDataSet.xsd</DependentUpon>
     </None>
-    <None Include="Resources\AccountBalance.sqlce" />
-    <None Include="Resources\AccountEnvelopeBalance.sqlce" />
-    <None Include="Resources\AccountsByCatagory.sqlce" />
-    <None Include="Resources\EnvelopeBalance.sqlce" />
-    <None Include="Resources\Groups.sqlce" />
+    <None Include="Resources\AccountBalances.sqlce" />
+    <None Include="Resources\AccountNames.sqlce" />
+    <None Include="Resources\AccountTypes.sqlce" />
+    <None Include="Resources\BuildTables.sqlce" />
+    <None Include="Resources\DropTables.sqlce" />
+    <None Include="Resources\EnvelopeBalances.sqlce" />
+    <None Include="Resources\EnvelopeGroups.sqlce" />
+    <None Include="Resources\EnvelopeNames.sqlce" />
+    <None Include="Resources\SubAccountBalances.sqlce" />
+    <None Include="Resources\SubEnvelopeBalances.sqlce" />
+    <None Include="Resources\TestData.sqlce" />
     <None Include="Resources\TLVRedFlag.png" />
     <None Include="Resources\TLVMoney.png" />
     <None Include="Resources\TLVEnvelope.png" />
     <None Include="Resources\TLVBank.png" />
-    <None Include="Resources\TypesByCatagory.sqlce" />
     <None Include="Testing\StressDataSet.xsc">
       <DependentUpon>StressDataSet.xsd</DependentUpon>
     </None>

@@ -1,0 +1,7 @@
+SELECT id, name
+FROM Account
+WHERE closed = 0 AND catagory = @@
+ORDER BY name;
+--@ 1 AND typeID = 12
+--@ 3
+-- 2 is not used its the real accounts.
