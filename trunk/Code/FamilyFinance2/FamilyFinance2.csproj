@@ -448,9 +448,11 @@
     <None Include="Forms\Transaction\TransactionDataSet.xss">
       <DependentUpon>TransactionDataSet.xsd</DependentUpon>
     </None>
+    <None Include="Resources\ABalance.sqlce" />
     <None Include="Resources\AccountBalances.sqlce" />
     <None Include="Resources\AccountNames.sqlce" />
     <None Include="Resources\AccountTypes.sqlce" />
+    <None Include="Resources\AEBalance.sqlce" />
     <None Include="Resources\BuildTables.sqlce" />
     <None Include="Resources\DropTables.sqlce" />
     <None Include="Resources\EnvelopeBalances.sqlce" />
