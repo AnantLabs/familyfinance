@@ -1,6 +1,6 @@
 SELECT DISTINCT AccountType.id, AccountType.name
 FROM AccountType INNER JOIN Account ON AccountType.id = Account.typeID
-WHERE Account.closed = 0 AND Account.catagory = 2
+WHERE Account.closed = 0 AND Account.catagory = @@
 ORDER BY AccountType.name;
 --@ 1
 --@ 2

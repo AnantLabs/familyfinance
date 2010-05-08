@@ -333,11 +333,11 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
                 return;
             }
 
-            List<SubBalanceDetails> envList = TreeQuery.getSubAccountDetails(accountID);
+            List<SubBalanceDetails> envList = TreeQuery.getSubAccountBalances(accountID);
 
             foreach (var item in envList)
             {
-                AENode aeNode = new AENode(accountID, item.id, item.name, item.subBalance);
+                AENode aeNode = new AENode(accountID, item.ID, item.Name, item.SubBalance);
                 aeNode.ImageId = (int)NodeImage.Envelope;
                 aeNode.HasChildren = false;
                 accNode.Nodes.Add(aeNode);
@@ -349,11 +349,11 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             int envelopeID = envNode.EnvelopeID;
             envNode.Nodes.Clear();
 
-            List<SubBalanceDetails> envList = TreeQuery.getSubEnvelopeDetails(envelopeID);
+            List<SubBalanceDetails> envList = TreeQuery.getSubEnvelopeBalanses(envelopeID);
 
             foreach (var item in envList)
             {
-                AENode aeNode = new AENode(item.id, envelopeID, item.name, item.subBalance);
+                AENode aeNode = new AENode(item.ID, envelopeID, item.Name, item.SubBalance);
                 aeNode.ImageId = (int)NodeImage.Bank;
                 aeNode.HasChildren = false;
                 envNode.Nodes.Add(aeNode);
@@ -366,7 +366,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             byte cat = rNode.Catagory;
 
             if (cat == SpclAccountCat.ENVELOPE)
-                foreach (var item in TreeQuery.getGroups())
+                foreach (var item in TreeQuery.getEnvelopeGroups())
                 {
                     GroupNode gNode = new GroupNode(item.Key, item.Value);
                     gNode.HasChildren = true;
@@ -397,7 +397,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             }
             else
             {
-                Dictionary<int, string> inList = TreeQuery.getAccountNamesByCatAndType(cat, typeID);
+                Dictionary<int, string> inList = TreeQuery.getAccountNames(cat, typeID);
 
                 foreach (var item in inList)
                 {
