@@ -190,7 +190,7 @@ namespace FamilyFinance2.Forms.Import
             return newRow.id;
         }
 
-        public int myImportAccount(string name, string type, byte catagory, bool envelopes)
+        public int myImportAccount(string name, string type, byte catagory)
         {
             // Check to see if the account is already in the map and table.
             int id;
@@ -208,7 +208,7 @@ namespace FamilyFinance2.Forms.Import
             newAccount.typeID = this.myImportAccountType(type);
             newAccount.catagory = catagory;
             newAccount.closed = false;
-            newAccount.envelopes = envelopes;
+            newAccount.envelopes = false; // Assume false, decide later.
 
             if (type == "CCard" || type == "Oth L" || catagory == SpclAccountCat.INCOME)
                 newAccount.creditDebit = LineCD.CREDIT;

@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Collections.Generic;
+using System.Data.SqlServerCe;
 
 using FamilyFinance2.SharedElements;
 
@@ -66,9 +67,10 @@ namespace FamilyFinance2.Forms.Import.Qif
             // PHASE 2 - Import the data.
             this.importQIFData();
             this.importSpecialCaseTransactions();
-            
-            // Commit the changes to the database
+
+            // PHAZE 3 - Commit the changes to the database. Determine wich accounts should have Envelopes
             this.ffDataSet.mySaveData();
+            this.setAccountEnvelopes();
         }
 
 
@@ -357,14 +359,14 @@ namespace FamilyFinance2.Forms.Import.Qif
             // Add all the accounts so the are in the accountMap
             foreach (QifAccount qAcc in this.qifAccounts)
             {
-                this.ffDataSet.myImportAccount(qAcc.Name, qAcc.Type, SpclAccountCat.ACCOUNT, true);
+                this.ffDataSet.myImportAccount(qAcc.Name, qAcc.Type, SpclAccountCat.ACCOUNT);
             }
 
             // Double nested foreach loop to process each account and then each transaction 
             // Report the progress too.
             foreach (QifAccount qAcc in this.qifAccounts)
             {
-                int accountID = this.ffDataSet.myImportAccount(qAcc.Name, qAcc.Type, SpclAccountCat.ACCOUNT, true);
+                int accountID = this.ffDataSet.myImportAccount(qAcc.Name, qAcc.Type, SpclAccountCat.ACCOUNT);
 
                 foreach (QifTransaction trans in qAcc.Transactions)
                 {
@@ -388,11 +390,11 @@ namespace FamilyFinance2.Forms.Import.Qif
 
             // Set oppAccount and envelopeID, and import envelope Lines
             byte cat = (qTrans.Amount > 0.0m) ? SpclAccountCat.INCOME : SpclAccountCat.EXPENSE;
-            newLine.oppAccountID = this.ffDataSet.myImportAccount(qTrans.Payee, "", cat, false);
+            newLine.oppAccountID = this.ffDataSet.myImportAccount(qTrans.Payee, "", cat);
             newLine.envelopeID = this.importEnvelopeLines(qTrans, newLine.id);
 
             if (newLine.accountID == newLine.oppAccountID)
-                newLine.oppAccountID = this.ffDataSet.myImportAccount(qTrans.Payee + "-Payee", "", cat, false);
+                newLine.oppAccountID = this.ffDataSet.myImportAccount(qTrans.Payee + "-Payee", "", cat);
 
             // Build the oppLine 
             FFDataSet.LineItemRow payeeLine = this.ffDataSet.LineItem.NewLineItemRow();
@@ -464,7 +466,7 @@ namespace FamilyFinance2.Forms.Import.Qif
                 newLine.typeID = this.ffDataSet.myImportLineType("Check");
                 newLine.confirmationNumber = "Check Number: " + qTrans.Num;
             }
-            catch (FormatException e)
+            catch (FormatException)
             {
                 newLine.typeID = this.ffDataSet.myImportLineType(qTrans.Num);
             }
@@ -483,19 +485,22 @@ namespace FamilyFinance2.Forms.Import.Qif
                 // Build the envelope lines from the splits.
                 foreach (QifSplit split in qTrans.EnvLines)
                 {
-                    eLine = this.ffDataSet.EnvelopeLine.NewEnvelopeLineRow();
-
-                    eLine.lineItemID = lineID;
-                    eLine.envelopeID = envelopeID = this.ffDataSet.myImportEnvelope(split.Catagory);
-                    eLine.description = split.Memo;
-
                     if (qTrans.Amount < 0.0m)
-                        eLine.amount = Decimal.Negate(split.Amount);
-                    else
-                        eLine.amount = split.Amount;
+                    {
+                        eLine = this.ffDataSet.EnvelopeLine.NewEnvelopeLineRow();
 
-                    this.ffDataSet.EnvelopeLine.AddEnvelopeLineRow(eLine);
-                    countELines++;
+                        eLine.lineItemID = lineID;
+                        eLine.envelopeID = envelopeID = this.ffDataSet.myImportEnvelope(split.Catagory);
+                        eLine.description = split.Memo;
+
+                        if (qTrans.Amount < 0.0m)
+                            eLine.amount = Decimal.Negate(split.Amount);
+                        else
+                            eLine.amount = split.Amount;
+
+                        this.ffDataSet.EnvelopeLine.AddEnvelopeLineRow(eLine);
+                        countELines++;
+                    }
                 }
             }
             else if (qTrans.Catagory.StartsWith("["))
@@ -503,7 +508,7 @@ namespace FamilyFinance2.Forms.Import.Qif
                 // Filter out the Transfers
                 countELines = 0;
             }
-            else
+            else if (qTrans.Amount < 0.0m)
             {
                 // Else there are no splits so build an envelopeLine from the transaction.
                 eLine = this.ffDataSet.EnvelopeLine.NewEnvelopeLineRow();
@@ -643,7 +648,7 @@ namespace FamilyFinance2.Forms.Import.Qif
                         else
                         {
                             byte cat = (split.Amount > 0.0m) ? SpclAccountCat.INCOME : SpclAccountCat.EXPENSE;
-                            split.OppAccountID = this.ffDataSet.myImportAccount(split.Catagory, "", cat, false);
+                            split.OppAccountID = this.ffDataSet.myImportAccount(split.Catagory, "", cat);
                         }
                     }
                 }
@@ -787,6 +792,22 @@ namespace FamilyFinance2.Forms.Import.Qif
             }
         }
 
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        //   Phase 3 - Save the data to the Database.
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        private void setAccountEnvelopes()
+        {
+            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            SqlCeCommand command = new SqlCeCommand(Properties.Resources.SetAccountEnvelopes, connection);
+            connection.Open();
+
+            command.ExecuteNonQuery();
+
+            // Always call Close the reader and connection when done reading
+            connection.Close();
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Public Functions

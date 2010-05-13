@@ -296,155 +296,156 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             byte cat = rNode.Catagory;
 
             if (groupEnv && cat == SpclAccountCat.ENVELOPE)
-                this.fillWithTypeOrGroupNodes(rNode);
-
+            {
+                // Fill with Envelope Groups
+                foreach (var item in TreeQuery.getEnvelopeGroups())
+                    rNode.Nodes.Add(new GroupNode(item.ID, item.Name));
+            }
             else if (!groupEnv && cat == SpclAccountCat.ENVELOPE)
-                this.fillWithEnvelopeNodes(rNode, SpclEnvelopeGroup.NULL);
+            {
+                // Fill with All Envelope names
+                foreach (var item in TreeQuery.getAllEnvelopeNames())
+                    rNode.Nodes.Add(new EnvelopeNode(item.ID, item.Name));
 
+                // Fill all Envelope balances
+                foreach (var item in TreeQuery.getAllEnvelopeBalances())
+                    this.updateBalance(rNode, SpclAccount.NULL, item.ID, item.Balance);
+            }
             else if (groupAcc)
-                this.fillWithTypeOrGroupNodes(rNode);
+            {
+                // Fill with the Account Types
+                foreach (var item in TreeQuery.getAccountTypes(cat))
+                    rNode.Nodes.Add(new TypeNode(item.ID, item.Name, cat));
+            }
+            else if (cat == SpclAccountCat.ACCOUNT)
+            {
+                // Fill with All Account names
+                foreach (var item in TreeQuery.getAccountNamesByCatagory(cat))
+                    rNode.Nodes.Add(new AccountNode(cat, item.ID, item.Name, item.Envelopes));
 
-            else if (cat == SpclAccountCat.ACCOUNT || cat == SpclAccountCat.EXPENSE || cat == SpclAccountCat.INCOME)
-                this.fillWithAccountNodes(rNode, cat, SpclAccountType.NULL);
+                // Fill all Account balances
+                foreach (var item in TreeQuery.getAccountBalancesByCatagory(cat))
+                    this.updateBalance(rNode, item.ID, SpclEnvelope.NULL, item.Balance);
+            }
+            else if (cat == SpclAccountCat.EXPENSE || cat == SpclAccountCat.INCOME)
+            {
+                // Fill with the Account names.  No balances
+                foreach (var item in TreeQuery.getAccountNamesByCatagory(cat))
+                    rNode.Nodes.Add(new AccountNode(cat, item.ID, item.Name, false));
+            }
         }
 
         private void handleThisTypeNode(TypeNode tNode)
         {
             byte cat = tNode.Catagory;
-            int typeID = tNode.TypeID;
-            this.fillWithAccountNodes(tNode, cat, typeID);
+
+            // Fill with account Names by type
+            foreach (var item in TreeQuery.getAccountNamesByCatagoryAndType(cat, tNode.TypeID))
+                tNode.Nodes.Add(new AccountNode(cat, item.ID, item.Name, item.Envelopes));
+
+            // If this is an account add in the balances
+            if (cat == SpclAccountCat.ACCOUNT)
+            {
+                foreach (var item in TreeQuery.getAccountBalancesByType(cat, tNode.TypeID))
+                    this.updateBalance(tNode, item.ID, SpclEnvelope.NULL, item.Balance);
+            }
         }
 
         private void handleThisGroupNode(GroupNode gNode)
         {
-            int groupID = gNode.GroupID;
-            this.fillWithEnvelopeNodes(gNode, groupID);
+            // Fill with names
+            foreach (var item in TreeQuery.getEnvelopeNamesByGroup(gNode.GroupID))
+                gNode.Nodes.Add(new EnvelopeNode(item.ID, item.Name));
+
+            // Fill in the balances
+            foreach (var item in TreeQuery.getEnvelopeBalancesByGroup(gNode.GroupID))
+                this.updateBalance(gNode, SpclAccount.NULL, item.ID, item.Balance);
+
         }
 
         private void handleThisAccountNode(AccountNode accNode)
         {
             int accountID = accNode.AccountID;
-            byte cat = accNode.Catagory;
-            bool usesEnvelopes = accNode.Envelopes;
 
-            if (!usesEnvelopes)
+            if (accNode.Catagory == SpclAccountCat.ACCOUNT)
             {
-                accNode.HasChildren = false;
-                return;
-            }
-
-            List<SubBalanceDetails> envList = TreeQuery.getSubAccountBalances(accountID);
-
-            foreach (var item in envList)
-            {
-                AENode aeNode = new AENode(accountID, item.ID, item.Name, item.SubBalance);
-                aeNode.ImageId = (int)NodeImage.Envelope;
-                aeNode.HasChildren = false;
-                accNode.Nodes.Add(aeNode);
+                foreach (var item in TreeQuery.getSubAccountBalances(accountID))
+                {
+                    AENode node = new AENode(accountID, item.ID, item.Name, item.SubBalance);
+                    node.ImageId = (int)NodeImage.Envelope;
+                    accNode.Nodes.Add(node);
+                }
             }
         }
 
         private void handleThisEnvelopeNode(EnvelopeNode envNode)
         {
             int envelopeID = envNode.EnvelopeID;
-            envNode.Nodes.Clear();
 
-            List<SubBalanceDetails> envList = TreeQuery.getSubEnvelopeBalanses(envelopeID);
-
-            foreach (var item in envList)
+            foreach (var item in TreeQuery.getSubEnvelopeBalances(envelopeID))
             {
-                AENode aeNode = new AENode(item.ID, envelopeID, item.Name, item.SubBalance);
-                aeNode.ImageId = (int)NodeImage.Bank;
-                aeNode.HasChildren = false;
-                envNode.Nodes.Add(aeNode);
+                AENode node = new AENode(item.ID, envelopeID, item.Name, item.SubBalance);
+                node.ImageId = (int)NodeImage.Bank;
+                envNode.Nodes.Add(node);
             }
         }
 
-
-        private void fillWithTypeOrGroupNodes(RootNode rNode)
-        {
-            byte cat = rNode.Catagory;
-
-            if (cat == SpclAccountCat.ENVELOPE)
-                foreach (var item in TreeQuery.getEnvelopeGroups())
-                {
-                    GroupNode gNode = new GroupNode(item.Key, item.Value);
-                    gNode.HasChildren = true;
-                    rNode.Nodes.Add(gNode);
-                }
-            else
-                foreach (var item in TreeQuery.getAccountTypes(cat))
-                {
-                    TypeNode tNode = new TypeNode(item.Key, item.Value, cat);
-                    tNode.HasChildren = true;
-                    rNode.Nodes.Add(tNode);
-                }
-        }
-
-        private void fillWithAccountNodes(BaseNode pNode, byte cat, int typeID)
-        {
-            if (cat == SpclAccountCat.ACCOUNT)
-            {
-                List<AccountBalanceDetails> accList = TreeQuery.getRealAccountsDetails(typeID);
-
-                foreach (var item in accList)
-                {
-                    AccountNode accNode = new AccountNode(item.accountID, item.accountName, item.envelopes, item.balance);
-                    accNode.ImageId = (int)NodeImage.Bank;
-                    accNode.HasChildren = item.envelopes;
-                    pNode.Nodes.Add(accNode);
-                }
-            }
-            else
-            {
-                Dictionary<int, string> inList = TreeQuery.getAccountNames(cat, typeID);
-
-                foreach (var item in inList)
-                {
-                    AccountNode accNode = new AccountNode(cat, item.Key, item.Value);
-                    accNode.HasChildren = false;
-                    pNode.Nodes.Add(accNode);
-                }
-            }
-        }
-
-        private void fillWithEnvelopeNodes(BaseNode pNode, int groupID)
-        {
-            pNode.Nodes.Clear();
-            List<EnvelopeBalanceDetails> envList = TreeQuery.getEnvelopeDetails(groupID);
-
-            foreach (var item in envList)
-            {
-                EnvelopeNode eNode = new EnvelopeNode(item.envelopeID, item.envelopeName, item.balance);
-                eNode[0] = item.envelopeName;
-                eNode[1] = item.balance.ToString("C2");
-                eNode.ImageId = (int)NodeImage.Envelope;
-                eNode.HasChildren = true;
-                pNode.Nodes.Add(eNode);
-            }
-        }
 
 
 
         private bool updateBalance(BaseNode pNode, int accountID, int envelopeID, decimal newAmount)
         {
-            //foreach (MyTreeListNode child in pNode.Nodes)
-            //{
-            //    int aID = child.AccountID;
-            //    int eID = child.EnvelopeID;
+            switch (pNode.NodeType)
+            {
+                case MyNodes.Root:
+                case MyNodes.AccountType:
+                case MyNodes.EnvelopeGroup:
+                    foreach (BaseNode child in pNode.Nodes)
+                        if (updateBalance(child, accountID, envelopeID, newAmount))
+                            return true;
+                    break;
 
-            //    if (aID == accountID && eID == envelopeID)
-            //    {
-            //        child[1] = newAmount.ToString("C2");
-            //        return true;
-            //    }
+                case MyNodes.Account:
+                    AccountNode aNode = pNode as AccountNode;
+                    if (aNode.AccountID == accountID)
+                    {
+                        if (envelopeID == SpclEnvelope.NULL)
+                        {
+                            aNode.setBalance(newAmount);
+                            return true;
+                        }
+                        else
+                            foreach (BaseNode child in pNode.Nodes)
+                                if (updateBalance(child, accountID, envelopeID, newAmount))
+                                    return true;
+                    }
+                    break;
 
-            //    if (updateBalance(child, accountID, envelopeID, newAmount))
-            //        return true;
-            //    else
-            //        return false;
-            //}
+                case MyNodes.Envelope:
+                    EnvelopeNode eNode = pNode as EnvelopeNode;
+                    if (eNode.EnvelopeID == envelopeID)
+                    {
+                        if (accountID == SpclAccount.NULL)
+                        {
+                            eNode.setBalance(newAmount);
+                            return true;
+                        }
+                        else
+                            foreach (BaseNode child in pNode.Nodes)
+                                if (updateBalance(child, accountID, envelopeID, newAmount))
+                                    return true;
+                    }
+                    break;
 
+                case MyNodes.AENode:
+                    AENode aeNode = pNode as AENode;
+                    if (aeNode.EnvelopeID == envelopeID && aeNode.AccountID == accountID)
+                    {
+                        aeNode.setBalance(newAmount);
+                        return true;
+                    }
+                    break;
+            }
             return false;
         }
 
@@ -463,18 +464,28 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 
         }
 
-        public void updateBalanceInTheTreeView(int accountID, int envelopeID, decimal newAmount)
+        public void updateBalanceInTheTreeView(int accountID, int envelopeID)
         {
-            bool found = false;
+            decimal newBalance;
 
-            //foreach (MyTreeListNode child in this.Nodes)
-            //{
-            //    found = updateBalance(child, accountID, envelopeID, newAmount);
-            //    // Do not break-out if found, sub envelopes are in accounts and envleopes be in two places.
-            //}
+            if (accountID > SpclAccount.NULL && envelopeID > SpclEnvelope.NOENVELOPE)
+            {
+                newBalance = TreeQuery.getAccBalance(accountID);
+                this.updateBalance(this.accountRootNode, accountID, SpclEnvelope.NULL, newBalance);
 
-            if (found == false)
-                this.rePlantTheRoots();
+                newBalance = TreeQuery.getAEBalance(accountID, envelopeID);
+                this.updateBalance(this.accountRootNode, accountID, envelopeID, newBalance);
+                this.updateBalance(this.envelopeRootNode, accountID, envelopeID, newBalance);
+
+                newBalance = TreeQuery.getEnvBalance(envelopeID);
+                this.updateBalance(this.envelopeRootNode, SpclAccount.NULL, envelopeID, newBalance);
+            }
+            else if (accountID > SpclAccount.NULL)
+            {
+                newBalance = TreeQuery.getAccBalance(accountID);
+                this.updateBalance(this.accountRootNode, accountID, SpclEnvelope.NULL, newBalance);
+            }
+
         }
 
         public void myRebuildAccounts()

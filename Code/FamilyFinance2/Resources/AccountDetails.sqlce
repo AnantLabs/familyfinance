@@ -1,0 +1,8 @@
+SELECT id, name, envelopes
+FROM Account
+WHERE id > 0 AND closed = 0 AND catagory = @@
+ORDER BY name;
+--@ 1 AND typeID = 12
+--@ 3
+--@ 2 
+

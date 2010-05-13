@@ -133,9 +133,6 @@
   <data name="AccountBalances" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AccountBalances.sqlce;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="AccountNames" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\AccountNames.sqlce;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="AccountTypes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AccountTypes.sqlce;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
@@ -162,5 +159,23 @@
   </data>
   <data name="TestData" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TestData.sqlce;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="AccountDetails" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\AccountDetails.sqlce;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="AEBalance" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\AEBalance.sqlce;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="SetAccountEnvelopes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SetAccountEnvelopes.sqlce;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="SingleAccBalance" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SingleAccBalance.sqlce;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="SingleAEBalance" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SingleAEBalance.sqlce;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="SingleEnvBalance" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SingleEnvBalance.sqlce;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

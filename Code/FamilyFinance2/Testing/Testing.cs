@@ -44,8 +44,8 @@ namespace FamilyFinance2.Testing
             envLineTA = new EnvelopeLineTableAdapter();
 
             // Reset the database
-            FFDataBase.myExecuteFile(Properties.Resources.Drop_Tables, false);
-            FFDataBase.myExecuteFile(Properties.Resources.Build_Tables, false);
+            FFDataBase.myExecuteFile(Properties.Resources.DropTables, false);
+            FFDataBase.myExecuteFile(Properties.Resources.BuildTables, false);
 
             // Fill the data tables
             accountTypeTA.Fill(stressDS.AccountType);

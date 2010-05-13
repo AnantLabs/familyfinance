@@ -1,0 +1,10 @@
+SELECT elSum.debit - elSum.credit
+FROM (
+	SELECT  EnvelopeLine.envelopeID, 
+			SUM(CASE WHEN LineItem.creditDebit = 0 THEN EnvelopeLine.amount ELSE 0 END) AS credit, 
+			SUM(CASE WHEN LineItem.creditDebit = 1 THEN EnvelopeLine.amount ELSE 0 END) AS debit
+	FROM LineItem INNER JOIN EnvelopeLine ON LineItem.id = EnvelopeLine.lineItemID
+	WHERE LineItem.accountID = @aID AND EnvelopeLine.envelopeID = @eID
+	GROUP BY EnvelopeLine.envelopeID ) 
+
+--@ 3

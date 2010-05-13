@@ -54,6 +54,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             : base(MyNodes.Root, name) 
         {
             this.Catagory = catagory;
+            this.HasChildren = true;
         }
     }
 
@@ -67,6 +68,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
         {
             this.TypeID = typeID;
             this.Catagory = catagory;
+            this.HasChildren = true;
         }
     }
 
@@ -78,6 +80,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             : base(MyNodes.EnvelopeGroup, name)
         {
             this.GroupID = groupID;
+            this.HasChildren = true;
         }
     }
 
@@ -85,24 +88,30 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
     {
         public readonly byte Catagory;
         public readonly int AccountID;
-        public readonly bool Envelopes;
 
-        public AccountNode(int accountID, string name, bool envelopes, decimal balance)
-            : base(MyNodes.Account, name)
-        {
-            this.Catagory = SpclAccountCat.ACCOUNT;
-            this.AccountID = accountID;
-            this.Envelopes = envelopes;
-            this[0] = name;
-            this[1] = balance.ToString("C2");
-        }
-
-        public AccountNode(byte catagory, int accountID, string name)
+        public AccountNode(byte catagory, int accountID, string name, bool envelopes)
             : base(MyNodes.Account, name)
         {
             this.Catagory = catagory;
             this.AccountID = accountID;
-            this.Envelopes = false;
+            this[0] = name;
+
+            if(catagory == SpclAccountCat.ACCOUNT)
+            {
+                this.HasChildren = envelopes;
+                this.ImageId = (int)NodeImage.Bank;
+                this.setBalance(0.0m);
+            }
+            else
+            {
+                this.HasChildren = false;
+                this.ImageId = (int)NodeImage.None;
+            }
+        }
+
+        public void setBalance(decimal balance)
+        {
+            this[1] = balance.ToString("C2");
         }
     }
 
@@ -110,11 +119,18 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
     {
         public readonly int EnvelopeID;
 
-        public EnvelopeNode(int envelopeID, string name, decimal balance)
+        public EnvelopeNode(int envelopeID, string name)
             : base(MyNodes.Envelope, name)
         {
             this.EnvelopeID = envelopeID;
+            this.HasChildren = true;
+            this.ImageId = (int)NodeImage.Envelope;
             this[0] = name;
+            this.setBalance(0.0m);
+        }
+
+        public void setBalance(decimal balance)
+        {
             this[1] = balance.ToString("C2");
         }
     }
@@ -130,6 +146,12 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             this.AccountID = accountID;
             this.EnvelopeID = envelopeID;
             this[0] = name;
+            this.setBalance(balance);
+            this.HasChildren = false;
+        }
+
+        public void setBalance(decimal balance)
+        {
             this[1] = balance.ToString("C2");
         }
     }

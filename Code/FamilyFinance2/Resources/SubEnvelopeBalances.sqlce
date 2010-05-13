@@ -1,7 +1,12 @@
-SELECT id, name
-FROM Account
-WHERE closed = 0 AND catagory = @@
-ORDER BY name;
---@ 1 AND typeID = 12
+SELECT Account.id, Account.name, (elSum.debit - elSum.credit) AS balance
+FROM Account INNER JOIN (
+	SELECT  LineItem.accountID, 
+			SUM(CASE WHEN LineItem.creditDebit = 0 THEN EnvelopeLine.amount ELSE 0 END) AS credit, 
+			SUM(CASE WHEN LineItem.creditDebit = 1 THEN EnvelopeLine.amount ELSE 0 END) AS debit
+	FROM LineItem INNER JOIN EnvelopeLine ON LineItem.id = EnvelopeLine.lineItemID
+	WHERE EnvelopeLine.envelopeID = @@
+	GROUP BY LineItem.accountID ) AS elSum ON Account.id = elSum.accountID
+WHERE Account.closed = 0 AND elSum.credit <> elSum.debit
+ORDER BY Account.name
+
 --@ 3
--- 2 is not used its the real accounts.

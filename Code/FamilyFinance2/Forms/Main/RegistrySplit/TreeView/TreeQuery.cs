@@ -7,24 +7,24 @@ using FamilyFinance2.SharedElements;
 
 namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 {
-    public class Name
+    public class IdName
     {
         public int ID;
         public string Name;
 
-        public Name(int id, string name)
+        public IdName(int id, string name)
         {
             this.ID = id;
             this.Name = name;
         }
     }
 
-    public class Balance
+    public class IdBalance
     {
         public int ID;
         public decimal Balance;
 
-        public Balance(int id, decimal balance)
+        public IdBalance(int id, decimal balance)
         {
             this.ID = id;
             this.Balance = balance;
@@ -61,256 +61,207 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 
     public class TreeQuery
     {
-        static public List<Name> getAccountTypes(byte catagory)
+        static private List<IdName> queryIdNames(string query)
         {
-            List<Name> queryResults = new List<Name>();
-            
-            string query = Properties.Resources.AccountTypes.Replace("@@", catagory.ToString());
-            
+            List<IdName> queryResults = new List<IdName>();
             SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
             SqlCeCommand command = new SqlCeCommand(query, connection);
             connection.Open();
             SqlCeDataReader reader = command.ExecuteReader();
 
-            try
-            { // Iterate through the results
-                while (reader.Read())
-                    queryResults.Add(new Name(reader.GetInt32(0), reader.GetString(1)));
-            }
-            finally
-            { // Always call Close the reader and connection when done reading
-                reader.Close();
-                connection.Close();
-            }
+            // Iterate through the results
+            while (reader.Read())
+                queryResults.Add(new IdName(reader.GetInt32(0), reader.GetString(1)));
+
+            // Always call Close the reader and connection when done reading
+            reader.Close();
+            connection.Close();
 
             return queryResults;
         }
 
-        static public List<Name> getEnvelopeGroups()
-        {
-            List<Name> queryResults = new List<Name>();
-            string query = Properties.Resources.EnvelopeGroups;
-            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
-            SqlCeCommand command = new SqlCeCommand(query, connection);
-            connection.Open();
-            SqlCeDataReader reader = command.ExecuteReader();
-
-            try
-            { // Iterate through the results
-                while (reader.Read())
-                    queryResults.Add(new Name(reader.GetInt32(0), reader.GetString(1)));
-            }
-            finally
-            { // Always call Close the reader and connection when done reading
-                reader.Close();
-                connection.Close();
-            }
-
-            return queryResults;
-        }
-
-        static public List<Name> getEnvelopeNames(int groupID)
-        {
-            List<Name> queryResults = new List<Name>();
-            string query = Properties.Resources.AccountBalances;
-
-            if (groupID == SpclEnvelopeGroup.NULL)
-                query = query.Replace("@@", "");
-            else
-                query = query.Replace("@@", "AND groupID = " + groupID.ToString());
-
-            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
-            SqlCeCommand command = new SqlCeCommand(query, connection);
-
-            connection.Open();
-            SqlCeDataReader reader = command.ExecuteReader();
-
-            try
-            { // Iterate through the results
-                while (reader.Read())
-                {
-                    queryResults.Add(new Name(reader.GetInt32(0), reader.GetString(1)));
-                }
-            }
-            finally
-            { // Always call Close the reader and connection when done reading
-                reader.Close();
-                connection.Close();
-            }
-
-            return queryResults;
-        }
-
-        static public List<AccountDetails> getAccountNames(byte catagory, int typeID)
+        static private List<AccountDetails> queryAccountDetails(string query)
         {
             List<AccountDetails> queryResults = new List<AccountDetails>();
-            string query = Properties.Resources.AccountNames;
-
-            if (typeID == SpclAccountType.NULL)
-                query = query.Replace("@@", catagory.ToString());
-            else
-                query = query.Replace("@@", catagory.ToString() + " AND typeID = " + typeID.ToString());
-
             SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
             SqlCeCommand command = new SqlCeCommand(query, connection);
             connection.Open();
             SqlCeDataReader reader = command.ExecuteReader();
 
-            try
-            { // Iterate through the results
-                while (reader.Read())
-                    queryResults.Add(new AccountDetails(reader.GetInt32(0), reader.GetString(1), reader.GetBoolean(2)));
-            }
-            finally
-            { // Always call Close the reader and connection when done reading
-                reader.Close();
-                connection.Close();
-            }
+            // Iterate through the results
+            while (reader.Read())
+                queryResults.Add(new AccountDetails(reader.GetInt32(0), reader.GetString(1), reader.GetBoolean(2)));
+            
+            // Always call Close the reader and connection when done reading
+            reader.Close();
+            connection.Close();
 
             return queryResults;
         }
 
-        static public List<Balance> getAccountBalances(int typeID)
+        static private List<IdBalance> queryIdBalance(string query)
         {
-            Dictionary<int, decimal> queryResults = new Dictionary<int, decimal>();
-            string query = Properties.Resources.AccountBalances;
-
-            if (typeID != SpclAccountType.NULL)
-                query = query.Replace("@@", " AND typeID = " + typeID.ToString());
-            else
-                query = query.Replace("@@", "");
-
+            List<IdBalance> queryResults = new List<IdBalance>();
             SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
             SqlCeCommand command = new SqlCeCommand(query, connection);
             
             connection.Open();
             SqlCeDataReader reader = command.ExecuteReader();
 
-            try
-            { // Iterate through the results
-                while (reader.Read())
-                {
-                    queryResults.Add(reader.GetInt32(0), reader.GetDecimal(1));
-                }
-            }
-            finally
-            { // Always call Close the reader and connection when done reading
-                reader.Close();
-                connection.Close();
-            }
+            // Iterate through the results
+            while (reader.Read())
+                queryResults.Add(new IdBalance(reader.GetInt32(0), reader.GetDecimal(1)));
+            
+            // Always call Close the reader and connection when done reading
+            reader.Close();
+            connection.Close();
 
             return queryResults;
         }
 
-        static public List<Balance> getEnvelopeBalances(int groupID)
+        static private List<SubBalanceDetails> querySubBalanceDetails(string query)
         {
-            List<EnvelopeBalanceDetails> queryResults = new List<EnvelopeBalanceDetails>();
-            string query = Properties.Resources.EnvelopeBalances;
-
-            if (groupID != SpclEnvelopeGroup.NULL)
-                query = query.Replace("@@", " AND groupID = " + groupID.ToString());
-            else
-                query = query.Replace("@@", "");
-
+            List<SubBalanceDetails> queryResults = new List<SubBalanceDetails>();
             SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
             SqlCeCommand command = new SqlCeCommand(query, connection);
 
             connection.Open();
             SqlCeDataReader reader = command.ExecuteReader();
 
-            try
-            {
-                // Iterate through the results
-                while (reader.Read())
-                {
-                    EnvelopeBalanceDetails acd = new EnvelopeBalanceDetails();
-                    acd.envelopeID = reader.GetInt32(0);
-                    acd.envelopeName = reader.GetString(1);
-                    acd.balance = reader.GetDecimal(2);
+            // Iterate through the results
+            while (reader.Read())
+                queryResults.Add(new SubBalanceDetails(reader.GetInt32(0), reader.GetString(1), reader.GetDecimal(2)));
 
-                    queryResults.Add(acd);
-                }
-            }
-            finally
-            {
-                // Always call Close the reader and connection when done reading
-                reader.Close();
-                connection.Close();
-            }
+            // Always call Close the reader and connection when done reading
+            reader.Close();
+            connection.Close();
 
             return queryResults;
         }
+
+        static private decimal queryBalance(string query)
+        {
+            decimal result = 0.0m;
+            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            SqlCeCommand command = new SqlCeCommand(query, connection);
+
+            connection.Open();
+            result = Convert.ToDecimal(command.ExecuteScalar());
+
+            return result;
+        }
+
+
+        static public decimal getAccBalance(int accountID)
+        {
+            string query = Properties.Resources.SingleAccBalance.Replace("@@", accountID.ToString());
+            return queryBalance(query);
+        }
+
+        static public decimal getEnvBalance(int envelopeID)
+        {
+            string query = Properties.Resources.SingleEnvBalance.Replace("@@", envelopeID.ToString());
+            return queryBalance(query);
+        }
+
+        static public decimal getAEBalance(int accountID, int envelopeID)
+        {
+            string query = Properties.Resources.SingleAEBalance.Replace("@eID", envelopeID.ToString());
+            query = query.Replace("@aID", accountID.ToString());
+            return queryBalance(query);
+        }
+
+
+        static public List<IdName> getAccountTypes(byte catagory)
+        {
+            string query = Properties.Resources.AccountTypes.Replace("@@", catagory.ToString());
+            return TreeQuery.queryIdNames(query);
+        }
+
+        static public List<IdName> getEnvelopeGroups()
+        {
+            return TreeQuery.queryIdNames(Properties.Resources.EnvelopeGroups);
+        }
+
+        static public List<IdName> getAllEnvelopeNames()
+        {
+            string query = Properties.Resources.EnvelopeNames.Replace("@@", "");
+            return TreeQuery.queryIdNames(query);
+        }
+
+        static public List<IdName> getEnvelopeNamesByGroup(int groupID)
+        {
+            string query = Properties.Resources.EnvelopeNames;
+            query = query.Replace("@@", "AND groupID = " + groupID.ToString());
+
+            return TreeQuery.queryIdNames(query);
+        }
+
+
+
+
+        static public List<AccountDetails> getAccountNamesByCatagory(byte catagory)
+        {
+            string query = Properties.Resources.AccountDetails.Replace("@@", catagory.ToString());
+            return TreeQuery.queryAccountDetails(query);
+        }
+
+        static public List<AccountDetails> getAccountNamesByCatagoryAndType(byte catagory, int typeID)
+        {
+            string query = Properties.Resources.AccountDetails;
+            query = query.Replace("@@", catagory.ToString() + " AND typeID = " + typeID.ToString());
+
+            return TreeQuery.queryAccountDetails(query);
+        }
+
+
+
+        static public List<IdBalance> getAccountBalancesByCatagory(byte catagory)
+        {
+            string query = Properties.Resources.AccountBalances.Replace("@@", catagory.ToString());
+            return TreeQuery.queryIdBalance(query);
+        }
+
+        static public List<IdBalance> getAccountBalancesByType(byte catagory, int typeID)
+        {
+            string query = Properties.Resources.AccountBalances;
+            query = query.Replace("@@", catagory.ToString() + " AND typeID = " + typeID.ToString());
+
+            return TreeQuery.queryIdBalance(query);
+        }
+
+        static public List<IdBalance> getAllEnvelopeBalances()
+        {
+            string query = Properties.Resources.EnvelopeBalances.Replace("@@", "");
+            return TreeQuery.queryIdBalance(query);
+        }
+
+        static public List<IdBalance> getEnvelopeBalancesByGroup(int groupID)
+        {
+            string query = Properties.Resources.EnvelopeBalances;
+            query = query.Replace("@@", "AND groupID = " + groupID.ToString());
+
+            return TreeQuery.queryIdBalance(query);
+        }
+
+
+
 
         static public List<SubBalanceDetails> getSubAccountBalances(int accountID)
         {
-            List<SubBalanceDetails> queryResults = new List<SubBalanceDetails>();
-            string query = Properties.Resources.SubAccountDetails;
-            query = query.Replace("@@", accountID.ToString());
-
-            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
-            SqlCeCommand command = new SqlCeCommand(query, connection);
-
-            connection.Open();
-            SqlCeDataReader reader = command.ExecuteReader();
-
-            try
-            {
-                // Iterate through the results
-                while (reader.Read())
-                {
-                    SubBalanceDetails ad = new SubBalanceDetails();
-
-                    ad.ID = reader.GetInt32(0);
-                    ad.Name = reader.GetString(1);
-                    ad.SubBalance = reader.GetDecimal(2);
-
-                    queryResults.Add(ad);
-                }
-            }
-            finally
-            {
-                // Always call Close the reader and connection when done reading
-                reader.Close();
-                connection.Close();
-            }
-
-            return queryResults;
+            string query = Properties.Resources.SubAccountBalances.Replace("@@", accountID.ToString());
+            return TreeQuery.querySubBalanceDetails(query);
         }
 
-        static public List<SubBalanceDetails> getSubEnvelopeBalanses(int envelopeID)
+        static public List<SubBalanceDetails> getSubEnvelopeBalances(int envelopeID)
         {
-            List<SubBalanceDetails> queryResults = new List<SubBalanceDetails>();
-            string query = Properties.Resources.SubEnvelopeDetails;
-            query = query.Replace("@@", envelopeID.ToString());
-
-            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
-            SqlCeCommand command = new SqlCeCommand(query, connection);
-
-            connection.Open();
-            SqlCeDataReader reader = command.ExecuteReader();
-
-            try
-            {
-                // Iterate through the results
-                while (reader.Read())
-                {
-                    SubBalanceDetails ad = new SubBalanceDetails();
-                    ad.ID = reader.GetInt32(0);
-                    ad.Name = reader.GetString(1);
-                    ad.SubBalance = reader.GetDecimal(2);
-
-                    queryResults.Add(ad);
-                }
-            }
-            finally
-            {
-                // Always call Close the reader and connection when done reading
-                reader.Close();
-                connection.Close();
-            }
-
-            return queryResults;
+            string query = Properties.Resources.SubEnvelopeBalances.Replace("@@", envelopeID.ToString());
+            return TreeQuery.querySubBalanceDetails(query);
         }
+
+
+
 
     }
+
 }

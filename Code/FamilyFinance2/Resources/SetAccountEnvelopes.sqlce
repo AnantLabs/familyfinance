@@ -1,0 +1,8 @@
+UPDATE Account
+SET envelopes = 1
+WHERE id in (
+SELECT DISTINCT accountID 
+FROM LineItem 
+WHERE id IN (
+	SELECT DISTINCT LineItemID
+	FROM EnvelopeLine ) )
