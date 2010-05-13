@@ -1,13 +1,12 @@
-SELECT id,
-	   CASE WHEN Account.creditDebit = 0 THEN lSum.credit - lSum.debit ELSE lSum.debit - lSum.credit END 
+SELECT CASE WHEN Account.creditDebit = 0 THEN lSum.credit - lSum.debit ELSE lSum.debit - lSum.credit END 
 FROM Account INNER JOIN (
 	SELECT accountID, 
 		   SUM(CASE WHEN LineItem.creditDebit = 0 THEN LineItem.amount ELSE 0 END) AS credit, 
 		   SUM(CASE WHEN LineItem.creditDebit = 1 THEN LineItem.amount ELSE 0 END) AS debit
 	FROM LineItem 
-	WHERE accountID IN (SELECT id FROM Account WHERE catagory = @@ )
+	WHERE accountID = @@ 
 	GROUP BY accountID ) AS lSum ON Account.id = lSum.accountID
 WHERE lSum.credit <> lSum.debit;
 
---@ 2 AND typeID = 1
+--@  1
 --@

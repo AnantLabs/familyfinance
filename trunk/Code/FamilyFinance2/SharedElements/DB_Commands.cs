@@ -95,7 +95,7 @@ namespace FamilyFinance2.SharedElements
                 engine.Dispose();
             }
 
-            myExecuteFile(Properties.Resources.Build_Tables, true);
+            myExecuteFile(Properties.Resources.BuildTables, true);
 
             return true;
         }
