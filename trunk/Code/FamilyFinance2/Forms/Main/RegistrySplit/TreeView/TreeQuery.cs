@@ -59,8 +59,34 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
         }
     }
 
+    public class AccountErrors
+    {
+        public byte Catagory;
+        public int TypeID;
+        public int AccountID;
+
+        public AccountErrors(byte catagory, int typeID, int accountID)
+        {
+            this.Catagory = catagory;
+            this.TypeID = typeID;
+            this.AccountID = accountID;
+        }
+    }
+
     public class TreeQuery
     {
+        static private decimal queryBalance(string query)
+        {
+            decimal result = 0.0m;
+            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            SqlCeCommand command = new SqlCeCommand(query, connection);
+
+            connection.Open();
+            result = Convert.ToDecimal(command.ExecuteScalar());
+
+            return result;
+        }
+
         static private List<IdName> queryIdNames(string query)
         {
             List<IdName> queryResults = new List<IdName>();
@@ -80,25 +106,6 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             return queryResults;
         }
 
-        static private List<AccountDetails> queryAccountDetails(string query)
-        {
-            List<AccountDetails> queryResults = new List<AccountDetails>();
-            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
-            SqlCeCommand command = new SqlCeCommand(query, connection);
-            connection.Open();
-            SqlCeDataReader reader = command.ExecuteReader();
-
-            // Iterate through the results
-            while (reader.Read())
-                queryResults.Add(new AccountDetails(reader.GetInt32(0), reader.GetString(1), reader.GetBoolean(2)));
-            
-            // Always call Close the reader and connection when done reading
-            reader.Close();
-            connection.Close();
-
-            return queryResults;
-        }
-
         static private List<IdBalance> queryIdBalance(string query)
         {
             List<IdBalance> queryResults = new List<IdBalance>();
@@ -111,6 +118,45 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             // Iterate through the results
             while (reader.Read())
                 queryResults.Add(new IdBalance(reader.GetInt32(0), reader.GetDecimal(1)));
+            
+            // Always call Close the reader and connection when done reading
+            reader.Close();
+            connection.Close();
+
+            return queryResults;
+        }
+
+        static private List<AccountErrors> queryAccountErrors(string query)
+        {
+            List<AccountErrors> queryResults = new List<AccountErrors>();
+            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            SqlCeCommand command = new SqlCeCommand(query, connection);
+
+            connection.Open();
+            SqlCeDataReader reader = command.ExecuteReader();
+
+            // Iterate through the results
+            while (reader.Read())
+                queryResults.Add(new AccountErrors(reader.GetByte(0), reader.GetInt32(1), reader.GetInt32(2)));
+
+            // Always call Close the reader and connection when done reading
+            reader.Close();
+            connection.Close();
+
+            return queryResults;
+        }
+
+        static private List<AccountDetails> queryAccountDetails(string query)
+        {
+            List<AccountDetails> queryResults = new List<AccountDetails>();
+            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            SqlCeCommand command = new SqlCeCommand(query, connection);
+            connection.Open();
+            SqlCeDataReader reader = command.ExecuteReader();
+
+            // Iterate through the results
+            while (reader.Read())
+                queryResults.Add(new AccountDetails(reader.GetInt32(0), reader.GetString(1), reader.GetBoolean(2)));
             
             // Always call Close the reader and connection when done reading
             reader.Close();
@@ -139,16 +185,10 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             return queryResults;
         }
 
-        static private decimal queryBalance(string query)
+
+        static public List<AccountErrors> getAccountErrors()
         {
-            decimal result = 0.0m;
-            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
-            SqlCeCommand command = new SqlCeCommand(query, connection);
-
-            connection.Open();
-            result = Convert.ToDecimal(command.ExecuteScalar());
-
-            return result;
+            return TreeQuery.queryAccountErrors(Properties.Resources.ErrorAccounts);
         }
 
 

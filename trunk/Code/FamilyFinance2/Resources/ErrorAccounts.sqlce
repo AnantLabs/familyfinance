@@ -1,0 +1,46 @@
+SELECT catagory, typeID, id
+FROM Account
+WHERE id IN 
+(
+-- Find the accounts where credits and debits don't add up within the transactions
+SELECT DISTINCT LineItem.accountID
+FROM LineItem
+WHERE --accountID <> oppAccountID AND 
+transactionID IN (
+	SELECT transactionID
+	FROM (
+		SELECT transactionID, 
+			   SUM(CASE WHEN LineItem.creditDebit = 0 THEN LineItem.amount ELSE 0 END) AS credit, 
+			   SUM(CASE WHEN LineItem.creditDebit = 1 THEN LineItem.amount ELSE 0 END) AS debit
+		FROM LineItem 
+		GROUP BY transactionID ) AS TSums
+	WHERE credit <> debit)
+
+UNION 
+
+-- Find the account where the subLine amounts don't add up to the line amounts
+SELECT DISTINCT accountID
+FROM LineItem INNER JOIN (
+	SELECT lineItemID, 
+		   SUM(amount) AS amount 
+	FROM EnvelopeLine 
+	GROUP BY lineItemID) AS eSum ON LineItem.id = eSum.lineItemID
+WHERE LineItem.amount <> eSum.amount
+
+UNION
+
+--Find the accounts where the lines should have subLines
+SELECT DISTINCT accountID
+FROM LineItem
+WHERE accountID IN (SELECT id FROM Account WHERE envelopes = 1) 
+	  AND id NOT IN (SELECT lineItemID FROM EnvelopeLine)
+
+UNION
+
+--Find the accounts where the lines should not have subLines
+SELECT DISTINCT accountID
+FROM LineItem
+WHERE accountID NOT IN (SELECT id FROM Account WHERE envelopes = 1) 
+	  AND id IN (SELECT lineItemID FROM EnvelopeLine)
+
+) -- <-- This is required for the outermost query.

@@ -160,7 +160,103 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             this.myRebuildAccounts();
         }
 
-        
+
+
+        ///////////////////////////////////////////////////////////////////////
+        //   Error Finder
+        ///////////////////////////////////////////////////////////////////////
+        private BackgroundWorker e_Finder;
+        private List<AccountErrors> e_KnownErrors;
+
+
+        private void findNewErrors()
+        {
+            if (!e_Finder.IsBusy)
+                e_Finder.RunWorkerAsync();
+        }
+
+        private void setErrorFlags(BaseNode node)
+        {
+            switch (node.NodeType)
+            {
+                case MyNodes.EnvelopeGroup:
+                case MyNodes.Envelope:
+                case MyNodes.AENode:
+                    return;
+                case MyNodes.Root:
+                    RootNode rNode = node as RootNode;
+                    rNode.SetError(this.e_isCatagoryError(rNode.Catagory));
+
+                    foreach (BaseNode child in node.Nodes)
+                        setErrorFlags(child);
+
+                    break;
+                case MyNodes.AccountType:
+                    TypeNode tNode = node as TypeNode;
+                    tNode.SetError(this.e_isTypeError(tNode.Catagory, tNode.TypeID));
+
+                    foreach (BaseNode child in node.Nodes)
+                        setErrorFlags(child);
+
+                    break;
+                case MyNodes.Account:
+                    AccountNode aNode = node as AccountNode;
+                    aNode.SetError(this.e_isAccountError(aNode.AccountID));
+                    break;
+            }
+        }
+
+
+
+        private bool e_isCatagoryError(byte catagory)
+        {
+            foreach (AccountErrors er in this.e_KnownErrors)
+                if (er.Catagory == catagory)
+                    return true;
+
+            return false;
+        }
+
+        private bool e_isTypeError(byte catagory, int typeID)
+        {
+            foreach (AccountErrors er in this.e_KnownErrors)
+                if (er.TypeID == typeID && er.Catagory == catagory)
+                    return true;
+
+            return false;
+        }
+
+        private bool e_isAccountError(int accountID)
+        {
+            foreach (AccountErrors er in this.e_KnownErrors)
+                if (er.AccountID == accountID)
+                    return true;
+
+            return false;
+        }
+
+
+
+        private void e_Finder_DoWork(object sender, DoWorkEventArgs e)
+        {
+            e.Result = TreeQuery.getAccountErrors();
+        }
+
+        private void e_Finder_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error != null)
+                throw new Exception("Finding account error exception", e.Error);
+
+            this.e_KnownErrors = e.Result as List<AccountErrors>;
+
+            for(int i = 0; i < this.Nodes.Count - 1; i++)
+            {
+                setErrorFlags(this.Nodes[i] as RootNode);
+            }
+        }
+
+
+
  
         ///////////////////////////////////////////////////////////////////////
         //   Functions Private
@@ -265,21 +361,25 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
         {
             // Clear the nodes
             this.Nodes.Clear();
+            this.findNewErrors();
 
             // Add the Type Nodes to the catagory Root nodes
             this.accountRootNode.HasChildren = true;
             this.Nodes.Add(this.accountRootNode);
+            this.setErrorFlags(this.accountRootNode);
 
             if (this.showExpenseMenuItem.Checked == true)
             {
                 this.expenseRootNode.HasChildren = true;
                 this.Nodes.Add(this.expenseRootNode);
+                this.setErrorFlags(this.expenseRootNode);
             }
 
             if (this.showIncomeMenuItem.Checked == true)
             {
                 this.incomeRootNode.HasChildren = true;
                 this.Nodes.Add(this.incomeRootNode);
+                this.setErrorFlags(this.incomeRootNode);
             }
 
             //Add the Envelope nodes
@@ -309,7 +409,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 
                 // Fill all Envelope balances
                 foreach (var item in TreeQuery.getAllEnvelopeBalances())
-                    this.updateBalance(rNode, SpclAccount.NULL, item.ID, item.Balance);
+                    this.updateBalanceRecurse(rNode, SpclAccount.NULL, item.ID, item.Balance);
             }
             else if (groupAcc)
             {
@@ -325,7 +425,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 
                 // Fill all Account balances
                 foreach (var item in TreeQuery.getAccountBalancesByCatagory(cat))
-                    this.updateBalance(rNode, item.ID, SpclEnvelope.NULL, item.Balance);
+                    this.updateBalanceRecurse(rNode, item.ID, SpclEnvelope.NULL, item.Balance);
             }
             else if (cat == SpclAccountCat.EXPENSE || cat == SpclAccountCat.INCOME)
             {
@@ -333,6 +433,8 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
                 foreach (var item in TreeQuery.getAccountNamesByCatagory(cat))
                     rNode.Nodes.Add(new AccountNode(cat, item.ID, item.Name, false));
             }
+
+            this.setErrorFlags(rNode);
         }
 
         private void handleThisTypeNode(TypeNode tNode)
@@ -347,8 +449,10 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             if (cat == SpclAccountCat.ACCOUNT)
             {
                 foreach (var item in TreeQuery.getAccountBalancesByType(cat, tNode.TypeID))
-                    this.updateBalance(tNode, item.ID, SpclEnvelope.NULL, item.Balance);
+                    this.updateBalanceRecurse(tNode, item.ID, SpclEnvelope.NULL, item.Balance);
             }
+
+            this.setErrorFlags(tNode);
         }
 
         private void handleThisGroupNode(GroupNode gNode)
@@ -359,8 +463,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 
             // Fill in the balances
             foreach (var item in TreeQuery.getEnvelopeBalancesByGroup(gNode.GroupID))
-                this.updateBalance(gNode, SpclAccount.NULL, item.ID, item.Balance);
-
+                this.updateBalanceRecurse(gNode, SpclAccount.NULL, item.ID, item.Balance);
         }
 
         private void handleThisAccountNode(AccountNode accNode)
@@ -376,6 +479,8 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
                     accNode.Nodes.Add(node);
                 }
             }
+
+            this.setErrorFlags(accNode);
         }
 
         private void handleThisEnvelopeNode(EnvelopeNode envNode)
@@ -391,9 +496,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
         }
 
 
-
-
-        private bool updateBalance(BaseNode pNode, int accountID, int envelopeID, decimal newAmount)
+        private bool updateBalanceRecurse(BaseNode pNode, int accountID, int envelopeID, decimal newAmount)
         {
             switch (pNode.NodeType)
             {
@@ -401,7 +504,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
                 case MyNodes.AccountType:
                 case MyNodes.EnvelopeGroup:
                     foreach (BaseNode child in pNode.Nodes)
-                        if (updateBalance(child, accountID, envelopeID, newAmount))
+                        if (updateBalanceRecurse(child, accountID, envelopeID, newAmount))
                             return true;
                     break;
 
@@ -416,7 +519,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
                         }
                         else
                             foreach (BaseNode child in pNode.Nodes)
-                                if (updateBalance(child, accountID, envelopeID, newAmount))
+                                if (updateBalanceRecurse(child, accountID, envelopeID, newAmount))
                                     return true;
                     }
                     break;
@@ -432,7 +535,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
                         }
                         else
                             foreach (BaseNode child in pNode.Nodes)
-                                if (updateBalance(child, accountID, envelopeID, newAmount))
+                                if (updateBalanceRecurse(child, accountID, envelopeID, newAmount))
                                     return true;
                     }
                     break;
@@ -459,33 +562,39 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             selectedAccountID = SpclAccount.NULL;
             selectedEnvelopeID = SpclEnvelope.NULL;
 
+            e_Finder = new BackgroundWorker();
+            e_Finder.RunWorkerCompleted += new RunWorkerCompletedEventHandler(e_Finder_RunWorkerCompleted);
+            e_Finder.DoWork += new DoWorkEventHandler(e_Finder_DoWork);
+            this.e_KnownErrors = new List<AccountErrors>();
+
             this.buildContextMenu();
             this.myInit();
-
+            this.findNewErrors();
         }
 
-        public void updateBalanceInTheTreeView(int accountID, int envelopeID)
+        public void updateBalance(int accountID, int envelopeID)
         {
             decimal newBalance;
 
             if (accountID > SpclAccount.NULL && envelopeID > SpclEnvelope.NOENVELOPE)
             {
                 newBalance = TreeQuery.getAccBalance(accountID);
-                this.updateBalance(this.accountRootNode, accountID, SpclEnvelope.NULL, newBalance);
+                this.updateBalanceRecurse(this.accountRootNode, accountID, SpclEnvelope.NULL, newBalance);
 
                 newBalance = TreeQuery.getAEBalance(accountID, envelopeID);
-                this.updateBalance(this.accountRootNode, accountID, envelopeID, newBalance);
-                this.updateBalance(this.envelopeRootNode, accountID, envelopeID, newBalance);
+                this.updateBalanceRecurse(this.accountRootNode, accountID, envelopeID, newBalance);
+                this.updateBalanceRecurse(this.envelopeRootNode, accountID, envelopeID, newBalance);
 
                 newBalance = TreeQuery.getEnvBalance(envelopeID);
-                this.updateBalance(this.envelopeRootNode, SpclAccount.NULL, envelopeID, newBalance);
+                this.updateBalanceRecurse(this.envelopeRootNode, SpclAccount.NULL, envelopeID, newBalance);
             }
             else if (accountID > SpclAccount.NULL)
             {
                 newBalance = TreeQuery.getAccBalance(accountID);
-                this.updateBalance(this.accountRootNode, accountID, SpclEnvelope.NULL, newBalance);
+                this.updateBalanceRecurse(this.accountRootNode, accountID, SpclEnvelope.NULL, newBalance);
             }
 
+            findNewErrors();
         }
 
         public void myRebuildAccounts()
