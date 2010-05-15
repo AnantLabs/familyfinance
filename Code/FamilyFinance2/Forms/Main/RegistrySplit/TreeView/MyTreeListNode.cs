@@ -9,44 +9,36 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
     public enum NodeImage { None = -1, Bank = 0, Envelope = 1, Money = 2, ErrorFlag = 3 };
     public enum MyNodes { Root, AccountType, EnvelopeGroup, Account, Envelope, AENode }
 
-    public class BaseNode : TreeList.Node
+    public abstract class BaseNode : TreeList.Node
     {
         public readonly MyNodes NodeType;
-        private int ErrorCount;
-        private int origionalImageID;
-
+ 
         protected BaseNode (MyNodes nodeType, String name)
             : base(name)
         {
             this.NodeType = nodeType;
         }
+    }
 
-        public void SetError()
+    public abstract class ErrorNode : BaseNode
+    {
+        protected ErrorNode(MyNodes nodeType, String name)
+            : base(nodeType, name) 
+        {}
+
+        public void SetError(bool hasError)
         {
-            ErrorCount++;
-            setImage();
-        }
-
-        public void RemoveError()
-        {
-            ErrorCount--;
-            setImage();
-        }
-
-        private void setImage()
-        {
-            if (ErrorCount < 0)
-                ErrorCount = 0;
-
-            if (ErrorCount > 0)
+            if (hasError)
                 this.ImageId = (int)NodeImage.ErrorFlag;
 
+            else if (this.NodeType == MyNodes.Account)
+                this.ImageId = (int)NodeImage.Bank;
             else
-                this.ImageId = this.origionalImageID; ;
+                this.ImageId = (int)NodeImage.None;
         }
     }
 
-    public class RootNode : BaseNode
+    public class RootNode : ErrorNode
     {
         public readonly byte  Catagory;
 
@@ -58,7 +50,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
         }
     }
 
-    public class TypeNode : BaseNode
+    public class TypeNode : ErrorNode
     {
         public readonly byte Catagory;
         public readonly int TypeID;
@@ -84,7 +76,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
         }
     }
 
-    public class AccountNode : BaseNode
+    public class AccountNode : ErrorNode
     {
         public readonly byte Catagory;
         public readonly int AccountID;

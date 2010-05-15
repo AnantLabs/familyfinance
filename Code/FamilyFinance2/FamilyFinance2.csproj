@@ -457,6 +457,7 @@
     <None Include="Resources\EnvelopeBalances.sqlce" />
     <None Include="Resources\EnvelopeGroups.sqlce" />
     <None Include="Resources\EnvelopeNames.sqlce" />
+    <None Include="Resources\ErrorAccounts.sqlce" />
     <None Include="Resources\SetAccountEnvelopes.sqlce" />
     <None Include="Resources\SingleAccBalance.sqlce" />
     <None Include="Resources\SingleAEBalance.sqlce" />
