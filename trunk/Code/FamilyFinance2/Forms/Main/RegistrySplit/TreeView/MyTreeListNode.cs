@@ -6,7 +6,17 @@ using FamilyFinance2.SharedElements;
 namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 {
 
-    public enum NodeImage { None = -1, Bank = 0, Envelope = 1, Money = 2, ErrorFlag = 3 };
+    public enum NodeImage 
+    { 
+        None = -1, 
+        Bank = 0, 
+        Envelope = 1, 
+        Money = 2, 
+        ErrorFlag = 3,
+        ErrorBank = 4,
+        ErrorEnvelope = 5
+    };
+
     public enum MyNodes { Root, AccountType, EnvelopeGroup, Account, Envelope, AENode }
 
     public abstract class BaseNode : TreeList.Node
@@ -28,11 +38,15 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 
         public void SetError(bool hasError)
         {
-            if (hasError)
+            if (hasError && this.NodeType == MyNodes.Account)
+                this.ImageId = (int)NodeImage.ErrorBank;
+
+            else if (hasError)
                 this.ImageId = (int)NodeImage.ErrorFlag;
 
             else if (this.NodeType == MyNodes.Account)
                 this.ImageId = (int)NodeImage.Bank;
+
             else
                 this.ImageId = (int)NodeImage.None;
         }

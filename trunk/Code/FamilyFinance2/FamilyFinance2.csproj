@@ -349,6 +349,10 @@
     <Content Include="FamilyFinanceDB.sdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\TLVRedEnvelope.png" />
+    <None Include="Resources\DeleteOrphanELines.sqlce" />
+    <None Include="Resources\TLVBank.png" />
+    <None Include="Resources\TLVRedBank.png" />
     <None Include="Forms\AccountType\AccountTypeDataSet.xsc">
       <DependentUpon>AccountTypeDataSet.xsd</DependentUpon>
     </None>
@@ -453,11 +457,13 @@
     <None Include="Resources\AccountTypes.sqlce" />
     <None Include="Resources\AEBalance.sqlce" />
     <None Include="Resources\BuildTables.sqlce" />
+    <None Include="Resources\CountELinesInAccount.sqlce" />
     <None Include="Resources\DropTables.sqlce" />
     <None Include="Resources\EnvelopeBalances.sqlce" />
     <None Include="Resources\EnvelopeGroups.sqlce" />
     <None Include="Resources\EnvelopeNames.sqlce" />
     <None Include="Resources\ErrorAccounts.sqlce" />
+    <None Include="Resources\ErrorsInAccount.sqlce" />
     <None Include="Resources\SetAccountEnvelopes.sqlce" />
     <None Include="Resources\SingleAccBalance.sqlce" />
     <None Include="Resources\SingleAEBalance.sqlce" />
@@ -468,7 +474,6 @@
     <None Include="Resources\TLVRedFlag.png" />
     <None Include="Resources\TLVMoney.png" />
     <None Include="Resources\TLVEnvelope.png" />
-    <None Include="Resources\TLVBank.png" />
     <None Include="Testing\StressDataSet.xsc">
       <DependentUpon>StressDataSet.xsd</DependentUpon>
     </None>

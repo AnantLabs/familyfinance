@@ -150,6 +150,31 @@ namespace FamilyFinance2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT COUNT(1)
+        ///FROM LineItem INNER JOIN EnvelopeLine ON LineItem.id = EnvelopeLine.lineitemID
+        ///WHERE LineItem.accountID = @@
+        ///
+        ///--@ 3.
+        /// </summary>
+        internal static string CountELinesInAccount {
+            get {
+                return ResourceManager.GetString("CountELinesInAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM EnvelopeLine
+        ///WHERE lineItemID IN (SELECT id FROM LineItem WHERE accountID = @@)
+        ///
+        ///--@@ 13.
+        /// </summary>
+        internal static string DeleteOrphanELines {
+            get {
+                return ResourceManager.GetString("DeleteOrphanELines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DROP TABLE EnvelopeLine;
         ///DROP TABLE LineItem;
         ///DROP TABLE Envelope;
@@ -217,24 +242,49 @@ namespace FamilyFinance2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to -- Find the accounts where credits and debits don&apos;t add up within the transactions
+        ///   Looks up a localized string similar to SELECT catagory, typeID, id
+        ///FROM Account
+        ///WHERE id IN 
+        ///(
+        ///-- Find the accounts where credits and debits don&apos;t add up within the transactions
         ///SELECT DISTINCT LineItem.accountID
         ///FROM LineItem
-        ///WHERE --accountID &lt;&gt; oppAccountID AND 
-        ///transactionID IN (
+        ///WHERE transactionID IN (
         ///	SELECT transactionID
         ///	FROM (
         ///		SELECT transactionID, 
         ///			   SUM(CASE WHEN LineItem.creditDebit = 0 THEN LineItem.amount ELSE 0 END) AS credit, 
         ///			   SUM(CASE WHEN LineItem.creditDebit = 1 THEN LineItem.amount ELSE 0 END) AS debit
         ///		FROM LineItem 
-        ///		GROUP BY transactionID ) AS TSums
-        ///	WHERE credit &lt;&gt; debit)
-        /// [rest of string was truncated]&quot;;.
+        ///		WHERE accountID &lt;&gt; oppAccountID
+        ///	 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ErrorAccounts {
             get {
                 return ResourceManager.GetString("ErrorAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT SUM(cnt)
+        ///FROM 
+        ///(
+        ///-- Find the accounts where credits and debits don&apos;t add up within the transactions
+        ///SELECT COUNT(1) AS cnt
+        ///FROM LineItem
+        ///WHERE accountID = @@ AND transactionID IN (
+        ///	SELECT transactionID
+        ///	FROM (
+        ///		SELECT transactionID, 
+        ///			   SUM(CASE WHEN LineItem.creditDebit = 0 THEN LineItem.amount ELSE 0 END) AS credit, 
+        ///			   SUM(CASE WHEN LineItem.creditDebit = 1 THEN LineItem.amount ELSE 0 END) AS debit
+        ///		FROM LineItem 
+        ///		WHERE accountID &lt;&gt; oppAccountID 
+        ///		GROUP BY transactionID ) [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ErrorsInAccount {
+            get {
+                return ResourceManager.GetString("ErrorsInAccount", resourceCulture);
             }
         }
         
@@ -379,6 +429,20 @@ namespace FamilyFinance2.Properties {
         internal static System.Drawing.Bitmap TLVMoney {
             get {
                 object obj = ResourceManager.GetObject("TLVMoney", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap TLVRedBank {
+            get {
+                object obj = ResourceManager.GetObject("TLVRedBank", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap TLVRedEnvelope {
+            get {
+                object obj = ResourceManager.GetObject("TLVRedEnvelope", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

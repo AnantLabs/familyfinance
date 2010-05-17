@@ -1,0 +1,5 @@
+SELECT COUNT(1)
+FROM LineItem INNER JOIN EnvelopeLine ON LineItem.id = EnvelopeLine.lineitemID
+WHERE LineItem.accountID = @@
+
+--@ 3
