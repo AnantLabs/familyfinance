@@ -83,6 +83,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 
             connection.Open();
             result = Convert.ToDecimal(command.ExecuteScalar());
+            connection.Close();
 
             return result;
         }

@@ -1,0 +1,4 @@
+DELETE FROM EnvelopeLine
+WHERE lineItemID IN (SELECT id FROM LineItem WHERE accountID = @@)
+
+--@@ 13

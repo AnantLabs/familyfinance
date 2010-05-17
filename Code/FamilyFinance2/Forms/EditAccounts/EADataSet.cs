@@ -1,5 +1,7 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Collections.Generic;
+using System.Data.SqlServerCe;
 using FamilyFinance2.Forms.EditAccounts.EADataSetTableAdapters;
 using FamilyFinance2.SharedElements;
 
@@ -13,6 +15,7 @@ namespace FamilyFinance2.Forms.EditAccounts
         private AccountTypeTableAdapter AccountTypeTA;
 
         public List<AccountCatagory> AccountCatagoryList;
+        public List<AccountNormal> AccountNormalList;
 
 
         /////////////////////////
@@ -29,6 +32,10 @@ namespace FamilyFinance2.Forms.EditAccounts
             this.AccountCatagoryList.Add(new AccountCatagory(SpclAccountCat.INCOME, "Income"));
             this.AccountCatagoryList.Add(new AccountCatagory(SpclAccountCat.ACCOUNT, "Account"));
             this.AccountCatagoryList.Add(new AccountCatagory(SpclAccountCat.EXPENSE, "Expense"));
+
+            this.AccountNormalList = new List<AccountNormal>();
+            this.AccountNormalList.Add(new AccountNormal(LineCD.CREDIT, "Credit"));
+            this.AccountNormalList.Add(new AccountNormal(LineCD.DEBIT, "Debit"));
         }
 
         public void myUpdateAccountDB()
@@ -48,20 +55,76 @@ namespace FamilyFinance2.Forms.EditAccounts
         }
 
 
+        public int queryELineCount(int accountID)
+        {
+            int count;
+            string query = Properties.Resources.CountELinesInAccount.Replace("@@", accountID.ToString());
+            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            SqlCeCommand command = new SqlCeCommand(query, connection);
+
+            connection.Open();
+            count = Convert.ToInt32(command.ExecuteScalar());
+            connection.Close();
+
+            return count;
+        }
+
+        public int queryErrorCount(int accountID)
+        {
+            int count;
+            string query = Properties.Resources.ErrorsInAccount.Replace("@@", accountID.ToString());
+            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            SqlCeCommand command = new SqlCeCommand(query, connection);
+
+            connection.Open();
+            count = Convert.ToInt32(command.ExecuteScalar());
+            connection.Close();
+
+            return count;
+        }
+
+        public void deleteOrphanELines()
+        {
+            string query = Properties.Resources.DeleteOrphanELines;
+            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            SqlCeCommand command = new SqlCeCommand(query, connection);
+
+            connection.Open();
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
+
         ///////////////////////////////////////////////////////////////////////
         //   Account Catagory Data
         ///////////////////////////////////////////////////////////////////////
         public class AccountCatagory
         {
-            public byte ID { get; set; }
+            public byte Id { get; set; }
             public string Name { get; set; }
 
             public AccountCatagory(byte id, string name)
             {
-                ID = id;
-                Name = name;
+                this.Id = id;
+                this.Name = name;
             }
         }
+
+
+        ///////////////////////////////////////////////////////////////////////
+        //   Account Normal Data
+        ///////////////////////////////////////////////////////////////////////
+        public class AccountNormal
+        {
+            public bool Id { get; set; }
+            public string Name { get; set; }
+
+            public AccountNormal(bool id, string name)
+            {
+                this.Id = id;
+                this.Name = name;
+            }
+        }
+
 
 
         ///////////////////////////////////////////////////////////////////////
@@ -72,7 +135,6 @@ namespace FamilyFinance2.Forms.EditAccounts
             //////////////////////////
             //   Local Variables
             private int newID;
-            private bool stayOut;
 
 
             //////////////////////////
@@ -82,18 +144,16 @@ namespace FamilyFinance2.Forms.EditAccounts
                 base.EndInit();
 
                 this.TableNewRow += new DataTableNewRowEventHandler(AccountDataTable_TableNewRow);
-                this.ColumnChanged += new DataColumnChangeEventHandler(AccountDataTable_ColumnChanged);
+                this.ColumnChanging += new DataColumnChangeEventHandler(AccountDataTable_ColumnChanging);
 
                 this.newID = 1;
-                this.stayOut = false;
             }
 
-
+            
             /////////////////////////
             //   Internal Events
             private void AccountDataTable_TableNewRow(object sender, System.Data.DataTableNewRowEventArgs e)
             {
-                stayOut = true;
                 AccountRow accountRow = e.Row as AccountRow;
 
                 accountRow.id = this.newID++;
@@ -103,32 +163,19 @@ namespace FamilyFinance2.Forms.EditAccounts
                 accountRow.closed = false;
                 accountRow.creditDebit = LineCD.DEBIT;
                 accountRow.envelopes = false;
-
-                stayOut = false;
             }
 
-            private void AccountDataTable_ColumnChanged(object sender, DataColumnChangeEventArgs e)
+            private void AccountDataTable_ColumnChanging(object sender, DataColumnChangeEventArgs e)
             {
-                if (stayOut)
-                    return;
-
-                stayOut = true;
-                AccountRow row = e.Row as AccountRow;
-                string tmp;
-                int maxLen;
-
                 if (e.Column.ColumnName == "name")
                 {
-                    tmp = e.ProposedValue as string;
-                    maxLen = this.nameColumn.MaxLength;
+                    string tmp = e.ProposedValue as string;
+                    int maxLen = this.nameColumn.MaxLength;
 
                     if (tmp.Length > maxLen)
-                        row.name = tmp.Substring(0, maxLen);
+                        e.ProposedValue = tmp.Substring(0, maxLen);
                 }
-
-                stayOut = false;
             }
-
 
             /////////////////////////
             //   Functions Public 
@@ -136,17 +183,7 @@ namespace FamilyFinance2.Forms.EditAccounts
             {
                 this.newID = FFDataBase.myDBGetNewID("id", "Account");
             }
-
         }
-
-
-        ///////////////////////////////////////////////////////////////////////
-        //   Account Type Data Table 
-        ///////////////////////////////////////////////////////////////////////
-        //public partial class AccountTypeDataTable
-        //{
-        //    // Nothing special needed
-        //}
 
     }
 }

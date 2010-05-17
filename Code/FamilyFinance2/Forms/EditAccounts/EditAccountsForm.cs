@@ -21,7 +21,7 @@ namespace FamilyFinance2.Forms.EditAccounts
         private MyTreeNode incomeRootNode;
         private MyTreeNode closedRootNode;
 
-        public Changes Changes;
+        private int currentID;
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Internal Events
@@ -30,6 +30,7 @@ namespace FamilyFinance2.Forms.EditAccounts
         {
             this.accountBindingSource.EndEdit();
             this.eADataSet.myUpdateAccountDB();
+            this.eADataSet.deleteOrphanELines();
             this.buildAccountTree();
         }
 
@@ -39,8 +40,7 @@ namespace FamilyFinance2.Forms.EditAccounts
             this.accountTypeIDComboBox.Enabled = true;
             this.catagoryIDComboBox.Enabled = true;
             this.closedCheckBox.Enabled = true;
-            this.debitRadioButton.Enabled = true;
-            this.creditRadioButton.Enabled = true;
+            this.accountNormalComboBox.Enabled = true;
             this.envelopesCheckBox.Enabled = true;
         }
 
@@ -49,30 +49,27 @@ namespace FamilyFinance2.Forms.EditAccounts
             AccountTypeForm atf = new AccountTypeForm();
             atf.ShowDialog();
 
-            //this.Changes.Copy(atf.Changes);
-
             this.eADataSet.myFillAccountTypeTable();
         }
 
         private void accountTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             MyTreeNode node = e.Node as MyTreeNode;
-            int accountID = node.ID;
+            currentID = node.ID;
 
             // End, save 
             this.accountBindingSource.EndEdit();
             this.eADataSet.myUpdateAccountDB();
 
             // Enable or disable the combo box
-            EADataSet.AccountRow aRow = this.eADataSet.Account.FindByid(accountID);
-            if (aRow == null || accountID == SpclAccount.NULL)
+            EADataSet.AccountRow aRow = this.eADataSet.Account.FindByid(currentID);
+            if (aRow == null || currentID == SpclAccount.NULL)
             {
                 this.nameTextBox.Enabled = false;
                 this.accountTypeIDComboBox.Enabled = false;
                 this.catagoryIDComboBox.Enabled = false;
                 this.closedCheckBox.Enabled = false;
-                this.debitRadioButton.Enabled = false;
-                this.creditRadioButton.Enabled = false;
+                this.accountNormalComboBox.Enabled = false;
                 this.envelopesCheckBox.Enabled = false;
             }
             else if (aRow.closed)
@@ -81,9 +78,19 @@ namespace FamilyFinance2.Forms.EditAccounts
                 this.accountTypeIDComboBox.Enabled = false;
                 this.catagoryIDComboBox.Enabled = false;
                 this.closedCheckBox.Enabled = true;
-                this.debitRadioButton.Enabled = false;
-                this.creditRadioButton.Enabled = false;
+                this.accountNormalComboBox.Enabled = false;
                 this.envelopesCheckBox.Enabled = false;
+            }
+            else if (aRow.catagory == SpclAccountCat.EXPENSE || aRow.catagory == SpclAccountCat.INCOME)
+            {
+                this.nameTextBox.Enabled = true;
+                this.accountTypeIDComboBox.Enabled = true;
+                this.catagoryIDComboBox.Enabled = true;
+                this.closedCheckBox.Enabled = true;
+                this.accountNormalComboBox.Enabled = false;
+                this.envelopesCheckBox.Enabled = false;
+
+                this.envelopesCheckBox.Checked = false;
             }
             else
             {
@@ -91,32 +98,80 @@ namespace FamilyFinance2.Forms.EditAccounts
                 this.accountTypeIDComboBox.Enabled = true;
                 this.catagoryIDComboBox.Enabled = true;
                 this.closedCheckBox.Enabled = true;
-                this.debitRadioButton.Enabled = true;
-                this.creditRadioButton.Enabled = true;
+                this.accountNormalComboBox.Enabled = true;
                 this.envelopesCheckBox.Enabled = true;
             }
 
 
             // Set Selected Account to the selected Account
-            this.accountBindingSource.Filter = "id = " + accountID.ToString();
+            this.accountBindingSource.Filter = "id = " + currentID.ToString();
         }
 
         private void EditAccountsForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.accountBindingSource.EndEdit();
             this.eADataSet.myUpdateAccountDB();
-
-            this.Changes.AddTable(DBTables.Account);
+            this.eADataSet.deleteOrphanELines();
         }
 
-        private void debitRadioButton_CheckedChanged(object sender, EventArgs e)
+
+        private void envelopesCheckBox_Click(object sender, EventArgs e)
         {
-            if (debitRadioButton.Checked == true)
-                creditRadioButton.Checked = false;
-            else
-                creditRadioButton.Checked = true;
+            string text;
+            string caption;
+            DialogResult res;
 
+            // If still using envelopes return
+            if (envelopesCheckBox.Checked == true)
+                return;
+
+            int count = this.eADataSet.queryELineCount(currentID);
+
+            if (count < 1)
+                return;
+
+            caption = "Delete Envelope Lines?";
+
+            text = "By removing the use of envelopes from this account \n";
+            text += count.ToString() + " envelope lines will be deleted. \n\n";
+            text += "Click YES if you want this to happen.";
+
+            res = MessageBox.Show(text, caption, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button3);
+
+            if (res != DialogResult.Yes)
+                this.envelopesCheckBox.Checked = true;
         }
+
+        private void closedCheckBox_Click(object sender, EventArgs e)
+        {
+            string text;
+            string caption;
+            DialogResult res;
+
+            // If "opening" an account return.
+            if (closedCheckBox.Checked == false)
+                return;
+
+            if (this.eADataSet.Account.FindByid(this.currentID).catagory != SpclAccountCat.ACCOUNT)
+                return;
+
+            decimal balance = FamilyFinance2.Forms.Main.RegistrySplit.TreeView.TreeQuery.getAccBalance(currentID);
+            int count = eADataSet.queryErrorCount(currentID);
+
+            if (balance == 0.0m && count == 0)
+                return;
+
+            caption = "Zero balance needed";
+
+            text = "This account has a balance of " + balance.ToString("C2") + ". \n";
+            text += "This account has " + count.ToString() + " error(s). \n\n";
+            text += "Please get the balance to zero and resolve the errors before closing.";
+
+            res = MessageBox.Show(text, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+            closedCheckBox.Checked = false;
+        }
+
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -230,7 +285,6 @@ namespace FamilyFinance2.Forms.EditAccounts
             this.eADataSet.myFillAccountTable();
             this.eADataSet.myFillAccountTypeTable();
 
-            this.Changes = new Changes();
 
             // Set the max on the nameTextbox
             this.nameTextBox.MaxLength = this.eADataSet.Account.nameColumn.MaxLength;
@@ -240,15 +294,21 @@ namespace FamilyFinance2.Forms.EditAccounts
             this.buildAccountTree();
 
             // Setup the Binding sources and the Account Catagory list/combobox
-            this.accountBindingSource.Filter = "id = -100"; // Initially blank
+            this.currentID = -100;
+            this.accountBindingSource.Filter = "id = " + this.currentID.ToString(); // Initially blank
 
             this.accountTypeBindingSource.Sort = "name";
 
             this.catagoryIDComboBox.DataSource = this.eADataSet.AccountCatagoryList;
             this.catagoryIDComboBox.DisplayMember = "Name";
-            this.catagoryIDComboBox.ValueMember = "ID";
-               
+            this.catagoryIDComboBox.ValueMember = "Id";
 
+
+            this.accountNormalComboBox.DataSource = this.eADataSet.AccountNormalList;
+            this.accountNormalComboBox.DisplayMember = "Name";
+            this.accountNormalComboBox.ValueMember = "Id";
         }
+
+
     }
 }
