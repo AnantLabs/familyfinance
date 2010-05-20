@@ -299,7 +299,7 @@
     <Compile Include="SharedElements\CalanderColumn.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="SharedElements\DB_Commands.cs" />
+    <Compile Include="SharedElements\DB_Queries.cs" />
     <Compile Include="SharedElements\Pieces.cs" />
     <Compile Include="SharedElements\TreeList\Tracing.cs" />
     <Compile Include="SharedElements\TreeList\TreeListColumn.cs" />
