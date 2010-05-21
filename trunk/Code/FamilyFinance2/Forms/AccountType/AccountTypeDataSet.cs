@@ -86,7 +86,7 @@ namespace FamilyFinance2.Forms.AccountType
             public void myFillTable()
             {
                 this.ACTableAdapter.Fill(this);
-                this.newID = FFDataBase.myDBGetNewID("id", "AccountType");
+                this.newID = DBquery.getNewID("id", "AccountType");
             }
 
             public void myUpdateDB()

@@ -112,7 +112,7 @@ namespace FamilyFinance2.Forms.EditEnvelopes
             //   Functions Public 
             public void myResetID()
             {
-                this.newID = FFDataBase.myDBGetNewID("id", "Envelope");
+                this.newID = DBquery.getNewID("id", "Envelope");
             }
         }
     }

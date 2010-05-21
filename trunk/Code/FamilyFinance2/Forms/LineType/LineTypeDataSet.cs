@@ -83,7 +83,7 @@ namespace FamilyFinance2.Forms.LineType
             public void myFillTable()
             {
                 this.LTTableAdapter.Fill(this);
-                this.newID = FFDataBase.myDBGetNewID("id", "LineType");
+                this.newID = DBquery.getNewID("id", "LineType");
             }
 
             public void myUpdateDB()

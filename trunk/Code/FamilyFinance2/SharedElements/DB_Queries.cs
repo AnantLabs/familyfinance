@@ -7,100 +7,266 @@ using System.Collections.Generic;
 
 namespace FamilyFinance2.SharedElements
 {
-    public partial class FFDataBase
+    ///////////////////////////////////////////////////////////////////////
+    //   Data Structures 
+    ///////////////////////////////////////////////////////////////////////
+    public class IdName
+    {
+        public int ID;
+        public string Name;
+
+        public IdName(int id, string name)
+        {
+            this.ID = id;
+            this.Name = name;
+        }
+    }
+
+    public class IdBalance
+    {
+        public int ID;
+        public decimal Balance;
+
+        public IdBalance(int id, decimal balance)
+        {
+            this.ID = id;
+            this.Balance = balance;
+        }
+    }
+
+    public class AccountDetails
+    {
+        public int ID;
+        public string Name;
+        public bool Envelopes;
+
+        public AccountDetails(int id, string name, bool envelopes)
+        {
+            this.ID = id;
+            this.Name = name;
+            this.Envelopes = envelopes;
+        }
+    }
+
+    public class SubBalanceDetails
+    {
+        public int ID;
+        public string Name;
+        public decimal SubBalance;
+
+        public SubBalanceDetails(int id, string name, decimal balance)
+        {
+            this.ID = id;
+            this.Name = name;
+            this.SubBalance = balance;
+        }
+    }
+
+    public class AccountErrors
+    {
+        public byte Catagory;
+        public int TypeID;
+        public int AccountID;
+
+        public AccountErrors(byte catagory, int typeID, int accountID)
+        {
+            this.Catagory = catagory;
+            this.TypeID = typeID;
+            this.AccountID = accountID;
+        }
+    }
+
+
+
+    ///////////////////////////////////////////////////////////////////////
+    //   DBquery Class
+    ///////////////////////////////////////////////////////////////////////
+    public partial class DBquery
     {
         ///////////////////////////////////////////////////////////////////////
-        //   Functions STATIC 
+        //   Private STATIC Queries
         ///////////////////////////////////////////////////////////////////////
-        static public void myExecuteFile(string fileAsString, bool catchExceptions)
+        static private void executeFile(string fileAsString)
         {
-            SqlCeConnection connection;
-            SqlCeCommand command;
-            string scriptLine = "";
-            int start = 0;
-            int end = 0;
+            string[] commands = fileAsString.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            SqlCeCommand sqlCmd = new SqlCeCommand();
 
-            // Remove all comments
-            while (true)
-            {
-                start = fileAsString.IndexOf("--", 0);
-                if (start == -1)
-                    break;
-
-                end = fileAsString.IndexOf("\n", start) + 1;
-                fileAsString = fileAsString.Remove(start, end - start);
-            }
-
-            // Replace all the white space characters
-            fileAsString = fileAsString.Replace("\n", "");
-            fileAsString = fileAsString.Replace("\r", "");
-            fileAsString = fileAsString.Replace("\t", " ");
-
-
-            connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
             connection.Open();
+            sqlCmd.Connection = connection;
 
-
-
-            try
+            foreach (string line in commands)
             {
-                while (true)
-                {
-                    // Find the next statments end
-                    end = fileAsString.IndexOf(";", 0) + 1;
-                    if (end == 0)
-                        break;
-
-                    scriptLine = fileAsString.Substring(0, end);
-                    fileAsString = fileAsString.Remove(0, end);
-
-                    // Execute the statement
-                    command = new SqlCeCommand(scriptLine, connection);
-                    command.ExecuteNonQuery();
-                }
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Caught a bad SQL Line <" + scriptLine + ">", e);
-            }
-            finally
-            {
-                connection.Close();
+                sqlCmd.CommandText = line;
+                sqlCmd.ExecuteNonQuery();
             }
 
+            connection.Close();
+            sqlCmd.Dispose();
         }
 
-        static public bool myCreateDBFile()
+        static private object queryValue(string query)
+        {
+            object result;
+            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            SqlCeCommand sqlCmd = new SqlCeCommand(query, connection);
+
+            connection.Open();
+
+            result = sqlCmd.ExecuteScalar();
+
+            connection.Close();
+            sqlCmd.Dispose();
+
+            return result;
+        }
+
+        static private decimal queryBalance(string query)
+        {
+            decimal result = 0.0m;
+            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            SqlCeCommand sqlCmd = new SqlCeCommand(query, connection);
+
+            connection.Open();
+
+            result = Convert.ToDecimal(sqlCmd.ExecuteScalar());
+
+            connection.Close();
+            sqlCmd.Dispose();
+
+            return result;
+        }
+
+        static private List<IdName> queryIdNames(string query)
+        {
+            List<IdName> queryResults = new List<IdName>();
+            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            SqlCeCommand command = new SqlCeCommand(query, connection);
+            SqlCeDataReader reader = command.ExecuteReader();
+
+            connection.Open();
+
+            // Iterate through the results
+            while (reader.Read())
+                queryResults.Add(new IdName(reader.GetInt32(0), reader.GetString(1)));
+
+            // Always call Close the reader and connection when done reading
+            reader.Close();
+            command.Dispose();
+            connection.Close();
+
+            return queryResults;
+        }
+
+        static private List<IdBalance> queryIdBalance(string query)
+        {
+            List<IdBalance> queryResults = new List<IdBalance>();
+            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            SqlCeCommand command = new SqlCeCommand(query, connection);
+            SqlCeDataReader reader = command.ExecuteReader();
+
+            connection.Open();
+
+            // Iterate through the results
+            while (reader.Read())
+                queryResults.Add(new IdBalance(reader.GetInt32(0), reader.GetDecimal(1)));
+
+            // Always call Close the reader and connection when done reading
+            reader.Close();
+            command.Dispose();
+            connection.Close();
+
+            return queryResults;
+        }
+
+        static private List<AccountErrors> queryAccountErrors(string query)
+        {
+            List<AccountErrors> queryResults = new List<AccountErrors>();
+            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            SqlCeCommand command = new SqlCeCommand(query, connection);
+            SqlCeDataReader reader = command.ExecuteReader();
+
+            connection.Open();
+
+            // Iterate through the results
+            while (reader.Read())
+                queryResults.Add(new AccountErrors(reader.GetByte(0), reader.GetInt32(1), reader.GetInt32(2)));
+
+            // Always call Close the reader and connection when done reading
+            reader.Close();
+            command.Dispose();
+            connection.Close();
+
+            return queryResults;
+        }
+
+        static private List<AccountDetails> queryAccountDetails(string query)
+        {
+            List<AccountDetails> queryResults = new List<AccountDetails>();
+            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            SqlCeCommand command = new SqlCeCommand(query, connection);
+            SqlCeDataReader reader = command.ExecuteReader();
+
+            connection.Open();
+
+            // Iterate through the results
+            while (reader.Read())
+                queryResults.Add(new AccountDetails(reader.GetInt32(0), reader.GetString(1), reader.GetBoolean(2)));
+
+            // Always call Close the reader and connection when done reading
+            reader.Close();
+            command.Dispose();
+            connection.Close();
+
+            return queryResults;
+        }
+
+        static private List<SubBalanceDetails> querySubBalanceDetails(string query)
+        {
+            List<SubBalanceDetails> queryResults = new List<SubBalanceDetails>();
+            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            SqlCeCommand command = new SqlCeCommand(query, connection);
+            SqlCeDataReader reader = command.ExecuteReader();
+
+            connection.Open();
+
+            // Iterate through the results
+            while (reader.Read())
+                queryResults.Add(new SubBalanceDetails(reader.GetInt32(0), reader.GetString(1), reader.GetDecimal(2)));
+
+            // Always call Close the reader and connection when done reading
+            reader.Close();
+            command.Dispose();
+            connection.Close();
+
+            return queryResults;
+        }
+
+
+
+        ///////////////////////////////////////////////////////////////////////
+        //   Public STATIC Functions
+        ///////////////////////////////////////////////////////////////////////
+        static public bool createDBFile()
         {
             SqlCeEngine engine = new SqlCeEngine();
-            string connection = Properties.Settings.Default.FFDBConnectionString;
+            engine.LocalConnectionString = Properties.Settings.Default.FFDBConnectionString;
+
             string filePath = AppDomain.CurrentDomain.GetData("DataDirectory").ToString();
             filePath += "\\" + Properties.Settings.Default.DBFileName;
 
             if (File.Exists(filePath))
                 return false;
 
-            engine.LocalConnectionString = connection;
+            engine.CreateDatabase();
+            engine.Dispose();
 
-            try
-            {
-                engine.CreateDatabase();
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Failed to make the DBFile", e);
-            }
-            finally
-            {
-                engine.Dispose();
-            }
-
-            myExecuteFile(Properties.Resources.BuildTables, true);
+            executeFile(Properties.Resources.BuildTables);
 
             return true;
         }
 
-        static public bool myGoodPath()
+        static public bool goodPath()
         {
             SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
             bool result;
@@ -114,66 +280,34 @@ namespace FamilyFinance2.SharedElements
                 else
                     result = false;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                string temp = e.Message;
                 result = false;
             }
-            finally
-            {
-                connection.Close();
-            }
-
+                
+            connection.Close();
             return result;
         }
-
-        static public List<int> myDBGetIDList(string col, string table, string filter, string sort)
+        
+        static public void dropTables()
         {
-            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
-            List<int> idList = new List<int>();
-            SqlCeCommand selectCmd;
-            SqlCeDataReader reader;
-            string command;
-
-            connection.Open();
-
-            command = "SELECT DISTINCT " + col;
-            command += " FROM " + table;
-
-            if (filter != "")
-                command += " WHERE " + filter;
-
-            if (sort != "")
-                command += " ORDER BY " + sort;
-
-            command += " ;";
-
-            selectCmd = new SqlCeCommand(command, connection);
-            reader = selectCmd.ExecuteReader();
-
-            while (reader.Read())
-                idList.Add(reader.GetInt32(0));
-
-            reader.Close();
-            connection.Close();
-
-            return idList;
+            executeFile(Properties.Resources.DropTables);
+        }
+        
+        static public void buildTables()
+        {
+            executeFile(Properties.Resources.BuildTables);
         }
 
-        static public int myDBGetNewID(string col, string table)
+        static public int getNewID(string col, string table)
         {
-            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
-            SqlCeCommand selectCmd = new SqlCeCommand();
+            string query;
             object result;
             int num;
 
-            connection.Open();
+            query = "SELECT MAX(" + col + ") FROM " + table + " ;";
 
-            selectCmd.Connection = connection;
-            selectCmd.CommandText = "SELECT MAX(" + col + ") FROM " + table + " ;";
-            result = selectCmd.ExecuteScalar();
-
-            connection.Close();
+            result = queryValue(query);
 
             if (result == DBNull.Value)
                 return 1;
@@ -186,41 +320,201 @@ namespace FamilyFinance2.SharedElements
             return num + 1;
         }
 
-        static public decimal myDBGetSubSum(int lineID, out int subCount, out short envelopeID)
+
+
+        static public decimal getAccBalance(int accountID)
         {
-            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
-            SqlCeCommand selectCmd = new SqlCeCommand();
-            SqlCeDataReader reader;
-            decimal sum;
+            string query = Properties.Resources.SingleAccBalance.Replace("@@", accountID.ToString());
 
-            sum = 0.0m;
-            subCount = 0;
-            envelopeID = SpclEnvelope.NULL;
-
-            connection.Open();
-
-            selectCmd.Connection = connection;
-            selectCmd.CommandText = "SELECT amount, envelopeID FROM SubLineItem WHERE lineItemID = " + lineID.ToString() + ";";
-            reader = selectCmd.ExecuteReader();
-
-            while (reader.Read())
-            {
-                sum += reader.GetDecimal(0);
-                subCount++;
-                envelopeID = reader.GetInt16(1);
-            }
-
-            if (subCount > 1)
-                envelopeID = SpclEnvelope.SPLIT;
-
-            reader.Close();
-            connection.Close();
-
-            return sum;
+            return queryBalance(query);
         }
+
+        static public decimal getEnvBalance(int envelopeID)
+        {
+            string query = Properties.Resources.SingleEnvBalance.Replace("@@", envelopeID.ToString());
+
+            return queryBalance(query);
+        }
+
+        static public decimal getAEBalance(int accountID, int envelopeID)
+        {
+            string query = Properties.Resources.SingleAEBalance.Replace("@eID", envelopeID.ToString());
+            query = query.Replace("@aID", accountID.ToString());
+
+            return queryBalance(query);
+        }
+
+
+
+        static public List<IdName> getAccountTypes(byte catagory)
+        {
+            string query = Properties.Resources.AccountTypes.Replace("@@", catagory.ToString());
+
+            return queryIdNames(query);
+        }
+
+        static public List<IdName> getEnvelopeGroups()
+        {
+            return queryIdNames(Properties.Resources.EnvelopeGroups);
+        }
+
+        static public List<IdName> getAllEnvelopeNames()
+        {
+            string query = Properties.Resources.EnvelopeNames.Replace("@@", "");
+            return queryIdNames(query);
+        }
+
+        static public List<IdName> getEnvelopeNamesByGroup(int groupID)
+        {
+            string query = Properties.Resources.EnvelopeNames;
+            query = query.Replace("@@", "AND groupID = " + groupID.ToString());
+
+            return queryIdNames(query);
+        }
+
+
+
+        static public List<IdBalance> getAccountBalancesByCatagory(byte catagory)
+        {
+            string query = Properties.Resources.AccountBalances.Replace("@@", catagory.ToString());
+
+            return queryIdBalance(query);
+        }
+
+        static public List<IdBalance> getAccountBalancesByType(byte catagory, int typeID)
+        {
+            string query = Properties.Resources.AccountBalances;
+            query = query.Replace("@@", catagory.ToString() + " AND typeID = " + typeID.ToString());
+
+            return queryIdBalance(query);
+        }
+
+        static public List<IdBalance> getAllEnvelopeBalances()
+        {
+            string query = Properties.Resources.EnvelopeBalances.Replace("@@", "");
+
+            return queryIdBalance(query);
+        }
+
+        static public List<IdBalance> getEnvelopeBalancesByGroup(int groupID)
+        {
+            string query = Properties.Resources.EnvelopeBalances;
+            query = query.Replace("@@", "AND groupID = " + groupID.ToString());
+
+            return queryIdBalance(query);
+        }
+
+
+
+        static public List<AccountErrors> getAccountErrors()
+        {
+            return queryAccountErrors(Properties.Resources.ErrorAccounts);
+        }
+
+
+
+        static public List<AccountDetails> getAccountNamesByCatagory(byte catagory)
+        {
+            string query = Properties.Resources.AccountDetails.Replace("@@", catagory.ToString());
+
+            return queryAccountDetails(query);
+        }
+
+        static public List<AccountDetails> getAccountNamesByCatagoryAndType(byte catagory, int typeID)
+        {
+            string query = Properties.Resources.AccountDetails;
+            query = query.Replace("@@", catagory.ToString() + " AND typeID = " + typeID.ToString());
+
+            return queryAccountDetails(query);
+        }
+
+
+
+
+        static public List<SubBalanceDetails> getSubAccountBalances(int accountID)
+        {
+            string query = Properties.Resources.SubAccountBalances.Replace("@@", accountID.ToString());
+
+            return querySubBalanceDetails(query);
+        }
+
+        static public List<SubBalanceDetails> getSubEnvelopeBalances(int envelopeID)
+        {
+            string query = Properties.Resources.SubEnvelopeBalances.Replace("@@", envelopeID.ToString());
+
+            return querySubBalanceDetails(query);
+        }
+
+
+        //static public List<int> myDBGetIDList(string col, string table, string filter, string sort)
+        //{
+        //    SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+        //    List<int> idList = new List<int>();
+        //    SqlCeCommand selectCmd;
+        //    SqlCeDataReader reader;
+        //    string command;
+
+        //    connection.Open();
+
+        //    command = "SELECT DISTINCT " + col;
+        //    command += " FROM " + table;
+
+        //    if (filter != "")
+        //        command += " WHERE " + filter;
+
+        //    if (sort != "")
+        //        command += " ORDER BY " + sort;
+
+        //    command += " ;";
+
+        //    selectCmd = new SqlCeCommand(command, connection);
+        //    reader = selectCmd.ExecuteReader();
+
+        //    while (reader.Read())
+        //        idList.Add(reader.GetInt32(0));
+
+        //    reader.Close();
+        //    connection.Close();
+
+        //    return idList;
+        //}
+
+        //static public decimal myDBGetSubSum(int lineID, out int subCount, out short envelopeID)
+        //{
+        //    SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+        //    SqlCeCommand selectCmd = new SqlCeCommand();
+        //    SqlCeDataReader reader;
+        //    decimal sum;
+
+        //    sum = 0.0m;
+        //    subCount = 0;
+        //    envelopeID = SpclEnvelope.NULL;
+
+        //    connection.Open();
+
+        //    selectCmd.Connection = connection;
+        //    selectCmd.CommandText = "SELECT amount, envelopeID FROM SubLineItem WHERE lineItemID = " + lineID.ToString() + ";";
+        //    reader = selectCmd.ExecuteReader();
+
+        //    while (reader.Read())
+        //    {
+        //        sum += reader.GetDecimal(0);
+        //        subCount++;
+        //        envelopeID = reader.GetInt16(1);
+        //    }
+
+        //    if (subCount > 1)
+        //        envelopeID = SpclEnvelope.SPLIT;
+
+        //    reader.Close();
+        //    connection.Close();
+
+        //    return sum;
+        //}
+
+
+
     }
-
-
 } // END namespace FamilyFinance
 
 

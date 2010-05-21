@@ -100,124 +100,8 @@ namespace FamilyFinance2.SharedElements
     }
 
 
-    //public class EnvelopesIDandName
-    //{
-    //    public int ID;
-    //    public string Name;
 
-    //    public EnvelopesIDandName(int id, string name)
-    //    {
-    //        ID = id;
-    //        Name = name;
-    //    }
-    //}
-
-    //public class EnvelopesIDandNameComparer : IComparer<EnvelopesIDandName>
-    //{
-    //    public int Compare(EnvelopesIDandName x, EnvelopesIDandName y)
-    //    {
-    //        return x.Name.CompareTo(y.Name);
-    //    }
-    //}
-
-    //public class MyConnectionString
-    //{
-    //    public enum Modes {ReadWrite, ReadOnly, Exclusive, SharedRead };
-
-    //    static public string Build(string filePath, string mode)
-    //    {
-    //        string connectionString;
-
-    //        connectionString = "Persist Security Info = False; ";
-    //        connectionString += "Data Source = '" + filePath + "'; ";
-    //        //connectionString += "File Mode = '" + mode + "'; ";
-    //        connectionString += "File Mode = 'Read Write'; ";
-    //        connectionString += "Max Database Size = 1024; "; // 1 Gig
-    //        connectionString += "Max Buffer Size = 640; ";
-    //        connectionString += "Password = 's7upahu2umEcrabr!c#?u66v*FRad4gum2swe#22'; ";
-
-    //        return connectionString;
-    //    }
-    //}
     // Data Source = "|DataDirectory|\FamilyFinanceDB.sdf"; File Mode = 'Read Write'; Max Database Size = 1024; Max Buffer Size = 640; Password = 's7upahu2umEcrabr!c#?u66v*FRad4gum2swe#22'; 
-
-    //public class SubLineEntry
-    //{
-    //    public int EnvelopeID;
-    //    public string Description;
-    //    public decimal Amount;
-
-    //    public SubLineEntry()
-    //    {
-    //        EnvelopeID = SpclEnvelope.NULL;
-    //        Description = "";
-    //        Amount = 0;
-    //    }
-    //}
-
-    //public class OppLineEntry
-    //{
-    //    public int AccountID;
-    //    public string Description;
-    //    public decimal Amount;
-
-    //    public OppLineEntry()
-    //    {
-    //        AccountID = SpclAccount.NULL;
-    //        Description = "";
-    //        Amount = 0;
-    //    }
-    //}
-
-    //public class TransactionEntry
-    //{
-    //    public DateTime Date;
-    //    public string Type;
-    //    public int AccountID;
-    //    public string Description;
-    //    public string ConfirmationNumber;
-    //    public string Complete;
-    //    public decimal Amount;
-    //    public bool CreditDebit;
-    //    public List<OppLineEntry> OppLineList;
-    //    public List<SubLineEntry> SubLineList;
-
-    //    public TransactionEntry()
-    //    {
-    //        Date = new DateTime(1, 1, 1);
-    //        Type = "";
-    //        AccountID = SpclAccount.NULL;
-    //        Description = "";
-    //        ConfirmationNumber = "";
-    //        Complete = LineState.PENDING;
-    //        Amount = 0;
-    //        CreditDebit = LineCD.DEBIT;
-
-    //        OppLineList = new List<OppLineEntry>();
-    //        SubLineList = new List<SubLineEntry>();
-    //    }
-    //}
-
-    //public class AccountEntry
-    //{
-    //    public string name;
-    //    public string type;
-    //    public string catagory;
-    //    public bool creditDebit;
-    //    public bool envelopes;
-
-    //    public AccountEntry()
-    //    {
-    //        name = "";
-    //        type = "";
-    //        catagory = "";
-    //        creditDebit = true;
-    //        envelopes = true;
-    //    }
-    //}
-
-
-
 
     ///////////////////////////////////////
     //  Special Celltypes
@@ -299,6 +183,8 @@ namespace FamilyFinance2.SharedElements
             this.ID = id;
         }
     }
+
+
 
     ///////////////////////////////////////
     // Delagates and Event Arguments
