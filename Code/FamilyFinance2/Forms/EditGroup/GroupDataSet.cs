@@ -85,7 +85,7 @@ namespace FamilyFinance2.Forms.EditGroup
             public void myFillTable()
             {
                 this.groupTA.Fill(this);
-                this.newID = FFDataBase.myDBGetNewID("id", "EnvelopeGroup");
+                this.newID = DBquery.getNewID("id", "EnvelopeGroup");
             }
 
             public void myUpdateDB()

@@ -213,7 +213,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\Main\RegistrySplit\TreeView\MyTreeListNode.cs" />
-    <Compile Include="Forms\Main\RegistrySplit\TreeView\TreeQuery.cs" />
     <Compile Include="Forms\Transaction\CDLinesDGV.cs">
       <SubType>Component</SubType>
     </Compile>

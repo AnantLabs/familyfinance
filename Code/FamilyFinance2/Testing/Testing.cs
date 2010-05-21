@@ -44,8 +44,8 @@ namespace FamilyFinance2.Testing
             envLineTA = new EnvelopeLineTableAdapter();
 
             // Reset the database
-            FFDataBase.myExecuteFile(Properties.Resources.DropTables, false);
-            FFDataBase.myExecuteFile(Properties.Resources.BuildTables, false);
+            DBquery.dropTables();
+            DBquery.buildTables();
 
             // Fill the data tables
             accountTypeTA.Fill(stressDS.AccountType);
@@ -56,15 +56,15 @@ namespace FamilyFinance2.Testing
             lineTA.Fill(stressDS.LineItem);
             envLineTA.Fill(stressDS.EnvelopeLine);
 
-            accountID = FFDataBase.myDBGetNewID("id", "Account");
-            aTypeID = FFDataBase.myDBGetNewID("id", "AccountType");
-            envelopeID = FFDataBase.myDBGetNewID("id", "Envelope");
-            eGroupID = FFDataBase.myDBGetNewID("id", "EnvelopeGroup");
-            eLineID = FFDataBase.myDBGetNewID("id", "EnvelopeLine");
-            lTypeID = FFDataBase.myDBGetNewID("id", "LineType");
+            accountID = DBquery.getNewID("id", "Account");
+            aTypeID = DBquery.getNewID("id", "AccountType");
+            envelopeID = DBquery.getNewID("id", "Envelope");
+            eGroupID = DBquery.getNewID("id", "EnvelopeGroup");
+            eLineID = DBquery.getNewID("id", "EnvelopeLine");
+            lTypeID = DBquery.getNewID("id", "LineType");
 
-            lineID = FFDataBase.myDBGetNewID("id", "LineItem");
-            transID = FFDataBase.myDBGetNewID("transactionID", "LineItem");
+            lineID = DBquery.getNewID("id", "LineItem");
+            transID = DBquery.getNewID("transactionID", "LineItem");
             date = DateTime.Now.AddMonths(-12*100).Date;
 
             addAccount();

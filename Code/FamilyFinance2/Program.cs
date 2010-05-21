@@ -116,7 +116,7 @@ namespace FamilyFinance2
 
             AppDomain.CurrentDomain.SetData("DataDirectory", Properties.Settings.Default.DataDirectory);
 
-            try { result = FFDataBase.myGoodPath(); }
+            try { result = DBquery.goodPath(); }
 
             catch
             {
@@ -126,7 +126,7 @@ namespace FamilyFinance2
 
             if (result == false)
             {
-                try { result = FFDataBase.myCreateDBFile(); }
+                try { result = DBquery.createDBFile(); }
 
                 catch { result = false; }
 

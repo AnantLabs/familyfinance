@@ -354,7 +354,7 @@ namespace FamilyFinance2.Forms.Transaction
             public void myFill(int transID)
             {
                 this.LineItemTA.FillByTransID(this, transID);
-                this.newLineID = FFDataBase.myDBGetNewID("id", "LineItem");
+                this.newLineID = DBquery.getNewID("id", "LineItem");
             }
 
             public void mySaveNewLines()
@@ -450,7 +450,7 @@ namespace FamilyFinance2.Forms.Transaction
             public void myFill(int transID)
             {
                 this.EnvelopeLineTA.FillByTransID(this, transID);
-                this.newID = FFDataBase.myDBGetNewID("id", "EnvelopeLine");
+                this.newID = DBquery.getNewID("id", "EnvelopeLine");
             }
 
             public void mySaveChanges()

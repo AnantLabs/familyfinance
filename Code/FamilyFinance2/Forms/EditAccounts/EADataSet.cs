@@ -181,7 +181,7 @@ namespace FamilyFinance2.Forms.EditAccounts
             //   Functions Public 
             public void myResetID()
             {
-                this.newID = FFDataBase.myDBGetNewID("id", "Account");
+                this.newID = DBquery.getNewID("id", "Account");
             }
         }
 

@@ -126,13 +126,13 @@ namespace FamilyFinance2.Forms.Import
             this.lineTypeTA.Fill(this.LineType);
 
             // Setup ID Counters
-            this.AccountID = FFDataBase.myDBGetNewID("id", "Account");
-            this.AccountTypeID = FFDataBase.myDBGetNewID("id", "AccountType");
-            this.EnvelopeID = FFDataBase.myDBGetNewID("id", "Envelope");
-            this.LineTypeID = FFDataBase.myDBGetNewID("id", "LineType");
-            this.LineItemID = FFDataBase.myDBGetNewID("id", "LineItem");
-            this.TransactionID = FFDataBase.myDBGetNewID("transactionID", "LineItem");
-            this.EnvelopeLineID = FFDataBase.myDBGetNewID("id", "EnvelopeLine");
+            this.AccountID = DBquery.getNewID("id", "Account");
+            this.AccountTypeID = DBquery.getNewID("id", "AccountType");
+            this.EnvelopeID = DBquery.getNewID("id", "Envelope");
+            this.LineTypeID = DBquery.getNewID("id", "LineType");
+            this.LineItemID = DBquery.getNewID("id", "LineItem");
+            this.TransactionID = DBquery.getNewID("transactionID", "LineItem");
+            this.EnvelopeLineID = DBquery.getNewID("id", "EnvelopeLine");
 
             // Subscribe to table events
             this.Account.TableNewRow += new System.Data.DataTableNewRowEventHandler(Account_TableNewRow);

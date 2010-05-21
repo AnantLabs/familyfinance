@@ -155,7 +155,7 @@ namespace FamilyFinance2.Forms.EditAccounts
             if (this.eADataSet.Account.FindByid(this.currentID).catagory != SpclAccountCat.ACCOUNT)
                 return;
 
-            decimal balance = FamilyFinance2.Forms.Main.RegistrySplit.TreeView.TreeQuery.getAccBalance(currentID);
+            decimal balance = DBquery.getAccBalance(currentID);
             int count = eADataSet.queryErrorCount(currentID);
 
             if (balance == 0.0m && count == 0)
