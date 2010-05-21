@@ -30,7 +30,7 @@ namespace FamilyFinance2.Forms.EditAccounts
         {
             this.accountBindingSource.EndEdit();
             this.eADataSet.myUpdateAccountDB();
-            this.eADataSet.deleteOrphanELines();
+            DBquery.deleteOrphanELines();
             this.buildAccountTree();
         }
 
@@ -111,7 +111,7 @@ namespace FamilyFinance2.Forms.EditAccounts
         {
             this.accountBindingSource.EndEdit();
             this.eADataSet.myUpdateAccountDB();
-            this.eADataSet.deleteOrphanELines();
+            DBquery.deleteOrphanELines();
         }
 
 
@@ -125,7 +125,7 @@ namespace FamilyFinance2.Forms.EditAccounts
             if (envelopesCheckBox.Checked == true)
                 return;
 
-            int count = this.eADataSet.queryELineCount(currentID);
+            int count = DBquery.getELineCount(currentID);
 
             if (count < 1)
                 return;
@@ -156,7 +156,7 @@ namespace FamilyFinance2.Forms.EditAccounts
                 return;
 
             decimal balance = DBquery.getAccBalance(currentID);
-            int count = eADataSet.queryErrorCount(currentID);
+            int count = DBquery.getErrorCount(currentID);
 
             if (balance == 0.0m && count == 0)
                 return;

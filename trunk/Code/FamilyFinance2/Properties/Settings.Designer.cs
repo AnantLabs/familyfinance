@@ -26,8 +26,7 @@ namespace FamilyFinance2.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=|DataDirectory|\\FamilyFinanceDB.sdf;Password=s7upahu2umEcrabr!c#?u66v" +
-            "*FRad4gum2swe#22;Persist Security Info=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=|DataDirectory|\\FamilyFinanceDB.sdf")]
         public string FFDBConnectionString {
             get {
                 return ((string)(this["FFDBConnectionString"]));

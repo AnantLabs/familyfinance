@@ -55,45 +55,8 @@ namespace FamilyFinance2.Forms.EditAccounts
         }
 
 
-        public int queryELineCount(int accountID)
-        {
-            int count;
-            string query = Properties.Resources.CountELinesInAccount.Replace("@@", accountID.ToString());
-            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
-            SqlCeCommand command = new SqlCeCommand(query, connection);
 
-            connection.Open();
-            count = Convert.ToInt32(command.ExecuteScalar());
-            connection.Close();
-
-            return count;
-        }
-
-        public int queryErrorCount(int accountID)
-        {
-            int count;
-            string query = Properties.Resources.ErrorsInAccount.Replace("@@", accountID.ToString());
-            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
-            SqlCeCommand command = new SqlCeCommand(query, connection);
-
-            connection.Open();
-            count = Convert.ToInt32(command.ExecuteScalar());
-            connection.Close();
-
-            return count;
-        }
-
-        public void deleteOrphanELines()
-        {
-            string query = Properties.Resources.DeleteOrphanELines;
-            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
-            SqlCeCommand command = new SqlCeCommand(query, connection);
-
-            connection.Open();
-            command.ExecuteNonQuery();
-            connection.Close();
-        }
-
+        
         ///////////////////////////////////////////////////////////////////////
         //   Account Catagory Data
         ///////////////////////////////////////////////////////////////////////

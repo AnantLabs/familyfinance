@@ -163,10 +163,17 @@ namespace FamilyFinance2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DELETE FROM EnvelopeLine
-        ///WHERE lineItemID IN (SELECT id FROM LineItem WHERE accountID = @@)
-        ///
-        ///--@@ 13.
+        ///   Looks up a localized string similar to -- Delete the orphaned EnvelopeLines
+        ///DELETE FROM EnvelopeLine
+        ///WHERE lineItemID IN 
+        ///	(SELECT LineItem.id 
+        ///	 FROM LineItem INNER JOIN Account ON LineItem.accountID = Account.id 
+        ///	 WHERE Account.envelopes = 0);
+        ///	 
+        ///-- Set all the LineItems.envelopeId to NULL
+        ///UPDATE LineItem
+        ///SET envelopeID = -1
+        ///WHERE accountID IN (SELECT id FROM Account WHERE envelopes = 0);.
         /// </summary>
         internal static string DeleteOrphanELines {
             get {
@@ -415,6 +422,13 @@ namespace FamilyFinance2.Properties {
         internal static System.Drawing.Bitmap TLVBank {
             get {
                 object obj = ResourceManager.GetObject("TLVBank", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap TLVBankAndFlag {
+            get {
+                object obj = ResourceManager.GetObject("TLVBankAndFlag", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

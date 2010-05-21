@@ -273,6 +273,8 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             this.Images.Images.Add(Properties.Resources.TLVRedFlag);
             this.Images.Images.Add(Properties.Resources.TLVRedBank);
             this.Images.Images.Add(Properties.Resources.TLVRedEnvelope);
+            this.Images.Images.Add(Properties.Resources.TLVBankAndFlag);
+
 
             // Build theTreeListView
             this.MultiSelect = false;
