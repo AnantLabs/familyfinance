@@ -142,9 +142,9 @@ namespace FamilyFinance2.SharedElements
             List<IdName> queryResults = new List<IdName>();
             SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
             SqlCeCommand command = new SqlCeCommand(query, connection);
-            SqlCeDataReader reader = command.ExecuteReader();
-
             connection.Open();
+
+            SqlCeDataReader reader = command.ExecuteReader();
 
             // Iterate through the results
             while (reader.Read())
@@ -163,9 +163,10 @@ namespace FamilyFinance2.SharedElements
             List<IdBalance> queryResults = new List<IdBalance>();
             SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
             SqlCeCommand command = new SqlCeCommand(query, connection);
+            connection.Open();
+
             SqlCeDataReader reader = command.ExecuteReader();
 
-            connection.Open();
 
             // Iterate through the results
             while (reader.Read())
@@ -184,9 +185,10 @@ namespace FamilyFinance2.SharedElements
             List<AccountErrors> queryResults = new List<AccountErrors>();
             SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
             SqlCeCommand command = new SqlCeCommand(query, connection);
+            connection.Open();
+
             SqlCeDataReader reader = command.ExecuteReader();
 
-            connection.Open();
 
             // Iterate through the results
             while (reader.Read())
@@ -205,9 +207,9 @@ namespace FamilyFinance2.SharedElements
             List<AccountDetails> queryResults = new List<AccountDetails>();
             SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
             SqlCeCommand command = new SqlCeCommand(query, connection);
-            SqlCeDataReader reader = command.ExecuteReader();
-
             connection.Open();
+
+            SqlCeDataReader reader = command.ExecuteReader();
 
             // Iterate through the results
             while (reader.Read())
@@ -226,9 +228,9 @@ namespace FamilyFinance2.SharedElements
             List<SubBalanceDetails> queryResults = new List<SubBalanceDetails>();
             SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
             SqlCeCommand command = new SqlCeCommand(query, connection);
-            SqlCeDataReader reader = command.ExecuteReader();
-
             connection.Open();
+
+            SqlCeDataReader reader = command.ExecuteReader();
 
             // Iterate through the results
             while (reader.Read())
@@ -299,6 +301,13 @@ namespace FamilyFinance2.SharedElements
             executeFile(Properties.Resources.BuildTables);
         }
 
+        static public void deleteOrphanELines()
+        {
+            executeFile(Properties.Resources.DeleteOrphanELines);
+        }
+
+
+
         static public int getNewID(string col, string table)
         {
             string query;
@@ -319,6 +328,27 @@ namespace FamilyFinance2.SharedElements
 
             return num + 1;
         }
+
+        public static int getELineCount(int accountID)
+        {
+            int count;
+            string query = Properties.Resources.CountELinesInAccount.Replace("@@", accountID.ToString());
+
+            count = Convert.ToInt32(queryValue(query));
+
+            return count;
+        }
+
+        public static int getErrorCount(int accountID)
+        {
+            int count;
+            string query = Properties.Resources.ErrorsInAccount.Replace("@@", accountID.ToString());
+
+            count = Convert.ToInt32(queryValue(query));
+
+            return count;
+        }
+
 
 
 
@@ -445,72 +475,6 @@ namespace FamilyFinance2.SharedElements
             return querySubBalanceDetails(query);
         }
 
-
-        //static public List<int> myDBGetIDList(string col, string table, string filter, string sort)
-        //{
-        //    SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
-        //    List<int> idList = new List<int>();
-        //    SqlCeCommand selectCmd;
-        //    SqlCeDataReader reader;
-        //    string command;
-
-        //    connection.Open();
-
-        //    command = "SELECT DISTINCT " + col;
-        //    command += " FROM " + table;
-
-        //    if (filter != "")
-        //        command += " WHERE " + filter;
-
-        //    if (sort != "")
-        //        command += " ORDER BY " + sort;
-
-        //    command += " ;";
-
-        //    selectCmd = new SqlCeCommand(command, connection);
-        //    reader = selectCmd.ExecuteReader();
-
-        //    while (reader.Read())
-        //        idList.Add(reader.GetInt32(0));
-
-        //    reader.Close();
-        //    connection.Close();
-
-        //    return idList;
-        //}
-
-        //static public decimal myDBGetSubSum(int lineID, out int subCount, out short envelopeID)
-        //{
-        //    SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
-        //    SqlCeCommand selectCmd = new SqlCeCommand();
-        //    SqlCeDataReader reader;
-        //    decimal sum;
-
-        //    sum = 0.0m;
-        //    subCount = 0;
-        //    envelopeID = SpclEnvelope.NULL;
-
-        //    connection.Open();
-
-        //    selectCmd.Connection = connection;
-        //    selectCmd.CommandText = "SELECT amount, envelopeID FROM SubLineItem WHERE lineItemID = " + lineID.ToString() + ";";
-        //    reader = selectCmd.ExecuteReader();
-
-        //    while (reader.Read())
-        //    {
-        //        sum += reader.GetDecimal(0);
-        //        subCount++;
-        //        envelopeID = reader.GetInt16(1);
-        //    }
-
-        //    if (subCount > 1)
-        //        envelopeID = SpclEnvelope.SPLIT;
-
-        //    reader.Close();
-        //    connection.Close();
-
-        //    return sum;
-        //}
 
 
 

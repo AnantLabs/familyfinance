@@ -12,9 +12,10 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
         Bank = 0, 
         Envelope = 1, 
         Money = 2, 
-        ErrorFlag = 3,
-        ErrorBank = 4,
-        ErrorEnvelope = 5
+        RedFlag = 3,
+        RedBank = 4,
+        RedEnvelope = 5,
+        BankAndFlag = 6
     };
 
     public enum MyNodes { Root, AccountType, EnvelopeGroup, Account, Envelope, AENode }
@@ -30,29 +31,12 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
         }
     }
 
-    public abstract class ErrorNode : BaseNode
+    public interface IErrorNode
     {
-        protected ErrorNode(MyNodes nodeType, String name)
-            : base(nodeType, name) 
-        {}
-
-        public void SetError(bool hasError)
-        {
-            if (hasError && this.NodeType == MyNodes.Account)
-                this.ImageId = (int)NodeImage.ErrorBank;
-
-            else if (hasError)
-                this.ImageId = (int)NodeImage.ErrorFlag;
-
-            else if (this.NodeType == MyNodes.Account)
-                this.ImageId = (int)NodeImage.Bank;
-
-            else
-                this.ImageId = (int)NodeImage.None;
-        }
+        void SetError(bool hasError);
     }
 
-    public class RootNode : ErrorNode
+    public class RootNode : BaseNode, IErrorNode
     {
         public readonly byte  Catagory;
 
@@ -62,9 +46,18 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             this.Catagory = catagory;
             this.HasChildren = true;
         }
+
+        public void SetError(bool hasError)
+        {
+            if (hasError)
+                this.ImageId = (int)NodeImage.RedFlag;
+
+            else
+                this.ImageId = (int)NodeImage.None;
+        }
     }
 
-    public class TypeNode : ErrorNode
+    public class TypeNode : BaseNode, IErrorNode
     {
         public readonly byte Catagory;
         public readonly int TypeID;
@@ -75,6 +68,15 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             this.TypeID = typeID;
             this.Catagory = catagory;
             this.HasChildren = true;
+        }
+
+        public void SetError(bool hasError)
+        {
+            if (hasError)
+                this.ImageId = (int)NodeImage.RedFlag;
+
+            else
+                this.ImageId = (int)NodeImage.None;
         }
     }
 
@@ -90,7 +92,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
         }
     }
 
-    public class AccountNode : ErrorNode
+    public class AccountNode : BaseNode, IErrorNode
     {
         public readonly byte Catagory;
         public readonly int AccountID;
@@ -118,6 +120,21 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
         public void setBalance(decimal balance)
         {
             this[1] = balance.ToString("C2");
+        }
+
+        public void SetError(bool hasError)
+        {
+            if (hasError && Catagory == SpclAccountCat.ACCOUNT)
+                this.ImageId = (int)NodeImage.BankAndFlag;
+
+            else if (hasError)
+                this.ImageId = (int)NodeImage.RedFlag;
+
+            else if (Catagory == SpclAccountCat.ACCOUNT)
+                this.ImageId = (int)NodeImage.Bank;
+
+            else
+                this.ImageId = (int)NodeImage.None;
         }
     }
 

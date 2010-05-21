@@ -346,8 +346,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FamilyFinanceDB.sdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\TLVBankAndFlag.png" />
     <Content Include="Resources\TLVRedEnvelope.png" />
     <None Include="Resources\DeleteOrphanELines.sqlce" />
     <None Include="Resources\TLVBank.png" />
