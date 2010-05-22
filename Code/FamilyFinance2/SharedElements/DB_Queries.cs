@@ -62,20 +62,19 @@ namespace FamilyFinance2.SharedElements
         }
     }
 
-    public class AccountErrors
+    public class AccountError
     {
         public byte Catagory;
         public int TypeID;
         public int AccountID;
 
-        public AccountErrors(byte catagory, int typeID, int accountID)
+        public AccountError(byte catagory, int typeID, int accountID)
         {
             this.Catagory = catagory;
             this.TypeID = typeID;
             this.AccountID = accountID;
         }
     }
-
 
 
     ///////////////////////////////////////////////////////////////////////
@@ -180,9 +179,9 @@ namespace FamilyFinance2.SharedElements
             return queryResults;
         }
 
-        static private List<AccountErrors> queryAccountErrors(string query)
+        static private List<AccountError> queryAccountErrors(string query)
         {
-            List<AccountErrors> queryResults = new List<AccountErrors>();
+            List<AccountError> queryResults = new List<AccountError>();
             SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
             SqlCeCommand command = new SqlCeCommand(query, connection);
             connection.Open();
@@ -192,7 +191,7 @@ namespace FamilyFinance2.SharedElements
 
             // Iterate through the results
             while (reader.Read())
-                queryResults.Add(new AccountErrors(reader.GetByte(0), reader.GetInt32(1), reader.GetInt32(2)));
+                queryResults.Add(new AccountError(reader.GetByte(0), reader.GetInt32(1), reader.GetInt32(2)));
 
             // Always call Close the reader and connection when done reading
             reader.Close();
@@ -436,7 +435,7 @@ namespace FamilyFinance2.SharedElements
 
 
 
-        static public List<AccountErrors> getAccountErrors()
+        static public List<AccountError> getAccountErrors()
         {
             return queryAccountErrors(Properties.Resources.ErrorAccounts);
         }
@@ -479,6 +478,7 @@ namespace FamilyFinance2.SharedElements
 
 
     }
+
 } // END namespace FamilyFinance
 
 
