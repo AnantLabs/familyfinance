@@ -80,7 +80,7 @@ namespace FamilyFinance2.SharedElements
     ///////////////////////////////////////////////////////////////////////
     //   DBquery Class
     ///////////////////////////////////////////////////////////////////////
-    public partial class DBquery
+    public class DBquery
     {
         ///////////////////////////////////////////////////////////////////////
         //   Private STATIC Queries
@@ -134,6 +134,27 @@ namespace FamilyFinance2.SharedElements
             sqlCmd.Dispose();
 
             return result;
+        }
+
+        static private List<int> queryIds(string query)
+        {
+            List<int> queryResults = new List<int>();
+            SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
+            SqlCeCommand command = new SqlCeCommand(query, connection);
+            connection.Open();
+
+            SqlCeDataReader reader = command.ExecuteReader();
+
+            // Iterate through the results
+            while (reader.Read())
+                queryResults.Add(reader.GetInt32(0));
+
+            // Always call Close the reader and connection when done reading
+            reader.Close();
+            command.Dispose();
+            connection.Close();
+
+            return queryResults;
         }
 
         static private List<IdName> queryIdNames(string query)
@@ -374,6 +395,19 @@ namespace FamilyFinance2.SharedElements
         }
 
 
+        static public List<int> getTransactionErrors(int accountID)
+        {
+            string query = Properties.Resources.TransactionErrors.Replace("@@", catagory.ToString());
+
+            return queryIds(query);
+        }
+
+        static public List<int> getLineErrors(int accountID)
+        {
+            string query = Properties.Resources.LineErrors.Replace("@@", catagory.ToString());
+
+            return queryIds(query);
+        }
 
         static public List<IdName> getAccountTypes(byte catagory)
         {
