@@ -181,9 +181,6 @@
   <data name="ErrorAccounts" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ErrorAccounts.sqlce;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="CountELinesInAccount" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CountELinesInAccount.sqlce;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="ErrorsInAccount" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ErrorsInAccount.sqlce;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
@@ -198,5 +195,8 @@
   </data>
   <data name="TLVBankAndFlag" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\tlvbankandflag.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CountELines" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\countelines.sqlce;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>
