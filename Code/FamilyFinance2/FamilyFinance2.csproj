@@ -206,8 +206,7 @@
     <Compile Include="Forms\Main\RegistrySplit\Register\SubLineDGV.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Forms\Main\RegistrySplit\RegistrySplitContainer.cs">
-    </Compile>
+    <Compile Include="Forms\Main\RegistrySplit\RegistrySplit.cs" />
     <Compile Include="Forms\Main\RegistrySplit\TreeView\AccountTLV.cs">
     </Compile>
     <Compile Include="Forms\Main\RegistrySplit\TreeView\MyTreeListNode.cs" />
@@ -266,9 +265,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Main\RegistrySplit\Register\MultiDataGridViewControl.resx">
       <DependentUpon>MultiDataGridViewControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Main\RegistrySplit\RegistrySplitContainer.resx">
-      <DependentUpon>RegistrySplitContainer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Transaction\TransactionForm.resx">
       <DependentUpon>TransactionForm.cs</DependentUpon>
