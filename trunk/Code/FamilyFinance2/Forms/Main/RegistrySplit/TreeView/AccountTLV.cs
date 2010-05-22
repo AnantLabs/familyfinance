@@ -67,7 +67,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
         ///////////////////////////////////////////////////////////////////////
         //   Internal Events
         ///////////////////////////////////////////////////////////////////////
-        private void theTreeListView_AfterSelect(object sender, TreeViewEventArgs e)
+        private void AccountTLV_AfterSelect(object sender, TreeViewEventArgs e)
         {
             int accountID = -1;
             int envelopeID = -1;
@@ -166,7 +166,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
         //   Error Finder
         ///////////////////////////////////////////////////////////////////////
         private BackgroundWorker e_Finder;
-        private List<AccountErrors> e_KnownErrors;
+        private List<AccountError> e_KnownErrors;
 
 
         private void findNewErrors()
@@ -175,30 +175,66 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
                 e_Finder.RunWorkerAsync();
         }
 
-        private void setErrorFlags(BaseNode node)
+        private bool setErrorFlag(BaseNode node, int accountID, bool error)
         {
             switch (node.NodeType)
             {
                 case MyNodes.EnvelopeGroup:
                 case MyNodes.Envelope:
                 case MyNodes.AENode:
-                    return;
+                    break;
                 case MyNodes.Root:
                     RootNode rNode = node as RootNode;
                     rNode.SetError(this.e_isCatagoryError(rNode.Catagory));
 
                     foreach (BaseNode child in node.Nodes)
-                        setErrorFlags(child);
-
+                        if (setErrorFlag(child, accountID, error))
+                            return true;
                     break;
+
                 case MyNodes.AccountType:
                     TypeNode tNode = node as TypeNode;
                     tNode.SetError(this.e_isTypeError(tNode.Catagory, tNode.TypeID));
 
                     foreach (BaseNode child in node.Nodes)
-                        setErrorFlags(child);
-
+                        if (setErrorFlag(child, accountID, error))
+                            return true;
                     break;
+
+                case MyNodes.Account:
+                    AccountNode aNode = node as AccountNode;
+                    if (aNode.AccountID == accountID)
+                    {
+                        aNode.SetError(error);
+                        return true;
+                    }
+                    break;
+            }
+            return false;
+        }
+
+        private void setErrorFlag(BaseNode node)
+        {
+            switch (node.NodeType)
+            {
+                case MyNodes.EnvelopeGroup:
+                case MyNodes.Envelope:
+                case MyNodes.AENode:
+                    break;
+                case MyNodes.Root:
+                    RootNode rNode = node as RootNode;
+                    rNode.SetError(this.e_isCatagoryError(rNode.Catagory));
+                    foreach (BaseNode child in node.Nodes)
+                        setErrorFlag(child);
+                    break;
+
+                case MyNodes.AccountType:
+                    TypeNode tNode = node as TypeNode;
+                    tNode.SetError(this.e_isTypeError(tNode.Catagory, tNode.TypeID));
+                    foreach (BaseNode child in node.Nodes)
+                        setErrorFlag(child);
+                    break;
+
                 case MyNodes.Account:
                     AccountNode aNode = node as AccountNode;
                     aNode.SetError(this.e_isAccountError(aNode.AccountID));
@@ -207,10 +243,9 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
         }
 
 
-
         private bool e_isCatagoryError(byte catagory)
         {
-            foreach (AccountErrors er in this.e_KnownErrors)
+            foreach (AccountError er in this.e_KnownErrors)
                 if (er.Catagory == catagory)
                     return true;
 
@@ -219,7 +254,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 
         private bool e_isTypeError(byte catagory, int typeID)
         {
-            foreach (AccountErrors er in this.e_KnownErrors)
+            foreach (AccountError er in this.e_KnownErrors)
                 if (er.TypeID == typeID && er.Catagory == catagory)
                     return true;
 
@@ -228,13 +263,12 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 
         private bool e_isAccountError(int accountID)
         {
-            foreach (AccountErrors er in this.e_KnownErrors)
+            foreach (AccountError er in this.e_KnownErrors)
                 if (er.AccountID == accountID)
                     return true;
 
             return false;
         }
-
 
 
         private void e_Finder_DoWork(object sender, DoWorkEventArgs e)
@@ -247,15 +281,54 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             if (e.Error != null)
                 throw new Exception("Finding account error exception", e.Error);
 
-            this.e_KnownErrors = e.Result as List<AccountErrors>;
+            List<AccountError> newErrors = e.Result as List<AccountError>;
 
-            for(int i = 0; i < this.Nodes.Count - 1; i++)
+            // Add the new error to the new list and set the flag
+            for (int i = 0; i < newErrors.Count; i++)
             {
-                setErrorFlags(this.Nodes[i] as RootNode);
+                AccountError aError = newErrors[i];
+                if (!this.e_KnownErrors.Contains(aError))
+                {
+                    this.e_KnownErrors.Add(aError);
+                    switch (aError.Catagory)
+                    {
+                        case SpclAccountCat.ACCOUNT:
+                            this.setErrorFlag(this.accountRootNode, aError.AccountID, true);
+                            break;
+                        case SpclAccountCat.EXPENSE:
+                            this.setErrorFlag(this.expenseRootNode, aError.AccountID, true);
+                            break;
+                        case SpclAccountCat.INCOME:
+                            this.setErrorFlag(this.incomeRootNode, aError.AccountID, true);
+                            break;
+                    }
+                }
             }
-        }
 
+            // Remove the fixed errors. Errors not in the new list.
+            for (int i = 0; i < this.e_KnownErrors.Count; i++)
+            {
+                AccountError aError = this.e_KnownErrors[i];
+                if (!newErrors.Contains(aError))
+                {
+                    this.e_KnownErrors.RemoveAt(i);
+                    i--;
+                    switch (aError.Catagory)
+                    {
+                        case SpclAccountCat.ACCOUNT:
+                            this.setErrorFlag(this.accountRootNode, aError.AccountID, false);
+                            break;
+                        case SpclAccountCat.EXPENSE:
+                            this.setErrorFlag(this.expenseRootNode, aError.AccountID, false);
+                            break;
+                        case SpclAccountCat.INCOME:
+                            this.setErrorFlag(this.incomeRootNode, aError.AccountID, false);
+                            break;
+                    }
+                }
+            }// END for loop
 
+        }// END e_Finder_RunWorkerCompleted()
 
  
         ///////////////////////////////////////////////////////////////////////
@@ -286,8 +359,9 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             this.RowOptions.ItemHeight = 20;
             this.ViewOptions.Indent = 10;
             this.Dock = DockStyle.Fill;
-            this.AfterSelect += new TreeViewEventHandler(theTreeListView_AfterSelect);
+            this.AfterSelect += new TreeViewEventHandler(AccountTLV_AfterSelect);
             this.NotifyBeforeExpand += new NotifyBeforeExpandHandler(AccountTLV_NotifyBeforeExpand);
+
 
             // Build the columns
             this.nameColumn = new TreeListColumn("nameColumn");
@@ -365,31 +439,30 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
         {
             // Clear the nodes
             this.Nodes.Clear();
-            this.findNewErrors();
+            //this.findNewErrors();
 
             // Add the Type Nodes to the catagory Root nodes
             this.accountRootNode.HasChildren = true;
             this.Nodes.Add(this.accountRootNode);
-            this.setErrorFlags(this.accountRootNode);
-
-            if (this.showExpenseMenuItem.Checked == true)
-            {
-                this.expenseRootNode.HasChildren = true;
-                this.Nodes.Add(this.expenseRootNode);
-                this.setErrorFlags(this.expenseRootNode);
-            }
+            this.setErrorFlag(this.accountRootNode);
 
             if (this.showIncomeMenuItem.Checked == true)
             {
                 this.incomeRootNode.HasChildren = true;
                 this.Nodes.Add(this.incomeRootNode);
-                this.setErrorFlags(this.incomeRootNode);
+                this.setErrorFlag(this.incomeRootNode);
+            }
+
+            if (this.showExpenseMenuItem.Checked == true)
+            {
+                this.expenseRootNode.HasChildren = true;
+                this.Nodes.Add(this.expenseRootNode);
+                this.setErrorFlag(this.expenseRootNode);
             }
 
             //Add the Envelope nodes
             this.envelopeRootNode.HasChildren = true;
             this.Nodes.Add(this.envelopeRootNode);
-
         }
 
 
@@ -438,7 +511,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
                     rNode.Nodes.Add(new AccountNode(cat, item.ID, item.Name, false));
             }
 
-            this.setErrorFlags(rNode);
+            this.setErrorFlag(rNode);
         }
 
         private void handleThisTypeNode(TypeNode tNode)
@@ -456,7 +529,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
                     this.updateBalanceRecurse(tNode, item.ID, SpclEnvelope.NULL, item.Balance);
             }
 
-            this.setErrorFlags(tNode);
+            this.setErrorFlag(tNode);
         }
 
         private void handleThisGroupNode(GroupNode gNode)
@@ -484,7 +557,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
                 }
             }
 
-            this.setErrorFlags(accNode);
+            this.setErrorFlag(accNode);
         }
 
         private void handleThisEnvelopeNode(EnvelopeNode envNode)
@@ -569,7 +642,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             e_Finder = new BackgroundWorker();
             e_Finder.RunWorkerCompleted += new RunWorkerCompletedEventHandler(e_Finder_RunWorkerCompleted);
             e_Finder.DoWork += new DoWorkEventHandler(e_Finder_DoWork);
-            this.e_KnownErrors = new List<AccountErrors>();
+            this.e_KnownErrors = new List<AccountError>();
 
             this.buildContextMenu();
             this.myInit();
