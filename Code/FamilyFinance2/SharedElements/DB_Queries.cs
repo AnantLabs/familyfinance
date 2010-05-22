@@ -352,17 +352,17 @@ namespace FamilyFinance2.SharedElements
         public static int getELineCount(int accountID)
         {
             int count;
-            string query = Properties.Resources.CountELinesInAccount.Replace("@@", accountID.ToString());
+            string query = Properties.Resources.CountELines.Replace("@@", accountID.ToString());
 
             count = Convert.ToInt32(queryValue(query));
 
             return count;
         }
 
-        public static int getErrorCount(int accountID)
+        public static int getAccountErrorCount(int accountID)
         {
             int count;
-            string query = Properties.Resources.ErrorsInAccount.Replace("@@", accountID.ToString());
+            string query = Properties.Resources.CountAccountErrors.Replace("@@", accountID.ToString());
 
             count = Convert.ToInt32(queryValue(query));
 
@@ -374,21 +374,21 @@ namespace FamilyFinance2.SharedElements
 
         static public decimal getAccBalance(int accountID)
         {
-            string query = Properties.Resources.SingleAccBalance.Replace("@@", accountID.ToString());
+            string query = Properties.Resources.AccountSingleBalance.Replace("@@", accountID.ToString());
 
             return queryBalance(query);
         }
 
         static public decimal getEnvBalance(int envelopeID)
         {
-            string query = Properties.Resources.SingleEnvBalance.Replace("@@", envelopeID.ToString());
+            string query = Properties.Resources.EnvelopeSingleBalance.Replace("@@", envelopeID.ToString());
 
             return queryBalance(query);
         }
 
         static public decimal getAEBalance(int accountID, int envelopeID)
         {
-            string query = Properties.Resources.SingleAEBalance.Replace("@eID", envelopeID.ToString());
+            string query = Properties.Resources.AESingleBalance.Replace("@eID", envelopeID.ToString());
             query = query.Replace("@aID", accountID.ToString());
 
             return queryBalance(query);
@@ -397,14 +397,14 @@ namespace FamilyFinance2.SharedElements
 
         static public List<int> getTransactionErrors(int accountID)
         {
-            string query = Properties.Resources.TransactionErrors.Replace("@@", catagory.ToString());
+            string query = Properties.Resources.LineTransactionErrors.Replace("@@", accountID.ToString());
 
             return queryIds(query);
         }
 
         static public List<int> getLineErrors(int accountID)
         {
-            string query = Properties.Resources.LineErrors.Replace("@@", catagory.ToString());
+            string query = Properties.Resources.LineEnvelopeLineErrors.Replace("@@", accountID.ToString());
 
             return queryIds(query);
         }
@@ -471,7 +471,7 @@ namespace FamilyFinance2.SharedElements
 
         static public List<AccountError> getAccountErrors()
         {
-            return queryAccountErrors(Properties.Resources.ErrorAccounts);
+            return queryAccountErrors(Properties.Resources.AccountErrors);
         }
 
 

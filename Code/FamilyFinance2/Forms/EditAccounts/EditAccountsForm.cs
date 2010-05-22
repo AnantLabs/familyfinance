@@ -156,7 +156,7 @@ namespace FamilyFinance2.Forms.EditAccounts
                 return;
 
             decimal balance = DBquery.getAccBalance(currentID);
-            int count = DBquery.getErrorCount(currentID);
+            int count = DBquery.getAccountErrorCount(currentID);
 
             if (balance == 0.0m && count == 0)
                 return;

@@ -1,22 +1,22 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
 using System.Data;
 using System.Text;
+using System.Drawing;
+using System.ComponentModel;
 using System.Windows.Forms;
+using System.Collections.Generic;
 using TreeList;
 using FamilyFinance2.SharedElements;
-using FamilyFinance2.Forms.Main.RegistrySplit.TreeView;
 
 namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 {
-    public class AccountTLV : TreeListView
+    public class AccountTLV
     {    
         ///////////////////////////////////////////////////////////////////////
         //   Local Variables
         ///////////////////////////////////////////////////////////////////////
-        
+        private TreeListView accTLV;
+
         private TreeListColumn nameColumn;
         private TreeListColumn balanceColumn;
 
@@ -29,6 +29,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
         private ToolStripMenuItem showExpenseMenuItem;
         private ToolStripMenuItem groupAccountsMenuItem;
         private ToolStripMenuItem groupEnvelopesMenuItem;
+
 
 
         ///////////////////////////////////////////////////////////////////////
@@ -72,22 +73,22 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             int accountID = -1;
             int envelopeID = -1;
 
-            MyNodes nodeType = (this.FocusedNode as BaseNode).NodeType;
+            MyNodes nodeType = (this.accTLV.FocusedNode as BaseNode).NodeType;
 
             switch (nodeType)
             {
                 case MyNodes.AENode:
-                    AENode aeNode = this.FocusedNode as AENode;
+                    AENode aeNode = this.accTLV.FocusedNode as AENode;
                     accountID = aeNode.AccountID;
                     envelopeID = aeNode.EnvelopeID;
                     break;
 
                 case MyNodes.Account:
-                    accountID = (this.FocusedNode as AccountNode).AccountID;
+                    accountID = (this.accTLV.FocusedNode as AccountNode).AccountID;
                     break;
 
                 case MyNodes.Envelope:
-                    envelopeID = (this.FocusedNode as EnvelopeNode).EnvelopeID;
+                    envelopeID = (this.accTLV.FocusedNode as EnvelopeNode).EnvelopeID;
                     break;
 
                 case MyNodes.Root:
@@ -336,31 +337,34 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
         ///////////////////////////////////////////////////////////////////////
         private void myInit()
         {
-            this.SuspendLayout();
+            this.accTLV.SuspendLayout();
+
+            this.accTLV.Text = "accountTLV";
+            this.accTLV.Dock = DockStyle.Fill;
 
             // Build Image list
-            this.Images = new ImageList();
-            this.Images.Images.Add(Properties.Resources.TLVBank);
-            this.Images.Images.Add(Properties.Resources.TLVEnvelope);
-            this.Images.Images.Add(Properties.Resources.TLVMoney);
-            this.Images.Images.Add(Properties.Resources.TLVRedFlag);
-            this.Images.Images.Add(Properties.Resources.TLVRedBank);
-            this.Images.Images.Add(Properties.Resources.TLVRedEnvelope);
-            this.Images.Images.Add(Properties.Resources.TLVBankAndFlag);
+            this.accTLV.Images = new ImageList();
+            this.accTLV.Images.Images.Add(Properties.Resources.TLVBank);
+            this.accTLV.Images.Images.Add(Properties.Resources.TLVEnvelope);
+            this.accTLV.Images.Images.Add(Properties.Resources.TLVMoney);
+            this.accTLV.Images.Images.Add(Properties.Resources.TLVRedFlag);
+            this.accTLV.Images.Images.Add(Properties.Resources.TLVRedBank);
+            this.accTLV.Images.Images.Add(Properties.Resources.TLVRedEnvelope);
+            this.accTLV.Images.Images.Add(Properties.Resources.TLVBankAndFlag);
 
 
             // Build theTreeListView
-            this.MultiSelect = false;
-            this.RowOptions.ShowHeader = false;
-            this.ColumnsOptions.HeaderHeight = 0;
-            this.ViewOptions.ShowGridLines = false;
-            this.ViewOptions.ShowLine = true;
-            this.Font = new Font(FontFamily.GenericSansSerif, 10, FontStyle.Regular);
-            this.RowOptions.ItemHeight = 20;
-            this.ViewOptions.Indent = 10;
-            this.Dock = DockStyle.Fill;
-            this.AfterSelect += new TreeViewEventHandler(AccountTLV_AfterSelect);
-            this.NotifyBeforeExpand += new NotifyBeforeExpandHandler(AccountTLV_NotifyBeforeExpand);
+            this.accTLV.MultiSelect = false;
+            this.accTLV.RowOptions.ShowHeader = false;
+            this.accTLV.ColumnsOptions.HeaderHeight = 0;
+            this.accTLV.ViewOptions.ShowGridLines = false;
+            this.accTLV.ViewOptions.ShowLine = true;
+            this.accTLV.Font = new Font(FontFamily.GenericSansSerif, 10, FontStyle.Regular);
+            this.accTLV.RowOptions.ItemHeight = 20;
+            this.accTLV.ViewOptions.Indent = 10;
+            this.accTLV.Dock = DockStyle.Fill;
+            this.accTLV.AfterSelect += new TreeViewEventHandler(AccountTLV_AfterSelect);
+            this.accTLV.NotifyBeforeExpand += new TreeListView.NotifyBeforeExpandHandler(AccountTLV_NotifyBeforeExpand);
 
 
             // Build the columns
@@ -376,16 +380,16 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             this.balanceColumn.CellFormat.TextAlignment = ContentAlignment.MiddleRight;
 
             // Add the columns
-            this.Columns.Add(nameColumn);
-            this.Columns.Add(balanceColumn);
+            this.accTLV.Columns.Add(nameColumn);
+            this.accTLV.Columns.Add(balanceColumn);
 
             // Make the ROOT nodes
             this.accountRootNode = new RootNode(SpclAccountCat.ACCOUNT, "Accounts");
             this.expenseRootNode = new RootNode(SpclAccountCat.EXPENSE, "Expenses");
             this.incomeRootNode = new RootNode(SpclAccountCat.INCOME, "Incomes");
-            this.envelopeRootNode = new RootNode(SpclAccountCat.ENVELOPE, "Envelopes"); 
+            this.envelopeRootNode = new RootNode(SpclAccountCat.ENVELOPE, "Envelopes");
 
-            this.ResumeLayout();
+            this.accTLV.ResumeLayout();
         }
 
         private void buildContextMenu()
@@ -425,12 +429,12 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             this.groupEnvelopesMenuItem.Click += new EventHandler(groupEnvelopesMenuItem_Click);
 
             // Context Menu for the AccountTreeListView
-            this.ContextMenuStrip = new ContextMenuStrip();
-            this.ContextMenuStrip.Items.Add(this.showIncomeMenuItem);
-            this.ContextMenuStrip.Items.Add(this.showExpenseMenuItem);
-            this.ContextMenuStrip.Items.Add(new ToolStripSeparator());
-            this.ContextMenuStrip.Items.Add(this.groupAccountsMenuItem);
-            this.ContextMenuStrip.Items.Add(this.groupEnvelopesMenuItem);
+            this.accTLV.ContextMenuStrip = new ContextMenuStrip();
+            this.accTLV.ContextMenuStrip.Items.Add(this.showIncomeMenuItem);
+            this.accTLV.ContextMenuStrip.Items.Add(this.showExpenseMenuItem);
+            this.accTLV.ContextMenuStrip.Items.Add(new ToolStripSeparator());
+            this.accTLV.ContextMenuStrip.Items.Add(this.groupAccountsMenuItem);
+            this.accTLV.ContextMenuStrip.Items.Add(this.groupEnvelopesMenuItem);
 
 
         }
@@ -438,31 +442,31 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
         private void rePlantTheRoots()
         {
             // Clear the nodes
-            this.Nodes.Clear();
+            this.accTLV.Nodes.Clear();
             //this.findNewErrors();
 
             // Add the Type Nodes to the catagory Root nodes
             this.accountRootNode.HasChildren = true;
-            this.Nodes.Add(this.accountRootNode);
+            this.accTLV.Nodes.Add(this.accountRootNode);
             this.setErrorFlag(this.accountRootNode);
 
             if (this.showIncomeMenuItem.Checked == true)
             {
                 this.incomeRootNode.HasChildren = true;
-                this.Nodes.Add(this.incomeRootNode);
+                this.accTLV.Nodes.Add(this.incomeRootNode);
                 this.setErrorFlag(this.incomeRootNode);
             }
 
             if (this.showExpenseMenuItem.Checked == true)
             {
                 this.expenseRootNode.HasChildren = true;
-                this.Nodes.Add(this.expenseRootNode);
+                this.accTLV.Nodes.Add(this.expenseRootNode);
                 this.setErrorFlag(this.expenseRootNode);
             }
 
             //Add the Envelope nodes
             this.envelopeRootNode.HasChildren = true;
-            this.Nodes.Add(this.envelopeRootNode);
+            this.accTLV.Nodes.Add(this.envelopeRootNode);
         }
 
 
@@ -635,6 +639,8 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
         ///////////////////////////////////////////////////////////////////////
         public AccountTLV()
         {
+            this.accTLV = new TreeListView();
+
             // Set Defaults
             selectedAccountID = SpclAccount.NULL;
             selectedEnvelopeID = SpclEnvelope.NULL;
@@ -646,7 +652,13 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
 
             this.buildContextMenu();
             this.myInit();
+            this.rePlantTheRoots();
             this.findNewErrors();
+        }
+
+        public Control getControls()
+        {
+            return this.accTLV;
         }
 
         public void updateBalance(int accountID, int envelopeID)
@@ -709,9 +721,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
             this.rePlantTheRoots();
         }
 
-        public void myRebuildTree()
-        {
-            this.rePlantTheRoots();
-        }
+
+
     }
 }

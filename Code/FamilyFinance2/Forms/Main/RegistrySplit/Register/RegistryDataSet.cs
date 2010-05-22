@@ -105,15 +105,20 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register
 
         public void myDeleteLine(int lineID)
         {
-            if (lineID != this.CurrentLineID)
-            {
-                this.tDataSet.myFillLineItemAndSubLine(this.LineItem.FindByid(lineID).transactionID);
-                this.tDataSet.myDeleteLine(lineID);
-                this.tDataSet.myCheckTransaction();
-                this.tDataSet.mySaveChanges();
+            int tID = this.LineItem.FindByid(lineID).transactionID;
 
-                this.LineItem.FindByid(lineID).Delete();
-                this.LineItem.FindByid(lineID).AcceptChanges();
+            this.tDataSet.myFillLineItemAndSubLine(tID);
+            this.tDataSet.myDeleteLine(lineID);
+            this.tDataSet.myCheckTransaction();
+            this.tDataSet.mySaveChanges();
+
+            foreach (LineItemRow row in this.LineItem)
+            {
+                if (row.transactionID == tID)
+                {
+                    row.Delete();
+                    row.AcceptChanges();
+                }
             }
         }
 

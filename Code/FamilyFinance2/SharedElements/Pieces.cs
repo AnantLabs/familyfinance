@@ -7,6 +7,7 @@ using System.Windows.Forms;
 
 namespace FamilyFinance2.SharedElements
 {
+
     /////////////////////////////////
     // Constants
     public class LineCD
@@ -60,48 +61,29 @@ namespace FamilyFinance2.SharedElements
     }
 
 
-
     /////////////////////////////////
-    // Custom List items, Passing variables and sorting classes
-    public enum DBTables { Account, AccountType, AEBalance, Envelope, LineItem, LineType, SubLineItem }
-    public class Changes
+    //   Data Structures 
+    public class AEChange
     {
-        public List<DBTables> Tables;
+        public int AccountID;
+        public int EnvelopeID;
 
-        public Changes()
+        public AEChange(int accountID, int envelopeID)
         {
-            Tables = new List<DBTables>();
-        }
-
-        public void AddTable(DBTables table)
-        {
-            bool found = false;
-
-            foreach (DBTables tab in this.Tables)
-            {
-                if (tab == table)
-                {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found)
-                this.Tables.Add(table);
-        }
-
-        public void Copy(Changes otherChanges)
-        {
-            foreach (DBTables tab in otherChanges.Tables)
-	        {
-                this.AddTable(tab);
-	        }
-
+            this.AccountID = accountID;
+            this.EnvelopeID = envelopeID;
         }
     }
 
 
+    /////////////////////////////////
+    // Interfaces
+    public interface IReportsErrors
+    {
+        List<int> getAccountChanges();
+        List<AEChange> getAEChanges();
+    }
 
-    // Data Source = "|DataDirectory|\FamilyFinanceDB.sdf"; File Mode = 'Read Write'; Max Database Size = 1024; Max Buffer Size = 640; Password = 's7upahu2umEcrabr!c#?u66v*FRad4gum2swe#22'; 
 
     ///////////////////////////////////////
     //  Special Celltypes

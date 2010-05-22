@@ -207,10 +207,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\Main\RegistrySplit\RegistrySplitContainer.cs">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Forms\Main\RegistrySplit\TreeView\AccountTLV.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\Main\RegistrySplit\TreeView\MyTreeListNode.cs" />
     <Compile Include="Forms\Transaction\CDLinesDGV.cs">
@@ -278,12 +276,18 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -345,12 +349,14 @@
     <Content Include="Resources\TLVBankAndFlag.png" />
     <Content Include="Resources\TLVRedEnvelope.png" />
     <None Include="Resources\AccountErrors.sqlce" />
-    <None Include="Resources\AccountErrorsCount.sqlce" />
     <None Include="Resources\AccountSingleBalance.sqlce" />
     <None Include="Resources\AESingleBalance.sqlce" />
+    <None Include="Resources\CountAccountErrors.sqlce" />
     <None Include="Resources\CountELines.sqlce" />
     <None Include="Resources\DeleteOrphanELines.sqlce" />
     <None Include="Resources\EnvelopeSingleBalance.sqlce" />
+    <None Include="Resources\LineEnvelopeLineErrors.sqlce" />
+    <None Include="Resources\LineTransactionErrors.sqlce" />
     <None Include="Resources\TLVBank.png" />
     <None Include="Resources\TLVRedBank.png" />
     <None Include="Forms\AccountType\AccountTypeDataSet.xsc">

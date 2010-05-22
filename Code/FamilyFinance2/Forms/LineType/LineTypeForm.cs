@@ -14,7 +14,6 @@ namespace FamilyFinance2.Forms.LineType
         ///////////////////////////////////////////////////////////////////////
         //   Local Variables
         ///////////////////////////////////////////////////////////////////////
-        public Changes Changes;
 
         ///////////////////////////////////////////////////////////////////////
         //   Internal Events
@@ -33,7 +32,6 @@ namespace FamilyFinance2.Forms.LineType
         private void LineTypeForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.SaveChanges();
-            this.Changes.AddTable(DBTables.LineType);
         }
 
 
@@ -54,8 +52,6 @@ namespace FamilyFinance2.Forms.LineType
         {
             InitializeComponent();
             this.lineTypeDataSet.LineType.myFillTable();
-
-            this.Changes = new Changes();
 
             this.lineTypeBindingSource.Filter = "id > " + SpclLineType.NULL.ToString();
             this.lineTypeBindingSource.Sort = "name";
