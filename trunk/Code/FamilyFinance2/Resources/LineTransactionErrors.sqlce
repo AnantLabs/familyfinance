@@ -1,0 +1,14 @@
+SELECT LineItem.id
+FROM LineItem
+WHERE accountID = @@ AND transactionID IN (
+	SELECT transactionID
+	FROM (
+		SELECT transactionID, 
+			   SUM(CASE WHEN LineItem.creditDebit = 0 THEN LineItem.amount ELSE 0 END) AS credit, 
+			   SUM(CASE WHEN LineItem.creditDebit = 1 THEN LineItem.amount ELSE 0 END) AS debit
+		FROM LineItem 
+		WHERE accountID <> oppAccountID 
+		GROUP BY transactionID ) AS TSums
+	WHERE credit <> debit)
+
+--@ 3

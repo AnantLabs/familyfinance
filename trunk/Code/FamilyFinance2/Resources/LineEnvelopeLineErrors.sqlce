@@ -1,0 +1,18 @@
+-- Find the Lines where the EnvelopeLines don't add up to the lines amount
+SELECT id
+FROM LineItem INNER JOIN (
+	SELECT lineItemID, 
+		   SUM(amount) AS amount 
+	FROM EnvelopeLine 
+	GROUP BY lineItemID) AS eSum ON LineItem.id = eSum.lineItemID
+WHERE LineItem.amount <> eSum.amount AND LineItem.accountID = @@
+
+UNION ALL
+
+--Find the accounts where the lines should have subLines
+SELECT id
+FROM LineItem
+WHERE accountID IN (SELECT id FROM Account WHERE envelopes = 1 AND ID = @@) 
+	  AND id NOT IN (SELECT lineItemID FROM EnvelopeLine)
+
+-- @ 3

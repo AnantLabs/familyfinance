@@ -6,13 +6,15 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+
+using FamilyFinance2.SharedElements;
 using FamilyFinance2.Forms.AccountType;
 using FamilyFinance2.Forms.EditAccounts;
 using FamilyFinance2.Forms.EditEnvelopes;
 using FamilyFinance2.Forms.LineType;
 using FamilyFinance2.Forms.Transaction;
 using FamilyFinance2.Forms.Import.Qif;
-using FamilyFinance2.SharedElements;
+using FamilyFinance2.Forms.Main.RegistrySplit;
 
 namespace FamilyFinance2.Forms.Main
 {
@@ -21,6 +23,7 @@ namespace FamilyFinance2.Forms.Main
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Local Avriables
         ////////////////////////////////////////////////////////////////////////////////////////////
+        private RegistySplit regSplit;
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -29,35 +32,35 @@ namespace FamilyFinance2.Forms.Main
         private void accountTypesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new AccountTypeForm().ShowDialog();
-            this.registySplitContainer1.myReloadAccountTypes();
+            this.regSplit.myReloadAccountTypes();
         }
 
         private void transactionTypesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new LineTypeForm().ShowDialog();
-            this.registySplitContainer1.myReloadLineType();
+            this.regSplit.myReloadLineType();
         }
 
         private void envelopesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new EditEnvelopesForm().ShowDialog();
-            this.registySplitContainer1.myReloadEnvelope();
+            this.regSplit.myReloadEnvelope();
         }
 
         private void accountsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new EditAccountsForm().ShowDialog();
-            this.registySplitContainer1.myReloadAccount();
+            this.regSplit.myReloadAccount();
         }
 
         private void importQIFToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new ImportQIFForm().ShowDialog();
-            this.registySplitContainer1.myReloadAccount();
-            this.registySplitContainer1.myReloadAccountTypes();
-            this.registySplitContainer1.myReloadEnvelope();
-            this.registySplitContainer1.myReloadLineItem();
-            this.registySplitContainer1.myReloadLineType();
+            this.regSplit.myReloadAccount();
+            this.regSplit.myReloadAccountTypes();
+            this.regSplit.myReloadEnvelope();
+            this.regSplit.myReloadLineItem();
+            this.regSplit.myReloadLineType();
         }
         
 
@@ -71,10 +74,15 @@ namespace FamilyFinance2.Forms.Main
         ////////////////////////////////////////////////////////////////////////////////////////////
         public MainForm()
         {
-
-
-
             InitializeComponent();
+            this.regSplit = new RegistySplit();
+
+            // Repack the controls
+            this.Controls.Clear();
+            this.Controls.Add(regSplit.getControl());
+            this.Controls.Add(this.mainToolStrip);
+
+            this.regSplit.setSplit(330);
         }
 
     }

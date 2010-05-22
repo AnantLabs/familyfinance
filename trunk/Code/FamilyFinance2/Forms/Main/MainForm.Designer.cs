@@ -1,6 +1,4 @@
-﻿using FamilyFinance2.Forms.Main.RegistrySplit;
-
-namespace FamilyFinance2.Forms.Main
+﻿namespace FamilyFinance2.Forms.Main
 {
     partial class MainForm
     {
@@ -37,7 +35,6 @@ namespace FamilyFinance2.Forms.Main
             this.transactionTypesTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.importQifTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.mainToolStrip = new System.Windows.Forms.ToolStrip();
-            this.registySplitContainer1 = new FamilyFinance2.Forms.Main.RegistrySplit.RegistySplitContainer();
             editTSDropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.mainToolStrip.SuspendLayout();
             this.SuspendLayout();
@@ -97,20 +94,11 @@ namespace FamilyFinance2.Forms.Main
             this.mainToolStrip.TabIndex = 0;
             this.mainToolStrip.Text = "toolStrip1";
             // 
-            // registySplitContainer1
-            // 
-            this.registySplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.registySplitContainer1.Location = new System.Drawing.Point(0, 25);
-            this.registySplitContainer1.Name = "registySplitContainer1";
-            this.registySplitContainer1.Size = new System.Drawing.Size(739, 501);
-            this.registySplitContainer1.TabIndex = 1;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(739, 526);
-            this.Controls.Add(this.registySplitContainer1);
             this.Controls.Add(this.mainToolStrip);
             this.Name = "MainForm";
             this.Text = "Family Finance";
@@ -128,7 +116,6 @@ namespace FamilyFinance2.Forms.Main
         private System.Windows.Forms.ToolStripMenuItem envelopesTSMI;
         private System.Windows.Forms.ToolStripMenuItem transactionTypesTSMI;
         private System.Windows.Forms.ToolStripMenuItem importQifTSMI;
-        private RegistySplitContainer registySplitContainer1;
 
     }
 }
