@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using FamilyFinance2.SharedElements;
 
-namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
+namespace FamilyFinance2.Forms.Main.RegistrySplit
 {
 
     public enum NodeImage 

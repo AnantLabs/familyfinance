@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using TreeList;
 using FamilyFinance2.SharedElements;
 
-namespace FamilyFinance2.Forms.Main.RegistrySplit.TreeView
+namespace FamilyFinance2.Forms.Main.RegistrySplit
 {
     public class AccountTLV
     {    
