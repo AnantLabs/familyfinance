@@ -33,6 +33,8 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register {
         
         private LineTypeDataTable tableLineType;
         
+        private EnvelopeLineViewDataTable tableEnvelopeLineView;
+        
         private global::System.Data.DataRelation relationFK_Line_accountID;
         
         private global::System.Data.DataRelation relationFK_Line_envelopeID;
@@ -78,6 +80,9 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register {
                 }
                 if ((ds.Tables["LineType"] != null)) {
                     base.Tables.Add(new LineTypeDataTable(ds.Tables["LineType"]));
+                }
+                if ((ds.Tables["EnvelopeLineView"] != null)) {
+                    base.Tables.Add(new EnvelopeLineViewDataTable(ds.Tables["EnvelopeLineView"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -130,6 +135,15 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register {
         public LineTypeDataTable LineType {
             get {
                 return this.tableLineType;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public EnvelopeLineViewDataTable EnvelopeLineView {
+            get {
+                return this.tableEnvelopeLineView;
             }
         }
         
@@ -204,6 +218,9 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register {
                 if ((ds.Tables["LineType"] != null)) {
                     base.Tables.Add(new LineTypeDataTable(ds.Tables["LineType"]));
                 }
+                if ((ds.Tables["EnvelopeLineView"] != null)) {
+                    base.Tables.Add(new EnvelopeLineViewDataTable(ds.Tables["EnvelopeLineView"]));
+                }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
                 this.Namespace = ds.Namespace;
@@ -258,6 +275,12 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register {
                     this.tableLineType.InitVars();
                 }
             }
+            this.tableEnvelopeLineView = ((EnvelopeLineViewDataTable)(base.Tables["EnvelopeLineView"]));
+            if ((initTable == true)) {
+                if ((this.tableEnvelopeLineView != null)) {
+                    this.tableEnvelopeLineView.InitVars();
+                }
+            }
             this.relationFK_Line_accountID = this.Relations["FK_Line_accountID"];
             this.relationFK_Line_envelopeID = this.Relations["FK_Line_envelopeID"];
             this.relationFK_Line_oppAccountID = this.Relations["FK_Line_oppAccountID"];
@@ -279,6 +302,8 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register {
             base.Tables.Add(this.tableLineItem);
             this.tableLineType = new LineTypeDataTable();
             base.Tables.Add(this.tableLineType);
+            this.tableEnvelopeLineView = new EnvelopeLineViewDataTable();
+            base.Tables.Add(this.tableEnvelopeLineView);
             this.relationFK_Line_accountID = new global::System.Data.DataRelation("FK_Line_accountID", new global::System.Data.DataColumn[] {
                         this.tableAccount.idColumn}, new global::System.Data.DataColumn[] {
                         this.tableLineItem.accountIDColumn}, false);
@@ -314,6 +339,11 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         private bool ShouldSerializeLineType() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private bool ShouldSerializeEnvelopeLineView() {
             return false;
         }
         
@@ -377,6 +407,8 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register {
         public delegate void LineItemRowChangeEventHandler(object sender, LineItemRowChangeEvent e);
         
         public delegate void LineTypeRowChangeEventHandler(object sender, LineTypeRowChangeEvent e);
+        
+        public delegate void EnvelopeLineViewRowChangeEventHandler(object sender, EnvelopeLineViewRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -1707,6 +1739,437 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register {
         }
         
         /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class EnvelopeLineViewDataTable : global::System.Data.TypedTableBase<EnvelopeLineViewRow> {
+            
+            private global::System.Data.DataColumn columntransactionID;
+            
+            private global::System.Data.DataColumn columnlineItemID;
+            
+            private global::System.Data.DataColumn columneLineID;
+            
+            private global::System.Data.DataColumn columndate;
+            
+            private global::System.Data.DataColumn columnlineDescription;
+            
+            private global::System.Data.DataColumn columndescription;
+            
+            private global::System.Data.DataColumn columncreditDebit;
+            
+            private global::System.Data.DataColumn columnamount;
+            
+            private global::System.Data.DataColumn columncomplete;
+            
+            private global::System.Data.DataColumn columncreditAmount;
+            
+            private global::System.Data.DataColumn columndebitAmount;
+            
+            private global::System.Data.DataColumn columnbalanceAmount;
+            
+            private global::System.Data.DataColumn columnlineType;
+            
+            private global::System.Data.DataColumn columnsourceAccount;
+            
+            private global::System.Data.DataColumn columndestinationAccount;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public EnvelopeLineViewDataTable() {
+                this.TableName = "EnvelopeLineView";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            internal EnvelopeLineViewDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected EnvelopeLineViewDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn transactionIDColumn {
+                get {
+                    return this.columntransactionID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn lineItemIDColumn {
+                get {
+                    return this.columnlineItemID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn eLineIDColumn {
+                get {
+                    return this.columneLineID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn dateColumn {
+                get {
+                    return this.columndate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn lineDescriptionColumn {
+                get {
+                    return this.columnlineDescription;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn descriptionColumn {
+                get {
+                    return this.columndescription;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn creditDebitColumn {
+                get {
+                    return this.columncreditDebit;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn amountColumn {
+                get {
+                    return this.columnamount;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn completeColumn {
+                get {
+                    return this.columncomplete;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn creditAmountColumn {
+                get {
+                    return this.columncreditAmount;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn debitAmountColumn {
+                get {
+                    return this.columndebitAmount;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn balanceAmountColumn {
+                get {
+                    return this.columnbalanceAmount;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn lineTypeColumn {
+                get {
+                    return this.columnlineType;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn sourceAccountColumn {
+                get {
+                    return this.columnsourceAccount;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn destinationAccountColumn {
+                get {
+                    return this.columndestinationAccount;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public EnvelopeLineViewRow this[int index] {
+                get {
+                    return ((EnvelopeLineViewRow)(this.Rows[index]));
+                }
+            }
+            
+            public event EnvelopeLineViewRowChangeEventHandler EnvelopeLineViewRowChanging;
+            
+            public event EnvelopeLineViewRowChangeEventHandler EnvelopeLineViewRowChanged;
+            
+            public event EnvelopeLineViewRowChangeEventHandler EnvelopeLineViewRowDeleting;
+            
+            public event EnvelopeLineViewRowChangeEventHandler EnvelopeLineViewRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void AddEnvelopeLineViewRow(EnvelopeLineViewRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public EnvelopeLineViewRow AddEnvelopeLineViewRow(int transactionID, int lineItemID, int eLineID, System.DateTime date, string lineDescription, string description, bool creditDebit, decimal amount, string complete, decimal creditAmount, decimal debitAmount, decimal balanceAmount, string lineType, string sourceAccount, string destinationAccount) {
+                EnvelopeLineViewRow rowEnvelopeLineViewRow = ((EnvelopeLineViewRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        transactionID,
+                        lineItemID,
+                        eLineID,
+                        date,
+                        lineDescription,
+                        description,
+                        creditDebit,
+                        amount,
+                        complete,
+                        creditAmount,
+                        debitAmount,
+                        balanceAmount,
+                        lineType,
+                        sourceAccount,
+                        destinationAccount};
+                rowEnvelopeLineViewRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowEnvelopeLineViewRow);
+                return rowEnvelopeLineViewRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public EnvelopeLineViewRow FindByeLineID(int eLineID) {
+                return ((EnvelopeLineViewRow)(this.Rows.Find(new object[] {
+                            eLineID})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public override global::System.Data.DataTable Clone() {
+                EnvelopeLineViewDataTable cln = ((EnvelopeLineViewDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new EnvelopeLineViewDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            internal void InitVars() {
+                this.columntransactionID = base.Columns["transactionID"];
+                this.columnlineItemID = base.Columns["lineItemID"];
+                this.columneLineID = base.Columns["eLineID"];
+                this.columndate = base.Columns["date"];
+                this.columnlineDescription = base.Columns["lineDescription"];
+                this.columndescription = base.Columns["description"];
+                this.columncreditDebit = base.Columns["creditDebit"];
+                this.columnamount = base.Columns["amount"];
+                this.columncomplete = base.Columns["complete"];
+                this.columncreditAmount = base.Columns["creditAmount"];
+                this.columndebitAmount = base.Columns["debitAmount"];
+                this.columnbalanceAmount = base.Columns["balanceAmount"];
+                this.columnlineType = base.Columns["lineType"];
+                this.columnsourceAccount = base.Columns["sourceAccount"];
+                this.columndestinationAccount = base.Columns["destinationAccount"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            private void InitClass() {
+                this.columntransactionID = new global::System.Data.DataColumn("transactionID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntransactionID);
+                this.columnlineItemID = new global::System.Data.DataColumn("lineItemID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnlineItemID);
+                this.columneLineID = new global::System.Data.DataColumn("eLineID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columneLineID);
+                this.columndate = new global::System.Data.DataColumn("date", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columndate);
+                this.columnlineDescription = new global::System.Data.DataColumn("lineDescription", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnlineDescription);
+                this.columndescription = new global::System.Data.DataColumn("description", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columndescription);
+                this.columncreditDebit = new global::System.Data.DataColumn("creditDebit", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncreditDebit);
+                this.columnamount = new global::System.Data.DataColumn("amount", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnamount);
+                this.columncomplete = new global::System.Data.DataColumn("complete", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncomplete);
+                this.columncreditAmount = new global::System.Data.DataColumn("creditAmount", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncreditAmount);
+                this.columndebitAmount = new global::System.Data.DataColumn("debitAmount", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columndebitAmount);
+                this.columnbalanceAmount = new global::System.Data.DataColumn("balanceAmount", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnbalanceAmount);
+                this.columnlineType = new global::System.Data.DataColumn("lineType", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnlineType);
+                this.columnsourceAccount = new global::System.Data.DataColumn("sourceAccount", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnsourceAccount);
+                this.columndestinationAccount = new global::System.Data.DataColumn("destinationAccount", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columndestinationAccount);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columneLineID}, true));
+                this.columntransactionID.ReadOnly = true;
+                this.columnlineItemID.ReadOnly = true;
+                this.columneLineID.AllowDBNull = false;
+                this.columneLineID.ReadOnly = true;
+                this.columneLineID.Unique = true;
+                this.columndate.ReadOnly = true;
+                this.columnlineDescription.ReadOnly = true;
+                this.columnlineDescription.MaxLength = 536870911;
+                this.columndescription.ReadOnly = true;
+                this.columndescription.MaxLength = 536870911;
+                this.columncreditDebit.ReadOnly = true;
+                this.columnamount.ReadOnly = true;
+                this.columncomplete.ReadOnly = true;
+                this.columncomplete.MaxLength = 1;
+                this.columnlineType.ReadOnly = true;
+                this.columnlineType.MaxLength = 15;
+                this.columnsourceAccount.MaxLength = 30;
+                this.columndestinationAccount.MaxLength = 30;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public EnvelopeLineViewRow NewEnvelopeLineViewRow() {
+                return ((EnvelopeLineViewRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new EnvelopeLineViewRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override global::System.Type GetRowType() {
+                return typeof(EnvelopeLineViewRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.EnvelopeLineViewRowChanged != null)) {
+                    this.EnvelopeLineViewRowChanged(this, new EnvelopeLineViewRowChangeEvent(((EnvelopeLineViewRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.EnvelopeLineViewRowChanging != null)) {
+                    this.EnvelopeLineViewRowChanging(this, new EnvelopeLineViewRowChangeEvent(((EnvelopeLineViewRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.EnvelopeLineViewRowDeleted != null)) {
+                    this.EnvelopeLineViewRowDeleted(this, new EnvelopeLineViewRowChangeEvent(((EnvelopeLineViewRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.EnvelopeLineViewRowDeleting != null)) {
+                    this.EnvelopeLineViewRowDeleting(this, new EnvelopeLineViewRowChangeEvent(((EnvelopeLineViewRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void RemoveEnvelopeLineViewRow(EnvelopeLineViewRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                RegistryDataSet ds = new RegistryDataSet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "EnvelopeLineViewDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
@@ -2222,6 +2685,381 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register {
         }
         
         /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+        public partial class EnvelopeLineViewRow : global::System.Data.DataRow {
+            
+            private EnvelopeLineViewDataTable tableEnvelopeLineView;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            internal EnvelopeLineViewRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableEnvelopeLineView = ((EnvelopeLineViewDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public int transactionID {
+                get {
+                    try {
+                        return ((int)(this[this.tableEnvelopeLineView.transactionIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'transactionID\' in table \'EnvelopeLineView\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnvelopeLineView.transactionIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public int lineItemID {
+                get {
+                    try {
+                        return ((int)(this[this.tableEnvelopeLineView.lineItemIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'lineItemID\' in table \'EnvelopeLineView\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnvelopeLineView.lineItemIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public int eLineID {
+                get {
+                    return ((int)(this[this.tableEnvelopeLineView.eLineIDColumn]));
+                }
+                set {
+                    this[this.tableEnvelopeLineView.eLineIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public System.DateTime date {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tableEnvelopeLineView.dateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'date\' in table \'EnvelopeLineView\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnvelopeLineView.dateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public string lineDescription {
+                get {
+                    try {
+                        return ((string)(this[this.tableEnvelopeLineView.lineDescriptionColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'lineDescription\' in table \'EnvelopeLineView\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnvelopeLineView.lineDescriptionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public string description {
+                get {
+                    try {
+                        return ((string)(this[this.tableEnvelopeLineView.descriptionColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'description\' in table \'EnvelopeLineView\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnvelopeLineView.descriptionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool creditDebit {
+                get {
+                    try {
+                        return ((bool)(this[this.tableEnvelopeLineView.creditDebitColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'creditDebit\' in table \'EnvelopeLineView\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnvelopeLineView.creditDebitColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public decimal amount {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableEnvelopeLineView.amountColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'amount\' in table \'EnvelopeLineView\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnvelopeLineView.amountColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public string complete {
+                get {
+                    try {
+                        return ((string)(this[this.tableEnvelopeLineView.completeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'complete\' in table \'EnvelopeLineView\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnvelopeLineView.completeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public decimal creditAmount {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableEnvelopeLineView.creditAmountColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'creditAmount\' in table \'EnvelopeLineView\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnvelopeLineView.creditAmountColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public decimal debitAmount {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableEnvelopeLineView.debitAmountColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'debitAmount\' in table \'EnvelopeLineView\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnvelopeLineView.debitAmountColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public decimal balanceAmount {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableEnvelopeLineView.balanceAmountColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'balanceAmount\' in table \'EnvelopeLineView\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnvelopeLineView.balanceAmountColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public string lineType {
+                get {
+                    try {
+                        return ((string)(this[this.tableEnvelopeLineView.lineTypeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'lineType\' in table \'EnvelopeLineView\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnvelopeLineView.lineTypeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public string sourceAccount {
+                get {
+                    try {
+                        return ((string)(this[this.tableEnvelopeLineView.sourceAccountColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'sourceAccount\' in table \'EnvelopeLineView\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnvelopeLineView.sourceAccountColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public string destinationAccount {
+                get {
+                    try {
+                        return ((string)(this[this.tableEnvelopeLineView.destinationAccountColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'destinationAccount\' in table \'EnvelopeLineView\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEnvelopeLineView.destinationAccountColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IstransactionIDNull() {
+                return this.IsNull(this.tableEnvelopeLineView.transactionIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SettransactionIDNull() {
+                this[this.tableEnvelopeLineView.transactionIDColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IslineItemIDNull() {
+                return this.IsNull(this.tableEnvelopeLineView.lineItemIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetlineItemIDNull() {
+                this[this.tableEnvelopeLineView.lineItemIDColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsdateNull() {
+                return this.IsNull(this.tableEnvelopeLineView.dateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetdateNull() {
+                this[this.tableEnvelopeLineView.dateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IslineDescriptionNull() {
+                return this.IsNull(this.tableEnvelopeLineView.lineDescriptionColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetlineDescriptionNull() {
+                this[this.tableEnvelopeLineView.lineDescriptionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsdescriptionNull() {
+                return this.IsNull(this.tableEnvelopeLineView.descriptionColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetdescriptionNull() {
+                this[this.tableEnvelopeLineView.descriptionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IscreditDebitNull() {
+                return this.IsNull(this.tableEnvelopeLineView.creditDebitColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetcreditDebitNull() {
+                this[this.tableEnvelopeLineView.creditDebitColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsamountNull() {
+                return this.IsNull(this.tableEnvelopeLineView.amountColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetamountNull() {
+                this[this.tableEnvelopeLineView.amountColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IscompleteNull() {
+                return this.IsNull(this.tableEnvelopeLineView.completeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetcompleteNull() {
+                this[this.tableEnvelopeLineView.completeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IscreditAmountNull() {
+                return this.IsNull(this.tableEnvelopeLineView.creditAmountColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetcreditAmountNull() {
+                this[this.tableEnvelopeLineView.creditAmountColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsdebitAmountNull() {
+                return this.IsNull(this.tableEnvelopeLineView.debitAmountColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetdebitAmountNull() {
+                this[this.tableEnvelopeLineView.debitAmountColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsbalanceAmountNull() {
+                return this.IsNull(this.tableEnvelopeLineView.balanceAmountColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetbalanceAmountNull() {
+                this[this.tableEnvelopeLineView.balanceAmountColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IslineTypeNull() {
+                return this.IsNull(this.tableEnvelopeLineView.lineTypeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetlineTypeNull() {
+                this[this.tableEnvelopeLineView.lineTypeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IssourceAccountNull() {
+                return this.IsNull(this.tableEnvelopeLineView.sourceAccountColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetsourceAccountNull() {
+                this[this.tableEnvelopeLineView.sourceAccountColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public bool IsdestinationAccountNull() {
+                return this.IsNull(this.tableEnvelopeLineView.destinationAccountColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public void SetdestinationAccountNull() {
+                this[this.tableEnvelopeLineView.destinationAccountColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
@@ -2332,6 +3170,37 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public LineTypeRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+        public class EnvelopeLineViewRowChangeEvent : global::System.EventArgs {
+            
+            private EnvelopeLineViewRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public EnvelopeLineViewRowChangeEvent(EnvelopeLineViewRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public EnvelopeLineViewRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -3000,6 +3869,225 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit.Register.RegistryDataSetTableA
         public virtual RegistryDataSet.LineTypeDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             RegistryDataSet.LineTypeDataTable dataTable = new RegistryDataSet.LineTypeDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+    }
+    
+    /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class EnvelopeLineViewTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.SqlServerCe.SqlCeDataAdapter _adapter;
+        
+        private global::System.Data.SqlServerCe.SqlCeConnection _connection;
+        
+        private global::System.Data.SqlServerCe.SqlCeTransaction _transaction;
+        
+        private global::System.Data.SqlServerCe.SqlCeCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public EnvelopeLineViewTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        protected internal global::System.Data.SqlServerCe.SqlCeDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        internal global::System.Data.SqlServerCe.SqlCeConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::System.Data.SqlServerCe.SqlCeCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        internal global::System.Data.SqlServerCe.SqlCeTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        protected global::System.Data.SqlServerCe.SqlCeCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private void InitAdapter() {
+            this._adapter = new global::System.Data.SqlServerCe.SqlCeDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "EnvelopeLineView";
+            tableMapping.ColumnMappings.Add("transactionID", "transactionID");
+            tableMapping.ColumnMappings.Add("id", "lineItemID");
+            tableMapping.ColumnMappings.Add("eLineID", "eLineID");
+            tableMapping.ColumnMappings.Add("date", "date");
+            tableMapping.ColumnMappings.Add("description", "lineDescription");
+            tableMapping.ColumnMappings.Add("subDescription", "description");
+            tableMapping.ColumnMappings.Add("creditDebit", "creditDebit");
+            tableMapping.ColumnMappings.Add("amount", "amount");
+            tableMapping.ColumnMappings.Add("complete", "complete");
+            tableMapping.ColumnMappings.Add("lineType", "lineType");
+            tableMapping.ColumnMappings.Add("sourceAccount", "sourceAccount");
+            tableMapping.ColumnMappings.Add("destinationAccount", "destinationAccount");
+            this._adapter.TableMappings.Add(tableMapping);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private void InitConnection() {
+            this._connection = new global::System.Data.SqlServerCe.SqlCeConnection();
+            this._connection.ConnectionString = global::FamilyFinance2.Properties.Settings.Default.FFDBConnectionString;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.SqlServerCe.SqlCeCommand[2];
+            this._commandCollection[0] = new global::System.Data.SqlServerCe.SqlCeCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = @"SELECT        LineItem.transactionID, LineItem.id, EnvelopeLine.id AS eLineID, LineItem.date, LineType.name AS lineType, Account.name AS sourceAccount, 
+                         OppAccount.name AS destinationAccount, LineItem.description, EnvelopeLine.description AS subDescription, LineItem.creditDebit, EnvelopeLine.amount, 
+                         LineItem.complete
+FROM            EnvelopeLine INNER JOIN
+                         LineItem ON EnvelopeLine.lineItemID = LineItem.id INNER JOIN
+                         LineType ON LineItem.typeID = LineType.id INNER JOIN
+                         Account ON LineItem.accountID = Account.id INNER JOIN
+                         Account AS OppAccount ON LineItem.oppAccountID = OppAccount.id
+WHERE        (LineItem.accountID = @aID) AND (EnvelopeLine.envelopeID = @eID)";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@aID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, true, 0, 0, "accountID", global::System.Data.DataRowVersion.Current, null));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@eID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, true, 0, 0, "envelopeID", global::System.Data.DataRowVersion.Current, null));
+            this._commandCollection[1] = new global::System.Data.SqlServerCe.SqlCeCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = @"SELECT        LineItem.transactionID, LineItem.id, EnvelopeLine.id AS eLineID, LineItem.date, LineType.name AS lineType, Account.name AS sourceAccount, 
+                         OppAccount.name AS destinationAccount, LineItem.description, EnvelopeLine.description AS subDescription, LineItem.creditDebit, EnvelopeLine.amount, 
+                         LineItem.complete
+FROM            EnvelopeLine INNER JOIN
+                         LineItem ON EnvelopeLine.lineItemID = LineItem.id INNER JOIN
+                         LineType ON LineItem.typeID = LineType.id INNER JOIN
+                         Account ON LineItem.accountID = Account.id INNER JOIN
+                         Account AS OppAccount ON LineItem.oppAccountID = OppAccount.id
+WHERE        (EnvelopeLine.envelopeID = @eID)";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@eID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, true, 0, 0, "envelopeID", global::System.Data.DataRowVersion.Current, null));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int FillByAccountAndEnvelope(RegistryDataSet.EnvelopeLineViewDataTable dataTable, int aID, int eID) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(aID));
+            this.Adapter.SelectCommand.Parameters[1].Value = ((int)(eID));
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual RegistryDataSet.EnvelopeLineViewDataTable GetDataByAccountAndEnvelope(int aID, int eID) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(aID));
+            this.Adapter.SelectCommand.Parameters[1].Value = ((int)(eID));
+            RegistryDataSet.EnvelopeLineViewDataTable dataTable = new RegistryDataSet.EnvelopeLineViewDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillByEnvelope(RegistryDataSet.EnvelopeLineViewDataTable dataTable, int eID) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(eID));
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual RegistryDataSet.EnvelopeLineViewDataTable GetDataByEnvelope(int eID) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(eID));
+            RegistryDataSet.EnvelopeLineViewDataTable dataTable = new RegistryDataSet.EnvelopeLineViewDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }

@@ -176,15 +176,7 @@
     <Compile Include="Forms\Main\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Main\RegistrySplit\Register\LineItemDGV.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\Main\RegistrySplit\Register\MultiDataGridViewControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Forms\Main\RegistrySplit\Register\MultiDataGridViewControl.Designer.cs">
-      <DependentUpon>MultiDataGridViewControl.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Forms\Main\RegistrySplit\Register\MultiDataGridView.cs" />
     <Compile Include="Forms\Main\RegistrySplit\Register\RegistryDataSet.cs">
       <DependentUpon>RegistryDataSet.xsd</DependentUpon>
       <SubType>Component</SubType>
@@ -194,18 +186,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="Forms\Main\RegistrySplit\Register\SubLineDataSet.cs">
-      <DependentUpon>SubLineDataSet.xsd</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\Main\RegistrySplit\Register\SubLineDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SubLineDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Main\RegistrySplit\Register\SubLineDGV.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Forms\Main\RegistrySplit\RegistrySplit.cs" />
     <Compile Include="Forms\Main\RegistrySplit\TreeView\AccountTLV.cs">
     </Compile>
@@ -214,9 +194,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\Transaction\EnvelopeLineDGV.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\Transaction\MyDataGridView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\Transaction\TransactionDataSet.cs">
@@ -262,9 +239,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Main\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Main\RegistrySplit\Register\MultiDataGridViewControl.resx">
-      <DependentUpon>MultiDataGridViewControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Transaction\TransactionForm.resx">
       <DependentUpon>TransactionForm.cs</DependentUpon>
@@ -431,17 +405,6 @@
     </None>
     <None Include="Forms\Main\RegistrySplit\Register\RegistryDataSet.xss">
       <DependentUpon>RegistryDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="Forms\Main\RegistrySplit\Register\SubLineDataSet.xsc">
-      <DependentUpon>SubLineDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="Forms\Main\RegistrySplit\Register\SubLineDataSet.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>SubLineDataSet.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Forms\Main\RegistrySplit\Register\SubLineDataSet.xss">
-      <DependentUpon>SubLineDataSet.xsd</DependentUpon>
     </None>
     <None Include="Forms\Transaction\TransactionDataSet.xsc">
       <DependentUpon>TransactionDataSet.xsd</DependentUpon>
