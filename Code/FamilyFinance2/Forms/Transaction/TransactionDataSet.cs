@@ -159,7 +159,7 @@ namespace FamilyFinance2.Forms.Transaction
 
         ///////////////////////////////////////////
         // Used by the Registry dataset
-        public void myForwardLineEdits(FamilyFinance2.Forms.Main.RegistrySplit.Register.RegistryDataSet.LineItemRow newRow)
+        public void myForwardLineEdits(FamilyFinance2.Forms.Main.RegistrySplit.RegistryDataSet.LineItemRow newRow)
         {
             LineItemRow oldRow = this.LineItem.FindByid(newRow.id);
             int tranSize = this.LineItem.Rows.Count;
