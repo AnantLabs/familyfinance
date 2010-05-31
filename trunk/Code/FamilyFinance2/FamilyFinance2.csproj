@@ -176,20 +176,17 @@
     <Compile Include="Forms\Main\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Main\RegistrySplit\Register\MultiDataGridView.cs" />
-    <Compile Include="Forms\Main\RegistrySplit\Register\RegistryDataSet.cs">
+    <Compile Include="Forms\Main\RegistrySplit\AccountTLV.cs" />
+    <Compile Include="Forms\Main\RegistrySplit\MultiDataGridView.cs" />
+    <Compile Include="Forms\Main\RegistrySplit\MyTreeListNode.cs" />
+    <Compile Include="Forms\Main\RegistrySplit\RegistryDataSet.cs">
       <DependentUpon>RegistryDataSet.xsd</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Forms\Main\RegistrySplit\Register\RegistryDataSet.Designer.cs">
-      <DependentUpon>RegistryDataSet.xsd</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
+    <Compile Include="Forms\Main\RegistrySplit\RegistryDataSet.Designer.cs">
+      <DependentUpon>RegistryDataSet.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Main\RegistrySplit\RegistrySplit.cs" />
-    <Compile Include="Forms\Main\RegistrySplit\TreeView\AccountTLV.cs">
-    </Compile>
-    <Compile Include="Forms\Main\RegistrySplit\TreeView\MyTreeListNode.cs" />
     <Compile Include="Forms\Transaction\CDLinesDGV.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -318,6 +315,15 @@
     </Content>
     <Content Include="Resources\TLVBankAndFlag.png" />
     <Content Include="Resources\TLVRedEnvelope.png" />
+    <None Include="Forms\Main\RegistrySplit\RegistryDataSet.xsc">
+      <DependentUpon>RegistryDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Forms\Main\RegistrySplit\RegistryDataSet.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Forms\Main\RegistrySplit\RegistryDataSet.xss">
+      <DependentUpon>RegistryDataSet.xsd</DependentUpon>
+    </None>
     <None Include="Resources\AccountErrors.sqlce" />
     <None Include="Resources\AccountSingleBalance.sqlce" />
     <None Include="Resources\AESingleBalance.sqlce" />
@@ -394,17 +400,6 @@
     </None>
     <None Include="Forms\LineType\LineTypeDataSet.xss">
       <DependentUpon>LineTypeDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="Forms\Main\RegistrySplit\Register\RegistryDataSet.xsc">
-      <DependentUpon>RegistryDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="Forms\Main\RegistrySplit\Register\RegistryDataSet.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>RegistryDataSet.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Forms\Main\RegistrySplit\Register\RegistryDataSet.xss">
-      <DependentUpon>RegistryDataSet.xsd</DependentUpon>
     </None>
     <None Include="Forms\Transaction\TransactionDataSet.xsc">
       <DependentUpon>TransactionDataSet.xsd</DependentUpon>
