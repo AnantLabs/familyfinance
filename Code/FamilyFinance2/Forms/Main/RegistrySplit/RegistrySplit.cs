@@ -1,9 +1,5 @@
 using System;
 using System.Collections.Generic;
-//using System.ComponentModel;
-//using System.Drawing;
-//using System.Data;
-//using System.Text;
 using System.Windows.Forms;
 using FamilyFinance2.SharedElements;
 using FamilyFinance2.Forms.Main.RegistrySplit.TreeView;
@@ -19,7 +15,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
         private Label temp;
         private SplitContainer splitContainer;
         private AccountTLV accountTLV;
-        private MultiDataGridViewControl multiDGV;
+        private MultiDataGridView multiDGV;
 
 
 
@@ -29,7 +25,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
         private void accountTLV_SelectedAccountEnvelopeChanged(object sender, SelectedAccountEnvelopeChangedEventArgs e)
         {
             temp.Text = "AccountID = " + e.AccountID.ToString() + "  EnvelopeID = " + e.EnvelopeID.ToString();
-            this.multiDGV.mySetEnvelopeAndAccount(e.AccountID, e.EnvelopeID);
+            this.multiDGV.setEnvelopeAndAccount(e.AccountID, e.EnvelopeID);
         }
 
 
@@ -59,9 +55,8 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             this.splitContainer.Panel1.Controls.Add(this.accountTLV.getControls());
 
             // the Multi Data Grid View
-            this.multiDGV = new MultiDataGridViewControl();
-            this.multiDGV.Dock = DockStyle.Fill;
-            this.splitContainer.Panel2.Controls.Add(this.multiDGV);
+            this.multiDGV = new MultiDataGridView();
+            this.splitContainer.Panel2.Controls.Add(this.multiDGV.getControl());
         }
 
         public Control getControl()
@@ -76,7 +71,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
         public void myReloadAccount()
         {
-            multiDGV.myReloadAccounts();
+            multiDGV.reloadAccounts();
             accountTLV.myRebuildAccounts();
         }
 
@@ -87,18 +82,18 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
         public void myReloadEnvelope()
         {
-            multiDGV.myReloadEnvelopes();
+            multiDGV.reloadEnvelopes();
             this.accountTLV.myRebuildEnvelopes();
         }
 
         public void myReloadLineItem()
         {
-            multiDGV.myReloadLineItems();
+            multiDGV.reloadLines();
         }
 
         public void myReloadLineType()
         {
-            multiDGV.myReloadLineTypes();
+            multiDGV.reloadLineTypes();
         }
 
     }

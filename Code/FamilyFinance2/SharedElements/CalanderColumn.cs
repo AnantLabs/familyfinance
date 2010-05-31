@@ -4,8 +4,6 @@ using System.Text;
 using System.Windows.Forms;
 
 
-
-
 namespace FamilyFinance2
 {
 
