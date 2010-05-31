@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace FamilyFinance2.Forms.Main.RegistrySplit.Register {
+namespace FamilyFinance2.Forms.Main.RegistrySplit {
     
     
     /// <summary>

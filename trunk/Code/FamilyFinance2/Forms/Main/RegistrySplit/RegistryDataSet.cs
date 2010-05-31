@@ -3,7 +3,7 @@ using FamilyFinance2.Forms.Transaction;
 using FamilyFinance2.SharedElements;
 
 
-namespace FamilyFinance2.Forms.Main.RegistrySplit.Register 
+namespace FamilyFinance2.Forms.Main.RegistrySplit
 {
     public partial class RegistryDataSet 
     {

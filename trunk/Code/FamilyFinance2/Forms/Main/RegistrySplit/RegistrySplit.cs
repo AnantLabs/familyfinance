@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using FamilyFinance2.SharedElements;
-using FamilyFinance2.Forms.Main.RegistrySplit.TreeView;
-using FamilyFinance2.Forms.Main.RegistrySplit.Register;
+using FamilyFinance2.Forms.Main.RegistrySplit;
 
 namespace FamilyFinance2.Forms.Main.RegistrySplit
 {
