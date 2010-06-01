@@ -11,7 +11,6 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
         ///////////////////////////////////////////////////////////////////////
         //   Local Variables
         ///////////////////////////////////////////////////////////////////////
-        private Label temp;
         private SplitContainer splitContainer;
         private AccountTLV accountTLV;
         private MultiDataGridView multiDGV;
@@ -23,7 +22,6 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
         ///////////////////////////////////////////////////////////////////////
         private void accountTLV_SelectedAccountEnvelopeChanged(object sender, SelectedAccountEnvelopeChangedEventArgs e)
         {
-            temp.Text = "AccountID = " + e.AccountID.ToString() + "  EnvelopeID = " + e.EnvelopeID.ToString();
             this.multiDGV.setEnvelopeAndAccount(e.AccountID, e.EnvelopeID);
         }
 
@@ -42,11 +40,6 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             this.splitContainer.Dock = DockStyle.Fill;
             this.splitContainer.TabIndex = 1;
             this.splitContainer.ResumeLayout();
-
-            // Temp
-            this.temp = new Label();
-            this.temp.AutoSize = true;
-            this.splitContainer.Panel2.Controls.Add(temp);
 
             // The Account Tree List View
             this.accountTLV = new AccountTLV();
