@@ -21,419 +21,429 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             public static int AccountID = SpclAccount.NULL;
             public static int EnvelopeID = SpclEnvelope.NULL;
 
-            public static int TransactionID;
-            public static int LineID;
-            public static int EnvLineID;
+            //public static int TransactionID;
+            //public static int LineID;
+            //public static int EnvLineID;
 
             public static bool AccountUsesEnvelopes;
+            public static bool AccountIsCredit;
 
             public static DataGridView DGV;
         }
 
-        private class EnvLine
+        private static class EnvLine
         {
-            private DataGridView dgv;
-            private BindingSource dgvBindingSource;
+            public const string TRANSACTION_ID_NAME = "transactionID";
+            public const string LINE_ID_NAME = "lineItemID";
+            public const string E_LINE_ID_NAME = "eLineID";
+            public const string DATE_NAME = "date";
 
-            private DataGridViewTextBoxColumn transactionIDCol;
-            private DataGridViewTextBoxColumn lineItemIDCol;
-            private DataGridViewTextBoxColumn idCol;
-            private DataGridViewTextBoxColumn dateCol;
-            private DataGridViewTextBoxColumn lineTypeCol;
-            private DataGridViewTextBoxColumn sourceCol;
-            private DataGridViewTextBoxColumn destinationCol;
-            private DataGridViewTextBoxColumn lineDescriptionCol;
-            private DataGridViewTextBoxColumn descriptionCol;
-            private DataGridViewTextBoxColumn creditAmountCol;
-            private DataGridViewTextBoxColumn completeCol;
-            private DataGridViewTextBoxColumn debitAmountCol;
-            private DataGridViewTextBoxColumn balanceAmountCol;
+            private static DataGridView dgv;
+            private static BindingSource dgvBindingSource;
 
-            private void buildTheColumns()
+            private static DataGridViewTextBoxColumn transactionIDCol;
+            private static DataGridViewTextBoxColumn lineItemIDCol;
+            private static DataGridViewTextBoxColumn idCol;
+            private static DataGridViewTextBoxColumn dateCol;
+            private static DataGridViewTextBoxColumn lineTypeCol;
+            private static DataGridViewTextBoxColumn sourceCol;
+            private static DataGridViewTextBoxColumn destinationCol;
+            private static DataGridViewTextBoxColumn lineDescriptionCol;
+            private static DataGridViewTextBoxColumn descriptionCol;
+            private static DataGridViewTextBoxColumn creditAmountCol;
+            private static DataGridViewTextBoxColumn completeCol;
+            private static DataGridViewTextBoxColumn debitAmountCol;
+            private static DataGridViewTextBoxColumn balanceAmountCol;
+
+            private static void buildTheColumns()
             {
                 // transactionIDColumn
-                this.transactionIDCol = new DataGridViewTextBoxColumn();
-                this.transactionIDCol.Name = "transactionID";
-                this.transactionIDCol.HeaderText = "transactionID";
-                this.transactionIDCol.DataPropertyName = "transactionID";
-                this.transactionIDCol.Visible = true;
+                transactionIDCol = new DataGridViewTextBoxColumn();
+                transactionIDCol.Name = TRANSACTION_ID_NAME;
+                transactionIDCol.HeaderText = "transactionID";
+                transactionIDCol.DataPropertyName = "transactionID";
+                transactionIDCol.Visible = true;
 
                 // lineItemIDColumn
-                this.lineItemIDCol = new DataGridViewTextBoxColumn();
-                this.lineItemIDCol.Name = "lineItemID";
-                this.lineItemIDCol.HeaderText = "lineItemID";
-                this.lineItemIDCol.DataPropertyName = "lineItemID";
-                this.lineItemIDCol.Visible = true;
+                lineItemIDCol = new DataGridViewTextBoxColumn();
+                lineItemIDCol.Name = LINE_ID_NAME;
+                lineItemIDCol.HeaderText = "lineItemID";
+                lineItemIDCol.DataPropertyName = "lineItemID";
+                lineItemIDCol.Visible = true;
 
                 // idColumn
-                this.idCol = new DataGridViewTextBoxColumn();
-                this.idCol.Name = "eLineID";
-                this.idCol.HeaderText = "eLineID";
-                this.idCol.DataPropertyName = "eLineID";
-                this.idCol.Visible = true;
+                idCol = new DataGridViewTextBoxColumn();
+                idCol.Name = E_LINE_ID_NAME;
+                idCol.HeaderText = "eLineID";
+                idCol.DataPropertyName = "eLineID";
+                idCol.Visible = true;
 
                 // dateColumn
-                this.dateCol = new DataGridViewTextBoxColumn();
-                this.dateCol.Name = "date";
-                this.dateCol.HeaderText = "Date";
-                this.dateCol.DataPropertyName = "date";
-                this.dateCol.SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.dateCol.Visible = true;
-                this.dateCol.Width = 85;
+                dateCol = new DataGridViewTextBoxColumn();
+                dateCol.Name = DATE_NAME;
+                dateCol.HeaderText = "Date";
+                dateCol.DataPropertyName = "date";
+                dateCol.SortMode = DataGridViewColumnSortMode.NotSortable;
+                dateCol.Visible = true;
+                dateCol.Width = 85;
 
                 // descriptionColumn
-                this.lineDescriptionCol = new DataGridViewTextBoxColumn();
-                this.lineDescriptionCol.Name = "lineDescription";
-                this.lineDescriptionCol.HeaderText = "Description";
-                this.lineDescriptionCol.DataPropertyName = "lineDescription";
-                this.lineDescriptionCol.SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.lineDescriptionCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                this.lineDescriptionCol.FillWeight = 50;
-                this.lineDescriptionCol.Visible = true;
+                lineDescriptionCol = new DataGridViewTextBoxColumn();
+                lineDescriptionCol.Name = "lineDescription";
+                lineDescriptionCol.HeaderText = "Description";
+                lineDescriptionCol.DataPropertyName = "lineDescription";
+                lineDescriptionCol.SortMode = DataGridViewColumnSortMode.NotSortable;
+                lineDescriptionCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                lineDescriptionCol.FillWeight = 50;
+                lineDescriptionCol.Visible = true;
 
                 // subDescriptionColumn
-                this.descriptionCol = new DataGridViewTextBoxColumn();
-                this.descriptionCol.Name = "description";
-                this.descriptionCol.HeaderText = "Sub Description";
-                this.descriptionCol.DataPropertyName = "description";
-                this.descriptionCol.SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.descriptionCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                this.descriptionCol.FillWeight = 50;
-                this.descriptionCol.Visible = true;
+                descriptionCol = new DataGridViewTextBoxColumn();
+                descriptionCol.Name = "description";
+                descriptionCol.HeaderText = "Sub Description";
+                descriptionCol.DataPropertyName = "description";
+                descriptionCol.SortMode = DataGridViewColumnSortMode.NotSortable;
+                descriptionCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                descriptionCol.FillWeight = 50;
+                descriptionCol.Visible = true;
 
                 // lineTypeslColumn
-                this.lineTypeCol = new DataGridViewTextBoxColumn();
-                this.lineTypeCol.Name = "lineType";
-                this.lineTypeCol.HeaderText = "Type";
-                this.lineTypeCol.DataPropertyName = "lineType";
-                this.lineTypeCol.SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.lineTypeCol.Width = 80;
-                this.lineTypeCol.Visible = true;
+                lineTypeCol = new DataGridViewTextBoxColumn();
+                lineTypeCol.Name = "lineType";
+                lineTypeCol.HeaderText = "Type";
+                lineTypeCol.DataPropertyName = "lineType";
+                lineTypeCol.SortMode = DataGridViewColumnSortMode.NotSortable;
+                lineTypeCol.Width = 80;
+                lineTypeCol.Visible = true;
 
                 // sourceColumn
-                this.sourceCol = new DataGridViewTextBoxColumn();
-                this.sourceCol.Name = "source";
-                this.sourceCol.HeaderText = "Source";
-                this.sourceCol.DataPropertyName = "sourceAccount";
-                this.sourceCol.SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.sourceCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                this.sourceCol.FillWeight = 30;
-                this.sourceCol.Visible = true;
+                sourceCol = new DataGridViewTextBoxColumn();
+                sourceCol.Name = "source";
+                sourceCol.HeaderText = "Source";
+                sourceCol.DataPropertyName = "sourceAccount";
+                sourceCol.SortMode = DataGridViewColumnSortMode.NotSortable;
+                sourceCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                sourceCol.FillWeight = 30;
+                sourceCol.Visible = true;
 
                 // destinationColumn
-                this.destinationCol = new DataGridViewTextBoxColumn();
-                this.destinationCol.Name = "destination";
-                this.destinationCol.HeaderText = "Destination";
-                this.destinationCol.DataPropertyName = "destinationAccount";
-                this.destinationCol.SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.destinationCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                this.destinationCol.FillWeight = 30;
-                this.destinationCol.Visible = true;
+                destinationCol = new DataGridViewTextBoxColumn();
+                destinationCol.Name = "destination";
+                destinationCol.HeaderText = "Destination";
+                destinationCol.DataPropertyName = "destinationAccount";
+                destinationCol.SortMode = DataGridViewColumnSortMode.NotSortable;
+                destinationCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                destinationCol.FillWeight = 30;
+                destinationCol.Visible = true;
 
                 // creditAmountColumn
-                this.creditAmountCol = new DataGridViewTextBoxColumn();
-                this.creditAmountCol.Name = "creditAmount";
-                this.creditAmountCol.HeaderText = "Credit";
-                this.creditAmountCol.DataPropertyName = "creditAmount";
-                this.creditAmountCol.SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.creditAmountCol.DefaultCellStyle = new MyCellStyleMoney();
-                this.creditAmountCol.Visible = true;
-                this.creditAmountCol.Width = 65;
+                creditAmountCol = new DataGridViewTextBoxColumn();
+                creditAmountCol.Name = "creditAmount";
+                creditAmountCol.HeaderText = "Credit";
+                creditAmountCol.DataPropertyName = "creditAmount";
+                creditAmountCol.SortMode = DataGridViewColumnSortMode.NotSortable;
+                creditAmountCol.DefaultCellStyle = new MyCellStyleMoney();
+                creditAmountCol.Visible = true;
+                creditAmountCol.Width = 65;
 
                 // completeColumn
-                this.completeCol = new DataGridViewTextBoxColumn();
-                this.completeCol.Name = "complete";
-                this.completeCol.HeaderText = "CR";
-                this.completeCol.DataPropertyName = "complete";
-                this.completeCol.SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.completeCol.DefaultCellStyle.Alignment = DataGridViewContentAlignment.TopCenter;
-                this.completeCol.Visible = true;
-                this.completeCol.Width = 25;
+                completeCol = new DataGridViewTextBoxColumn();
+                completeCol.Name = "complete";
+                completeCol.HeaderText = "CR";
+                completeCol.DataPropertyName = "complete";
+                completeCol.SortMode = DataGridViewColumnSortMode.NotSortable;
+                completeCol.DefaultCellStyle.Alignment = DataGridViewContentAlignment.TopCenter;
+                completeCol.Visible = true;
+                completeCol.Width = 25;
 
                 // debitAmountColumn
-                this.debitAmountCol = new DataGridViewTextBoxColumn();
-                this.debitAmountCol.Name = "debitAmountColumn";
-                this.debitAmountCol.HeaderText = "Debit";
-                this.debitAmountCol.DataPropertyName = "debitAmount";
-                this.debitAmountCol.SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.debitAmountCol.DefaultCellStyle = new MyCellStyleMoney();
-                this.debitAmountCol.Visible = true;
-                this.debitAmountCol.Width = 65;
+                debitAmountCol = new DataGridViewTextBoxColumn();
+                debitAmountCol.Name = "debitAmountColumn";
+                debitAmountCol.HeaderText = "Debit";
+                debitAmountCol.DataPropertyName = "debitAmount";
+                debitAmountCol.SortMode = DataGridViewColumnSortMode.NotSortable;
+                debitAmountCol.DefaultCellStyle = new MyCellStyleMoney();
+                debitAmountCol.Visible = true;
+                debitAmountCol.Width = 65;
 
                 // balanceAmountColumn
-                this.balanceAmountCol = new DataGridViewTextBoxColumn();
-                this.balanceAmountCol.Name = "balanceAmount";
-                this.balanceAmountCol.HeaderText = "Balance";
-                this.balanceAmountCol.DataPropertyName = "balanceAmount";
-                this.balanceAmountCol.SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.balanceAmountCol.DefaultCellStyle = new MyCellStyleMoney();
-                this.balanceAmountCol.Visible = true;
-                this.balanceAmountCol.Width = 75;
+                balanceAmountCol = new DataGridViewTextBoxColumn();
+                balanceAmountCol.Name = "balanceAmount";
+                balanceAmountCol.HeaderText = "Balance";
+                balanceAmountCol.DataPropertyName = "balanceAmount";
+                balanceAmountCol.SortMode = DataGridViewColumnSortMode.NotSortable;
+                balanceAmountCol.DefaultCellStyle = new MyCellStyleMoney();
+                balanceAmountCol.Visible = true;
+                balanceAmountCol.Width = 75;
             }
 
-            public EnvLine(ref RegistryDataSet dataSource)
+            public static DataGridView getDGV(ref RegistryDataSet dataSource)
             {
-                this.dgvBindingSource = new BindingSource(dataSource , "EnvelopeLineView");
+                dgvBindingSource = new BindingSource(dataSource, "EnvelopeLineView");
 
-                this.buildTheColumns();
+                buildTheColumns();
 
 
                 // envDGV
-                this.dgv = new DataGridView();
-                this.dgv.Name = "theDataGridView";
-                this.dgv.DataSource = this.dgvBindingSource;
-                this.dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-                this.dgv.AlternatingRowsDefaultCellStyle = new MyCellStyleAlternatingRow();
-                this.dgv.SelectionMode = DataGridViewSelectionMode.CellSelect;
-                this.dgv.Dock = DockStyle.Fill;
-                this.dgv.AutoGenerateColumns = false;
-                this.dgv.AllowUserToOrderColumns = false;
-                this.dgv.AllowUserToDeleteRows = false;
-                this.dgv.AllowUserToResizeRows = false;
-                this.dgv.AllowUserToAddRows = false;
-                this.dgv.RowHeadersVisible = false;
-                this.dgv.ShowCellErrors = false;
-                this.dgv.ShowRowErrors = false;
-                this.dgv.MultiSelect = false;
-                this.dgv.ReadOnly = true;
+                dgv = new DataGridView();
+                dgv.Name = "theDataGridView";
+                dgv.DataSource = dgvBindingSource;
+                dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+                dgv.AlternatingRowsDefaultCellStyle = new MyCellStyleAlternatingRow();
+                dgv.SelectionMode = DataGridViewSelectionMode.CellSelect;
+                dgv.Dock = DockStyle.Fill;
+                dgv.AutoGenerateColumns = false;
+                dgv.AllowUserToOrderColumns = false;
+                dgv.AllowUserToDeleteRows = false;
+                dgv.AllowUserToResizeRows = false;
+                dgv.AllowUserToAddRows = false;
+                dgv.RowHeadersVisible = false;
+                dgv.ShowCellErrors = false;
+                dgv.ShowRowErrors = false;
+                dgv.MultiSelect = false;
+                dgv.ReadOnly = true;
 
-                this.dgv.Columns.AddRange(
+                dgv.Columns.AddRange(
                     new DataGridViewColumn[] 
                 {
-                    this.dateCol,
-                    this.transactionIDCol,
-                    this.lineItemIDCol,
-                    this.idCol,
-                    this.lineTypeCol,
-                    this.sourceCol,
-                    this.destinationCol,
-                    this.lineDescriptionCol,
-                    this.descriptionCol,
-                    this.creditAmountCol,
-                    this.completeCol,
-                    this.debitAmountCol,
-                    this.balanceAmountCol
+                    dateCol,
+                    transactionIDCol,
+                    lineItemIDCol,
+                    idCol,
+                    lineTypeCol,
+                    sourceCol,
+                    destinationCol,
+                    lineDescriptionCol,
+                    descriptionCol,
+                    creditAmountCol,
+                    completeCol,
+                    debitAmountCol,
+                    balanceAmountCol
                 }
                     );
 
-            }
-
-            public DataGridView getDGV()
-            {
-                return this.dgv; 
+                return dgv; 
             }
 
         }
 
-        private class LineItem
+        private static class LineItem
         {
-            private DataGridView dgv;
+            public const string TRANSACTION_ID_NAME = "transactionID";
+            public const string LINE_ID_NAME = "lineItemID";
+            public const string DATE_NAME = "date";
 
-            private BindingSource dgvBindingSource;
-            private BindingSource typeColBindingSource;
-            private BindingSource oppAccountColBindingSource;
-            private BindingSource envelopeColBindingSource;
+            private static DataGridView dgv;
 
-            private DataGridViewTextBoxColumn idCol;
-            private DataGridViewTextBoxColumn transactionIDCol;
-            private CalendarColumn dateCol;
-            private DataGridViewComboBoxColumn lineTypeCol;
-            private DataGridViewComboBoxColumn oppAccountIDCol;
-            private DataGridViewTextBoxColumn descriptionCol;
-            private DataGridViewTextBoxColumn confirmationNumCol;
-            private DataGridViewComboBoxColumn envelopeIDCol;
-            private DataGridViewTextBoxColumn creditAmountCol;
-            private DataGridViewTextBoxColumn completeCol;
-            private DataGridViewTextBoxColumn debitAmountCol;
-            private DataGridViewTextBoxColumn balanceAmountCol;
+            private static BindingSource dgvBindingSource;
+            private static BindingSource typeColBindingSource;
+            private static BindingSource oppAccountColBindingSource;
+            private static BindingSource envelopeColBindingSource;
 
-            private void buildTheColumns()
+            private static DataGridViewTextBoxColumn idCol;
+            private static DataGridViewTextBoxColumn transactionIDCol;
+            private static CalendarColumn dateCol;
+            private static DataGridViewComboBoxColumn lineTypeCol;
+            private static DataGridViewComboBoxColumn oppAccountIDCol;
+            private static DataGridViewTextBoxColumn descriptionCol;
+            private static DataGridViewTextBoxColumn confirmationNumCol;
+            private static DataGridViewComboBoxColumn envelopeIDCol;
+            private static DataGridViewTextBoxColumn creditAmountCol;
+            private static DataGridViewTextBoxColumn completeCol;
+            private static DataGridViewTextBoxColumn debitAmountCol;
+            private static DataGridViewTextBoxColumn balanceAmountCol;
+
+            private static void buildTheColumns()
             {
                 // idColumn
-                this.idCol = new DataGridViewTextBoxColumn();
-                this.idCol.Name = "id";
-                this.idCol.HeaderText = "id";
-                this.idCol.DataPropertyName = "id";
-                this.idCol.Visible = true;
+                idCol = new DataGridViewTextBoxColumn();
+                idCol.Name = LINE_ID_NAME;
+                idCol.HeaderText = "id";
+                idCol.DataPropertyName = "id";
+                idCol.Visible = true;
 
                 // transactionIDColumn
-                this.transactionIDCol = new DataGridViewTextBoxColumn();
-                this.transactionIDCol.Name = "transactionID";
-                this.transactionIDCol.HeaderText = "transactionID";
-                this.transactionIDCol.DataPropertyName = "transactionID";
-                this.transactionIDCol.Visible = true;
+                transactionIDCol = new DataGridViewTextBoxColumn();
+                transactionIDCol.Name = TRANSACTION_ID_NAME;
+                transactionIDCol.HeaderText = "transactionID";
+                transactionIDCol.DataPropertyName = "transactionID";
+                transactionIDCol.Visible = true;
 
                 // dateColumn
-                this.dateCol = new CalendarColumn();
-                this.dateCol.Name = "date";
-                this.dateCol.HeaderText = "Date";
-                this.dateCol.DataPropertyName = "date";
-                this.dateCol.SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.dateCol.Resizable = DataGridViewTriState.True;
-                this.dateCol.Visible = true;
-                this.dateCol.Width = 85;
+                dateCol = new CalendarColumn();
+                dateCol.Name = DATE_NAME;
+                dateCol.HeaderText = "Date";
+                dateCol.DataPropertyName = "date";
+                dateCol.SortMode = DataGridViewColumnSortMode.NotSortable;
+                dateCol.Resizable = DataGridViewTriState.True;
+                dateCol.Visible = true;
+                dateCol.Width = 85;
 
                 // typeIDColumn
-                this.lineTypeCol = new DataGridViewComboBoxColumn();
-                this.lineTypeCol.Name = "typeID";
-                this.lineTypeCol.HeaderText = "Type";
-                this.lineTypeCol.DataPropertyName = "typeID";
-                this.lineTypeCol.DataSource = this.typeColBindingSource;
-                this.lineTypeCol.DisplayMember = "name";
-                this.lineTypeCol.ValueMember = "id";
-                this.lineTypeCol.AutoComplete = true;
-                this.lineTypeCol.SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.lineTypeCol.Resizable = DataGridViewTriState.True;
-                this.lineTypeCol.DisplayStyleForCurrentCellOnly = true;
-                this.lineTypeCol.Width = 80;
-                this.lineTypeCol.Visible = true;
+                lineTypeCol = new DataGridViewComboBoxColumn();
+                lineTypeCol.Name = "typeID";
+                lineTypeCol.HeaderText = "Type";
+                lineTypeCol.DataPropertyName = "typeID";
+                lineTypeCol.DataSource = typeColBindingSource;
+                lineTypeCol.DisplayMember = "name";
+                lineTypeCol.ValueMember = "id";
+                lineTypeCol.AutoComplete = true;
+                lineTypeCol.SortMode = DataGridViewColumnSortMode.NotSortable;
+                lineTypeCol.Resizable = DataGridViewTriState.True;
+                lineTypeCol.DisplayStyleForCurrentCellOnly = true;
+                lineTypeCol.Width = 80;
+                lineTypeCol.Visible = true;
 
                 // oppAccountIDColumn
-                this.oppAccountIDCol = new DataGridViewComboBoxColumn();
-                this.oppAccountIDCol.Name = "oppAccountID";
-                this.oppAccountIDCol.HeaderText = "Source / Destination";
-                this.oppAccountIDCol.DataPropertyName = "oppAccountID";
-                this.oppAccountIDCol.DataSource = this.oppAccountColBindingSource;
-                this.oppAccountIDCol.DisplayMember = "name";
-                this.oppAccountIDCol.ValueMember = "id";
-                this.oppAccountIDCol.SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.oppAccountIDCol.Resizable = DataGridViewTriState.True;
-                this.oppAccountIDCol.DisplayStyleForCurrentCellOnly = true;
-                this.oppAccountIDCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                this.oppAccountIDCol.FillWeight = 120;
-                this.oppAccountIDCol.Visible = true;
+                oppAccountIDCol = new DataGridViewComboBoxColumn();
+                oppAccountIDCol.Name = "oppAccountID";
+                oppAccountIDCol.HeaderText = "Source / Destination";
+                oppAccountIDCol.DataPropertyName = "oppAccountID";
+                oppAccountIDCol.DataSource = oppAccountColBindingSource;
+                oppAccountIDCol.DisplayMember = "name";
+                oppAccountIDCol.ValueMember = "id";
+                oppAccountIDCol.SortMode = DataGridViewColumnSortMode.NotSortable;
+                oppAccountIDCol.Resizable = DataGridViewTriState.True;
+                oppAccountIDCol.DisplayStyleForCurrentCellOnly = true;
+                oppAccountIDCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                oppAccountIDCol.FillWeight = 120;
+                oppAccountIDCol.Visible = true;
 
                 // descriptionColumn
-                this.descriptionCol = new DataGridViewTextBoxColumn();
-                this.descriptionCol.Name = "description";
-                this.descriptionCol.HeaderText = "Description";
-                this.descriptionCol.DataPropertyName = "description";
-                this.descriptionCol.SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.descriptionCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                this.descriptionCol.FillWeight = 200;
-                this.descriptionCol.Visible = true;
+                descriptionCol = new DataGridViewTextBoxColumn();
+                descriptionCol.Name = "description";
+                descriptionCol.HeaderText = "Description";
+                descriptionCol.DataPropertyName = "description";
+                descriptionCol.SortMode = DataGridViewColumnSortMode.NotSortable;
+                descriptionCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                descriptionCol.FillWeight = 200;
+                descriptionCol.Visible = true;
 
                 // confirmationNumColumn
-                this.confirmationNumCol = new DataGridViewTextBoxColumn();
-                this.confirmationNumCol.Name = "confirmationNum";
-                this.confirmationNumCol.HeaderText = "Confirmation #";
-                this.confirmationNumCol.DataPropertyName = "confirmationNumber";
-                this.confirmationNumCol.SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.confirmationNumCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                this.confirmationNumCol.FillWeight = 100;
-                this.confirmationNumCol.Visible = true;
+                confirmationNumCol = new DataGridViewTextBoxColumn();
+                confirmationNumCol.Name = "confirmationNum";
+                confirmationNumCol.HeaderText = "Confirmation #";
+                confirmationNumCol.DataPropertyName = "confirmationNumber";
+                confirmationNumCol.SortMode = DataGridViewColumnSortMode.NotSortable;
+                confirmationNumCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                confirmationNumCol.FillWeight = 100;
+                confirmationNumCol.Visible = true;
 
                 // envelopeIDColumn
-                this.envelopeIDCol = new DataGridViewComboBoxColumn();
-                this.envelopeIDCol.Name = "envelopeID";
-                this.envelopeIDCol.HeaderText = "Envelope";
-                this.envelopeIDCol.DataPropertyName = "envelopeID";
-                this.envelopeIDCol.DataSource = this.envelopeColBindingSource;
-                this.envelopeIDCol.DisplayMember = "name";
-                this.envelopeIDCol.ValueMember = "id";
-                this.envelopeIDCol.SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.envelopeIDCol.DisplayStyleForCurrentCellOnly = true;
-                this.envelopeIDCol.Resizable = DataGridViewTriState.True;
-                this.envelopeIDCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                this.envelopeIDCol.FillWeight = 100;
-                this.envelopeIDCol.Visible = true;
+                envelopeIDCol = new DataGridViewComboBoxColumn();
+                envelopeIDCol.Name = "envelopeID";
+                envelopeIDCol.HeaderText = "Envelope";
+                envelopeIDCol.DataPropertyName = "envelopeID";
+                envelopeIDCol.DataSource = envelopeColBindingSource;
+                envelopeIDCol.DisplayMember = "name";
+                envelopeIDCol.ValueMember = "id";
+                envelopeIDCol.SortMode = DataGridViewColumnSortMode.NotSortable;
+                envelopeIDCol.DisplayStyleForCurrentCellOnly = true;
+                envelopeIDCol.Resizable = DataGridViewTriState.True;
+                envelopeIDCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                envelopeIDCol.FillWeight = 100;
+                envelopeIDCol.Visible = true;
 
                 // creditAmountColumn
-                this.creditAmountCol = new DataGridViewTextBoxColumn();
-                this.creditAmountCol.Name = "creditAmount";
-                this.creditAmountCol.HeaderText = "Credit";
-                this.creditAmountCol.DataPropertyName = "creditAmount";
-                this.creditAmountCol.SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.creditAmountCol.DefaultCellStyle = new MyCellStyleMoney();
-                this.creditAmountCol.Width = 65;
+                creditAmountCol = new DataGridViewTextBoxColumn();
+                creditAmountCol.Name = "creditAmount";
+                creditAmountCol.HeaderText = "Credit";
+                creditAmountCol.DataPropertyName = "creditAmount";
+                creditAmountCol.SortMode = DataGridViewColumnSortMode.NotSortable;
+                creditAmountCol.DefaultCellStyle = new MyCellStyleMoney();
+                creditAmountCol.Width = 65;
 
 
                 // completeColumn
-                this.completeCol = new DataGridViewTextBoxColumn();
-                this.completeCol.Name = "complete";
-                this.completeCol.HeaderText = "CR";
-                this.completeCol.DataPropertyName = "complete";
-                this.completeCol.SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.completeCol.DefaultCellStyle.Alignment = DataGridViewContentAlignment.TopCenter;
-                this.completeCol.Width = 25;
-                this.completeCol.ReadOnly = true;
+                completeCol = new DataGridViewTextBoxColumn();
+                completeCol.Name = "complete";
+                completeCol.HeaderText = "CR";
+                completeCol.DataPropertyName = "complete";
+                completeCol.SortMode = DataGridViewColumnSortMode.NotSortable;
+                completeCol.DefaultCellStyle.Alignment = DataGridViewContentAlignment.TopCenter;
+                completeCol.Width = 25;
+                completeCol.ReadOnly = true;
 
                 // debitAmountColumn
-                this.debitAmountCol = new DataGridViewTextBoxColumn();
-                this.debitAmountCol.Name = "debitAmountColumn";
-                this.debitAmountCol.HeaderText = "Debit";
-                this.debitAmountCol.DataPropertyName = "debitAmount";
-                this.debitAmountCol.SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.debitAmountCol.DefaultCellStyle = new MyCellStyleMoney();
-                this.debitAmountCol.Visible = true;
-                this.debitAmountCol.Width = 65;
+                debitAmountCol = new DataGridViewTextBoxColumn();
+                debitAmountCol.Name = "debitAmountColumn";
+                debitAmountCol.HeaderText = "Debit";
+                debitAmountCol.DataPropertyName = "debitAmount";
+                debitAmountCol.SortMode = DataGridViewColumnSortMode.NotSortable;
+                debitAmountCol.DefaultCellStyle = new MyCellStyleMoney();
+                debitAmountCol.Visible = true;
+                debitAmountCol.Width = 65;
 
                 // balanceAmountColumn
-                this.balanceAmountCol = new DataGridViewTextBoxColumn();
-                this.balanceAmountCol.Name = "balanceAmount";
-                this.balanceAmountCol.HeaderText = "Balance";
-                this.balanceAmountCol.DataPropertyName = "balanceAmount";
-                this.balanceAmountCol.SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.balanceAmountCol.DefaultCellStyle = new MyCellStyleMoney();
-                this.balanceAmountCol.Visible = true;
-                this.balanceAmountCol.Width = 75;
+                balanceAmountCol = new DataGridViewTextBoxColumn();
+                balanceAmountCol.Name = "balanceAmount";
+                balanceAmountCol.HeaderText = "Balance";
+                balanceAmountCol.DataPropertyName = "balanceAmount";
+                balanceAmountCol.SortMode = DataGridViewColumnSortMode.NotSortable;
+                balanceAmountCol.DefaultCellStyle = new MyCellStyleMoney();
+                balanceAmountCol.Visible = true;
+                balanceAmountCol.Width = 75;
             }
 
-            public LineItem(ref RegistryDataSet dataSource)
+            public static DataGridView getDGV(ref RegistryDataSet dataSource)
             {
-                this.dgvBindingSource = new BindingSource(dataSource, "LineItem");
+                dgvBindingSource = new BindingSource(dataSource, "LineItem");
 
-                this.typeColBindingSource = new BindingSource(dataSource, "LineType");
-                this.typeColBindingSource.Sort = "name";
-                this.oppAccountColBindingSource = new BindingSource(dataSource, "Account");
-                this.oppAccountColBindingSource.Sort = "name";
-                this.envelopeColBindingSource = new BindingSource(dataSource, "Envelope");
-                this.envelopeColBindingSource.Sort = "name";
+                typeColBindingSource = new BindingSource(dataSource, "LineType");
+                typeColBindingSource.Sort = "name";
+                oppAccountColBindingSource = new BindingSource(dataSource, "Account");
+                oppAccountColBindingSource.Sort = "name";
+                envelopeColBindingSource = new BindingSource(dataSource, "Envelope");
+                envelopeColBindingSource.Sort = "name";
 
-                this.buildTheColumns();
+                buildTheColumns();
 
                 // Line Item DGV
-                this.dgv = new DataGridView();
-                this.dgv.Name = "theDataGridView";
-                this.dgv.DataSource = this.dgvBindingSource;
-                this.dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-                this.dgv.AlternatingRowsDefaultCellStyle = new MyCellStyleAlternatingRow();
-                this.dgv.SelectionMode = DataGridViewSelectionMode.CellSelect;
-                this.dgv.Dock = DockStyle.Fill;
-                this.dgv.AutoGenerateColumns = false;
-                this.dgv.AllowUserToOrderColumns = false;
-                this.dgv.AllowUserToDeleteRows = false;
-                this.dgv.AllowUserToResizeRows = false;
-                this.dgv.AllowUserToAddRows = false;
-                this.dgv.RowHeadersVisible = false;
-                this.dgv.ShowCellErrors = false;
-                this.dgv.ShowRowErrors = false;
-                this.dgv.MultiSelect = false;
+                dgv = new DataGridView();
+                dgv.Name = "theDataGridView";
+                dgv.DataSource = dgvBindingSource;
+                dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+                dgv.AlternatingRowsDefaultCellStyle = new MyCellStyleAlternatingRow();
+                dgv.SelectionMode = DataGridViewSelectionMode.CellSelect;
+                dgv.Dock = DockStyle.Fill;
+                dgv.AutoGenerateColumns = false;
+                dgv.AllowUserToOrderColumns = false;
+                dgv.AllowUserToDeleteRows = false;
+                dgv.AllowUserToResizeRows = false;
+                dgv.AllowUserToAddRows = false;
+                dgv.RowHeadersVisible = false;
+                dgv.ShowCellErrors = false;
+                dgv.ShowRowErrors = false;
+                dgv.MultiSelect = false;
 
-                this.dgv.Columns.AddRange(
+                dgv.Columns.AddRange(
                     new DataGridViewColumn[] 
                     {
-                        this.dateCol,
-                        this.transactionIDCol,
-                        this.idCol,
-                        this.lineTypeCol,
-                        this.oppAccountIDCol,
-                        this.descriptionCol,
-                        this.confirmationNumCol,
-                        this.envelopeIDCol,
-                        this.creditAmountCol,
-                        this.completeCol,
-                        this.debitAmountCol,
-                        this.balanceAmountCol
+                        dateCol,
+                        transactionIDCol,
+                        idCol,
+                        lineTypeCol,
+                        oppAccountIDCol,
+                        descriptionCol,
+                        confirmationNumCol,
+                        envelopeIDCol,
+                        creditAmountCol,
+                        completeCol,
+                        debitAmountCol,
+                        balanceAmountCol
                     }
                     );
+
+                return dgv;
             }
 
-            public DataGridView getDGV()
+            public static void setNegativeBalanceFormat(bool isAccountCredit)
             {
-                return this.dgv;
+                if (isAccountCredit)
+                    balanceAmountCol.DefaultCellStyle.Format = "$#0.00;$#0.00;$0.00";
+                else
+                    balanceAmountCol.DefaultCellStyle.Format = "$#0.00;($#0.00);$0.00";
             }
-
         }
 
 
@@ -444,7 +454,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
         private DataGridView liDGV;
         private DataGridView envDGV;
 
-        private bool inRowValidating;
+        //private bool inRowValidating;
 
         private RegistryDataSet regDataSet;
 
@@ -470,148 +480,163 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
         private void dgv_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            //int col = e.ColumnIndex;
-            //int row = e.RowIndex;
+            int col = e.ColumnIndex;
+            int row = e.RowIndex;
 
-            //if (col < 0 || row < 0)
-            //    return;
+            if (col < 0 || row < 0)
+                return;
 
-            //string colName = Current.DGV.Columns[col].Name;
-            //bool readOnlyCell = Current.DGV[col, row].ReadOnly;
-            //string toolTipText = Current.DGV[col, row].ToolTipText;
+            string colName = Current.DGV.Columns[col].Name;
+            bool readOnlyCell = Current.DGV[col, row].ReadOnly;
+            string toolTipText = Current.DGV[col, row].ToolTipText;
 
-            //// Set the back ground and the tool tip.
-            //if (this.flagTransactionError)
-            //{
-            //    e.CellStyle.BackColor = System.Drawing.Color.Red;
-            //    toolTipText = "This transaction needs attention.";
-            //}
-            //else if (this.flagLineError && (colName == "envelopeID" || colName == "amount"))
-            //{
-            //    e.CellStyle.BackColor = System.Drawing.Color.Red;
-            //    toolTipText = "This line amount and its envelope sum need to match.";
-            //}
-            //else if (this.flagAccountError && (colName == "accountID" || colName == "oppAccountID"))
-            //{
-            //    e.CellStyle.BackColor = System.Drawing.Color.Red;
-            //    toolTipText = "Please choose an account.";
-            //}
-            //else if (this.flagFutureDate)
-            //    e.CellStyle.BackColor = System.Drawing.Color.LightGray;
+            // Set the back ground and the tool tip.
+            if (this.flagTransactionError)
+            {
+                e.CellStyle.BackColor = System.Drawing.Color.Red;
+                toolTipText = "This transaction needs attention.";
+            }
+            else if (this.flagLineError && colName == "envelopeID")
+            {
+                e.CellStyle.BackColor = System.Drawing.Color.Red;
+                toolTipText = "This line amount and its envelope sum need to match.";
+            }
+            else if (this.flagAccountError && colName == "oppAccountID")
+            {
+                e.CellStyle.BackColor = System.Drawing.Color.Red;
+                toolTipText = "Please choose an account.";
+            }
+            else if (this.flagFutureDate)
+                e.CellStyle.BackColor = System.Drawing.Color.LightGray;
 
-            //// rowNegativeBalance
-            //if (this.flagNegativeBalance && colName == "balanceAmount")
-            //    e.CellStyle.ForeColor = System.Drawing.Color.Red;
+            // rowNegativeBalance
+            if (this.flagNegativeBalance && colName == "balanceAmount")
+                e.CellStyle.ForeColor = System.Drawing.Color.Red;
 
-            //// rowMultipleAccounts
-            //if (this.flagReadOnlyAccount && colName == "oppAccountID")
-            //    readOnlyCell = true;
+            // rowMultipleAccounts
+            if (this.flagReadOnlyAccount && colName == "oppAccountID")
+                readOnlyCell = true;
 
-            //// rowSplitEnvelope
-            //if (this.flagReadOnlyEnvelope && colName == "envelopeID")
-            //    readOnlyCell = true;
+            // rowSplitEnvelope
+            if (this.flagReadOnlyEnvelope && colName == "envelopeID")
+                readOnlyCell = true;
 
-            //Current.DGV[col, row].ToolTipText = toolTipText;
-            //Current.DGV[col, row].ReadOnly = readOnlyCell;
+            Current.DGV[col, row].ToolTipText = toolTipText;
+            Current.DGV[col, row].ReadOnly = readOnlyCell;
         }
 
         private void dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            //int row = e.RowIndex;
-            //int col = e.ColumnIndex;
+            int row = e.RowIndex;
+            int col = e.ColumnIndex;
 
-            //if (col < 0 || row < 0)
-            //    return;
+            if (col < 0 || row < 0)
+                return;
 
-            //string colName = Current.DGV.Columns[col].Name;
+            string colName = Current.DGV.Columns[col].Name;
 
-            //if (colName == "complete" && Current.DGV == this.liDGV)
-            //{
-            //    string cellValue = Current.DGV[col, row].Value.ToString();
+            if (colName == "complete" && Current.DGV == this.liDGV)
+            {
+                string cellValue = Current.DGV[col, row].Value.ToString();
 
-            //    if (cellValue == LineState.PENDING)
-            //        Current.DGV[col, row].Value = LineState.CLEARED;
+                if (cellValue == LineState.PENDING)
+                    Current.DGV[col, row].Value = LineState.CLEARED;
 
-            //    else if (cellValue == LineState.CLEARED)
-            //        Current.DGV[col, row].Value = LineState.RECONSILED;
+                else if (cellValue == LineState.CLEARED)
+                    Current.DGV[col, row].Value = LineState.RECONSILED;
 
-            //    else
-            //        Current.DGV[col, row].Value = LineState.PENDING;
-            //}
-            //else
-            //{
-            //    int transID = Convert.ToInt32(Current.DGV["transactionID", row].Value);
-            //    int lineID = Convert.ToInt32(Current.DGV["lineID", row].Value);
+                else
+                    Current.DGV[col, row].Value = LineState.PENDING;
+            }
+            else if (Current.DGV == this.liDGV)
+            {
+                int transID = Convert.ToInt32(Current.DGV[LineItem.TRANSACTION_ID_NAME, row].Value);
+                int lineID = Convert.ToInt32(Current.DGV[LineItem.LINE_ID_NAME, row].Value);
 
-            //    TransactionForm tf = new TransactionForm(transID, lineID);
-            //    tf.ShowDialog();
-            //    //this.myReloadLineItems(); // <- remove this line
-            //}
+                TransactionForm tf = new TransactionForm(transID, lineID);
+                tf.ShowDialog();
+                //this.myReloadLineItems(); // <- remove this line
+            }
+            else if (Current.DGV == this.envDGV)
+            {
+                int transID = Convert.ToInt32(Current.DGV[EnvLine.TRANSACTION_ID_NAME, row].Value);
+                int lineID = Convert.ToInt32(Current.DGV[EnvLine.LINE_ID_NAME, row].Value);
+                int eLineID = Convert.ToInt32(Current.DGV[EnvLine.E_LINE_ID_NAME, e.RowIndex].Value);
+
+                TransactionForm tf = new TransactionForm(transID, lineID);
+                tf.ShowDialog();
+                //this.myReloadLineItems(); // <- remove this line
+            }
 
         }
 
         
         private void envDGV_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
-        //    int subLineID = Convert.ToInt32(this[envLineItemIDColumn.Index, e.RowIndex].Value);
-        //    SubLineDataSet.SubLineViewRow thisSubLine = this.slDataSet.SubLineView.FindByeLineID(subLineID);
+            int eLineID = Convert.ToInt32(Current.DGV[EnvLine.E_LINE_ID_NAME, e.RowIndex].Value);
+            RegistryDataSet.EnvelopeLineViewRow thisELine = this.regDataSet.EnvelopeLineView.FindByeLineID(eLineID);
 
-        //    // Defaults. Used for new lines.
-        //    this.flagTransactionError = false;
-        //    this.flagLineError = false;
-        //    this.flagNegativeBalance = false;
-        //    this.flagFutureDate = false;
-        //    this.flagAccountError = false;
+            // Defaults. Used for new lines.
+            this.flagTransactionError = false;
+            this.flagLineError = false;
+            this.flagNegativeBalance = false;
+            this.flagReadOnlyEnvelope = false;
+            this.flagReadOnlyAccount = false;
+            this.flagFutureDate = false;
+            this.flagAccountError = false;
 
-        //    if (thisSubLine != null)
-        //    {
-        //        // Set row Flags
-        //        //flagTransactionError = thisSubLine.tr;
+            if (thisELine != null)
+            {
+                // Set row Flags
+                //flagTransactionError = thisSubLine.tr;
 
-        //        if (thisSubLine.amount < 0.0m)
-        //            this.flagNegativeBalance = true;
+                if (thisELine.amount < 0.0m)
+                    this.flagNegativeBalance = true;
 
-        //        if (thisSubLine.date > DateTime.Today) // future Date
-        //            this.flagFutureDate = true;
-        //    }
+                if (thisELine.date > DateTime.Today) // future Date
+                    this.flagFutureDate = true;
+            }
         }
 
 
         private void liDGV_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
-        //    int lineID = Convert.ToInt32(this[lineItemIDColumn.Index, e.RowIndex].Value);
-        //    RegistryDataSet.LineItemRow thisLine = this.regDataSet.LineItem.FindByid(lineID);
+            int lineID = Convert.ToInt32(Current.DGV[LineItem.LINE_ID_NAME, e.RowIndex].Value);
+            RegistryDataSet.LineItemRow thisLine = this.regDataSet.LineItem.FindByid(lineID);
 
-        //    // Defaults. Used for new lines.
-        //    this.flagTransactionError = false;
-        //    this.flagLineError = false;
-        //    this.flagNegativeBalance = false;
-        //    this.flagReadOnlyEnvelope = false;
-        //    this.flagReadOnlyAccount = false;
-        //    this.flagFutureDate = false;
-        //    this.flagAccountError = false;
+            // Defaults. Used for new lines.
+            this.flagTransactionError = false;
+            this.flagLineError = false;
+            this.flagNegativeBalance = false;
+            this.flagReadOnlyEnvelope = false;
+            this.flagReadOnlyAccount = false;
+            this.flagFutureDate = false;
+            this.flagAccountError = false;
 
-        //    if (thisLine != null)
-        //    {
-        //        // Set row Flags
-        //        flagTransactionError = thisLine.transactionError;
-        //        flagLineError = thisLine.lineError;
+            if (thisLine != null)
+            {
+                // Set row Flags
+                flagTransactionError = thisLine.transactionError;
+                flagLineError = thisLine.lineError;
 
-        //        if (!thisLine.IsbalanceAmountNull() && thisLine.balanceAmount < 0.0m)
-        //            this.flagNegativeBalance = true;
+                if (!thisLine.IsbalanceAmountNull() && thisLine.balanceAmount < 0.0m && !Current.AccountIsCredit)
+                    this.flagNegativeBalance = true;
 
-        //        if (thisLine.oppAccountID == SpclAccount.MULTIPLE)
-        //            this.flagReadOnlyAccount = true;
+                if (!thisLine.IsbalanceAmountNull() && thisLine.balanceAmount > 0.0m && Current.AccountIsCredit)
+                    this.flagNegativeBalance = true;
 
-        //        if (thisLine.envelopeID == SpclEnvelope.SPLIT)
-        //            this.flagReadOnlyEnvelope = true;
+                if (thisLine.oppAccountID == SpclAccount.MULTIPLE)
+                    this.flagReadOnlyAccount = true;
 
-        //        if (thisLine.date > DateTime.Today) // future Date
-        //            this.flagFutureDate = true;
+                if (thisLine.envelopeID == SpclEnvelope.SPLIT)
+                    this.flagReadOnlyEnvelope = true;
 
-        //        if (thisLine.oppAccountID == SpclAccount.NULL)
-        //            this.flagAccountError = true;
-        //    }
+                if (thisLine.date > DateTime.Today) // future Date
+                    this.flagFutureDate = true;
+
+                if (thisLine.oppAccountID == SpclAccount.NULL)
+                    this.flagAccountError = true;
+            }
         }
 
         private void liDGV_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -675,63 +700,26 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
         
 
-        ////////////////////////////////////////////////////////////////////////////////////////////
-        //   Functions Private
-        ////////////////////////////////////////////////////////////////////////////////////////////
-
-        private int CurrentLineID()
-        {
-            int lineID = -1;
-
-            //try
-            //{
-            //    lineID = Convert.ToInt32(this.CurrentRow.Cells["lineItemIDColumn"].Value);
-            //}
-            //catch
-            //{
-            //}
-
-            return lineID;
-        }
-
-        private int CurrentTransactionID()
-        {
-            int transID = -1;
-
-            //try
-            //{
-            //    transID = Convert.ToInt32(this.CurrentRow.Cells["transactionIDColumn"].Value);
-            //}
-            //catch
-            //{
-            //}
-
-            return transID;
-        }
-
-
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Public
         ////////////////////////////////////////////////////////////////////////////////////////////
         public MultiDataGridView()
         {
-            this.inRowValidating = false; 
+            //this.inRowValidating = false; 
 
             this.regDataSet = new RegistryDataSet();
             this.regDataSet.myInit();
 
             ////////////////////////////////////
             // The DataGridViews
-            LineItem lineItem = new LineItem(ref this.regDataSet);
-            EnvLine envLine = new EnvLine(ref this.regDataSet);
-
-            this.liDGV = lineItem.getDGV();
+            this.liDGV = LineItem.getDGV(ref this.regDataSet);
             this.liDGV.DataError +=new DataGridViewDataErrorEventHandler(dgv_DataError);
             this.liDGV.CellFormatting += new DataGridViewCellFormattingEventHandler(dgv_CellFormatting);
             this.liDGV.CellDoubleClick += new DataGridViewCellEventHandler(dgv_CellDoubleClick);
+            this.liDGV.RowPrePaint +=new DataGridViewRowPrePaintEventHandler(liDGV_RowPrePaint);
 
-            this.envDGV = envLine.getDGV();
+            this.envDGV = EnvLine.getDGV(ref this.regDataSet);
             this.envDGV.DataError += new DataGridViewDataErrorEventHandler(dgv_DataError);
             this.envDGV.CellFormatting += new DataGridViewCellFormattingEventHandler(dgv_CellFormatting);
             this.envDGV.CellDoubleClick += new DataGridViewCellEventHandler(dgv_CellDoubleClick);
@@ -772,6 +760,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                 Current.AccountID = accountID;
                 Current.EnvelopeID = envelopeID;
                 Current.AccountUsesEnvelopes = false;
+                Current.AccountIsCredit = false;
                 Current.DGV = null;
 
                 this.liDGV.Visible = false;
@@ -782,6 +771,8 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                 Current.AccountID = accountID;
                 Current.EnvelopeID = envelopeID;
                 Current.AccountUsesEnvelopes = this.regDataSet.Account.FindByid(accountID).envelopes;
+                Current.AccountIsCredit = !this.regDataSet.Account.FindByid(accountID).creditDebit;
+                LineItem.setNegativeBalanceFormat(Current.AccountIsCredit);
                 Current.DGV = this.liDGV;
 
                 this.regDataSet.myFillLines(accountID);
@@ -793,6 +784,8 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             {
                 Current.AccountID = accountID;
                 Current.EnvelopeID = envelopeID;
+                Current.AccountUsesEnvelopes = true;
+                Current.AccountIsCredit = false;
                 Current.DGV = this.envDGV;
 
                 this.regDataSet.myFillLines(accountID, envelopeID);
