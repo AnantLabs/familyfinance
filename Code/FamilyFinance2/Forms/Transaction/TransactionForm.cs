@@ -57,7 +57,8 @@ namespace FamilyFinance2.Forms.Transaction
             decimal difference;
             TransactionDataSet.LineItemRow line = e.Row as TransactionDataSet.LineItemRow;
 
-            this.tDataSet.myCheckTransaction(out creditSum, out debitSum);
+            this.tDataSet.myCheckTransaction();
+            this.tDataSet.myGetCDSums(out creditSum, out debitSum);
 
             if (this.creditDGV.Focused)
             {
@@ -507,7 +508,8 @@ namespace FamilyFinance2.Forms.Transaction
 
             /////////////////////////////////
             // Update the Source and Destination sums.
-            this.tDataSet.myCheckTransaction(out creditSum, out debitSum);
+            this.tDataSet.myCheckTransaction();
+            this.tDataSet.myGetCDSums(out creditSum, out debitSum);
 
             sourceSumLabel.Text = creditSum.ToString("C2");
             destinationSumLabel.Text = debitSum.ToString("C2");
