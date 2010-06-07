@@ -63,25 +63,16 @@ namespace FamilyFinance2.SharedElements
 
     /////////////////////////////////
     //   Data Structures 
-    public class AEChange
+    public class AEPair
     {
         public int AccountID;
         public int EnvelopeID;
 
-        public AEChange(int accountID, int envelopeID)
+        public AEPair(int accountID, int envelopeID)
         {
             this.AccountID = accountID;
             this.EnvelopeID = envelopeID;
         }
-    }
-
-
-    /////////////////////////////////
-    // Interfaces
-    public interface IReportsErrors
-    {
-        List<int> getAccountChanges();
-        List<AEChange> getAEChanges();
     }
 
 
@@ -170,18 +161,14 @@ namespace FamilyFinance2.SharedElements
 
     ///////////////////////////////////////
     // Delagates and Event Arguments
-    public delegate void BalanceChangedEventHandler(Object sender, BalanceChangedEventArgs e);
-    public class BalanceChangedEventArgs : EventArgs
+    public delegate void BalanceChangesEventHandler(Object sender, BalanceChangesEventArgs e);
+    public class BalanceChangesEventArgs : EventArgs
     {
-        public int AccountID;
-        public int EnvelopeID;
-        public decimal NewAmount;
+        public List<AEPair> AEChanges;
 
-        public BalanceChangedEventArgs(int accountID, int envelopeID, decimal newAmount)
+        public BalanceChangesEventArgs(List<AEPair> aeChanges)
         {
-            AccountID = accountID;
-            EnvelopeID = envelopeID;
-            NewAmount = newAmount;
+            this.AEChanges = aeChanges;
         }
     }
 

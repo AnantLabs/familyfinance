@@ -17,13 +17,246 @@ namespace FamilyFinance2.Forms.Transaction
         private LineTypeTableAdapter LineTypeTA;
 
         public bool TransactionError;
+        private int currentTransID;
+
+        public List<AEPair> Changes;
+
+
 
         /////////////////////////
-        //   Properties 
-        private int currentTransID;
-        public int CurrentTransactionID
+        //   Functions Private
+        private void myChangeCreditDebit(ref LineItemRow lineBeingChange)
         {
-            get { return currentTransID; }
+            int thisSideCount = 0;
+            int oppLineCount = 0;
+
+            // Count how many lines have the sam creditDebit as the line and how many lines
+            // are opposite this line.
+            foreach (LineItemRow oppLine in this.LineItem)
+            {
+                if (oppLine.creditDebit == lineBeingChange.creditDebit)
+                    thisSideCount++;
+                else
+                    oppLineCount++;
+            }
+
+            // If this is a simple transaction update both creditDebits
+            if (thisSideCount == 1 && oppLineCount == 1)
+            {
+                this.LineItem[0].creditDebit = !this.LineItem[0].creditDebit;
+                this.LineItem[1].creditDebit = !this.LineItem[1].creditDebit;
+            }
+            else // else just update the lineBeingchanged
+                lineBeingChange.creditDebit = !lineBeingChange.creditDebit;
+        }
+
+        private void myChangeAmount(ref LineItemRow lineBeingChange, decimal newAmount)
+        {
+            int thisSideCount = 0;
+            int oppLineCount = 0;
+            int envCount;
+            int eLineID;
+
+            // Count how many lines have the sam creditDebit as the line and how many lines
+            // are opposite this line.
+            foreach (LineItemRow oppLine in this.LineItem)
+            {
+                if (oppLine.creditDebit == lineBeingChange.creditDebit)
+                    thisSideCount++;
+                else
+                    oppLineCount++;
+            }
+
+            // If this is a simple transaction update both amounts
+            if (thisSideCount == 1 && oppLineCount == 1)
+            {
+                this.LineItem[0].amount = newAmount;
+                this.LineItem[1].amount = newAmount;
+
+                // Now update the envelopeLines with the new amount;
+                this.EnvelopeLine.myEnvelopeLineCount(this.LineItem[0].id, out envCount, out eLineID);
+                if (envCount == 1)
+                    this.EnvelopeLine.FindByid(eLineID).amount = newAmount;
+
+                this.EnvelopeLine.myEnvelopeLineCount(this.LineItem[1].id, out envCount, out eLineID);
+                if (envCount == 1)
+                    this.EnvelopeLine.FindByid(eLineID).amount = newAmount;
+            }
+
+            // else just update the lineBeingchanged
+            else
+            {
+                lineBeingChange.amount = newAmount;
+
+                // Now update the envelopeLines with the new amount;
+                this.EnvelopeLine.myEnvelopeLineCount(lineBeingChange.id, out envCount, out eLineID);
+                if (envCount == 1)
+                    this.EnvelopeLine.FindByid(eLineID).amount = newAmount;
+            }
+        }
+
+        private void myChangeAccountID(ref LineItemRow lineBeingChange, int newAccountID)
+        {
+            int thisSideCount = 0;
+
+            // Count how many lines have the same creditDebit as the line.
+            foreach (LineItemRow oppLine in this.LineItem)
+            {
+                if (oppLine.creditDebit == lineBeingChange.creditDebit)
+                    thisSideCount++;
+            }
+
+            // If thisSide has only one line (the given line) then update the oppLines.oppAccountID with the new
+            // accountID
+            if (thisSideCount == 1)
+            {
+                foreach (LineItemRow oppLine in this.LineItem)
+                    if (oppLine.creditDebit != lineBeingChange.creditDebit)
+                        oppLine.oppAccountID = newAccountID;
+            }
+
+            // Make the change to the one being changed.
+            lineBeingChange.accountID = newAccountID;
+        }
+
+        private void myChangeOppAccountID(ref LineItemRow lineBeingChange, int newOppAccountID)
+        {
+            int oppLineCount = 0;
+
+            // Count how many lines are opposite this line.
+            foreach (LineItemRow oppLine in this.LineItem)
+            {
+                if (oppLine.creditDebit != lineBeingChange.creditDebit)
+                    oppLineCount++;
+            }
+
+            // If oppLine is only one then update all the lines. The lines on the same saide as the one
+            // getting the update get there oppAccount ids updated. Then the line opposite the one being
+            // changed will get its accountID changed.
+            if (oppLineCount == 1)
+            {
+                foreach (LineItemRow sameSideLine in this.LineItem)
+                    if (sameSideLine.creditDebit == lineBeingChange.creditDebit)
+                        sameSideLine.oppAccountID = newOppAccountID;
+                    else
+                        sameSideLine.accountID = newOppAccountID;
+            }
+        }
+
+        private void myChangeEnvelopeID(ref LineItemRow lineBeingChange, int newEnvelopeID)
+        {
+            int envCount;
+            int eLineID;
+
+            lineBeingChange.envelopeID = newEnvelopeID;
+
+            // Now update the envelopeLine If there is only one with the new envelopeID;
+            this.EnvelopeLine.myEnvelopeLineCount(lineBeingChange.id, out envCount, out eLineID);
+            if (envCount == 1 && newEnvelopeID > SpclEnvelope.NULL)
+                this.EnvelopeLine.FindByid(eLineID).envelopeID = newEnvelopeID;
+
+            else if (envCount == 1 && newEnvelopeID == SpclEnvelope.NULL)
+                this.EnvelopeLine.FindByid(eLineID).Delete();
+        }
+
+        private void myAddChange(int accountID, int envelopeID)
+        {
+            bool found = false;
+
+            foreach (AEPair pair in this.Changes)
+            {
+                // We want unique pairs of accountIDs and envelopeIDs. An account with an envelope
+                // is better than just the same account with a null envelope. So if an account and a null envelope
+                // are being added and ther is a mathing account don't add a new entry. If there is a complete
+                // match don't add the entry, if there is an account and a null envelope already in the list
+                // and we have a valid envelopeID replace the null envelope.
+
+                if (pair.AccountID == accountID && envelopeID == SpclEnvelope.NULL)
+                    found = true;
+
+                else if (pair.AccountID == accountID && pair.EnvelopeID == envelopeID)
+                    found = true;
+
+                else if (pair.AccountID == accountID && pair.EnvelopeID == SpclEnvelope.NULL)
+                {
+                    // if a lone accountID is in the list 
+                    pair.EnvelopeID = envelopeID;
+                    found = true;
+                }
+            }
+
+            if (!found)
+                this.Changes.Add(new AEPair(accountID, envelopeID));
+        }
+
+        private void myFindChanges()
+        {
+            // Report EnvelopeLine Changes
+            foreach (EnvelopeLineRow envLine in this.EnvelopeLine)
+            {
+                if (envLine.RowState == DataRowState.Modified)
+                {
+                    int orAccountID = (int)envLine.LineItemRow["accountID", DataRowVersion.Original];
+                    int orEnvelopeID = (int)envLine["envelopeID", DataRowVersion.Original];
+                    decimal orAmount = (decimal)envLine["amount", DataRowVersion.Original];
+
+                    if (envLine.LineItemRow.accountID != orAccountID)
+                    {
+                        this.myAddChange(orAccountID, envLine.envelopeID);
+                        this.myAddChange(envLine.LineItemRow.accountID, envLine.envelopeID);
+                    }
+
+                    if (envLine.envelopeID != orEnvelopeID)
+                    {
+                        this.myAddChange(envLine.LineItemRow.accountID, orEnvelopeID);
+                        this.myAddChange(envLine.LineItemRow.accountID, envLine.envelopeID);
+                    }
+
+                    if (envLine.amount != orAmount)
+                    {
+                        this.myAddChange(envLine.LineItemRow.accountID, envLine.envelopeID);
+                    }
+                }
+                else if (envLine.RowState == DataRowState.Added)
+                {
+                    this.myAddChange(envLine.LineItemRow.accountID, envLine.envelopeID);
+                }
+                else if (envLine.RowState == DataRowState.Deleted)
+                {
+                    int orEnvelopeID = (int)envLine["envelopeID", DataRowVersion.Original];
+                    int lineItemID = (int)envLine["lineItemID", DataRowVersion.Original];
+                    int orAccountID = (int)this.LineItem.FindByid(lineItemID)["accountID", DataRowVersion.Original];
+
+                    this.myAddChange(orAccountID, orEnvelopeID);
+                }
+            }
+
+            // report lineItem changes
+            foreach (LineItemRow modLine in this.LineItem)
+            {
+                if (modLine.RowState == DataRowState.Modified)
+                {
+                    int orAccountID = (int)modLine["accountID", DataRowVersion.Original];
+                    decimal orAmount = (decimal)modLine["amount", DataRowVersion.Original];
+                    bool orCreditDebit = (bool)modLine["creditDebit", DataRowVersion.Original];
+
+                    if (modLine.accountID != orAccountID)
+                        this.myAddChange(orAccountID, SpclEnvelope.NULL);
+
+                    if (modLine.accountID != orAccountID || modLine.amount != orAmount || modLine.creditDebit != orCreditDebit)
+                        this.myAddChange(modLine.accountID, SpclEnvelope.NULL);
+
+                }
+                else if (modLine.RowState == DataRowState.Added)
+                {
+                    this.myAddChange(modLine.accountID, SpclEnvelope.NULL);
+                }
+                else if (modLine.RowState == DataRowState.Deleted)
+                {
+                    int orAccountID = (int)modLine["accountID", DataRowVersion.Original];
+                    this.myAddChange(orAccountID, SpclEnvelope.NULL);
+                }
+            }
         }
 
 
@@ -32,6 +265,8 @@ namespace FamilyFinance2.Forms.Transaction
         //   Functions Public 
         public void myInit()
         {
+            this.currentTransID = -1;
+
             this.AccountTA = new AccountTableAdapter();
             this.AccountTA.ClearBeforeFill = true;
 
@@ -41,7 +276,9 @@ namespace FamilyFinance2.Forms.Transaction
             this.LineTypeTA = new LineTypeTableAdapter();
             this.LineTypeTA.ClearBeforeFill = true;
 
-            this.currentTransID = -1;
+
+            // Setup for traching changes
+            this.Changes = new List<AEPair>();
         }
 
 
@@ -67,8 +304,7 @@ namespace FamilyFinance2.Forms.Transaction
             this.EnvelopeLine.myFill(transID);
         }
 
-
-
+        
         public void myDeleteLine(int lineID)
         {
             try
@@ -83,19 +319,6 @@ namespace FamilyFinance2.Forms.Transaction
 
                 // Delete the line
                 this.LineItem.FindByid(lineID).Delete();
-            }
-            catch
-            {
-                return;
-            }
-        }
-
-        public void myDeleteEnvelopeLine(int envLineID)
-        {
-            try
-            {
-                // Delete the Envelope Line
-                this.EnvelopeLine.FindByid(envLineID).Delete();
             }
             catch
             {
@@ -148,117 +371,81 @@ namespace FamilyFinance2.Forms.Transaction
                 this.TransactionError = false;
         }
 
+
         public void mySaveChanges()
         {
+            this.myFindChanges();
             // only changes to the lines and envelopeLines
             this.LineItem.mySaveNewLines();
             this.EnvelopeLine.mySaveChanges();
             this.LineItem.mySaveChanges();
         }
 
+        public List<AEPair> myGetChanges()
+        {
+            // Pass back the changes list and create a new list to work with.
+            List<AEPair> change = this.Changes;
+
+            this.Changes = new List<AEPair>();
+
+            return change;
+        }
+
 
         ///////////////////////////////////////////
         // Used by the Registry dataset
-        public void myForwardLineEdits(FamilyFinance2.Forms.Main.RegistrySplit.RegistryDataSet.LineItemRow newRow)
+        public void myForwardLineEdits(FamilyFinance2.Forms.Main.RegistrySplit.RegistryDataSet.LineItemRow rLine)
         {
-            LineItemRow oldRow = this.LineItem.FindByid(newRow.id);
-            int tranSize = this.LineItem.Rows.Count;
+            LineItemRow tLine = this.LineItem.FindByid(rLine.id);
 
             // Copy the simple items.
-            if (oldRow.date != newRow.date)
-                oldRow.date = newRow.date;
+            if (tLine.date != rLine.date)
+                tLine.date = rLine.date;
 
-            if (oldRow.typeID != newRow.typeID)
-                oldRow.typeID = newRow.typeID;
+            if (tLine.typeID != rLine.typeID)
+                tLine.typeID = rLine.typeID;
 
-            if (oldRow.description != newRow.description)
-                oldRow.description = newRow.description;
+            if (tLine.description != rLine.description)
+                tLine.description = rLine.description;
 
-            if (oldRow.confirmationNumber != newRow.confirmationNumber)
-                oldRow.confirmationNumber = newRow.confirmationNumber;
+            if (tLine.confirmationNumber != rLine.confirmationNumber)
+                tLine.confirmationNumber = rLine.confirmationNumber;
 
-            if (oldRow.envelopeID != newRow.envelopeID)
-                oldRow.envelopeID = newRow.envelopeID;
+            if (tLine.complete != rLine.complete)
+                tLine.complete = rLine.complete;
 
-            if (oldRow.complete != newRow.complete)
-                oldRow.complete = newRow.complete;
+            // The following affect other lines / envelopeLines 
+            if (tLine.oppAccountID != rLine.oppAccountID)
+                this.myChangeOppAccountID(ref tLine, rLine.oppAccountID);
 
-            if (oldRow.accountID != newRow.accountID)
-                oldRow.accountID = newRow.accountID;  //Needs something else
+            if (tLine.creditDebit != rLine.creditDebit)
+                this.myChangeCreditDebit(ref tLine);
 
-            if (oldRow.oppAccountID != newRow.oppAccountID)
-                oldRow.oppAccountID = newRow.oppAccountID;  //Needs something else
+            if (tLine.amount != rLine.amount)
+                this.myChangeAmount(ref tLine, rLine.amount);
 
-            if (oldRow.amount != newRow.amount)
-                oldRow.amount = newRow.amount;  //Needs something else
+            if (tLine.accountID != rLine.accountID)
+                this.myChangeAccountID(ref tLine, rLine.accountID);
 
-            if (oldRow.creditDebit != newRow.creditDebit)
-                oldRow.creditDebit = newRow.creditDebit;  //Needs something else
+            if (tLine.envelopeID != rLine.envelopeID)
+                this.myChangeEnvelopeID(ref tLine, rLine.envelopeID);
 
-            // line error 
-            // transaction error
 
-            newRow.AcceptChanges();
+            // Update the error flags
+            this.myCheckTransaction();
+            rLine.transactionError = this.TransactionError;
+            rLine.lineError = tLine.lineError;
         }
 
-        public void myQuickFinishSubLines(ref LineItemRow line)
+        public void myDeleteTransaction()
         {
-            int subLineCount = 0;
-
-            // Count the subLines
-            foreach (EnvelopeLineRow subLine in this.EnvelopeLine)
-                if (subLine.lineItemID == line.id)
-                    subLineCount++;
-
-            // determine if we should delete the sub lines of this lineitem.
-            bool delete = (line == null || line.AccountRowByFK_Line_accountID.envelopes == false);
-
-            if (delete)
+            for (int i = 0; i < this.LineItem.Rows.Count; )
             {
-                foreach (EnvelopeLineRow subLine in this.EnvelopeLine)
-                {
-                    if (subLine.lineItemID == line.id)
-                        subLine.Delete();
-                }
+                LineItemRow row = this.LineItem[i];
+                this.myDeleteLine(row.id);
             }
-            // If there is no subLine for this Line make one because this account has envelopes
-            else if (subLineCount == 0)
-            {
-                bool envelopes = line.AccountRowByFK_Line_accountID.envelopes;
-                bool validID = (line.envelopeID > SpclEnvelope.NULL);
-
-                if (envelopes && validID)
-                {
-                    EnvelopeLineRow newRow = this.EnvelopeLine.NewEnvelopeLineRow();
-
-                    newRow.lineItemID = line.id;
-                    newRow.envelopeID = line.envelopeID;
-                    newRow.description = line.description;
-                    newRow.amount = line.amount;
-
-                    subLineCount++;
-
-                    this.EnvelopeLine.Rows.Add(newRow);
-                }
-            }
-            // If there is one subLine forward simple changes from LineItem to SublineItem.
-            else if (subLineCount == 1)
-            {
-                foreach (EnvelopeLineRow subLine in this.EnvelopeLine)
-                {
-                    if (subLine.lineItemID == line.id)
-                    {
-                        if (subLine.amount != line.amount)
-                            subLine.amount = line.amount;
-
-                        if (subLine.envelopeID != line.envelopeID)
-                            subLine.envelopeID = line.envelopeID;
-                    }
-                }
-            }
-
-
         }
+
 
 
         ///////////////////////////////////////////////////////////////////////
@@ -342,10 +529,6 @@ namespace FamilyFinance2.Forms.Transaction
 
                 stayOut = false;
             }
-
-
-            /////////////////////////
-            //   Private Functions
 
 
 
@@ -461,16 +644,25 @@ namespace FamilyFinance2.Forms.Transaction
             public decimal myEnvelopeLineSum(int lineID)
             {
                 decimal sum = 0.0m;
-                int subCount = 0;
+
+                foreach (EnvelopeLineRow envLine in this)
+                    if (envLine.RowState != DataRowState.Deleted && envLine.lineItemID == lineID)
+                        sum += envLine.amount;
+
+                return sum;
+            }
+
+            public void myEnvelopeLineCount(int lineID, out int count, out int eLineID)
+            {
+                count = 0;
+                eLineID = -1;
 
                 foreach (EnvelopeLineRow envLine in this)
                     if (envLine.RowState != DataRowState.Deleted && envLine.lineItemID == lineID)
                     {
-                        sum += envLine.amount;
-                        subCount++;
+                        count++;
+                        eLineID = envLine.id;
                     }
-
-                return sum;
             }
 
         }

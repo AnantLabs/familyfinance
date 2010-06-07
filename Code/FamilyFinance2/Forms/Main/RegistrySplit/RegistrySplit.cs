@@ -25,7 +25,10 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             this.multiDGV.setEnvelopeAndAccount(e.AccountID, e.EnvelopeID);
         }
 
-
+        private void multiDGV_BalanceChanges(object sender, BalanceChangesEventArgs e)
+        {
+            accountTLV.updateBalance(e.AEChanges);
+        }
 
         ///////////////////////////////////////////////////////////////////////
         //   Functions Public
@@ -43,12 +46,13 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
             // The Account Tree List View
             this.accountTLV = new AccountTLV();
-            this.accountTLV.SelectedAccountEnvelopeChanged += new SelectedAccountEnvelopeChangedEventHandler(accountTLV_SelectedAccountEnvelopeChanged);
             this.splitContainer.Panel1.Controls.Add(this.accountTLV.getControls());
+            this.accountTLV.SelectedAccountEnvelopeChanged += new SelectedAccountEnvelopeChangedEventHandler(accountTLV_SelectedAccountEnvelopeChanged);
 
             // the Multi Data Grid View
             this.multiDGV = new MultiDataGridView();
             this.splitContainer.Panel2.Controls.Add(this.multiDGV.getControl());
+            this.multiDGV.BalanceChanges += new BalanceChangesEventHandler(multiDGV_BalanceChanges);
         }
 
         public Control getControl()
@@ -64,18 +68,18 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
         public void myReloadAccount()
         {
             multiDGV.reloadAccounts();
-            accountTLV.myRebuildAccounts();
+            accountTLV.rebuildAccounts();
         }
 
         public void myReloadAccountTypes()
         {
-            this.accountTLV.myRebuildAccountType();
+            this.accountTLV.rebuildAccountType();
         }
 
         public void myReloadEnvelope()
         {
             multiDGV.reloadEnvelopes();
-            this.accountTLV.myRebuildEnvelopes();
+            this.accountTLV.rebuildEnvelopes();
         }
 
         public void myReloadLineItem()
