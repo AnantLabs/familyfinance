@@ -395,6 +395,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                 balanceAmountCol.DataPropertyName = "balanceAmount";
                 balanceAmountCol.SortMode = DataGridViewColumnSortMode.NotSortable;
                 balanceAmountCol.DefaultCellStyle = new MyCellStyleMoney();
+                balanceAmountCol.ReadOnly = true;
                 balanceAmountCol.Visible = true;
                 balanceAmountCol.Width = 75;
             }
@@ -403,11 +404,11 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             {
                 dgvBindingSource = new BindingSource(dataSource, "LineItem");
 
-                typeColBindingSource = new BindingSource(dataSource, "LineType");
+                typeColBindingSource = new BindingSource(dataSource.LineType, "");
                 typeColBindingSource.Sort = "name";
-                oppAccountColBindingSource = new BindingSource(dataSource, "Account");
+                oppAccountColBindingSource = new BindingSource(dataSource.Account, "");
                 oppAccountColBindingSource.Sort = "name";
-                envelopeColBindingSource = new BindingSource(dataSource, "Envelope");
+                envelopeColBindingSource = new BindingSource(dataSource.Envelope, "");
                 envelopeColBindingSource.Sort = "name";
 
                 buildTheColumns();

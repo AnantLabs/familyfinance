@@ -184,7 +184,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\Main\RegistrySplit\RegistryDataSet.Designer.cs">
-      <DependentUpon>RegistryDataSet.cs</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegistryDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Forms\Main\RegistrySplit\RegistrySplit.cs" />
     <Compile Include="Forms\Transaction\CDLinesDGV.cs">
@@ -320,6 +322,8 @@
     </None>
     <None Include="Forms\Main\RegistrySplit\RegistryDataSet.xsd">
       <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>RegistryDataSet.Designer.cs</LastGenOutput>
     </None>
     <None Include="Forms\Main\RegistrySplit\RegistryDataSet.xss">
       <DependentUpon>RegistryDataSet.xsd</DependentUpon>

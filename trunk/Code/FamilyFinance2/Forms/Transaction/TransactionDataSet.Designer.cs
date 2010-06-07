@@ -2715,8 +2715,6 @@ namespace FamilyFinance2.Forms.Transaction.TransactionDataSetTableAdapters {
         
         private global::System.Data.SqlServerCe.SqlCeConnection _connection;
         
-        private global::System.Data.SqlServerCe.SqlCeTransaction _transaction;
-        
         private global::System.Data.SqlServerCe.SqlCeCommand[] _commandCollection;
         
         private bool _clearBeforeFill;
@@ -2727,7 +2725,7 @@ namespace FamilyFinance2.Forms.Transaction.TransactionDataSetTableAdapters {
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        protected internal global::System.Data.SqlServerCe.SqlCeDataAdapter Adapter {
+        private global::System.Data.SqlServerCe.SqlCeDataAdapter Adapter {
             get {
                 if ((this._adapter == null)) {
                     this.InitAdapter();
@@ -2759,31 +2757,6 @@ namespace FamilyFinance2.Forms.Transaction.TransactionDataSetTableAdapters {
                     if ((this.CommandCollection[i] != null)) {
                         ((global::System.Data.SqlServerCe.SqlCeCommand)(this.CommandCollection[i])).Connection = value;
                     }
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        internal global::System.Data.SqlServerCe.SqlCeTransaction Transaction {
-            get {
-                return this._transaction;
-            }
-            set {
-                this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    this.CommandCollection[i].Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.DeleteCommand != null))) {
-                    this.Adapter.DeleteCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.InsertCommand != null))) {
-                    this.Adapter.InsertCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.UpdateCommand != null))) {
-                    this.Adapter.UpdateCommand.Transaction = this._transaction;
                 }
             }
         }
@@ -3027,8 +3000,6 @@ namespace FamilyFinance2.Forms.Transaction.TransactionDataSetTableAdapters {
         
         private global::System.Data.SqlServerCe.SqlCeConnection _connection;
         
-        private global::System.Data.SqlServerCe.SqlCeTransaction _transaction;
-        
         private global::System.Data.SqlServerCe.SqlCeCommand[] _commandCollection;
         
         private bool _clearBeforeFill;
@@ -3039,7 +3010,7 @@ namespace FamilyFinance2.Forms.Transaction.TransactionDataSetTableAdapters {
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        protected internal global::System.Data.SqlServerCe.SqlCeDataAdapter Adapter {
+        private global::System.Data.SqlServerCe.SqlCeDataAdapter Adapter {
             get {
                 if ((this._adapter == null)) {
                     this.InitAdapter();
@@ -3071,31 +3042,6 @@ namespace FamilyFinance2.Forms.Transaction.TransactionDataSetTableAdapters {
                     if ((this.CommandCollection[i] != null)) {
                         ((global::System.Data.SqlServerCe.SqlCeCommand)(this.CommandCollection[i])).Connection = value;
                     }
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        internal global::System.Data.SqlServerCe.SqlCeTransaction Transaction {
-            get {
-                return this._transaction;
-            }
-            set {
-                this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    this.CommandCollection[i].Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.DeleteCommand != null))) {
-                    this.Adapter.DeleteCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.InsertCommand != null))) {
-                    this.Adapter.InsertCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.UpdateCommand != null))) {
-                    this.Adapter.UpdateCommand.Transaction = this._transaction;
                 }
             }
         }
@@ -3323,8 +3269,6 @@ namespace FamilyFinance2.Forms.Transaction.TransactionDataSetTableAdapters {
         
         private global::System.Data.SqlServerCe.SqlCeConnection _connection;
         
-        private global::System.Data.SqlServerCe.SqlCeTransaction _transaction;
-        
         private global::System.Data.SqlServerCe.SqlCeCommand[] _commandCollection;
         
         private bool _clearBeforeFill;
@@ -3335,7 +3279,7 @@ namespace FamilyFinance2.Forms.Transaction.TransactionDataSetTableAdapters {
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        protected internal global::System.Data.SqlServerCe.SqlCeDataAdapter Adapter {
+        private global::System.Data.SqlServerCe.SqlCeDataAdapter Adapter {
             get {
                 if ((this._adapter == null)) {
                     this.InitAdapter();
@@ -3367,31 +3311,6 @@ namespace FamilyFinance2.Forms.Transaction.TransactionDataSetTableAdapters {
                     if ((this.CommandCollection[i] != null)) {
                         ((global::System.Data.SqlServerCe.SqlCeCommand)(this.CommandCollection[i])).Connection = value;
                     }
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        internal global::System.Data.SqlServerCe.SqlCeTransaction Transaction {
-            get {
-                return this._transaction;
-            }
-            set {
-                this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    this.CommandCollection[i].Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.DeleteCommand != null))) {
-                    this.Adapter.DeleteCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.InsertCommand != null))) {
-                    this.Adapter.InsertCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.UpdateCommand != null))) {
-                    this.Adapter.UpdateCommand.Transaction = this._transaction;
                 }
             }
         }
@@ -3657,8 +3576,6 @@ namespace FamilyFinance2.Forms.Transaction.TransactionDataSetTableAdapters {
         
         private global::System.Data.SqlServerCe.SqlCeConnection _connection;
         
-        private global::System.Data.SqlServerCe.SqlCeTransaction _transaction;
-        
         private global::System.Data.SqlServerCe.SqlCeCommand[] _commandCollection;
         
         private bool _clearBeforeFill;
@@ -3669,7 +3586,7 @@ namespace FamilyFinance2.Forms.Transaction.TransactionDataSetTableAdapters {
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        protected internal global::System.Data.SqlServerCe.SqlCeDataAdapter Adapter {
+        private global::System.Data.SqlServerCe.SqlCeDataAdapter Adapter {
             get {
                 if ((this._adapter == null)) {
                     this.InitAdapter();
@@ -3701,31 +3618,6 @@ namespace FamilyFinance2.Forms.Transaction.TransactionDataSetTableAdapters {
                     if ((this.CommandCollection[i] != null)) {
                         ((global::System.Data.SqlServerCe.SqlCeCommand)(this.CommandCollection[i])).Connection = value;
                     }
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        internal global::System.Data.SqlServerCe.SqlCeTransaction Transaction {
-            get {
-                return this._transaction;
-            }
-            set {
-                this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    this.CommandCollection[i].Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.DeleteCommand != null))) {
-                    this.Adapter.DeleteCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.InsertCommand != null))) {
-                    this.Adapter.InsertCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.UpdateCommand != null))) {
-                    this.Adapter.UpdateCommand.Transaction = this._transaction;
                 }
             }
         }
@@ -4047,8 +3939,6 @@ namespace FamilyFinance2.Forms.Transaction.TransactionDataSetTableAdapters {
         
         private global::System.Data.SqlServerCe.SqlCeConnection _connection;
         
-        private global::System.Data.SqlServerCe.SqlCeTransaction _transaction;
-        
         private global::System.Data.SqlServerCe.SqlCeCommand[] _commandCollection;
         
         private bool _clearBeforeFill;
@@ -4059,7 +3949,7 @@ namespace FamilyFinance2.Forms.Transaction.TransactionDataSetTableAdapters {
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        protected internal global::System.Data.SqlServerCe.SqlCeDataAdapter Adapter {
+        private global::System.Data.SqlServerCe.SqlCeDataAdapter Adapter {
             get {
                 if ((this._adapter == null)) {
                     this.InitAdapter();
@@ -4091,31 +3981,6 @@ namespace FamilyFinance2.Forms.Transaction.TransactionDataSetTableAdapters {
                     if ((this.CommandCollection[i] != null)) {
                         ((global::System.Data.SqlServerCe.SqlCeCommand)(this.CommandCollection[i])).Connection = value;
                     }
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        internal global::System.Data.SqlServerCe.SqlCeTransaction Transaction {
-            get {
-                return this._transaction;
-            }
-            set {
-                this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    this.CommandCollection[i].Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.DeleteCommand != null))) {
-                    this.Adapter.DeleteCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.InsertCommand != null))) {
-                    this.Adapter.InsertCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.UpdateCommand != null))) {
-                    this.Adapter.UpdateCommand.Transaction = this._transaction;
                 }
             }
         }
@@ -4312,658 +4177,6 @@ namespace FamilyFinance2.Forms.Transaction.TransactionDataSetTableAdapters {
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
         public virtual int Update(string p2, int p3) {
             return this.Update(p3, p2, p3);
-        }
-    }
-    
-    /// <summary>
-    ///TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
-    ///</summary>
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
-    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
-    [global::System.ComponentModel.ToolboxItem(true)]
-    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerDesigner, Microsoft.VSD" +
-        "esigner, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
-    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapterManager")]
-    public partial class TableAdapterManager : global::System.ComponentModel.Component {
-        
-        private UpdateOrderOption _updateOrder;
-        
-        private AccountTableAdapter _accountTableAdapter;
-        
-        private EnvelopeTableAdapter _envelopeTableAdapter;
-        
-        private EnvelopeLineTableAdapter _envelopeLineTableAdapter;
-        
-        private LineItemTableAdapter _lineItemTableAdapter;
-        
-        private LineTypeTableAdapter _lineTypeTableAdapter;
-        
-        private bool _backupDataSetBeforeUpdate;
-        
-        private global::System.Data.IDbConnection _connection;
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public UpdateOrderOption UpdateOrder {
-            get {
-                return this._updateOrder;
-            }
-            set {
-                this._updateOrder = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
-            "ft.VSDesigner, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" +
-            "", "System.Drawing.Design.UITypeEditor")]
-        public AccountTableAdapter AccountTableAdapter {
-            get {
-                return this._accountTableAdapter;
-            }
-            set {
-                this._accountTableAdapter = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
-            "ft.VSDesigner, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" +
-            "", "System.Drawing.Design.UITypeEditor")]
-        public EnvelopeTableAdapter EnvelopeTableAdapter {
-            get {
-                return this._envelopeTableAdapter;
-            }
-            set {
-                this._envelopeTableAdapter = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
-            "ft.VSDesigner, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" +
-            "", "System.Drawing.Design.UITypeEditor")]
-        public EnvelopeLineTableAdapter EnvelopeLineTableAdapter {
-            get {
-                return this._envelopeLineTableAdapter;
-            }
-            set {
-                this._envelopeLineTableAdapter = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
-            "ft.VSDesigner, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" +
-            "", "System.Drawing.Design.UITypeEditor")]
-        public LineItemTableAdapter LineItemTableAdapter {
-            get {
-                return this._lineItemTableAdapter;
-            }
-            set {
-                this._lineItemTableAdapter = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
-            "ft.VSDesigner, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" +
-            "", "System.Drawing.Design.UITypeEditor")]
-        public LineTypeTableAdapter LineTypeTableAdapter {
-            get {
-                return this._lineTypeTableAdapter;
-            }
-            set {
-                this._lineTypeTableAdapter = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public bool BackupDataSetBeforeUpdate {
-            get {
-                return this._backupDataSetBeforeUpdate;
-            }
-            set {
-                this._backupDataSetBeforeUpdate = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.ComponentModel.Browsable(false)]
-        public global::System.Data.IDbConnection Connection {
-            get {
-                if ((this._connection != null)) {
-                    return this._connection;
-                }
-                if (((this._accountTableAdapter != null) 
-                            && (this._accountTableAdapter.Connection != null))) {
-                    return this._accountTableAdapter.Connection;
-                }
-                if (((this._envelopeTableAdapter != null) 
-                            && (this._envelopeTableAdapter.Connection != null))) {
-                    return this._envelopeTableAdapter.Connection;
-                }
-                if (((this._envelopeLineTableAdapter != null) 
-                            && (this._envelopeLineTableAdapter.Connection != null))) {
-                    return this._envelopeLineTableAdapter.Connection;
-                }
-                if (((this._lineItemTableAdapter != null) 
-                            && (this._lineItemTableAdapter.Connection != null))) {
-                    return this._lineItemTableAdapter.Connection;
-                }
-                if (((this._lineTypeTableAdapter != null) 
-                            && (this._lineTypeTableAdapter.Connection != null))) {
-                    return this._lineTypeTableAdapter.Connection;
-                }
-                return null;
-            }
-            set {
-                this._connection = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.ComponentModel.Browsable(false)]
-        public int TableAdapterInstanceCount {
-            get {
-                int count = 0;
-                if ((this._accountTableAdapter != null)) {
-                    count = (count + 1);
-                }
-                if ((this._envelopeTableAdapter != null)) {
-                    count = (count + 1);
-                }
-                if ((this._envelopeLineTableAdapter != null)) {
-                    count = (count + 1);
-                }
-                if ((this._lineItemTableAdapter != null)) {
-                    count = (count + 1);
-                }
-                if ((this._lineTypeTableAdapter != null)) {
-                    count = (count + 1);
-                }
-                return count;
-            }
-        }
-        
-        /// <summary>
-        ///Update rows in top-down order.
-        ///</summary>
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        private int UpdateUpdatedRows(TransactionDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
-            int result = 0;
-            if ((this._lineTypeTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.LineType.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._lineTypeTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
-            if ((this._envelopeTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.Envelope.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._envelopeTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
-            if ((this._accountTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.Account.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._accountTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
-            if ((this._lineItemTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.LineItem.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._lineItemTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
-            if ((this._envelopeLineTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.EnvelopeLine.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._envelopeLineTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
-            return result;
-        }
-        
-        /// <summary>
-        ///Insert rows in top-down order.
-        ///</summary>
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        private int UpdateInsertedRows(TransactionDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
-            int result = 0;
-            if ((this._lineTypeTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.LineType.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._lineTypeTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
-            if ((this._envelopeTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.Envelope.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._envelopeTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
-            if ((this._accountTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.Account.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._accountTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
-            if ((this._lineItemTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.LineItem.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._lineItemTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
-            if ((this._envelopeLineTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.EnvelopeLine.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._envelopeLineTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
-            return result;
-        }
-        
-        /// <summary>
-        ///Delete rows in bottom-up order.
-        ///</summary>
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        private int UpdateDeletedRows(TransactionDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
-            int result = 0;
-            if ((this._envelopeLineTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.EnvelopeLine.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._envelopeLineTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-            if ((this._lineItemTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.LineItem.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._lineItemTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-            if ((this._accountTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.Account.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._accountTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-            if ((this._envelopeTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.Envelope.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._envelopeTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-            if ((this._lineTypeTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.LineType.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._lineTypeTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-            return result;
-        }
-        
-        /// <summary>
-        ///Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
-        ///</summary>
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        private global::System.Data.DataRow[] GetRealUpdatedRows(global::System.Data.DataRow[] updatedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
-            if (((updatedRows == null) 
-                        || (updatedRows.Length < 1))) {
-                return updatedRows;
-            }
-            if (((allAddedRows == null) 
-                        || (allAddedRows.Count < 1))) {
-                return updatedRows;
-            }
-            global::System.Collections.Generic.List<global::System.Data.DataRow> realUpdatedRows = new global::System.Collections.Generic.List<global::System.Data.DataRow>();
-            for (int i = 0; (i < updatedRows.Length); i = (i + 1)) {
-                global::System.Data.DataRow row = updatedRows[i];
-                if ((allAddedRows.Contains(row) == false)) {
-                    realUpdatedRows.Add(row);
-                }
-            }
-            return realUpdatedRows.ToArray();
-        }
-        
-        /// <summary>
-        ///Update all changes to the dataset.
-        ///</summary>
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public virtual int UpdateAll(TransactionDataSet dataSet) {
-            if ((dataSet == null)) {
-                throw new global::System.ArgumentNullException("dataSet");
-            }
-            if ((dataSet.HasChanges() == false)) {
-                return 0;
-            }
-            if (((this._accountTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._accountTableAdapter.Connection) == false))) {
-                throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
-                        "tring.");
-            }
-            if (((this._envelopeTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._envelopeTableAdapter.Connection) == false))) {
-                throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
-                        "tring.");
-            }
-            if (((this._envelopeLineTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._envelopeLineTableAdapter.Connection) == false))) {
-                throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
-                        "tring.");
-            }
-            if (((this._lineItemTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._lineItemTableAdapter.Connection) == false))) {
-                throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
-                        "tring.");
-            }
-            if (((this._lineTypeTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._lineTypeTableAdapter.Connection) == false))) {
-                throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
-                        "tring.");
-            }
-            global::System.Data.IDbConnection workConnection = this.Connection;
-            if ((workConnection == null)) {
-                throw new global::System.ApplicationException("TableAdapterManager contains no connection information. Set each TableAdapterMana" +
-                        "ger TableAdapter property to a valid TableAdapter instance.");
-            }
-            bool workConnOpened = false;
-            if (((workConnection.State & global::System.Data.ConnectionState.Broken) 
-                        == global::System.Data.ConnectionState.Broken)) {
-                workConnection.Close();
-            }
-            if ((workConnection.State == global::System.Data.ConnectionState.Closed)) {
-                workConnection.Open();
-                workConnOpened = true;
-            }
-            global::System.Data.IDbTransaction workTransaction = workConnection.BeginTransaction();
-            if ((workTransaction == null)) {
-                throw new global::System.ApplicationException("The transaction cannot begin. The current data connection does not support transa" +
-                        "ctions or the current state is not allowing the transaction to begin.");
-            }
-            global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows = new global::System.Collections.Generic.List<global::System.Data.DataRow>();
-            global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows = new global::System.Collections.Generic.List<global::System.Data.DataRow>();
-            global::System.Collections.Generic.List<global::System.Data.Common.DataAdapter> adaptersWithAcceptChangesDuringUpdate = new global::System.Collections.Generic.List<global::System.Data.Common.DataAdapter>();
-            global::System.Collections.Generic.Dictionary<object, global::System.Data.IDbConnection> revertConnections = new global::System.Collections.Generic.Dictionary<object, global::System.Data.IDbConnection>();
-            int result = 0;
-            global::System.Data.DataSet backupDataSet = null;
-            if (this.BackupDataSetBeforeUpdate) {
-                backupDataSet = new global::System.Data.DataSet();
-                backupDataSet.Merge(dataSet);
-            }
-            try {
-                // ---- Prepare for update -----------
-                //
-                if ((this._accountTableAdapter != null)) {
-                    revertConnections.Add(this._accountTableAdapter, this._accountTableAdapter.Connection);
-                    this._accountTableAdapter.Connection = ((global::System.Data.SqlServerCe.SqlCeConnection)(workConnection));
-                    this._accountTableAdapter.Transaction = ((global::System.Data.SqlServerCe.SqlCeTransaction)(workTransaction));
-                    if (this._accountTableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._accountTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._accountTableAdapter.Adapter);
-                    }
-                }
-                if ((this._envelopeTableAdapter != null)) {
-                    revertConnections.Add(this._envelopeTableAdapter, this._envelopeTableAdapter.Connection);
-                    this._envelopeTableAdapter.Connection = ((global::System.Data.SqlServerCe.SqlCeConnection)(workConnection));
-                    this._envelopeTableAdapter.Transaction = ((global::System.Data.SqlServerCe.SqlCeTransaction)(workTransaction));
-                    if (this._envelopeTableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._envelopeTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._envelopeTableAdapter.Adapter);
-                    }
-                }
-                if ((this._envelopeLineTableAdapter != null)) {
-                    revertConnections.Add(this._envelopeLineTableAdapter, this._envelopeLineTableAdapter.Connection);
-                    this._envelopeLineTableAdapter.Connection = ((global::System.Data.SqlServerCe.SqlCeConnection)(workConnection));
-                    this._envelopeLineTableAdapter.Transaction = ((global::System.Data.SqlServerCe.SqlCeTransaction)(workTransaction));
-                    if (this._envelopeLineTableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._envelopeLineTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._envelopeLineTableAdapter.Adapter);
-                    }
-                }
-                if ((this._lineItemTableAdapter != null)) {
-                    revertConnections.Add(this._lineItemTableAdapter, this._lineItemTableAdapter.Connection);
-                    this._lineItemTableAdapter.Connection = ((global::System.Data.SqlServerCe.SqlCeConnection)(workConnection));
-                    this._lineItemTableAdapter.Transaction = ((global::System.Data.SqlServerCe.SqlCeTransaction)(workTransaction));
-                    if (this._lineItemTableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._lineItemTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._lineItemTableAdapter.Adapter);
-                    }
-                }
-                if ((this._lineTypeTableAdapter != null)) {
-                    revertConnections.Add(this._lineTypeTableAdapter, this._lineTypeTableAdapter.Connection);
-                    this._lineTypeTableAdapter.Connection = ((global::System.Data.SqlServerCe.SqlCeConnection)(workConnection));
-                    this._lineTypeTableAdapter.Transaction = ((global::System.Data.SqlServerCe.SqlCeTransaction)(workTransaction));
-                    if (this._lineTypeTableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._lineTypeTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._lineTypeTableAdapter.Adapter);
-                    }
-                }
-                // 
-                //---- Perform updates -----------
-                //
-                if ((this.UpdateOrder == UpdateOrderOption.UpdateInsertDelete)) {
-                    result = (result + this.UpdateUpdatedRows(dataSet, allChangedRows, allAddedRows));
-                    result = (result + this.UpdateInsertedRows(dataSet, allAddedRows));
-                }
-                else {
-                    result = (result + this.UpdateInsertedRows(dataSet, allAddedRows));
-                    result = (result + this.UpdateUpdatedRows(dataSet, allChangedRows, allAddedRows));
-                }
-                result = (result + this.UpdateDeletedRows(dataSet, allChangedRows));
-                // 
-                //---- Commit updates -----------
-                //
-                workTransaction.Commit();
-                if ((0 < allAddedRows.Count)) {
-                    global::System.Data.DataRow[] rows = new System.Data.DataRow[allAddedRows.Count];
-                    allAddedRows.CopyTo(rows);
-                    for (int i = 0; (i < rows.Length); i = (i + 1)) {
-                        global::System.Data.DataRow row = rows[i];
-                        row.AcceptChanges();
-                    }
-                }
-                if ((0 < allChangedRows.Count)) {
-                    global::System.Data.DataRow[] rows = new System.Data.DataRow[allChangedRows.Count];
-                    allChangedRows.CopyTo(rows);
-                    for (int i = 0; (i < rows.Length); i = (i + 1)) {
-                        global::System.Data.DataRow row = rows[i];
-                        row.AcceptChanges();
-                    }
-                }
-            }
-            catch (global::System.Exception ex) {
-                workTransaction.Rollback();
-                // ---- Restore the dataset -----------
-                if (this.BackupDataSetBeforeUpdate) {
-                    global::System.Diagnostics.Debug.Assert((backupDataSet != null));
-                    dataSet.Clear();
-                    dataSet.Merge(backupDataSet);
-                }
-                else {
-                    if ((0 < allAddedRows.Count)) {
-                        global::System.Data.DataRow[] rows = new System.Data.DataRow[allAddedRows.Count];
-                        allAddedRows.CopyTo(rows);
-                        for (int i = 0; (i < rows.Length); i = (i + 1)) {
-                            global::System.Data.DataRow row = rows[i];
-                            row.AcceptChanges();
-                            row.SetAdded();
-                        }
-                    }
-                }
-                throw ex;
-            }
-            finally {
-                if (workConnOpened) {
-                    workConnection.Close();
-                }
-                if ((this._accountTableAdapter != null)) {
-                    this._accountTableAdapter.Connection = ((global::System.Data.SqlServerCe.SqlCeConnection)(revertConnections[this._accountTableAdapter]));
-                    this._accountTableAdapter.Transaction = null;
-                }
-                if ((this._envelopeTableAdapter != null)) {
-                    this._envelopeTableAdapter.Connection = ((global::System.Data.SqlServerCe.SqlCeConnection)(revertConnections[this._envelopeTableAdapter]));
-                    this._envelopeTableAdapter.Transaction = null;
-                }
-                if ((this._envelopeLineTableAdapter != null)) {
-                    this._envelopeLineTableAdapter.Connection = ((global::System.Data.SqlServerCe.SqlCeConnection)(revertConnections[this._envelopeLineTableAdapter]));
-                    this._envelopeLineTableAdapter.Transaction = null;
-                }
-                if ((this._lineItemTableAdapter != null)) {
-                    this._lineItemTableAdapter.Connection = ((global::System.Data.SqlServerCe.SqlCeConnection)(revertConnections[this._lineItemTableAdapter]));
-                    this._lineItemTableAdapter.Transaction = null;
-                }
-                if ((this._lineTypeTableAdapter != null)) {
-                    this._lineTypeTableAdapter.Connection = ((global::System.Data.SqlServerCe.SqlCeConnection)(revertConnections[this._lineTypeTableAdapter]));
-                    this._lineTypeTableAdapter.Transaction = null;
-                }
-                if ((0 < adaptersWithAcceptChangesDuringUpdate.Count)) {
-                    global::System.Data.Common.DataAdapter[] adapters = new System.Data.Common.DataAdapter[adaptersWithAcceptChangesDuringUpdate.Count];
-                    adaptersWithAcceptChangesDuringUpdate.CopyTo(adapters);
-                    for (int i = 0; (i < adapters.Length); i = (i + 1)) {
-                        global::System.Data.Common.DataAdapter adapter = adapters[i];
-                        adapter.AcceptChangesDuringUpdate = true;
-                    }
-                }
-            }
-            return result;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        protected virtual void SortSelfReferenceRows(global::System.Data.DataRow[] rows, global::System.Data.DataRelation relation, bool childFirst) {
-            global::System.Array.Sort<global::System.Data.DataRow>(rows, new SelfReferenceComparer(relation, childFirst));
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        protected virtual bool MatchTableAdapterConnection(global::System.Data.IDbConnection inputConnection) {
-            if ((this._connection != null)) {
-                return true;
-            }
-            if (((this.Connection == null) 
-                        || (inputConnection == null))) {
-                return true;
-            }
-            if (string.Equals(this.Connection.ConnectionString, inputConnection.ConnectionString, global::System.StringComparison.Ordinal)) {
-                return true;
-            }
-            return false;
-        }
-        
-        /// <summary>
-        ///Update Order Option
-        ///</summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
-        public enum UpdateOrderOption {
-            
-            InsertUpdateDelete = 0,
-            
-            UpdateInsertDelete = 1,
-        }
-        
-        /// <summary>
-        ///Used to sort self-referenced table's rows
-        ///</summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "2.0.0.0")]
-        private class SelfReferenceComparer : object, global::System.Collections.Generic.IComparer<global::System.Data.DataRow> {
-            
-            private global::System.Data.DataRelation _relation;
-            
-            private int _childFirst;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            internal SelfReferenceComparer(global::System.Data.DataRelation relation, bool childFirst) {
-                this._relation = relation;
-                if (childFirst) {
-                    this._childFirst = -1;
-                }
-                else {
-                    this._childFirst = 1;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            private bool IsChildAndParent(global::System.Data.DataRow child, global::System.Data.DataRow parent) {
-                global::System.Diagnostics.Debug.Assert((child != null));
-                global::System.Diagnostics.Debug.Assert((parent != null));
-                global::System.Data.DataRow newParent = child.GetParentRow(this._relation, global::System.Data.DataRowVersion.Default);
-                for (
-                ; ((newParent != null) 
-                            && ((object.ReferenceEquals(newParent, child) == false) 
-                            && (object.ReferenceEquals(newParent, parent) == false))); 
-                ) {
-                    newParent = newParent.GetParentRow(this._relation, global::System.Data.DataRowVersion.Default);
-                }
-                if ((newParent == null)) {
-                    for (newParent = child.GetParentRow(this._relation, global::System.Data.DataRowVersion.Original); ((newParent != null) 
-                                && ((object.ReferenceEquals(newParent, child) == false) 
-                                && (object.ReferenceEquals(newParent, parent) == false))); 
-                    ) {
-                        newParent = newParent.GetParentRow(this._relation, global::System.Data.DataRowVersion.Original);
-                    }
-                }
-                if (object.ReferenceEquals(newParent, parent)) {
-                    return true;
-                }
-                return false;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public int Compare(global::System.Data.DataRow row1, global::System.Data.DataRow row2) {
-                if (object.ReferenceEquals(row1, row2)) {
-                    return 0;
-                }
-                if ((row1 == null)) {
-                    return -1;
-                }
-                if ((row2 == null)) {
-                    return 1;
-                }
-
-                // Is row1 the child or grandchild of row2
-                if (this.IsChildAndParent(row1, row2)) {
-                    return this._childFirst;
-                }
-
-                // Is row2 the child or grandchild of row1
-                if (this.IsChildAndParent(row2, row1)) {
-                    return (-1 * this._childFirst);
-                }
-                return 0;
-            }
         }
     }
 }
