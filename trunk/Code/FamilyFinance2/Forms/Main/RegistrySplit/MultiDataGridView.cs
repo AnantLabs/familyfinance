@@ -21,12 +21,8 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             public static int AccountID = SpclAccount.NULL;
             public static int EnvelopeID = SpclEnvelope.NULL;
 
-            //public static int TransactionID;
-            //public static int LineID;
-            //public static int EnvLineID;
-
-            public static bool AccountUsesEnvelopes;
-            public static bool AccountIsCredit;
+            public static bool AccountUsesEnvelopes = false;
+            public static bool AccountIsCredit = false;
 
             public static DataGridView DGV;
         }
@@ -37,6 +33,15 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             public const string LINE_ID_NAME = "lineItemID";
             public const string E_LINE_ID_NAME = "eLineID";
             public const string DATE_NAME = "date";
+            public const string LINE_TYPE_NAME = "lineType";
+            public const string SOURCE_NAME = "source";
+            public const string DESTINATION_NAME = "destination";
+            public const string LINE_DESCRIPTION_NAME = "lineDesctription";
+            public const string DESCRIPTION_NAME = "desctription";
+            public const string CREDIT_AMOUNT_NAME = "creditAmount";
+            public const string COMPLETE_NAME = "complete";
+            public const string DEBIT_AMOUNT_NAME = "debitAmount";
+            public const string BALANCE_AMOUNT_NAME = "balanceAmount";
 
             private static DataGridView dgv;
             private static BindingSource dgvBindingSource;
@@ -89,7 +94,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
                 // descriptionColumn
                 lineDescriptionCol = new DataGridViewTextBoxColumn();
-                lineDescriptionCol.Name = "lineDescription";
+                lineDescriptionCol.Name = LINE_DESCRIPTION_NAME;
                 lineDescriptionCol.HeaderText = "Description";
                 lineDescriptionCol.DataPropertyName = "lineDescription";
                 lineDescriptionCol.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -99,7 +104,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
                 // subDescriptionColumn
                 descriptionCol = new DataGridViewTextBoxColumn();
-                descriptionCol.Name = "description";
+                descriptionCol.Name = DESCRIPTION_NAME;
                 descriptionCol.HeaderText = "Sub Description";
                 descriptionCol.DataPropertyName = "description";
                 descriptionCol.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -109,7 +114,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
                 // lineTypeslColumn
                 lineTypeCol = new DataGridViewTextBoxColumn();
-                lineTypeCol.Name = "lineType";
+                lineTypeCol.Name = LINE_TYPE_NAME;
                 lineTypeCol.HeaderText = "Type";
                 lineTypeCol.DataPropertyName = "lineType";
                 lineTypeCol.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -118,7 +123,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
                 // sourceColumn
                 sourceCol = new DataGridViewTextBoxColumn();
-                sourceCol.Name = "source";
+                sourceCol.Name = SOURCE_NAME;
                 sourceCol.HeaderText = "Source";
                 sourceCol.DataPropertyName = "sourceAccount";
                 sourceCol.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -128,7 +133,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
                 // destinationColumn
                 destinationCol = new DataGridViewTextBoxColumn();
-                destinationCol.Name = "destination";
+                destinationCol.Name = DESTINATION_NAME;
                 destinationCol.HeaderText = "Destination";
                 destinationCol.DataPropertyName = "destinationAccount";
                 destinationCol.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -138,7 +143,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
                 // creditAmountColumn
                 creditAmountCol = new DataGridViewTextBoxColumn();
-                creditAmountCol.Name = "creditAmount";
+                creditAmountCol.Name = CREDIT_AMOUNT_NAME;
                 creditAmountCol.HeaderText = "Credit";
                 creditAmountCol.DataPropertyName = "creditAmount";
                 creditAmountCol.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -148,7 +153,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
                 // completeColumn
                 completeCol = new DataGridViewTextBoxColumn();
-                completeCol.Name = "complete";
+                completeCol.Name = COMPLETE_NAME;
                 completeCol.HeaderText = "CR";
                 completeCol.DataPropertyName = "complete";
                 completeCol.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -158,7 +163,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
                 // debitAmountColumn
                 debitAmountCol = new DataGridViewTextBoxColumn();
-                debitAmountCol.Name = "debitAmountColumn";
+                debitAmountCol.Name = DEBIT_AMOUNT_NAME;
                 debitAmountCol.HeaderText = "Debit";
                 debitAmountCol.DataPropertyName = "debitAmount";
                 debitAmountCol.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -168,7 +173,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
                 // balanceAmountColumn
                 balanceAmountCol = new DataGridViewTextBoxColumn();
-                balanceAmountCol.Name = "balanceAmount";
+                balanceAmountCol.Name = BALANCE_AMOUNT_NAME;
                 balanceAmountCol.HeaderText = "Balance";
                 balanceAmountCol.DataPropertyName = "balanceAmount";
                 balanceAmountCol.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -229,9 +234,18 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
         private static class LineItem
         {
+            public const string LINE_ID_NAME = "lineID";
             public const string TRANSACTION_ID_NAME = "transactionID";
-            public const string LINE_ID_NAME = "lineItemID";
             public const string DATE_NAME = "date";
+            public const string LINE_TYPE_ID_NAME = "lineTypeID";
+            public const string OPP_ACCOUNT_ID_NAME = "oppAccountID";
+            public const string DESCRIPTION_NAME = "desctription";
+            public const string CONFIRMATION_NUM_NAME = "confirmationNum";
+            public const string ENVELOPE_ID_NAME = "envelopeID";
+            public const string CREDIT_AMOUNT_NAME = "creditAmount";
+            public const string COMPLETE_NAME = "complete";
+            public const string DEBIT_AMOUNT_NAME = "debitAmount";
+            public const string BALANCE_AMOUNT_NAME = "balanceAmount";
 
             private static DataGridView dgv;
 
@@ -281,7 +295,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
                 // typeIDColumn
                 lineTypeCol = new DataGridViewComboBoxColumn();
-                lineTypeCol.Name = "typeID";
+                lineTypeCol.Name = LINE_TYPE_ID_NAME;
                 lineTypeCol.HeaderText = "Type";
                 lineTypeCol.DataPropertyName = "typeID";
                 lineTypeCol.DataSource = typeColBindingSource;
@@ -296,7 +310,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
                 // oppAccountIDColumn
                 oppAccountIDCol = new DataGridViewComboBoxColumn();
-                oppAccountIDCol.Name = "oppAccountID";
+                oppAccountIDCol.Name = OPP_ACCOUNT_ID_NAME;
                 oppAccountIDCol.HeaderText = "Source / Destination";
                 oppAccountIDCol.DataPropertyName = "oppAccountID";
                 oppAccountIDCol.DataSource = oppAccountColBindingSource;
@@ -311,7 +325,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
                 // descriptionColumn
                 descriptionCol = new DataGridViewTextBoxColumn();
-                descriptionCol.Name = "description";
+                descriptionCol.Name = DESCRIPTION_NAME;
                 descriptionCol.HeaderText = "Description";
                 descriptionCol.DataPropertyName = "description";
                 descriptionCol.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -321,7 +335,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
                 // confirmationNumColumn
                 confirmationNumCol = new DataGridViewTextBoxColumn();
-                confirmationNumCol.Name = "confirmationNum";
+                confirmationNumCol.Name = CONFIRMATION_NUM_NAME;
                 confirmationNumCol.HeaderText = "Confirmation #";
                 confirmationNumCol.DataPropertyName = "confirmationNumber";
                 confirmationNumCol.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -331,7 +345,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
                 // envelopeIDColumn
                 envelopeIDCol = new DataGridViewComboBoxColumn();
-                envelopeIDCol.Name = "envelopeID";
+                envelopeIDCol.Name = ENVELOPE_ID_NAME;
                 envelopeIDCol.HeaderText = "Envelope";
                 envelopeIDCol.DataPropertyName = "envelopeID";
                 envelopeIDCol.DataSource = envelopeColBindingSource;
@@ -346,7 +360,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
                 // creditAmountColumn
                 creditAmountCol = new DataGridViewTextBoxColumn();
-                creditAmountCol.Name = "creditAmount";
+                creditAmountCol.Name = CREDIT_AMOUNT_NAME;
                 creditAmountCol.HeaderText = "Credit";
                 creditAmountCol.DataPropertyName = "creditAmount";
                 creditAmountCol.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -356,7 +370,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
                 // completeColumn
                 completeCol = new DataGridViewTextBoxColumn();
-                completeCol.Name = "complete";
+                completeCol.Name = COMPLETE_NAME;
                 completeCol.HeaderText = "CR";
                 completeCol.DataPropertyName = "complete";
                 completeCol.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -366,7 +380,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
                 // debitAmountColumn
                 debitAmountCol = new DataGridViewTextBoxColumn();
-                debitAmountCol.Name = "debitAmountColumn";
+                debitAmountCol.Name = DEBIT_AMOUNT_NAME;
                 debitAmountCol.HeaderText = "Debit";
                 debitAmountCol.DataPropertyName = "debitAmount";
                 debitAmountCol.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -376,7 +390,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
                 // balanceAmountColumn
                 balanceAmountCol = new DataGridViewTextBoxColumn();
-                balanceAmountCol.Name = "balanceAmount";
+                balanceAmountCol.Name = BALANCE_AMOUNT_NAME;
                 balanceAmountCol.HeaderText = "Balance";
                 balanceAmountCol.DataPropertyName = "balanceAmount";
                 balanceAmountCol.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -444,6 +458,11 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                 else
                     balanceAmountCol.DefaultCellStyle.Format = "$#0.00;($#0.00);$0.00";
             }
+
+            public static void cancelEdit()
+            {
+                dgvBindingSource.CancelEdit();
+            }
         }
 
 
@@ -453,9 +472,6 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
         private Panel panel;
         private DataGridView liDGV;
         private DataGridView envDGV;
-
-        //private bool inRowValidating;
-
         private RegistryDataSet regDataSet;
 
         // row flags used in painting cells
@@ -467,11 +483,32 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
         private bool flagReadOnlyAccount;
         private bool flagReadOnlyEnvelope;
 
+        // Variables to keep track of when a change has been made to a line so that changes can
+        // be forwarded to the correct place and saved to the database.
+        private const int NO_DIRTY_LINE = -1;
+        private int dirtyLineID = NO_DIRTY_LINE;
 
-        
+
+        ///////////////////////////////////////////////////////////////////////
+        //   External Events
+        ///////////////////////////////////////////////////////////////////////   
+        public event BalanceChangesEventHandler BalanceChanges;
+        private void OnBalanceChanges(BalanceChangesEventArgs e)
+        {
+            if (BalanceChanges != null)
+                BalanceChanges(this, e);
+        }
+
+       
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Internal Events
         ////////////////////////////////////////////////////////////////////////////////////////////
+        private void regDataSet_ErrorsFound(object sender, EventArgs e)
+        {
+            Current.DGV.Refresh();
+        }
+
+
         private void dgv_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             string temp = "stop";
@@ -496,12 +533,12 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                 e.CellStyle.BackColor = System.Drawing.Color.Red;
                 toolTipText = "This transaction needs attention.";
             }
-            else if (this.flagLineError && colName == "envelopeID")
+            else if (this.flagLineError && colName == LineItem.ENVELOPE_ID_NAME)
             {
                 e.CellStyle.BackColor = System.Drawing.Color.Red;
                 toolTipText = "This line amount and its envelope sum need to match.";
             }
-            else if (this.flagAccountError && colName == "oppAccountID")
+            else if (this.flagAccountError && colName == LineItem.OPP_ACCOUNT_ID_NAME)
             {
                 e.CellStyle.BackColor = System.Drawing.Color.Red;
                 toolTipText = "Please choose an account.";
@@ -510,15 +547,15 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                 e.CellStyle.BackColor = System.Drawing.Color.LightGray;
 
             // rowNegativeBalance
-            if (this.flagNegativeBalance && colName == "balanceAmount")
+            if (this.flagNegativeBalance && (colName == LineItem.BALANCE_AMOUNT_NAME || colName == EnvLine.BALANCE_AMOUNT_NAME))
                 e.CellStyle.ForeColor = System.Drawing.Color.Red;
 
             // rowMultipleAccounts
-            if (this.flagReadOnlyAccount && colName == "oppAccountID")
+            if (this.flagReadOnlyAccount && colName == LineItem.OPP_ACCOUNT_ID_NAME)
                 readOnlyCell = true;
 
             // rowSplitEnvelope
-            if (this.flagReadOnlyEnvelope && colName == "envelopeID")
+            if (this.flagReadOnlyEnvelope && colName == LineItem.ENVELOPE_ID_NAME)
                 readOnlyCell = true;
 
             Current.DGV[col, row].ToolTipText = toolTipText;
@@ -535,7 +572,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
             string colName = Current.DGV.Columns[col].Name;
 
-            if (colName == "complete" && Current.DGV == this.liDGV)
+            if (colName == LineItem.COMPLETE_NAME && Current.DGV == this.liDGV)
             {
                 string cellValue = Current.DGV[col, row].Value.ToString();
 
@@ -563,39 +600,11 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                 int lineID = Convert.ToInt32(Current.DGV[EnvLine.LINE_ID_NAME, row].Value);
                 int eLineID = Convert.ToInt32(Current.DGV[EnvLine.E_LINE_ID_NAME, e.RowIndex].Value);
 
-                TransactionForm tf = new TransactionForm(transID, lineID);
+                TransactionForm tf = new TransactionForm(transID, lineID, eLineID);
                 tf.ShowDialog();
                 //this.myReloadLineItems(); // <- remove this line
             }
 
-        }
-
-        
-        private void envDGV_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
-        {
-            int eLineID = Convert.ToInt32(Current.DGV[EnvLine.E_LINE_ID_NAME, e.RowIndex].Value);
-            RegistryDataSet.EnvelopeLineViewRow thisELine = this.regDataSet.EnvelopeLineView.FindByeLineID(eLineID);
-
-            // Defaults. Used for new lines.
-            this.flagTransactionError = false;
-            this.flagLineError = false;
-            this.flagNegativeBalance = false;
-            this.flagReadOnlyEnvelope = false;
-            this.flagReadOnlyAccount = false;
-            this.flagFutureDate = false;
-            this.flagAccountError = false;
-
-            if (thisELine != null)
-            {
-                // Set row Flags
-                //flagTransactionError = thisSubLine.tr;
-
-                if (thisELine.amount < 0.0m)
-                    this.flagNegativeBalance = true;
-
-                if (thisELine.date > DateTime.Today) // future Date
-                    this.flagFutureDate = true;
-            }
         }
 
 
@@ -641,64 +650,83 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
         private void liDGV_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-        //    this.regDataSet.myEditLine(this.CurrentLineID);
+            int newDirtyLine = Convert.ToInt32(this.liDGV[LineItem.LINE_ID_NAME, e.RowIndex].Value);
+
+            if (this.dirtyLineID == NO_DIRTY_LINE)
+                this.dirtyLineID = newDirtyLine;
+
+            else if (this.dirtyLineID == newDirtyLine)
+                return;
+
+            else
+                throw new Exception("This should not happen");
         }
 
         private void liDGV_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
         {
-            //if (inRowValidating)
-            //    return;
+            int row = e.RowIndex;
+            int oppAccount = Convert.ToInt32(this.liDGV[LineItem.OPP_ACCOUNT_ID_NAME, row].Value);
 
-            //inRowValidating = true;
+            if (this.dirtyLineID == NO_DIRTY_LINE) // Means the user didn't change any values. - Nothing to do. -
+                return; 
 
-            //int row = e.RowIndex;
-            //int typeID = Convert.ToInt32(this.liDGV[liColTypeID.Index, row].Value);
-            //int oppAccount = Convert.ToInt32(this.liDGV[liColOppAccountID.Index, row].Value);
-            //int envelope = Convert.ToInt32(this.liDGV[liColEnvelopeID.Index, row].Value);
-            //string description = Convert.ToString(this.liDGV[liColDescription.Index, row].Value);
-            //string confNum = Convert.ToString(this.liDGV[liColConfirmationNum.Index, row].Value);
-
-            //bool allNull = (
-            //                typeID == SpclLineType.NULL
-            //             && envelope == SpclEnvelope.NULL
-            //             && oppAccount == SpclAccount.NULL
-            //             && description == ""
-            //             && confNum == ""
-            //             );
-
-            //if (allNull) // Means the user didn't enter any values. - Cancel the edit -
-            //    this.liDGVBindingSource.CancelEdit();
-
-            //else if (oppAccount == SpclAccount.NULL) // Means the user didn't enter the required feild. Ask user what to do.
-            //{
-            //    if (DialogResult.Yes == MessageBox.Show("You have not entered the required Source or Destination.\n\nDo you want to discard this entry?", "Discard Entry?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Error))
-            //    {   // The user said to discard the changes.
-            //        this.liDGVBindingSource.CancelEdit();
-            //    }
-            //    else
-            //    {   // The user answerd No or Cancel. Cancel leaving the row
-            //        e.Cancel = true;
-            //    }
-            //}
-
-            //inRowValidating = false;
+            else if (oppAccount == SpclAccount.NULL)
+            { 
+                // Means the user didn't enter the required oppAccount. Ask user what to do.
+                if (DialogResult.Yes == MessageBox.Show("You have not entered the required Source or Destination.\n\nDo you want to discard this entry?", 
+                    "Discard Entry?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Error))
+                {   
+                    // The user said to discard the changes.
+                    LineItem.cancelEdit();
+                    this.dirtyLineID = NO_DIRTY_LINE;
+                }
+                else
+                {   // The user answerd No or Cancel. Cancel leaving the row
+                    e.Cancel = true;
+                }
+            }
         }
 
         private void liDGV_RowValidated(object sender, DataGridViewCellEventArgs e)
         {
-            //int transID = Convert.ToInt32(this[transactionIDColumn.Index, e.RowIndex].Value);
+            if (this.dirtyLineID != NO_DIRTY_LINE) // Means the user changed something.
+            {
+                this.regDataSet.mySaveSingleLineEdits(this.dirtyLineID);
+                this.dirtyLineID = NO_DIRTY_LINE;
 
-            //if (currentAccountID != SpclAccount.NULL)  // Save the changes
-            //{
-            //    lineItemDGVBindingSource.EndEdit();
-            //    //this.fFDBDataSet.myCommitSingleLineChanges(lineID, currentAccountID);
-            //    //this.fFDBDataSet.mySaveAndCheckTransaction(transID);
-            //    //this.fFDBDataSet.LineItem.myFillByAccount(this.currentAccountID);
-            //    //this.fFDBDataSet.LineItem.myFillBalance();
-            //}
+                BalanceChangesEventArgs arg = new BalanceChangesEventArgs(this.regDataSet.myGetChanges());
+                this.OnBalanceChanges(arg);
+            }
         }
 
-        
+                
+        private void envDGV_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            int eLineID = Convert.ToInt32(Current.DGV[EnvLine.E_LINE_ID_NAME, e.RowIndex].Value);
+            RegistryDataSet.EnvelopeLineViewRow thisELine = this.regDataSet.EnvelopeLineView.FindByeLineID(eLineID);
+
+            // Defaults. Used for new lines.
+            this.flagTransactionError = false;
+            this.flagLineError = false;
+            this.flagNegativeBalance = false;
+            this.flagReadOnlyEnvelope = false;
+            this.flagReadOnlyAccount = false;
+            this.flagFutureDate = false;
+            this.flagAccountError = false;
+
+            if (thisELine != null)
+            {
+                // Set row Flags
+                //flagTransactionError = thisSubLine.tr;
+
+                if (thisELine.amount < 0.0m)
+                    this.flagNegativeBalance = true;
+
+                if (thisELine.date > DateTime.Today) // future Date
+                    this.flagFutureDate = true;
+            }
+        }
+
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -710,6 +738,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
             this.regDataSet = new RegistryDataSet();
             this.regDataSet.myInit();
+            this.regDataSet.ErrorsFound += new EventHandler(regDataSet_ErrorsFound);
 
             ////////////////////////////////////
             // The DataGridViews
@@ -717,12 +746,16 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             this.liDGV.DataError +=new DataGridViewDataErrorEventHandler(dgv_DataError);
             this.liDGV.CellFormatting += new DataGridViewCellFormattingEventHandler(dgv_CellFormatting);
             this.liDGV.CellDoubleClick += new DataGridViewCellEventHandler(dgv_CellDoubleClick);
+            this.liDGV.CellValueChanged += new DataGridViewCellEventHandler(liDGV_CellValueChanged);
             this.liDGV.RowPrePaint +=new DataGridViewRowPrePaintEventHandler(liDGV_RowPrePaint);
+            this.liDGV.RowValidating += new DataGridViewCellCancelEventHandler(liDGV_RowValidating);
+            this.liDGV.RowValidated += new DataGridViewCellEventHandler(liDGV_RowValidated);
 
             this.envDGV = EnvLine.getDGV(ref this.regDataSet);
             this.envDGV.DataError += new DataGridViewDataErrorEventHandler(dgv_DataError);
             this.envDGV.CellFormatting += new DataGridViewCellFormattingEventHandler(dgv_CellFormatting);
             this.envDGV.CellDoubleClick += new DataGridViewCellEventHandler(dgv_CellDoubleClick);
+            this.envDGV.RowPrePaint += new DataGridViewRowPrePaintEventHandler(envDGV_RowPrePaint);
 
 
             ////////////////////////////////////
@@ -744,6 +777,8 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             this.reloadAccounts();
             this.reloadEnvelopes();
         }
+
+
 
         public Control getControl()
         {

@@ -53,7 +53,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
         //   External Events
         ///////////////////////////////////////////////////////////////////////   
         public event SelectedAccountEnvelopeChangedEventHandler SelectedAccountEnvelopeChanged;
-        public void OnSelectedAccountEnvelopeChanged(SelectedAccountEnvelopeChangedEventArgs e)
+        private void OnSelectedAccountEnvelopeChanged(SelectedAccountEnvelopeChangedEventArgs e)
         {
             selectedAccountID = e.AccountID;
             selectedEnvelopeID = e.EnvelopeID;
@@ -153,12 +153,12 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
         private void groupEnvelopesMenuItem_Click(object sender, EventArgs e)
         {
-            this.myRebuildEnvelopes();
+            this.rebuildEnvelopes();
         }
 
         private void groupAccountsMenuItem_Click(object sender, EventArgs e)
         {
-            this.myRebuildAccounts();
+            this.rebuildAccounts();
         }
 
 
@@ -661,32 +661,35 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             return this.accTLV;
         }
 
-        public void updateBalance(int accountID, int envelopeID)
+        public void updateBalance(List<AEPair> aeChanges)
         {
             decimal newBalance;
 
-            if (accountID > SpclAccount.NULL && envelopeID > SpclEnvelope.NOENVELOPE)
+            foreach (AEPair pair in aeChanges)
             {
-                newBalance = DBquery.getAccBalance(accountID);
-                this.updateBalanceRecurse(this.accountRootNode, accountID, SpclEnvelope.NULL, newBalance);
+                if (pair.AccountID > SpclAccount.NULL && pair.EnvelopeID > SpclEnvelope.NOENVELOPE)
+                {
+                    newBalance = DBquery.getAccBalance(pair.AccountID);
+                    this.updateBalanceRecurse(this.accountRootNode, pair.AccountID, SpclEnvelope.NULL, newBalance);
 
-                newBalance = DBquery.getAEBalance(accountID, envelopeID);
-                this.updateBalanceRecurse(this.accountRootNode, accountID, envelopeID, newBalance);
-                this.updateBalanceRecurse(this.envelopeRootNode, accountID, envelopeID, newBalance);
+                    newBalance = DBquery.getAEBalance(pair.AccountID, pair.EnvelopeID);
+                    this.updateBalanceRecurse(this.accountRootNode, pair.AccountID, pair.EnvelopeID, newBalance);
+                    this.updateBalanceRecurse(this.envelopeRootNode, pair.AccountID, pair.EnvelopeID, newBalance);
 
-                newBalance = DBquery.getEnvBalance(envelopeID);
-                this.updateBalanceRecurse(this.envelopeRootNode, SpclAccount.NULL, envelopeID, newBalance);
-            }
-            else if (accountID > SpclAccount.NULL)
-            {
-                newBalance = DBquery.getAccBalance(accountID);
-                this.updateBalanceRecurse(this.accountRootNode, accountID, SpclEnvelope.NULL, newBalance);
+                    newBalance = DBquery.getEnvBalance(pair.EnvelopeID);
+                    this.updateBalanceRecurse(this.envelopeRootNode, SpclAccount.NULL, pair.EnvelopeID, newBalance);
+                }
+                else if (pair.AccountID > SpclAccount.NULL)
+                {
+                    newBalance = DBquery.getAccBalance(pair.AccountID);
+                    this.updateBalanceRecurse(this.accountRootNode, pair.AccountID, SpclEnvelope.NULL, newBalance);
+                }
             }
 
             findNewErrors();
         }
 
-        public void myRebuildAccounts()
+        public void rebuildAccounts()
         {
             this.accountRootNode.Nodes.Clear();
             this.accountRootNode.Collapse();
@@ -700,14 +703,14 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             this.rePlantTheRoots();
         }
 
-        public void myRebuildEnvelopes()
+        public void rebuildEnvelopes()
         {
             this.envelopeRootNode.Nodes.Clear();
             this.envelopeRootNode.Collapse();
             this.rePlantTheRoots();
         }
 
-        public void myRebuildAccountType()
+        public void rebuildAccountType()
         {
             this.accountRootNode.Nodes.Clear();
             this.accountRootNode.Collapse();
