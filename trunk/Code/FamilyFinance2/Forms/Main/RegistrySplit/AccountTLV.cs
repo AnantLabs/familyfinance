@@ -277,6 +277,19 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             e.Result = DBquery.getAccountErrors();
         }
 
+        private bool e_doesNotContain(ref List<AccountError> list, ref AccountError item)
+        {
+            bool notFound = true;
+
+            foreach (AccountError alpha in list)
+                if (alpha.AccountID == item.AccountID
+                    && alpha.Catagory == item.Catagory
+                    && alpha.TypeID == item.TypeID)
+                    notFound = false;
+
+            return notFound;
+        }
+
         private void e_Finder_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Error != null)
@@ -288,7 +301,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             for (int i = 0; i < newErrors.Count; i++)
             {
                 AccountError aError = newErrors[i];
-                if (!this.e_KnownErrors.Contains(aError))
+                if (e_doesNotContain(ref e_KnownErrors, ref aError))
                 {
                     this.e_KnownErrors.Add(aError);
                     switch (aError.Catagory)
@@ -310,7 +323,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             for (int i = 0; i < this.e_KnownErrors.Count; i++)
             {
                 AccountError aError = this.e_KnownErrors[i];
-                if (!newErrors.Contains(aError))
+                if (e_doesNotContain(ref newErrors, ref aError))
                 {
                     this.e_KnownErrors.RemoveAt(i);
                     i--;
@@ -599,9 +612,22 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                             return true;
                         }
                         else
+                        {
                             foreach (BaseNode child in pNode.Nodes)
+                            {
                                 if (updateBalanceRecurse(child, accountID, envelopeID, newAmount))
                                     return true;
+                            }
+
+                            // If we get here the AENode was not found so handle this Account Node.
+                            bool open = aNode.Expanded;
+
+                            aNode.Nodes.Clear();
+                            this.handleThisAccountNode(aNode);
+
+                            aNode.Expanded = open;
+                            return true;
+                        }
                     }
                     break;
 
@@ -615,9 +641,22 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                             return true;
                         }
                         else
+                        {
                             foreach (BaseNode child in pNode.Nodes)
+                            {
                                 if (updateBalanceRecurse(child, accountID, envelopeID, newAmount))
                                     return true;
+                            }
+
+                            // If we get here the AENode was not found so handle this Account Node.
+                            bool open = eNode.Expanded;
+
+                            eNode.Nodes.Clear();
+                            this.handleThisEnvelopeNode(eNode);
+
+                            eNode.Expanded = open;
+                            return true;
+                        }
                     }
                     break;
 
@@ -625,7 +664,17 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                     AENode aeNode = pNode as AENode;
                     if (aeNode.EnvelopeID == envelopeID && aeNode.AccountID == accountID)
                     {
-                        aeNode.setBalance(newAmount);
+                        if (newAmount == 0.00m)
+                        {
+                            // If we get here delete this node because it is zero balance.
+                            // To do that in a simple way just return false and the previous iteration
+                            // will think we didn't find the aeNode and do a update of all the aeNode.
+                            // which will be the same as deleting it here.
+                            return false;
+                        }
+                        else
+                            aeNode.setBalance(newAmount);
+
                         return true;
                     }
                     break;
@@ -642,13 +691,13 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             this.accTLV = new TreeListView();
 
             // Set Defaults
-            selectedAccountID = SpclAccount.NULL;
-            selectedEnvelopeID = SpclEnvelope.NULL;
+            this.selectedAccountID = SpclAccount.NULL;
+            this.selectedEnvelopeID = SpclEnvelope.NULL;
 
-            e_Finder = new BackgroundWorker();
-            e_Finder.RunWorkerCompleted += new RunWorkerCompletedEventHandler(e_Finder_RunWorkerCompleted);
-            e_Finder.DoWork += new DoWorkEventHandler(e_Finder_DoWork);
             this.e_KnownErrors = new List<AccountError>();
+            this.e_Finder = new BackgroundWorker();
+            this.e_Finder.RunWorkerCompleted += new RunWorkerCompletedEventHandler(e_Finder_RunWorkerCompleted);
+            this.e_Finder.DoWork += new DoWorkEventHandler(e_Finder_DoWork);
 
             this.buildContextMenu();
             this.myInit();
@@ -686,6 +735,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                 }
             }
 
+            this.accTLV.Refresh();
             findNewErrors();
         }
 
@@ -701,6 +751,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             this.expenseRootNode.Collapse();
 
             this.rePlantTheRoots();
+            this.findNewErrors();
         }
 
         public void rebuildEnvelopes()

@@ -291,7 +291,5 @@ namespace FamilyFinance2.Forms.Import
 
             return newRow.id;
         }
-
-
     }
 }

@@ -229,10 +229,14 @@ namespace FamilyFinance2.Forms.Transaction
             }
 
             // Determin if there is a transaction error.
-            if (creditSum != debitSum)
-                this.TransactionError = true;
-            else
+            if (creditSum == debitSum)
                 this.TransactionError = false;
+
+            else if (this.LineItem.Rows.Count == 1 && this.LineItem[0].accountID == this.LineItem[0].oppAccountID)
+                this.TransactionError = false;
+
+            else
+                this.TransactionError = true;
         }
 
         public void myGetCDSums(out decimal creditSum, out decimal debitSum)

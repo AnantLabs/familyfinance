@@ -35,6 +35,11 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             if (e.Error != null)
                 throw new Exception("Finding Transaction error exception", e.Error);
 
+            if (stayOut)
+                return;
+            else
+                stayOut = true;
+
             foreach (int lineID in e_LineErrors)
             {
                 LineItemRow line = this.LineItem.FindByid(lineID);
@@ -60,6 +65,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             }
 
             this.OnErrorsFound(new EventArgs());
+            stayOut = false;
         }
 
 
@@ -93,34 +99,57 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Private
         ////////////////////////////////////////////////////////////////////////////////////////////
-        private void myCalcBalance()
+        private bool stayOut;
+        private void LineItem_ColumnChanged(object sender, System.Data.DataColumnChangeEventArgs e)
         {
-            decimal bal = 0.0m;
-            bool debitAccount = this.Account.FindByid(this.currentAccountID).creditDebit == LineCD.DEBIT;
-            bool showingEnvelopes = currentEnvelopeID != SpclEnvelope.NULL;
+            if (stayOut)
+                return;
+            else
+                stayOut = true;
+            
+            LineItemRow row = e.Row as LineItemRow;
 
-            if (debitAccount || showingEnvelopes)
+            if (e.Column == this.LineItem.creditAmountColumn)
             {
-                foreach (LineItemRow row in this.LineItem)
-                {
-                    if (row.creditDebit == LineCD.CREDIT)
-                        row.balanceAmount = bal -= row.creditAmount = row.amount;
-                    else
-                        row.balanceAmount = bal += row.debitAmount = row.amount;
-                }
+                decimal newAmount = Convert.ToDecimal(e.ProposedValue);
+                newBalance(row, newAmount, LineCD.CREDIT);
+            }
+            else if (e.Column == this.LineItem.debitAmountColumn)
+            {
+                decimal newAmount = Convert.ToDecimal(e.ProposedValue);
+                newBalance(row, newAmount, LineCD.DEBIT);
+            }
+
+            stayOut = false;
+        }
+
+        private void newBalance(LineItemRow row, decimal newAmount, bool newCD)
+        {
+            if (newAmount < 0.0m)
+            {
+                newAmount = Decimal.Negate(newAmount);
+                newCD = !newCD;
+            }
+
+            newAmount = Decimal.Round(newAmount, 2);
+
+            if (row.amount != newAmount)
+                row.amount = newAmount;
+
+            if (row.creditDebit != newCD)
+                row.creditDebit = newCD;
+
+            if (newCD == LineCD.CREDIT)
+            {
+                row.creditAmount = newAmount;
+                row.SetdebitAmountNull();
             }
             else
             {
-                foreach (LineItemRow row in this.LineItem)
-                {
-                    if (row.creditDebit == LineCD.CREDIT)
-                        row.balanceAmount = bal += row.creditAmount = row.amount;
-                    else
-                        row.balanceAmount = bal -= row.debitAmount = row.amount;
-                }
+                row.debitAmount = newAmount;
+                row.SetcreditAmountNull();
             }
         }
-
 
         ///////////////////////////////////////////
         // Used by the Registry dataset
@@ -174,8 +203,10 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
             // Update the error flags
             this.tDataSet.myCheckTransaction();
+            this.stayOut = true;
             rLine.transactionError = this.tDataSet.TransactionError;
             rLine.lineError = tLine.lineError;
+            this.stayOut = false;
         }
         
         private void myChangeCreditDebit(ref TransactionDataSet.LineItemRow lineBeingChange)
@@ -227,11 +258,11 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                 this.tDataSet.LineItem[1].amount = newAmount;
 
                 // Now update the envelopeLines with the new amount;
-                this.tDataSet.EnvelopeLine.myEnvelopeLineCount(this.LineItem[0].id, out envCount, out eLineID);
+                this.tDataSet.EnvelopeLine.myEnvelopeLineCount(this.tDataSet.LineItem[0].id, out envCount, out eLineID);
                 if (envCount == 1)
                     this.tDataSet.EnvelopeLine.FindByid(eLineID).amount = newAmount;
 
-                this.tDataSet.EnvelopeLine.myEnvelopeLineCount(this.LineItem[1].id, out envCount, out eLineID);
+                this.tDataSet.EnvelopeLine.myEnvelopeLineCount(this.tDataSet.LineItem[1].id, out envCount, out eLineID);
                 if (envCount == 1)
                     this.tDataSet.EnvelopeLine.FindByid(eLineID).amount = newAmount;
             }
@@ -305,13 +336,63 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
             // Now update the envelopeLine If there is only one with the new envelopeID;
             this.tDataSet.EnvelopeLine.myEnvelopeLineCount(lineBeingChange.id, out envCount, out eLineID);
+
             if (envCount == 1 && newEnvelopeID > SpclEnvelope.NULL)
                 this.tDataSet.EnvelopeLine.FindByid(eLineID).envelopeID = newEnvelopeID;
 
             else if (envCount == 1 && newEnvelopeID == SpclEnvelope.NULL)
                 this.tDataSet.EnvelopeLine.FindByid(eLineID).Delete();
+
+            else if (envCount == 0 && newEnvelopeID > SpclEnvelope.NULL)
+            {
+                TransactionDataSet.EnvelopeLineRow eLine = this.tDataSet.EnvelopeLine.NewEnvelopeLineRow();
+
+                eLine.lineItemID = lineBeingChange.id;
+                eLine.envelopeID = newEnvelopeID;
+                eLine.description = lineBeingChange.description;
+                eLine.amount = lineBeingChange.amount;
+
+                this.tDataSet.EnvelopeLine.AddEnvelopeLineRow(eLine);
+            }
         }
 
+
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        //   Private
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        private void myCalcBalance()
+        {
+            if (this.stayOut)
+                return;
+            else
+                this.stayOut = true;
+
+            decimal bal = 0.0m;
+            bool debitAccount = this.Account.FindByid(this.currentAccountID).creditDebit == LineCD.DEBIT;
+
+            if (debitAccount)
+            {
+                foreach (LineItemRow row in this.LineItem)
+                {
+                    if (row.creditDebit == LineCD.CREDIT)
+                        row.balanceAmount = bal -= row.creditAmount = row.amount;
+                    else
+                        row.balanceAmount = bal += row.debitAmount = row.amount;
+                }
+            }
+            else
+            {
+                foreach (LineItemRow row in this.LineItem)
+                {
+                    if (row.creditDebit == LineCD.CREDIT)
+                        row.balanceAmount = bal += row.creditAmount = row.amount;
+                    else
+                        row.balanceAmount = bal -= row.debitAmount = row.amount;
+                }
+            }
+
+            this.stayOut = false; ;
+        }
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -329,6 +410,9 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
             this.envelopeLineViewTA = new EnvelopeLineViewTableAdapter();
             this.envelopeLineViewTA.ClearBeforeFill = true;
+
+            this.LineItem.ColumnChanged += new System.Data.DataColumnChangeEventHandler(LineItem_ColumnChanged);
+            this.stayOut = false;
 
             // Reference the tables in the transactionDataSet
             this.Account = this.tDataSet.Account;
@@ -375,6 +459,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
         public void myFillLines(int accountID, int envelopeID)
         {
+            decimal bal = 0.0m;
             this.currentAccountID = accountID;
             this.currentEnvelopeID = envelopeID;
 
@@ -387,7 +472,14 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             else
                 this.envelopeLineViewTA.FillByAccountAndEnvelope(this.EnvelopeLineView, accountID, envelopeID);
 
-            this.myCalcBalance();
+
+            foreach (EnvelopeLineViewRow  row in this.EnvelopeLineView)
+            {
+                if (row.creditDebit == LineCD.CREDIT)
+                    row.balanceAmount = bal -= row.creditAmount = row.amount;
+                else
+                    row.balanceAmount = bal += row.debitAmount = row.amount;
+            }
         }
 
         public void myDeleteTransaction(int transID)
@@ -401,19 +493,28 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                 if (line.transactionID == transID)
                     line.Delete();
 
-            this.myCalcBalance();
-
             // Save the changes
-            this.LineItem.AcceptChanges();
+            if (currentEnvelopeID == SpclEnvelope.NULL)
+            {
+                this.myCalcBalance();
+                this.LineItem.AcceptChanges();
+            }
+        }
+
+        public void myPrefillTransaction(int lineID)
+        {
+            LineItemRow line = this.LineItem.FindByid(lineID);
+            this.tDataSet.myFillLineItemAndSubLine(line.transactionID);
         }
 
         public void mySaveSingleLineEdits(int lineID)
         {
             LineItemRow line = this.LineItem.FindByid(lineID);
-            this.tDataSet.myFillLineItemAndSubLine(line.transactionID);
-            this.myForwardLineEdits(line);
-            this.tDataSet.mySaveChanges();
 
+            this.myForwardLineEdits(line);
+
+            this.tDataSet.mySaveChanges();
+            this.myCalcBalance();
             this.LineItem.AcceptChanges();
         }
 
