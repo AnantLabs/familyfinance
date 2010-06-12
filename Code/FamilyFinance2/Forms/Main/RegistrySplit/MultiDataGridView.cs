@@ -67,21 +67,21 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                 transactionIDCol.Name = TRANSACTION_ID_NAME;
                 transactionIDCol.HeaderText = "transactionID";
                 transactionIDCol.DataPropertyName = "transactionID";
-                transactionIDCol.Visible = true;
+                transactionIDCol.Visible = false;
 
                 // lineItemIDColumn
                 lineItemIDCol = new DataGridViewTextBoxColumn();
                 lineItemIDCol.Name = LINE_ID_NAME;
                 lineItemIDCol.HeaderText = "lineItemID";
                 lineItemIDCol.DataPropertyName = "lineItemID";
-                lineItemIDCol.Visible = true;
+                lineItemIDCol.Visible = false;
 
                 // idColumn
                 idCol = new DataGridViewTextBoxColumn();
                 idCol.Name = E_LINE_ID_NAME;
                 idCol.HeaderText = "eLineID";
                 idCol.DataPropertyName = "eLineID";
-                idCol.Visible = true;
+                idCol.Visible = false;
 
                 // dateColumn
                 dateCol = new DataGridViewTextBoxColumn();
@@ -274,14 +274,14 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                 idCol.Name = LINE_ID_NAME;
                 idCol.HeaderText = "id";
                 idCol.DataPropertyName = "id";
-                idCol.Visible = true;
+                idCol.Visible = false;
 
                 // transactionIDColumn
                 transactionIDCol = new DataGridViewTextBoxColumn();
                 transactionIDCol.Name = TRANSACTION_ID_NAME;
                 transactionIDCol.HeaderText = "transactionID";
                 transactionIDCol.DataPropertyName = "transactionID";
-                transactionIDCol.Visible = true;
+                transactionIDCol.Visible = false;
 
                 // dateColumn
                 dateCol = new CalendarColumn();
@@ -460,6 +460,16 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                     balanceAmountCol.DefaultCellStyle.Format = "$#0.00;($#0.00);$0.00";
             }
 
+            public static void setEnvelopeColumnVisible(bool visible)
+            {
+                envelopeIDCol.Visible = visible;
+            }
+
+            public static void setConfermationNumColumnVisible(bool visible)
+            {
+                confirmationNumCol.Visible = visible;
+            }
+
             public static void cancelEdit()
             {
                 dgvBindingSource.CancelEdit();
@@ -486,6 +496,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
         // Variables to keep track of when a change has been made to a line so that changes can
         // be forwarded to the correct place and saved to the database.
+        private bool inRowValidating;
         private const int NO_DIRTY_LINE = -1;
         private int dirtyLineID = NO_DIRTY_LINE;
 
@@ -654,8 +665,10 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             int newDirtyLine = Convert.ToInt32(this.liDGV[LineItem.LINE_ID_NAME, e.RowIndex].Value);
 
             if (this.dirtyLineID == NO_DIRTY_LINE)
+            {
                 this.dirtyLineID = newDirtyLine;
-
+                this.regDataSet.myPrefillTransaction(newDirtyLine);
+            }
             else if (this.dirtyLineID == newDirtyLine)
                 return;
 
@@ -690,6 +703,11 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
         private void liDGV_RowValidated(object sender, DataGridViewCellEventArgs e)
         {
+            if (this.inRowValidating)
+                return;
+
+            this.inRowValidating = true;
+
             if (this.dirtyLineID != NO_DIRTY_LINE) // Means the user changed something.
             {
                 this.regDataSet.mySaveSingleLineEdits(this.dirtyLineID);
@@ -698,6 +716,9 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                 BalanceChangesEventArgs arg = new BalanceChangesEventArgs(this.regDataSet.myGetChanges());
                 this.OnBalanceChanges(arg);
             }
+
+
+            this.inRowValidating = false;
         }
 
                 
@@ -735,7 +756,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
         ////////////////////////////////////////////////////////////////////////////////////////////
         public MultiDataGridView()
         {
-            //this.inRowValidating = false; 
+            this.inRowValidating = false; 
 
             this.regDataSet = new RegistryDataSet();
             this.regDataSet.myInit();
@@ -780,7 +801,6 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
         }
 
 
-
         public Control getControl()
         {
             return this.panel;
@@ -808,8 +828,10 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                 Current.EnvelopeID = envelopeID;
                 Current.AccountUsesEnvelopes = this.regDataSet.Account.FindByid(accountID).envelopes;
                 Current.AccountIsCredit = !this.regDataSet.Account.FindByid(accountID).creditDebit;
-                LineItem.setNegativeBalanceFormat(Current.AccountIsCredit);
                 Current.DGV = this.liDGV;
+
+                LineItem.setNegativeBalanceFormat(Current.AccountIsCredit);
+                LineItem.setEnvelopeColumnVisible(Current.AccountUsesEnvelopes);
 
                 this.regDataSet.myFillLines(accountID);
 
