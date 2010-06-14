@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.IO;
 using System.Data.SqlServerCe;
+
 using FamilyFinance2.Forms.FindDB;
 using FamilyFinance2.Forms.Main;
 using FamilyFinance2.SharedElements;
@@ -15,45 +16,63 @@ namespace FamilyFinance2
     static class Program
     {
         [STAThread] // The main entry point for the application.
-        static void Main()
+        static void Main(string [] args)
         {
+            if (!canRun())
+                return;
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-#if (DEBUG)
-    #if (RUN_TESTS)
+            if (args.Length == 1 && setPath(args[0]))
+                runProgram();
 
-            testCode();
-            return;
+            else if (args.Length == 0 && setPath(Properties.Settings.Default.DataDirectory))
+                runProgram();
 
-    #else
-            AppDomain.CurrentDomain.SetData("DataDirectory", Path.GetDirectoryName(Application.ExecutablePath));
+            else if (args.Length == 0)
+            {
+                string dbDir = findUserPath();
 
-            if (FFDataBase.myCreateDBFile())
-                FFDataBase.myExecuteFile(Properties.Resources.Test_Data, true);
+                if (dbDir != null && (setPath(dbDir) || createDataBase(dbDir)) )
+                {
+                    Properties.Settings.Default.DataDirectory = dbDir;
+                    Properties.Settings.Default.Save();
+                    runProgram();
+                }
+                else
+                    MessageBox.Show("Failed to find the database file.", "", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
+        }
 
+        private static void runProgram()
+        {
             //Application.Run(new FamilyFinance2.Forms.EditAccounts.EditAccountsForm());
             //Application.Run(new FamilyFinance2.Forms.EditEnvelopes.EditEnvelopesForm());
-            Application.Run(new MainForm());
+
+            //Testing.Testing test = new FamilyFinance2.Testing.Testing();
+            //test.stressFillDataBase();
+
             //Application.Run(new FamilyFinance2.Forms.Transaction.TransactionForm(3));
-            return;
+            Application.Run(new MainForm());
+        }
 
-    #endif
+        private static bool createDataBase(string path)
+        {
+            bool result = false;
+                            
+            try
+            {
+                AppDomain.CurrentDomain.SetData("DataDirectory", path);
+                result = DBquery.createDBFile();
+            } 
+            catch  
+            { 
+                MessageBox.Show("Failed to create the database file.", "", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                result = false; 
+            }
 
-#else
-
-            if (canRun())
-                if (findPath())
-                {
-                    //Testing.Testing test = new FamilyFinance2.Testing.Testing();
-                    //test.stressFillDataBase();
-
-                    //Application.Run(new FamilyFinance2.Forms.Transaction.TransactionForm(3));
-                    Application.Run(new FamilyFinance2.Forms.Main.MainForm());
-                }
-
-#endif
-
+            return result;
         }
 
         private static bool canRun()
@@ -71,7 +90,7 @@ namespace FamilyFinance2
             }
 
             // See if SQLCE is installed
-            try { sqlCommand(); }
+            try { sqlCommandTest(); }
             catch
             {
                 message = "It appears this computer does not yet have SQLServerCE3-5-1.msi installed.\n Please get it installed before running Family Finance.";
@@ -83,73 +102,48 @@ namespace FamilyFinance2
             return true;
         }
 
-        private static void sqlCommand()
+        private static void sqlCommandTest()
         {
             SqlCeCommand test = new SqlCeCommand();
             test.Dispose();
         }
 
-        private static bool findPath()
+        private static bool setPath(string dbDir)
         {
-            bool result;
-            string dbFilePath;
-            string dbDir;
+            bool result = false;
+            string dbFilePath = dbDir + "\\" + Properties.Settings.Default.DBFileName;
 
-            dbDir = Properties.Settings.Default.DataDirectory;
-            dbFilePath = dbDir + "\\" + Properties.Settings.Default.DBFileName;
-
-            if (File.Exists(dbFilePath) == false)
+            if (File.Exists(dbFilePath))
             {
-                FindDBForm findDB = new FindDBForm();
-                findDB.ShowDialog();
+                try
+                {
+                    AppDomain.CurrentDomain.SetData("DataDirectory", dbDir);
+                    result = DBquery.goodPath(); 
+                }
+                catch
+                {
+                    result = false;
+                }
+            }
+
+            return result;
+        }
+
+        private static string findUserPath()
+        {
+            string dbDir;
+            FindDBForm findDB = new FindDBForm();
+            findDB.ShowDialog();
+
+            if (findDB.Result == FindDBForm.OpenResult.Cancel)
+                dbDir = null;
+            else
                 dbDir = findDB.FileDir;
 
-                if (findDB.Result == FindDBForm.OpenResult.Cancel)
-                    return false;
-
-                else
-                {
-                    Properties.Settings.Default.DataDirectory = dbDir;
-                    Properties.Settings.Default.Save();
-                }
-            }
-
-            AppDomain.CurrentDomain.SetData("DataDirectory", Properties.Settings.Default.DataDirectory);
-
-            try { result = DBquery.goodPath(); }
-
-            catch
-            {
-                MessageBox.Show("Failed to find the database file.", "", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                return false;
-            }
-
-            if (result == false)
-            {
-                try { result = DBquery.createDBFile(); }
-
-                catch { result = false; }
-
-                if (result == false)
-                {
-                    MessageBox.Show("Failed to create the database file.", "", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                    return false;
-                }
-            }
-
-            return true;
+            return dbDir;
         }
 
 
-        // Run UnitTesting
-#if (DEBUG)
-        private static void testCode()
-        {
-            //FamilyFinanceDBDataSet testDS = new FamilyFinanceDBDataSet();
-            //testDS.Test_myRunAllTests();
-            //testDS.Dispose();
-        }
-#endif
 
     }// END Class Program
 }// END namespace FamilyFinance
