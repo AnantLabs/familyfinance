@@ -86,8 +86,9 @@ namespace FamilyFinance2.SharedElements
         ///////////////////////////////////////////////////////////////////////
         //   Private STATIC Queries
         ///////////////////////////////////////////////////////////////////////
-        static private void executeFile(string fileAsString)
+        static private bool executeFile(string fileAsString)
         {
+            bool result = false;
             string[] commands = fileAsString.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             SqlCeConnection connection = new SqlCeConnection(Properties.Settings.Default.FFDBConnectionString);
             SqlCeCommand sqlCmd = new SqlCeCommand();
@@ -95,14 +96,31 @@ namespace FamilyFinance2.SharedElements
             connection.Open();
             sqlCmd.Connection = connection;
 
-            foreach (string line in commands)
+            try
             {
-                sqlCmd.CommandText = line;
-                sqlCmd.ExecuteNonQuery();
+                foreach (string line in commands)
+                {
+                    string temp = line.Trim();
+                    if (temp != "")
+                    {
+                        temp += ";";
+                        sqlCmd.CommandText = temp;
+                        sqlCmd.ExecuteNonQuery();
+                    }
+                }
+                result = true;
+            }
+            catch
+            {
+                result = false;
+            }
+            finally
+            {
+                connection.Close();
+                sqlCmd.Dispose();
             }
 
-            connection.Close();
-            sqlCmd.Dispose();
+            return result;
         }
 
         static private object queryValue(string query)
@@ -272,6 +290,7 @@ namespace FamilyFinance2.SharedElements
         ///////////////////////////////////////////////////////////////////////
         static public bool createDBFile()
         {
+            bool result = false;
             SqlCeEngine engine = new SqlCeEngine();
             engine.LocalConnectionString = Properties.Settings.Default.FFDBConnectionString;
 
@@ -279,14 +298,16 @@ namespace FamilyFinance2.SharedElements
             filePath += "\\" + Properties.Settings.Default.DBFileName;
 
             if (File.Exists(filePath))
-                return false;
+                result = false;
+            else
+            {
+                engine.CreateDatabase();
+                engine.Dispose();
 
-            engine.CreateDatabase();
-            engine.Dispose();
+                result = buildTables();
+            }
 
-            executeFile(Properties.Resources.BuildTables);
-
-            return true;
+            return result;
         }
 
         static public bool goodPath()
@@ -312,19 +333,19 @@ namespace FamilyFinance2.SharedElements
             return result;
         }
         
-        static public void dropTables()
+        static public bool dropTables()
         {
-            executeFile(Properties.Resources.DropTables);
+            return executeFile(Properties.Resources.DropTables);
         }
         
-        static public void buildTables()
+        static public bool buildTables()
         {
-            executeFile(Properties.Resources.BuildTables);
+            return executeFile(Properties.Resources.BuildTables);
         }
 
-        static public void deleteOrphanELines()
+        static public bool deleteOrphanELines()
         {
-            executeFile(Properties.Resources.DeleteOrphanELines);
+            return executeFile(Properties.Resources.DeleteOrphanELines);
         }
 
 

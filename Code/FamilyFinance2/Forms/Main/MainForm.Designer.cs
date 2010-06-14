@@ -102,6 +102,7 @@
             this.Controls.Add(this.mainToolStrip);
             this.Name = "MainForm";
             this.Text = "Family Finance";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.mainToolStrip.ResumeLayout(false);
             this.mainToolStrip.PerformLayout();
             this.ResumeLayout(false);
