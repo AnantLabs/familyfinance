@@ -31,7 +31,6 @@ namespace FamilyFinance2.Forms.Transaction
 
         private int _currentEnvelopeLineID;
         private int CurrentEnvelopeLineID
-
         {
             get { return _currentEnvelopeLineID; }
             set
@@ -681,7 +680,12 @@ namespace FamilyFinance2.Forms.Transaction
             //this.CurrentLineID = lineID;
             //myResetValues();
 
-        }     
+        }
 
+
+        public List<AEPair> myGetChanges()
+        {
+            return this.tDataSet.myGetChanges();
+        }
     }
 }
