@@ -403,6 +403,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             public static DataGridView getDGV(ref RegistryDataSet dataSource)
             {
                 dgvBindingSource = new BindingSource(dataSource, "LineItem");
+                dgvBindingSource.Sort = "date, creditDebit DESC, amount";
 
                 typeColBindingSource = new BindingSource(dataSource.LineType, "");
                 typeColBindingSource.Sort = "name";
@@ -425,7 +426,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                 dgv.AllowUserToOrderColumns = false;
                 dgv.AllowUserToDeleteRows = false;
                 dgv.AllowUserToResizeRows = false;
-                dgv.AllowUserToAddRows = false;
+                dgv.AllowUserToAddRows = false; // Turned on else where
                 dgv.RowHeadersVisible = false;
                 dgv.ShowCellErrors = false;
                 dgv.ShowRowErrors = false;
@@ -468,6 +469,11 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             public static void setConfermationNumColumnVisible(bool visible)
             {
                 confirmationNumCol.Visible = visible;
+            }
+
+            public static void setAccountFilter(int accID)
+            {
+                dgvBindingSource.Filter = "accountID = " + accID.ToString();
             }
 
             public static void cancelEdit()
@@ -535,6 +541,9 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             if (col < 0 || row < 0)
                 return;
 
+            if (Current.DGV == null)
+                return;
+
             string colName = Current.DGV.Columns[col].Name;
             bool readOnlyCell = Current.DGV[col, row].ReadOnly;
             string toolTipText = Current.DGV[col, row].ToolTipText;
@@ -599,22 +608,29 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             }
             else if (Current.DGV == this.liDGV)
             {
+                this.saveLineEdits();
+
                 int transID = Convert.ToInt32(Current.DGV[LineItem.TRANSACTION_ID_NAME, row].Value);
                 int lineID = Convert.ToInt32(Current.DGV[LineItem.LINE_ID_NAME, row].Value);
 
                 TransactionForm tf = new TransactionForm(transID, lineID);
                 tf.ShowDialog();
-                //this.myReloadLineItems(); // <- remove this line
+                this.regDataSet.myGetTransactionEdits(transID);
+
+                BalanceChangesEventArgs arg = new BalanceChangesEventArgs(tf.myGetChanges());
+                this.OnBalanceChanges(arg);
             }
             else if (Current.DGV == this.envDGV)
             {
+                this.saveLineEdits();
+
                 int transID = Convert.ToInt32(Current.DGV[EnvLine.TRANSACTION_ID_NAME, row].Value);
                 int lineID = Convert.ToInt32(Current.DGV[EnvLine.LINE_ID_NAME, row].Value);
                 int eLineID = Convert.ToInt32(Current.DGV[EnvLine.E_LINE_ID_NAME, e.RowIndex].Value);
 
                 TransactionForm tf = new TransactionForm(transID, lineID, eLineID);
                 tf.ShowDialog();
-                //this.myReloadLineItems(); // <- remove this line
+                this.reloadLines(); // <-- get rid of this.
             }
 
         }
@@ -622,8 +638,8 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
         private void liDGV_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
-            int lineID = Convert.ToInt32(Current.DGV[LineItem.LINE_ID_NAME, e.RowIndex].Value);
-            RegistryDataSet.LineItemRow thisLine = this.regDataSet.LineItem.FindByid(lineID);
+            if (Current.DGV == null)
+                return;
 
             // Defaults. Used for new lines.
             this.flagTransactionError = false;
@@ -633,6 +649,10 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             this.flagReadOnlyAccount = false;
             this.flagFutureDate = false;
             this.flagAccountError = false;
+
+            object value = Current.DGV[LineItem.LINE_ID_NAME, e.RowIndex].Value;
+            int lineID = (value == DBNull.Value) ? -1 : Convert.ToInt32(value);
+            RegistryDataSet.LineItemRow thisLine = this.regDataSet.LineItem.FindByid(lineID);
 
             if (thisLine != null)
             {
@@ -665,10 +685,8 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             int newDirtyLine = Convert.ToInt32(this.liDGV[LineItem.LINE_ID_NAME, e.RowIndex].Value);
 
             if (this.dirtyLineID == NO_DIRTY_LINE)
-            {
                 this.dirtyLineID = newDirtyLine;
-                this.regDataSet.myPrefillTransaction(newDirtyLine);
-            }
+            
             else if (this.dirtyLineID == newDirtyLine)
                 return;
 
@@ -678,16 +696,16 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
         private void liDGV_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
         {
-            int row = e.RowIndex;
-            int oppAccount = Convert.ToInt32(this.liDGV[LineItem.OPP_ACCOUNT_ID_NAME, row].Value);
-
             if (this.dirtyLineID == NO_DIRTY_LINE) // Means the user didn't change any values. - Nothing to do. -
                 return; 
 
-            else if (oppAccount == SpclAccount.NULL)
+            int row = e.RowIndex;
+            int oppAccount = Convert.ToInt32(this.liDGV[LineItem.OPP_ACCOUNT_ID_NAME, row].Value);
+
+            if (oppAccount == SpclAccount.NULL)
             { 
                 // Means the user didn't enter the required oppAccount. Ask user what to do.
-                if (DialogResult.Yes == MessageBox.Show("You have not entered the required Source or Destination.\n\nDo you want to discard this entry?", 
+                if (DialogResult.Yes == MessageBox.Show("You have not selected the required Source or Destination.\n\nDo you want to discard this entry?", 
                     "Discard Entry?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Error))
                 {   
                     // The user said to discard the changes.
@@ -699,6 +717,17 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                     e.Cancel = true;
                 }
             }
+            else if (this.regDataSet.Account.FindByid(oppAccount).closed)
+            {
+                // Means the user tried to select a closed account
+                MessageBox.Show("You have selected a closed account.\n\nPlease open the account first?",
+                    "Closed Account", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+
+                // cancel the changes.
+                LineItem.cancelEdit();
+                this.dirtyLineID = NO_DIRTY_LINE;
+                e.Cancel = true;
+            }
         }
 
         private void liDGV_RowValidated(object sender, DataGridViewCellEventArgs e)
@@ -708,15 +737,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
             this.inRowValidating = true;
 
-            if (this.dirtyLineID != NO_DIRTY_LINE) // Means the user changed something.
-            {
-                this.regDataSet.mySaveSingleLineEdits(this.dirtyLineID);
-                this.dirtyLineID = NO_DIRTY_LINE;
-
-                BalanceChangesEventArgs arg = new BalanceChangesEventArgs(this.regDataSet.myGetChanges());
-                this.OnBalanceChanges(arg);
-            }
-
+            this.saveLineEdits();
 
             this.inRowValidating = false;
         }
@@ -752,10 +773,27 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////
+        //   Functions Private
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        private void saveLineEdits()
+        {
+            // Save any changes that might be happening
+            if (this.dirtyLineID != NO_DIRTY_LINE)
+            {
+                this.regDataSet.mySaveSingleLineEdits(this.dirtyLineID);
+                this.dirtyLineID = NO_DIRTY_LINE;
+
+                BalanceChangesEventArgs arg = new BalanceChangesEventArgs(this.regDataSet.myGetChanges());
+                this.OnBalanceChanges(arg);
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Public
         ////////////////////////////////////////////////////////////////////////////////////////////
         public MultiDataGridView()
         {
+
             this.inRowValidating = false; 
 
             this.regDataSet = new RegistryDataSet();
@@ -765,6 +803,9 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             ////////////////////////////////////
             // The DataGridViews
             this.liDGV = LineItem.getDGV(ref this.regDataSet);
+            this.envDGV = EnvLine.getDGV(ref this.regDataSet);
+
+
             this.liDGV.DataError +=new DataGridViewDataErrorEventHandler(dgv_DataError);
             this.liDGV.CellFormatting += new DataGridViewCellFormattingEventHandler(dgv_CellFormatting);
             this.liDGV.CellDoubleClick += new DataGridViewCellEventHandler(dgv_CellDoubleClick);
@@ -773,12 +814,10 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             this.liDGV.RowValidating += new DataGridViewCellCancelEventHandler(liDGV_RowValidating);
             this.liDGV.RowValidated += new DataGridViewCellEventHandler(liDGV_RowValidated);
 
-            this.envDGV = EnvLine.getDGV(ref this.regDataSet);
             this.envDGV.DataError += new DataGridViewDataErrorEventHandler(dgv_DataError);
             this.envDGV.CellFormatting += new DataGridViewCellFormattingEventHandler(dgv_CellFormatting);
             this.envDGV.CellDoubleClick += new DataGridViewCellEventHandler(dgv_CellDoubleClick);
             this.envDGV.RowPrePaint += new DataGridViewRowPrePaintEventHandler(envDGV_RowPrePaint);
-
 
             ////////////////////////////////////
             // Panel Setup
@@ -798,6 +837,8 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             this.reloadLineTypes();
             this.reloadAccounts();
             this.reloadEnvelopes();
+
+            //this.setEnvelopeAndAccount(SpclAccount.NULL, SpclEnvelope.NULL);
         }
 
 
@@ -820,6 +861,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                 Current.DGV = null;
 
                 this.liDGV.Visible = false;
+                this.liDGV.AllowUserToAddRows = false;
                 this.envDGV.Visible = false;
             }
             else if (accountID > SpclAccount.NULL && envelopeID == SpclEnvelope.NULL)
@@ -832,10 +874,12 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
                 LineItem.setNegativeBalanceFormat(Current.AccountIsCredit);
                 LineItem.setEnvelopeColumnVisible(Current.AccountUsesEnvelopes);
+                LineItem.setAccountFilter(accountID);
 
                 this.regDataSet.myFillLines(accountID);
 
                 this.liDGV.Visible = true;
+                this.liDGV.AllowUserToAddRows = true;
                 this.envDGV.Visible = false;
             }
             else
@@ -848,8 +892,9 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
                 this.regDataSet.myFillLines(accountID, envelopeID);
 
-                this.envDGV.Visible = true;
                 this.liDGV.Visible = false;
+                this.liDGV.AllowUserToAddRows = false;
+                this.envDGV.Visible = true;
             }
         }
 

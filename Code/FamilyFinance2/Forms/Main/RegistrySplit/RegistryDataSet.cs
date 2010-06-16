@@ -100,6 +100,30 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
         //   Private
         ////////////////////////////////////////////////////////////////////////////////////////////
         private bool stayOut;
+
+        private void LineItem_TableNewRow(object sender, System.Data.DataTableNewRowEventArgs e)
+        {
+            stayOut = true;
+            LineItemRow newLine = e.Row as LineItemRow;
+
+            newLine.id = DBquery.getNewID("id", "LineItem");
+            newLine.transactionID = DBquery.getNewID("transactionID", "LineItem");
+            newLine.date = DateTime.Today;
+            newLine.typeID = SpclLineType.NULL;
+            newLine.accountID = currentAccountID;
+            newLine.oppAccountID = SpclAccount.NULL;
+            newLine.description = "";
+            newLine.confirmationNumber = "";
+            newLine.envelopeID = SpclEnvelope.NULL;
+            newLine.complete = LineState.PENDING;
+            newLine.amount = 0.00m;
+            newLine.creditDebit = LineCD.CREDIT;
+            newLine.lineError = false;
+            newLine.transactionError = false;
+
+            stayOut = false;
+        }
+
         private void LineItem_ColumnChanged(object sender, System.Data.DataColumnChangeEventArgs e)
         {
             if (stayOut)
@@ -151,6 +175,8 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             }
         }
 
+
+
         ///////////////////////////////////////////
         // Used by the Registry dataset
         public void myDeleteTransaction()
@@ -168,45 +194,104 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
         {
             TransactionDataSet.LineItemRow tLine = this.tDataSet.LineItem.FindByid(rLine.id);
 
-            // Copy the simple items.
-            if (tLine.date != rLine.date)
-                tLine.date = rLine.date;
+            if (tLine == null)
+                tLine = this.myNewTransaction(rLine);
 
-            if (tLine.typeID != rLine.typeID)
-                tLine.typeID = rLine.typeID;
+            else
+            {
+                // Copy the simple items.
+                if (tLine.date != rLine.date)
+                    tLine.date = rLine.date;
 
-            if (tLine.description != rLine.description)
-                tLine.description = rLine.description;
+                if (tLine.typeID != rLine.typeID)
+                    tLine.typeID = rLine.typeID;
 
-            if (tLine.confirmationNumber != rLine.confirmationNumber)
-                tLine.confirmationNumber = rLine.confirmationNumber;
+                if (tLine.description != rLine.description)
+                    tLine.description = rLine.description;
 
-            if (tLine.complete != rLine.complete)
-                tLine.complete = rLine.complete;
+                if (tLine.confirmationNumber != rLine.confirmationNumber)
+                    tLine.confirmationNumber = rLine.confirmationNumber;
 
-            // The following affect other lines / envelopeLines 
-            if (tLine.oppAccountID != rLine.oppAccountID)
-                this.myChangeOppAccountID(ref tLine, rLine.oppAccountID);
+                if (tLine.complete != rLine.complete)
+                    tLine.complete = rLine.complete;
 
-            if (tLine.creditDebit != rLine.creditDebit)
-                this.myChangeCreditDebit(ref tLine);
+                // The following affect other lines / envelopeLines 
+                if (tLine.oppAccountID != rLine.oppAccountID)
+                    this.myChangeOppAccountID(ref tLine, rLine.oppAccountID);
 
-            if (tLine.amount != rLine.amount)
-                this.myChangeAmount(ref tLine, rLine.amount);
+                if (tLine.creditDebit != rLine.creditDebit)
+                    this.myChangeCreditDebit(ref tLine);
 
-            if (tLine.accountID != rLine.accountID)
-                this.myChangeAccountID(ref tLine, rLine.accountID);
+                if (tLine.amount != rLine.amount)
+                    this.myChangeAmount(ref tLine, rLine.amount);
+
+                if (tLine.accountID != rLine.accountID)
+                    this.myChangeAccountID(ref tLine, rLine.accountID);
+
+                if (tLine.envelopeID != rLine.envelopeID)
+                    this.myChangeEnvelopeID(ref tLine, rLine.envelopeID);
+            }
+
+            // Update the error flags
+            this.tDataSet.myCheckTransaction();
+
+            this.stayOut = true;
+
+            rLine.transactionError = this.tDataSet.TransactionError;
+            rLine.lineError = tLine.lineError;
+
+            this.stayOut = false;
+        }
+
+        private TransactionDataSet.LineItemRow myNewTransaction(LineItemRow rLine)
+        {
+            stayOut = true;
+
+            TransactionDataSet.LineItemRow tLine = this.tDataSet.LineItem.NewLineItemRow();
+
+            // Initially assume this is a single line transaction.
+            tLine.id = rLine.id;
+            tLine.transactionID = rLine.transactionID;
+            tLine.date = rLine.date;
+            tLine.typeID = rLine.typeID;
+            tLine.description = rLine.description;
+            tLine.confirmationNumber = rLine.confirmationNumber;
+            tLine.complete = rLine.complete;
+            tLine.amount = rLine.amount;
+            tLine.creditDebit = rLine.creditDebit;
+            tLine.accountID = rLine.accountID;
+            tLine.oppAccountID = rLine.oppAccountID;
 
             if (tLine.envelopeID != rLine.envelopeID)
                 this.myChangeEnvelopeID(ref tLine, rLine.envelopeID);
 
+            this.tDataSet.LineItem.AddLineItemRow(tLine);
 
-            // Update the error flags
-            this.tDataSet.myCheckTransaction();
-            this.stayOut = true;
-            rLine.transactionError = this.tDataSet.TransactionError;
-            rLine.lineError = tLine.lineError;
-            this.stayOut = false;
+            // if not a sigle line make the other half.
+            if (rLine.accountID != rLine.oppAccountID)
+            {
+                TransactionDataSet.LineItemRow tOppLine = this.tDataSet.LineItem.NewLineItemRow();
+
+                tOppLine.id = rLine.id + 1;
+                tOppLine.transactionID = rLine.transactionID;
+                tOppLine.date = rLine.date;
+                tOppLine.typeID = rLine.typeID;
+                tOppLine.description = rLine.description;
+                tOppLine.confirmationNumber = rLine.confirmationNumber;
+                tOppLine.complete = rLine.complete;
+                tOppLine.amount = rLine.amount;
+                tOppLine.creditDebit = !rLine.creditDebit;
+                tOppLine.oppAccountID = rLine.accountID;
+                tOppLine.accountID = rLine.oppAccountID;
+
+                if (tLine.envelopeID != rLine.envelopeID)
+                    this.myChangeEnvelopeID(ref tOppLine, rLine.envelopeID);
+
+                this.tDataSet.LineItem.AddLineItemRow(tOppLine);
+            }
+
+            stayOut = false;
+            return tLine;
         }
         
         private void myChangeCreditDebit(ref TransactionDataSet.LineItemRow lineBeingChange)
@@ -394,6 +479,50 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             this.stayOut = false; ;
         }
 
+        private void myGetLineEdits(int transID)
+        {
+            stayOut = true;
+
+            for (int index = 0; index < this.LineItem.Rows.Count; index++)
+            {
+                LineItemRow rLine = this.LineItem[index];
+                bool found = false;
+
+                if (rLine.transactionID != transID)
+                    continue;
+
+                foreach (TransactionDataSet.LineItemRow tLine in this.tDataSet.LineItem)
+                {
+                    if (tLine.id == rLine.id)
+                    {
+                        found = true;
+                        rLine.date = tLine.date;
+                        rLine.typeID = tLine.typeID;
+                        rLine.accountID = tLine.accountID;
+                        rLine.oppAccountID = tLine.oppAccountID;
+                        rLine.description = tLine.description;
+                        rLine.confirmationNumber = tLine.confirmationNumber;
+                        rLine.envelopeID = tLine.envelopeID;
+                        rLine.complete = tLine.complete;
+                        rLine.amount = tLine.amount;
+                        rLine.creditDebit = tLine.creditDebit;
+                        rLine.lineError = tLine.lineError;
+                        rLine.transactionError = this.tDataSet.TransactionError;
+                    }
+                }
+
+                if (!found)
+                {
+                    rLine.Delete();
+                    index--;
+                }
+            }
+
+            stayOut = false;
+        }
+
+
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Public
@@ -412,6 +541,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             this.envelopeLineViewTA.ClearBeforeFill = true;
 
             this.LineItem.ColumnChanged += new System.Data.DataColumnChangeEventHandler(LineItem_ColumnChanged);
+            this.LineItem.TableNewRow += new System.Data.DataTableNewRowEventHandler(LineItem_TableNewRow);
             this.stayOut = false;
 
             // Reference the tables in the transactionDataSet
@@ -501,19 +631,25 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             }
         }
 
-        public void myPrefillTransaction(int lineID)
-        {
-            LineItemRow line = this.LineItem.FindByid(lineID);
-            this.tDataSet.myFillLineItemAndSubLine(line.transactionID);
-        }
-
         public void mySaveSingleLineEdits(int lineID)
         {
             LineItemRow line = this.LineItem.FindByid(lineID);
+            this.tDataSet.myFillLineItemAndSubLine(line.transactionID);
 
             this.myForwardLineEdits(line);
 
             this.tDataSet.mySaveChanges();
+            this.myCalcBalance();
+            this.LineItem.AcceptChanges();
+        }
+
+        public void myGetTransactionEdits(int transID)
+        {
+            this.tDataSet.myFillLineItemAndSubLine(transID);
+            this.tDataSet.myCheckTransaction();
+
+            this.myGetLineEdits(transID);
+            
             this.myCalcBalance();
             this.LineItem.AcceptChanges();
         }
