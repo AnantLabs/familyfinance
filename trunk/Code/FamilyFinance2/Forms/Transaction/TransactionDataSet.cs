@@ -257,6 +257,69 @@ namespace FamilyFinance2.Forms.Transaction
         }
 
 
+        public void mySetEnvelopeID(LineItemRow line)
+        {
+            if (!line.AccountRowByFK_Line_accountID.envelopes)
+                line.envelopeID = SpclEnvelope.NULL;
+
+            else
+            {
+                int count;
+                int eID;
+
+                this.EnvelopeLine.myEnvelopeLineCount(line.id, out count, out eID);
+
+                line.envelopeID = eID;
+            }
+        }
+
+        public void mySetDependentValues()
+        {
+            int debitCount = 0;
+            int creditCount = 0;
+
+            int debitID = SpclAccount.NULL;
+            int creditID = SpclAccount.NULL;
+
+            foreach (LineItemRow line in this.LineItem)
+            {
+                if (line.creditDebit == LineCD.DEBIT)
+                {
+                    debitCount++;
+                    debitID = line.accountID;
+                }
+                else
+                {
+                    creditCount++;
+                    creditID = line.accountID;
+                }
+
+                this.mySetEnvelopeID(line);
+            }
+
+            if (debitCount > 1)
+                debitID = SpclAccount.MULTIPLE;
+
+            if (creditCount > 1)
+                creditID = SpclAccount.MULTIPLE;
+
+            if (debitCount + creditCount == 1)
+                this.LineItem[0].oppAccountID = this.LineItem[0].accountID;
+
+            else
+            {
+                foreach (LineItemRow line in this.LineItem)
+                {
+                    if (line.creditDebit == LineCD.DEBIT)
+                        line.oppAccountID = creditID;
+
+                    else
+                        line.oppAccountID = debitID;
+                }
+            }
+
+        }
+
         public void mySaveChanges()
         {
             this.myFindChanges();
@@ -491,11 +554,15 @@ namespace FamilyFinance2.Forms.Transaction
                     if (envLine.RowState != DataRowState.Deleted && envLine.lineItemID == lineID)
                     {
                         count++;
-                        eLineID = envLine.id;
+                        eLineID = envLine.envelopeID;
                     }
+
+                if (count > 1)
+                    eLineID = SpclEnvelope.SPLIT;
             }
 
         }
+
 
     }
 }

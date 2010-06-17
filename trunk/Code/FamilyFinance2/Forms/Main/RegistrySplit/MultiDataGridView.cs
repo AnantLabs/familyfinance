@@ -480,6 +480,11 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             {
                 dgvBindingSource.CancelEdit();
             }
+
+            public static void endEdit()
+            {
+                dgvBindingSource.EndEdit();
+            }
         }
 
 
@@ -631,6 +636,9 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                 TransactionForm tf = new TransactionForm(transID, lineID, eLineID);
                 tf.ShowDialog();
                 this.reloadLines(); // <-- get rid of this.
+
+                BalanceChangesEventArgs arg = new BalanceChangesEventArgs(tf.myGetChanges());
+                this.OnBalanceChanges(arg);
             }
 
         }
@@ -780,6 +788,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             // Save any changes that might be happening
             if (this.dirtyLineID != NO_DIRTY_LINE)
             {
+                LineItem.endEdit();
                 this.regDataSet.mySaveSingleLineEdits(this.dirtyLineID);
                 this.dirtyLineID = NO_DIRTY_LINE;
 

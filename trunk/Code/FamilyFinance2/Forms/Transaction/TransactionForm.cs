@@ -350,6 +350,7 @@ namespace FamilyFinance2.Forms.Transaction
         private void DoneButton_Click(object sender, EventArgs e)
         {
             this.tDataSet.myCheckTransaction();
+            this.tDataSet.mySetDependentValues();
             this.tDataSet.mySaveChanges();
             this.Close();
         }
