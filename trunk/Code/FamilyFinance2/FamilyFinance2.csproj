@@ -177,6 +177,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Main\RegistrySplit\AccountTLV.cs" />
+    <Compile Include="Forms\Main\RegistrySplit\AutoDistribute.cs" />
     <Compile Include="Forms\Main\RegistrySplit\MultiDataGridView.cs" />
     <Compile Include="Forms\Main\RegistrySplit\MyTreeListNode.cs" />
     <Compile Include="Forms\Main\RegistrySplit\RegistryDataSet.cs">

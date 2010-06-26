@@ -291,5 +291,19 @@ namespace FamilyFinance2.Forms.Import
 
             return newRow.id;
         }
+
+        public void myFillForAutoDistribute()
+        {
+            this.lineItemTA.Fill(this.LineItem);
+            this.eLineTA.Fill(this.EnvelopeLine);
+        }
+
+    }
+}
+
+namespace FamilyFinance2.Forms.Import.FFDataSetTableAdapters {
+    
+    
+    public partial class EnvelopeLineTableAdapter {
     }
 }
