@@ -264,12 +264,20 @@ namespace FamilyFinance2.Forms.Transaction
 
             else
             {
-                int count;
-                int eID;
+                int count = 0;
+                int eID = SpclEnvelope.NULL;
 
-                this.EnvelopeLine.myEnvelopeLineCount(line.id, out count, out eID);
+                foreach (EnvelopeLineRow row in this.EnvelopeLine)
+                    if (row.lineItemID == line.id)
+                    {
+                        count++;
+                        eID = row.envelopeID;
+                    }
 
-                line.envelopeID = eID;
+                if (count > 1)
+                    line.envelopeID = SpclEnvelope.SPLIT;
+                else
+                    line.envelopeID = eID;
             }
         }
 
@@ -554,11 +562,8 @@ namespace FamilyFinance2.Forms.Transaction
                     if (envLine.RowState != DataRowState.Deleted && envLine.lineItemID == lineID)
                     {
                         count++;
-                        eLineID = envLine.envelopeID;
+                        eLineID = envLine.id;
                     }
-
-                if (count > 1)
-                    eLineID = SpclEnvelope.SPLIT;
             }
 
         }

@@ -27,6 +27,18 @@ namespace FamilyFinance2
             if (args.Length == 1 && setPath(args[0]))
                 runProgram();
 
+            else if (args.Length == 1)
+            {
+                string dbDir = args[0];
+
+                if (createDataBase(dbDir))
+                {
+                    Properties.Settings.Default.DataDirectory = dbDir;
+                    runProgram();
+                }
+                else
+                    MessageBox.Show("Failed to find the database file.", "", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
             else if (args.Length == 0 && setPath(Properties.Settings.Default.DataDirectory))
                 runProgram();
 
@@ -34,7 +46,7 @@ namespace FamilyFinance2
             {
                 string dbDir = findUserPath();
 
-                if (dbDir != null && (setPath(dbDir) || createDataBase(dbDir)) )
+                if (dbDir != null && (setPath(dbDir) || createDataBase(dbDir)))
                 {
                     Properties.Settings.Default.DataDirectory = dbDir;
                     Properties.Settings.Default.Save();

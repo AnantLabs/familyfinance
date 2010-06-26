@@ -97,7 +97,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////
-        //   Private
+        //   Private table events
         ////////////////////////////////////////////////////////////////////////////////////////////
         private bool stayOut;
 
@@ -176,20 +176,9 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
         }
 
 
-
-        ///////////////////////////////////////////
-        // Used by the Registry dataset
-        public void myDeleteTransaction()
-        {
-            // delete the envelope lines in the transaction
-            while (this.tDataSet.EnvelopeLine.Rows.Count > 0)
-                this.tDataSet.EnvelopeLine[0].Delete();
-
-            // delete the lines in the transaction
-            while (this.tDataSet.LineItem.Rows.Count > 0)
-                this.tDataSet.LineItem[0].Delete();
-        }
-
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        //   Private Forwarding line edits
+        ////////////////////////////////////////////////////////////////////////////////////////////
         private void myForwardLineEdits(LineItemRow rLine)
         {
             TransactionDataSet.LineItemRow tLine = this.tDataSet.LineItem.FindByid(rLine.id);
@@ -443,7 +432,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////
-        //   Private
+        //   Private internal calculations
         ////////////////////////////////////////////////////////////////////////////////////////////
         private void myCalcBalance()
         {
@@ -454,6 +443,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
             decimal bal = 0.0m;
             bool debitAccount = this.Account.FindByid(this.currentAccountID).creditDebit == LineCD.DEBIT;
+            //List<int> registryLineIds DBquery.getRegistryLineIDs(this.currentAccountID);
 
             if (debitAccount)
             {
@@ -476,7 +466,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                 }
             }
 
-            this.stayOut = false; ;
+            this.stayOut = false;
         }
 
         private void myGetLineEdits(int transID)
@@ -496,6 +486,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                     if (tLine.id == rLine.id)
                     {
                         found = true;
+
                         rLine.date = tLine.date;
                         rLine.typeID = tLine.typeID;
                         rLine.accountID = tLine.accountID;
@@ -616,7 +607,15 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
         {
             // Fill up the tDataset and delete the transaction;
             this.tDataSet.myFillLineItemAndSubLine(transID);
-            this.myDeleteTransaction();
+
+            // delete the envelope lines in the transaction
+            while (this.tDataSet.EnvelopeLine.Rows.Count > 0)
+                this.tDataSet.EnvelopeLine[0].Delete();
+
+            // delete the lines in the transaction
+            while (this.tDataSet.LineItem.Rows.Count > 0)
+                this.tDataSet.LineItem[0].Delete();
+
             this.tDataSet.mySaveChanges();
 
             foreach (LineItemRow line in this.LineItem)
@@ -661,4 +660,5 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
     }
 }
+
 

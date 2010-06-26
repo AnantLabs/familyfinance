@@ -67,6 +67,8 @@ namespace FamilyFinance2.Forms.Import.Qif
             // PHASE 2 - Import the data.
             this.importQIFData();
             this.importSpecialCaseTransactions();
+            this.importTheRest();
+            
 
             // PHAZE 3 - Commit the changes to the database. Determine wich accounts should have Envelopes
             this.ffDataSet.mySaveData();
@@ -605,6 +607,7 @@ namespace FamilyFinance2.Forms.Import.Qif
 
                 return;
             }
+         
 
             // If we get here this is a simple Transfer.
             newLine = this.getEasyLineData(qTrans);
@@ -693,6 +696,7 @@ namespace FamilyFinance2.Forms.Import.Qif
 
         private void importQIFTransfers(QifTransaction majorTrans, QifSplit payee)
         {
+            List<FFDataSet.LineItemRow> transLines = new List<FFDataSet.LineItemRow>();
             List<QifTransaction> oppTransList = new List<QifTransaction>();
 
             // Match up
@@ -717,6 +721,7 @@ namespace FamilyFinance2.Forms.Import.Qif
             {
                 // Finish the MajorLine
                 FFDataSet.LineItemRow majorLine = this.getEasyLineData(majorTrans);
+
                 majorLine.envelopeID = this.importEnvelopeLines(majorTrans, majorLine.id);
 
                 if(oppTransList.Count == 1)
@@ -725,6 +730,7 @@ namespace FamilyFinance2.Forms.Import.Qif
                     majorLine.oppAccountID = SpclAccount.MULTIPLE;
 
                 this.ffDataSet.LineItem.AddLineItemRow(majorLine);
+                transLines.Add(majorLine);
 
                 this.qifTransfers.Remove(majorTrans);
 
@@ -732,10 +738,13 @@ namespace FamilyFinance2.Forms.Import.Qif
                 foreach (QifTransaction minorTrans in oppTransList)
                 {
                     FFDataSet.LineItemRow minorLine = this.getEasyLineData(minorTrans);
+
                     minorLine.transactionID = majorLine.transactionID;
                     minorLine.oppAccountID = majorLine.accountID;
                     minorLine.envelopeID = this.importEnvelopeLines(minorTrans, minorLine.id);
+
                     this.ffDataSet.LineItem.AddLineItemRow(minorLine);
+                    transLines.Add(minorLine);
 
                     this.qifTransfers.Remove(minorTrans);
                 }
@@ -746,9 +755,12 @@ namespace FamilyFinance2.Forms.Import.Qif
             {
                 // Finish the MajorLine
                 FFDataSet.LineItemRow majorLine = this.getEasyLineData(majorTrans);
+
                 majorLine.oppAccountID = SpclAccount.MULTIPLE;
                 majorLine.envelopeID = this.importEnvelopeLines(majorTrans, majorLine.id);
+
                 this.ffDataSet.LineItem.AddLineItemRow(majorLine);
+                transLines.Add(majorLine);
 
                 this.qifTransfers.Remove(majorTrans);
 
@@ -777,21 +789,70 @@ namespace FamilyFinance2.Forms.Import.Qif
                 }
 
                 this.ffDataSet.LineItem.AddLineItemRow(payeeLine);
+                transLines.Add(payeeLine);
 
                 // Finish the MinorLines 
                 foreach (QifTransaction minorTrans in oppTransList)
                 {
                     FFDataSet.LineItemRow minorLine = this.getEasyLineData(minorTrans);
+
                     minorLine.transactionID = majorLine.transactionID;
                     minorLine.oppAccountID = majorLine.accountID;
                     minorLine.envelopeID = this.importEnvelopeLines(minorTrans, minorLine.id);
+
                     this.ffDataSet.LineItem.AddLineItemRow(minorLine);
+                    transLines.Add(minorLine);
 
                     this.qifTransfers.Remove(minorTrans);
                 }
+
+                // Make sure the oppAccount was set correctly
+                int debitCount = 0;
+                int creditCount = 0;
+                int debitAccountID = SpclAccount.NULL;
+                int creditAccountID = SpclAccount.NULL;
+
+                // Count things up
+                foreach (FFDataSet.LineItemRow line in transLines)
+                {
+                    if (line.creditDebit == LineCD.CREDIT)
+                    {
+                        creditCount++;
+                        creditAccountID = line.accountID;
+                    }
+                    else
+                    {
+                        debitCount++;
+                        debitAccountID = line.accountID;
+                    }
+                }
+
+                // Set correct values
+                foreach (FFDataSet.LineItemRow line in transLines)
+                {
+                    if (line.creditDebit == LineCD.CREDIT && debitCount == 1)
+                        line.oppAccountID = debitAccountID;
+
+                    else if (line.creditDebit == LineCD.CREDIT && debitCount > 1)
+                        line.oppAccountID = SpclAccount.MULTIPLE;
+
+                    else if (line.creditDebit == LineCD.DEBIT && creditCount == 1)
+                        line.oppAccountID = creditAccountID;
+
+                    else if (line.creditDebit == LineCD.DEBIT && creditCount > 1)
+                        line.oppAccountID = SpclAccount.MULTIPLE;
+
+                }
+
+
             }
         }
 
+        private void importTheRest()
+        {
+            if (this.qifTransfers.Count > 0)
+                throw new Exception("Unable to match some transactions.");
+        }
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////

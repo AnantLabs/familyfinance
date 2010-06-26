@@ -274,7 +274,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                 idCol.Name = LINE_ID_NAME;
                 idCol.HeaderText = "id";
                 idCol.DataPropertyName = "id";
-                idCol.Visible = false;
+                idCol.Visible = true;
 
                 // transactionIDColumn
                 transactionIDCol = new DataGridViewTextBoxColumn();
@@ -774,11 +774,41 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                     this.flagNegativeBalance = true;
 
                 if (thisELine.date > DateTime.Today) // future Date
+                {
                     this.flagFutureDate = true;
+
+                    // Current.DGV.Rows[0].DividerHeight
+                }
             }
         }
 
 
+
+        ////////////////////////////
+        // Context menu events
+        Point mousePoint;
+
+        private void menu_Opening(object sender, CancelEventArgs e)
+        {
+            mousePoint = Cursor.Position;
+        }
+
+        private void move_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void delete_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void duplicate_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void autoFill_Click(object sender, EventArgs e)
+        {
+            AutoDistribute.Distribute(Current.AccountID);
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Private
@@ -795,6 +825,20 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                 BalanceChangesEventArgs arg = new BalanceChangesEventArgs(this.regDataSet.myGetChanges());
                 this.OnBalanceChanges(arg);
             }
+        }
+
+        private void buildTheContextMenues()
+        {
+            ContextMenuStrip menu = new ContextMenuStrip();
+
+            menu.Opening += new CancelEventHandler(menu_Opening);
+
+            menu.Items.Add(new ToolStripButton("Move", null, move_Click));
+            menu.Items.Add(new ToolStripButton("Delete", null, delete_Click));
+            menu.Items.Add(new ToolStripButton("Duplicate", null, duplicate_Click));
+            menu.Items.Add(new ToolStripButton("Auto Fill Envelopes", null, autoFill_Click));
+
+            this.liDGV.ContextMenuStrip = menu;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -839,7 +883,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
             ////////////////////////////////////
             // Panel Setup
-            //this.buildTheContextMenues();
+            this.buildTheContextMenues();
 
             ////////////////////////////////////
             // Fill the tables

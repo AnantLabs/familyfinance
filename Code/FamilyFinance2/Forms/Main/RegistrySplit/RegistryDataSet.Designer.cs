@@ -29,6 +29,10 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit {
         
         private EnvelopeLineViewDataTable tableEnvelopeLineView;
         
+        private global::System.Data.DataRelation relationFK_Line_accountID;
+        
+        private global::System.Data.DataRelation relationFK_Line_oppAccountID;
+        
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -204,6 +208,8 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit {
                     this.tableEnvelopeLineView.InitVars();
                 }
             }
+            this.relationFK_Line_accountID = this.Relations["FK_Line_accountID"];
+            this.relationFK_Line_oppAccountID = this.Relations["FK_Line_oppAccountID"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -217,6 +223,14 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit {
             base.Tables.Add(this.tableLineItem);
             this.tableEnvelopeLineView = new EnvelopeLineViewDataTable();
             base.Tables.Add(this.tableEnvelopeLineView);
+            this.relationFK_Line_accountID = new global::System.Data.DataRelation("FK_Line_accountID", new global::System.Data.DataColumn[] {
+                        this.tableEnvelopeLineView.lineItemIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableLineItem.accountIDColumn}, false);
+            this.Relations.Add(this.relationFK_Line_accountID);
+            this.relationFK_Line_oppAccountID = new global::System.Data.DataRelation("FK_Line_oppAccountID", new global::System.Data.DataColumn[] {
+                        this.tableEnvelopeLineView.lineItemIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableLineItem.oppAccountIDColumn}, false);
+            this.Relations.Add(this.relationFK_Line_oppAccountID);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -511,8 +525,8 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit {
                         int transactionID, 
                         System.DateTime date, 
                         int typeID, 
-                        int accountID, 
-                        int oppAccountID, 
+                        EnvelopeLineViewRow parentEnvelopeLineViewRowByFK_Line_accountID, 
+                        EnvelopeLineViewRow parentEnvelopeLineViewRowByFK_Line_oppAccountID, 
                         string description, 
                         string confirmationNumber, 
                         int envelopeID, 
@@ -530,8 +544,8 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit {
                         transactionID,
                         date,
                         typeID,
-                        accountID,
-                        oppAccountID,
+                        null,
+                        null,
                         description,
                         confirmationNumber,
                         envelopeID,
@@ -543,6 +557,12 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit {
                         debitAmount,
                         creditAmount,
                         balanceAmount};
+                if ((parentEnvelopeLineViewRowByFK_Line_accountID != null)) {
+                    columnValuesArray[4] = parentEnvelopeLineViewRowByFK_Line_accountID[1];
+                }
+                if ((parentEnvelopeLineViewRowByFK_Line_oppAccountID != null)) {
+                    columnValuesArray[5] = parentEnvelopeLineViewRowByFK_Line_oppAccountID[1];
+                }
                 rowLineItemRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowLineItemRow);
                 return rowLineItemRow;
@@ -1401,6 +1421,26 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public EnvelopeLineViewRow EnvelopeLineViewRowByFK_Line_accountID {
+                get {
+                    return ((EnvelopeLineViewRow)(this.GetParentRow(this.Table.ParentRelations["FK_Line_accountID"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_Line_accountID"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public EnvelopeLineViewRow EnvelopeLineViewRowByFK_Line_oppAccountID {
+                get {
+                    return ((EnvelopeLineViewRow)(this.GetParentRow(this.Table.ParentRelations["FK_Line_oppAccountID"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_Line_oppAccountID"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public bool IsdescriptionNull() {
                 return this.IsNull(this.tableLineItem.descriptionColumn);
             }
@@ -1824,6 +1864,26 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit {
             public void SetdestinationAccountNull() {
                 this[this.tableEnvelopeLineView.destinationAccountColumn] = global::System.Convert.DBNull;
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public LineItemRow[] GetLineItemRowsByFK_Line_accountID() {
+                if ((this.Table.ChildRelations["FK_Line_accountID"] == null)) {
+                    return new LineItemRow[0];
+                }
+                else {
+                    return ((LineItemRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Line_accountID"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public LineItemRow[] GetLineItemRowsByFK_Line_oppAccountID() {
+                if ((this.Table.ChildRelations["FK_Line_oppAccountID"] == null)) {
+                    return new LineItemRow[0];
+                }
+                else {
+                    return ((LineItemRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Line_oppAccountID"])));
+                }
+            }
         }
         
         /// <summary>
@@ -2161,7 +2221,8 @@ FROM            EnvelopeLine INNER JOIN
                          LineType ON LineItem.typeID = LineType.id INNER JOIN
                          Account ON LineItem.accountID = Account.id INNER JOIN
                          Account AS OppAccount ON LineItem.oppAccountID = OppAccount.id
-WHERE        (LineItem.accountID = @aID) AND (EnvelopeLine.envelopeID = @eID)";
+WHERE        (LineItem.accountID = @aID) AND (EnvelopeLine.envelopeID = @eID)
+ORDER BY LineItem.date, LineItem.creditDebit DESC, EnvelopeLine.amount";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@aID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, true, 0, 0, "accountID", global::System.Data.DataRowVersion.Current, null));
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@eID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, true, 0, 0, "envelopeID", global::System.Data.DataRowVersion.Current, null));
@@ -2175,7 +2236,8 @@ FROM            EnvelopeLine INNER JOIN
                          LineType ON LineItem.typeID = LineType.id INNER JOIN
                          Account ON LineItem.accountID = Account.id INNER JOIN
                          Account AS OppAccount ON LineItem.oppAccountID = OppAccount.id
-WHERE        (EnvelopeLine.envelopeID = @eID)";
+WHERE        (EnvelopeLine.envelopeID = @eID)
+ORDER BY LineItem.date, LineItem.creditDebit DESC, EnvelopeLine.amount";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@eID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, true, 0, 0, "envelopeID", global::System.Data.DataRowVersion.Current, null));
         }
