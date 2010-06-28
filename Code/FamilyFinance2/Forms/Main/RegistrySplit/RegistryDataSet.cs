@@ -605,28 +605,29 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
         public void myDeleteTransaction(int transID)
         {
-            // Fill up the tDataset and delete the transaction;
-            this.tDataSet.myFillLineItemAndSubLine(transID);
-
-            // delete the envelope lines in the transaction
-            while (this.tDataSet.EnvelopeLine.Rows.Count > 0)
-                this.tDataSet.EnvelopeLine[0].Delete();
-
-            // delete the lines in the transaction
-            while (this.tDataSet.LineItem.Rows.Count > 0)
-                this.tDataSet.LineItem[0].Delete();
-
-            this.tDataSet.mySaveChanges();
-
-            foreach (LineItemRow line in this.LineItem)
-                if (line.transactionID == transID)
-                    line.Delete();
-
-            // Save the changes
             if (currentEnvelopeID == SpclEnvelope.NULL)
             {
+                // Fill up the tDataset and delete the transaction;
+                this.tDataSet.myFillLineItemAndSubLine(transID);
+
+                // Delete the envelope lines in the transaction
+                foreach (TransactionDataSet.EnvelopeLineRow eRow in this.tDataSet.EnvelopeLine)
+                    eRow.Delete();
+
+                // Delete the lines in the transaction
+                foreach (TransactionDataSet.LineItemRow eRow in this.tDataSet.LineItem)
+                    eRow.Delete();
+
+                // Delete the transaction in the registries copy.
+                foreach (LineItemRow line in this.LineItem)
+                    if (line.transactionID == transID)
+                        line.Delete();
+
+                // Save the changes
+                this.tDataSet.mySaveChanges();
+                this.LineItem.AcceptChanges(); // save so calculation can happen
                 this.myCalcBalance();
-                this.LineItem.AcceptChanges();
+                this.LineItem.AcceptChanges(); // save to accept the running total
             }
         }
 
