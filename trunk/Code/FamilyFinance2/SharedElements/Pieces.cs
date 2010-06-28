@@ -105,7 +105,7 @@ namespace FamilyFinance2.SharedElements
             //ButtonFace / Control is a nise soft greay color.
             //GradientInactiveCaption is a baby blue color
             //InactiveBorder nice very soft blue color.
-            this.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
         }
     }
     
