@@ -483,7 +483,13 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
             public static void endEdit()
             {
-                dgvBindingSource.EndEdit();
+                try
+                {
+                    dgvBindingSource.EndEdit();
+                }
+                catch
+                {
+                }
             }
         }
 
@@ -705,8 +711,9 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
         private void liDGV_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
         {
             if (this.dirtyLineID == NO_DIRTY_LINE) // Means the user didn't change any values. - Nothing to do. -
-                return; 
+                return;
 
+            LineItem.endEdit();
             int row = e.RowIndex;
             int oppAccount = Convert.ToInt32(this.liDGV[LineItem.OPP_ACCOUNT_ID_NAME, row].Value);
 
@@ -786,11 +793,27 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
         ////////////////////////////
         // Context menu events
-        Point mousePoint;
-
         private void menu_Opening(object sender, CancelEventArgs e)
         {
-            mousePoint = Cursor.Position;
+            int row = 0;
+            int col = 0;
+            bool found = false;
+            Point clientPt = this.liDGV.PointToClient(Cursor.Position);
+
+            for (row = 0; row < this.liDGV.Rows.Count && !found; row++)
+            {
+                for (col = 0; col < this.liDGV.Columns.Count && !found; col++)
+                {
+                    Rectangle rec = this.liDGV.GetCellDisplayRectangle(col, row, true);
+
+                    if (rec.Contains(clientPt))
+                    {
+                        this.liDGV[col, row].Selected = true;
+                        found = true;
+                    }
+                }
+            }
+
         }
 
         private void move_Click(object sender, EventArgs e)
@@ -799,6 +822,12 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
         private void delete_Click(object sender, EventArgs e)
         {
+            int row = this.liDGV.CurrentRow.Index;
+            int transID = Convert.ToInt32(this.liDGV[LineItem.TRANSACTION_ID_NAME, row].Value);
+            this.regDataSet.myDeleteTransaction(transID);
+
+            BalanceChangesEventArgs arg = new BalanceChangesEventArgs(this.regDataSet.myGetChanges());
+            this.OnBalanceChanges(arg);
         }
 
         private void duplicate_Click(object sender, EventArgs e)
@@ -810,6 +839,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             AutoDistribute.Distribute(Current.AccountID);
         }
 
+
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Private
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -820,10 +850,11 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             {
                 LineItem.endEdit();
                 this.regDataSet.mySaveSingleLineEdits(this.dirtyLineID);
-                this.dirtyLineID = NO_DIRTY_LINE;
 
                 BalanceChangesEventArgs arg = new BalanceChangesEventArgs(this.regDataSet.myGetChanges());
                 this.OnBalanceChanges(arg);
+
+                this.dirtyLineID = NO_DIRTY_LINE;
             }
         }
 
@@ -840,6 +871,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
             this.liDGV.ContextMenuStrip = menu;
         }
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Functions Public

@@ -92,7 +92,14 @@ namespace FamilyFinance2.Forms.Transaction
                 {
                     int orEnvelopeID = (int)envLine["envelopeID", DataRowVersion.Original];
                     int lineItemID = (int)envLine["lineItemID", DataRowVersion.Original];
-                    int orAccountID = (int)this.LineItem.FindByid(lineItemID)["accountID", DataRowVersion.Original];
+                    int orAccountID = SpclAccount.NULL;
+
+                    foreach(LineItemRow line in this.LineItem)
+                        if ((int)line["id", DataRowVersion.Original] == lineItemID)
+                        {
+                            orAccountID = (int)line["accountID", DataRowVersion.Original];
+                            break;
+                        }
 
                     this.myAddChange(orAccountID, orEnvelopeID);
                 }
