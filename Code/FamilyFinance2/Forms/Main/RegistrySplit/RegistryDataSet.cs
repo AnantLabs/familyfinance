@@ -431,6 +431,86 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
         }
 
 
+
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        //   Private Duplicating a transaction
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        private void myDuplicateTransaction(DateTime newDate)
+        {
+            LineItemRow temp = this.LineItem.NewLineItemRow();
+
+            int newTransID = temp.transactionID;
+            int transSize = this.tDataSet.LineItem.Count;
+            int envCount = this.tDataSet.EnvelopeLine.Count;
+
+            // Copy the lines from this transaction.
+            for (int tIndex = 0; tIndex < transSize; tIndex++)
+            {
+                TransactionDataSet.LineItemRow origTLine = this.tDataSet.LineItem[tIndex];
+                TransactionDataSet.LineItemRow newTLine = this.tDataSet.LineItem.NewLineItemRow();
+
+                newTLine.transactionID = newTransID;
+                newTLine.date = newDate;
+                newTLine.typeID = origTLine.typeID;
+                newTLine.accountID = origTLine.accountID;
+                newTLine.oppAccountID = origTLine.oppAccountID;
+                newTLine.description = origTLine.description;
+                newTLine.confirmationNumber = origTLine.confirmationNumber;
+                newTLine.envelopeID = origTLine.envelopeID;
+                newTLine.complete = LineState.PENDING;
+                newTLine.amount = origTLine.amount;
+                newTLine.creditDebit = origTLine.creditDebit;
+                newTLine.lineError = origTLine.lineError;
+
+                this.tDataSet.LineItem.AddLineItemRow(newTLine);
+
+                // Copy the envelopelines for this line.
+                for (int envIndex = 0; envIndex < envCount; envIndex++)
+                {
+                    TransactionDataSet.EnvelopeLineRow origEnvRow = this.tDataSet.EnvelopeLine[envIndex];
+
+                    if (origEnvRow.lineItemID == origTLine.id)
+                    {
+                        TransactionDataSet.EnvelopeLineRow newEnvRow = this.tDataSet.EnvelopeLine.NewEnvelopeLineRow();
+
+                        newEnvRow.lineItemID = newTLine.id;
+                        newEnvRow.envelopeID = origEnvRow.envelopeID;
+                        newEnvRow.description = origEnvRow.description;
+                        newEnvRow.amount = origEnvRow.amount;
+
+                        this.tDataSet.EnvelopeLine.AddEnvelopeLineRow(newEnvRow);
+                    }
+                }
+            }
+
+            // now copy back to the registry dataset
+            for (int tIndex = transSize; tIndex < this.tDataSet.LineItem.Rows.Count; tIndex++)
+            {
+                TransactionDataSet.LineItemRow tLine = this.tDataSet.LineItem[tIndex];
+
+                if (tLine.accountID == currentAccountID)
+                {
+                    LineItemRow rLine = this.LineItem.NewLineItemRow();
+
+                    rLine.id = tLine.id;
+                    rLine.transactionID = tLine.transactionID;
+                    rLine.date = tLine.date;
+                    rLine.typeID = tLine.typeID;
+                    rLine.accountID = tLine.accountID;
+                    rLine.oppAccountID = tLine.oppAccountID;
+                    rLine.description = tLine.description;
+                    rLine.confirmationNumber = tLine.confirmationNumber;
+                    rLine.envelopeID = tLine.envelopeID;
+                    rLine.complete = tLine.complete;
+                    rLine.amount = tLine.amount;
+                    rLine.creditDebit = tLine.creditDebit;
+                    rLine.lineError = tLine.lineError;
+
+                    this.LineItem.AddLineItemRow(rLine);
+                }
+            }
+        }
+
         ////////////////////////////////////////////////////////////////////////////////////////////
         //   Private internal calculations
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -605,30 +685,40 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
         public void myDeleteTransaction(int transID)
         {
-            if (currentEnvelopeID == SpclEnvelope.NULL)
-            {
-                // Fill up the tDataset and delete the transaction;
-                this.tDataSet.myFillLineItemAndSubLine(transID);
 
-                // Delete the envelope lines in the transaction
-                foreach (TransactionDataSet.EnvelopeLineRow eRow in this.tDataSet.EnvelopeLine)
-                    eRow.Delete();
+            // Fill up the tDataset and delete the transaction;
+            this.tDataSet.myFillLineItemAndSubLine(transID);
 
-                // Delete the lines in the transaction
-                foreach (TransactionDataSet.LineItemRow eRow in this.tDataSet.LineItem)
-                    eRow.Delete();
+            // Delete the envelope lines in the transaction
+            foreach (TransactionDataSet.EnvelopeLineRow eRow in this.tDataSet.EnvelopeLine)
+                eRow.Delete();
 
-                // Delete the transaction in the registries copy.
-                foreach (LineItemRow line in this.LineItem)
-                    if (line.transactionID == transID)
-                        line.Delete();
+            // Delete the lines in the transaction
+            foreach (TransactionDataSet.LineItemRow eRow in this.tDataSet.LineItem)
+                eRow.Delete();
 
-                // Save the changes
-                this.tDataSet.mySaveChanges();
-                this.LineItem.AcceptChanges(); // save so calculation can happen
-                this.myCalcBalance();
-                this.LineItem.AcceptChanges(); // save to accept the running total
-            }
+            // Delete the transaction in the registries copy.
+            foreach (LineItemRow line in this.LineItem)
+                if (line.transactionID == transID)
+                    line.Delete();
+
+            // Save the changes
+            this.tDataSet.mySaveChanges();
+            this.LineItem.AcceptChanges(); // save so calculation can happen
+            this.myCalcBalance();
+            this.LineItem.AcceptChanges(); // save to accept the running total
+ 
+        }
+
+        public void myDuplicateTransaction(int transID, DateTime newDate)
+        {
+            this.tDataSet.myFillLineItemAndSubLine(transID);
+
+            this.myDuplicateTransaction(newDate);
+
+            this.tDataSet.mySaveChanges();
+            this.myCalcBalance();
+            this.LineItem.AcceptChanges();
         }
 
         public void mySaveSingleLineEdits(int lineID)

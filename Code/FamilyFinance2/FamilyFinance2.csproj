@@ -86,6 +86,12 @@
     <Compile Include="Forms\AccountType\AccountTypeForm.Designer.cs">
       <DependentUpon>AccountTypeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\DateSelector\DateSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DateSelector\DateSelector.Designer.cs">
+      <DependentUpon>DateSelector.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\EditAccounts\EADataSet.cs">
       <DependentUpon>EADataSet.xsd</DependentUpon>
       <SubType>Component</SubType>
@@ -218,6 +224,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AccountType\AccountTypeForm.resx">
       <DependentUpon>AccountTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DateSelector\DateSelector.resx">
+      <DependentUpon>DateSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EditAccounts\EditAccountsForm.resx">
       <DependentUpon>EditAccountsForm.cs</DependentUpon>

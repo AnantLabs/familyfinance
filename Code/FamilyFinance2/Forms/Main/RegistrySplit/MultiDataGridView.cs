@@ -8,6 +8,7 @@ using System.Windows.Forms;
 
 using FamilyFinance2.Forms.Transaction;
 using FamilyFinance2.SharedElements;
+using FamilyFinance2.Forms.DateSelector;
 
 namespace FamilyFinance2.Forms.Main.RegistrySplit
 {
@@ -824,6 +825,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
         {
             int row = this.liDGV.CurrentRow.Index;
             int transID = Convert.ToInt32(this.liDGV[LineItem.TRANSACTION_ID_NAME, row].Value);
+
             this.regDataSet.myDeleteTransaction(transID);
 
             BalanceChangesEventArgs arg = new BalanceChangesEventArgs(this.regDataSet.myGetChanges());
@@ -832,6 +834,20 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
         private void duplicate_Click(object sender, EventArgs e)
         {
+            int row = this.liDGV.CurrentRow.Index;
+            int transID = Convert.ToInt32(this.liDGV[LineItem.TRANSACTION_ID_NAME, row].Value);
+            DateTime oldDate = Convert.ToDateTime(this.liDGV[LineItem.DATE_NAME, row].Value);
+
+            DateSelector.DateSelector date = new FamilyFinance2.Forms.DateSelector.DateSelector(oldDate);
+            date.ShowDialog();
+
+            if (date.WasDatePicked())
+            {
+                this.regDataSet.myDuplicateTransaction(transID, date.GetDataPicked());
+
+                BalanceChangesEventArgs arg = new BalanceChangesEventArgs(this.regDataSet.myGetChanges());
+                this.OnBalanceChanges(arg);
+            }
         }
 
         private void autoFill_Click(object sender, EventArgs e)
