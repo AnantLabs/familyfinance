@@ -430,6 +430,7 @@ namespace FamilyFinance2.Forms.Transaction
 
             this.envLinesDGV.BindingSourceEnvelopeCol.DataSource = this.tDataSet;
             this.envLinesDGV.BindingSourceEnvelopeCol.DataMember = "Envelope";
+            this.envLinesDGV.BindingSourceEnvelopeCol.Sort = "name";
             this.envLinesDGV.BindingSourceEnvelopeCol.Filter = "id <> " + SpclEnvelope.SPLIT.ToString();
 
             this.envLinesDGV.RowPrePaint += new DataGridViewRowPrePaintEventHandler(envLinesDGV_RowPrePaint);

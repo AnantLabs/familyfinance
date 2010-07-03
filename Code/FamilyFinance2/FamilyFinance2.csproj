@@ -27,6 +27,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <ApplicationIcon>MoneyEnvelopeIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -334,6 +335,7 @@
   <ItemGroup>
     <Content Include="FamilyFinanceDB.sdf">
     </Content>
+    <Content Include="MoneyEnvelopeIcon.ico" />
     <Content Include="Resources\TLVBankAndFlag.png" />
     <Content Include="Resources\TLVRedEnvelope.png" />
     <None Include="Forms\Main\RegistrySplit\RegistryDataSet.xsc">

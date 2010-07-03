@@ -180,7 +180,7 @@ namespace FamilyFinance2.Properties {
         ///			SUM(CASE WHEN LineItem.creditDebit = 1 THEN EnvelopeLine.amount ELSE 0 END) AS debit
         ///	FROM LineItem INNER JOIN EnvelopeLine ON LineItem.id = EnvelopeLine.lineItemID
         ///	WHERE LineItem.accountID = @aID AND EnvelopeLine.envelopeID = @eID
-        ///	GROUP BY EnvelopeLine.envelopeID ) 
+        ///	GROUP BY EnvelopeLine.envelopeID )  AS elSum
         ///
         ///--@ 3.
         /// </summary>
@@ -267,7 +267,8 @@ namespace FamilyFinance2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DROP TABLE EnvelopeLine;
+        ///   Looks up a localized string similar to DROP TABLE [WebAddress];
+        ///DROP TABLE EnvelopeLine;
         ///DROP TABLE LineItem;
         ///DROP TABLE Envelope;
         ///DROP TABLE Account;
@@ -360,15 +361,15 @@ namespace FamilyFinance2.Properties {
         ///		   SUM(amount) AS amount 
         ///	FROM EnvelopeLine 
         ///	GROUP BY lineItemID) AS eSum ON LineItem.id = eSum.lineItemID
-        ///WHERE LineItem.amount &lt;&gt; eSum.amount AND LineItem.accountID = 3
+        ///WHERE LineItem.amount &lt;&gt; eSum.amount AND LineItem.accountID = @@
         ///
         ///UNION ALL
         ///
         ///--Find the accounts where the lines should have subLines
         ///SELECT id
         ///FROM LineItem
-        ///WHERE accountID IN (SELECT id FROM Account WHERE envelopes = 1 AND ID = 3) 
-        ///	  AND id NOT IN (SE [rest of string was truncated]&quot;;.
+        ///WHERE accountID IN (SELECT id FROM Account WHERE envelopes = 1 AND ID = @@) 
+        ///	  AND id NOT IN ( [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string LineEnvelopeLineErrors {
             get {
