@@ -15,6 +15,7 @@ using FamilyFinance2.Forms.LineType;
 using FamilyFinance2.Forms.Transaction;
 using FamilyFinance2.Forms.Import.Qif;
 using FamilyFinance2.Forms.Main.RegistrySplit;
+using FamilyFinance2.Forms.Main.WebBrowser;
 
 namespace FamilyFinance2.Forms.Main
 {
@@ -79,7 +80,7 @@ namespace FamilyFinance2.Forms.Main
 
             // Repack the controls
             this.Controls.Clear();
-            this.Controls.Add(regSplit.getControl());
+            this.Controls.Add(this.regSplit.getControl());
             this.Controls.Add(this.mainToolStrip);
 
             this.regSplit.setSplit(330);

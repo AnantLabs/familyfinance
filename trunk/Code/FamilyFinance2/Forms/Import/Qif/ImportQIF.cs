@@ -785,7 +785,6 @@ namespace FamilyFinance2.Forms.Import.Qif
                 else
                 {
                     payeeLine.amount = Decimal.Negate(payee.Amount);
-                    //payeeLine.creditDebit = LineCD.CREDIT;
                 }
 
                 this.ffDataSet.LineItem.AddLineItemRow(payeeLine);
