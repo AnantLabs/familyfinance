@@ -155,6 +155,12 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
         public void setBalance(decimal balance)
         {
             this[1] = balance.ToString("C2");
+
+            if (balance < 0.0m)
+                this.ImageId = (int)NodeImage.RedEnvelope;
+            else
+                this.ImageId = (int)NodeImage.Envelope;
+
         }
     }
 
