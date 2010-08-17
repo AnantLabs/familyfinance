@@ -430,7 +430,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             this.groupAccountsMenuItem.Name = "groupAccountsMenuItem";
             this.groupAccountsMenuItem.Text = "Group Accounts";
             this.groupAccountsMenuItem.CheckOnClick = true;
-            this.groupAccountsMenuItem.Checked = true;
+            this.groupAccountsMenuItem.Checked = false;
             this.groupAccountsMenuItem.Click += new EventHandler(groupAccountsMenuItem_Click);
 
             // groupEnvelopesMenuItem
@@ -438,7 +438,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             this.groupEnvelopesMenuItem.Name = "groupEnvelopesMenuItem";
             this.groupEnvelopesMenuItem.Text = "Group Envelopes";
             this.groupEnvelopesMenuItem.CheckOnClick = true;
-            this.groupEnvelopesMenuItem.Checked = true;
+            this.groupEnvelopesMenuItem.Checked = false;
             this.groupEnvelopesMenuItem.Click += new EventHandler(groupEnvelopesMenuItem_Click);
 
             // Context Menu for the AccountTreeListView
@@ -462,6 +462,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             this.accountRootNode.HasChildren = true;
             this.accTLV.Nodes.Add(this.accountRootNode);
             this.setErrorFlag(this.accountRootNode);
+            this.accountRootNode.Expand();
 
             if (this.showIncomeMenuItem.Checked == true)
             {
@@ -480,6 +481,8 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
             //Add the Envelope nodes
             this.envelopeRootNode.HasChildren = true;
             this.accTLV.Nodes.Add(this.envelopeRootNode);
+            this.envelopeRootNode.Expand();
+
         }
 
 
