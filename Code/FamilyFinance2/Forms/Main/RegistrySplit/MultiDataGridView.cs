@@ -950,13 +950,16 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
         public void setEnvelopeAndAccount(int accountID, int envelopeID)
         {
+            // If no change
             if (accountID == Current.AccountID && envelopeID == Current.EnvelopeID)
                 return;
 
-            else if (accountID == SpclAccount.NULL && envelopeID == SpclEnvelope.NULL)
+            Current.AccountID = accountID;
+            Current.EnvelopeID = envelopeID;
+
+            // If both are null
+            if (accountID == SpclAccount.NULL && envelopeID == SpclEnvelope.NULL)
             {
-                Current.AccountID = accountID;
-                Current.EnvelopeID = envelopeID;
                 Current.AccountUsesEnvelopes = false;
                 Current.AccountIsCredit = false;
                 Current.DGV = null;
@@ -965,10 +968,9 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                 this.liDGV.AllowUserToAddRows = false;
                 this.envDGV.Visible = false;
             }
+            // If an account
             else if (accountID > SpclAccount.NULL && envelopeID == SpclEnvelope.NULL)
             {
-                Current.AccountID = accountID;
-                Current.EnvelopeID = envelopeID;
                 Current.AccountUsesEnvelopes = this.regDataSet.Account.FindByid(accountID).envelopes;
                 Current.AccountIsCredit = !this.regDataSet.Account.FindByid(accountID).creditDebit;
                 Current.DGV = this.liDGV;
@@ -981,12 +983,15 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
                 this.liDGV.Visible = true;
                 this.liDGV.AllowUserToAddRows = true;
+
+                if (this.regDataSet.LineItem.Count > 3)
+                    this.liDGV.CurrentCell = this.liDGV[LineItem.DATE_NAME, this.liDGV.RowCount - 2];
+
                 this.envDGV.Visible = false;
             }
+            // else and envelope with or with out an account.
             else
             {
-                Current.AccountID = accountID;
-                Current.EnvelopeID = envelopeID;
                 Current.AccountUsesEnvelopes = true;
                 Current.AccountIsCredit = false;
                 Current.DGV = this.envDGV;
@@ -995,7 +1000,11 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
                 this.liDGV.Visible = false;
                 this.liDGV.AllowUserToAddRows = false;
+
                 this.envDGV.Visible = true;
+                
+                if (this.regDataSet.EnvelopeLineView.Count > 2)
+                    this.envDGV.CurrentCell = this.envDGV[EnvLine.DATE_NAME, this.envDGV.RowCount - 1];
             }
         }
 
