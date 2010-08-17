@@ -523,7 +523,6 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
             decimal bal = 0.0m;
             bool debitAccount = this.Account.FindByid(this.currentAccountID).creditDebit == LineCD.DEBIT;
-            //List<int> registryLineIds DBquery.getRegistryLineIDs(this.currentAccountID);
 
             if (debitAccount)
             {
@@ -676,10 +675,25 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
 
             foreach (EnvelopeLineViewRow  row in this.EnvelopeLineView)
             {
+                // Change the polarity of negative Envelop Line amounts
+                if (row.amount < 0.0m)
+                {
+                    row.creditDebit = !row.creditDebit;
+                    row.amount = decimal.Negate(row.amount);
+                }
+
                 if (row.creditDebit == LineCD.CREDIT)
+                {
                     row.balanceAmount = bal -= row.creditAmount = row.amount;
+                }
                 else
+                {
+                    string temp = row.sourceAccount;
+                    row.sourceAccount = row.destinationAccount;
+                    row.destinationAccount = temp;
+
                     row.balanceAmount = bal += row.debitAmount = row.amount;
+                }
             }
         }
 
