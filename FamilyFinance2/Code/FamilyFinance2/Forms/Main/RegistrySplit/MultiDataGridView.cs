@@ -275,7 +275,7 @@ namespace FamilyFinance2.Forms.Main.RegistrySplit
                 idCol.Name = LINE_ID_NAME;
                 idCol.HeaderText = "id";
                 idCol.DataPropertyName = "id";
-                idCol.Visible = true;
+                idCol.Visible = false;
 
                 // transactionIDColumn
                 transactionIDCol = new DataGridViewTextBoxColumn();

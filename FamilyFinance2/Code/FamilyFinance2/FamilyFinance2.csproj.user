@@ -16,10 +16,10 @@
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <StartArguments>"C:\Users\Erik Lee\Documents\Projects\FamilyFinance2\Trunk\Code\FamilyFinance2"</StartArguments>
+    <StartArguments>"..\.."</StartArguments>
     <EnableSQLServerDebugging>false</EnableSQLServerDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <StartArguments>"C:\Users\Erik Lee\Documents\Projects\FamilyFinance2\Trunk\Code\FamilyFinance2"</StartArguments>
+    <StartArguments>"."</StartArguments>
   </PropertyGroup>
 </Project>
