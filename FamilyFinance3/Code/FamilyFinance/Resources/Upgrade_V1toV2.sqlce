@@ -1,0 +1,149 @@
+-------------------------------------------------------------------------------
+-- 1) Add new tables
+-------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+CREATE TABLE Settings
+(
+	id					int				NOT NULL,
+	value				ntext			NOT NULL,
+	CONSTRAINT PK_Settings_id        PRIMARY KEY (id)
+);
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+CREATE TABLE Bank
+(
+	id					int				NOT NULL,
+	[name]				nvarchar(30)	NOT NULL,
+	routingNumber		nvarchar(9)		NOT NULL, -- <BANKID> Routing and transit number, A-9 
+	CONSTRAINT PK_Bank_id     PRIMARY KEY (id)
+);
+INSERT INTO Bank VALUES (-1, ' ', ' '); -- Null Bank Type
+
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+CREATE TABLE BankInfo
+(
+	accountID			int				NOT NULL,
+	bankID				int				NOT NULL,
+	accountNumber		nvarchar(12)	NOT NULL,  -- <ACCTID> Account number, A-22
+	creditDebit			bit				NOT NULL,	--(0 = Credit, 1 = Debit (normal))
+	CONSTRAINT PK_BankInfo_id     PRIMARY KEY (accountID),
+	CONSTRAINT FK_BankInfo_accountID FOREIGN KEY (accountID) REFERENCES  Account(id),
+	CONSTRAINT FK_BankInfo_bankID FOREIGN KEY (bankID) REFERENCES  Bank(id)
+);
+
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+CREATE TABLE FitLine
+(
+	lineItemID			int				NOT NULL,
+	fitID				nvarchar(12)	NOT NULL,  -- <FITID> 
+	CONSTRAINT PK_FitLine_lineItemID PRIMARY KEY (lineItemID),
+	CONSTRAINT FK_FitLine_lineItemID FOREIGN KEY (lineItemID) REFERENCES  LineItem(id)
+);
+
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+CREATE TABLE OFXFiles
+(
+	id					int				NOT NULL,
+	ofxSegment			ntext			NOT NULL,
+	CONSTRAINT PK_OFXFiles_id PRIMARY KEY (id)
+);
+
+
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+CREATE TABLE Bills
+(
+	id					int				NOT NULL,
+	nextDate			datetime		NOT NULL,
+	recurance			datetime		NOT NULL,
+	typeID				int				NOT NULL,
+	sourceAccountID		int				NOT NULL,
+	destinationAccountID int			NOT NULL,
+	description			ntext			NULL,
+	envelopeID			int				NOT NULL,
+
+	CONSTRAINT PK_Bills_id     PRIMARY KEY (id),
+	CONSTRAINT FK_Bills_typeID FOREIGN KEY (typeID) REFERENCES  LineType(id),
+	CONSTRAINT FK_Bills_sourceAccountID FOREIGN KEY (sourceAccountID) REFERENCES  Account(id),
+	CONSTRAINT FK_Bills_destinationAccountID FOREIGN KEY (destinationAccountID) REFERENCES  Account(id),
+	CONSTRAINT FK_Bills_envelopeID FOREIGN KEY (envelopeID) REFERENCES  Envelope(id)
+);
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+CREATE TABLE [Transaction]
+(
+	id					int				NOT NULL,
+	date				datetime		NOT NULL,
+	typeID				int				NOT NULL,
+	description			ntext			NULL,
+	confirmationNumber	ntext			NULL,
+	complete			nchar(1)		NOT NULL,		-- (" " Null, "C" Complete, "R" Reconciled)
+
+	CONSTRAINT PK_Transaction_id			PRIMARY KEY (id),
+	CONSTRAINT FK_Transaction_typeID		FOREIGN KEY (typeID) REFERENCES  LineType(id)
+);
+
+
+
+-------------------------------------------------------------------------------
+-- 2) Split the Line Item into the transaction table
+-------------------------------------------------------------------------------
+ALTER TABLE LineItem 
+DROP CONSTRAINT FK_Line_typeID;
+
+INSERT INTO [Transaction] (id, date, typeID, description, confirmationNumber, complete)
+SELECT transactionID, date, typeID, description, confirmationNumber, complete
+FROM LineItem
+WHERE id IN (SELECT MIN(id) FROM LineItem GROUP BY transactionID);
+
+ALTER TABLE LineItem DROP COLUMN date;
+ALTER TABLE LineItem DROP COLUMN typeID;
+ALTER TABLE LineItem DROP COLUMN description;
+ALTER TABLE LineItem DROP COLUMN confirmationNumber;
+ALTER TABLE LineItem DROP COLUMN complete;
+
+ALTER TABLE LineItem 
+ADD CONSTRAINT FK_Line_transactionID FOREIGN KEY (transactionID) REFERENCES  [Transaction](id);
+
+-------------------------------------------------------------------------------
+-- 3) Split Account into BankInfo
+-------------------------------------------------------------------------------
+INSERT INTO BankInfo (accountID, bankID, accountNumber, creditDebit)
+SELECT id AS accountID, -1 AS bankID, ' ' AS accountNumber, creditDebit
+FROM Account
+WHERE catagory = 2;
+
+ALTER TABLE Account 
+DROP COLUMN creditDebit;
+
+
+
+-------------------------------------------------------------------------------
+-- 4) Add the Favorite Account to Envelope table.
+-------------------------------------------------------------------------------
+ALTER TABLE Envelope 
+ADD COLUMN accountID int NULL;
+
+UPDATE Envelope
+SET accountID = -1;
+
+ALTER TABLE Envelope 
+ALTER COLUMN accountID int NOT NULL;
+
+ALTER TABLE Envelope 
+ADD CONSTRAINT FK_Envelope_accountID FOREIGN KEY (accountID) REFERENCES  Account(id);
+
+
+
+

@@ -1,0 +1,110 @@
+﻿<Window x:Class="FamilyFinance.EditEnvelopes.EditEnvelopesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:FamilyFinance.EditEnvelopes"
+        Title="Edit Envelopes" 
+        Height="322" 
+        Width="616"  >
+    <Window.Resources>
+        <local:EditEnvelopesVM x:Key="eeViewModel" />
+    </Window.Resources>
+    <Grid Height="Auto" 
+            Width="Auto">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Menu x:Name="menu"
+              Grid.Row="0" 
+              HorizontalContentAlignment="Right" 
+              FlowDirection="LeftToRight" 
+              VerticalContentAlignment="Center">
+            <MenuItem Header="Edit" Margin="4,4,50,4">
+                <MenuItem Header="Envelope Groups"
+                          Click="envelopeGroupsMenuItem_Click"/>
+                <MenuItem Header="Accounts"
+                          Click="accountMenuItem_Click"/>
+            </MenuItem>
+            <CheckBox Content="Closed" 
+                      Margin="0" 
+                      IsChecked="{Binding Source={StaticResource eeViewModel}, Path=ShowClosed, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" 
+                      VerticalAlignment="Center" 
+                      HorizontalAlignment="Left" 
+                      />
+            <TextBox Width="150" 
+                     Margin="0" 
+                     Text="{Binding Source={StaticResource eeViewModel}, Path=SearchText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" 
+                     HorizontalAlignment="Left" 
+                     VerticalAlignment="Center" 
+                     />
+        </Menu>
+        <DataGrid Name="envelopeDataGrid" 
+                  Grid.Row="1" 
+                  HorizontalAlignment="Stretch" 
+                  VerticalAlignment="Stretch"
+                  AutoGenerateColumns="False" 
+                  EnableRowVirtualization="True" 
+                  ItemsSource="{Binding Source={StaticResource eeViewModel}, Path=Envelopes}" 
+                  RowDetailsVisibilityMode="Collapsed" 
+                  SelectionMode="Single" 
+                  CanUserDeleteRows="False" 
+                  CanUserResizeRows="False" >
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="nameColumn" 
+                                    Binding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                    Header="Envelope Name" 
+                                    CanUserSort="True"
+                                    MinWidth="150"
+                                    Width="50*" />
+                <DataGridTemplateColumn x:Name="groupColumnCB" 
+                                        Header="Envelope Group"
+                                        CanUserSort="True"
+                                        SortMemberPath="GroupName" 
+                                        MinWidth="150"
+                                        Width="30*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=GroupName, Mode=OneWay}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox SelectedValue="{Binding Path=GroupID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                      ItemsSource="{Binding Source={StaticResource eeViewModel}, Path=Groups, Mode=OneWay}"
+                                      SelectedValuePath="ID"
+                                      DisplayMemberPath="Name" >
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn x:Name="accountColumnCB" 
+                                        Header="Favorite Account"
+                                        CanUserSort="True"
+                                        SortMemberPath="AccountName" 
+                                        MinWidth="150"
+                                        Width="30*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=AccountName, Mode=OneWay}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox SelectedValue="{Binding Path=AccountID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                      ItemsSource="{Binding Source={StaticResource eeViewModel}, Path=Accounts, Mode=OneWay}"
+                                      SelectedValuePath="ID"
+                                      DisplayMemberPath="Name" >
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridCheckBoxColumn x:Name="closedColumn"  
+                                        Header="Closed" 
+                                        Width="50"
+                                        CanUserResize="False"
+                                        Binding="{Binding Path=Closed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                        />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

@@ -1,0 +1,191 @@
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+CREATE TABLE AccountType
+(
+	id					int				NOT NULL,
+	[name]				nvarchar(30)	NOT NULL,
+	CONSTRAINT PK_AccountType_id        PRIMARY KEY (id)
+);
+INSERT INTO AccountType VALUES (-1, ' '); -- Null Account Type
+
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+CREATE TABLE EnvelopeGroup
+(
+	id					int				NOT NULL,
+	[name]				nvarchar(30)	NOT NULL,
+	CONSTRAINT PK_EnvelopeGroup_id      PRIMARY KEY (id)
+);
+INSERT INTO EnvelopeGroup VALUES (-1, ' '); -- Null Envelope Group
+
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+CREATE TABLE LineType
+(
+	id					int				NOT NULL,
+	[name]				nvarchar(15)	NOT NULL,
+	CONSTRAINT PK_LineType_id     PRIMARY KEY (id)
+);
+INSERT INTO LineType VALUES (-1, ' '); -- Null Line Type
+
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+CREATE TABLE Settings
+(
+	id					int				NOT NULL,
+	value				ntext			NOT NULL,
+	CONSTRAINT PK_Settings_id     PRIMARY KEY (id)
+);
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+CREATE TABLE Bank
+(
+	id					int				NOT NULL,
+	[name]				nvarchar(30)	NOT NULL,
+	routingNumber		nvarchar(9)		NOT NULL, -- <BANKID> Routing and transit number, A-9 
+	CONSTRAINT PK_Bank_id     PRIMARY KEY (id)
+);
+INSERT INTO Bank VALUES (-1, ' ', ' '); -- Null Bank Type
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+CREATE TABLE Account
+(
+	id					int				NOT NULL,
+	[name]				nvarchar(30)	NOT NULL,
+	typeID				int				NOT NULL,
+	catagory			tinyint			NOT NULL,	--(0 = NULL, 1 = Income, 2 = Account, 3 = Expence)
+	closed				bit				NOT NULL,	--(0 = NO , 1 = YES)
+	CONSTRAINT PK_Account_id     PRIMARY KEY (id),
+	CONSTRAINT FK_Account_typeID FOREIGN KEY (typeID) REFERENCES  AccountType(id)
+);
+INSERT INTO Account VALUES (-2, '-Multiple-', -1, 0, 0);
+INSERT INTO Account VALUES (-1, ' ', -1, 0, 0); -- NULL Account
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+CREATE TABLE BankAccount
+(
+	accountID			int				NOT NULL,
+	bankID				int				NOT NULL,
+	accountNumber		nvarchar(12)	NOT NULL,  -- <ACCTID> Account number, A-22
+	creditDebit			bit				NOT NULL,	--(0 = Credit, 1 = Debit (normal))
+	envelopes			bit				NOT NULL,	--(0 = NO , 1 = YES)
+	CONSTRAINT PK_BankAccount_id     PRIMARY KEY (accountID),
+	CONSTRAINT FK_BankAccount_bankID FOREIGN KEY (bankID) REFERENCES  Bank(id)
+);
+
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+CREATE TABLE Envelope
+(
+	id					int				NOT NULL,
+	[name]				nvarchar(30)	NOT NULL,
+	groupID				int				NOT NULL,
+	closed				bit				NOT NULL,
+	CONSTRAINT PK_Envelope_id       PRIMARY KEY (id),
+	CONSTRAINT FK_Envelope_groupID  FOREIGN KEY (groupID) REFERENCES  EnvelopeGroup(id)
+);
+INSERT INTO Envelope VALUES (-1, ' ', -1, 0); --NULL Value "Not assigned yet."
+INSERT INTO Envelope VALUES (-2, '-Split-', -1, 0);
+INSERT INTO Envelope VALUES (0, '-No Envelope-', -1, 0); --The Exception Envelope. Not tracked in reports.
+
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+CREATE TABLE LineItem
+(
+	id					int				NOT NULL,
+	transactionID		int				NOT NULL,
+	date				datetime		NOT NULL,
+	typeID				int				NOT NULL,
+	accountID			int				NOT NULL,
+	oppAccountID		int				NOT NULL,
+	description			ntext			NULL,
+	confirmationNumber	ntext			NULL,
+	envelopeID			int				NOT NULL,
+	complete			nchar(1)		NOT NULL,		-- (" " Null, "C" Complete, "R" Reconciled)
+	amount				money			NOT NULL,
+	creditDebit			bit				NOT NULL,		-- (0 = Credit (out), 1 = Debit (in))
+	CONSTRAINT PK_Line_id			PRIMARY KEY (id),
+	CONSTRAINT FK_Line_accountID	FOREIGN KEY (accountID)	REFERENCES  Account(id),
+	CONSTRAINT FK_Line_oppAccountID	FOREIGN KEY (oppAccountID)	REFERENCES  Account(id),
+	CONSTRAINT FK_Line_envelopeID	FOREIGN KEY (envelopeID)	REFERENCES  Envelope(id),
+	CONSTRAINT FK_Line_typeID		FOREIGN KEY (typeID) REFERENCES  LineType(id)
+);
+CREATE INDEX IN_LineItem_transactionID ON LineItem (transactionID);
+CREATE INDEX IN_LineItem_accountID ON LineItem (accountID);
+
+
+
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+CREATE TABLE EnvelopeLine
+(
+	id					int				NOT NULL,
+	lineItemID			int				NOT NULL,
+	envelopeID			int				NOT NULL,
+	description			ntext			NULL,
+	amount				money			NOT NULL,
+	CONSTRAINT PK_EnvelopeLine_id         PRIMARY KEY (id),
+	CONSTRAINT FK_EnvelopeLine_lineID	  FOREIGN KEY (lineItemID) REFERENCES  LineItem(id),
+	CONSTRAINT FK_EnvelopeLine_envelopeID FOREIGN KEY (envelopeID) REFERENCES  Envelope(id)
+);
+CREATE INDEX IN_EnvelopeLine_lineItemID ON EnvelopeLine (lineItemID);
+CREATE INDEX IN_EnvelopeLine_envelopeID ON EnvelopeLine (envelopeID);
+
+
+
+
+
+
+--------------------------------------------------------------------------------------
+--   Good Defaults
+--------------------------------------------------------------------------------------
+
+-- Default Account Types
+INSERT INTO AccountType VALUES (1, 'Checking');
+INSERT INTO AccountType VALUES (2, 'Savings');
+INSERT INTO AccountType VALUES (3, 'Loan');
+INSERT INTO AccountType VALUES (4, 'Credit Card');
+INSERT INTO AccountType VALUES (5, 'Cash');
+INSERT INTO AccountType VALUES (6, 'Job');
+INSERT INTO AccountType VALUES (7, 'Other');
+INSERT INTO AccountType VALUES (8, 'Person');
+INSERT INTO AccountType VALUES (9, 'Store');
+INSERT INTO AccountType VALUES (10, 'Utility');
+INSERT INTO AccountType VALUES (11, 'Restraunt');
+INSERT INTO AccountType VALUES (12, 'Grocery Store');
+INSERT INTO AccountType VALUES (13, 'Online');
+
+
+-- Default LineItem Types
+INSERT INTO LineType VALUES (1, 'Deposit');
+INSERT INTO LineType VALUES (2, 'Debit');
+INSERT INTO LineType VALUES (3, 'Check');
+INSERT INTO LineType VALUES (4, 'Transfer');
+INSERT INTO LineType VALUES (5, 'Cash');
+INSERT INTO LineType VALUES (6, 'Bill Pay');
+INSERT INTO LineType VALUES (7, 'Withdrawl');
+INSERT INTO LineType VALUES (8, 'Refund');
+
+
+
+-- Default Envelope Groups
+INSERT INTO EnvelopeGroup VALUES (1, 'Charity');
+INSERT INTO EnvelopeGroup VALUES (2, 'Saving');
+INSERT INTO EnvelopeGroup VALUES (3, 'Housing');
+INSERT INTO EnvelopeGroup VALUES (4, 'Utilities');
+INSERT INTO EnvelopeGroup VALUES (5, 'Food');
+INSERT INTO EnvelopeGroup VALUES (6, 'Transportation');
+INSERT INTO EnvelopeGroup VALUES (7, 'Clothing');
+INSERT INTO EnvelopeGroup VALUES (8, 'Medical/Health');
+INSERT INTO EnvelopeGroup VALUES (9, 'Personal');
+INSERT INTO EnvelopeGroup VALUES (10, 'Recreation');
+INSERT INTO EnvelopeGroup VALUES (11, 'Debts');
