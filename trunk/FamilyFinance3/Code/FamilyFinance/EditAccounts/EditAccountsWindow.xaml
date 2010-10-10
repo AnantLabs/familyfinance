@@ -1,0 +1,205 @@
+﻿<Window x:Class="FamilyFinance.EditAccounts.EditAccountsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:FamilyFinance.EditAccounts"
+        Title="Accounts" 
+        Height="486" 
+        Width="917">
+    <Window.Resources>
+        <local:EditAccountsVM x:Key="eaViewModel"/>
+    </Window.Resources>
+    <Grid Height="Auto" 
+            Width="Auto">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Menu x:Name="menu"
+              Grid.Row="0" 
+              HorizontalContentAlignment="Right" 
+              FlowDirection="LeftToRight" 
+              VerticalContentAlignment="Center">
+            <MenuItem Header="Edit" Margin="4,4,50,4">
+                <MenuItem Header="Banks"
+                          Click="editBanksButton_Click"/>
+                <MenuItem Header="Account Types"
+                          Click="editAccountTypesButton_Click"/>
+            </MenuItem>
+            <CheckBox Content="Incomes" 
+                      Margin="0" 
+                      IsChecked="{Binding Source={StaticResource eaViewModel}, Path=IncludeIncomes, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" 
+                      VerticalAlignment="Center" 
+                      HorizontalAlignment="Left" 
+                      />
+            <CheckBox Content="Accounts" 
+                      Margin="0" 
+                      IsChecked="{Binding Source={StaticResource eaViewModel}, Path=IncludeAccounts, Mode=OneWayToSource, FallbackValue=True, UpdateSourceTrigger=PropertyChanged}" 
+                      VerticalAlignment="Center" 
+                      HorizontalAlignment="Left" 
+                      />
+            <CheckBox Content="Expences" 
+                      Margin="0" 
+                      IsChecked="{Binding Source={StaticResource eaViewModel}, Path=IncludeExpences, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" 
+                      VerticalAlignment="Center" 
+                      HorizontalAlignment="Left" 
+                      />
+            <CheckBox Content="Closed" 
+                      Margin="0" 
+                      IsChecked="{Binding Source={StaticResource eaViewModel}, Path=ShowClosed, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" 
+                      VerticalAlignment="Center" 
+                      HorizontalAlignment="Left" 
+                      />
+            <TextBox Width="150" 
+                     Margin="0" 
+                     Text="{Binding Source={StaticResource eaViewModel}, Path=SearchText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" 
+                     HorizontalAlignment="Left" 
+                     VerticalAlignment="Center" 
+                     />
+        </Menu>
+        <DataGrid Name="accountDataGrid" 
+                  Grid.Row="1" 
+                  HorizontalAlignment="Stretch" 
+                  VerticalAlignment="Stretch"
+                  AutoGenerateColumns="False" 
+                  EnableRowVirtualization="True" 
+                  ItemsSource="{Binding Source={StaticResource eaViewModel}, Path=Accounts}" 
+                  RowDetailsVisibilityMode="VisibleWhenSelected" 
+                  SelectionMode="Single" 
+                  CanUserDeleteRows="False" 
+                  CanUserResizeRows="False" >
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="nameColumn" 
+                                    Binding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                    Header="Account Name" 
+                                    CanUserSort="True"
+                                    MinWidth="150"
+                                    Width="50*" />
+                <DataGridTemplateColumn x:Name="typeColumnCB" 
+                                        Header="Account Type"
+                                        CanUserSort="True"
+                                        SortMemberPath="TypeName" 
+                                        MinWidth="150"
+                                        Width="30*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=TypeName, Mode=OneWay}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox SelectedValue="{Binding Path=TypeID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                      ItemsSource="{Binding Source={StaticResource eaViewModel}, Path=AccountTypes, Mode=OneWay}"
+                                      SelectedValuePath="ID"
+                                      DisplayMemberPath="Name">
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn x:Name="catagoryColumnCB" 
+                                        Header="Catagory" 
+                                        CanUserSort="True"
+                                        SortMemberPath="CatagoryName" 
+                                        MinWidth="100"
+                                        Width="20*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=CatagoryName, Mode=OneWay}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox SelectedValue="{Binding Path=CatagoryID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                      ItemsSource="{Binding Source={StaticResource eaViewModel}, Path=Catagories, Mode=OneWay}"
+                                      SelectedValuePath="ID"
+                                      DisplayMemberPath="Name" 
+                                      />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridCheckBoxColumn x:Name="closedColumn"  
+                                        Header="Closed" 
+                                        Width="50"
+                                        CanUserResize="False"
+                                        Binding="{Binding Path=Closed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                        />
+                <DataGridTemplateColumn x:Name="useEnvelopesColumn" 
+                                        Header="Envelopes" 
+                                        CanUserSort="True"
+                                        CanUserResize="False"
+                                        SortMemberPath="UsesEnvelopes" 
+                                        Width="65">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox HorizontalAlignment="Center"
+                                      IsChecked="{Binding Path=UsesEnvelopes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                      IsEnabled="{Binding Path=CanUseEnvelopes, Mode=OneWay}" 
+                                      />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridHyperlinkColumn x:Name="BankInfoLinkColumn" 
+                                         Binding="{Binding Path=BankInfo, Mode=OneWay}"
+                                         Header="Bank Info" 
+                                         Width="60"
+                                         CanUserSort="True"
+                                         CanUserResize="False"
+                                         />
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <StackPanel Background="White">
+                        <StackPanel Background="White"
+                                    Margin="10,5,10,10"
+                                    Orientation="Horizontal">
+                            
+                            <Label Content="Bank:" 
+                                   VerticalAlignment="Center" 
+                                   />
+                            <ComboBox Margin="0, 0, 10, 0" 
+                                      MinWidth="100"
+                                      VerticalAlignment="Center"
+                                      SelectedValue="{Binding Path=BankID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      ItemsSource="{Binding Source={StaticResource eaViewModel}, Path=Banks, Mode=OneWay}"
+                                      SelectedValuePath="ID"
+                                      DisplayMemberPath="Name"
+                                      />
+                            
+                            <Label Content="Account Number:" 
+                                   VerticalAlignment="Center" 
+                                   />
+                            <TextBox Height="23" 
+                                     Width="100" 
+                                     Margin="0, 0, 10, 0" 
+                                     Text="{Binding Path=BankAccountNumber, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                     VerticalAlignment="Center" 
+                                     />
+                            
+                            <Label Content="Routing Number:" 
+                                   VerticalAlignment="Center" 
+                                   />
+                            <TextBox Height="23" 
+                                     Width="70" 
+                                     Margin="0, 0, 10, 0" 
+                                     IsEnabled="False"
+                                     Text="{Binding Path=RoutingNumber, Mode=OneWay}" 
+                                     VerticalAlignment="Center" 
+                                     />
+
+                            <Label Content="Account Normal:" 
+                                   VerticalAlignment="Center" 
+                                   />
+                            <ComboBox Margin="0, 0, 10, 0" 
+                                      MinWidth="60"
+                                      VerticalAlignment="Center"
+                                      SelectedValue="{Binding Path=AccountNormal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      ItemsSource="{Binding Source={StaticResource eaViewModel}, Path=CreditDebits}"
+                                      SelectedValuePath="Value"
+                                      DisplayMemberPath="Name"
+                                      />
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+        </DataGrid>
+    </Grid>
+</Window>

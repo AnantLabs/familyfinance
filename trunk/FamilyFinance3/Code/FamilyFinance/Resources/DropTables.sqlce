@@ -1,0 +1,10 @@
+DROP TABLE EnvelopeLine;
+DROP TABLE LineItem;
+DROP TABLE Envelope;
+DROP TABLE Account;
+DROP TABLE LineType;
+DROP TABLE EnvelopeGroup;
+DROP TABLE AccountType;
+
+
+
