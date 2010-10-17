@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-using FamilyFinance.Database;
+﻿using FamilyFinance.Database;
 
 namespace FamilyFinance.Model
 {

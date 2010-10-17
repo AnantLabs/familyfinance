@@ -108,11 +108,6 @@ namespace FamilyFinance.EditAccounts
         /// </summary>
         private void loadAccounts()
         {
-            if (this.Accounts != null)
-                this.Accounts.Clear();
-
-
-
             this.Accounts = CollectionBuilder.getAccountsEditable(
                 this._IncludeIncomes,
                 this._IncludeAccounts,

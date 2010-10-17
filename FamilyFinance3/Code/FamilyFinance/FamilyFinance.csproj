@@ -58,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\ExtendedTextBoxColumn.cs" />
     <Compile Include="Database\DBConstants.cs" />
     <Compile Include="Model\AccountBankModel.cs" />
     <Compile Include="EditEnvelopes\EditEnvelopesVM.cs" />
@@ -69,6 +70,14 @@
       <DependentUpon>EditTypesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\AccountModel.cs" />
+    <Compile Include="Model\EnvelopeGoalModel.cs" />
+    <Compile Include="Model\LineItemRegModel.cs" />
+    <Compile Include="Model\MoneyConverter.cs" />
+    <Compile Include="Model\TransactionModel.cs" />
+    <Compile Include="Registry\RegistryControl.xaml.cs">
+      <DependentUpon>RegistryControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Registry\RegistryVM.cs" />
     <Page Include="EditAccounts\EditAccountsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -100,6 +109,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Registry\RegistryControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\MyData.cs" />
@@ -155,7 +168,9 @@
     <None Include="Resources\DropTables.sqlce" />
     <None Include="Resources\Upgrade_V1toV2.sqlce" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="EditTransaction\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Database\FamilyFinanceDB.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

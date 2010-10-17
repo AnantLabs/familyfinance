@@ -54,7 +54,7 @@ namespace FamilyFinance.Model
             List<IdNameCat> accounts = new List<IdNameCat>();
 
             foreach (FFDataSet.AccountRow row in MyData.getInstance().Account)
-                accounts.Add(new IdNameCat(row.id, row.name, CatagoryModel.getName(row.catagory)));
+                accounts.Add(new IdNameCat(row.id, row.name, CatagoryModel.getShortName(row.catagory)));
 
             accounts.Sort(new INCComparer());
 
@@ -204,18 +204,9 @@ namespace FamilyFinance.Model
         /// <summary>
         /// Gets the envelopes matching the criteria.
         /// </summary>
-        public static ObservableCollection<EnvelopeModel> getEnvelopesEditable(bool showClosed, string searchText)
+        public static ObservableCollection<EnvelopeGoalModel> getEnvelopesEditable(bool showClosed, string searchText)
         {
-            ObservableCollection<EnvelopeModel> envelopes = new ObservableCollection<EnvelopeModel>();
-
-            //IEnumerable<int> idList =
-            //    (from Envelope in MyData.getInstance().Envelope
-            //     where Envelope.id > 0 && Envelope.name.Contains
-            //     orderby Envelope.name
-            //     select Envelope.id);
-
-            //foreach (int id in idList)
-            //    envelopes.Add(new EnvelopeModel(MyData.getInstance().Envelope.FindByid(id)));
+            ObservableCollection<EnvelopeGoalModel> envelopes = new ObservableCollection<EnvelopeGoalModel>();
 
             foreach (FFDataSet.EnvelopeRow row in MyData.getInstance().Envelope)
             {
@@ -224,7 +215,7 @@ namespace FamilyFinance.Model
                 bool doShow = showClosed || !row.closed;
 
                 if (validID && inSearch && doShow)
-                    envelopes.Add(new EnvelopeModel(row));
+                    envelopes.Add(new EnvelopeGoalModel(row));
             }
 
             return envelopes;
@@ -284,5 +275,28 @@ namespace FamilyFinance.Model
             return types;
         }
 
+
+        public static ObservableCollection<LineItemRegModel> getRegistryLinesEditable(int accountID)
+        {
+            ObservableCollection<LineItemRegModel> reg = new ObservableCollection<LineItemRegModel>();
+
+            foreach (FFDataSet.LineItemRow line in MyData.getInstance().LineItem)
+                if (line.accountID == accountID)
+                    reg.Add(new LineItemRegModel(line));
+
+            return reg;
+        }
+
+        public static List<IdName> getLineTypesAll()
+        {
+            List<IdName> types = new List<IdName>();
+
+            foreach (FFDataSet.LineTypeRow row in MyData.getInstance().LineType)
+                types.Add(new IdName(row.id, row.name));
+
+            types.Sort(new INComparer());
+
+            return types;
+        }
     }
 }
