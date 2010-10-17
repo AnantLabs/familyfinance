@@ -1,0 +1,203 @@
+﻿<UserControl x:Class="FamilyFinance.Registry.RegistryControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FamilyFinance.Registry"
+             xmlns:model="clr-namespace:FamilyFinance.Model"
+             xmlns:controls="clr-namespace:FamilyFinance.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="254" 
+             d:DesignWidth="1283">
+    <UserControl.Resources>
+        <local:RegistryVM x:Key="rVM"/>
+        <model:MoneyConverter x:Key="conv" />
+    </UserControl.Resources>
+    <Grid Background="#FF293955">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="228*" />
+            <RowDefinition Height="25" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="153*" />
+            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="591*" />
+        </Grid.ColumnDefinitions>
+        <GridSplitter Grid.Column="1" 
+                      Background="Transparent" 
+                      BorderBrush="Black" 
+                      HorizontalAlignment="Stretch" 
+                      ResizeBehavior="PreviousAndNext" 
+                      ShowsPreview="True" 
+                      Grid.RowSpan="2" />
+        <TreeView Margin="5,5,0,5" 
+                  BorderThickness="0" 
+                  Grid.RowSpan="2">
+            
+        </TreeView>
+        <DataGrid x:Name="dataGrid"
+                  Grid.Column="2"
+                  Margin="0,5,5,5" 
+                  BorderThickness="0" 
+                  Grid.RowSpan="1"
+                  SelectionMode="Single" 
+                  CanUserDeleteRows="False" 
+                  CanUserResizeRows="False" 
+                  HorizontalAlignment="Stretch" 
+                  VerticalAlignment="Stretch"
+                  AutoGenerateColumns="False" 
+                  EnableRowVirtualization="True" 
+                  RowDetailsVisibilityMode="Collapsed" 
+                  ItemsSource="{Binding Source={StaticResource rVM}, Path=RegistryLines}" >
+            <DataGrid.Columns>
+                <!-- Date -->
+                <DataGridTemplateColumn x:Name="dateColumn" 
+                                        Header="Date" 
+                                        CanUserSort="False"
+                                        Width="80">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Date, StringFormat=MM/dd/yyyy, Mode=OneWay}"
+                                       VerticalAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding Path=Date, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                        />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <!-- Line Type -->
+                <DataGridTemplateColumn x:Name="lineTypeColumnCB" 
+                                        Header="Type"
+                                        CanUserSort="False"
+                                        Width="60*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=TypeName, Mode=OneWay}"
+                                       VerticalAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox SelectedValue="{Binding Path=TypeID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                      ItemsSource="{Binding Source={StaticResource rVM}, Path=LineTypes, Mode=OneWay}"
+                                      SelectedValuePath="ID"
+                                      DisplayMemberPath="Name">
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <!-- Source or Destination -->
+                <DataGridTemplateColumn x:Name="oppAccountColumnCB" 
+                                        Header="Source / Destination"
+                                        CanUserSort="False"
+                                        Width="80*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=OppAccountName, Mode=OneWay}"
+                                       VerticalAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox SelectedValue="{Binding Path=OppAccountID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                      ItemsSource="{Binding Source={StaticResource rVM}, Path=Accounts, Mode=OneWay}"
+                                      SelectedValuePath="ID"
+                                      DisplayMemberPath="Name">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="150" />
+                                                <ColumnDefinition Width="35" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{Binding Path=Name}" />
+                                            <TextBlock Grid.Column="1"
+                                                       Text="{Binding Path=Catagory}" 
+                                                       Foreground="Black"
+                                                       HorizontalAlignment="Right">
+                                            </TextBlock>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <!-- Description -->
+                <controls:ExtendedTextColumn x:Name="descriptionColumn" 
+                                    Header="Description" 
+                                    CanUserSort="False"
+                                    Width="150*"
+                                    VerticalAlignment="Center"
+                                    Binding="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                <!-- Confirmation Number -->
+                <controls:ExtendedTextColumn x:Name="confirmationColumn"  
+                                    Header="Confirmation"
+                                    CanUserSort="False"
+                                    Width="70*"
+                                    VerticalAlignment="Center"
+                                    Binding="{Binding Path=ConfirmationNumber, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                <!-- Envelope -->
+                <DataGridTemplateColumn x:Name="envelopeColumnCB" 
+                                        Header="Envelope"
+                                        CanUserSort="False"
+                                        Width="70*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=EnvelopeName, Mode=OneWay}"
+                                       VerticalAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox SelectedValue="{Binding Path=EnvelopeID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                      ItemsSource="{Binding Source={StaticResource rVM}, Path=Envelopes, Mode=OneWay}"
+                                      SelectedValuePath="ID"
+                                      DisplayMemberPath="Name" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <!-- Credit -->
+                <controls:ExtendedTextColumn x:Name="creditColumn"  
+                                             Header="Credit"
+                                             CanUserSort="False"
+                                             IsReadOnly="False"
+                                             Width="70"
+                                             HorizontalAlignment="Right"
+                                             VerticalAlignment="Center"
+                                             Binding="{Binding Path=CreditAmount, Converter={StaticResource conv}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                <!-- Complete -->
+                <controls:ExtendedTextColumn x:Name="completeColumn"  
+                                             Header="C/R"
+                                             CanUserSort="False"
+                                             IsReadOnly="True"
+                                             Width="30"
+                                             CanUserResize="False"
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             Binding="{Binding Path=Complete, Mode=OneWay}" />
+                <!--Debit -->
+                <controls:ExtendedTextColumn x:Name="debitColumn"  
+                                             Header="Debit"
+                                             CanUserSort="False"
+                                             Width="70"
+                                             HorizontalAlignment="Right"
+                                             VerticalAlignment="Center"
+                                             Binding="{Binding Path=DebitAmount,  Converter={StaticResource conv}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                <!-- Balance -->
+                <controls:ExtendedTextColumn x:Name="balanceColumn"  
+                                             Header="Balance"
+                                             CanUserSort="False"
+                                             IsReadOnly="True"
+                                             Width="90"
+                                             HorizontalAlignment="Right"
+                                             VerticalAlignment="Center"
+                                             Binding="{Binding Path=BalanceAmount, StringFormat=c, Mode=oneWay}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

@@ -10,7 +10,7 @@ namespace FamilyFinance.Model
         /// <summary>
         /// Local referance to the account row this object is modeling.
         /// </summary>
-        protected FFDataSet.AccountRow accountRow;
+        private FFDataSet.AccountRow accountRow;
 
         /// <summary>
         /// Gets the ID of the account.
@@ -35,10 +35,9 @@ namespace FamilyFinance.Model
 
             set
             {
-                checkRowState();
-
                 this.accountRow.name = value;
-                MyData.getInstance().saveAccountRow(this.accountRow);
+
+                this.saveRow();
                 this.RaisePropertyChanged("Name");
             }
         }
@@ -55,10 +54,9 @@ namespace FamilyFinance.Model
 
             set
             {
-                checkRowState();
-
                 this.accountRow.typeID = value;
-                MyData.getInstance().saveAccountRow(this.accountRow);
+
+                this.saveRow();
                 this.RaisePropertyChanged("TypeID");
                 this.RaisePropertyChanged("TypeName");
             }
@@ -87,10 +85,9 @@ namespace FamilyFinance.Model
 
             set
             {
-                checkRowState();
-
                 this.accountRow.catagory = value;
-                MyData.getInstance().saveAccountRow(this.accountRow);
+
+                this.saveRow();
                 this.RaisePropertyChanged("CatagoryID");
                 this.RaisePropertyChanged("CatagoryName");
             }
@@ -120,10 +117,9 @@ namespace FamilyFinance.Model
 
             set
             {
-                checkRowState();
-
                 this.accountRow.closed = value;
-                MyData.getInstance().saveAccountRow(this.accountRow);
+
+                this.saveRow();
                 this.RaisePropertyChanged("Closed");
             }
         }
@@ -140,10 +136,9 @@ namespace FamilyFinance.Model
 
             set
             {
-                checkRowState();
-
                 this.accountRow.envelopes = value;
-                MyData.getInstance().saveAccountRow(this.accountRow);
+
+                this.saveRow();
                 this.RaisePropertyChanged("UsesEnvelopes");
             }
         }
@@ -163,15 +158,16 @@ namespace FamilyFinance.Model
         public AccountModel()
         {
             this.accountRow = MyData.getInstance().Account.NewAccountRow();
+            MyData.getInstance().Account.AddAccountRow(this.accountRow);
+            this.saveRow();
         }
 
         /// <summary>
         /// Checks the state of the row. If it is a new row (detached) it will be added to the table.
         /// </summary>
-        private void checkRowState()
+        private void saveRow()
         {
-            if (this.accountRow.RowState == System.Data.DataRowState.Detached)
-                MyData.getInstance().Account.AddAccountRow(this.accountRow);
+            MyData.getInstance().saveAccountRow(this.accountRow);
         }
    
     }

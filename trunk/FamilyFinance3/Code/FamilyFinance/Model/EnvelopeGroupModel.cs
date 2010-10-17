@@ -32,14 +32,9 @@ namespace FamilyFinance.Model
 
             set
             {
-                this.checkRowState();
-
                 this.envelopeGroupRow.name = value;
 
-                if (this.envelopeGroupRow.RowState == System.Data.DataRowState.Detached)
-                    MyData.getInstance().EnvelopeGroup.AddEnvelopeGroupRow(this.envelopeGroupRow);
-
-                MyData.getInstance().saveEnvelopeGroupRow(this.envelopeGroupRow);
+                this.saveRow();
                 this.RaisePropertyChanged("Name");
             }
         }
@@ -60,12 +55,13 @@ namespace FamilyFinance.Model
         public EnvelopeGroupModel()
         {
             this.envelopeGroupRow = MyData.getInstance().EnvelopeGroup.NewEnvelopeGroupRow();
+            MyData.getInstance().EnvelopeGroup.AddEnvelopeGroupRow(this.envelopeGroupRow);
+            this.saveRow();
         }
 
-        private void checkRowState()
+        private void saveRow()
         {
-            if (this.envelopeGroupRow.RowState == System.Data.DataRowState.Detached)
-                MyData.getInstance().EnvelopeGroup.AddEnvelopeGroupRow(this.envelopeGroupRow);
+            MyData.getInstance().saveEnvelopeGroupRow(this.envelopeGroupRow);
         }
 
 

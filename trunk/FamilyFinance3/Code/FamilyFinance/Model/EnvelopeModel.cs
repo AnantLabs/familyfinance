@@ -1,8 +1,4 @@
-﻿//using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Collections.Generic;
-
-using FamilyFinance.Database;
+﻿using FamilyFinance.Database;
 
 namespace FamilyFinance.Model
 {
@@ -11,7 +7,7 @@ namespace FamilyFinance.Model
         /// <summary>
         /// Local referance to the account row this object is modeling.
         /// </summary>
-        protected FFDataSet.EnvelopeRow envelopeRow;
+        private FFDataSet.EnvelopeRow envelopeRow;
 
         /// <summary>
         /// Gets the ID of the envelope.
@@ -36,10 +32,9 @@ namespace FamilyFinance.Model
 
             set
             {
-                checkRowState();
-
                 this.envelopeRow.name = value;
-                MyData.getInstance().saveEnvelopeRow(this.envelopeRow);
+
+                saveRow();
                 this.RaisePropertyChanged("Name");
             }
         }
@@ -56,10 +51,9 @@ namespace FamilyFinance.Model
 
             set
             {
-                checkRowState();
-
                 this.envelopeRow.groupID = value;
-                MyData.getInstance().saveEnvelopeRow(this.envelopeRow);
+
+                saveRow();
                 this.RaisePropertyChanged("GroupID");
                 this.RaisePropertyChanged("GroupName");
             }
@@ -75,7 +69,6 @@ namespace FamilyFinance.Model
                 return this.envelopeRow.EnvelopeGroupRow.name;
             }
         }
-        
 
         /// <summary>
         /// Gets or sets the Closed flag for this envelope. True if the envelope is closed, 
@@ -90,10 +83,9 @@ namespace FamilyFinance.Model
 
             set
             {
-                checkRowState();
-
                 this.envelopeRow.closed = value;
-                MyData.getInstance().saveEnvelopeRow(this.envelopeRow);
+
+                saveRow();
                 this.RaisePropertyChanged("Closed");
             }
         }
@@ -110,10 +102,9 @@ namespace FamilyFinance.Model
 
             set
             {
-                checkRowState();
-
                 this.envelopeRow.accountID = value;
-                MyData.getInstance().saveEnvelopeRow(this.envelopeRow);
+
+                saveRow();
                 this.RaisePropertyChanged("AccountID");
                 this.RaisePropertyChanged("AccountName");
             }
@@ -130,7 +121,6 @@ namespace FamilyFinance.Model
             }
         }
 
-
         /// <summary>
         /// Creates the object and keeps a local referance to the given account row.
         /// </summary>
@@ -146,12 +136,13 @@ namespace FamilyFinance.Model
         public EnvelopeModel()
         {
             this.envelopeRow = MyData.getInstance().Envelope.NewEnvelopeRow();
+            MyData.getInstance().Envelope.AddEnvelopeRow(this.envelopeRow);
+            this.saveRow();
         }
 
-        protected void checkRowState()
+        private void saveRow()
         {
-            if (this.envelopeRow.RowState == System.Data.DataRowState.Detached)
-                MyData.getInstance().Envelope.AddEnvelopeRow(this.envelopeRow);
+            MyData.getInstance().saveEnvelopeRow(this.envelopeRow);
         }
 
 

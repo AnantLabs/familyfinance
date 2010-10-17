@@ -29,6 +29,7 @@ namespace FamilyFinance.Database
         private BankTableAdapter bankTA = new BankTableAdapter();
         private BankInfoTableAdapter bankInfoTA = new BankInfoTableAdapter();
         private OFXFilesTableAdapter ofxFilesTA = new OFXFilesTableAdapter();
+        private GoalTableAdapter goalTA = new GoalTableAdapter();
 
 
         /// <summary>
@@ -118,6 +119,7 @@ namespace FamilyFinance.Database
         /// </summary>
         public FFDataSet.OFXFilesDataTable OFXFiles;
 
+        public FFDataSet.GoalDataTable Goal;
 
 
 
@@ -248,6 +250,11 @@ namespace FamilyFinance.Database
         }
 
 
+        public void saveGoalRow(FFDataSet.GoalRow goalRow)
+        {
+            goalTA.Update(goalRow);
+        }
+
         /// <summary>
         /// Prevents instantiation of this class. Instantiates the singleton instance of this
         /// class.
@@ -272,6 +279,7 @@ namespace FamilyFinance.Database
             this.Bank = this.ffDataSet.Bank;
             this.BankInfo = this.ffDataSet.BankInfo;
             this.OFXFiles = this.ffDataSet.OFXFiles;
+            this.Goal = this.ffDataSet.Goal;
 
                       
 
@@ -291,6 +299,7 @@ namespace FamilyFinance.Database
             this.bankTA.ClearBeforeFill = true;
             this.bankInfoTA.ClearBeforeFill = true;
             this.ofxFilesTA.ClearBeforeFill = true;
+            this.goalTA.ClearBeforeFill = true;
 
             // Fill all the tables
             this.envelopeGroupTA.Fill(EnvelopeGroup);
@@ -307,6 +316,7 @@ namespace FamilyFinance.Database
             this.bankTA.Fill(Bank);
             this.bankInfoTA.Fill(BankInfo);
             this.ofxFilesTA.Fill(OFXFiles);
+            this.goalTA.Fill(Goal);
 
             // Subscribe to the new lines
             this.Account.TableNewRow += new System.Data.DataTableNewRowEventHandler(Account_TableNewRow);
@@ -323,6 +333,7 @@ namespace FamilyFinance.Database
             this.OFXFiles.TableNewRow += new System.Data.DataTableNewRowEventHandler(OFXFiles_TableNewRow);
             // this.Settings
             this.Transaction.TableNewRow += new System.Data.DataTableNewRowEventHandler(Transaction_TableNewRow);
+            this.Goal.TableNewRow += new System.Data.DataTableNewRowEventHandler(Goal_TableNewRow);
 
 
             // Subscribe to column Changing
@@ -341,6 +352,7 @@ namespace FamilyFinance.Database
             // Not LineItem this.LineItem.ColumnChanging += new System.Data.DataColumnChangeEventHandler(ColumnChanging);
             // Not OFXFiles this.OFXFiles.ColumnChanging += new System.Data.DataColumnChangeEventHandler(ColumnChanging);
             // Not Transaction this.Transaction.ColumnChanging += new System.Data.DataColumnChangeEventHandler(ColumnChanging);
+            // not Goal
 
         }
 
@@ -357,6 +369,21 @@ namespace FamilyFinance.Database
         }
 
 
+
+        private void Goal_TableNewRow(object sender, System.Data.DataTableNewRowEventArgs e)
+        {
+            FFDataSet.GoalRow row = e.Row as FFDataSet.GoalRow;
+
+            int max =
+               (from Goal in MyData.Instance.Goal
+                select Goal.priority).Max();
+
+            row.priority = max + 1;
+            row.notes = "";
+            row.step = 0.0m;
+            row.goal = 0.0m;
+            row.dueDate = DateTime.Today;
+        }
 
 
         private void Account_TableNewRow(object sender, System.Data.DataTableNewRowEventArgs e)

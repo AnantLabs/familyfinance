@@ -1,17 +1,21 @@
-﻿using System.ComponentModel;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-
-
-using FamilyFinance.Database;
-using FamilyFinance.Model;
+﻿using FamilyFinance.Database;
 
 namespace FamilyFinance.Model
 {
     class AccountBankModel : AccountModel
     {
-
         private FFDataSet.BankInfoRow bankInfoRow;
+
+        public int AccountID
+        {
+            get
+            {
+                if (this.bankInfoRow == null)
+                    return SpclAccount.NULL;
+                else
+                    return this.bankInfoRow.accountID;
+            }
+        }
 
         public int BankID
         {
@@ -28,11 +32,23 @@ namespace FamilyFinance.Model
                 if (this.bankInfoRow != null)
                 {
                     this.bankInfoRow.bankID = value;
-                    MyData.getInstance().saveBankInfoRow(this.bankInfoRow);
+
+                    this.saveRow();
                     this.RaisePropertyChanged("BankID");
-                    this.RaisePropertyChanged("BankID");
+                    this.RaisePropertyChanged("BankName");
                     this.RaisePropertyChanged("RoutingNumber");
                 }
+            }
+        }
+
+        public string BankName
+        {
+            get
+            {
+                if (this.bankInfoRow == null)
+                    return "";
+                else
+                    return this.bankInfoRow.BankRow.name;
             }
         }
 
@@ -51,7 +67,8 @@ namespace FamilyFinance.Model
                 if (this.bankInfoRow != null)
                 {
                     this.bankInfoRow.accountNumber = value;
-                    MyData.getInstance().saveBankInfoRow(this.bankInfoRow);
+                    
+                    this.saveRow();
                     this.RaisePropertyChanged("BankAccountNumber");
                 }
             }
@@ -83,21 +100,10 @@ namespace FamilyFinance.Model
                 if (this.bankInfoRow != null)
                 {
                     this.bankInfoRow.creditDebit = value;
-                    MyData.getInstance().saveBankInfoRow(this.bankInfoRow);
+
+                    this.saveRow();
                     this.RaisePropertyChanged("AccountNormal");
                 }
-            }
-        }
-
-        public bool CanUseEnvelopes
-        {
-            get
-            {
-                if (this.accountRow.catagory == SpclAccountCat.ACCOUNT)
-                    return true;
-
-                else
-                    return false;
             }
         }
 
@@ -114,7 +120,7 @@ namespace FamilyFinance.Model
 
         public AccountBankModel(FFDataSet.AccountRow aRow) : base(aRow)
         {
-            this.bankInfoRow = MyData.getInstance().BankInfo.FindByaccountID(this.accountRow.id);
+            this.bankInfoRow = MyData.getInstance().BankInfo.FindByaccountID(this.ID);
         }
 
         public AccountBankModel() : base()
@@ -128,9 +134,13 @@ namespace FamilyFinance.Model
             {
                 this.bankInfoRow = MyData.getInstance().BankInfo.NewBankInfoRow();
                 MyData.getInstance().BankInfo.AddBankInfoRow(this.bankInfoRow);
-
-
+                this.saveRow();
             }
+        }
+
+        private void saveRow()
+        {
+            MyData.getInstance().saveBankInfoRow(this.bankInfoRow);
         }
     }
 }

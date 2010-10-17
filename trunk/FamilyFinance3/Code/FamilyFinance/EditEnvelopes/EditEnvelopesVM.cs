@@ -38,7 +38,7 @@ namespace FamilyFinance.EditEnvelopes
         /// <summary>
         /// Gets or sets the collection of envelopes.
         /// </summary>
-        public ObservableCollection<EnvelopeModel> Envelopes { get; set; }
+        public ObservableCollection<EnvelopeGoalModel> Envelopes { get; set; }
 
         /// <summary>
         /// Gets or sets the collection of accounts.
@@ -78,6 +78,7 @@ namespace FamilyFinance.EditEnvelopes
         public EditEnvelopesVM()
         {
             this._SearchText = "";
+            this._ShowClosed = false;
 
             this.loadEnvelopes();
             this.reloadEnvelopeGroups();

@@ -26,6 +26,14 @@ namespace FamilyFinance.Database
     {
         public const int MULTIPLE = -2;
         public const int NULL = -1;
+
+        public static bool isNotSpecial(int id)
+        {
+            if (id > 0)
+                return true;
+            else
+                return false;
+        }
     }
 
     public class SpclAccountCat

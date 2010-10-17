@@ -35,14 +35,9 @@ namespace FamilyFinance.Model
 
             set
             {
-                this.checkRowState();
-
                 this.accountTypeRow.name = value;
 
-                if (this.accountTypeRow.RowState == System.Data.DataRowState.Detached)
-                    MyData.getInstance().AccountType.AddAccountTypeRow(this.accountTypeRow);
-
-                MyData.getInstance().saveAccountTypeRow(this.accountTypeRow);
+                this.saveRow();
                 this.RaisePropertyChanged("Name");
             }
         }
@@ -63,12 +58,13 @@ namespace FamilyFinance.Model
         public AccountTypeModel()
         {
             this.accountTypeRow = MyData.getInstance().AccountType.NewAccountTypeRow();
+            MyData.getInstance().AccountType.AddAccountTypeRow(this.accountTypeRow);
+            this.saveRow();
         }
 
-        private void checkRowState()
+        private void saveRow()
         {
-            if (this.accountTypeRow.RowState == System.Data.DataRowState.Detached)
-                MyData.getInstance().AccountType.AddAccountTypeRow(this.accountTypeRow);
+            MyData.getInstance().saveAccountTypeRow(this.accountTypeRow);
         }
 
 

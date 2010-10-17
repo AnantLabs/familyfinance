@@ -13,7 +13,7 @@ namespace FamilyFinance.Model
         private FFDataSet.LineTypeRow lineTypeRow;
 
         /// <summary>
-        /// Gets the ID of the account type.
+        /// Gets the ID of this line type
         /// </summary>
         public int ID
         {
@@ -35,14 +35,9 @@ namespace FamilyFinance.Model
 
             set
             {
-                this.checkRowState();
-
                 this.lineTypeRow.name = value;
 
-                if (this.lineTypeRow.RowState == System.Data.DataRowState.Detached)
-                    MyData.getInstance().LineType.AddLineTypeRow(this.lineTypeRow);
-
-                MyData.getInstance().saveLineTypeRow(this.lineTypeRow);
+                this.saveRow();
                 this.RaisePropertyChanged("Name");
             }
         }
@@ -63,12 +58,13 @@ namespace FamilyFinance.Model
         public LineTypeModel()
         {
             this.lineTypeRow = MyData.getInstance().LineType.NewLineTypeRow();
+            MyData.getInstance().LineType.AddLineTypeRow(this.lineTypeRow);
+            this.saveRow();
         }
 
-        private void checkRowState()
+        private void saveRow()
         {
-            if (this.lineTypeRow.RowState == System.Data.DataRowState.Detached)
-                MyData.getInstance().LineType.AddLineTypeRow(this.lineTypeRow);
+            MyData.getInstance().saveLineTypeRow(this.lineTypeRow);
         }
 
 

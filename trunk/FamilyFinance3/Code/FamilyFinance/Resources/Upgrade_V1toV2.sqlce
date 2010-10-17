@@ -36,6 +36,19 @@ CREATE TABLE BankInfo
 	CONSTRAINT FK_BankInfo_bankID FOREIGN KEY (bankID) REFERENCES  Bank(id)
 );
 
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+CREATE TABLE Goal
+(
+	envelopeID			int				NOT NULL,
+	priority			int				NOT NULL,
+	notes				ntext			NULL,
+	step				money			NOT NULL,
+	goal				money			NOT NULL,
+	dueDate				datetime		NOT NULL,
+	CONSTRAINT PK_Goals_id     PRIMARY KEY (envelopeID),
+	CONSTRAINT FK_Goals_envelopeID FOREIGN KEY (envelopeID) REFERENCES  Envelope(id)
+);
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------

@@ -35,10 +35,9 @@ namespace FamilyFinance.Model
 
             set
             {
-                this.checkRowState();
-
                 this.bankRow.name = value;
-                MyData.getInstance().saveBankRow(this.bankRow);
+
+                this.saveRow();
                 this.RaisePropertyChanged("Name");
             }
         }
@@ -55,10 +54,9 @@ namespace FamilyFinance.Model
 
             set
             {
-                this.checkRowState();
-
                 this.bankRow.routingNumber = value;
-                MyData.getInstance().saveBankRow(this.bankRow);
+
+                this.saveRow();
                 this.RaisePropertyChanged("RoutingNumber");
                 
             }
@@ -80,12 +78,13 @@ namespace FamilyFinance.Model
         public BankModel()
         {
             this.bankRow = MyData.getInstance().Bank.NewBankRow();
+            MyData.getInstance().Bank.AddBankRow(this.bankRow);
+            this.saveRow();
         }
 
-        private void checkRowState()
+        private void saveRow()
         {
-            if (this.bankRow.RowState == System.Data.DataRowState.Detached)
-                MyData.getInstance().Bank.AddBankRow(this.bankRow);
+            MyData.getInstance().saveBankRow(this.bankRow);
         }
 
     }
