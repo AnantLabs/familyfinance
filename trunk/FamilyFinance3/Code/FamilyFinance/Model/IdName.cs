@@ -13,7 +13,7 @@
 
     }
 
-    class INComparer : System.Collections.Generic.IComparer<IdName>
+    class IdNameComparer : System.Collections.Generic.IComparer<IdName>
     {
         public int Compare(IdName x, IdName y)
         {

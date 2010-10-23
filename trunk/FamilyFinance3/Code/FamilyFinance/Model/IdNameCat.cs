@@ -16,7 +16,7 @@
 
     }
 
-    class INCComparer : System.Collections.Generic.IComparer<IdNameCat>
+    class IdNameCatComparer : System.Collections.Generic.IComparer<IdNameCat>
     {
         public int Compare(IdNameCat x, IdNameCat y)
         {
