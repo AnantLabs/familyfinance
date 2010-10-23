@@ -121,7 +121,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FFDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Model\CollectionBuilder.cs" />
     <Compile Include="Model\EnvelopeGroupModel.cs" />
     <Compile Include="Model\EnvelopeModel.cs" />
     <Compile Include="Model\IdName.cs" />

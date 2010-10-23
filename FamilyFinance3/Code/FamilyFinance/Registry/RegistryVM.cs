@@ -128,19 +128,41 @@ namespace FamilyFinance.Registry
 
         public void reloadAccountTypesCBList()
         {
-            this.LineTypesCBList = CollectionBuilder.getLineTypesAll();
+            List<IdName> types = new List<IdName>();
+
+            foreach (FFDataSet.LineTypeRow row in MyData.getInstance().LineType)
+                types.Add(new IdName(row.id, row.name));
+
+            types.Sort(new IdNameComparer());
+
+            this.LineTypesCBList = types;
             this.RaisePropertyChanged("LineTypesCBList");
         }
 
         public void reloadEnvelopesCBList()
         {
-            this.EnvelopesCBList = CollectionBuilder.getEnvelopesAll();
+            List<IdName> envelopes = new List<IdName>();
+
+            foreach (FFDataSet.EnvelopeRow row in MyData.getInstance().Envelope)
+                envelopes.Add(new IdName(row.id, row.name));
+
+            envelopes.Sort(new IdNameComparer());
+
+            this.EnvelopesCBList = envelopes;
             this.RaisePropertyChanged("EnvelopesCBList");
         }
 
         public void reloadAccountsCBList()
         {
-            this.AccountsCBList = CollectionBuilder.getAccountAll();
+            List<IdNameCat> acc = new List<IdNameCat>();
+
+            foreach (FFDataSet.AccountRow row in MyData.getInstance().Account)
+                acc.Add(new IdNameCat(row.id, row.name, CatagoryModel.getShortName(row.catagory)));
+
+            acc.Sort(new IdNameCatComparer());
+
+            this.AccountsCBList = acc;
+
             this.RaisePropertyChanged("AccountsCBList");
         }
 
@@ -162,10 +184,15 @@ namespace FamilyFinance.Registry
         public void reloadRegistryLines(int aID)
         {
             this.currentAccountID = aID;
-            this.RegistryLines = CollectionBuilder.getRegistryLinesEditable(aID);
-
             LineItemRegModel.setAccount(aID);
 
+            ObservableCollection<LineItemRegModel> reg = new ObservableCollection<LineItemRegModel>();
+
+            foreach (FFDataSet.LineItemRow line in MyData.getInstance().LineItem)
+                if (line.accountID == aID)
+                    reg.Add(new LineItemRegModel(line));
+
+            this.RegistryLines = reg;
             this.registryRowEditEnding();
         }
 

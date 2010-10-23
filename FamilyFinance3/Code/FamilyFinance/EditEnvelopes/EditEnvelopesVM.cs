@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using FamilyFinance.Model;
+using FamilyFinance.Database;
 
 namespace FamilyFinance.EditEnvelopes
 {
@@ -55,20 +56,50 @@ namespace FamilyFinance.EditEnvelopes
         /// </summary>
         private void loadEnvelopes()
         {
-            this.Envelopes = CollectionBuilder.getEnvelopesEditable(this._ShowClosed, this._SearchText);
+            ObservableCollection<EnvelopeGoalModel> envelopes = new ObservableCollection<EnvelopeGoalModel>();
+
+            foreach (FFDataSet.EnvelopeRow row in MyData.getInstance().Envelope)
+            {
+                bool validID = row.id > 0;
+                bool inSearch = row.name.ToLower().Contains(this._SearchText.ToLower());
+                bool doShow = this._ShowClosed || !row.closed;
+
+                if (validID && inSearch && doShow)
+                    envelopes.Add(new EnvelopeGoalModel(row));
+            }
+
+
+            this.Envelopes = envelopes;
 
             this.RaisePropertyChanged("Envelopes");
         }
 
         public void reloadEnvelopeGroups()
         {
-            this.Groups = CollectionBuilder.getEnvelopeGroupsAll();
+            List<IdName> types = new List<IdName>();
+
+            foreach (FFDataSet.EnvelopeGroupRow row in MyData.getInstance().EnvelopeGroup)
+                types.Add(new IdName(row.id, row.name));
+
+            types.Sort(new IdNameComparer());
+
+            this.Groups = types;
             this.RaisePropertyChanged("Groups");
         }
 
         public void reloadAccounts()
         {
-            this.Accounts = CollectionBuilder.getAccountAccount();
+            List<IdName> accounts = new List<IdName>();
+
+            foreach (FFDataSet.AccountRow row in MyData.getInstance().Account)
+            {
+                if (row.catagory == SpclAccountCat.ACCOUNT || row.id == SpclAccount.NULL)
+                    accounts.Add(new IdName(row.id, row.name));
+            }
+
+            accounts.Sort(new IdNameComparer());
+
+            this.Accounts = accounts;
             this.RaisePropertyChanged("Accounts");
         }
 

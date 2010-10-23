@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using FamilyFinance.Model;
+using FamilyFinance.Database;
 
 namespace FamilyFinance.EditAccounts
 {
@@ -108,25 +109,60 @@ namespace FamilyFinance.EditAccounts
         /// </summary>
         private void loadAccounts()
         {
-            this.Accounts = CollectionBuilder.getAccountsEditable(
-                this._IncludeIncomes,
-                this._IncludeAccounts,
-                this._IncludeExpences,
-                this._ShowClosed,
-                this._SearchText);
+            ObservableCollection<AccountBankModel> accounts = new ObservableCollection<AccountBankModel>();
+
+            List<byte> cats = new List<byte>();
+
+            if (this._IncludeIncomes)
+                cats.Add(SpclAccountCat.INCOME);
+
+            if (this._IncludeAccounts)
+                cats.Add(SpclAccountCat.ACCOUNT);
+
+            if (this._IncludeExpences)
+                cats.Add(SpclAccountCat.EXPENSE);
+
+            foreach (FFDataSet.AccountRow aRow in MyData.getInstance().Account)
+            {
+                bool validID = aRow.id > 0;
+                bool validCat = cats.Contains(aRow.catagory);
+                bool inSearch = aRow.name.ToLower().Contains(this._SearchText.ToLower());
+                bool doShow = this._ShowClosed || !aRow.closed;
+
+                if (validID && validCat && inSearch && doShow)
+                    accounts.Add(new AccountBankModel(aRow));
+            }
+
+            this.Accounts = accounts;
 
             this.RaisePropertyChanged("Accounts");
         }
 
         public void reloadBanks()
         {
-            this.Banks = CollectionBuilder.getBanksAll();
+            List<IdName> banks = new List<IdName>();
+
+            foreach (FFDataSet.BankRow bRow in MyData.getInstance().Bank)
+            {
+                banks.Add(new IdName(bRow.id, bRow.name));
+            }
+
+            banks.Sort(new IdNameComparer());
+
+            this.Banks = banks;
             this.RaisePropertyChanged("Banks");
         }
 
         public void reloadAccountTypes()
         {
-            this.AccountTypes = CollectionBuilder.getAccountTypesAll();
+            List<IdName> types = new List<IdName>();
+
+            foreach (FFDataSet.AccountTypeRow row in MyData.getInstance().AccountType)
+                types.Add(new IdName(row.id, row.name));
+
+            types.Sort(new IdNameComparer());
+
+            this.AccountTypes = types;
             this.RaisePropertyChanged("AccountTypes");
         }
 
@@ -140,8 +176,10 @@ namespace FamilyFinance.EditAccounts
             this.loadAccounts();
             this.reloadBanks();
             this.reloadAccountTypes();
-            this.Catagories = CollectionBuilder.getCatagoryArray();
-            this.CreditDebits = CollectionBuilder.getCreditDebitArray();
+
+            this.Catagories = new CatagoryModel[] { CatagoryModel.INCOME, CatagoryModel.ACCOUNT, CatagoryModel.EXPENCE };
+            this.CreditDebits = new CreditDebitModel[] { CreditDebitModel.CREDIT, CreditDebitModel.DEBIT };
+
         }
     
     }
