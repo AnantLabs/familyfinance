@@ -112,8 +112,9 @@ CREATE TABLE [Transaction]
 -------------------------------------------------------------------------------
 -- 2) Split the Line Item into the transaction table
 -------------------------------------------------------------------------------
-ALTER TABLE LineItem 
-DROP CONSTRAINT FK_Line_typeID;
+ALTER TABLE LineItem DROP CONSTRAINT FK_Line_typeID;
+ALTER TABLE LineItem DROP CONSTRAINT FK_Line_oppAccountID;
+ALTER TABLE LineItem DROP CONSTRAINT FK_Line_envelopeID;
 
 INSERT INTO [Transaction] (id, date, typeID, description, confirmationNumber, complete)
 SELECT transactionID, date, typeID, description, confirmationNumber, complete
@@ -125,6 +126,8 @@ ALTER TABLE LineItem DROP COLUMN typeID;
 ALTER TABLE LineItem DROP COLUMN description;
 ALTER TABLE LineItem DROP COLUMN confirmationNumber;
 ALTER TABLE LineItem DROP COLUMN complete;
+ALTER TABLE LineItem DROP COLUMN oppAccountID;
+ALTER TABLE LineItem DROP COLUMN envelopeID;
 
 ALTER TABLE LineItem 
 ADD CONSTRAINT FK_Line_transactionID FOREIGN KEY (transactionID) REFERENCES  [Transaction](id);

@@ -33,26 +33,6 @@ INSERT INTO LineType VALUES (-1, ' '); -- Null Line Type
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-CREATE TABLE Settings
-(
-	id					int				NOT NULL,
-	value				ntext			NOT NULL,
-	CONSTRAINT PK_Settings_id     PRIMARY KEY (id)
-);
-
--------------------------------------------------------------------------------
--------------------------------------------------------------------------------
-CREATE TABLE Bank
-(
-	id					int				NOT NULL,
-	[name]				nvarchar(30)	NOT NULL,
-	routingNumber		nvarchar(9)		NOT NULL, -- <BANKID> Routing and transit number, A-9 
-	CONSTRAINT PK_Bank_id     PRIMARY KEY (id)
-);
-INSERT INTO Bank VALUES (-1, ' ', ' '); -- Null Bank Type
-
--------------------------------------------------------------------------------
--------------------------------------------------------------------------------
 CREATE TABLE Account
 (
 	id					int				NOT NULL,
@@ -60,24 +40,13 @@ CREATE TABLE Account
 	typeID				int				NOT NULL,
 	catagory			tinyint			NOT NULL,	--(0 = NULL, 1 = Income, 2 = Account, 3 = Expence)
 	closed				bit				NOT NULL,	--(0 = NO , 1 = YES)
+	creditDebit			bit				NOT NULL,	--(0 = Credit, 1 = Debit (normal))
+	envelopes			bit				NOT NULL,	--(0 = NO , 1 = YES)
 	CONSTRAINT PK_Account_id     PRIMARY KEY (id),
 	CONSTRAINT FK_Account_typeID FOREIGN KEY (typeID) REFERENCES  AccountType(id)
 );
-INSERT INTO Account VALUES (-2, '-Multiple-', -1, 0, 0);
-INSERT INTO Account VALUES (-1, ' ', -1, 0, 0); -- NULL Account
-
--------------------------------------------------------------------------------
--------------------------------------------------------------------------------
-CREATE TABLE BankAccount
-(
-	accountID			int				NOT NULL,
-	bankID				int				NOT NULL,
-	accountNumber		nvarchar(12)	NOT NULL,  -- <ACCTID> Account number, A-22
-	creditDebit			bit				NOT NULL,	--(0 = Credit, 1 = Debit (normal))
-	envelopes			bit				NOT NULL,	--(0 = NO , 1 = YES)
-	CONSTRAINT PK_BankAccount_id     PRIMARY KEY (accountID),
-	CONSTRAINT FK_BankAccount_bankID FOREIGN KEY (bankID) REFERENCES  Bank(id)
-);
+INSERT INTO Account VALUES (-2, '-Multiple-', -1, 0, 0, 1, 0);
+INSERT INTO Account VALUES (-1, ' ', -1, 0, 0, 1, 0); -- NULL Account
 
 
 -------------------------------------------------------------------------------
@@ -177,7 +146,7 @@ INSERT INTO LineType VALUES (8, 'Refund');
 
 
 
--- Default Envelope Groups
+-- Default Envelope Types
 INSERT INTO EnvelopeGroup VALUES (1, 'Charity');
 INSERT INTO EnvelopeGroup VALUES (2, 'Saving');
 INSERT INTO EnvelopeGroup VALUES (3, 'Housing');

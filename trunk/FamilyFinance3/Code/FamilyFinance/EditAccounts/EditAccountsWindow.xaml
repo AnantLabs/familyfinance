@@ -8,6 +8,68 @@
         Width="917">
     <Window.Resources>
         <local:EditAccountsVM x:Key="eaViewModel"/>
+        <local:AccountDetailsTemplateSelector x:Key="tSelector">
+            <!-- Bank information tmplate -->
+            <local:AccountDetailsTemplateSelector.BankTemplate>
+                <DataTemplate>
+                    <StackPanel Background="White">
+                        <StackPanel Background="White"
+                                    Margin="10,5,10,10"
+                                    Orientation="Horizontal">
+
+                            <Label Content="Bank:" 
+                                   VerticalAlignment="Center" 
+                                   />
+                            <ComboBox Margin="0, 0, 10, 0" 
+                                      MinWidth="100"
+                                      VerticalAlignment="Center"
+                                      SelectedValue="{Binding Path=BankID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      ItemsSource="{Binding Source={StaticResource eaViewModel}, Path=Banks, Mode=OneWay}"
+                                      SelectedValuePath="ID"
+                                      DisplayMemberPath="Name"
+                                      />
+
+                            <Label Content="Account Number:" 
+                                   VerticalAlignment="Center" 
+                                   />
+                            <TextBox Height="23" 
+                                     Width="100" 
+                                     Margin="0, 0, 10, 0" 
+                                     Text="{Binding Path=BankAccountNumber, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                     VerticalAlignment="Center" 
+                                     />
+
+                            <Label Content="Routing Number:" 
+                                   VerticalAlignment="Center" 
+                                   />
+                            <TextBox Height="23" 
+                                     Width="70" 
+                                     Margin="0, 0, 10, 0" 
+                                     IsEnabled="False"
+                                     Text="{Binding Path=RoutingNumber, Mode=OneWay}" 
+                                     VerticalAlignment="Center" 
+                                     />
+
+                            <Label Content="Account Normal:" 
+                                   VerticalAlignment="Center" 
+                                   />
+                            <ComboBox Margin="0, 0, 10, 0" 
+                                      MinWidth="60"
+                                      VerticalAlignment="Center"
+                                      SelectedValue="{Binding Path=AccountNormal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      ItemsSource="{Binding Source={StaticResource eaViewModel}, Path=CreditDebits}"
+                                      SelectedValuePath="Value"
+                                      DisplayMemberPath="Name"
+                                      />
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </local:AccountDetailsTemplateSelector.BankTemplate>
+            <!-- Empty Template -->
+            <local:AccountDetailsTemplateSelector.EmptyTemplate>
+                <DataTemplate/>
+            </local:AccountDetailsTemplateSelector.EmptyTemplate>
+        </local:AccountDetailsTemplateSelector>
     </Window.Resources>
     <Grid Height="Auto" 
             Width="Auto">
@@ -64,10 +126,10 @@
                   AutoGenerateColumns="False" 
                   EnableRowVirtualization="True" 
                   ItemsSource="{Binding Source={StaticResource eaViewModel}, Path=Accounts}" 
-                  RowDetailsVisibilityMode="VisibleWhenSelected" 
+                  RowDetailsVisibilityMode="{Binding /HasBankInfo}" 
+                  RowDetailsTemplateSelector="{StaticResource tSelector}"
                   SelectionMode="Single" 
-                  CanUserDeleteRows="False" 
-                  CanUserResizeRows="False" >
+                  CanUserDeleteRows="False" >
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="nameColumn" 
                                     Binding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
@@ -138,69 +200,14 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridHyperlinkColumn x:Name="BankInfoLinkColumn" 
-                                         Binding="{Binding Path=BankInfo, Mode=OneWay}"
+                <DataGridCheckBoxColumn x:Name="BankInfoColumn" 
                                          Header="Bank Info" 
                                          Width="60"
                                          CanUserSort="True"
                                          CanUserResize="False"
+                                         Binding="{Binding Path=HasBankInfo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          />
             </DataGrid.Columns>
-            <DataGrid.RowDetailsTemplate>
-                <DataTemplate>
-                    <StackPanel Background="White">
-                        <StackPanel Background="White"
-                                    Margin="10,5,10,10"
-                                    Orientation="Horizontal">
-                            
-                            <Label Content="Bank:" 
-                                   VerticalAlignment="Center" 
-                                   />
-                            <ComboBox Margin="0, 0, 10, 0" 
-                                      MinWidth="100"
-                                      VerticalAlignment="Center"
-                                      SelectedValue="{Binding Path=BankID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      ItemsSource="{Binding Source={StaticResource eaViewModel}, Path=Banks, Mode=OneWay}"
-                                      SelectedValuePath="ID"
-                                      DisplayMemberPath="Name"
-                                      />
-                            
-                            <Label Content="Account Number:" 
-                                   VerticalAlignment="Center" 
-                                   />
-                            <TextBox Height="23" 
-                                     Width="100" 
-                                     Margin="0, 0, 10, 0" 
-                                     Text="{Binding Path=BankAccountNumber, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
-                                     VerticalAlignment="Center" 
-                                     />
-                            
-                            <Label Content="Routing Number:" 
-                                   VerticalAlignment="Center" 
-                                   />
-                            <TextBox Height="23" 
-                                     Width="70" 
-                                     Margin="0, 0, 10, 0" 
-                                     IsEnabled="False"
-                                     Text="{Binding Path=RoutingNumber, Mode=OneWay}" 
-                                     VerticalAlignment="Center" 
-                                     />
-
-                            <Label Content="Account Normal:" 
-                                   VerticalAlignment="Center" 
-                                   />
-                            <ComboBox Margin="0, 0, 10, 0" 
-                                      MinWidth="60"
-                                      VerticalAlignment="Center"
-                                      SelectedValue="{Binding Path=AccountNormal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      ItemsSource="{Binding Source={StaticResource eaViewModel}, Path=CreditDebits}"
-                                      SelectedValuePath="Value"
-                                      DisplayMemberPath="Name"
-                                      />
-                        </StackPanel>
-                    </StackPanel>
-                </DataTemplate>
-            </DataGrid.RowDetailsTemplate>
         </DataGrid>
     </Grid>
 </Window>

@@ -30,5 +30,6 @@ namespace FamilyFinance.EditAccounts
 
             ((EditAccountsVM)(this.Resources["eaViewModel"])).reloadAccountTypes();
         }
+
     }
 }

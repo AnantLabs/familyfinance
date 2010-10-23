@@ -116,7 +116,7 @@ namespace FamilyFinance.Model
                 int envelopeID = SpclEnvelope.NULL;
 
                 // If this line account doesn't use envelopes return the null envelope reference.
-                if (this.lineItemRow.AccountRowByFK_Line_accountID.envelopes == true)
+                if (this.lineItemRow.AccountRow.envelopes == true)
                 {
                     int count = this.lineItemRow.GetEnvelopeLineRows().Length;
 
@@ -134,7 +134,7 @@ namespace FamilyFinance.Model
             set
             {
                 // if this lines account uses envelopes save the value.
-                if (this.lineItemRow.AccountRowByFK_Line_accountID.envelopes == true)
+                if (this.lineItemRow.AccountRow.envelopes == true)
                 {
                     FFDataSet.EnvelopeLineRow[] rows = this.lineItemRow.GetEnvelopeLineRows();
                     int count = rows.Length;
@@ -142,7 +142,7 @@ namespace FamilyFinance.Model
                     if (count == 1)
                     {
                         rows[0].envelopeID = value;
-                        MyData.getInstance().saveEnvelopeLineRow(rows[0]);
+                        MyData.getInstance().saveRow(rows[0]);
 
                         this.RaisePropertyChanged("EnvelopeID");
                         this.RaisePropertyChanged("EnvelopeName");
@@ -229,7 +229,7 @@ namespace FamilyFinance.Model
         ///////////////////////////////////////////////////////////////////////
         private void saveRow()
         {
-            MyData.getInstance().saveLineItemRow(this.lineItemRow);
+            MyData.getInstance().saveRow(this.lineItemRow);
         }
 
         private void setAmount(decimal amount, bool cd)
@@ -260,29 +260,21 @@ namespace FamilyFinance.Model
         ///////////////////////////////////////////////////////////////////////
         public LineItemRegModel() : base()
         {
-            // Create two new lines
+            // Build up the first lineItem.
             this.lineItemRow = MyData.getInstance().LineItem.NewLineItemRow();
-            FFDataSet.LineItemRow oppLine = MyData.getInstance().LineItem.NewLineItemRow();
-
-            // Set the transactionID.
             this.lineItemRow.transactionID = base.ID;
-            oppLine.transactionID = base.ID;
-
-            // Set the accountID's
             this.lineItemRow.accountID = currentAccountID;
-            oppLine.accountID = SpclAccount.NULL;
-
-            // Make them opposite, assume this is a credit (purchase)
             this.lineItemRow.creditDebit = LineCD.CREDIT;
-            this.lineItemRow.creditDebit = LineCD.DEBIT;
-
-            // Add them to the table
             MyData.getInstance().LineItem.AddLineItemRow(this.lineItemRow);
-            MyData.getInstance().LineItem.AddLineItemRow(oppLine);
+            MyData.getInstance().saveRow(this.lineItemRow);
 
-            // Save these new linees to the database.
-            MyData.getInstance().saveLineItemRow(this.lineItemRow);
-            MyData.getInstance().saveLineItemRow(oppLine);
+            // Build up the opposite lineItem.
+            FFDataSet.LineItemRow oppLine = MyData.getInstance().LineItem.NewLineItemRow();
+            oppLine.transactionID = base.ID;
+            oppLine.accountID = SpclAccount.NULL;
+            oppLine.creditDebit = LineCD.DEBIT;
+            MyData.getInstance().LineItem.AddLineItemRow(oppLine);
+            MyData.getInstance().saveRow(oppLine);
         }
 
         public LineItemRegModel(FFDataSet.LineItemRow row) : base(row.TransactionRow)
@@ -297,7 +289,19 @@ namespace FamilyFinance.Model
 
         public int CompareTo(LineItemRegModel value)
         {
-            return this.Date.CompareTo(value.Date);
+            int comp = this.Date.CompareTo(value.Date);
+
+            if (comp == 0)
+            {
+                comp = value.CreditDebit.CompareTo(this.CreditDebit);
+
+                if (comp == 0)
+                {
+                    comp = this.Amount.CompareTo(value.Amount);
+                }
+            }
+
+            return comp;
         }
 
 

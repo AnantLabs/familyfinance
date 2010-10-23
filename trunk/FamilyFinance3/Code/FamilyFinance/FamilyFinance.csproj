@@ -60,7 +60,8 @@
     </ApplicationDefinition>
     <Compile Include="Controls\ExtendedTextBoxColumn.cs" />
     <Compile Include="Database\DBConstants.cs" />
-    <Compile Include="Model\AccountBankModel.cs" />
+    <Compile Include="EditAccounts\AccountDetailsTemplateSelector.cs" />
+    <Compile Include="EditAccounts\AccountBankModel.cs" />
     <Compile Include="EditEnvelopes\EditEnvelopesVM.cs" />
     <Compile Include="EditEnvelopes\EditEnvelopesWindow.xaml.cs">
       <DependentUpon>EditEnvelopesWindow.xaml</DependentUpon>
@@ -69,7 +70,6 @@
     <Compile Include="EditTypes\EditTypesWindow.xaml.cs">
       <DependentUpon>EditTypesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\AccountModel.cs" />
     <Compile Include="Model\EnvelopeGoalModel.cs" />
     <Compile Include="Model\LineItemRegModel.cs" />
     <Compile Include="Model\MoneyConverter.cs" />

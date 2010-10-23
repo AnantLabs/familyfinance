@@ -64,7 +64,7 @@ namespace FamilyFinance.Model
 
         private void saveRow()
         {
-            MyData.getInstance().saveLineTypeRow(this.lineTypeRow);
+            MyData.getInstance().saveRow(this.lineTypeRow);
         }
 
 
