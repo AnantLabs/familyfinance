@@ -42,7 +42,7 @@ namespace FamilyFinance.Model
                     row.value = this.defaultValue;
 
                     MyData.getInstance().Settings.AddSettingsRow(row);
-                    MyData.getInstance().saveSettingsRow(row);
+                    MyData.getInstance().saveRow(row);
                 }
 
                 return row.value; 
@@ -59,7 +59,7 @@ namespace FamilyFinance.Model
                 }
 
                 row.value = value;
-                MyData.getInstance().saveSettingsRow(row);
+                MyData.getInstance().saveRow(row);
 
                 this.RaisePropertyChanged("Value");
             }

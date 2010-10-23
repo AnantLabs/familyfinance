@@ -139,7 +139,7 @@ namespace FamilyFinance.Model
 
         private void saveRow()
         {
-            MyData.getInstance().saveGoalRow(this.goalRow);
+            MyData.getInstance().saveRow(this.goalRow);
         }
     }
 }

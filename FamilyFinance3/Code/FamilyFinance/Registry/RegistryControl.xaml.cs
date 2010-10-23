@@ -19,9 +19,18 @@ namespace FamilyFinance.Registry
     /// </summary>
     public partial class RegistryControl : UserControl
     {
+        RegistryVM rVM;
+
         public RegistryControl()
         {
             InitializeComponent();
+
+            rVM = (RegistryVM)this.Resources["rVM"];
+        }
+
+        private void dataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            rVM.registryRowEditEnding();
         }
     }
 }

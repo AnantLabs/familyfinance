@@ -184,7 +184,7 @@ namespace FamilyFinance.Model
         /// </summary>
         private void saveRow()
         {
-            MyData.getInstance().saveTransactionRow(this.transactionRow);
+            MyData.getInstance().saveRow(this.transactionRow);
         }
 
 

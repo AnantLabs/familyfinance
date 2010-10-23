@@ -61,7 +61,7 @@ namespace FamilyFinance.Model
 
         private void saveRow()
         {
-            MyData.getInstance().saveEnvelopeGroupRow(this.envelopeGroupRow);
+            MyData.getInstance().saveRow(this.envelopeGroupRow);
         }
 
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using FamilyFinance.Database.FFDataSetTableAdapters;
+using System.Data;
 
 namespace FamilyFinance.Database
 {
@@ -119,141 +120,72 @@ namespace FamilyFinance.Database
         /// </summary>
         public FFDataSet.OFXFilesDataTable OFXFiles;
 
+        /// <summary>
+        /// Local referance of the table.
+        /// </summary>
         public FFDataSet.GoalDataTable Goal;
 
 
-
         /// <summary>
         /// Commits the changes in the given row to the database.
         /// </summary>
-        /// <param name="ofxRow">The EnvelopeGroup row to commit.</param>
-        public void saveEnvelopeGroupRow(FFDataSet.EnvelopeGroupRow egRow)
+        /// <param name="ofxRow">Any tables row.</param>
+        public void saveRow(DataRow row)
         {
-            envelopeGroupTA.Update(egRow);
-        }
 
-        /// <summary>
-        /// Commits the changes in the given row to the database.
-        /// </summary>
-        /// <param name="ofxRow">The Envelope row to commit.</param>
-        public void saveEnvelopeRow(FFDataSet.EnvelopeRow eRow)
-        {
-            envelopeTA.Update(eRow);
-        }
+            if (row.Table == this.Account)
+                accountTA.Update(row);
 
-        /// <summary>
-        /// Commits the changes in the given row to the database.
-        /// </summary>
-        /// <param name="ofxRow">The EnvelopeLine row to commit.</param>
-        public void saveEnvelopeLineRow(FFDataSet.EnvelopeLineRow elRow)
-        {
-            envelopeLineTA.Update(elRow);
-        }
+            else if (row.Table == this.AccountType)
+                accountTypeTA.Update(row);
 
-        /// <summary>
-        /// Commits the changes in the given row to the database.
-        /// </summary>
-        /// <param name="ofxRow">The LineType row to commit.</param>
-        public void saveLineTypeRow(FFDataSet.LineTypeRow ltRow)
-        {
-            lineTypeTA.Update(ltRow);
-        }
+            else if (row.Table == this.Bank)
+                bankTA.Update(row);
 
-        /// <summary>
-        /// Commits the changes in the given row to the database.
-        /// </summary>
-        /// <param name="ofxRow">The Transaction row to commit.</param>
-        public void saveTransactionRow(FFDataSet.TransactionRow tRow)
-        {
-            transactionTA.Update(tRow);
-        }
+            else if (row.Table == this.BankInfo)
+                bankInfoTA.Update(row);
 
-        /// <summary>
-        /// Commits the changes in the given row to the database.
-        /// </summary>
-        /// <param name="ofxRow">The LineItem row to commit.</param>
-        public void saveLineItemRow(FFDataSet.LineItemRow lRow)
-        {
-            lineItemTA.Update(lRow);
-        }
+            else if (row.Table == this.Bills)
+                billsTA.Update(row);
 
-        /// <summary>
-        /// Commits the changes in the given row to the database.
-        /// </summary>
-        /// <param name="ofxRow">The FitLine row to commit.</param>
-        public void saveFitLineRow(FFDataSet.FitLineRow flRow)
-        {
-            fitLineTA.Update(flRow);
-        }
+            else if (row.Table == this.Envelope)
+                envelopeTA.Update(row);
 
-        /// <summary>
-        /// Commits the changes in the given row to the database.
-        /// </summary>
-        /// <param name="ofxRow">The Account row to commit.</param>
-        public void saveAccountRow(FFDataSet.AccountRow aRow)
-        {
-            accountTA.Update(aRow);
-        }
+            else if (row.Table == this.EnvelopeGroup)
+                envelopeGroupTA.Update(row);
 
-        /// <summary>
-        /// Commits the changes in the given row to the database.
-        /// </summary>
-        /// <param name="ofxRow">The AccountType row to commit.</param>
-        public void saveAccountTypeRow(FFDataSet.AccountTypeRow atRow)
-        {
-            accountTypeTA.Update(atRow);
-        }
+            else if (row.Table == this.EnvelopeLine)
+                envelopeLineTA.Update(row);
 
-        /// <summary>
-        /// Commits the changes in the given row to the database.
-        /// </summary>
-        /// <param name="ofxRow">The Bills row to commit.</param>
-        public void saveBillsRow(FFDataSet.BillsRow bRow)
-        {
-            billsTA.Update(bRow);
-        }
+            else if (row.Table == this.FitLine)
+                fitLineTA.Update(row);
 
-        /// <summary>
-        /// Commits the changes in the given row to the database.
-        /// </summary>
-        /// <param name="ofxRow">The Settings row to commit.</param>
-        public void saveSettingsRow(FFDataSet.SettingsRow sRow)
-        {
-            settingsTA.Update(sRow);
-        }
+            else if (row.Table == this.Goal)
+                goalTA.Update(row);
 
-        /// <summary>
-        /// Commits the changes in the given row to the database.
-        /// </summary>
-        /// <param name="ofxRow">The Bank row to commit.</param>
-        public void saveBankRow(FFDataSet.BankRow bRow)
-        {
-            bankTA.Update(bRow);
-        }
+            else if (row.Table == this.LineItem)
+                lineItemTA.Update(row);
 
-        /// <summary>
-        /// Commits the changes in the given row to the database.
-        /// </summary>
-        /// <param name="ofxRow">The BankInfo row to commit.</param>
-        public void saveBankInfoRow(FFDataSet.BankInfoRow bRow)
-        {
-            bankInfoTA.Update(bRow);
-        }
+            else if (row.Table == this.LineType)
+                lineTypeTA.Update(row);
 
-        /// <summary>
-        /// Commits the changes in the given row to the database.
-        /// </summary>
-        /// <param name="ofxRow">The OFXFile row to commit.</param>
-        public void saveOFXFilesRow(FFDataSet.OFXFilesRow ofxRow)
-        {
-            ofxFilesTA.Update(ofxRow);
+            else if (row.Table == this.OFXFiles)
+                ofxFilesTA.Update(row);
+
+            else if (row.Table == this.Settings)
+                settingsTA.Update(row);
+
+            else if (row.Table == this.Transaction)
+                transactionTA.Update(row);
+
+            else
+                throw new Exception("Unknown Table");
         }
 
 
-        public void saveGoalRow(FFDataSet.GoalRow goalRow)
-        {
-            goalTA.Update(goalRow);
-        }
+
+
+
 
         /// <summary>
         /// Prevents instantiation of this class. Instantiates the singleton instance of this
@@ -375,7 +307,7 @@ namespace FamilyFinance.Database
             FFDataSet.GoalRow row = e.Row as FFDataSet.GoalRow;
 
             int max =
-               (from Goal in MyData.Instance.Goal
+               (from Goal in this.Goal
                 select Goal.priority).Max();
 
             row.priority = max + 1;
@@ -391,7 +323,7 @@ namespace FamilyFinance.Database
             FFDataSet.AccountRow row = e.Row as FFDataSet.AccountRow;
 
             int max =
-               (from Account in MyData.Instance.Account
+               (from Account in this.Account
                 select Account.id).Max();
 
             row.id = max + 1;
@@ -407,7 +339,7 @@ namespace FamilyFinance.Database
             FFDataSet.AccountTypeRow row = e.Row as FFDataSet.AccountTypeRow;
 
             int max =
-               (from AccountType in MyData.Instance.AccountType
+               (from AccountType in this.AccountType
                 select AccountType.id).Max();
 
             row.id = max + 1;
@@ -419,7 +351,7 @@ namespace FamilyFinance.Database
             FFDataSet.BankRow row = e.Row as FFDataSet.BankRow;
 
             int max =
-               (from Bank in MyData.Instance.Bank
+               (from Bank in this.Bank
                 select Bank.id).Max();
 
             row.id = max + 1;
@@ -446,7 +378,7 @@ namespace FamilyFinance.Database
             FFDataSet.EnvelopeRow row = e.Row as FFDataSet.EnvelopeRow;
 
             int max =
-               (from Envelope in MyData.Instance.Envelope
+               (from Envelope in this.Envelope
                 select Envelope.id).Max();
 
             row.id = max + 1;
@@ -461,7 +393,7 @@ namespace FamilyFinance.Database
             FFDataSet.EnvelopeGroupRow row = e.Row as FFDataSet.EnvelopeGroupRow;
 
             int max =
-               (from EnvelopeGroup in MyData.Instance.EnvelopeGroup
+               (from EnvelopeGroup in this.EnvelopeGroup
                 select EnvelopeGroup.id).Max();
 
             row.id = max + 1;
@@ -478,6 +410,17 @@ namespace FamilyFinance.Database
 
         private void LineItem_TableNewRow(object sender, System.Data.DataTableNewRowEventArgs e)
         {
+            FFDataSet.LineItemRow row = e.Row as FFDataSet.LineItemRow;
+
+            int max =
+               (from LineItem in this.LineItem
+                select LineItem.id).Max();
+
+            row.id = max + 1;
+            // TransactionID needs to be set by calling function.
+            row.accountID = SpclAccount.NULL;
+            row.amount = 0.0m;
+            row.creditDebit = LineCD.CREDIT;
         }
 
         private void LineType_TableNewRow(object sender, System.Data.DataTableNewRowEventArgs e)
@@ -485,7 +428,7 @@ namespace FamilyFinance.Database
             FFDataSet.LineTypeRow row = e.Row as FFDataSet.LineTypeRow;
 
             int max =
-               (from LineType in MyData.Instance.LineType
+               (from LineType in this.LineType
                 select LineType.id).Max();
 
             row.id = max + 1;
@@ -494,11 +437,22 @@ namespace FamilyFinance.Database
 
         private void OFXFiles_TableNewRow(object sender, System.Data.DataTableNewRowEventArgs e)
         {
-            FFDataSet.OFXFilesRow row = e.Row as FFDataSet.OFXFilesRow;
         }
 
         private void Transaction_TableNewRow(object sender, System.Data.DataTableNewRowEventArgs e)
         {
+            FFDataSet.TransactionRow row = e.Row as FFDataSet.TransactionRow;
+
+            int max =
+               (from Transaction in this.Transaction
+                select Transaction.id).Max();
+
+            row.id = max + 1;
+            row.date = DateTime.Today;
+            row.typeID = SpclAccountType.NULL;
+            row.description = "";
+            row.confirmationNumber = "";
+            row.complete = LineComplete.PENDING;
         }
 
 

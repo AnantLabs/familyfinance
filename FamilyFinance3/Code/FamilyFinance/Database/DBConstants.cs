@@ -10,7 +10,7 @@ namespace FamilyFinance.Database
         public const bool DEBIT = true;
     }
 
-    public class LineState
+    public class LineComplete
     {
         public const string CLEARED = "C";
         public const string RECONSILED = "R";
