@@ -1,8 +1,9 @@
 ﻿using FamilyFinance.Database;
 
-namespace FamilyFinance.Model
+
+namespace FamilyFinance.Registry
 {
-    class LineItemRegModel : TransactionModel
+    class LineItemRegModel : FamilyFinance.EditTransaction.TransactionModel
     {
         ///////////////////////////////////////////////////////////////////////
         // Local variables

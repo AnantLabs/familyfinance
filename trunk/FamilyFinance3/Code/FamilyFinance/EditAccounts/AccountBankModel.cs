@@ -98,6 +98,7 @@ namespace FamilyFinance.EditAccounts
                 MyData.getInstance().saveRow(this.accountRow);
                 this.RaisePropertyChanged("CatagoryID");
                 this.RaisePropertyChanged("CatagoryName");
+                this.RaisePropertyChanged("CanUseEnvelopes");
             }
         }
 
@@ -150,7 +151,16 @@ namespace FamilyFinance.EditAccounts
                 this.RaisePropertyChanged("UsesEnvelopes");
             }
         }
+
+        public bool CanUseEnvelopes
+        {
+            get
+            {
+                return (this.accountRow.catagory == SpclAccountCat.ACCOUNT);
+            }
+        }
         
+
         public int BankID
         {
             get

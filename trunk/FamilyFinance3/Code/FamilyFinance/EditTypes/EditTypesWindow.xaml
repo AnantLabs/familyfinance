@@ -4,8 +4,9 @@
         Title="EditTypesWindow" 
         Height="348" 
         Width="294">
-    <Grid>
-        <DataGrid Name="typeDataGrid"  
+    <Grid Background="{StaticResource DarkBlueBackGround}">
+        <DataGrid Name="typeDataGrid" 
+                  Margin="5"
                   HorizontalAlignment="Stretch" 
                   VerticalAlignment="Stretch"
                   AutoGenerateColumns="False" 
@@ -14,7 +15,7 @@
                   SelectionMode="Single" 
                   CanUserDeleteRows="False" 
                   CanUserResizeRows="False"
-                  CanUserAddRows="True">
+                  CanUserAddRows="True" HeadersVisibility="Column">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="nameColumn" 
                                     Binding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
