@@ -7,59 +7,33 @@
         Width="718"
         WindowStartupLocation="CenterScreen" 
         WindowState="Maximized">
-    <Grid>
-
-        <Button Name="button1" 
-                Content="Accounts" 
-                Height="23" 
-                HorizontalAlignment="Left" 
-                Margin="12,12,0,0" 
-                VerticalAlignment="Top" 
-                Width="75" 
-                Click="button1_Click"
-                />
-        <Button Name="button2" 
-                Content="Account Types" 
-                Height="23" 
-                HorizontalAlignment="Left"
-                Margin="12,54,0,0"
-                VerticalAlignment="Top" 
-                Width="104" 
-                Click="button2_Click" />
-
-        <Button Name="button3" 
-                Content="Line Types" 
-                Height="23" 
-                HorizontalAlignment="Left"
-                Margin="12,96,0,0"
-                VerticalAlignment="Top" 
-                Width="104"
-                Click="button3_Click"/>
-
-        <Button Name="button4" 
-                Content="Envelope Groups" 
-                Height="23" Margin="12,150,0,0"
-                VerticalAlignment="Top" 
-                Click="button4_Click" 
-                HorizontalAlignment="Left" 
-                Width="121" />
-
-        <Button Name="button5" 
-                Content="Banks" 
-                Height="23" Margin="12,190,0,0"
-                VerticalAlignment="Top" 
-                Click="button5_Click" 
-                HorizontalAlignment="Left" 
-                Width="70" />
-
-        <Button Name="button6" 
-                Content="Envelopes" 
-                Height="23" Margin="12,250,0,0"
-                VerticalAlignment="Top" 
-                Click="button6_Click" 
-                HorizontalAlignment="Left" 
-                Width="70" />
-        <my:RegistryControl Margin="139,12,12,12" 
+    <Grid Background="{StaticResource DarkBlueBackGround}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Menu x:Name="menu"
+              Grid.Row="0" 
+              HorizontalContentAlignment="Right" 
+              FlowDirection="LeftToRight" 
+              VerticalContentAlignment="Center" Background="{StaticResource LightBlueMenuBackground}">
+            <MenuItem Header="Edit" >
+                <MenuItem Header="Accounts"
+                          Click="button1_Click"/>
+                <MenuItem Header="Account Types"
+                          Click="button2_Click"/>
+                <MenuItem Header="Line Types"
+                          Click="button3_Click"/>
+                <MenuItem Header="Envelope Groups"
+                          Click="button4_Click"/>
+                <MenuItem Header="Banks"
+                          Click="button5_Click"/>
+                <MenuItem Header="Envelopes"
+                          Click="button6_Click"/>
+            </MenuItem>
+        </Menu>
+        <my:RegistryControl Grid.Row="1" 
+                            Margin="5"
                             x:Name="registryControl" />
     </Grid>
 </Window>

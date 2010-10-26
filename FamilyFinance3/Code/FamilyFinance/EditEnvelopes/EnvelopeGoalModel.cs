@@ -1,6 +1,7 @@
-﻿using FamilyFinance.Database;
+﻿using FamilyFinance.Model;
+using FamilyFinance.Database;
 
-namespace FamilyFinance.Model
+namespace FamilyFinance.EditEnvelopes
 {
     class EnvelopeGoalModel : EnvelopeModel
     {

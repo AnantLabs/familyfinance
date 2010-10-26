@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 using FamilyFinance.Model;
 using FamilyFinance.Database;
-using FamilyFinance.EditAccounts;
 
 namespace FamilyFinance.Registry
 {
@@ -23,7 +22,7 @@ namespace FamilyFinance.Registry
         /// </summary>
         public ObservableCollection<LineItemRegModel> RegistryLines { get; set; }
 
-        public ObservableCollection<AccountBankModel> AccountBalances { get; set; }
+        public ObservableCollection<AccountBalanceModel> AccountBalances { get; set; }
 
 
 
@@ -169,12 +168,12 @@ namespace FamilyFinance.Registry
 
         public void reloadAccountBalances()
         {
-            ObservableCollection<AccountBankModel> temp = new ObservableCollection<AccountBankModel>();
+            ObservableCollection<AccountBalanceModel> temp = new ObservableCollection<AccountBalanceModel>();
 
             foreach (FFDataSet.AccountRow row in MyData.getInstance().Account)
             {
                 if (row.closed == false && row.catagory == SpclAccountCat.ACCOUNT)
-                    temp.Add(new AccountBankModel(row));
+                    temp.Add(new AccountBalanceModel(row));
             }
             
             this.AccountBalances = temp;

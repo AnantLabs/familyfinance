@@ -1,6 +1,7 @@
 ﻿using FamilyFinance.Database;
+using FamilyFinance.Model;
 
-namespace FamilyFinance.Model
+namespace FamilyFinance.EditTypes
 {
     class EnvelopeGroupModel : ModelBase
     {

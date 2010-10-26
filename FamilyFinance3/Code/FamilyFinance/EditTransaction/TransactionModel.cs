@@ -1,6 +1,7 @@
 ﻿using FamilyFinance.Database;
+using FamilyFinance.Model;
 
-namespace FamilyFinance.Model
+namespace FamilyFinance.EditTransaction
 {
     class TransactionModel : ModelBase
     {

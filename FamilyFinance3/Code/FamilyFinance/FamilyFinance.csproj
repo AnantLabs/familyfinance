@@ -66,14 +66,20 @@
     <Compile Include="EditEnvelopes\EditEnvelopesWindow.xaml.cs">
       <DependentUpon>EditEnvelopesWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EditEnvelopes\EnvelopeGoalModel.cs" />
+    <Compile Include="EditEnvelopes\EnvelopeModel.cs" />
+    <Compile Include="EditTransaction\TransactionModel.cs" />
+    <Compile Include="EditTypes\AccountTypeModel.cs" />
+    <Compile Include="EditTypes\BankModel.cs" />
     <Compile Include="EditTypes\EditTypesVM.cs" />
     <Compile Include="EditTypes\EditTypesWindow.xaml.cs">
       <DependentUpon>EditTypesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\EnvelopeGoalModel.cs" />
-    <Compile Include="Model\LineItemRegModel.cs" />
+    <Compile Include="EditTypes\EnvelopeGroupModel.cs" />
+    <Compile Include="EditTypes\LineTypeModel.cs" />
     <Compile Include="Model\MoneyConverter.cs" />
-    <Compile Include="Model\TransactionModel.cs" />
+    <Compile Include="Registry\AccountBalanceModel.cs" />
+    <Compile Include="Registry\LineItemRegModel.cs" />
     <Compile Include="Registry\RegistryControl.xaml.cs">
       <DependentUpon>RegistryControl.xaml</DependentUpon>
     </Compile>
@@ -98,8 +104,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Model\AccountTypeModel.cs" />
-    <Compile Include="Model\BankModel.cs" />
     <Compile Include="Model\CatagoryModel.cs" />
     <Compile Include="EditAccounts\EditAccountsVM.cs" />
     <Compile Include="EditAccounts\EditAccountsWindow.xaml.cs">
@@ -121,11 +125,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FFDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Model\EnvelopeGroupModel.cs" />
-    <Compile Include="Model\EnvelopeModel.cs" />
     <Compile Include="Model\IdName.cs" />
     <Compile Include="Model\IdNameCat.cs" />
-    <Compile Include="Model\LineTypeModel.cs" />
     <Compile Include="Model\SettingsModel.cs" />
     <Compile Include="Model\CreditDebitModel.cs" />
     <Compile Include="Model\ModelBase.cs" />
@@ -167,9 +168,7 @@
     <None Include="Resources\DropTables.sqlce" />
     <None Include="Resources\Upgrade_V1toV2.sqlce" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="EditTransaction\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Database\FamilyFinanceDB.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
