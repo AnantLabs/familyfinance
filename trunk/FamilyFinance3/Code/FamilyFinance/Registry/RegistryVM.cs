@@ -11,7 +11,6 @@ namespace FamilyFinance.Registry
         ///////////////////////////////////////////////////////////////////////
         // Local variables
         ///////////////////////////////////////////////////////////////////////
-        private int currentAccountID;
 
 
         ///////////////////////////////////////////////////////////////////////
@@ -22,8 +21,10 @@ namespace FamilyFinance.Registry
         /// </summary>
         public ObservableCollection<LineItemRegModel> RegistryLines { get; set; }
 
-        public ObservableCollection<AccountBalanceModel> AccountBalances { get; set; }
-
+        public ObservableCollection<BalanceModel> AccountBalances { get; set; }
+        public ObservableCollection<BalanceModel> EnvelopeBalances { get; set; }
+        public ObservableCollection<BalanceModel> ExpenceBalances { get; set; }
+        public ObservableCollection<BalanceModel> IncomeBalances { get; set; }
 
 
         /// <summary>
@@ -80,12 +81,12 @@ namespace FamilyFinance.Registry
 
         }
 
-        private void calcBalance()
+        private void calcAccountBalance(int aID)
         {
             decimal bal = 0.0m;
             bool cd = LineCD.DEBIT;
 
-            FFDataSet.BankInfoRow bInfo = MyData.getInstance().BankInfo.FindByaccountID(currentAccountID);
+            FFDataSet.BankInfoRow bInfo = MyData.getInstance().BankInfo.FindByaccountID(aID);
             LineItemRegModel line;
 
             if (bInfo != null)
@@ -121,8 +122,10 @@ namespace FamilyFinance.Registry
             this.reloadAccountTypesCBList();
             this.reloadAccountsCBList();
             this.reloadEnvelopesCBList();
-            this.reloadRegistryLines(3);
             this.reloadAccountBalances();
+            this.reloadEnvelopeBalances();
+
+            this.setCurrentAccountEnvelope(3, -1);
         }
 
         public void reloadAccountTypesCBList()
@@ -165,43 +168,80 @@ namespace FamilyFinance.Registry
             this.RaisePropertyChanged("AccountsCBList");
         }
 
-
         public void reloadAccountBalances()
         {
-            ObservableCollection<AccountBalanceModel> temp = new ObservableCollection<AccountBalanceModel>();
+            ObservableCollection<BalanceModel> tempAcc = new ObservableCollection<BalanceModel>();
+            ObservableCollection<BalanceModel> tempIn = new ObservableCollection<BalanceModel>();
+            ObservableCollection<BalanceModel> tempEx = new ObservableCollection<BalanceModel>();
 
             foreach (FFDataSet.AccountRow row in MyData.getInstance().Account)
             {
-                if (row.closed == false && row.catagory == SpclAccountCat.ACCOUNT)
-                    temp.Add(new AccountBalanceModel(row));
+                if (row.closed == false)
+                {
+                    if (row.catagory == SpclAccountCat.ACCOUNT)
+                    {
+                        tempAcc.Add(new BalanceModel(row));
+                    }
+                    else if (row.catagory == SpclAccountCat.EXPENSE)
+                    {
+                        tempEx.Add(new BalanceModel(row));
+                    }
+                    else if (row.catagory == SpclAccountCat.INCOME)
+                    {
+                        tempIn.Add(new BalanceModel(row));
+                    }
+                }
             }
-            
-            this.AccountBalances = temp;
+
+            this.AccountBalances = tempAcc;
+            this.ExpenceBalances = tempEx;
+            this.IncomeBalances = tempIn;
             this.RaisePropertyChanged("AccountBalances");
+            this.RaisePropertyChanged("ExpenceBalances");
+            this.RaisePropertyChanged("IncomeBalances");
         }
 
-        public void reloadRegistryLines(int aID)
+        public void reloadEnvelopeBalances()
         {
-            this.currentAccountID = aID;
+            ObservableCollection<BalanceModel> tempEnv = new ObservableCollection<BalanceModel>();
+
+            foreach (FFDataSet.EnvelopeRow row in MyData.getInstance().Envelope)
+            {
+                if (row.closed == false && row.id > 0)
+                {
+                    tempEnv.Add(new BalanceModel(row));
+                }
+            }
+
+            this.EnvelopeBalances = tempEnv;
+            this.RaisePropertyChanged("EnvelopeBalances");
+        }
+
+        public void setCurrentAccountEnvelope(int aID, int eID)
+        {
             LineItemRegModel.setAccount(aID);
 
             ObservableCollection<LineItemRegModel> reg = new ObservableCollection<LineItemRegModel>();
 
-            foreach (FFDataSet.LineItemRow line in MyData.getInstance().LineItem)
-                if (line.accountID == aID)
-                    reg.Add(new LineItemRegModel(line));
+            FFDataSet.LineItemRow[] lines = MyData.getInstance().Account.FindByid(aID).GetLineItemRows();
+
+            foreach (FFDataSet.LineItemRow line in lines)
+                reg.Add(new LineItemRegModel(line));
 
             this.RegistryLines = reg;
-            this.registryRowEditEnding();
+            this.sortRegistry();
+            this.RaisePropertyChanged("RegistryLines");
+            this.calcAccountBalance(aID);
         }
 
         public void registryRowEditEnding()
         {
-            this.sortRegistry();
-            this.RaisePropertyChanged("RegistryLines");
-            this.calcBalance();
+
         }
 
+        public void registrySelectionChanged()
+        {
+        }
 
     }
 }

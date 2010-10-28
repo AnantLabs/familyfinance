@@ -32,5 +32,24 @@ namespace FamilyFinance.Registry
         {
             rVM.registryRowEditEnding();
         }
+
+        private void ae_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            BalanceModel bModle = e.AddedItems[0] as BalanceModel;
+
+            if (bModle != null)
+                rVM.setCurrentAccountEnvelope(bModle.AccountID, bModle.EnvelopeID);
+
+        }
+
+        private void DataGrid_CurrentCellChanged(object sender, EventArgs e)
+        {
+            int i = 0;
+        }
+
+        private void DataGrid_InitializingNewItem(object sender, InitializingNewItemEventArgs e)
+        {
+            int i = 0;
+        }
     }
 }
