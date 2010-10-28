@@ -72,7 +72,8 @@
         </local:AccountDetailsTemplateSelector>
     </Window.Resources>
     <Grid Height="Auto" 
-          Width="Auto" Background="{StaticResource DarkBlueBackGround}">
+          Width="Auto" 
+          Background="{StaticResource DarkBlueBackGround}">
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition Height="*" />

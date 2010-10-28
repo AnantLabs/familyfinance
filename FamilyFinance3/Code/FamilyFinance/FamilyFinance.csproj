@@ -59,6 +59,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controls\ExtendedTextBoxColumn.cs" />
+    <Compile Include="Custom\MyObservableCollection.cs" />
     <Compile Include="Database\DBConstants.cs" />
     <Compile Include="EditAccounts\AccountDetailsTemplateSelector.cs" />
     <Compile Include="EditAccounts\AccountBankModel.cs" />
@@ -78,7 +79,10 @@
     <Compile Include="EditTypes\EnvelopeGroupModel.cs" />
     <Compile Include="EditTypes\LineTypeModel.cs" />
     <Compile Include="Model\MoneyConverter.cs" />
-    <Compile Include="Registry\AccountBalanceModel.cs" />
+    <Compile Include="Registry\BalanceModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Registry\SubBalanceTemplateSelector.cs" />
     <Compile Include="Registry\LineItemRegModel.cs" />
     <Compile Include="Registry\RegistryControl.xaml.cs">
       <DependentUpon>RegistryControl.xaml</DependentUpon>
