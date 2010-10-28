@@ -33,23 +33,33 @@ namespace FamilyFinance.Registry
             rVM.registryRowEditEnding();
         }
 
+        private DataGrid prevGrid;
+
         private void ae_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (e.AddedItems.Count < 1)
+            {
+                e.Handled = true;
+                return;
+            }
+
             BalanceModel bModle = e.AddedItems[0] as BalanceModel;
+            DataGrid thisGrid = sender as DataGrid;
 
             if (bModle != null)
+            {
                 rVM.setCurrentAccountEnvelope(bModle.AccountID, bModle.EnvelopeID);
+                e.Handled = true;
 
+                if (thisGrid != prevGrid)
+                {
+                    if (prevGrid != null)
+                        prevGrid.SelectedIndex = -1;
+
+                    this.prevGrid = thisGrid;
+                }
+            }
         }
 
-        private void DataGrid_CurrentCellChanged(object sender, EventArgs e)
-        {
-            int i = 0;
-        }
-
-        private void DataGrid_InitializingNewItem(object sender, InitializingNewItemEventArgs e)
-        {
-            int i = 0;
-        }
     }
 }
