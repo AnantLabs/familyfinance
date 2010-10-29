@@ -235,21 +235,15 @@ namespace FamilyFinance.Registry
 
         private void setAmount(decimal? amount, bool cd)
         {
-            decimal newAmount;
+            decimal newAmount = amount.Value;
 
-            if (amount == null)
-                newAmount = 0.0m;
-            else
-                newAmount = amount.Value;
-
-
-            if (amount < 0.0m)
+            if (newAmount < 0.0m)
             {
-                amount = decimal.Negate(newAmount);
+                newAmount = decimal.Negate(newAmount);
                 cd = !cd;
             }
 
-            amount = decimal.Round(newAmount, 2);
+            newAmount = decimal.Round(newAmount, 2);
 
             this.lineItemRow.amount = newAmount;
             this.lineItemRow.creditDebit = cd;

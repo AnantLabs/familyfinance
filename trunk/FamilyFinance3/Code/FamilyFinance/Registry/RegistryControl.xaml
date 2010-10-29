@@ -270,36 +270,35 @@
                     Padding="0">
             <TabItem Header="Accounts">
                 <Grid Background="White">
-                    <DataGrid SelectionMode="Single" 
+                    <DataGrid IsReadOnly="True"
+                              RowBackground="White"
+                              SelectionMode="Single"
                               CanUserAddRows="False"
-                              CanUserDeleteRows="False" 
-                              CanUserResizeColumns="True" 
-                              CanUserResizeRows="False"
-                              VerticalAlignment="Stretch"
-                              HorizontalAlignment="Stretch" 
-                              AutoGenerateColumns="False" 
-                              EnableRowVirtualization="True" 
-                              RowDetailsVisibilityMode="VisibleWhenSelected" 
-                              ItemsSource="{Binding Source={StaticResource rVM}, Path=AccountBalances}" 
-                              HorizontalScrollBarVisibility="Disabled"
-                              RowDetailsTemplateSelector="{StaticResource tSelector}"
                               Background="Transparent"
-                              RowBackground="White" 
-                              GridLinesVisibility="Horizontal" 
-                              HorizontalGridLinesBrush="{StaticResource LightBlueMenuBackground}" 
-                              HeadersVisibility="Column" 
-                              IsReadOnly="True"
+                              CanUserDeleteRows="False"
+                              CanUserResizeRows="False"
+                              HeadersVisibility="Column"
+                              CanUserResizeColumns="True"
+                              VerticalAlignment="Stretch"
+                              AutoGenerateColumns="False"
+                              CanUserReorderColumns="False"
+                              HorizontalAlignment="Stretch"
+                              EnableRowVirtualization="True"
+                              GridLinesVisibility="Horizontal"
+                              HorizontalScrollBarVisibility="Disabled"
+                              RowDetailsVisibilityMode="VisibleWhenSelected"  
                               SelectionChanged="major_SelectionChanged"
-                              CanUserReorderColumns="False">
+                              RowDetailsTemplateSelector="{StaticResource tSelector}"
+                              HorizontalGridLinesBrush="{StaticResource LightBlueMenuBackground}"
+                              ItemsSource="{Binding Source={StaticResource rVM}, Path=AccountBalances}">
                         <DataGrid.Columns>
                             <!-- Description -->
                             <controls:ExtendedTextColumn Width="130*"
                                                          IsReadOnly="True"
                                                          Binding="{Binding Path=Name, Mode=OneWay}" />
                             <!-- Balance -->
-                            <controls:ExtendedTextColumn IsReadOnly="True"
-                                                         Width="90*"
-                                                         CanUserResize="True"
+                            <controls:ExtendedTextColumn Width="90*"
+                                                         IsReadOnly="True"
                                                          HorizontalAlignment="Right"
                                                          Binding="{Binding Path=Balance, StringFormat=c, Mode=OneWay}" />
                         </DataGrid.Columns>
