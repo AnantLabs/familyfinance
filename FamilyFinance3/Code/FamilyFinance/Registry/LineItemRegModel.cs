@@ -169,14 +169,14 @@ namespace FamilyFinance.Registry
             }
         }
 
-        public decimal CreditAmount
+        public decimal? CreditAmount
         {
             get
             {
-                if (this.lineItemRow.creditDebit == LineCD.CREDIT)
+                if (this.lineItemRow.creditDebit == LineCD.CREDIT && this.lineItemRow.amount > 0.0m)
                     return this.lineItemRow.amount;
                 else
-                    return 0.0m;
+                    return null;
             }
 
             set
@@ -190,14 +190,14 @@ namespace FamilyFinance.Registry
             }
         }
 
-        public decimal DebitAmount
+        public decimal? DebitAmount
         {
             get
             {
-                if (this.lineItemRow.creditDebit == LineCD.DEBIT)
+                if (this.lineItemRow.creditDebit == LineCD.DEBIT && this.lineItemRow.amount > 0.0m)
                     return this.lineItemRow.amount;
                 else
-                    return 0.0m;
+                    return null;
             }
 
             set
@@ -233,17 +233,25 @@ namespace FamilyFinance.Registry
             MyData.getInstance().saveRow(this.lineItemRow);
         }
 
-        private void setAmount(decimal amount, bool cd)
+        private void setAmount(decimal? amount, bool cd)
         {
+            decimal newAmount;
+
+            if (amount == null)
+                newAmount = 0.0m;
+            else
+                newAmount = amount.Value;
+
+
             if (amount < 0.0m)
             {
-                amount = decimal.Negate(amount);
+                amount = decimal.Negate(newAmount);
                 cd = !cd;
             }
 
-            amount = decimal.Round(amount, 2);
+            amount = decimal.Round(newAmount, 2);
 
-            this.lineItemRow.amount = amount;
+            this.lineItemRow.amount = newAmount;
             this.lineItemRow.creditDebit = cd;
 
             this.setOppLineAmount(this.lineItemRow.id);

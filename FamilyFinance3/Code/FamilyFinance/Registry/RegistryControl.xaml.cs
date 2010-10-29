@@ -33,6 +33,7 @@ namespace FamilyFinance.Registry
             rVM.registryRowEditEnding();
         }
 
+
         private DataGrid prevMajorGrid;
         private DataGrid prevSubGrid;
 
