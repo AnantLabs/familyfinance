@@ -4,14 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FamilyFinance.Registry"
-             xmlns:model="clr-namespace:FamilyFinance.Model"
              xmlns:controls="clr-namespace:FamilyFinance.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="254" 
              d:DesignWidth="1256">
     <UserControl.Resources>
         <local:RegistryVM x:Key="rVM"/>
-        <model:MoneyConverter x:Key="conv" />
         <local:SubBalanceTemplateSelector x:Key="tSelector">
             <!-- Sub Balance template -->
             <local:SubBalanceTemplateSelector.SubBalanceTemplate>
@@ -111,7 +109,7 @@
                 <DataGridTemplateColumn x:Name="dateColumn" 
                                         Header="Date" 
                                         CanUserSort="False"
-                                        Width="80">
+                                        Width="90">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Path=Date, StringFormat=MM/dd/yyyy, Mode=OneWay}"
@@ -129,7 +127,7 @@
                 <DataGridTemplateColumn x:Name="lineTypeColumnCB" 
                                         Header="Type"
                                         CanUserSort="False"
-                                        Width="60*">
+                                        Width="50*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Path=TypeName, Mode=OneWay}"
@@ -150,7 +148,7 @@
                 <DataGridTemplateColumn x:Name="oppAccountColumnCB" 
                                         Header="Source / Destination"
                                         CanUserSort="False"
-                                        Width="80*">
+                                        Width="100*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Path=OppAccountName, Mode=OneWay}"
@@ -195,14 +193,14 @@
                 <controls:ExtendedTextColumn x:Name="confirmationColumn"  
                                     Header="Confirmation"
                                     CanUserSort="False"
-                                    Width="70*"
+                                    Width="60*"
                                     VerticalAlignment="Center"
                                     Binding="{Binding Path=ConfirmationNumber, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
                 <!-- Envelope -->
                 <DataGridTemplateColumn x:Name="envelopeColumnCB" 
                                         Header="Envelope"
                                         CanUserSort="False"
-                                        Width="70*">
+                                        Width="75*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Path=EnvelopeName, Mode=OneWay}"
@@ -226,7 +224,7 @@
                                              Width="70"
                                              HorizontalAlignment="Right"
                                              VerticalAlignment="Center"
-                                             Binding="{Binding Path=CreditAmount, Converter={StaticResource conv}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                                             Binding="{Binding Path=CreditAmount, StringFormat=c, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
                 <!-- Complete -->
                 <controls:ExtendedTextColumn x:Name="completeColumn"  
                                              Header="C/R"
@@ -244,7 +242,7 @@
                                              Width="70"
                                              HorizontalAlignment="Right"
                                              VerticalAlignment="Center"
-                                             Binding="{Binding Path=DebitAmount,  Converter={StaticResource conv}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                                             Binding="{Binding Path=DebitAmount,  StringFormat=c, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
                 <!-- Balance -->
                 <controls:ExtendedTextColumn x:Name="balanceColumn"  
                                              Header="Balance"
@@ -254,7 +252,7 @@
                                              CanUserResize="True"
                                              HorizontalAlignment="Right"
                                              VerticalAlignment="Center"
-                                             Binding="{Binding Path=BalanceAmount, StringFormat=c, Mode=oneWay}" />
+                                             Binding="{Binding Path=BalanceAmount, StringFormat={}{0:c}, Mode=oneWay}" />
             </DataGrid.Columns>
         </DataGrid>
         <!-- Account/Envelope Selector -->

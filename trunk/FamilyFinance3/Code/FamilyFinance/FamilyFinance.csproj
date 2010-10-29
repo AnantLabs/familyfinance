@@ -78,7 +78,6 @@
     </Compile>
     <Compile Include="EditTypes\EnvelopeGroupModel.cs" />
     <Compile Include="EditTypes\LineTypeModel.cs" />
-    <Compile Include="Model\MoneyConverter.cs" />
     <Compile Include="Registry\BalanceModel.cs">
       <SubType>Code</SubType>
     </Compile>
