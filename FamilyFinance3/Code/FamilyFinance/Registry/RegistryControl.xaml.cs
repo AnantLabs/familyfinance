@@ -33,30 +33,49 @@ namespace FamilyFinance.Registry
             rVM.registryRowEditEnding();
         }
 
-        private DataGrid prevGrid;
+        private DataGrid prevMajorGrid;
+        private DataGrid prevSubGrid;
 
-        private void ae_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void sub_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.AddedItems.Count < 1)
+            if (e.AddedItems.Count > 0)
             {
+                BalanceModel bModle = e.AddedItems[0] as BalanceModel;
+                DataGrid thisGrid = sender as DataGrid;
+
+                this.prevSubGrid = thisGrid;
+
+                if (bModle != null)
+                    rVM.setCurrentAccountEnvelope(bModle.AccountID, bModle.EnvelopeID);
+
                 e.Handled = true;
-                return;
             }
+        }
 
-            BalanceModel bModle = e.AddedItems[0] as BalanceModel;
-            DataGrid thisGrid = sender as DataGrid;
-
-            if (bModle != null)
+        private void major_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0)
             {
-                rVM.setCurrentAccountEnvelope(bModle.AccountID, bModle.EnvelopeID);
-                e.Handled = true;
+                BalanceModel bModle = e.AddedItems[0] as BalanceModel;
+                DataGrid thisGrid = sender as DataGrid;
 
-                if (thisGrid != prevGrid)
+                if (bModle != null)
                 {
-                    if (prevGrid != null)
-                        prevGrid.SelectedIndex = -1;
+                    rVM.setCurrentAccountEnvelope(bModle.AccountID, bModle.EnvelopeID);
+                    e.Handled = true;
 
-                    this.prevGrid = thisGrid;
+                    // Deselect the sub grid if it's not null
+                    if (this.prevSubGrid != null)
+                        this.prevSubGrid.SelectedItem = null;
+
+                    // 
+                    if (thisGrid != this.prevMajorGrid)
+                    {
+                        if (this.prevMajorGrid != null)
+                            this.prevMajorGrid.SelectedItem = null;
+
+                        this.prevMajorGrid = thisGrid;
+                    }
                 }
             }
         }
