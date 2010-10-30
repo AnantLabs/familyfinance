@@ -109,7 +109,7 @@
                 <DataGridTemplateColumn x:Name="dateColumn" 
                                         Header="Date" 
                                         CanUserSort="False"
-                                        Width="90">
+                                        Width="80*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Path=Date, StringFormat=MM/dd/yyyy, Mode=OneWay}"
@@ -221,7 +221,7 @@
                                              Header="Credit"
                                              CanUserSort="False"
                                              IsReadOnly="False"
-                                             Width="70"
+                                             Width="70*"
                                              HorizontalAlignment="Right"
                                              VerticalAlignment="Center"
                                              Binding="{Binding Path=CreditAmount, StringFormat=c, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
@@ -230,7 +230,7 @@
                                              Header="C/R"
                                              CanUserSort="False"
                                              IsReadOnly="True"
-                                             Width="30"
+                                             Width="30*"
                                              CanUserResize="False"
                                              HorizontalAlignment="Center"
                                              VerticalAlignment="Center"
@@ -239,7 +239,7 @@
                 <controls:ExtendedTextColumn x:Name="debitColumn"  
                                              Header="Debit"
                                              CanUserSort="False"
-                                             Width="70"
+                                             Width="70*"
                                              HorizontalAlignment="Right"
                                              VerticalAlignment="Center"
                                              Binding="{Binding Path=DebitAmount,  StringFormat=c, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
@@ -248,7 +248,7 @@
                                              Header="Balance"
                                              CanUserSort="False"
                                              IsReadOnly="True"
-                                             Width="90"
+                                             Width="90*"
                                              CanUserResize="True"
                                              HorizontalAlignment="Right"
                                              VerticalAlignment="Center"
