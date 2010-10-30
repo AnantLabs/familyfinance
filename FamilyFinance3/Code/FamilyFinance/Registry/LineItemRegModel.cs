@@ -290,24 +290,26 @@ namespace FamilyFinance.Registry
             currentAccountID = accountID;
         }
 
-        public int CompareTo(LineItemRegModel value)
+    }
+
+    class RegistryComparer : System.Collections.Generic.IComparer<LineItemRegModel>
+    {
+        public int Compare(LineItemRegModel x, LineItemRegModel y)
         {
-            int comp = this.Date.CompareTo(value.Date);
+            int comp = x.Date.CompareTo(y.Date);
 
             if (comp == 0)
             {
-                comp = value.CreditDebit.CompareTo(this.CreditDebit);
+                comp = y.CreditDebit.CompareTo(x.CreditDebit);
 
                 if (comp == 0)
                 {
-                    comp = this.Amount.CompareTo(value.Amount);
+                    comp = x.Amount.CompareTo(y.Amount);
                 }
             }
 
             return comp;
         }
-
-
     }
 
 }

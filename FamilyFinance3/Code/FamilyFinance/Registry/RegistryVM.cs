@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using FamilyFinance.Model;
 using FamilyFinance.Database;
+using FamilyFinance.Custom;
 
 namespace FamilyFinance.Registry
 {
@@ -19,7 +20,7 @@ namespace FamilyFinance.Registry
         /// <summary>
         /// Gets or sets the collection of accounts.
         /// </summary>
-        public ObservableCollection<LineItemRegModel> RegistryLines { get; set; }
+        public MyObservableCollection<LineItemRegModel> RegistryLines { get; set; }
 
         public ObservableCollection<BalanceModel> AccountBalances { get; set; }
         public ObservableCollection<BalanceModel> EnvelopeBalances { get; set; }
@@ -50,36 +51,6 @@ namespace FamilyFinance.Registry
         ///////////////////////////////////////////////////////////////////////
 
 
-        /// <summary>
-        /// Optimised sort for the registry. Based off the bubble sort but works from the bottom up.
-        /// This is because the registry will usually be sorted and new items will be added to the end.
-        /// So let that new item bubble up ito place.
-        /// </summary>
-        private void sortRegistry()
-        {
-            bool moved = false;
-
-            // Start at end and push the smallestvalues to the top
-            for (int i = 0; i < this.RegistryLines.Count - 1; i++)
-            {
-                moved = false;
-
-                for (int j = this.RegistryLines.Count - 1; j > i; j--)
-                {
-                    int comp = this.RegistryLines[j].CompareTo(this.RegistryLines[j - 1]);
-
-                    if (comp < 0)
-                    {
-                        this.RegistryLines.Move(j, j - 1);
-                        moved = true;
-                    }
-                }
-
-                if (!moved)
-                    break;
-            }
-
-        }
 
         private void calcAccountBalance(int aID)
         {
@@ -221,7 +192,7 @@ namespace FamilyFinance.Registry
         {
             LineItemRegModel.setAccount(aID);
 
-            ObservableCollection<LineItemRegModel> reg = new ObservableCollection<LineItemRegModel>();
+            MyObservableCollection<LineItemRegModel> reg = new MyObservableCollection<LineItemRegModel>();
 
             FFDataSet.LineItemRow[] lines = MyData.getInstance().Account.FindByid(aID).GetLineItemRows();
 
@@ -229,7 +200,7 @@ namespace FamilyFinance.Registry
                 reg.Add(new LineItemRegModel(line));
 
             this.RegistryLines = reg;
-            this.sortRegistry();
+            this.RegistryLines.sort(new RegistryComparer());
             this.RaisePropertyChanged("RegistryLines");
             this.calcAccountBalance(aID);
         }
@@ -237,10 +208,6 @@ namespace FamilyFinance.Registry
         public void registryRowEditEnding()
         {
 
-        }
-
-        public void registrySelectionChanged()
-        {
         }
 
     }
