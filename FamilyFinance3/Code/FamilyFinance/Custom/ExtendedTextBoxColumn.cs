@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 using System.Windows;
 
-namespace FamilyFinance.Controls
+namespace FamilyFinance.Custom
 {
     class ExtendedTextColumn : DataGridTextColumn
     {
