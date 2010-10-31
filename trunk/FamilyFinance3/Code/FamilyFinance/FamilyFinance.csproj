@@ -58,7 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controls\ExtendedTextBoxColumn.cs" />
+    <Compile Include="Custom\ExtendedTextBoxColumn.cs" />
     <Compile Include="Custom\MyObservableCollection.cs" />
     <Compile Include="Database\DBConstants.cs" />
     <Compile Include="EditAccounts\AccountDetailsTemplateSelector.cs" />
