@@ -69,6 +69,9 @@
     </Compile>
     <Compile Include="EditEnvelopes\EnvelopeGoalModel.cs" />
     <Compile Include="EditEnvelopes\EnvelopeModel.cs" />
+    <Compile Include="EditTransaction\EditTransaction.xaml.cs">
+      <DependentUpon>EditTransaction.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EditTransaction\TransactionModel.cs" />
     <Compile Include="EditTypes\AccountTypeModel.cs" />
     <Compile Include="EditTypes\BankModel.cs" />
@@ -78,6 +81,7 @@
     </Compile>
     <Compile Include="EditTypes\EnvelopeGroupModel.cs" />
     <Compile Include="EditTypes\LineTypeModel.cs" />
+    <Compile Include="Model\AccountListModel.cs" />
     <Compile Include="Registry\BalanceModel.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -92,6 +96,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EditEnvelopes\EditEnvelopesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditTransaction\EditTransaction.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
