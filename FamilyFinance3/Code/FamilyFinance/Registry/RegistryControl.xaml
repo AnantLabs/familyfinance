@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FamilyFinance.Registry"
-             xmlns:controls="clr-namespace:FamilyFinance.Custom"
+             xmlns:custom="clr-namespace:FamilyFinance.Custom"
              mc:Ignorable="d" 
              d:DesignHeight="254" 
              d:DesignWidth="1256">
@@ -343,14 +343,14 @@
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
                 <!-- Description -->
-                <controls:ExtendedTextColumn x:Name="descriptionColumn" 
+                <custom:ExtendedTextColumn x:Name="descriptionColumn" 
                                     Header="Description" 
                                     CanUserSort="False"
                                     Width="150*"
                                     VerticalAlignment="Center"
                                     Binding="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
                 <!-- Confirmation Number -->
-                <controls:ExtendedTextColumn x:Name="confirmationColumn"  
+                <custom:ExtendedTextColumn x:Name="confirmationColumn"  
                                     Header="Confirmation"
                                     CanUserSort="False"
                                     Width="50*"
@@ -377,7 +377,7 @@
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
                 <!-- Credit -->
-                <controls:ExtendedTextColumn x:Name="creditColumn"  
+                <custom:ExtendedTextColumn x:Name="creditColumn"  
                                              Header="Credit"
                                              CanUserSort="False"
                                              IsReadOnly="False"
@@ -386,7 +386,7 @@
                                              VerticalAlignment="Center"
                                              Binding="{Binding Path=CreditAmount, StringFormat=c, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
                 <!-- Complete -->
-                <controls:ExtendedTextColumn x:Name="completeColumn"  
+                <custom:ExtendedTextColumn x:Name="completeColumn"  
                                              Header="C/R"
                                              CanUserSort="False"
                                              IsReadOnly="True"
@@ -396,7 +396,7 @@
                                              VerticalAlignment="Center"
                                              Binding="{Binding Path=Complete, Mode=OneWay}" />
                 <!--Debit -->
-                <controls:ExtendedTextColumn x:Name="debitColumn"  
+                <custom:ExtendedTextColumn x:Name="debitColumn"  
                                              Header="Debit"
                                              CanUserSort="False"
                                              Width="50*"
@@ -404,7 +404,7 @@
                                              VerticalAlignment="Center"
                                              Binding="{Binding Path=DebitAmount,  StringFormat=c, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
                 <!-- Balance -->
-                <controls:ExtendedTextColumn x:Name="balanceColumn"  
+                <custom:ExtendedTextColumn x:Name="balanceColumn"  
                                              Header="Balance"
                                              CanUserSort="False"
                                              IsReadOnly="True"
