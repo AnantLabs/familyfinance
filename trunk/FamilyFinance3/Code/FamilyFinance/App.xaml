@@ -29,10 +29,10 @@
             </ComboBox>
         </DataTemplate>
         <SolidColorBrush x:Key="DarkBlueBackGround">#FF293955</SolidColorBrush>
-    <LinearGradientBrush x:Key="LightBlueMenuBackground" EndPoint="0.5,1" StartPoint="0.5,0">
+        <LinearGradientBrush x:Key="LightBlueMenuBackground" EndPoint="0.5,1" StartPoint="0.5,0">
       <GradientStop Color="#FFCAD3E2" Offset="0" />
       <GradientStop Color="#FFB1BCCF" Offset="1" />
     </LinearGradientBrush>
-    <SolidColorBrush x:Key="AltRowSemiTransBlueBrush">#1B29399D</SolidColorBrush>
+        <SolidColorBrush x:Key="AltRowSemiTransBlueBrush">#1B29399D</SolidColorBrush>
   </Application.Resources>
 </Application>

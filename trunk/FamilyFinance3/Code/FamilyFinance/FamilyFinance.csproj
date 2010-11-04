@@ -85,6 +85,13 @@
     <Compile Include="Registry\BalanceModel.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Registry\Navigator.xaml.cs">
+      <DependentUpon>Navigator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Registry\NavigatorVM.cs" />
+    <Compile Include="Registry\RegistryPanel.xaml.cs">
+      <DependentUpon>RegistryPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Registry\SubBalanceTemplateSelector.cs" />
     <Compile Include="Registry\LineItemRegModel.cs" />
     <Compile Include="Registry\RegistryControl.xaml.cs">
@@ -124,7 +131,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Registry\Navigator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Registry\RegistryControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Registry\RegistryPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
