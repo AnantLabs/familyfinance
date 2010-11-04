@@ -7,20 +7,20 @@ namespace FamilyFinance.Registry
     /// <summary>
     /// Interaction logic for RegistryControl.xaml
     /// </summary>
-    public partial class RegistryControl : UserControl
+    public partial class RegistryGrid : UserControl
     {
-        RegistryVM rVM;
+        RegistryGridVM gridVM;
 
-        public RegistryControl()
+        public RegistryGrid()
         {
             InitializeComponent();
 
-            rVM = (RegistryVM)this.Resources["rVM"];
+            gridVM = (RegistryGridVM)this.Resources["gridVM"];
         }
 
         private void dataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            rVM.registryRowEditEnding();
+            gridVM.registryRowEditEnding();
         }
 
 
@@ -37,7 +37,7 @@ namespace FamilyFinance.Registry
                 this.prevSubGrid = thisGrid;
 
                 if (bModle != null)
-                    rVM.setCurrentAccountEnvelope(bModle.AccountID, bModle.EnvelopeID);
+                    gridVM.setCurrentAccountEnvelope(bModle.AccountID, bModle.EnvelopeID);
 
                 e.Handled = true;
             }
@@ -52,7 +52,7 @@ namespace FamilyFinance.Registry
 
                 if (bModle != null)
                 {
-                    rVM.setCurrentAccountEnvelope(bModle.AccountID, bModle.EnvelopeID);
+                    gridVM.setCurrentAccountEnvelope(bModle.AccountID, bModle.EnvelopeID);
                     e.Handled = true;
 
                     // Deselect the sub grid if it's not null
@@ -69,6 +69,11 @@ namespace FamilyFinance.Registry
                     }
                 }
             }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
 
     }

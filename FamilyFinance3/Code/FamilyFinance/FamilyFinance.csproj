@@ -89,15 +89,15 @@
       <DependentUpon>Navigator.xaml</DependentUpon>
     </Compile>
     <Compile Include="Registry\NavigatorVM.cs" />
+    <Compile Include="Registry\RegistryGrid.xaml.cs">
+      <DependentUpon>RegistryGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Registry\RegistryGridVM.cs" />
     <Compile Include="Registry\RegistryPanel.xaml.cs">
       <DependentUpon>RegistryPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Registry\SubBalanceTemplateSelector.cs" />
     <Compile Include="Registry\LineItemRegModel.cs" />
-    <Compile Include="Registry\RegistryControl.xaml.cs">
-      <DependentUpon>RegistryControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Registry\RegistryVM.cs" />
     <Page Include="EditAccounts\EditAccountsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -135,9 +135,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Registry\RegistryControl.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Registry\RegistryGrid.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Registry\RegistryPanel.xaml">
       <SubType>Designer</SubType>

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="FamilyFinance.Registry.RegistryControl"
+﻿<UserControl x:Class="FamilyFinance.Registry.RegistryGrid"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,9 +7,10 @@
              xmlns:custom="clr-namespace:FamilyFinance.Custom"
              mc:Ignorable="d" 
              d:DesignHeight="254" 
-             d:DesignWidth="1256">
+             d:DesignWidth="1118"
+             Loaded="UserControl_Loaded">
     <UserControl.Resources>
-        <local:RegistryVM x:Key="rVM"/>
+        <local:RegistryVM x:Key="gridVM"/>
     </UserControl.Resources>
     <Grid Background="Transparent" 
           HorizontalAlignment="Stretch"
@@ -19,6 +20,13 @@
             <RowDefinition Height="228*" />
             <RowDefinition Height="22" />
         </Grid.RowDefinitions>
+        <!-- Upper Information Bar -->
+        <StackPanel Grid.Row="0" 
+                    Background="Transparent"
+                    Orientation="Horizontal">
+            <TextBlock Text="Type : Account Name : Envelope"
+                       Foreground="White" />
+        </StackPanel>
         <!-- Registry Grid -->
         <DataGrid x:Name="dataGrid"
                   Grid.Row="1"
@@ -194,13 +202,6 @@
                                              Binding="{Binding Path=BalanceAmount, StringFormat={}{0:c}, Mode=oneWay}" />
             </DataGrid.Columns>
         </DataGrid>
-        <!-- Upper Information Bar -->
-        <StackPanel Grid.Row="0" 
-                    Background="Transparent"
-                    Orientation="Horizontal">
-            <TextBlock Text="Type : Account Name : Envelope"
-                       Foreground="White" />
-        </StackPanel>
         <!-- Lower Information Bar -->
         <StackPanel Grid.Row="2"
                     Background="Transparent"
