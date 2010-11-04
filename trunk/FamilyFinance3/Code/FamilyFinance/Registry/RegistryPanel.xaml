@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="FamilyFinance.Registry.RegistryPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FamilyFinance.Registry"
+             mc:Ignorable="d" 
+             d:DesignHeight="159" 
+             d:DesignWidth="598">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="153*" />
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="591*" />
+        </Grid.ColumnDefinitions>
+        <local:Navigator Grid.Column="0"/>
+        <GridSplitter Grid.Column="1" 
+                      Background="Transparent" 
+                      BorderBrush="Black" 
+                      HorizontalAlignment="Stretch" 
+                      ResizeBehavior="PreviousAndNext" 
+                      ShowsPreview="True" 
+                      Grid.RowSpan="3" />
+        <local:RegistryGrid Grid.Column="2"/>
+    </Grid>
+</UserControl>

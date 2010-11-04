@@ -32,7 +32,7 @@
                           Click="button6_Click"/>
             </MenuItem>
         </Menu>
-        <my:RegistryControl Grid.Row="1" 
+        <my:RegistryGrid Grid.Row="1" 
                             Margin="5"
                             x:Name="registryControl" />
     </Grid>

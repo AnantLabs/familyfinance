@@ -7,7 +7,7 @@ using FamilyFinance.Custom;
 
 namespace FamilyFinance.Registry
 {
-    class RegistryVM : ModelBase
+    class RegistryGridVM : ModelBase
     {
         ///////////////////////////////////////////////////////////////////////
         // Local variables
@@ -22,10 +22,7 @@ namespace FamilyFinance.Registry
         /// </summary>
         public MyObservableCollection<LineItemRegModel> RegistryLines { get; set; }
 
-        public ObservableCollection<BalanceModel> AccountBalances { get; set; }
-        public ObservableCollection<BalanceModel> EnvelopeBalances { get; set; }
-        public ObservableCollection<BalanceModel> ExpenceBalances { get; set; }
-        public ObservableCollection<BalanceModel> IncomeBalances { get; set; }
+
 
 
         /// <summary>
@@ -88,7 +85,7 @@ namespace FamilyFinance.Registry
         ///////////////////////////////////////////////////////////////////////
         // Public functions
         ///////////////////////////////////////////////////////////////////////
-        public RegistryVM()
+        public RegistryGridVM()
         {
             this.reloadAccountTypesCBList();
             this.reloadAccountsCBList();
