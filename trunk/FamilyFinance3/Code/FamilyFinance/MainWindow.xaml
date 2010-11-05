@@ -32,8 +32,8 @@
                           Click="button6_Click"/>
             </MenuItem>
         </Menu>
-        <my:RegistryGrid Grid.Row="1" 
+        <my:RegistryPanel Grid.Row="1" 
                             Margin="5"
-                            x:Name="registryControl" />
+                            x:Name="registryPanel" />
     </Grid>
 </Window>

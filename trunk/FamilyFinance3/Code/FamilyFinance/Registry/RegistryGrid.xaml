@@ -5,12 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FamilyFinance.Registry"
              xmlns:custom="clr-namespace:FamilyFinance.Custom"
+             xmlns:sys="clr-namespace:Microsoft.CSharp;assembly=System"
              mc:Ignorable="d" 
              d:DesignHeight="254" 
              d:DesignWidth="1118"
              Loaded="UserControl_Loaded">
     <UserControl.Resources>
-        <local:RegistryVM x:Key="gridVM"/>
+        <local:RegistryGridVM x:Key="gridVM"/>
     </UserControl.Resources>
     <Grid Background="Transparent" 
           HorizontalAlignment="Stretch"
@@ -24,9 +25,14 @@
         <StackPanel Grid.Row="0" 
                     Background="Transparent"
                     Orientation="Horizontal">
-            <TextBlock Text="Type : Account Name : Envelope"
+            <TextBlock Text="{Binding Source={StaticResource gridVM}, Path=AccountName, Mode=OneWay}"
                        Foreground="White" />
         </StackPanel>
+        <TextBlock Grid.Row="0"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Stretch"
+                   Foreground="White"
+                   Text="{Binding Source={StaticResource gridVM}, Path=Date, StringFormat={}{0:D}}"  />
         <!-- Registry Grid -->
         <DataGrid x:Name="dataGrid"
                   Grid.Row="1"
@@ -40,8 +46,8 @@
                   VerticalAlignment="Stretch"
                   AutoGenerateColumns="False" 
                   EnableRowVirtualization="True" 
-                  RowDetailsVisibilityMode="Collapsed" 
-                  ItemsSource="{Binding Source={StaticResource rVM}, Path=RegistryLines}" 
+                  RowDetailsVisibilityMode="Collapsed"
+                  ItemsSource="{Binding Source={StaticResource gridVM}, Path=RegistryLines}" 
                   RowEditEnding="dataGrid_RowEditEnding" 
                   CanUserResizeColumns="True" 
                   VerticalGridLinesBrush="Black" 
@@ -65,8 +71,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <DatePicker SelectedDate="{Binding Path=Date, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                        />
+                            <DatePicker SelectedDate="{Binding Path=Date, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -83,8 +88,8 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <ComboBox SelectedValue="{Binding Path=TypeID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                      ItemsSource="{Binding Source={StaticResource rVM}, Path=LineTypesCBList, Mode=OneWay}"
+                            <ComboBox SelectedValue="{Binding Path=TypeID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      ItemsSource="{Binding Source={StaticResource gridVM}, Path=LineTypesList, Mode=OneWay}"
                                       SelectedValuePath="ID"
                                       DisplayMemberPath="Name">
                             </ComboBox>
@@ -104,8 +109,8 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <ComboBox SelectedValue="{Binding Path=OppAccountID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                      ItemsSource="{Binding Source={StaticResource rVM}, Path=AccountsCBList, Mode=OneWay}"
+                            <ComboBox SelectedValue="{Binding Path=OppAccountID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      ItemsSource="{Binding Source={StaticResource gridVM}, Path=AccountsList, Mode=OneWay}"
                                       SelectedValuePath="ID"
                                       DisplayMemberPath="Name">
                                 <ComboBox.ItemTemplate>
@@ -156,8 +161,8 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <ComboBox SelectedValue="{Binding Path=EnvelopeID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                      ItemsSource="{Binding Source={StaticResource rVM}, Path=EnvelopesCBList, Mode=OneWay}"
+                            <ComboBox SelectedValue="{Binding Path=EnvelopeID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      ItemsSource="{Binding Source={StaticResource gridVM}, Path=EnvelopesList, Mode=OneWay}"
                                       SelectedValuePath="ID"
                                       DisplayMemberPath="Name" />
                         </DataTemplate>
@@ -210,22 +215,16 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Bottom"
                     Margin="0,0,20,0">
-            <TextBlock Text="Bank Balance"
-                       Margin="50,0,0,0"
-                       Foreground="White" />
-            <TextBlock Text="$0.00"
-                       Margin="10,0,0,0"
-                       Foreground="White" />
             <TextBlock Text="Todays Balance"
                        Margin="50,0,0,0"
                        Foreground="White" />
-            <TextBlock Text="$0.00"
+            <TextBlock Text="{Binding Source={StaticResource gridVM}, Path=TodaysBalance, StringFormat=c, Mode=OneWay}"
                        Margin="10,0,0,0"
                        Foreground="White" />
             <TextBlock Text="Ending Balance"
                        Margin="50,0,0,0"
                        Foreground="White" />
-            <TextBlock Text="$0.00"
+            <TextBlock Text="{Binding Source={StaticResource gridVM}, Path=EndingBalance, StringFormat=c, Mode=OneWay}"
                        Margin="10,0,0,0"
                        Foreground="White" />
         </StackPanel>

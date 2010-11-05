@@ -1,9 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 
 using FamilyFinance.Model;
 using FamilyFinance.Database;
 using FamilyFinance.Custom;
+using FamilyFinance.EditAccounts;
 
 namespace FamilyFinance.Registry
 {
@@ -12,45 +14,141 @@ namespace FamilyFinance.Registry
         ///////////////////////////////////////////////////////////////////////
         // Local variables
         ///////////////////////////////////////////////////////////////////////
-
+        private int currentAccountID;
+        //private int currentEnvelopeID;
 
         ///////////////////////////////////////////////////////////////////////
-        // Properties to access this object.
+        // Properties
         ///////////////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Gets or sets the collection of accounts.
-        /// </summary>
-        public MyObservableCollection<LineItemRegModel> RegistryLines { get; set; }
+        private MyObservableCollection<LineItemRegModel> _RegistryLines;
+        public MyObservableCollection<LineItemRegModel> RegistryLines
+        {
+            get
+            {
+                return this._RegistryLines;
+            }
+            private set
+            {
+                this._RegistryLines = value;
+                this.RaisePropertyChanged("RegistryLines");
+            }
+        }
 
+        private List<IdName> _LineTypesList;
+        public List<IdName> LineTypesList 
+        {
+            get
+            {
+                return this._LineTypesList;
+            }
+            private set
+            {
+                this._LineTypesList = value;
+                this.RaisePropertyChanged("LineTypesList");
+            }
+        }
 
+        private List<IdNameCat> _AccountsList;
+        public List<IdNameCat> AccountsList
+        {
+            get
+            {
+                return this._AccountsList;
+            }
+            private set
+            {
+                this._AccountsList = value;
+                this.RaisePropertyChanged("AccountsList");
+            }
+        }
 
+        private List<IdName> _EnvelopesList;
+        public List<IdName> EnvelopesList
+        {
+            get
+            {
+                return this._EnvelopesList;
+            }
+            private set
+            {
+                this._EnvelopesList = value;
+                this.RaisePropertyChanged("EnvelopesList");
+            }
+        }
 
-        /// <summary>
-        /// Gets or sets the collection of account types.
-        /// </summary>
-        public List<IdName> LineTypesCBList { get; set; }
+        private string _AccountName;
+        public string AccountName
+        {
+            get
+            {
+                return this._AccountName;
+            }
+            private set
+            {
+                this._AccountName = value;
+                this.RaisePropertyChanged("AccountName");
+            }
+        }
 
-        /// <summary>
-        /// Gets or sets the collection of account types.
-        /// </summary>
-        public List<IdNameCat> AccountsCBList { get; set; }
+        private decimal _EndingBalance;
+        public decimal EndingBalance
+        {
+            get
+            {
+                return this._EndingBalance;
+            }
+            private set
+            {
+                this._EndingBalance = value;
+                this.RaisePropertyChanged("EndingBalance");
+            }
+        }
 
-        /// <summary>
-        /// Gets or sets the collection of account types.
-        /// </summary>
-        public List<IdName> EnvelopesCBList { get; set; }
+        private decimal _TodaysBalance;
+        public decimal TodaysBalance
+        {
+            get
+            {
+                return this._TodaysBalance;
+            }
+            private set
+            {
+                this._TodaysBalance = value;
+                this.RaisePropertyChanged("TodaysBalance");
+            }
+        }
 
+        public DateTime Date
+        {
+            get
+            {
+                return DateTime.Today;
+            }
+        }
+
+        //private decimal _BanksBalance;
+        //public decimal BanksBalance
+        //{
+        //    get
+        //    {
+        //        return this._BanksBalance;
+        //    }
+        //    private set
+        //    {
+        //        this._BanksBalance = value;
+        //        this.RaisePropertyChanged("BanksBalance");
+        //    }
+        //}
 
 
 
         ///////////////////////////////////////////////////////////////////////
         // Private functions
         ///////////////////////////////////////////////////////////////////////
-
-
-
         private void calcAccountBalance(int aID)
         {
+            DateTime today = DateTime.Today;
+            decimal tBal = 0.0m;
             decimal bal = 0.0m;
             bool cd = LineCD.DEBIT;
 
@@ -67,6 +165,9 @@ namespace FamilyFinance.Registry
                     line = this.RegistryLines[i];
                     bal = (line.CreditDebit) ? bal += line.Amount : bal -= line.Amount;
                     line.BalanceAmount = bal;
+
+                    if (line.Date <= today)
+                        tBal = bal;
                 }
             }
             else
@@ -76,9 +177,14 @@ namespace FamilyFinance.Registry
                     line = this.RegistryLines[i];
                     bal = (line.CreditDebit) ? bal -= line.Amount : bal += line.Amount;
                     line.BalanceAmount = bal;
+
+                    if (line.Date <= today)
+                        tBal = bal;
                 }
             }
 
+            this.EndingBalance = bal;
+            this.TodaysBalance = tBal;
         }
 
 
@@ -87,16 +193,9 @@ namespace FamilyFinance.Registry
         ///////////////////////////////////////////////////////////////////////
         public RegistryGridVM()
         {
-            this.reloadAccountTypesCBList();
-            this.reloadAccountsCBList();
-            this.reloadEnvelopesCBList();
-            this.reloadAccountBalances();
-            this.reloadEnvelopeBalances();
-
-            this.setCurrentAccountEnvelope(3, -1);
         }
 
-        public void reloadAccountTypesCBList()
+        public void reloadLineTypes()
         {
             List<IdName> types = new List<IdName>();
 
@@ -104,12 +203,10 @@ namespace FamilyFinance.Registry
                 types.Add(new IdName(row.id, row.name));
 
             types.Sort(new IdNameComparer());
-
-            this.LineTypesCBList = types;
-            this.RaisePropertyChanged("LineTypesCBList");
+            this.LineTypesList = types;
         }
 
-        public void reloadEnvelopesCBList()
+        public void reloadEnvelopes()
         {
             List<IdName> envelopes = new List<IdName>();
 
@@ -117,12 +214,10 @@ namespace FamilyFinance.Registry
                 envelopes.Add(new IdName(row.id, row.name));
 
             envelopes.Sort(new IdNameComparer());
-
-            this.EnvelopesCBList = envelopes;
-            this.RaisePropertyChanged("EnvelopesCBList");
+            this.EnvelopesList = envelopes;
         }
 
-        public void reloadAccountsCBList()
+        public void reloadAccounts()
         {
             List<IdNameCat> acc = new List<IdNameCat>();
 
@@ -130,63 +225,16 @@ namespace FamilyFinance.Registry
                 acc.Add(new IdNameCat(row.id, row.name, CatagoryModel.getShortName(row.catagory)));
 
             acc.Sort(new IdNameCatComparer());
-
-            this.AccountsCBList = acc;
-
-            this.RaisePropertyChanged("AccountsCBList");
-        }
-
-        public void reloadAccountBalances()
-        {
-            ObservableCollection<BalanceModel> tempAcc = new ObservableCollection<BalanceModel>();
-            ObservableCollection<BalanceModel> tempIn = new ObservableCollection<BalanceModel>();
-            ObservableCollection<BalanceModel> tempEx = new ObservableCollection<BalanceModel>();
-
-            foreach (FFDataSet.AccountRow row in MyData.getInstance().Account)
-            {
-                if (row.closed == false)
-                {
-                    if (row.catagory == SpclAccountCat.ACCOUNT)
-                    {
-                        tempAcc.Add(new BalanceModel(row));
-                    }
-                    else if (row.catagory == SpclAccountCat.EXPENSE)
-                    {
-                        tempEx.Add(new BalanceModel(row));
-                    }
-                    else if (row.catagory == SpclAccountCat.INCOME)
-                    {
-                        tempIn.Add(new BalanceModel(row));
-                    }
-                }
-            }
-
-            this.AccountBalances = tempAcc;
-            this.ExpenceBalances = tempEx;
-            this.IncomeBalances = tempIn;
-            this.RaisePropertyChanged("AccountBalances");
-            this.RaisePropertyChanged("ExpenceBalances");
-            this.RaisePropertyChanged("IncomeBalances");
-        }
-
-        public void reloadEnvelopeBalances()
-        {
-            ObservableCollection<BalanceModel> tempEnv = new ObservableCollection<BalanceModel>();
-
-            foreach (FFDataSet.EnvelopeRow row in MyData.getInstance().Envelope)
-            {
-                if (row.closed == false && row.id > 0)
-                {
-                    tempEnv.Add(new BalanceModel(row));
-                }
-            }
-
-            this.EnvelopeBalances = tempEnv;
-            this.RaisePropertyChanged("EnvelopeBalances");
+            this.AccountsList = acc;
         }
 
         public void setCurrentAccountEnvelope(int aID, int eID)
         {
+            string name = MyData.getInstance().Account.FindByid(aID).AccountTypeRow.name;
+            name += " : " + MyData.getInstance().Account.FindByid(aID).name;
+
+            this.currentAccountID = aID;
+            this.AccountName = name;
             LineItemRegModel.setAccount(aID);
 
             MyObservableCollection<LineItemRegModel> reg = new MyObservableCollection<LineItemRegModel>();
@@ -196,15 +244,15 @@ namespace FamilyFinance.Registry
             foreach (FFDataSet.LineItemRow line in lines)
                 reg.Add(new LineItemRegModel(line));
 
+            reg.sort(new RegistryComparer());
             this.RegistryLines = reg;
-            this.RegistryLines.sort(new RegistryComparer());
-            this.RaisePropertyChanged("RegistryLines");
             this.calcAccountBalance(aID);
         }
 
         public void registryRowEditEnding()
         {
-
+            this.RegistryLines.sort(new RegistryComparer());
+            this.calcAccountBalance(this.currentAccountID);
         }
 
     }

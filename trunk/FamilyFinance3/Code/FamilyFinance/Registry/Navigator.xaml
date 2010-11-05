@@ -6,10 +6,11 @@
              xmlns:local="clr-namespace:FamilyFinance.Registry"
              xmlns:custom="clr-namespace:FamilyFinance.Custom"
              mc:Ignorable="d" 
-             d:DesignHeight="300" 
-             d:DesignWidth="300">
+             d:DesignHeight="115" 
+             d:DesignWidth="256"
+             Loaded="UserControl_Loaded">
     <UserControl.Resources>
-        <local:NavigatorVM x:Key="nVM"/>
+        <local:NavigatorVM x:Key="navVM"/>
         <local:SubBalanceTemplateSelector x:Key="tSelector">
             <!-- Sub Balance template -->
             <local:SubBalanceTemplateSelector.SubBalanceTemplate>
@@ -36,14 +37,14 @@
                                   HeadersVisibility="Column"
                                   SelectionChanged="sub_SelectionChanged">
                             <DataGrid.Columns>
-                                <!-- Description -->
-                                <custom:ExtendedTextColumn CanUserSort="False"
+                                <!-- Name -->
+                                <custom:ExtendedTextColumn CanUserSort="True"
                                                          Width="130*"
                                                          IsReadOnly="True"
                                                          VerticalAlignment="Center"
                                                          Binding="{Binding Path=Name, Mode=OneWay}" />
                                 <!-- Balance -->
-                                <custom:ExtendedTextColumn CanUserSort="False"
+                                <custom:ExtendedTextColumn CanUserSort="True"
                                                          IsReadOnly="True"
                                                          Width="90*"
                                                          CanUserResize="True"
@@ -99,7 +100,7 @@
                               SelectionChanged="major_SelectionChanged"
                               RowDetailsTemplateSelector="{StaticResource tSelector}"
                               HorizontalGridLinesBrush="{StaticResource LightBlueMenuBackground}"
-                              ItemsSource="{Binding Source={StaticResource rVM}, Path=AccountBalances}">
+                              ItemsSource="{Binding Source={StaticResource navVM}, Path=Accounts}">
                         <DataGrid.Columns>
                             <!-- Description -->
                             <custom:ExtendedTextColumn Width="130*"
@@ -117,105 +118,102 @@
             </TabItem>
             <TabItem Header="Envelopes">
                 <Grid Background="White">
-                    <DataGrid SelectionMode="Single"
-                              CanUserAddRows="False"
-                              CanUserDeleteRows="False"
-                              CanUserResizeColumns="True"
-                              CanUserResizeRows="False"
-                              VerticalAlignment="Stretch"
-                              HorizontalAlignment="Stretch"
-                              AutoGenerateColumns="False"
-                              EnableRowVirtualization="True"
-                              RowDetailsVisibilityMode="VisibleWhenSelected"
-                              ItemsSource="{Binding Source={StaticResource rVM}, Path=EnvelopeBalances}"
-                              HorizontalScrollBarVisibility="Disabled"
-                              RowDetailsTemplateSelector="{StaticResource tSelector}"
-                              Background="Transparent"
+                    <DataGrid IsReadOnly="True"
                               RowBackground="White"
-                              GridLinesVisibility="Horizontal"
-                              HorizontalGridLinesBrush="{StaticResource LightBlueMenuBackground}"
+                              SelectionMode="Single"
+                              CanUserAddRows="False"
+                              Background="Transparent"
+                              CanUserDeleteRows="False"
+                              CanUserResizeRows="False"
                               HeadersVisibility="Column"
-                              IsReadOnly="True"
-                              SelectionChanged="major_SelectionChanged">
+                              CanUserResizeColumns="True"
+                              VerticalAlignment="Stretch"
+                              AutoGenerateColumns="False"
+                              CanUserReorderColumns="False"
+                              HorizontalAlignment="Stretch"
+                              EnableRowVirtualization="True"
+                              GridLinesVisibility="Horizontal"
+                              HorizontalScrollBarVisibility="Disabled"
+                              RowDetailsVisibilityMode="VisibleWhenSelected"
+                              SelectionChanged="major_SelectionChanged"
+                              RowDetailsTemplateSelector="{StaticResource tSelector}"
+                              HorizontalGridLinesBrush="{StaticResource LightBlueMenuBackground}"
+                              ItemsSource="{Binding Source={StaticResource navVM}, Path=Envelopes}">
                         <DataGrid.Columns>
                             <!-- Description -->
-                            <custom:ExtendedTextColumn CanUserSort="False"
-                                                         Width="130*"
-                                                         IsReadOnly="True"
-                                                         VerticalAlignment="Center"
-                                                         Binding="{Binding Path=Name, Mode=OneWay}" />
+                            <custom:ExtendedTextColumn Width="130*"
+                                                       IsReadOnly="True"
+                                                       Binding="{Binding Path=Name, Mode=OneWay}">
+                            </custom:ExtendedTextColumn>
                             <!-- Balance -->
-                            <custom:ExtendedTextColumn CanUserSort="False"
-                                                         IsReadOnly="True"
-                                                         Width="90*"
-                                                         CanUserResize="True"
-                                                         HorizontalAlignment="Right"
-                                                         VerticalAlignment="Center"
-                                                         Binding="{Binding Path=Balance, StringFormat=c, Mode=OneWay}" />
+                            <custom:ExtendedTextColumn Width="90*"
+                                                       IsReadOnly="True"
+                                                       HorizontalAlignment="Right"
+                                                       Binding="{Binding Path=Balance, StringFormat=c, Mode=OneWay}" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
             </TabItem>
             <TabItem Header="Expences">
                 <Grid Background="White">
-                    <DataGrid SelectionMode="Single"
-                              CanUserAddRows="False"
-                              CanUserDeleteRows="False"
-                              CanUserResizeColumns="True"
-                              CanUserResizeRows="False"
-                              VerticalAlignment="Stretch"
-                              HorizontalAlignment="Stretch"
-                              AutoGenerateColumns="False"
-                              EnableRowVirtualization="True"
-                              RowDetailsVisibilityMode="Collapsed"
-                              ItemsSource="{Binding Source={StaticResource rVM}, Path=ExpenceBalances}"
-                              HorizontalScrollBarVisibility="Disabled"
-                              Background="Transparent"
+                    <DataGrid IsReadOnly="True"
                               RowBackground="White"
-                              GridLinesVisibility="Horizontal"
-                              HorizontalGridLinesBrush="{StaticResource LightBlueMenuBackground}"
+                              SelectionMode="Single"
+                              CanUserAddRows="False"
+                              Background="Transparent"
+                              CanUserDeleteRows="False"
+                              CanUserResizeRows="False"
                               HeadersVisibility="Column"
-                              IsReadOnly="True"
-                              SelectionChanged="major_SelectionChanged">
+                              CanUserResizeColumns="True"
+                              VerticalAlignment="Stretch"
+                              AutoGenerateColumns="False"
+                              CanUserReorderColumns="False"
+                              HorizontalAlignment="Stretch"
+                              EnableRowVirtualization="True"
+                              GridLinesVisibility="Horizontal"
+                              HorizontalScrollBarVisibility="Disabled"
+                              RowDetailsVisibilityMode="Collapsed"
+                              SelectionChanged="major_SelectionChanged"
+                              HorizontalGridLinesBrush="{StaticResource LightBlueMenuBackground}"
+                              ItemsSource="{Binding Source={StaticResource navVM}, Path=Expences}">
                         <DataGrid.Columns>
                             <!-- Description -->
-                            <custom:ExtendedTextColumn CanUserSort="False"
-                                                         Width="130*"
-                                                         IsReadOnly="True"
-                                                         VerticalAlignment="Center"
-                                                         Binding="{Binding Path=Name, Mode=OneWay}" />
+                            <custom:ExtendedTextColumn Width="130*"
+                                                       IsReadOnly="True"
+                                                       Binding="{Binding Path=Name, Mode=OneWay}">
+                            </custom:ExtendedTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
             </TabItem>
             <TabItem Header="Incomes">
                 <Grid Background="White">
-                    <DataGrid SelectionMode="Single"
-                              CanUserAddRows="False"
-                              CanUserDeleteRows="False"
-                              CanUserResizeColumns="True"
-                              CanUserResizeRows="False"
-                              VerticalAlignment="Stretch"
-                              HorizontalAlignment="Stretch"
-                              AutoGenerateColumns="False"
-                              EnableRowVirtualization="True"
-                              RowDetailsVisibilityMode="Collapsed"
-                              ItemsSource="{Binding Source={StaticResource rVM}, Path=IncomeBalances}"
-                              HorizontalScrollBarVisibility="Disabled"
-                              Background="Transparent"
+                    <DataGrid IsReadOnly="True"
                               RowBackground="White"
-                              GridLinesVisibility="Horizontal"
-                              HorizontalGridLinesBrush="{StaticResource LightBlueMenuBackground}"
+                              SelectionMode="Single"
+                              CanUserAddRows="False"
+                              Background="Transparent"
+                              CanUserDeleteRows="False"
+                              CanUserResizeRows="False"
                               HeadersVisibility="Column"
-                              IsReadOnly="True"
-                              SelectionChanged="major_SelectionChanged">
+                              CanUserResizeColumns="True"
+                              VerticalAlignment="Stretch"
+                              AutoGenerateColumns="False"
+                              CanUserReorderColumns="False"
+                              HorizontalAlignment="Stretch"
+                              EnableRowVirtualization="True"
+                              GridLinesVisibility="Horizontal"
+                              HorizontalScrollBarVisibility="Disabled"
+                              RowDetailsVisibilityMode="Collapsed"
+                              SelectionChanged="major_SelectionChanged"
+                              HorizontalGridLinesBrush="{StaticResource LightBlueMenuBackground}"
+                              ItemsSource="{Binding Source={StaticResource navVM}, Path=Incomes}">
                         <DataGrid.Columns>
-                            <!-- Name -->
-                            <custom:ExtendedTextColumn CanUserSort="False"
-                                                         Width="130*"
-                                                         IsReadOnly="True"
-                                                         VerticalAlignment="Center"
-                                                         Binding="{Binding Path=Name, Mode=OneWay}" />
+                            <!-- Description -->
+                            <custom:ExtendedTextColumn Width="130*"
+                                                       IsReadOnly="True"
+                                                       Binding="{Binding Path=Name, Mode=OneWay}">
+                            </custom:ExtendedTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

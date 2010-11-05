@@ -82,6 +82,7 @@
     <Compile Include="EditTypes\EnvelopeGroupModel.cs" />
     <Compile Include="EditTypes\LineTypeModel.cs" />
     <Compile Include="Model\AccountListModel.cs" />
+    <Compile Include="Registry\AccountEnvelopeChangedEventArgs.cs" />
     <Compile Include="Registry\BalanceModel.cs">
       <SubType>Code</SubType>
     </Compile>

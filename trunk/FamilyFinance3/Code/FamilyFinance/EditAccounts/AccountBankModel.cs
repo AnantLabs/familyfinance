@@ -292,6 +292,11 @@ namespace FamilyFinance.EditAccounts
         ///////////////////////////////////////////////////////////////////////
         // Public functions
         ///////////////////////////////////////////////////////////////////////
+        public AccountBankModel(int aID)
+        {
+            this.accountRow = MyData.getInstance().Account.FindByid(aID);
+            this.bankInfoRow = MyData.getInstance().BankInfo.FindByaccountID(aID);
+        }
         
         public AccountBankModel(FFDataSet.AccountRow aRow)
         {
@@ -299,7 +304,7 @@ namespace FamilyFinance.EditAccounts
             this.bankInfoRow = MyData.getInstance().BankInfo.FindByaccountID(this.ID);
         }
 
-        public AccountBankModel() : base()
+        public AccountBankModel()
         {
             this.accountRow = MyData.getInstance().Account.NewAccountRow();
             MyData.getInstance().Account.AddAccountRow(this.accountRow);
