@@ -13,7 +13,9 @@
             <ColumnDefinition Width="3*" />
             <ColumnDefinition Width="591*" />
         </Grid.ColumnDefinitions>
-        <local:Navigator Grid.Column="0"/>
+        <local:Navigator x:Name="nav" 
+                         Grid.Column="0"
+                         AccountEnvelopeChanged="Navigator_AccountEnvelopeChanged"/>
         <GridSplitter Grid.Column="1" 
                       Background="Transparent" 
                       BorderBrush="Black" 
@@ -21,6 +23,8 @@
                       ResizeBehavior="PreviousAndNext" 
                       ShowsPreview="True" 
                       Grid.RowSpan="3" />
-        <local:RegistryGrid Grid.Column="2"/>
+        <local:RegistryGrid x:Name="grid" 
+                            Grid.Column="2"
+                            AccountEnvelopeChanged="grid_AccountEnvelopeChanged"/>
     </Grid>
 </UserControl>

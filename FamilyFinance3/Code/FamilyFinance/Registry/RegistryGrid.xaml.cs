@@ -18,62 +18,42 @@ namespace FamilyFinance.Registry
             gridVM = (RegistryGridVM)this.Resources["gridVM"];
         }
 
+
+        ///////////////////////////////////////////////////////////////////////
+        //   External Events
+        ///////////////////////////////////////////////////////////////////////   
+        public event AccountEnvelopeChangedEventHandler AccountEnvelopeChanged;
+        private void OnAccountEnvelopeChanged(AccountEnvelopeChangedEventArgs e)
+        {
+            // Raises the event CloseMe
+            if (AccountEnvelopeChanged != null)
+                AccountEnvelopeChanged(this, e);
+        }
+
+
+        ///////////////////////////////////////////////////////////////////////
+        //   Internal Events
+        ///////////////////////////////////////////////////////////////////////  
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            gridVM.reloadAccounts();
+            gridVM.reloadEnvelopes();
+            gridVM.reloadLineTypes();
+
+            gridVM.setCurrentAccountEnvelope(3, -1);
+        }
+
         private void dataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             gridVM.registryRowEditEnding();
         }
 
-
-        private DataGrid prevMajorGrid;
-        private DataGrid prevSubGrid;
-
-        private void sub_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        ///////////////////////////////////////////////////////////////////////
+        //   Public Functions
+        ///////////////////////////////////////////////////////////////////////  
+        public void setCurrentAccountEnvelope(int aID, int eID)
         {
-            if (e.AddedItems.Count > 0)
-            {
-                BalanceModel bModle = e.AddedItems[0] as BalanceModel;
-                DataGrid thisGrid = sender as DataGrid;
-
-                this.prevSubGrid = thisGrid;
-
-                if (bModle != null)
-                    gridVM.setCurrentAccountEnvelope(bModle.AccountID, bModle.EnvelopeID);
-
-                e.Handled = true;
-            }
-        }
-
-        private void major_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (e.AddedItems.Count > 0)
-            {
-                BalanceModel bModle = e.AddedItems[0] as BalanceModel;
-                DataGrid thisGrid = sender as DataGrid;
-
-                if (bModle != null)
-                {
-                    gridVM.setCurrentAccountEnvelope(bModle.AccountID, bModle.EnvelopeID);
-                    e.Handled = true;
-
-                    // Deselect the sub grid if it's not null
-                    if (this.prevSubGrid != null)
-                        this.prevSubGrid.SelectedItem = null;
-
-                    // 
-                    if (thisGrid != this.prevMajorGrid)
-                    {
-                        if (this.prevMajorGrid != null)
-                            this.prevMajorGrid.SelectedItem = null;
-
-                        this.prevMajorGrid = thisGrid;
-                    }
-                }
-            }
-        }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-
+            this.gridVM.setCurrentAccountEnvelope(aID, eID);
         }
 
     }

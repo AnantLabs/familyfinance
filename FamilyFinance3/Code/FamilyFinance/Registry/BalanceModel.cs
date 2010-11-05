@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 using FamilyFinance.Database;
 using FamilyFinance.Model;
-using System.Collections.Generic;
+using FamilyFinance.Custom;
 
 namespace FamilyFinance.Registry
 {
@@ -21,7 +22,7 @@ namespace FamilyFinance.Registry
         public string GroupName { get; private set; }
         public decimal Balance { get; private set; }
 
-        public ObservableCollection<BalanceModel> SubBalances { get; set; }
+        public MyObservableCollection<BalanceModel> SubBalances { get; set; }
 
         private readonly BalType _Type;
         
@@ -93,39 +94,29 @@ namespace FamilyFinance.Registry
 
         private void setSubBalanceColection()
         {
-            if (this._Type == BalanceModel.BalType.Account)
+            bool envelopes = MyData.getInstance().Account.FindByid(this.AccountID).envelopes;
+            MyObservableCollection<BalanceModel> tempSubs = new MyObservableCollection<BalanceModel>();
+
+            if (this._Type == BalanceModel.BalType.Account && envelopes == true)
             {
-                FFDataSet.AccountRow aRow = MyData.getInstance().Account.FindByid(this.AccountID);
-
-                if (aRow.envelopes == true)
-                {
-                    ObservableCollection<BalanceModel> tempSubs = new ObservableCollection<BalanceModel>();
-
-                    int[] ids =
+                int[] ids =
                     (from EnvelopeLine in MyData.getInstance().EnvelopeLine
-                     where EnvelopeLine.LineItemRow.accountID == this.AccountID
-                     select EnvelopeLine.envelopeID).Distinct().ToArray();
+                        where EnvelopeLine.LineItemRow.accountID == this.AccountID
+                        select EnvelopeLine.envelopeID).Distinct().ToArray();
 
-
-                    foreach (int envID in ids)
-                    {
-                        BalanceModel bm = new BalanceModel(this.AccountID, envID, true);
-                        if(bm.Balance != 0.0m)
-                            tempSubs.Add(bm);
-                    }
-
-                    this.SubBalances = tempSubs;
+                foreach (int envID in ids)
+                {
+                    BalanceModel bm = new BalanceModel(this.AccountID, envID, true);
+                    if(bm.Balance != 0.0m)
+                        tempSubs.Add(bm);
                 }
             }
             else if (this._Type == BalanceModel.BalType.Envelope)
             {
-                ObservableCollection<BalanceModel> tempSubs = new ObservableCollection<BalanceModel>();
-
                 int[] ids =
                     (from EnvelopeLine in MyData.getInstance().EnvelopeLine
                     where EnvelopeLine.envelopeID == this.EnvelopeID
                     select EnvelopeLine.LineItemRow.accountID).Distinct().ToArray();
-
 
                 foreach (int accID in ids)
                 {
@@ -133,11 +124,13 @@ namespace FamilyFinance.Registry
                     if (bm.Balance != 0.0m)
                         tempSubs.Add(bm);
                 }
-
-                this.SubBalances = tempSubs;
-                
             }
 
+            if (tempSubs.Count > 0)
+            {
+                tempSubs.sort(new BalanceModelComparer());
+                this.SubBalances = tempSubs;
+            }
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -211,7 +204,13 @@ namespace FamilyFinance.Registry
             }
         }
 
+    }
 
-
+    class BalanceModelComparer : System.Collections.Generic.IComparer<BalanceModel>
+    {
+        public int Compare(BalanceModel x, BalanceModel y)
+        {
+            return string.Compare(x.Name, y.Name);
+        }
     }
 }
