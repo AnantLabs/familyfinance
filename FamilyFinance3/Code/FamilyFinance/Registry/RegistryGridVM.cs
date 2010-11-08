@@ -15,7 +15,7 @@ namespace FamilyFinance.Registry
         // Local variables
         ///////////////////////////////////////////////////////////////////////
         private int currentAccountID;
-        //private int currentEnvelopeID;
+        private int currentEnvelopeID;
 
         ///////////////////////////////////////////////////////////////////////
         // Properties
@@ -126,21 +126,6 @@ namespace FamilyFinance.Registry
             }
         }
 
-        //private decimal _BanksBalance;
-        //public decimal BanksBalance
-        //{
-        //    get
-        //    {
-        //        return this._BanksBalance;
-        //    }
-        //    private set
-        //    {
-        //        this._BanksBalance = value;
-        //        this.RaisePropertyChanged("BanksBalance");
-        //    }
-        //}
-
-
 
         ///////////////////////////////////////////////////////////////////////
         // Private functions
@@ -187,6 +172,30 @@ namespace FamilyFinance.Registry
             this.TodaysBalance = tBal;
         }
 
+        private void setTitle()
+        {
+            string name = MyData.getInstance().Account.FindByid(this.currentAccountID).AccountTypeRow.name;
+            name += " : " + MyData.getInstance().Account.FindByid(this.currentAccountID).name;
+
+            this.AccountName = name;
+        }
+
+        private void fillRegistryLines()
+        {
+            LineItemRegModel.setAccount(this.currentAccountID);
+
+            MyObservableCollection<LineItemRegModel> reg = new MyObservableCollection<LineItemRegModel>();
+
+            FFDataSet.LineItemRow[] lines = MyData.getInstance().Account.FindByid(this.currentAccountID).GetLineItemRows();
+
+            foreach (FFDataSet.LineItemRow line in lines)
+                reg.Add(new LineItemRegModel(line));
+
+            reg.sort(new RegistryComparer());
+            this.RegistryLines = reg;
+            this.calcAccountBalance(this.currentAccountID);
+        }
+
 
         ///////////////////////////////////////////////////////////////////////
         // Public functions
@@ -230,23 +239,12 @@ namespace FamilyFinance.Registry
 
         public void setCurrentAccountEnvelope(int aID, int eID)
         {
-            string name = MyData.getInstance().Account.FindByid(aID).AccountTypeRow.name;
-            name += " : " + MyData.getInstance().Account.FindByid(aID).name;
-
             this.currentAccountID = aID;
-            this.AccountName = name;
-            LineItemRegModel.setAccount(aID);
+            this.currentEnvelopeID = eID;
 
-            MyObservableCollection<LineItemRegModel> reg = new MyObservableCollection<LineItemRegModel>();
+            this.setTitle();
+            this.fillRegistryLines();
 
-            FFDataSet.LineItemRow[] lines = MyData.getInstance().Account.FindByid(aID).GetLineItemRows();
-
-            foreach (FFDataSet.LineItemRow line in lines)
-                reg.Add(new LineItemRegModel(line));
-
-            reg.sort(new RegistryComparer());
-            this.RegistryLines = reg;
-            this.calcAccountBalance(aID);
         }
 
         public void registryRowEditEnding()
