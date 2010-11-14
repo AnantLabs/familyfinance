@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using FamilyFinance.Database;
 
 
 namespace FamilyFinance.Registry
@@ -9,14 +10,8 @@ namespace FamilyFinance.Registry
     /// </summary>
     public partial class RegistryGrid : UserControl
     {
+
         RegistryGridVM gridVM;
-
-        public RegistryGrid()
-        {
-            InitializeComponent();
-
-            gridVM = (RegistryGridVM)this.Resources["gridVM"];
-        }
 
 
         ///////////////////////////////////////////////////////////////////////
@@ -29,6 +24,7 @@ namespace FamilyFinance.Registry
             if (AccountEnvelopeChanged != null)
                 AccountEnvelopeChanged(this, e);
         }
+
 
 
         ///////////////////////////////////////////////////////////////////////
@@ -48,12 +44,27 @@ namespace FamilyFinance.Registry
             gridVM.registryRowEditEnding();
         }
 
+
+
         ///////////////////////////////////////////////////////////////////////
         //   Public Functions
-        ///////////////////////////////////////////////////////////////////////  
+        ///////////////////////////////////////////////////////////////////////          
+        public RegistryGrid()
+        {
+            InitializeComponent();
+
+            gridVM = (RegistryGridVM)this.Resources["gridVM"];
+        }
+
         public void setCurrentAccountEnvelope(int aID, int eID)
         {
             this.gridVM.setCurrentAccountEnvelope(aID, eID);
+
+            if (SpclEnvelope.isSpecial(eID))
+                this.dataGrid.ItemsSource = this.gridVM.RegistryLines;
+            else
+                this.dataGrid.ItemsSource = this.gridVM.SubRegistryLines;
+
         }
 
     }

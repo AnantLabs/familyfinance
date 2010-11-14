@@ -34,6 +34,20 @@ namespace FamilyFinance.Registry
             }
         }
 
+        private MyObservableCollection<SubLineRegModel> _SubRegistryLines;
+        public MyObservableCollection<SubLineRegModel> SubRegistryLines
+        {
+            get
+            {
+                return this._SubRegistryLines;
+            }
+            private set
+            {
+                this._SubRegistryLines = value;
+                this.RaisePropertyChanged("SubRegistryLines");
+            }
+        }
+
         private List<IdName> _LineTypesList;
         public List<IdName> LineTypesList 
         {
@@ -76,17 +90,17 @@ namespace FamilyFinance.Registry
             }
         }
 
-        private string _AccountName;
-        public string AccountName
+        private string _Title;
+        public string Title
         {
             get
             {
-                return this._AccountName;
+                return this._Title;
             }
             private set
             {
-                this._AccountName = value;
-                this.RaisePropertyChanged("AccountName");
+                this._Title = value;
+                this.RaisePropertyChanged("Title");
             }
         }
 
@@ -130,14 +144,14 @@ namespace FamilyFinance.Registry
         ///////////////////////////////////////////////////////////////////////
         // Private functions
         ///////////////////////////////////////////////////////////////////////
-        private void calcAccountBalance(int aID)
+        private void calcAccountBalance()
         {
             DateTime today = DateTime.Today;
             decimal tBal = 0.0m;
             decimal bal = 0.0m;
             bool cd = LineCD.DEBIT;
 
-            FFDataSet.BankInfoRow bInfo = MyData.getInstance().BankInfo.FindByaccountID(aID);
+            FFDataSet.BankInfoRow bInfo = MyData.getInstance().BankInfo.FindByaccountID(this.currentAccountID);
             LineItemRegModel line;
 
             if (bInfo != null)
@@ -172,12 +186,45 @@ namespace FamilyFinance.Registry
             this.TodaysBalance = tBal;
         }
 
+        private void calcEnvelopeBalance()
+        {
+            DateTime today = DateTime.Today;
+            decimal tBal = 0.0m;
+            decimal bal = 0.0m;
+
+            SubLineRegModel subLine;
+
+            for (int i = 0; i < this.SubRegistryLines.Count; i++)
+            {
+                subLine = this.SubRegistryLines[i];
+                bal = (subLine.CreditDebit) ? bal += subLine.Amount : bal -= subLine.Amount;
+                subLine.BalanceAmount = bal;
+
+                if (subLine.Date <= today)
+                    tBal = bal;
+            }
+
+            this.EndingBalance = bal;
+            this.TodaysBalance = tBal;
+        }
+
+
         private void setTitle()
         {
-            string name = MyData.getInstance().Account.FindByid(this.currentAccountID).AccountTypeRow.name;
-            name += " : " + MyData.getInstance().Account.FindByid(this.currentAccountID).name;
+            string accName = MyData.getInstance().Account.FindByid(this.currentAccountID).name;
+            string envName = MyData.getInstance().Envelope.FindByid(this.currentEnvelopeID).name;
 
-            this.AccountName = name;
+            string title;
+
+            if (!String.IsNullOrWhiteSpace(accName) && !String.IsNullOrWhiteSpace(envName))
+                title = accName + " : " + envName;
+
+            else if (!String.IsNullOrWhiteSpace(accName))
+                title = accName;
+
+            else title = envName;
+
+            this.Title = title;
         }
 
         private void fillRegistryLines()
@@ -193,7 +240,36 @@ namespace FamilyFinance.Registry
 
             reg.sort(new RegistryComparer());
             this.RegistryLines = reg;
-            this.calcAccountBalance(this.currentAccountID);
+            this.calcAccountBalance();
+        }
+
+        private void fillEnvelopeLines()
+        {
+            MyObservableCollection<SubLineRegModel> reg = new MyObservableCollection<SubLineRegModel>();
+
+            FFDataSet.EnvelopeLineRow[] lines = MyData.getInstance().Envelope.FindByid(this.currentEnvelopeID).GetEnvelopeLineRows();
+
+            foreach (FFDataSet.EnvelopeLineRow line in lines)
+                reg.Add(new SubLineRegModel(line));
+
+            reg.sort(new SubLineRegModelComparer());
+            this.SubRegistryLines = reg;
+            this.calcEnvelopeBalance();
+        }
+
+        private void fillAccountEnvelopeLines()
+        {
+            MyObservableCollection<SubLineRegModel> reg = new MyObservableCollection<SubLineRegModel>();
+
+            FFDataSet.EnvelopeLineRow[] lines = MyData.getInstance().Envelope.FindByid(this.currentEnvelopeID).GetEnvelopeLineRows();
+
+            foreach (FFDataSet.EnvelopeLineRow line in lines)
+                if (line.LineItemRow.accountID == this.currentAccountID)
+                    reg.Add(new SubLineRegModel(line));
+
+            reg.sort(new SubLineRegModelComparer());
+            this.SubRegistryLines = reg;
+            this.calcEnvelopeBalance();
         }
 
 
@@ -243,14 +319,22 @@ namespace FamilyFinance.Registry
             this.currentEnvelopeID = eID;
 
             this.setTitle();
-            this.fillRegistryLines();
+
+            if (!SpclEnvelope.isSpecial(eID) && SpclAccount.isNotSpecial(aID))
+                this.fillAccountEnvelopeLines();
+
+            else if (!SpclEnvelope.isSpecial(eID))
+                this.fillEnvelopeLines();
+
+            else
+                this.fillRegistryLines();
 
         }
 
         public void registryRowEditEnding()
         {
             this.RegistryLines.sort(new RegistryComparer());
-            this.calcAccountBalance(this.currentAccountID);
+            this.calcAccountBalance();
         }
 
     }

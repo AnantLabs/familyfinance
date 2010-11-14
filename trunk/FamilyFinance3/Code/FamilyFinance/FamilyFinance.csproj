@@ -99,6 +99,7 @@
     </Compile>
     <Compile Include="Registry\SubBalanceTemplateSelector.cs" />
     <Compile Include="Registry\LineItemRegModel.cs" />
+    <Compile Include="Registry\SubLineRegModel.cs" />
     <Page Include="EditAccounts\EditAccountsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
