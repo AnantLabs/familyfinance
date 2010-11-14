@@ -53,6 +53,14 @@ namespace FamilyFinance.Database
         public const int SPLIT = -2;
         public const int NULL = -1;
         public const int NOENVELOPE = 0;
+        
+        public static bool isSpecial(int id)
+        {
+            if (id == SPLIT || id == NULL || id == NOENVELOPE)
+                return true;
+            else
+                return false;
+        }
     }
 
     public class SpclEnvelopeGroup

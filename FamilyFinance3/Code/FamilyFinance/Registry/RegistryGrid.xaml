@@ -22,12 +22,11 @@
             <RowDefinition Height="22" />
         </Grid.RowDefinitions>
         <!-- Upper Information Bar -->
-        <StackPanel Grid.Row="0" 
-                    Background="Transparent"
-                    Orientation="Horizontal">
-            <TextBlock Text="{Binding Source={StaticResource gridVM}, Path=AccountName, Mode=OneWay}"
-                       Foreground="White" />
-        </StackPanel>
+        <TextBlock Grid.Row="0" 
+                   HorizontalAlignment="Left" 
+                   VerticalAlignment="Stretch" 
+                   Text="{Binding Source={StaticResource gridVM}, Path=Title, Mode=OneWay}"
+                   Foreground="White" />
         <TextBlock Grid.Row="0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Stretch"
