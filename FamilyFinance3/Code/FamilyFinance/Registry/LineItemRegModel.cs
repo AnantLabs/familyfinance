@@ -3,7 +3,7 @@
 
 namespace FamilyFinance.Registry
 {
-    class LineItemRegModel : FamilyFinance.EditTransaction.TransactionModel
+    class LineItemRegModel : TransactionModel
     {
         ///////////////////////////////////////////////////////////////////////
         // Local variables
