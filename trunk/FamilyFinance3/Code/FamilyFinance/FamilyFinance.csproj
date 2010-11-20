@@ -72,7 +72,8 @@
     <Compile Include="EditTransaction\EditTransaction.xaml.cs">
       <DependentUpon>EditTransaction.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EditTransaction\TransactionModel.cs" />
+    <Compile Include="EditTransaction\EditTransactionVM.cs" />
+    <Compile Include="EditTransaction\LineItemModel.cs" />
     <Compile Include="EditTypes\AccountTypeModel.cs" />
     <Compile Include="EditTypes\BankModel.cs" />
     <Compile Include="EditTypes\EditTypesVM.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Registry\SubBalanceTemplateSelector.cs" />
     <Compile Include="Registry\LineItemRegModel.cs" />
     <Compile Include="Registry\SubLineRegModel.cs" />
+    <Compile Include="Registry\TransactionModel.cs" />
     <Page Include="EditAccounts\EditAccountsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

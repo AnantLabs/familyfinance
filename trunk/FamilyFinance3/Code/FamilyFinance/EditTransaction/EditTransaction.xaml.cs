@@ -18,9 +18,25 @@ namespace FamilyFinance.EditTransaction
     /// </summary>
     public partial class EditTransaction : Window
     {
-        public EditTransaction()
+        private EditTransactionVM eTVM;
+        private int _transID;
+
+        public EditTransaction() : this(4)
+        {
+        }
+
+        public EditTransaction(int transID)
         {
             InitializeComponent();
+
+            this._transID = transID;
+            this.Resources["eTVM"] = eTVM = new EditTransactionVM(transID);
+            //this.InvalidateVisual();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

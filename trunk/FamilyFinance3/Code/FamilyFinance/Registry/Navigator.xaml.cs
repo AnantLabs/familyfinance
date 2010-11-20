@@ -19,7 +19,7 @@ namespace FamilyFinance.Registry
     /// </summary>
     public partial class Navigator : UserControl
     {
-        NavigatorVM navVM;
+        private NavigatorVM navVM;
 
         public Navigator()
         {
