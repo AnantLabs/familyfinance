@@ -71,7 +71,7 @@ namespace FamilyFinance2.Forms.Transaction
             this.envelopeIDColumn.DataSource = this.BindingSourceEnvelopeCol;
             this.envelopeIDColumn.DisplayMember = "name";
             this.envelopeIDColumn.ValueMember = "id";
-            this.envelopeIDColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            this.envelopeIDColumn.SortMode = DataGridViewColumnSortMode.Automatic;
             this.envelopeIDColumn.DisplayStyleForCurrentCellOnly = true;
             this.envelopeIDColumn.Resizable = DataGridViewTriState.True;
             this.envelopeIDColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -83,7 +83,7 @@ namespace FamilyFinance2.Forms.Transaction
             this.descriptionColumn.Name = "descriptionColumn";
             this.descriptionColumn.HeaderText = "Description";
             this.descriptionColumn.DataPropertyName = "description";
-            this.descriptionColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            this.descriptionColumn.SortMode = DataGridViewColumnSortMode.Automatic;
             this.descriptionColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.descriptionColumn.FillWeight = 100;
             this.descriptionColumn.Visible = true;
@@ -93,7 +93,7 @@ namespace FamilyFinance2.Forms.Transaction
             this.amountColumn.Name = "amountColumn";
             this.amountColumn.HeaderText = "Amount";
             this.amountColumn.DataPropertyName = "amount";
-            this.amountColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            this.amountColumn.SortMode = DataGridViewColumnSortMode.Automatic;
             this.amountColumn.DefaultCellStyle = new MyCellStyleMoney();
             this.amountColumn.Width = 65;
 

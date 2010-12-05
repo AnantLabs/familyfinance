@@ -301,39 +301,45 @@ namespace FamilyFinance2.Forms.Transaction
 
         private void envLineContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
+            bool found = false;
             object value;
             bool isEnabled = false;
 
-            // Find the row that was clicked
             for (int row = 0; row < this.envLinesDGV.RowCount; row++)
             {
-                if (this.envLinesDGV.GetRowDisplayRectangle(row, true).Contains(this.envLinesDGV.PointToClient(MousePosition)))
+                for (int col = 0; col < this.envLinesDGV.ColumnCount; col++)
                 {
-                    try
+                    if (this.envLinesDGV.GetCellDisplayRectangle(col, row, true).Contains(this.envLinesDGV.PointToClient(MousePosition)))
                     {
-                        value = this.envLinesDGV["subLineIDColumn", row].Value;
-                        this.CurrentEnvelopeLineID = Convert.ToInt32(value);
-                        isEnabled = true;
+                        this.envLinesDGV.CurrentCell = this.envLinesDGV[col, row];
+                        found = true;
+                        try
+                        {
+                            value = this.envLinesDGV["EnvelopeLineIDColumn", row].Value;
+                            this.CurrentEnvelopeLineID = Convert.ToInt32(value);
+                            isEnabled = true;
+                        }
+                        catch
+                        {
+                            this.CurrentEnvelopeLineID = -1;
+                        }
+                        break;
                     }
-                    catch 
-                    { 
-                        this.CurrentEnvelopeLineID = -1; 
+                    else
+                    {
+                        this.CurrentEnvelopeLineID = -1;
                     }
+                }
+                if (found)
                     break;
-                }
-                else
-                {
-                    this.CurrentEnvelopeLineID = -1;
-                }
             }
 
-            // Disable or enable the delete menu item
             this.envLinesDGV.ContextMenuStrip.Items[0].Enabled = isEnabled; 
         }
 
         private void deleteSubLineMenu_Click(object sender, EventArgs e)
         {
-            this.tDataSet.EnvelopeLine.FindByid(this.CurrentEnvelopeLineID).Delete();
+            this.tDataSet.myDeleteEnvLine(this.CurrentEnvelopeLineID);
             myResetValues();
         }
 
