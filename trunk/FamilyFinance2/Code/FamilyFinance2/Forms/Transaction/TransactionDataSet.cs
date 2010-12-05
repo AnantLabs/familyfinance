@@ -200,6 +200,19 @@ namespace FamilyFinance2.Forms.Transaction
             }
         }
 
+        public void myDeleteEnvLine(int envLineID)
+        {
+            try
+            {
+                // Delete the line
+                this.EnvelopeLine.FindByid(envLineID).Delete();
+            }
+            catch
+            {
+                return;
+            }
+        }
+
         public void myCheckTransaction()
         {
             decimal creditSum = 0.00m;
@@ -275,7 +288,7 @@ namespace FamilyFinance2.Forms.Transaction
                 int eID = SpclEnvelope.NULL;
 
                 foreach (EnvelopeLineRow row in this.EnvelopeLine)
-                    if (row.lineItemID == line.id)
+                    if (row.RowState != DataRowState.Deleted && row.lineItemID == line.id)
                     {
                         count++;
                         eID = row.envelopeID;
