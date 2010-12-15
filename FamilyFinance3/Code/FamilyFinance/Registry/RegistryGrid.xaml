@@ -15,7 +15,8 @@
     </UserControl.Resources>
     <Grid Background="Transparent" 
           HorizontalAlignment="Stretch"
-          VerticalAlignment="Stretch" >
+          VerticalAlignment="Stretch"
+          IsSharedSizeScope="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="22" />
             <RowDefinition Height="228*" />
@@ -54,8 +55,10 @@
                   AlternationCount="1" 
                   AreRowDetailsFrozen="False" 
                   HorizontalScrollBarVisibility="Disabled" 
-                  RowBackground="White" HeadersVisibility="Column"
-                  Background="White">
+                  RowBackground="White" 
+                  HeadersVisibility="Column"
+                  Background="White"
+                  MouseDoubleClick="dataGrid_MouseDoubleClick">
             <DataGrid.Columns>
                 <!-- Date -->
                 <DataGridTemplateColumn x:Name="dateColumn" 
@@ -88,7 +91,7 @@
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
                             <ComboBox SelectedValue="{Binding Path=TypeID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      ItemsSource="{Binding Source={StaticResource gridVM}, Path=LineTypesList, Mode=OneWay}"
+                                      ItemsSource="{Binding Source={StaticResource lineTypeVM}, Path=LineTypesList, Mode=OneWay}"
                                       SelectedValuePath="ID"
                                       DisplayMemberPath="Name">
                             </ComboBox>
@@ -114,10 +117,10 @@
                                       DisplayMemberPath="Name">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="150" />
-                                                <ColumnDefinition Width="35" />
+                                        <Grid >
+                                            <Grid.ColumnDefinitions >
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="nameGroup"/>
+                                                <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Grid.Column="0"
                                                        Text="{Binding Path=Name}" />

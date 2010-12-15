@@ -7,25 +7,55 @@ using FamilyFinance.Database;
 
 namespace FamilyFinance.EditTransaction
 {
-    class EditTransactionVM : ModelBase
+    class EditTransactionVM : FamilyFinance.Registry.TransactionModel
     {
-        private int transID;
 
         ///////////////////////////////////////////////////////////////////////
         // Properties to access this object.
         ///////////////////////////////////////////////////////////////////////
-        public MyObservableCollection<Decimal> Credits { get; private set; }
-        public MyObservableCollection<Decimal> Debits { get; private set; }
+        public MyObservableCollection<LineItemModel> Credits { get; private set; }
+        public MyObservableCollection<LineItemModel> Debits { get; private set; }
+
+       
 
 
-
-        public EditTransactionVM()
+        public EditTransactionVM() : base(null)
         {
         }
 
-        public EditTransactionVM(int transID)
+        public void setTransaction(int transID)
         {
-            this.transID = transID;
+            MyObservableCollection<LineItemModel> credits = new MyObservableCollection<LineItemModel>();
+            MyObservableCollection<LineItemModel> debits = new MyObservableCollection<LineItemModel>();
+            this.transactionRow = MyData.getInstance().Transaction.FindByid(transID);
+            FFDataSet.LineItemRow[] lines = this.transactionRow.GetLineItemRows();
+
+
+            foreach (FFDataSet.LineItemRow line in lines)
+            {
+                if (line.creditDebit == LineCD.CREDIT)
+                    credits.Add(new LineItemModel(line));
+                else
+                    debits.Add(new LineItemModel(line));
+            }
+
+            LineItemModel.TransactionID = transID;
+
+            this.Debits = debits;
+            this.Credits = credits;
+
+
+
+            this.RaisePropertyChanged("Date");
+            this.RaisePropertyChanged("TypeID");
+            this.RaisePropertyChanged("TypeName");
+            this.RaisePropertyChanged("Description");
+            this.RaisePropertyChanged("ConfirmationNumber");
+            this.RaisePropertyChanged("Complete");
+            this.RaisePropertyChanged("TransactionError");
+            this.RaisePropertyChanged("Credits");
+            this.RaisePropertyChanged("Debits");
+
         }
 
 

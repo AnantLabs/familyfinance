@@ -42,9 +42,9 @@ namespace FamilyFinance.Registry
                 }
             }
 
-            tempAcc.sort(new BalanceModelComparer());
-            tempEx.sort(new BalanceModelComparer());
-            tempIn.sort(new BalanceModelComparer());
+            tempAcc.Sort(new BalanceModelComparer());
+            tempEx.Sort(new BalanceModelComparer());
+            tempIn.Sort(new BalanceModelComparer());
 
             this.Accounts = tempAcc;
             this.Expences = tempEx;
@@ -66,7 +66,7 @@ namespace FamilyFinance.Registry
                 }
             }
 
-            tempEnv.sort(new BalanceModelComparer());
+            tempEnv.Sort(new BalanceModelComparer());
 
             this.Envelopes = tempEnv;
             this.RaisePropertyChanged("Envelopes");

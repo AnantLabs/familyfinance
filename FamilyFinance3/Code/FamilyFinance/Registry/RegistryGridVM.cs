@@ -48,48 +48,6 @@ namespace FamilyFinance.Registry
             }
         }
 
-        private List<IdName> _LineTypesList;
-        public List<IdName> LineTypesList 
-        {
-            get
-            {
-                return this._LineTypesList;
-            }
-            private set
-            {
-                this._LineTypesList = value;
-                this.RaisePropertyChanged("LineTypesList");
-            }
-        }
-
-        private List<IdNameCat> _AccountsList;
-        public List<IdNameCat> AccountsList
-        {
-            get
-            {
-                return this._AccountsList;
-            }
-            private set
-            {
-                this._AccountsList = value;
-                this.RaisePropertyChanged("AccountsList");
-            }
-        }
-
-        private List<IdName> _EnvelopesList;
-        public List<IdName> EnvelopesList
-        {
-            get
-            {
-                return this._EnvelopesList;
-            }
-            private set
-            {
-                this._EnvelopesList = value;
-                this.RaisePropertyChanged("EnvelopesList");
-            }
-        }
-
         private string _Title;
         public string Title
         {
@@ -208,7 +166,6 @@ namespace FamilyFinance.Registry
             this.TodaysBalance = tBal;
         }
 
-
         private void setTitle()
         {
             string accName = MyData.getInstance().Account.FindByid(this.currentAccountID).name;
@@ -238,7 +195,7 @@ namespace FamilyFinance.Registry
             foreach (FFDataSet.LineItemRow line in lines)
                 reg.Add(new LineItemRegModel(line));
 
-            reg.sort(new RegistryComparer());
+            reg.Sort(new RegistryComparer());
             this.RegistryLines = reg;
             this.calcAccountBalance();
         }
@@ -252,7 +209,7 @@ namespace FamilyFinance.Registry
             foreach (FFDataSet.EnvelopeLineRow line in lines)
                 reg.Add(new SubLineRegModel(line));
 
-            reg.sort(new SubLineRegModelComparer());
+            reg.Sort(new SubLineRegModelComparer());
             this.SubRegistryLines = reg;
             this.calcEnvelopeBalance();
         }
@@ -267,7 +224,7 @@ namespace FamilyFinance.Registry
                 if (line.LineItemRow.accountID == this.currentAccountID)
                     reg.Add(new SubLineRegModel(line));
 
-            reg.sort(new SubLineRegModelComparer());
+            reg.Sort(new SubLineRegModelComparer());
             this.SubRegistryLines = reg;
             this.calcEnvelopeBalance();
         }
@@ -278,39 +235,6 @@ namespace FamilyFinance.Registry
         ///////////////////////////////////////////////////////////////////////
         public RegistryGridVM()
         {
-        }
-
-        public void reloadLineTypes()
-        {
-            List<IdName> types = new List<IdName>();
-
-            foreach (FFDataSet.LineTypeRow row in MyData.getInstance().LineType)
-                types.Add(new IdName(row.id, row.name));
-
-            types.Sort(new IdNameComparer());
-            this.LineTypesList = types;
-        }
-
-        public void reloadEnvelopes()
-        {
-            List<IdName> envelopes = new List<IdName>();
-
-            foreach (FFDataSet.EnvelopeRow row in MyData.getInstance().Envelope)
-                envelopes.Add(new IdName(row.id, row.name));
-
-            envelopes.Sort(new IdNameComparer());
-            this.EnvelopesList = envelopes;
-        }
-
-        public void reloadAccounts()
-        {
-            List<IdNameCat> acc = new List<IdNameCat>();
-
-            foreach (FFDataSet.AccountRow row in MyData.getInstance().Account)
-                acc.Add(new IdNameCat(row.id, row.name, CatagoryModel.getShortName(row.catagory)));
-
-            acc.Sort(new IdNameCatComparer());
-            this.AccountsList = acc;
         }
 
         public void setCurrentAccountEnvelope(int aID, int eID)
@@ -333,7 +257,7 @@ namespace FamilyFinance.Registry
 
         public void registryRowEditEnding()
         {
-            this.RegistryLines.sort(new RegistryComparer());
+            this.RegistryLines.Sort(new RegistryComparer());
             this.calcAccountBalance();
         }
 

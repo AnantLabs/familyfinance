@@ -88,23 +88,6 @@ namespace FamilyFinance.EditAccounts
         public ObservableCollection<AccountBankModel> Accounts { get; set; }
 
         /// <summary>
-        /// Gets or sets the collection of account types.
-        /// </summary>
-        public List<IdName> AccountTypes { get; set; }
-
-        /// <summary>
-        /// Gets or sets the collection of account types.
-        /// </summary>
-        public List<IdName> Banks { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of catagories that the accounts can be apart of.
-        /// </summary>
-        public CatagoryModel[] Catagories { get; set; }
-
-        public CreditDebitModel[] CreditDebits { get; set; }
-
-        /// <summary>
         /// Loads the Account collection with data.
         /// </summary>
         private void loadAccounts()
@@ -138,34 +121,6 @@ namespace FamilyFinance.EditAccounts
             this.RaisePropertyChanged("Accounts");
         }
 
-        public void reloadBanks()
-        {
-            List<IdName> banks = new List<IdName>();
-
-            foreach (FFDataSet.BankRow bRow in MyData.getInstance().Bank)
-            {
-                banks.Add(new IdName(bRow.id, bRow.name));
-            }
-
-            banks.Sort(new IdNameComparer());
-
-            this.Banks = banks;
-            this.RaisePropertyChanged("Banks");
-        }
-
-        public void reloadAccountTypes()
-        {
-            List<IdName> types = new List<IdName>();
-
-            foreach (FFDataSet.AccountTypeRow row in MyData.getInstance().AccountType)
-                types.Add(new IdName(row.id, row.name));
-
-            types.Sort(new IdNameComparer());
-
-            this.AccountTypes = types;
-            this.RaisePropertyChanged("AccountTypes");
-        }
-
         /// <summary>
         /// Creats the view model for editing accounts
         /// </summary>
@@ -174,12 +129,6 @@ namespace FamilyFinance.EditAccounts
             this._SearchText = "";
 
             this.loadAccounts();
-            this.reloadBanks();
-            this.reloadAccountTypes();
-
-            this.Catagories = new CatagoryModel[] { CatagoryModel.INCOME, CatagoryModel.ACCOUNT, CatagoryModel.EXPENCE };
-            this.CreditDebits = new CreditDebitModel[] { CreditDebitModel.CREDIT, CreditDebitModel.DEBIT };
-
         }
     
     }

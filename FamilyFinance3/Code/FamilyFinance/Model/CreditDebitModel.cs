@@ -14,8 +14,6 @@ namespace FamilyFinance.Model
         /// </summary>
         public static CreditDebitModel DEBIT = new CreditDebitModel(LineCD.DEBIT, "Debit");
 
-
-
         /// <summary>
         /// The value of the Credit or Debit
         /// </summary>

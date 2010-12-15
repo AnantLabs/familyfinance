@@ -1,5 +1,7 @@
 ﻿using FamilyFinance.Database;
 using FamilyFinance.Model;
+using System.Collections.Generic;
+using System.Text;
 
 namespace FamilyFinance.Registry
 {
@@ -12,7 +14,7 @@ namespace FamilyFinance.Registry
         /// <summary>
         /// Local referance to the transaction line this object encapselates.
         /// </summary>
-        private FFDataSet.TransactionRow transactionRow;
+        protected FFDataSet.TransactionRow transactionRow;
 
         ///////////////////////////////////////////////////////////////////////
         // Properties to access this object.
@@ -36,7 +38,7 @@ namespace FamilyFinance.Registry
         {
             get
             {
-                return this.transactionRow.date;
+                return (this.transactionRow == null) ? new System.DateTime(0) : this.transactionRow.date;
             }
 
             set
@@ -55,7 +57,7 @@ namespace FamilyFinance.Registry
         {
             get
             {
-                return this.transactionRow.typeID;
+                return (this.transactionRow == null) ? SpclLineType.NULL : this.transactionRow.typeID;
             }
 
             set
@@ -216,22 +218,24 @@ namespace FamilyFinance.Registry
         protected string determineOppAccountName(bool cd)
         {
             FFDataSet.LineItemRow[] rows = this.transactionRow.GetLineItemRows();
-            int count = 0;
-            int oppAccountID = SpclAccount.NULL;
+            List<int> oppAccounts = new List<int>();
+            StringBuilder oppName = new StringBuilder();
 
             foreach (FFDataSet.LineItemRow row in rows)
                 if (row.creditDebit != cd)
-                {
-                    count++;
-                    oppAccountID = row.accountID;
-                }
+                    oppAccounts.Add(row.accountID);
 
-            // if count is 0 or 1 oppAccountID already has the right value
-            // if count > 2 then change to multiple.
-            if (count >= 2)
-                oppAccountID = SpclAccount.MULTIPLE;
+            foreach (int id in oppAccounts)
+            {
+                // If this is NOT the fors account add on the comma.
+                if(oppAccounts[0] != id)
+                    oppName.Append(", ");
 
-            return MyData.getInstance().Account.FindByid(oppAccountID).name;
+                oppName.Append(MyData.getInstance().Account.FindByid(id).name);
+            }
+
+
+            return oppName.ToString();
         }
 
         protected bool setOppAccountID(bool cd, int newOppAccountID)

@@ -30,25 +30,21 @@ namespace FamilyFinance.EditTypes
             switch (table)
             {
                 case Table.AccountType:
-                    this.editTypeVM.fillAccountTypes();
                     this.typeDataGrid.ItemsSource = this.editTypeVM.AccountTypes;
                     this.Title = "Account Types";
                     break;
 
                 case Table.EnvelopeGroup:
-                    this.editTypeVM.fillEnvelopeGroups();
                     this.typeDataGrid.ItemsSource = this.editTypeVM.EnvelopeGroups;
                     this.Title = "Envelope Groups";
                     break;
 
                 case Table.LineType:
-                    this.editTypeVM.fillLineTypes();
                     this.typeDataGrid.ItemsSource = this.editTypeVM.LineTypes;
                     this.Title = "Line Types";
                     break;
 
                 case Table.Bank:
-                    this.editTypeVM.fillBanks();
                     this.typeDataGrid.ItemsSource = this.editTypeVM.Banks;
                     this.Title = "Banks";
                     this.routingNumberColumn.Visibility = System.Windows.Visibility.Visible;

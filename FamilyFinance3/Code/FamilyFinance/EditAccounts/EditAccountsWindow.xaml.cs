@@ -20,7 +20,7 @@ namespace FamilyFinance.EditAccounts
             EditTypesWindow win = new EditTypesWindow(Table.Bank);
             win.ShowDialog();
 
-            ((EditAccountsVM)(this.Resources["eaViewModel"])).reloadBanks();
+            //((EditAccountsVM)(this.Resources["eaViewModel"])).reloadBanks();
         }
 
         private void editAccountTypesButton_Click(object sender, RoutedEventArgs e)
@@ -28,7 +28,7 @@ namespace FamilyFinance.EditAccounts
             EditTypesWindow win = new EditTypesWindow(Table.AccountType);
             win.ShowDialog();
 
-            ((EditAccountsVM)(this.Resources["eaViewModel"])).reloadAccountTypes();
+            //((EditAccountsVM)(this.Resources["eaViewModel"])).reloadAccountTypes();
         }
 
     }

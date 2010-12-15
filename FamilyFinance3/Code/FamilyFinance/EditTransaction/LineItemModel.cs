@@ -15,6 +15,8 @@ namespace FamilyFinance.EditTransaction
         /// </summary>
         private FFDataSet.LineItemRow lineItemRow;
 
+        static public int TransactionID;
+
         ///////////////////////////////////////////////////////////////////////
         // Properties to access this object.
         ///////////////////////////////////////////////////////////////////////
@@ -162,6 +164,9 @@ namespace FamilyFinance.EditTransaction
         public LineItemModel()
         {
             this.lineItemRow = MyData.getInstance().LineItem.NewLineItemRow();
+
+            this.lineItemRow.transactionID = TransactionID;
+
             MyData.getInstance().LineItem.AddLineItemRow(this.lineItemRow);
             this.saveRow();
         }
