@@ -67,7 +67,6 @@
     <Compile Include="EditEnvelopes\EditEnvelopesWindow.xaml.cs">
       <DependentUpon>EditEnvelopesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EditEnvelopes\EnvelopeGoalModel.cs" />
     <Compile Include="EditEnvelopes\EnvelopeModel.cs" />
     <Compile Include="EditTransaction\EditTransaction.xaml.cs">
       <DependentUpon>EditTransaction.xaml</DependentUpon>
@@ -82,7 +81,13 @@
     </Compile>
     <Compile Include="EditTypes\EnvelopeGroupModel.cs" />
     <Compile Include="EditTypes\LineTypeModel.cs" />
-    <Compile Include="Model\AccountListModel.cs" />
+    <Compile Include="Model\AccountCollectionModel.cs" />
+    <Compile Include="Model\AccountTypeCollectionModel.cs" />
+    <Compile Include="Model\BankCollectionModel.cs" />
+    <Compile Include="Model\CatagoryCollectionModel.cs" />
+    <Compile Include="Model\CreditDebitCollectionModel.cs" />
+    <Compile Include="Model\GroupCollectionModel.cs" />
+    <Compile Include="Model\EnvelopeCollectionModel.cs" />
     <Compile Include="Registry\AccountEnvelopeChangedEventArgs.cs" />
     <Compile Include="Registry\BalanceModel.cs">
       <SubType>Code</SubType>
@@ -102,6 +107,7 @@
     <Compile Include="Registry\LineItemRegModel.cs" />
     <Compile Include="Registry\SubLineRegModel.cs" />
     <Compile Include="Registry\TransactionModel.cs" />
+    <Compile Include="Model\LineTypeCollectionModel.cs" />
     <Page Include="EditAccounts\EditAccountsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

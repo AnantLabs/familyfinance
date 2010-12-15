@@ -32,10 +32,6 @@ namespace FamilyFinance.Registry
         ///////////////////////////////////////////////////////////////////////  
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            gridVM.reloadAccounts();
-            gridVM.reloadEnvelopes();
-            gridVM.reloadLineTypes();
-
             gridVM.setCurrentAccountEnvelope(3, -1);
         }
 
@@ -65,6 +61,14 @@ namespace FamilyFinance.Registry
             else
                 this.dataGrid.ItemsSource = this.gridVM.SubRegistryLines;
 
+        }
+
+        private void dataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            LineItemRegModel row = (LineItemRegModel)this.dataGrid.SelectedItem;
+
+            EditTransaction.EditTransaction et = new EditTransaction.EditTransaction(row.TransactionID);
+            et.ShowDialog();
         }
 
     }

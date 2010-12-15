@@ -121,6 +121,126 @@ namespace FamilyFinance.EditEnvelopes
                 return this.envelopeRow.AccountRow.name;
             }
         }
+        public int PriorityOrder
+        {
+            get
+            {
+                if (this.envelopeRow == null)
+                    return int.MaxValue;
+                else
+                    return this.envelopeRow.priorityOrder;
+            }
+
+            set
+            {
+                if (this.envelopeRow != null)
+                {
+                    this.envelopeRow.priorityOrder = value;
+
+                    this.saveRow();
+                    this.RaisePropertyChanged("PriorityOrder");
+                }
+            }
+        }
+
+        public string Notes
+        {
+            get
+            {
+                if (this.envelopeRow == null)
+                    return "";
+                else
+                    return this.envelopeRow.notes;
+            }
+        }
+
+        public decimal Step
+        {
+            get
+            {
+                if (this.envelopeRow == null)
+                    return 0.0m;
+                else
+                    return this.envelopeRow.step;
+            }
+
+            set
+            {
+                if (this.envelopeRow != null)
+                {
+                    this.envelopeRow.step = value;
+
+                    this.saveRow();
+                    this.RaisePropertyChanged("Step");
+                }
+            }
+        }
+
+        public decimal Cap
+        {
+            get
+            {
+                if (this.envelopeRow == null)
+                    return 0.0m;
+                else
+                    return this.envelopeRow.cap;
+            }
+
+            set
+            {
+                if (this.envelopeRow != null)
+                {
+                    this.envelopeRow.cap = value;
+
+                    this.saveRow();
+                    this.RaisePropertyChanged("Cap");
+                }
+            }
+        }
+
+        public System.DateTime NextDate
+        {
+            get
+            {
+                if (this.envelopeRow == null)
+                    return System.DateTime.MinValue;
+                else
+                    return this.envelopeRow.nextDate;
+            }
+
+            set
+            {
+                if (this.envelopeRow != null)
+                {
+                    this.envelopeRow.nextDate = value;
+
+                    this.saveRow();
+                    this.RaisePropertyChanged("NextDate");
+                }
+            }
+        }
+
+        public System.DateTime IntervalDate
+        {
+            get
+            {
+                if (this.envelopeRow == null)
+                    return System.DateTime.MinValue;
+                else
+                    return this.envelopeRow.intervalDate;
+            }
+
+            set
+            {
+                if (this.envelopeRow != null)
+                {
+                    this.envelopeRow.intervalDate = value;
+
+                    this.saveRow();
+                    this.RaisePropertyChanged("IntervalDate");
+                }
+            }
+        }
 
         /// <summary>
         /// Creates the object and keeps a local referance to the given account row.

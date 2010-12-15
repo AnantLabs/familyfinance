@@ -36,19 +36,6 @@ CREATE TABLE BankInfo
 	CONSTRAINT FK_BankInfo_bankID FOREIGN KEY (bankID) REFERENCES  Bank(id)
 );
 
--------------------------------------------------------------------------------
--------------------------------------------------------------------------------
-CREATE TABLE Goal
-(
-	envelopeID			int				NOT NULL,
-	priority			int				NOT NULL,
-	notes				ntext			NULL,
-	step				money			NOT NULL,
-	goal				money			NOT NULL,
-	dueDate				datetime		NOT NULL,
-	CONSTRAINT PK_Goals_id     PRIMARY KEY (envelopeID),
-	CONSTRAINT FK_Goals_envelopeID FOREIGN KEY (envelopeID) REFERENCES  Envelope(id)
-);
 
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
@@ -146,20 +133,31 @@ DROP COLUMN creditDebit;
 
 
 -------------------------------------------------------------------------------
--- 4) Add the Favorite Account to Envelope table.
+-- 4) Add the Favorite Account and goal items to Envelope table.
 -------------------------------------------------------------------------------
-ALTER TABLE Envelope 
-ADD COLUMN accountID int NULL;
+ALTER TABLE Envelope ADD COLUMN accountID int NULL;
+UPDATE Envelope SET accountID = -1;
+ALTER TABLE Envelope ALTER COLUMN accountID int NOT NULL;
+ALTER TABLE Envelope ADD CONSTRAINT FK_Envelope_accountID FOREIGN KEY (accountID) REFERENCES  Account(id);
 
-UPDATE Envelope
-SET accountID = -1;
+ALTER TABLE Envelope ADD COLUMN priorityOrder int NULL;
+UPDATE Envelope SET priorityOrder = -1;
+ALTER TABLE Envelope ALTER COLUMN priorityOrder int NOT NULL;
 
-ALTER TABLE Envelope 
-ALTER COLUMN accountID int NOT NULL;
+ALTER TABLE Envelope ADD COLUMN notes ntext NULL;
 
-ALTER TABLE Envelope 
-ADD CONSTRAINT FK_Envelope_accountID FOREIGN KEY (accountID) REFERENCES  Account(id);
+ALTER TABLE Envelope ADD COLUMN step money NULL;
+UPDATE Envelope SET step = 0;
+ALTER TABLE Envelope ALTER COLUMN step money NOT NULL;
 
+ALTER TABLE Envelope ADD COLUMN cap money NULL;
+UPDATE Envelope SET cap = 0;
+ALTER TABLE Envelope ALTER COLUMN cap money NOT NULL;
 
+ALTER TABLE Envelope ADD COLUMN nextDate datetime NULL;
+UPDATE Envelope SET nextDate = 0;
+ALTER TABLE Envelope ALTER COLUMN nextDate datetime NOT NULL;
 
-
+ALTER TABLE Envelope ADD COLUMN intervalDate datetime NULL;
+UPDATE Envelope SET intervalDate = 0;
+ALTER TABLE Envelope ALTER COLUMN intervalDate datetime NOT NULL;

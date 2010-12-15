@@ -128,7 +128,7 @@ namespace FamilyFinance.Registry
 
             if (tempSubs.Count > 0)
             {
-                tempSubs.sort(new BalanceModelComparer());
+                tempSubs.Sort(new BalanceModelComparer());
                 this.SubBalances = tempSubs;
             }
         }

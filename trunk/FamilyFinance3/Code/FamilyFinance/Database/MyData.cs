@@ -30,7 +30,6 @@ namespace FamilyFinance.Database
         private BankTableAdapter bankTA = new BankTableAdapter();
         private BankInfoTableAdapter bankInfoTA = new BankInfoTableAdapter();
         private OFXFilesTableAdapter ofxFilesTA = new OFXFilesTableAdapter();
-        private GoalTableAdapter goalTA = new GoalTableAdapter();
 
 
         /// <summary>
@@ -120,11 +119,6 @@ namespace FamilyFinance.Database
         /// </summary>
         public FFDataSet.OFXFilesDataTable OFXFiles;
 
-        /// <summary>
-        /// Local referance of the table.
-        /// </summary>
-        public FFDataSet.GoalDataTable Goal;
-
 
         /// <summary>
         /// Commits the changes in the given row to the database.
@@ -159,9 +153,6 @@ namespace FamilyFinance.Database
 
             else if (row.Table == this.FitLine)
                 fitLineTA.Update(row);
-
-            else if (row.Table == this.Goal)
-                goalTA.Update(row);
 
             else if (row.Table == this.LineItem)
                 lineItemTA.Update(row);
@@ -211,7 +202,6 @@ namespace FamilyFinance.Database
             this.Bank = this.ffDataSet.Bank;
             this.BankInfo = this.ffDataSet.BankInfo;
             this.OFXFiles = this.ffDataSet.OFXFiles;
-            this.Goal = this.ffDataSet.Goal;
 
                       
 
@@ -231,7 +221,6 @@ namespace FamilyFinance.Database
             this.bankTA.ClearBeforeFill = true;
             this.bankInfoTA.ClearBeforeFill = true;
             this.ofxFilesTA.ClearBeforeFill = true;
-            this.goalTA.ClearBeforeFill = true;
 
             // Fill all the tables
             this.envelopeGroupTA.Fill(EnvelopeGroup);
@@ -248,7 +237,6 @@ namespace FamilyFinance.Database
             this.bankTA.Fill(Bank);
             this.bankInfoTA.Fill(BankInfo);
             this.ofxFilesTA.Fill(OFXFiles);
-            this.goalTA.Fill(Goal);
 
             // Subscribe to the new lines
             this.Account.TableNewRow += new System.Data.DataTableNewRowEventHandler(Account_TableNewRow);
@@ -265,7 +253,6 @@ namespace FamilyFinance.Database
             this.OFXFiles.TableNewRow += new System.Data.DataTableNewRowEventHandler(OFXFiles_TableNewRow);
             // this.Settings
             this.Transaction.TableNewRow += new System.Data.DataTableNewRowEventHandler(Transaction_TableNewRow);
-            this.Goal.TableNewRow += new System.Data.DataTableNewRowEventHandler(Goal_TableNewRow);
 
 
             // Subscribe to column Changing
@@ -299,24 +286,6 @@ namespace FamilyFinance.Database
             if (e.Column.DataType.Name.Equals("String") && (e.ProposedValue as string).Length > e.Column.MaxLength)
                 e.ProposedValue = (e.ProposedValue as string).Substring(0, e.Column.MaxLength);
         }
-
-
-
-        private void Goal_TableNewRow(object sender, System.Data.DataTableNewRowEventArgs e)
-        {
-            FFDataSet.GoalRow row = e.Row as FFDataSet.GoalRow;
-
-            int max =
-               (from Goal in this.Goal
-                select Goal.priority).Max();
-
-            row.priority = max + 1;
-            row.notes = "";
-            row.step = 0.0m;
-            row.goal = 0.0m;
-            row.dueDate = DateTime.Today;
-        }
-
 
         private void Account_TableNewRow(object sender, System.Data.DataTableNewRowEventArgs e)
         {
@@ -381,11 +350,23 @@ namespace FamilyFinance.Database
                (from Envelope in this.Envelope
                 select Envelope.id).Max();
 
+            int maxP =
+               (from Envelope in this.Envelope
+                select Envelope.priorityOrder).Max();
+
+
             row.id = max + 1;
             row.name = "";
             row.groupID = SpclEnvelope.NULL;
             row.closed = false;
             row.accountID = SpclAccount.NULL;
+
+            row.priorityOrder = maxP + 1;
+            row.notes = "";
+            row.step = 0.0m;
+            row.cap = 0.0m;
+            row.nextDate = DateTime.Today;
+            row.intervalDate = DateTime.MinValue;
         }
 
         private void EnvelopeGroup_TableNewRow(object sender, System.Data.DataTableNewRowEventArgs e)

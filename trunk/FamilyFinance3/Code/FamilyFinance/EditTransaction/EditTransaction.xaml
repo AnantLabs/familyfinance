@@ -12,6 +12,7 @@
         Loaded="Window_Loaded">
     <Window.Resources>
         <local:EditTransactionVM x:Key="editTVM" />
+
     </Window.Resources>
     <Grid>
         <DatePicker Height="25" 
@@ -19,14 +20,18 @@
                     Margin="12,12,0,0" 
                     Name="datePicker1" 
                     VerticalAlignment="Top"
-                    SelectedDate="{Binding Path=Date, Mode=TwoWay}"
+                    SelectedDate="{Binding Source={StaticResource editTVM}, Path=Date, Mode=TwoWay}"
                     Width="115" />
-        <ComboBox Height="23" 
-                  HorizontalAlignment="Left" 
-                  Margin="133,12,0,0" 
-                  Name="comboBox1" 
-                  VerticalAlignment="Top" 
-                  Width="120" />
+        <ComboBox Height="23"
+                  HorizontalAlignment="Left"
+                  Margin="133,12,0,0"
+                  Name="comboBox1"
+                  VerticalAlignment="Top"
+                  Width="120"
+                  SelectedValue="{Binding Source={StaticResource editTVM}, Path=TypeID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  ItemsSource="{Binding Source={StaticResource lineTypeVM}, Path=LineTypesList, Mode=OneWay}"
+                  SelectedValuePath="ID"
+                  DisplayMemberPath="Name" />
         <TextBox Height="23" 
                  HorizontalAlignment="Left" 
                  Margin="259,12,0,0" 

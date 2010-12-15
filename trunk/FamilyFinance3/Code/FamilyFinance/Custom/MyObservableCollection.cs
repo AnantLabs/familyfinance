@@ -11,7 +11,7 @@ namespace FamilyFinance.Custom
         /// This is because after the initial sort new things are added to the end.
         /// So move that new item into the right place and be done.
         /// </summary>
-        public void sort(IComparer<T> comp)
+        public void Sort(IComparer<T> comp)
         {
             bool moved = false;
 

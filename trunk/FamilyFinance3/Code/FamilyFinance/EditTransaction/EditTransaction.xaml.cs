@@ -21,22 +21,22 @@ namespace FamilyFinance.EditTransaction
         private EditTransactionVM eTVM;
         private int _transID;
 
-        public EditTransaction() : this(4)
-        {
-        }
-
-        public EditTransaction(int transID)
+        public EditTransaction()
         {
             InitializeComponent();
+            this.eTVM = (EditTransactionVM)this.Resources["editTVM"];
+        }
 
+        public EditTransaction(int transID) : this()
+        {
             this._transID = transID;
-            this.Resources["eTVM"] = eTVM = new EditTransactionVM(transID);
+            this.eTVM.setTransaction(transID);
             //this.InvalidateVisual();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            this.eTVM.setTransaction(this._transID);
         }
     }
 }

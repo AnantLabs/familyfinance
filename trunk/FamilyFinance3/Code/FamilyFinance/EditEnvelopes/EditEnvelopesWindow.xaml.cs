@@ -21,7 +21,7 @@ namespace FamilyFinance.EditEnvelopes
             EditTypesWindow win = new EditTypesWindow(Table.EnvelopeGroup);
             win.ShowDialog();
 
-            ((EditEnvelopesVM)(this.Resources["eeViewModel"])).reloadEnvelopeGroups();
+            //((EditEnvelopesVM)(this.Resources["eeViewModel"])).reloadEnvelopeGroups();
         }
 
         private void accountMenuItem_Click(object sender, RoutedEventArgs e)
@@ -29,7 +29,7 @@ namespace FamilyFinance.EditEnvelopes
             EditAccountsWindow win = new EditAccountsWindow();
             win.ShowDialog();
 
-            ((EditEnvelopesVM)(this.Resources["eeViewModel"])).reloadAccounts();
+            //((EditEnvelopesVM)(this.Resources["eeViewModel"])).reloadAccounts();
         }
     }
 }
