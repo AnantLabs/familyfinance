@@ -18,7 +18,7 @@ namespace FamilyFinance.EditEnvelopes
             set
             {
                 this._SearchText = value;
-                this.loadEnvelopes();
+                this.RaisePropertyChanged("Envelopes");
             }
         }
 
@@ -32,38 +32,32 @@ namespace FamilyFinance.EditEnvelopes
             set
             {
                 this._ShowClosed = value;
-                loadEnvelopes();
+                this.RaisePropertyChanged("Envelopes");
             }
         }
 
         /// <summary>
         /// Gets or sets the collection of envelopes.
         /// </summary>
-        public ObservableCollection<EnvelopeModel> Envelopes { get; set; }
-
-        /// <summary>
-        /// Loads the Envelopes collection with data.
-        /// </summary>
-        private void loadEnvelopes()
+        public ObservableCollection<EnvelopeModel> Envelopes 
         {
-            ObservableCollection<EnvelopeModel> envelopes = new ObservableCollection<EnvelopeModel>();
-
-            foreach (FFDataSet.EnvelopeRow row in MyData.getInstance().Envelope)
+            get
             {
-                bool validID = row.id > 0;
-                bool inSearch = row.name.ToLower().Contains(this._SearchText.ToLower());
-                bool doShow = this._ShowClosed || !row.closed;
+                ObservableCollection<EnvelopeModel> envelopes = new ObservableCollection<EnvelopeModel>();
 
-                if (validID && inSearch && doShow)
-                    envelopes.Add(new EnvelopeModel(row));
+                foreach (FFDataSet.EnvelopeRow row in MyData.getInstance().Envelope)
+                {
+                    bool validID = row.id > 0;
+                    bool inSearch = row.name.ToLower().Contains(this._SearchText.ToLower());
+                    bool doShow = this._ShowClosed || !row.closed;
+
+                    if (validID && inSearch && doShow)
+                        envelopes.Add(new EnvelopeModel(row));
+                }
+
+                return envelopes;
             }
-
-
-            this.Envelopes = envelopes;
-
-            this.RaisePropertyChanged("Envelopes");
         }
-
 
         /// <summary>
         /// Creats the view model for editing accounts
@@ -72,8 +66,6 @@ namespace FamilyFinance.EditEnvelopes
         {
             this._SearchText = "";
             this._ShowClosed = false;
-
-            this.loadEnvelopes();
         }
     
     }

@@ -21,7 +21,7 @@ namespace FamilyFinance.EditAccounts
             set
             {
                 this._IncludeIncomes = value;
-                loadAccounts();
+                this.RaisePropertyChanged("Accounts");
             } 
         }
 
@@ -35,7 +35,7 @@ namespace FamilyFinance.EditAccounts
             set
             {
                 this._IncludeAccounts = value;
-                loadAccounts();
+                this.RaisePropertyChanged("Accounts");
             }
         }
 
@@ -49,7 +49,7 @@ namespace FamilyFinance.EditAccounts
             set
             {
                 this._IncludeExpences = value;
-                loadAccounts();
+                this.RaisePropertyChanged("Accounts");
             }
         }
 
@@ -63,10 +63,9 @@ namespace FamilyFinance.EditAccounts
             set
             {
                 this._SearchText = value;
-                loadAccounts();
+                this.RaisePropertyChanged("Accounts");
             }
         }
-
 
         private bool _ShowClosed;
         public bool ShowClosed
@@ -78,47 +77,43 @@ namespace FamilyFinance.EditAccounts
             set
             {
                 this._ShowClosed = value;
-                loadAccounts();
+                this.RaisePropertyChanged("Accounts");
             }
         }
 
         /// <summary>
         /// Gets or sets the collection of accounts.
         /// </summary>
-        public ObservableCollection<AccountBankModel> Accounts { get; set; }
-
-        /// <summary>
-        /// Loads the Account collection with data.
-        /// </summary>
-        private void loadAccounts()
+        public ObservableCollection<AccountBankModel> Accounts 
         {
-            ObservableCollection<AccountBankModel> accounts = new ObservableCollection<AccountBankModel>();
-
-            List<byte> cats = new List<byte>();
-
-            if (this._IncludeIncomes)
-                cats.Add(SpclAccountCat.INCOME);
-
-            if (this._IncludeAccounts)
-                cats.Add(SpclAccountCat.ACCOUNT);
-
-            if (this._IncludeExpences)
-                cats.Add(SpclAccountCat.EXPENSE);
-
-            foreach (FFDataSet.AccountRow aRow in MyData.getInstance().Account)
+            get
             {
-                bool validID = aRow.id > 0;
-                bool validCat = cats.Contains(aRow.catagory);
-                bool inSearch = aRow.name.ToLower().Contains(this._SearchText.ToLower());
-                bool doShow = this._ShowClosed || !aRow.closed;
+                ObservableCollection<AccountBankModel> accounts = new ObservableCollection<AccountBankModel>();
 
-                if (validID && validCat && inSearch && doShow)
-                    accounts.Add(new AccountBankModel(aRow));
+                List<byte> cats = new List<byte>();
+
+                if (this._IncludeIncomes)
+                    cats.Add(SpclAccountCat.INCOME);
+
+                if (this._IncludeAccounts)
+                    cats.Add(SpclAccountCat.ACCOUNT);
+
+                if (this._IncludeExpences)
+                    cats.Add(SpclAccountCat.EXPENSE);
+
+                foreach (FFDataSet.AccountRow aRow in MyData.getInstance().Account)
+                {
+                    bool validID = aRow.id > 0;
+                    bool validCat = cats.Contains(aRow.catagory);
+                    bool inSearch = aRow.name.ToLower().Contains(this._SearchText.ToLower());
+                    bool doShow = this._ShowClosed || !aRow.closed;
+
+                    if (validID && validCat && inSearch && doShow)
+                        accounts.Add(new AccountBankModel(aRow));
+                }
+
+                return accounts;
             }
-
-            this.Accounts = accounts;
-
-            this.RaisePropertyChanged("Accounts");
         }
 
         /// <summary>
@@ -126,9 +121,11 @@ namespace FamilyFinance.EditAccounts
         /// </summary>
         public EditAccountsVM()
         {
+            this._IncludeAccounts = true;
+            this._IncludeExpences = false;
+            this._IncludeIncomes = false;
             this._SearchText = "";
-
-            this.loadAccounts();
+            this._ShowClosed = false;
         }
     
     }

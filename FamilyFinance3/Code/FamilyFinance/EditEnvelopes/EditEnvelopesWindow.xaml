@@ -47,10 +47,72 @@
                   AutoGenerateColumns="False" 
                   EnableRowVirtualization="True" 
                   ItemsSource="{Binding Source={StaticResource eeViewModel}, Path=Envelopes}" 
-                  RowDetailsVisibilityMode="Collapsed" 
+                  RowDetailsVisibilityMode="VisibleWhenSelected" 
                   SelectionMode="Single" 
                   CanUserDeleteRows="False" 
-                  CanUserResizeRows="False" HeadersVisibility="Column">
+                  CanUserResizeRows="False" 
+                  HeadersVisibility="Column">
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <Grid Background="{StaticResource DarkBlueBackGround}"
+                          VerticalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Column="0"
+                               Grid.Row="0"
+                               Foreground="White"
+                               Content="Step:" 
+                               HorizontalAlignment="Right"/>
+                        <TextBox Grid.Column="1"
+                                 Grid.Row="0"
+                                 Margin="3"
+                                 MinWidth="50"
+                                 TextAlignment="Right"
+                                 Text="{Binding Path=Step, StringFormat={}{0:c}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                        <Label Grid.Column="2"
+                               Grid.Row="0"
+                               Foreground="White"
+                               Content="Goal/Cap:"
+                               HorizontalAlignment="Right"/>
+                        <TextBox Grid.Column="3"
+                                 Grid.Row="0"
+                                 MinWidth="50"
+                                 Margin="3"
+                                 TextAlignment="Right"
+                                 Text="{Binding Path=Cap, StringFormat={}{0:c}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                        <TextBox Grid.Column="0"
+                                 Grid.Row="1" 
+                                 Margin="3"/>
+                        <ComboBox Grid.Column="1"
+                                  Grid.Row="1"
+                                  Margin="3"/>
+                        <Label Grid.Column="2"
+                               Grid.Row="1"
+                               Foreground="White"
+                               Content="Due Date:"
+                               HorizontalAlignment="Right"/>
+                        <DatePicker Grid.Column="3"
+                                    Grid.Row="1"
+                                    Margin="3"
+                                    Text="{Binding Path=NextDate, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                        <TextBox Grid.Column="4"
+                                 Grid.Row="0"
+                                 Grid.RowSpan="2"
+                                 Margin="3"
+                                 MinWidth="50"
+                                 Text="{Binding Path=Notes, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                    </Grid>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="nameColumn" 
                                     Binding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 

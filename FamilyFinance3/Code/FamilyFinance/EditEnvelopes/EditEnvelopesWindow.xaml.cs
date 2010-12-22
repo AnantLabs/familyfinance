@@ -15,21 +15,16 @@ namespace FamilyFinance.EditEnvelopes
             InitializeComponent();
         }
 
-
         private void envelopeGroupsMenuItem_Click(object sender, RoutedEventArgs e)
         {
             EditTypesWindow win = new EditTypesWindow(Table.EnvelopeGroup);
             win.ShowDialog();
-
-            //((EditEnvelopesVM)(this.Resources["eeViewModel"])).reloadEnvelopeGroups();
         }
 
         private void accountMenuItem_Click(object sender, RoutedEventArgs e)
         {
             EditAccountsWindow win = new EditAccountsWindow();
             win.ShowDialog();
-
-            //((EditEnvelopesVM)(this.Resources["eeViewModel"])).reloadAccounts();
         }
     }
 }

@@ -227,7 +227,7 @@ namespace FamilyFinance.Registry
 
             foreach (int id in oppAccounts)
             {
-                // If this is NOT the fors account add on the comma.
+                // If this is NOT the first account add on the comma.
                 if(oppAccounts[0] != id)
                     oppName.Append(", ");
 
