@@ -1,4 +1,6 @@
 ﻿using FamilyFinance.Database;
+using System.Text;
+using System.Collections.Generic;
 
 
 namespace FamilyFinance.Registry
@@ -156,16 +158,19 @@ namespace FamilyFinance.Registry
         {
             get
             {
-                int count = this.lineItemRow.GetEnvelopeLineRows().Length;
+                FFDataSet.EnvelopeLineRow[] rows = this.lineItemRow.GetEnvelopeLineRows();
+                StringBuilder name = new StringBuilder();
 
-                if (count >= 2)
-                    return MyData.getInstance().Envelope.FindByid(-2).name;
+                foreach (FFDataSet.EnvelopeLineRow row in rows)
+                {
+                    // If this is NOT the first account add on the comma.
+                    if (rows[0] != row)
+                        name.Append(", ");
 
-                else if (count == 1)
-                    return this.lineItemRow.GetEnvelopeLineRows()[0].EnvelopeRow.name;
+                    name.Append(row.EnvelopeRow.name);
+                }
 
-                else
-                    return "";
+                return name.ToString();
             }
         }
 

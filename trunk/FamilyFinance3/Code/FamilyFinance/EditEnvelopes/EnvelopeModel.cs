@@ -121,25 +121,20 @@ namespace FamilyFinance.EditEnvelopes
                 return this.envelopeRow.AccountRow.name;
             }
         }
+
         public int PriorityOrder
         {
             get
             {
-                if (this.envelopeRow == null)
-                    return int.MaxValue;
-                else
-                    return this.envelopeRow.priorityOrder;
+                return this.envelopeRow.priorityOrder;
             }
 
             set
             {
-                if (this.envelopeRow != null)
-                {
-                    this.envelopeRow.priorityOrder = value;
+                this.envelopeRow.priorityOrder = value;
 
-                    this.saveRow();
-                    this.RaisePropertyChanged("PriorityOrder");
-                }
+                this.saveRow();
+                this.RaisePropertyChanged("PriorityOrder");
             }
         }
 
@@ -147,10 +142,18 @@ namespace FamilyFinance.EditEnvelopes
         {
             get
             {
-                if (this.envelopeRow == null)
+                if (this.envelopeRow.IsnotesNull())
                     return "";
                 else
                     return this.envelopeRow.notes;
+            }
+
+            set
+            {
+                this.envelopeRow.notes = value;
+
+                this.saveRow();
+                this.RaisePropertyChanged("Notes");
             }
         }
 
@@ -158,21 +161,15 @@ namespace FamilyFinance.EditEnvelopes
         {
             get
             {
-                if (this.envelopeRow == null)
-                    return 0.0m;
-                else
-                    return this.envelopeRow.step;
+                return this.envelopeRow.step;
             }
 
             set
             {
-                if (this.envelopeRow != null)
-                {
-                    this.envelopeRow.step = value;
+                this.envelopeRow.step = value;
 
-                    this.saveRow();
-                    this.RaisePropertyChanged("Step");
-                }
+                this.saveRow();
+                this.RaisePropertyChanged("Step");
             }
         }
 
@@ -180,21 +177,15 @@ namespace FamilyFinance.EditEnvelopes
         {
             get
             {
-                if (this.envelopeRow == null)
-                    return 0.0m;
-                else
-                    return this.envelopeRow.cap;
+                return this.envelopeRow.cap;
             }
 
             set
             {
-                if (this.envelopeRow != null)
-                {
-                    this.envelopeRow.cap = value;
+                this.envelopeRow.cap = value;
 
-                    this.saveRow();
-                    this.RaisePropertyChanged("Cap");
-                }
+                this.saveRow();
+                this.RaisePropertyChanged("Cap");
             }
         }
 
@@ -202,21 +193,15 @@ namespace FamilyFinance.EditEnvelopes
         {
             get
             {
-                if (this.envelopeRow == null)
-                    return System.DateTime.MinValue;
-                else
-                    return this.envelopeRow.nextDate;
+                return this.envelopeRow.nextDate;
             }
 
             set
             {
-                if (this.envelopeRow != null)
-                {
-                    this.envelopeRow.nextDate = value;
+                this.envelopeRow.nextDate = value;
 
-                    this.saveRow();
-                    this.RaisePropertyChanged("NextDate");
-                }
+                this.saveRow();
+                this.RaisePropertyChanged("NextDate");
             }
         }
 
@@ -224,21 +209,15 @@ namespace FamilyFinance.EditEnvelopes
         {
             get
             {
-                if (this.envelopeRow == null)
-                    return System.DateTime.MinValue;
-                else
-                    return this.envelopeRow.intervalDate;
+                return this.envelopeRow.intervalDate;
             }
 
             set
             {
-                if (this.envelopeRow != null)
-                {
-                    this.envelopeRow.intervalDate = value;
+                this.envelopeRow.intervalDate = value;
 
-                    this.saveRow();
-                    this.RaisePropertyChanged("IntervalDate");
-                }
+                this.saveRow();
+                this.RaisePropertyChanged("IntervalDate");
             }
         }
 
@@ -265,7 +244,5 @@ namespace FamilyFinance.EditEnvelopes
         {
             MyData.getInstance().saveRow(this.envelopeRow);
         }
-
-
     }
 }
