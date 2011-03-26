@@ -11,56 +11,6 @@
              Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <local:NavigatorVM x:Key="navVM"/>
-        <local:SubBalanceTemplateSelector x:Key="tSelector">
-            <!-- Sub Balance template -->
-            <local:SubBalanceTemplateSelector.SubBalanceTemplate>
-                <DataTemplate>
-                    <Grid Background="{StaticResource DarkBlueBackGround}">
-                        <DataGrid x:Name="subBalanceGrid"
-                                  Margin="10,0,5,10"
-                                  SelectionMode="Single" 
-                                  IsReadOnly="True"
-                                  CanUserAddRows="False"
-                                  CanUserDeleteRows="False" 
-                                  CanUserResizeColumns="True" 
-                                  CanUserResizeRows="False"
-                                  VerticalAlignment="Stretch"
-                                  HorizontalAlignment="Stretch" 
-                                  AutoGenerateColumns="False"  
-                                  RowDetailsVisibilityMode="Collapsed" 
-                                  ItemsSource="{Binding Path=SubBalances}" 
-                                  HorizontalScrollBarVisibility="Disabled"
-                                  Background="Transparent"
-                                  RowBackground="White" 
-                                  GridLinesVisibility="Horizontal" 
-                                  HorizontalGridLinesBrush="{StaticResource LightBlueMenuBackground}" 
-                                  HeadersVisibility="Column"
-                                  SelectionChanged="sub_SelectionChanged">
-                            <DataGrid.Columns>
-                                <!-- Name -->
-                                <custom:ExtendedTextColumn CanUserSort="True"
-                                                         Width="130*"
-                                                         IsReadOnly="True"
-                                                         VerticalAlignment="Center"
-                                                         Binding="{Binding Path=Name, Mode=OneWay}" />
-                                <!-- Balance -->
-                                <custom:ExtendedTextColumn CanUserSort="True"
-                                                         IsReadOnly="True"
-                                                         Width="90*"
-                                                         CanUserResize="True"
-                                                         HorizontalAlignment="Right"
-                                                         VerticalAlignment="Center"
-                                                         Binding="{Binding Path=Balance, StringFormat=c, Mode=OneWay}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Grid>
-                </DataTemplate>
-            </local:SubBalanceTemplateSelector.SubBalanceTemplate>
-            <!-- Empty Template -->
-            <local:SubBalanceTemplateSelector.EmptyTemplate>
-                <DataTemplate/>
-            </local:SubBalanceTemplateSelector.EmptyTemplate>
-        </local:SubBalanceTemplateSelector>
     </UserControl.Resources>
     <Grid Background="Transparent" 
           HorizontalAlignment="Stretch"
@@ -98,7 +48,6 @@
                               HorizontalScrollBarVisibility="Disabled"
                               RowDetailsVisibilityMode="VisibleWhenSelected"
                               SelectionChanged="major_SelectionChanged"
-                              RowDetailsTemplateSelector="{StaticResource tSelector}"
                               HorizontalGridLinesBrush="{StaticResource LightBlueMenuBackground}"
                               ItemsSource="{Binding Source={StaticResource navVM}, Path=Accounts}">
                         <DataGrid.Columns>
@@ -136,20 +85,19 @@
                               HorizontalScrollBarVisibility="Disabled"
                               RowDetailsVisibilityMode="VisibleWhenSelected"
                               SelectionChanged="major_SelectionChanged"
-                              RowDetailsTemplateSelector="{StaticResource tSelector}"
                               HorizontalGridLinesBrush="{StaticResource LightBlueMenuBackground}"
                               ItemsSource="{Binding Source={StaticResource navVM}, Path=Envelopes}">
                         <DataGrid.Columns>
                             <!-- Description -->
                             <custom:ExtendedTextColumn Width="130*"
-                                                       IsReadOnly="True"
-                                                       Binding="{Binding Path=Name, Mode=OneWay}">
+                                                         IsReadOnly="True"
+                                                         Binding="{Binding Path=Name, Mode=OneWay}">
                             </custom:ExtendedTextColumn>
                             <!-- Balance -->
                             <custom:ExtendedTextColumn Width="90*"
-                                                       IsReadOnly="True"
-                                                       HorizontalAlignment="Right"
-                                                       Binding="{Binding Path=Balance, StringFormat=c, Mode=OneWay}" />
+                                                         IsReadOnly="True"
+                                                         HorizontalAlignment="Right"
+                                                         Binding="{Binding Path=Balance, StringFormat=c, Mode=OneWay}" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
@@ -172,15 +120,15 @@
                               EnableRowVirtualization="True"
                               GridLinesVisibility="Horizontal"
                               HorizontalScrollBarVisibility="Disabled"
-                              RowDetailsVisibilityMode="Collapsed"
+                              RowDetailsVisibilityMode="VisibleWhenSelected"
                               SelectionChanged="major_SelectionChanged"
                               HorizontalGridLinesBrush="{StaticResource LightBlueMenuBackground}"
                               ItemsSource="{Binding Source={StaticResource navVM}, Path=Expences}">
                         <DataGrid.Columns>
                             <!-- Description -->
-                            <custom:ExtendedTextColumn Width="130*"
-                                                       IsReadOnly="True"
-                                                       Binding="{Binding Path=Name, Mode=OneWay}">
+                            <custom:ExtendedTextColumn Width="*"
+                                                         IsReadOnly="True"
+                                                         Binding="{Binding Path=Name, Mode=OneWay}">
                             </custom:ExtendedTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -204,15 +152,15 @@
                               EnableRowVirtualization="True"
                               GridLinesVisibility="Horizontal"
                               HorizontalScrollBarVisibility="Disabled"
-                              RowDetailsVisibilityMode="Collapsed"
+                              RowDetailsVisibilityMode="VisibleWhenSelected"
                               SelectionChanged="major_SelectionChanged"
                               HorizontalGridLinesBrush="{StaticResource LightBlueMenuBackground}"
                               ItemsSource="{Binding Source={StaticResource navVM}, Path=Incomes}">
                         <DataGrid.Columns>
                             <!-- Description -->
-                            <custom:ExtendedTextColumn Width="130*"
-                                                       IsReadOnly="True"
-                                                       Binding="{Binding Path=Name, Mode=OneWay}">
+                            <custom:ExtendedTextColumn Width="*"
+                                                         IsReadOnly="True"
+                                                         Binding="{Binding Path=Name, Mode=OneWay}">
                             </custom:ExtendedTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>

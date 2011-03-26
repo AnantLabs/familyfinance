@@ -76,9 +76,5 @@ namespace FamilyFinance.Registry
         {
         }
 
-        public void updateAccountEnvelope(int aID, int eID)
-        {
-
-        }
     }
 }

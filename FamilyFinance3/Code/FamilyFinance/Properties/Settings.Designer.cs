@@ -26,8 +26,8 @@ namespace FamilyFinance.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=C:\\Users\\Erik Lee\\Documents\\Projects\\FamilyFinance\\Trunk\\FamilyFinanc" +
-            "e3\\Code\\FamilyFinance\\Database\\FamilyFinanceDB.sdf")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=C:\\Users\\Erik\\Documents\\Projects\\FamilyFinance\\Trunk\\FamilyFinance3\\C" +
+            "ode\\FamilyFinance\\Database\\FamilyFinanceDB.sdf")]
         public string FamilyFinanceDBConnectionString {
             get {
                 return ((string)(this["FamilyFinanceDBConnectionString"]));

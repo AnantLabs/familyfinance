@@ -104,7 +104,6 @@ namespace FamilyFinance.Registry
         ///////////////////////////////////////////////////////////////////////  
         public void updateAccountEnvelope(int aID, int eID)
         {
-            this.navVM.updateAccountEnvelope(aID, eID);
         }
 
     }

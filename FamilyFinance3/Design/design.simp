@@ -1,0 +1,3266 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<sim-project version="4.88">
+  <meta>
+    <name>Project</name>
+    <authors />
+    <description />
+  </meta>
+  <management>
+    <persons />
+    <tasks />
+    <requirements />
+    <issues />
+    <to-dos />
+  </management>
+  <types>
+    <type-sets>
+      <type-set file="UmlTypes.xml" />
+      <type-set file="UmlTypes.xml" />
+      <type-set file="UmlTypes.xml" />
+      <type-set file="UmlTypes.xml" />
+      <type-set file="UmlTypes.xml" />
+      <type-set file="UmlTypes.xml" />
+      <type-set file="UmlTypes.xml" />
+      <type-set file="UmlTypes.xml" />
+      <type-set file="UmlTypes.xml" />
+      <type-set file="UmlTypes.xml" />
+      <type-set file="UmlTypes.xml" />
+    </type-sets>
+    <custom-types>
+      <type id="Uml.Integer" name="Uml.Integer" description="" />
+      <type id="Uml.String" name="Uml.String" description="" />
+      <type id="FFDataSet" name="FFDataSet" description="" />
+      <type id="TableAdapter" name="TableAdapter" description="" />
+      <type id="MyData" name="MyData" description="" />
+      <type id="Table" name="Table" description="" />
+      <type id="DataRow" name="DataRow" description="" />
+      <type id="event" name="event" description="" />
+      <type id="int" name="int" description="" />
+      <type id="DateTime" name="DateTime" description="" />
+      <type id="string" name="string" description="" />
+      <type id="bool" name="bool" description="" />
+      <type id="TransactionRow" name="TransactionRow" description="" />
+      <type id="decimal" name="decimal" description="" />
+    </custom-types>
+  </types>
+  <items>
+    <item id="di176870441253564387" cid="C001" type="class" name="CoolClass" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes>
+        <attribute id="" name="ID" type="Integer" type-id="Uml.Integer" visibility="public" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation />
+        </attribute>
+        <attribute id="" name="Name" type="String" type-id="Uml.String" visibility="public" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation />
+        </attribute>
+      </attributes>
+      <operations>
+        <operation id="" name="CoolFunction" type="Integer" type-id="Uml.Integer" visibility="public" abstract="false" virtual="false" static="false">
+          <parameters>
+            <parameter id="" name="p1" type="Integer" type-id="Uml.Integer" default-value="">
+              <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+            </parameter>
+            <parameter id="" name="newName" type="String" type-id="Uml.String" default-value="">
+              <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+            </parameter>
+          </parameters>
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </operation>
+      </operations>
+      <template-parameters />
+    </item>
+    <item id="di877118214654741909" cid="C002" type="class" name="Class2" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes />
+      <operations />
+      <template-parameters />
+    </item>
+    <item id="di651375270552728864" cid="GNR001" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di435379540100168715" cid="ENT001" type="erd-entity" name="Settings" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes>
+        <attribute name="id" type="int" type-size="" foreign-key="false" primary-key="true" nullable="false" description="The ID is a hash of the name of the setting" default-value="" />
+        <attribute name="value" type="ntext" type-size="" foreign-key="false" primary-key="false" nullable="false" description="" default-value="" />
+      </attributes>
+    </item>
+    <item id="di792824510691726753" cid="CMT001" type="comment" name="Comment" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <comment>The ID is a hash of the name of the setting.</comment>
+    </item>
+    <item id="di705692167351331796" cid="CN001" type="comment-connector" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di370832362348317092" cid="ENT002" type="erd-entity" name="AccountType" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes>
+        <attribute name="id" type="int" type-size="" foreign-key="false" primary-key="true" nullable="false" description="" default-value="" />
+        <attribute name="name" type="nvarchar" type-size="30" foreign-key="false" primary-key="false" nullable="false" description="" default-value="" />
+      </attributes>
+    </item>
+    <item id="di913247302954453999" cid="ENT002" type="erd-entity" name="Bank" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes>
+        <attribute name="id" type="int" type-size="" foreign-key="false" primary-key="true" nullable="false" description="" default-value="" />
+        <attribute name="name" type="nvarchar" type-size="30" foreign-key="false" primary-key="false" nullable="false" description="" default-value="" />
+        <attribute name="routingNumber" type="nvarchar" type-size="9" foreign-key="false" primary-key="false" nullable="false" description="&lt;BANKID&gt; Routing and Transit Number. A-9" default-value="" />
+      </attributes>
+    </item>
+    <item id="di697388883561173171" cid="ENT002" type="erd-entity" name="TransactionType" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes>
+        <attribute name="id" type="int" type-size="" foreign-key="false" primary-key="true" nullable="false" description="" default-value="" />
+        <attribute name="name" type="nvarchar" type-size="15" foreign-key="false" primary-key="false" nullable="false" description="" default-value="" />
+      </attributes>
+    </item>
+    <item id="di507281945206459663" cid="ENT002" type="erd-entity" name="Account" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes>
+        <attribute name="id" type="int" type-size="" foreign-key="false" primary-key="true" nullable="false" description="" default-value="" />
+        <attribute name="name" type="nvarchar" type-size="30" foreign-key="false" primary-key="false" nullable="false" description="" default-value="" />
+        <attribute name="typeID" type="int" type-size="" foreign-key="true" primary-key="false" nullable="false" description="" default-value="" />
+        <attribute name="catagory" type="tinyint" type-size="" foreign-key="false" primary-key="false" nullable="false" description="" default-value="" />
+        <attribute name="closed" type="bit" type-size="" foreign-key="false" primary-key="false" nullable="false" description="" default-value="" />
+        <attribute name="creditDebit" type="bit" type-size="" foreign-key="false" primary-key="false" nullable="false" description="" default-value="" />
+        <attribute name="envelopes" type="bit" type-size="" foreign-key="false" primary-key="false" nullable="false" description="" default-value="" />
+      </attributes>
+    </item>
+    <item id="di610372723559337845" cid="REL002" type="erd-relationship" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <erd-relation type="Association" multiplicity-from="1" multiplicity-to="1..*" />
+    </item>
+    <item id="di278038758390046488" cid="ENT002" type="erd-entity" name="BankInfo" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes>
+        <attribute name="accountID" type="int" type-size="" foreign-key="true" primary-key="true" nullable="false" description="" default-value="" />
+        <attribute name="bankID" type="int" type-size="" foreign-key="true" primary-key="false" nullable="false" description="" default-value="" />
+        <attribute name="accountNumber" type="nvarchar" type-size="12" foreign-key="false" primary-key="false" nullable="false" description="" default-value="" />
+        <attribute name="creditDebit" type="bit" type-size="" foreign-key="false" primary-key="false" nullable="false" description="" default-value="" />
+      </attributes>
+    </item>
+    <item id="di934818152489827859" cid="REL003" type="erd-relationship" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <erd-relation type="Association" multiplicity-from="1" multiplicity-to="1" />
+    </item>
+    <item id="di388139369770934565" cid="REL004" type="erd-relationship" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <erd-relation type="Association" multiplicity-from="1" multiplicity-to="1..*" />
+    </item>
+    <item id="di646459837551568909" cid="ENT002" type="erd-entity" name="EnvelopeGroup" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes>
+        <attribute name="id" type="int" type-size="" foreign-key="false" primary-key="true" nullable="false" description="" default-value="" />
+        <attribute name="name" type="nvarchar" type-size="30" foreign-key="false" primary-key="false" nullable="false" description="" default-value="" />
+      </attributes>
+    </item>
+    <item id="di732636806966524852" cid="ENT002" type="erd-entity" name="Transaction" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes>
+        <attribute name="id" type="int" type-size="" foreign-key="false" primary-key="true" nullable="false" description="" default-value="" />
+        <attribute name="transactionTypeID" type="int" type-size="" foreign-key="true" primary-key="false" nullable="false" description="" default-value="" />
+        <attribute name="date" type="datetime" type-size="" foreign-key="false" primary-key="false" nullable="false" description="" default-value="" />
+        <attribute name="description" type="ntext" type-size="" foreign-key="false" primary-key="false" nullable="true" description="" default-value="" />
+        <attribute name="complete" type="nchar" type-size="1" foreign-key="false" primary-key="false" nullable="false" description="" default-value="" />
+      </attributes>
+    </item>
+    <item id="di720276366145178742" cid="REL005" type="erd-relationship" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <erd-relation type="Association" multiplicity-from="1" multiplicity-to="1..*" />
+    </item>
+    <item id="di397550557390529394" cid="ENT002" type="erd-entity" name="LineItem" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes>
+        <attribute name="id" type="int" type-size="" foreign-key="false" primary-key="true" nullable="false" description="" default-value="" />
+        <attribute name="transactionID" type="int" type-size="" foreign-key="true" primary-key="false" nullable="false" description="" default-value="" />
+        <attribute name="accountID" type="int" type-size="" foreign-key="true" primary-key="false" nullable="false" description="" default-value="" />
+        <attribute name="amount" type="money" type-size="" foreign-key="false" primary-key="false" nullable="false" description="" default-value="" />
+        <attribute name="creditDebit" type="bit" type-size="" foreign-key="false" primary-key="false" nullable="false" description="" default-value="" />
+        <attribute name="confirmationNumber" type="ntext" type-size="" foreign-key="false" primary-key="false" nullable="true" description="" default-value="" />
+      </attributes>
+    </item>
+    <item id="di507588438130528840" cid="REL006" type="erd-relationship" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <erd-relation type="Association" multiplicity-from="1" multiplicity-to="1..*" />
+    </item>
+    <item id="di659368490242538136" cid="REL007" type="erd-relationship" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <erd-relation type="Association" multiplicity-from="1" multiplicity-to="1..*" />
+    </item>
+    <item id="di397495426273318833" cid="CMT002" type="comment" name="Comment" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <comment />
+    </item>
+    <item id="di709310459608934493" cid="CN002" type="comment-connector" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di484783430750687068" cid="ENT002" type="erd-entity" name="EnvelopeLine" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes>
+        <attribute name="id" type="int" type-size="" foreign-key="false" primary-key="true" nullable="false" description="" default-value="" />
+        <attribute name="lineItemID" type="int" type-size="" foreign-key="true" primary-key="false" nullable="false" description="" default-value="" />
+        <attribute name="envelopeID" type="int" type-size="" foreign-key="true" primary-key="false" nullable="false" description="" default-value="" />
+        <attribute name="description" type="ntext" type-size="" foreign-key="false" primary-key="false" nullable="true" description="" default-value="" />
+        <attribute name="amount" type="money" type-size="" foreign-key="false" primary-key="false" nullable="false" description="" default-value="" />
+      </attributes>
+    </item>
+    <item id="di395049340428588869" cid="ENT002" type="erd-entity" name="Envelope" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes>
+        <attribute name="id" type="int" type-size="" foreign-key="false" primary-key="true" nullable="false" description="" default-value="" />
+        <attribute name="name" type="nvarchar" type-size="30" foreign-key="false" primary-key="false" nullable="false" description="" default-value="" />
+        <attribute name="groupID" type="int" type-size="" foreign-key="true" primary-key="false" nullable="false" description="" default-value="" />
+        <attribute name="closed" type="bit" type-size="" foreign-key="false" primary-key="false" nullable="false" description="" default-value="" />
+        <attribute name="accountID" type="int" type-size="" foreign-key="true" primary-key="false" nullable="false" description="" default-value="" />
+        <attribute name="priorityOrder" type="int" type-size="" foreign-key="false" primary-key="false" nullable="false" description="" default-value="" />
+        <attribute name="notes" type="ntext" type-size="" foreign-key="false" primary-key="false" nullable="true" description="" default-value="" />
+        <attribute name="step" type="money" type-size="" foreign-key="false" primary-key="false" nullable="false" description="" default-value="" />
+        <attribute name="cap" type="money" type-size="" foreign-key="false" primary-key="false" nullable="false" description="" default-value="" />
+      </attributes>
+    </item>
+    <item id="di865309777916177085" cid="REL008" type="erd-relationship" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <erd-relation type="Association" multiplicity-from="1" multiplicity-to="1..*" />
+    </item>
+    <item id="di656166108361034946" cid="REL009" type="erd-relationship" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <erd-relation type="Association" multiplicity-from="1" multiplicity-to="1..*" />
+    </item>
+    <item id="di282277889277666323" cid="REL010" type="erd-relationship" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <erd-relation type="Association" multiplicity-from="1" multiplicity-to="1..*" />
+    </item>
+    <item id="di320355455151138525" cid="REL011" type="erd-relationship" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <erd-relation type="Association" multiplicity-from="1" multiplicity-to="1..*" />
+    </item>
+    <item id="di557873493675407604" cid="REL012" type="erd-relationship" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <erd-relation type="Association" multiplicity-from="1" multiplicity-to="1..*" />
+    </item>
+    <item id="di440307689867754116" cid="REL013" type="erd-relationship" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <erd-relation type="Association" multiplicity-from="1" multiplicity-to="1..*" />
+    </item>
+    <item id="di642740841140896773" cid="C001" type="class" name="MyData" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes>
+        <attribute id="" name="Instance" type="MyData" type-id="MyData" visibility="private" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </attribute>
+        <attribute id="" name="ffDataSet" type="FFDataSet" type-id="FFDataSet" visibility="private" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </attribute>
+        <attribute id="" name="[Table]TA" type="TableAdapter" type-id="TableAdapter" visibility="private" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </attribute>
+        <attribute id="" name="[TableName]" type="Table" type-id="Table" visibility="public" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </attribute>
+      </attributes>
+      <operations>
+        <operation id="" name="getInstance" type="MyData" type-id="MyData" visibility="public" abstract="false" virtual="false" static="true">
+          <parameters />
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </operation>
+        <operation id="" name="ColumnChanging" type="" type-id="" visibility="private" abstract="false" virtual="false" static="false">
+          <parameters />
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </operation>
+        <operation id="" name="[TableName]NewRow" type="" type-id="" visibility="private" abstract="false" virtual="false" static="false">
+          <parameters />
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </operation>
+        <operation id="" name="saveRow" type="" type-id="" visibility="public" abstract="false" virtual="false" static="false">
+          <parameters>
+            <parameter id="" name="row " type="DataRow" type-id="DataRow" default-value="">
+              <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+            </parameter>
+          </parameters>
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </operation>
+      </operations>
+      <template-parameters />
+    </item>
+    <item id="di564776287955003141" cid="CMT002" type="comment" name="Comment" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <comment>Singleton class
+This is where the default values are set.</comment>
+    </item>
+    <item id="di618024741555211114" cid="CN002" type="comment-connector" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di168446136446509012" cid="C002" type="class" name="ModelBase" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes>
+        <attribute id="" name="PropertyChanged" type="event" type-id="event" visibility="public" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </attribute>
+      </attributes>
+      <operations>
+        <operation id="" name="Raise PropertyChanged" type="" type-id="" visibility="protected" abstract="false" virtual="false" static="false">
+          <parameters>
+            <parameter id="" name="propertyName" type="String" type-id="Uml.String" default-value="">
+              <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+            </parameter>
+          </parameters>
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </operation>
+      </operations>
+      <template-parameters />
+    </item>
+    <item id="di297478058471418664" cid="IFC001" type="uml-interface" name="INotifyPropertyChanged" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di620402582196646757" cid="REL001" type="relationship" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <relation from="di168446136446509012" to="di297478058471418664">
+        <start-role id="" name="" multiplicity="" navigability="" association-type="association" visibility="private" />
+        <end-role id="" name="" multiplicity="" navigability="" association-type="association" visibility="private" />
+      </relation>
+    </item>
+    <item id="di754546168812364417" cid="C003" type="class" name="SettingsModel" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes />
+      <operations />
+      <template-parameters />
+    </item>
+    <item id="di553047728271375215" cid="GNR001" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di377102575897385102" cid="C004" type="class" name="Class5" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes />
+      <operations />
+      <template-parameters />
+    </item>
+    <item id="di342172781568488830" cid="GNR002" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di433454304240423847" cid="C005" type="class" name="RowModel" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes />
+      <operations>
+        <operation id="" name="SaveRow" type="" type-id="" visibility="protected" abstract="false" virtual="true" static="false">
+          <parameters />
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </operation>
+      </operations>
+      <template-parameters />
+    </item>
+    <item id="di595396237766964881" cid="GNR003" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di512576687676863135" cid="C006" type="class" name="SettingsModel" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes />
+      <operations />
+      <template-parameters />
+    </item>
+    <item id="di830098625635660171" cid="GNR004" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di285722709512437797" cid="C007" type="class" name="EnvelopeGroupModel" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes />
+      <operations />
+      <template-parameters />
+    </item>
+    <item id="di623655017942596424" cid="GNR005" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di160994836134872264" cid="C008" type="class" name="EnvelopeModel" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes />
+      <operations />
+      <template-parameters />
+    </item>
+    <item id="di330589161401298004" cid="GNR006" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di262254701509994488" cid="C009" type="class" name="LineTypeModel" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes />
+      <operations />
+      <template-parameters />
+    </item>
+    <item id="di921997499384927788" cid="GNR007" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di592983517496966830" cid="C010" type="class" name="AccountModel" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes />
+      <operations />
+      <template-parameters />
+    </item>
+    <item id="di184540845677423789" cid="GNR008" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di404008391235434949" cid="C011" type="class" name="AccountTypeModel" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes />
+      <operations />
+      <template-parameters />
+    </item>
+    <item id="di676417134704951380" cid="GNR009" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di936837697533553800" cid="C001" type="class" name="BankModel" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes />
+      <operations />
+      <template-parameters />
+    </item>
+    <item id="di706841530328174372" cid="GNR001" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di960831394199319326" cid="C002" type="class" name="TransactionTypeModel" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes />
+      <operations />
+      <template-parameters />
+    </item>
+    <item id="di569770749715951774" cid="GNR002" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di807384790893691590" cid="C003" type="class" name="BankInfoModel" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes />
+      <operations />
+      <template-parameters />
+    </item>
+    <item id="di704332944858359221" cid="GNR003" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di405420063674092967" cid="C004" type="class" name="TransactionModel" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes>
+        <attribute id="" name="ID" type="Integer" type-id="Uml.Integer" visibility="public" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </attribute>
+        <attribute id="" name="Date" type="DateTime" type-id="DateTime" visibility="public" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </attribute>
+        <attribute id="" name="TypeID" type="int" type-id="int" visibility="public" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </attribute>
+        <attribute id="" name="TypeName" type="string" type-id="string" visibility="public" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </attribute>
+        <attribute id="" name="Description" type="string" type-id="string" visibility="public" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </attribute>
+        <attribute id="" name="Complete" type="string" type-id="string" visibility="public" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </attribute>
+        <attribute id="" name="TransactionError" type="bool" type-id="bool" visibility="public" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </attribute>
+      </attributes>
+      <operations>
+        <operation id="" name="TransactionModel" type="" type-id="" visibility="public" abstract="false" virtual="false" static="false">
+          <parameters />
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </operation>
+        <operation id="" name="TransactionModel" type="" type-id="" visibility="public" abstract="false" virtual="false" static="false">
+          <parameters>
+            <parameter id="" name="row " type="TransactionRow" type-id="TransactionRow" default-value="">
+              <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+            </parameter>
+          </parameters>
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </operation>
+        <operation id="" name="determineOppAccountID" type="int" type-id="int" visibility="protected" abstract="false" virtual="false" static="false">
+          <parameters>
+            <parameter id="" name="cd" type="bool" type-id="bool" default-value="">
+              <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+            </parameter>
+          </parameters>
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </operation>
+        <operation id="" name="determineOppAccountName" type="string" type-id="string" visibility="protected" abstract="false" virtual="false" static="false">
+          <parameters>
+            <parameter id="" name="cd " type="bool" type-id="bool" default-value="">
+              <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+            </parameter>
+          </parameters>
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </operation>
+        <operation id="" name="setOppAccountID" type="bool" type-id="bool" visibility="protected" abstract="false" virtual="false" static="false">
+          <parameters>
+            <parameter id="" name="cd " type="bool" type-id="bool" default-value="">
+              <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+            </parameter>
+            <parameter id="" name=" newID " type="int" type-id="int" default-value="">
+              <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+            </parameter>
+          </parameters>
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </operation>
+        <operation id="" name="setOppLineAmount" type="" type-id="" visibility="protected" abstract="false" virtual="false" static="false">
+          <parameters>
+            <parameter id="" name="lineID" type="int" type-id="int" default-value="">
+              <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+            </parameter>
+          </parameters>
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </operation>
+      </operations>
+      <template-parameters />
+    </item>
+    <item id="di683824672298616449" cid="GNR004" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di443941139268818628" cid="C005" type="class" name="LineItemModel" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes />
+      <operations />
+      <template-parameters />
+    </item>
+    <item id="di492014485105741951" cid="GNR005" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di610580069621088828" cid="C006" type="class" name="EnvelopeLineModel" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes />
+      <operations />
+      <template-parameters />
+    </item>
+    <item id="di315212850924323749" cid="GNR006" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di305587093582023578" cid="C007" type="class" name="LineItemModel" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes>
+        <attribute id="" name="ID" type="int" type-id="int" visibility="public" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </attribute>
+        <attribute id="" name="TransactionID" type="int" type-id="int" visibility="public" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </attribute>
+        <attribute id="" name="AccountID" type="int" type-id="int" visibility="public" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </attribute>
+        <attribute id="" name="AccountName" type="string" type-id="string" visibility="public" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </attribute>
+        <attribute id="" name="ConfirmationNumber" type="string" type-id="string" visibility="public" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </attribute>
+        <attribute id="" name="Amount" type="decimal" type-id="decimal" visibility="public" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </attribute>
+        <attribute id="" name="CreditDebit" type="bool" type-id="bool" visibility="public" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </attribute>
+        <attribute id="" name="LineError" type="bool" type-id="bool" visibility="public" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </attribute>
+      </attributes>
+      <operations />
+      <template-parameters />
+    </item>
+    <item id="di872404934176278834" cid="GNR007" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di563795552952705233" cid="C008" type="class" name="EnvelopeLineModel" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes />
+      <operations />
+      <template-parameters />
+    </item>
+    <item id="di257243521928459735" cid="GNR008" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di149168714868343661" cid="C009" type="class" name="TransactionVM" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes />
+      <operations />
+      <template-parameters />
+    </item>
+    <item id="di182794856853461190" cid="GNR009" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di826816636132594743" cid="C002" type="class" name="ModelBase" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes>
+        <attribute id="" name="PropertyChanged" type="event" type-id="event" visibility="public" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </attribute>
+      </attributes>
+      <operations>
+        <operation id="" name="Raise PropertyChanged" type="" type-id="" visibility="protected" abstract="false" virtual="false" static="false">
+          <parameters>
+            <parameter id="" name="propertyName" type="String" type-id="Uml.String" default-value="">
+              <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+            </parameter>
+          </parameters>
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </operation>
+      </operations>
+      <template-parameters />
+    </item>
+    <item id="di583201137865577391" cid="IFC001" type="uml-interface" name="INotifyPropertyChanged" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di295213008971865333" cid="REL001" type="relationship" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <relation from="di168446136446509012" to="di297478058471418664">
+        <start-role id="" name="" multiplicity="" navigability="" association-type="association" visibility="private" />
+        <end-role id="" name="" multiplicity="" navigability="" association-type="association" visibility="private" />
+      </relation>
+    </item>
+    <item id="di412069120733676268" cid="C005" type="class" name="RowDataModel" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes />
+      <operations>
+        <operation id="" name="SaveRow" type="" type-id="" visibility="protected" abstract="false" virtual="true" static="false">
+          <parameters />
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </operation>
+      </operations>
+      <template-parameters />
+    </item>
+    <item id="di427713417986182468" cid="GNR003" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di924942112291058834" cid="CMT001" type="comment" name="Comment" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <comment />
+    </item>
+    <item id="di276627253857890869" cid="CN003" type="comment-connector" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di816012487970445948" cid="ELEM031" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di783542446983220040" cid="ELEM037" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di952709643222288964" cid="ELEM037" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FFD3D3D3" background-color2="#FF80FFFF" border-color="#FF2BFFFF" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+    </item>
+    <item id="di639399547705791743" cid="ELEM066" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di928324789409454810" cid="ELEM069" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di944824917994007520" cid="ELEM073" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di506444650375997838" cid="ELEM075" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di985874260375531904" cid="ELEM079" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di952704086936237498" cid="ELEM101" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di339080285822332508" cid="ELEM106" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di906353415430440957" cid="ELEM110" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di613478148597035440" cid="ELEM115" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di243427946333456579" cid="ELEM119" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di626119483431029055" cid="ELEM124" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di217401842176330617" cid="ELEM106" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di256298287980108959" cid="ELEM115" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di212332005750265273" cid="ELEM124" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di315801940453353349" cid="OBJ001" type="object" name="MyData" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FFFFAA55" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di777926585367896549" cid="OBJ002" type="object" name="FFDataSet" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FFD4D4D4" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di533797469486364273" cid="OBJ003" type="object" name="Account" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FFFFFFAA" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di495495886892986692" cid="OBJ003" type="object" name="Envelope" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FFFFFFAA" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di915709473832825224" cid="OBJ003" type="object" name="Transaction" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FFFFFFAA" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di344022032442951533" cid="OBJ003" type="object" name="Bank" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FFFFFFAA" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di651639643488107967" cid="ELEM147" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di523741279631911508" cid="OBJ003" type="object" name="AccountType" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FFFFFFAA" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di954756237990873101" cid="ELEM155" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di700712769132724680" cid="ELEM166" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di983893174790862130" cid="ELEM172" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di233787183807904907" cid="ELEM178" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di993889708809547036" cid="ELEM182" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di851994181406269956" cid="ELEM197" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di262919594889336637" cid="ELEM201" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di747870023214490943" cid="ELEM205" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di802891227393769314" cid="ELEM209" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di360983666236501304" cid="ELEM212" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di122023094238519163" cid="ELEM216" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di268135963628514304" cid="ELEM228" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di225420069253371482" cid="ELEM216" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di548232584568646886" cid="ELEM242" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di752286081171787751" cid="ELEM246" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di235059800211428986" cid="OBJ003" type="object" name="Table Adapters ..." style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FFFFFFAA" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di839966988871756180" cid="OBJ003" type="object" name="Table Adapters" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FFFFFFAA" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di324208545134437110" cid="ELEM267" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di730230779175173574" cid="ELEM273" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di552367747613296189" cid="OBJ003" type="object" name="Table Adapters" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FFFFFFAA" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di164486890601404243" cid="ELEM280" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di272133815613884286" cid="OBJ003" type="object" name="Envelope" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FFFFFFAA" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di263218488289727745" cid="OBJ003" type="object" name="&lt;Other Tables&gt;" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FFFFFFAA" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di514708387711750812" cid="ELEM288" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di447443278639636316" cid="CMT002" type="comment" name="Comment" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <comment>Singleton class.
+- Public referances to the dataset tables.
+- A single save function to commit row changes.
+- Private Table adapters.
+- Private event handlers for setting default values.
+- Simplified version of the FFDataSet</comment>
+    </item>
+    <item id="di727665480790035711" cid="CN004" type="comment-connector" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di211833807316634657" cid="ELEM313" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di316600189200245874" cid="ELEM321" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di871986216876145600" cid="ELEM328" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di480598843455764662" cid="ELEM335" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di916338835977022933" cid="ELEM341" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di961221667459779781" cid="C002" type="class" name="BindableObject" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FF8080FF" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <attributes>
+        <attribute id="" name="PropertyChanged" type="event" type-id="event" visibility="public" abstract="false" virtual="false" default-value="">
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </attribute>
+      </attributes>
+      <operations>
+        <operation id="" name="Raise PropertyChanged" type="" type-id="" visibility="protected" abstract="false" virtual="false" static="false">
+          <parameters>
+            <parameter id="" name="propertyName" type="String" type-id="Uml.String" default-value="">
+              <documentation />
+            </parameter>
+          </parameters>
+          <stereotypes />
+          <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+        </operation>
+      </operations>
+      <template-parameters />
+    </item>
+    <item id="di834203560474920003" cid="IFC001" type="uml-interface" name="INotifyPropertyChanged" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di924538724453359794" cid="REL001" type="relationship" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <relation from="di961221667459779781" to="di834203560474920003">
+        <start-role id="" name="" multiplicity="" navigability="" association-type="association" visibility="private" />
+        <end-role id="" name="" multiplicity="" navigability="" association-type="association" visibility="private" />
+      </relation>
+    </item>
+    <item id="di244760154951321312" cid="C005" type="class" name="RowDataModel" style-class="" is-abstract="true">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FF8080FF" background-color2="#FFBFBFBF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <attributes />
+      <operations />
+      <template-parameters />
+    </item>
+    <item id="di656834338547460223" cid="GNR003" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di377917071956812716" cid="GNR003" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di146011085937347230" cid="OBJ001" type="object" name="AccountRDM" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di116707008710194951" cid="OBJ001" type="object" name="EnvelopeRDM" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di912338056767741225" cid="OBJ001" type="object" name="TransactionDM" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di411438491270683058" cid="OBJ001" type="object" name="&lt;Other Tables&gt;RDM" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di374003147989043058" cid="GNR005" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di382474966691946143" cid="GNR006" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di572556601397333020" cid="GNR007" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di944248054105203689" cid="GNR008" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di623158968976288850" cid="ELEM043" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di376135732910215855" cid="GNR012" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di365889879522298940" cid="GNR013" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di908945295744736486" cid="GNR014" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di237323990324943646" cid="CMT001" type="comment" name="Comment" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <comment />
+    </item>
+    <item id="di210295935611941421" cid="CN004" type="comment-connector" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di322717614878268164" cid="CMT002" type="comment" name="Comment" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <comment>Each table from the dataset has a corosponding Row Data Model that takes an instance of a row in the consructer.
+- Table values are as easy to change as a property.
+- Null values are translated to Nullable types.
+- Subcribing to the data rows for value / column changes are propagated up through the INotifyPropertyChange interface.
+- All buisness logic for values and their dependent values between tables is handled here.
+</comment>
+    </item>
+    <item id="di740143930503525497" cid="CN005" type="comment-connector" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di560746417583236631" cid="OBJ003" type="object" name="Account" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FFFFFFAA" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di665672633632428069" cid="ELEM031" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di808980866141534281" cid="ELEM031" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di828116744204281106" cid="ELEM044" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di966011641979162470" cid="IFC001" type="uml-interface" name="iNotifyPropertChanged" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di628999347604174236" cid="REL001" type="relationship" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <relation from="di961221667459779781" to="di966011641979162470">
+        <start-role id="" name="" multiplicity="" navigability="" association-type="association" visibility="private" />
+        <end-role id="" name="" multiplicity="" navigability="" association-type="association" visibility="private" />
+      </relation>
+    </item>
+    <item id="di433926481778542802" cid="CMT001" type="comment" name="Comment" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <comment>Abstract class to seperate the row Data Model classes from the other classes inheriting from the Bindable Object class</comment>
+    </item>
+    <item id="di612232471445436887" cid="CN005" type="comment-connector" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di503737981109046941" cid="OBJ0030" type="object" name="EnvelopeGroup" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FFFFFFAA" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di135681304531829990" cid="OBJ003" type="object" name="LineItem" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FFFFFFAA" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di898536113940176219" cid="OBJ003" type="object" name="BankInfo" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FFFFFFAA" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di247497746675400564" cid="OBJ003" type="object" name="TransactionType" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FFFFFFAA" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di121240632263495913" cid="OBJ003" type="object" name="Settings" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FFFFFFAA" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di883871423951936764" cid="OBJ003" type="object" name="EnvelopeLine" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FFFFFFAA" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di698088280707842542" cid="GNR009" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di577576003241463506" cid="GNR008" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di158779648926011403" cid="GNR007" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di461345251216127690" cid="GNR006" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di174082035887525764" cid="GNR005" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di652313903264021482" cid="GNR004" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di559413848181849653" cid="GNR003" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di814874549764384505" cid="GNR002" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di727886470154901543" cid="ELEM125" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di815876354159869842" cid="ELEM125" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di224385509266090489" cid="ELEM125" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di306812915597414292" cid="GNR010" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di828734401352185805" cid="GNR011" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di300425855960056473" cid="GNR012" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di606045414600293699" cid="ELEM174" type="group" name="Group" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di427547316126958094" cid="OBJ001" type="object" name="EnvelopeGroupDRM" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FF80BFFF" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di521533103522215584" cid="GNR001" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di819373672550035192" cid="OBJ001" type="object" name="EnvelopeDRM" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FF80BFFF" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di310980538971764210" cid="OBJ001" type="object" name="EnvelopeLineDRM" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FF80BFFF" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di758164123703977747" cid="GNR002" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di631264786600240892" cid="GNR003" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di689813283318777591" cid="OBJ001" type="object" name="TransactionTypeDRM" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FF80BFFF" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di427522013377631462" cid="OBJ001" type="object" name="TransactionDRM" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FF80BFFF" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di674842396668563998" cid="OBJ001" type="object" name="LineItemDRM" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FF80BFFF" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di202110570586919186" cid="OBJ001" type="object" name="AccountTypeDRM" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FF80BFFF" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di751109537725461093" cid="OBJ001" type="object" name="AccountDRM" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FF80BFFF" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di308870477256892314" cid="OBJ001" type="object" name="BankDRM" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FF80BFFF" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di611324071137055911" cid="OBJ001" type="object" name="BankInfoDRM" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FF80BFFF" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di917636459767778604" cid="OBJ001" type="object" name="SettingsDRM" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FF80BFFF" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <object classifier-name="">
+        <attributes />
+      </object>
+    </item>
+    <item id="di422328168744754695" cid="GNR004" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di913665657607266819" cid="GNR005" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di306872425751973105" cid="GNR006" type="generalization" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di980018446587547767" cid="CNT001" type="containment" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di229907929886033245" cid="CMT001" type="comment" name="Comment" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <comment />
+    </item>
+    <item id="di322344505460266763" cid="CN006" type="comment-connector" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di456756350864407119" cid="C001" type="class" name="ObservableCollection" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <attributes />
+      <operations />
+      <template-parameters />
+    </item>
+    <item id="di411624198112418262" cid="IFC001" type="uml-interface" name="INotifyCollectionChanged" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+    <item id="di964271612233266422" cid="REL001" type="relationship" name="" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <relation from="di456756350864407119" to="di411624198112418262">
+        <start-role id="" name="" multiplicity="" navigability="" association-type="association" visibility="private" />
+        <end-role id="" name="" multiplicity="" navigability="" association-type="association" visibility="private" />
+      </relation>
+    </item>
+    <item id="di849942029351634353" cid="CMT002" type="comment" name="Comment" style-class="" is-abstract="false">
+      <stereotypes />
+      <tagged-values />
+      <documentation />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <comment>Each specialized table row adds on the referanced values (i.e. Account.Type.Name) as read only values.
+</comment>
+    </item>
+    <item id="di901211923371749020" cid="C005" type="class" name="TableDataModel" style-class="" is-abstract="true">
+      <stereotypes />
+      <tagged-values />
+      <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
+      <associated-diagrams />
+      <owned-items />
+      <style background-type="vertical-linear" background-color="#FF8080FF" background-color2="#FFBFBFBF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+      <attributes />
+      <operations />
+      <template-parameters />
+    </item>
+  </items>
+  <models>
+    <model id="p782888664976303874" name="Model 1" type="model" namespace="">
+      <documentation />
+      <sub-models />
+      <diagram type="entity-relationship" id="p697091324121641868" name="Database">
+        <meta>
+          <authors />
+          <description />
+          <creation-date>01/22/2011 07:48:07</creation-date>
+          <change-date>01/22/2011 10:30:10</change-date>
+          <revision-count>0</revision-count>
+          <version />
+        </meta>
+        <documentation />
+        <layer name="Default" visible="true" enabled="true" locked="false">
+          <item id="di435379540100168715" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="41" ay="77" awidth="174" aheight="79" x="41" y="77" width="174" height="79" />
+            <erd-entity />
+          </item>
+          <item id="di792824510691726753" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="59" ay="-80" awidth="140" aheight="81" x="59" y="-80" width="0" height="81" />
+          </item>
+          <item id="di705692167351331796" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="comment-connector">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="129" y1="1" x2="128" y2="77">
+              <points>
+                <point x="129" y="1" />
+                <point x="128" y="77" />
+              </points>
+            </layout>
+            <relation from="di792824510691726753" to="di435379540100168715" />
+          </item>
+          <item id="di370832362348317092" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="302" ay="82" awidth="215" aheight="79" x="302" y="82" width="215" height="79" />
+            <erd-entity />
+          </item>
+          <item id="di913247302954453999" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="600" ay="83" awidth="265" aheight="94" x="600" y="83" width="265" height="94" />
+            <erd-entity />
+          </item>
+          <item id="di697388883561173171" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="16" ay="237" awidth="215" aheight="79" x="16" y="237" width="215" height="79" />
+            <erd-entity />
+          </item>
+          <item id="di507281945206459663" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="300" ay="235" awidth="215" aheight="151" x="300" y="235" width="215" height="151" />
+            <erd-entity />
+          </item>
+          <item id="di610372723559337845" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="410" y1="161" x2="409" y2="235">
+              <points>
+                <point x="410" y="161" />
+                <point x="409" y="235" />
+              </points>
+            </layout>
+            <relation from="di370832362348317092" to="di507281945206459663" />
+          </item>
+          <item id="di278038758390046488" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="588" ay="231" awidth="282" aheight="128" x="588" y="231" width="282" height="128" />
+            <erd-entity />
+          </item>
+          <item id="di934818152489827859" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="515" y1="305" x2="588" y2="302">
+              <points>
+                <point x="515" y="305" />
+                <point x="588" y="302" />
+              </points>
+            </layout>
+            <relation from="di507281945206459663" to="di278038758390046488" />
+          </item>
+          <item id="di388139369770934565" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="731" y1="177" x2="730" y2="231">
+              <points>
+                <point x="731" y="177" />
+                <point x="730" y="231" />
+              </points>
+            </layout>
+            <relation from="di913247302954453999" to="di278038758390046488" />
+          </item>
+          <item id="di646459837551568909" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="955" ay="262" awidth="215" aheight="73" x="955" y="262" width="215" height="73" />
+            <erd-entity />
+          </item>
+          <item id="di732636806966524852" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="5" ay="420" awidth="238" aheight="151" x="5" y="420" width="238" height="151" />
+            <erd-entity />
+          </item>
+          <item id="di720276366145178742" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="124" y1="316" x2="124" y2="420">
+              <points>
+                <point x="124" y="316" />
+                <point x="124" y="420" />
+              </points>
+            </layout>
+            <relation from="di697388883561173171" to="di732636806966524852" />
+          </item>
+          <item id="di397550557390529394" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="299" ay="428" awidth="223" aheight="128" x="299" y="428" width="223" height="128" />
+            <erd-entity />
+          </item>
+          <item id="di507588438130528840" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="409" y1="386" x2="409" y2="428">
+              <points>
+                <point x="409" y="386" />
+                <point x="409" y="428" />
+              </points>
+            </layout>
+            <relation from="di507281945206459663" to="di397550557390529394" />
+          </item>
+          <item id="di659368490242538136" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="243" y1="494" x2="299" y2="494">
+              <points>
+                <point x="243" y="494" />
+                <point x="299" y="494" />
+              </points>
+            </layout>
+            <relation from="di732636806966524852" to="di397550557390529394" />
+          </item>
+          <item id="di484783430750687068" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="635" ay="429" awidth="188" aheight="128" x="635" y="429" width="188" height="128" />
+            <erd-entity />
+          </item>
+          <item id="di395049340428588869" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="959" ay="443" awidth="215" aheight="183" x="959" y="443" width="215" height="183" />
+            <erd-entity />
+          </item>
+          <item id="di865309777916177085" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="1063" y1="335" x2="1064" y2="443">
+              <points>
+                <point x="1063" y="335" />
+                <point x="1064" y="443" />
+              </points>
+            </layout>
+            <relation from="di646459837551568909" to="di395049340428588869" />
+          </item>
+          <item id="di656166108361034946" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="522" y1="492" x2="635" y2="493">
+              <points>
+                <point x="522" y="492" />
+                <point x="635" y="493" />
+              </points>
+            </layout>
+            <relation from="di397550557390529394" to="di484783430750687068" />
+          </item>
+          <item id="di320355455151138525" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="959" y1="521" x2="823" y2="504">
+              <points>
+                <point x="959" y="521" />
+                <point x="823" y="504" />
+              </points>
+            </layout>
+            <relation from="di395049340428588869" to="di484783430750687068" />
+          </item>
+          <item id="di440307689867754116" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="515" y1="362" x2="959" y2="452">
+              <points>
+                <point x="515" y="362" />
+                <point x="561" y="385" />
+                <point x="896" y="404" />
+                <point x="959" y="452" />
+              </points>
+            </layout>
+            <relation from="di507281945206459663" to="di395049340428588869" />
+          </item>
+        </layer>
+      </diagram>
+      <diagram type="uml-class" id="p209588773142205084" name="MyData Class">
+        <meta>
+          <authors />
+          <description />
+          <creation-date>01/27/2011 20:10:47</creation-date>
+          <change-date>01/27/2011 20:36:45</change-date>
+          <revision-count>0</revision-count>
+          <version />
+        </meta>
+        <documentation />
+        <layer name="Default" visible="true" enabled="true" locked="false">
+          <item id="di642740841140896773" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="266" ay="183" awidth="218" aheight="167" x="266" y="183" width="218" height="167" />
+            <class />
+          </item>
+          <item id="di564776287955003141" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="555" ay="183" awidth="161" aheight="82" x="555" y="183" width="161" height="82" />
+          </item>
+          <item id="di618024741555211114" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="comment-connector">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="555" y1="237" x2="484" y2="248">
+              <points>
+                <point x="555" y="237" />
+                <point x="484" y="248" />
+              </points>
+            </layout>
+            <relation from="di564776287955003141" to="di642740841140896773" />
+          </item>
+        </layer>
+      </diagram>
+      <diagram type="uml-class" id="p955821269999053157" name="ClassDiagram2">
+        <meta>
+          <authors />
+          <description />
+          <creation-date>01/27/2011 20:46:12</creation-date>
+          <change-date>01/29/2011 01:17:50</change-date>
+          <revision-count>0</revision-count>
+          <version />
+        </meta>
+        <documentation />
+        <layer name="Default" visible="true" enabled="true" locked="false">
+          <item id="di168446136446509012" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="-130" ay="157" awidth="310" aheight="71" x="-130" y="157" width="310" height="71" />
+            <class />
+          </item>
+          <item id="di297478058471418664" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="-54" ay="30.5" awidth="167" aheight="95" x="-54" y="30.5" width="167" height="95" />
+          </item>
+          <item id="di620402582196646757" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="27" y1="157" x2="28" y2="120">
+              <points>
+                <point x="27" y="157" />
+                <point x="28" y="120" />
+              </points>
+            </layout>
+            <relation from="di168446136446509012" to="di297478058471418664" />
+            <role-positions start-role="38.37185,105.8085" end-role="25,15" start-multiplicity="25,-15" end-multiplicity="-48.97141,35.16199" />
+          </item>
+          <item id="di433454304240423847" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="222" ay="311" awidth="150" aheight="54" x="222" y="311" width="0" height="54" />
+            <class />
+          </item>
+          <item id="di595396237766964881" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="247" y1="311" x2="92" y2="228">
+              <points>
+                <point x="247" y="311" />
+                <point x="92" y="228" />
+              </points>
+            </layout>
+            <relation from="di433454304240423847" to="di168446136446509012" />
+          </item>
+          <item id="di512576687676863135" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="523" ay="217" awidth="150" aheight="43" x="523" y="217" width="0" height="43" />
+            <class />
+          </item>
+          <item id="di830098625635660171" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="532" y1="260" x2="372" y2="313">
+              <points>
+                <point x="532" y="260" />
+                <point x="372" y="313" />
+              </points>
+            </layout>
+            <relation from="di512576687676863135" to="di433454304240423847" />
+          </item>
+          <item id="di285722709512437797" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="751" ay="527" awidth="150" aheight="36" x="751" y="527" width="0" height="36" />
+            <class />
+          </item>
+          <item id="di623655017942596424" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="780" y1="527" x2="366" y2="365">
+              <points>
+                <point x="780" y="527" />
+                <point x="366" y="365" />
+              </points>
+            </layout>
+            <relation from="di285722709512437797" to="di433454304240423847" />
+          </item>
+          <item id="di160994836134872264" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="746" ay="474" awidth="150" aheight="40" x="746" y="474" width="0" height="40" />
+            <class />
+          </item>
+          <item id="di330589161401298004" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="754" y1="474" x2="372" y2="360">
+              <points>
+                <point x="754" y="474" />
+                <point x="372" y="360" />
+              </points>
+            </layout>
+            <relation from="di160994836134872264" to="di433454304240423847" />
+          </item>
+          <item id="di262254701509994488" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="753" ay="583" awidth="150" aheight="41" x="753" y="583" width="0" height="41" />
+            <class />
+          </item>
+          <item id="di921997499384927788" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="786" y1="583" x2="351" y2="365">
+              <points>
+                <point x="786" y="583" />
+                <point x="351" y="365" />
+              </points>
+            </layout>
+            <relation from="di262254701509994488" to="di433454304240423847" />
+          </item>
+          <item id="di592983517496966830" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="728" ay="235" awidth="150" aheight="48" x="728" y="235" width="0" height="48" />
+            <class />
+          </item>
+          <item id="di184540845677423789" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="728" y1="271" x2="372" y2="326">
+              <points>
+                <point x="728" y="271" />
+                <point x="372" y="326" />
+              </points>
+            </layout>
+            <relation from="di592983517496966830" to="di433454304240423847" />
+          </item>
+          <item id="di404008391235434949" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="731" ay="304" awidth="150" aheight="38" x="731" y="304" width="0" height="38" />
+            <class />
+          </item>
+          <item id="di676417134704951380" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="731" y1="325" x2="372" y2="336">
+              <points>
+                <point x="731" y="325" />
+                <point x="372" y="336" />
+              </points>
+            </layout>
+            <relation from="di404008391235434949" to="di433454304240423847" />
+          </item>
+          <item id="di936837697533553800" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="737" ay="356" awidth="150" aheight="40" x="737" y="356" width="0" height="40" />
+            <class />
+          </item>
+          <item id="di706841530328174372" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="737" y1="370" x2="372" y2="344">
+              <points>
+                <point x="737" y="370" />
+                <point x="372" y="344" />
+              </points>
+            </layout>
+            <relation from="di936837697533553800" to="di433454304240423847" />
+          </item>
+          <item id="di960831394199319326" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="749" ay="645" awidth="164" aheight="48" x="749" y="645" width="164" height="48" />
+            <class />
+          </item>
+          <item id="di569770749715951774" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="792" y1="645" x2="341" y2="365">
+              <points>
+                <point x="792" y="645" />
+                <point x="341" y="365" />
+              </points>
+            </layout>
+            <relation from="di960831394199319326" to="di433454304240423847" />
+          </item>
+          <item id="di807384790893691590" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="740" ay="408" awidth="150" aheight="47" x="740" y="408" width="0" height="47" />
+            <class />
+          </item>
+          <item id="di704332944858359221" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="740" y1="418" x2="372" y2="352">
+              <points>
+                <point x="740" y="418" />
+                <point x="372" y="352" />
+              </points>
+            </layout>
+            <relation from="di807384790893691590" to="di433454304240423847" />
+          </item>
+          <item id="di405420063674092967" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="308" ay="481" awidth="298" aheight="258" x="308" y="481" width="298" height="258" />
+            <class />
+          </item>
+          <item id="di683824672298616449" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="381" y1="481" x2="313" y2="365">
+              <points>
+                <point x="381" y="481" />
+                <point x="313" y="365" />
+              </points>
+            </layout>
+            <relation from="di405420063674092967" to="di433454304240423847" />
+          </item>
+          <item id="di305587093582023578" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="303" ay="790" awidth="309" aheight="196" x="303" y="790" width="309" height="196" />
+            <class />
+          </item>
+          <item id="di872404934176278834" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="-44,-9" x1="458" y1="790" x2="457" y2="739">
+              <points>
+                <point x="458" y="790" />
+                <point x="457" y="739" />
+              </points>
+            </layout>
+            <relation from="di305587093582023578" to="di405420063674092967" />
+          </item>
+          <item id="di563795552952705233" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="473" ay="1048" awidth="150" aheight="170" x="0" y="0" width="0" height="0" />
+            <class />
+          </item>
+          <item id="di257243521928459735" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="517" y1="1048" x2="494" y2="986">
+              <points>
+                <point x="517" y="1048" />
+                <point x="494" y="986" />
+              </points>
+            </layout>
+            <relation from="di563795552952705233" to="di305587093582023578" />
+          </item>
+          <item id="di149168714868343661" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="-31" ay="546" awidth="150" aheight="170" x="-31" y="546" width="0" height="0" />
+            <class />
+          </item>
+          <item id="di182794856853461190" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="119" y1="627" x2="308" y2="618">
+              <points>
+                <point x="119" y="627" />
+                <point x="308" y="618" />
+              </points>
+            </layout>
+            <relation from="di149168714868343661" to="di405420063674092967" />
+          </item>
+        </layer>
+      </diagram>
+      <diagram type="uml-object" id="p565785630846267642" name="Global Diagram">
+        <meta>
+          <authors />
+          <description />
+          <creation-date>03/03/2011 21:48:07</creation-date>
+          <change-date>03/20/2011 21:42:36</change-date>
+          <revision-count>0</revision-count>
+          <version />
+        </meta>
+        <documentation />
+        <layer name="Default" visible="true" enabled="true" locked="false">
+          <item id="di447443278639636316" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="1444" ay="1394" awidth="322" aheight="137" x="1444" y="1394" width="322" height="137" />
+          </item>
+          <item id="di727665480790035711" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="comment-connector">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="1444" y1="1462" x2="1228" y2="1462">
+              <points>
+                <point x="1444" y="1462" />
+                <point x="1228" y="1462" />
+              </points>
+            </layout>
+            <relation from="di447443278639636316" to="di315801940453353349" />
+          </item>
+          <item id="di961221667459779781" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="-383" ay="1026" awidth="310" aheight="71" x="-383" y="1026" width="310" height="71" />
+            <class />
+          </item>
+          <item id="di244760154951321312" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="246" ay="1040" awidth="150" aheight="46" x="246" y="1040" width="0" height="46" />
+            <class />
+          </item>
+          <item id="di656834338547460223" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="246" y1="1063" x2="-73" y2="1062">
+              <points>
+                <point x="246" y="1063" />
+                <point x="-73" y="1062" />
+              </points>
+            </layout>
+            <relation from="di244760154951321312" to="di961221667459779781" />
+          </item>
+          <item id="di315801940453353349" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="398" ay="1274" awidth="830" aheight="376" x="398" y="1274" width="830" height="376" />
+          </item>
+          <item id="di322717614878268164" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="1430" ay="1006" awidth="392" aheight="144" x="1430" y="1006" width="392" height="144" />
+          </item>
+          <item id="di777926585367896549" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="414" ay="1455" awidth="795" aheight="182" x="414" y="1455" width="795" height="182" />
+          </item>
+          <item id="di665672633632428069" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="group">
+            <layout ax="248" ay="1147.361" awidth="1134" aheight="97.65845" x="248" y="1147.361" width="150" height="170" />
+            <group-items>
+              <item id="di640177335381371702" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="drawing-text">
+                <layout ax="248" ay="1219.361" awidth="124" aheight="25.65823" x="248" y="1219.361" width="124" height="25.65823" />
+                <drawing-text>
+                  <text>Data Access Layer</text>
+                </drawing-text>
+                <style class="default" />
+              </item>
+              <item id="di203216488406584101" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="drawing-shape">
+                <layout ax="254" ay="1183" awidth="1128" aheight="25" x="254" y="1183" width="150" height="170" />
+                <drawing-shape type="Rectangle" />
+                <style background-type="solid" background-color="#FFAA0000" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+              </item>
+              <item id="di489423359746680207" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="drawing-text">
+                <layout ax="249" ay="1147.361" awidth="142" aheight="24.65823" x="249" y="1147.361" width="142" height="24.65823" />
+                <drawing-text>
+                  <text>Buisiness Logic Layer</text>
+                </drawing-text>
+                <style class="default" />
+              </item>
+            </group-items>
+          </item>
+          <item id="di828116744204281106" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="group">
+            <layout ax="248" ay="637.3607" awidth="1134" aheight="89.6582" x="248" y="637.3607" width="150" height="170" />
+            <group-items>
+              <item id="di825316192898645386" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="drawing-text">
+                <layout ax="248" ay="637.3607" awidth="122" aheight="19.65823" x="248" y="637.3607" width="122" height="19.65823" />
+                <drawing-text>
+                  <text>Presentation Layer</text>
+                </drawing-text>
+                <style class="default" />
+              </item>
+              <item id="di203216488406584101" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="drawing-shape">
+                <layout ax="254" ay="668" awidth="1128" aheight="25" x="254" y="668" width="150" height="170" />
+                <drawing-shape type="Rectangle" />
+                <style background-type="solid" background-color="#FFAA0000" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+              </item>
+              <item id="di489423359746680207" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="drawing-text">
+                <layout ax="248" ay="702.3607" awidth="142" aheight="24.65823" x="248" y="702.3607" width="142" height="24.65823" />
+                <drawing-text>
+                  <text>Buisiness Logic Layer</text>
+                </drawing-text>
+                <style class="default" />
+              </item>
+            </group-items>
+          </item>
+          <item id="di966011641979162470" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="-306" ay="1131.5" awidth="161" aheight="92" x="-306" y="1131.5" width="161" height="92" />
+          </item>
+          <item id="di628999347604174236" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="-227" y1="1097" x2="-227" y2="1132">
+              <points>
+                <point x="-227" y="1097" />
+                <point x="-227" y="1132" />
+              </points>
+            </layout>
+            <relation from="di961221667459779781" to="di966011641979162470" />
+            <role-positions start-role="25,15" end-role="25,15" start-multiplicity="25,-15" end-multiplicity="25,-15" />
+          </item>
+          <item id="di958600252940018415" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="drawing-shape">
+            <layout ax="190" ay="285" awidth="13" aheight="1346" x="190" y="285" width="150" height="1346" />
+            <drawing-shape type="Rectangle" />
+            <style class="default" />
+          </item>
+          <item id="di433926481778542802" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="-18" ay="1089" awidth="169" aheight="86" x="-18" y="1089" width="169" height="86" />
+          </item>
+          <item id="di612232471445436887" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="comment-connector">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="151" y1="1109" x2="246" y2="1083">
+              <points>
+                <point x="151" y="1109" />
+                <point x="246" y="1083" />
+              </points>
+            </layout>
+            <relation from="di433926481778542802" to="di244760154951321312" />
+          </item>
+          <item id="di224385509266090489" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="group">
+            <layout ax="430.5" ay="1490" awidth="756.5" aheight="118" x="147" y="113" width="150" height="170" />
+            <group-items>
+              <item id="di503737981109046941" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+                <layout ax="432" ay="1490" awidth="120" aheight="26" x="430" y="1490" width="120" height="26" />
+              </item>
+              <item id="di495495886892986692" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+                <layout ax="450.5" ay="1536" awidth="83" aheight="26" x="446" y="1538" width="83" height="26" />
+              </item>
+              <item id="di883871423951936764" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+                <layout ax="430.5" ay="1580" awidth="123" aheight="28" x="431" y="1584" width="123" height="28" />
+              </item>
+              <item id="di247497746675400564" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+                <layout ax="605" ay="1490" awidth="127" aheight="28" x="605" y="1493" width="127" height="28" />
+              </item>
+              <item id="di915709473832825224" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+                <layout ax="617" ay="1536" awidth="103" aheight="28" x="615" y="1536" width="103" height="28" />
+              </item>
+              <item id="di135681304531829990" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+                <layout ax="624" ay="1580" awidth="89" aheight="28" x="620" y="1580" width="89" height="28" />
+              </item>
+              <item id="di533797469486364273" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+                <layout ax="788" ay="1536" awidth="85" aheight="28" x="792" y="1537" width="85" height="28" />
+              </item>
+              <item id="di523741279631911508" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+                <layout ax="777" ay="1490" awidth="107" aheight="27" x="777" y="1495" width="107" height="27" />
+              </item>
+              <item id="di344022032442951533" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+                <layout ax="960.5" ay="1490" awidth="58" aheight="27" x="960" y="1498" width="58" height="27" />
+              </item>
+              <item id="di898536113940176219" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+                <layout ax="951" ay="1536" awidth="77" aheight="27" x="951" y="1548" width="77" height="27" />
+              </item>
+              <item id="di121240632263495913" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+                <layout ax="1098" ay="1490" awidth="89" aheight="28" x="1098" y="1502" width="89" height="28" />
+              </item>
+            </group-items>
+          </item>
+          <item id="di815876354159869842" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="group">
+            <layout ax="426.5" ay="1312" awidth="756.5" aheight="118" x="426.5" y="1312" width="150" height="170" />
+            <group-items>
+              <item id="di503737981109046941" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+                <layout ax="428" ay="1312" awidth="120" aheight="26" x="426" y="1312" width="120" height="26" />
+              </item>
+              <item id="di495495886892986692" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+                <layout ax="446.5" ay="1358" awidth="83" aheight="26" x="442" y="1360" width="83" height="26" />
+              </item>
+              <item id="di883871423951936764" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+                <layout ax="426.5" ay="1402" awidth="123" aheight="28" x="427" y="1406" width="123" height="28" />
+              </item>
+              <item id="di247497746675400564" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+                <layout ax="601" ay="1312" awidth="127" aheight="28" x="601" y="1315" width="127" height="28" />
+              </item>
+              <item id="di915709473832825224" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+                <layout ax="613" ay="1358" awidth="103" aheight="28" x="611" y="1358" width="103" height="28" />
+              </item>
+              <item id="di135681304531829990" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+                <layout ax="620" ay="1402" awidth="89" aheight="28" x="616" y="1402" width="89" height="28" />
+              </item>
+              <item id="di533797469486364273" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+                <layout ax="784" ay="1358" awidth="85" aheight="28" x="788" y="1359" width="85" height="28" />
+              </item>
+              <item id="di523741279631911508" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+                <layout ax="773" ay="1312" awidth="107" aheight="27" x="773" y="1317" width="107" height="27" />
+              </item>
+              <item id="di344022032442951533" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+                <layout ax="956.5" ay="1312" awidth="58" aheight="27" x="956" y="1320" width="58" height="27" />
+              </item>
+              <item id="di898536113940176219" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+                <layout ax="947" ay="1358" awidth="77" aheight="27" x="947" y="1370" width="77" height="27" />
+              </item>
+              <item id="di121240632263495913" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+                <layout ax="1094" ay="1312" awidth="89" aheight="28" x="1094" y="1324" width="89" height="28" />
+              </item>
+            </group-items>
+          </item>
+          <item id="di427547316126958094" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="474" ay="1015" awidth="150" aheight="29" x="474" y="1015" width="0" height="29" />
+          </item>
+          <item id="di819373672550035192" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="477" ay="1060" awidth="150" aheight="29" x="477" y="1060" width="0" height="29" />
+          </item>
+          <item id="di310980538971764210" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="478" ay="1105" awidth="150" aheight="29" x="478" y="1105" width="0" height="29" />
+          </item>
+          <item id="di689813283318777591" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="650" ay="1014" awidth="150" aheight="29" x="650" y="1014" width="0" height="29" />
+          </item>
+          <item id="di427522013377631462" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="652" ay="1062" awidth="150" aheight="29" x="652" y="1062" width="0" height="29" />
+          </item>
+          <item id="di674842396668563998" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="654" ay="1107" awidth="150" aheight="29" x="654" y="1107" width="0" height="29" />
+          </item>
+          <item id="di202110570586919186" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="830" ay="1016" awidth="150" aheight="29" x="830" y="1016" width="0" height="29" />
+          </item>
+          <item id="di751109537725461093" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="831" ay="1063" awidth="150" aheight="29" x="831" y="1063" width="0" height="29" />
+          </item>
+          <item id="di308870477256892314" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="1002" ay="1016" awidth="150" aheight="29" x="1002" y="1016" width="0" height="29" />
+          </item>
+          <item id="di611324071137055911" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="1003" ay="1066" awidth="150" aheight="29" x="1003" y="1066" width="0" height="29" />
+          </item>
+          <item id="di508505137259710638" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="drawing-shape">
+            <layout ax="418" ay="1052" awidth="26" aheight="28" x="418" y="1052" width="150" height="170" />
+            <drawing-shape type="ArrowLeft" />
+            <style background-type="vertical-linear" background-color="#FF80BFFF" background-color2="#FFFFFFFF" border-color="#FF000000" border-width="1" shadow-type="smooth" shadow-offset="-2,-2" shadow-size="6,6" shadow-visible="true" shadow-color="#50000000" shadow-radius="6" gloss-effect="true" threed-gloss-effect="false" wrap-name-text="true" wrap-other-text="true" name-color="#FF000000" name-font="Arial;10;B" name-horizontal-alignment="center" name-vertical-alignment="center" part-header-color="#FF1E1E1E" part-header-font="Arial;9;I" part-header-horizontal-alignment="center" part-header-vertical-alignment="center" text-color="#FF000000" text-font="Arial;10;" text-horizontal-alignment="left" text-vertical-alignment="center" tagged-value-color="#FF1E1E1E" tagged-value-font="Arial;9;I" tagged-value-horizontal-alignment="center" tagged-value-vertical-alignment="center" stereotype-color="#FF1E1E1E" stereotype-font="Arial;9;I" stereotype-horizontal-alignment="center" stereotype-vertical-alignment="center" />
+          </item>
+          <item id="di456756350864407119" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="-795" ay="820" awidth="328" aheight="44" x="-795" y="820" width="328" height="44" />
+            <class />
+          </item>
+          <item id="di411624198112418262" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="-720" ay="895" awidth="177" aheight="82" x="-720" y="895" width="177" height="82" />
+          </item>
+          <item id="di964271612233266422" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="-631" y1="864" x2="-632" y2="895">
+              <points>
+                <point x="-631" y="864" />
+                <point x="-632" y="895" />
+              </points>
+            </layout>
+            <relation from="di456756350864407119" to="di411624198112418262" />
+            <role-positions start-role="25,15" end-role="25,15" start-multiplicity="25,-15" end-multiplicity="25,-15" />
+          </item>
+          <item id="di849942029351634353" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="1427" ay="909" awidth="392" aheight="76" x="1427" y="909" width="392" height="76" />
+          </item>
+          <item id="di901211923371749020" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" type="entity">
+            <layout ax="248" ay="888" awidth="150" aheight="46" x="248" y="888" width="0" height="46" />
+            <class />
+          </item>
+        </layer>
+      </diagram>
+    </model>
+  </models>
+</sim-project>
