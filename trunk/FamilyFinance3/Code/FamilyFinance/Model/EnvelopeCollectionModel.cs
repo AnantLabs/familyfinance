@@ -11,16 +11,16 @@ namespace FamilyFinance.Model
         ///////////////////////////////////////////////////////////////////////
         // Properties
         ///////////////////////////////////////////////////////////////////////
-        public List<IdNameCat> EnvelopeCollection
+        public List<IdName> EnvelopeCollection
         {
             get
             {
-                List<IdNameCat> temp = new List<IdNameCat>();
+                List<IdName> temp = new List<IdName>();
 
                 foreach (FFDataSet.EnvelopeRow row in MyData.getInstance().Envelope)
-                    temp.Add(new IdNameCat(row.id, row.name, row.EnvelopeGroupRow.name));
+                    temp.Add(new IdName(row.id, row.name));
 
-                temp.Sort(new IdNameCatComparer());
+                temp.Sort(new IdNameComparer());
 
                 return temp;
             }
@@ -33,8 +33,6 @@ namespace FamilyFinance.Model
         {
             this.RaisePropertyChanged("EnvelopeCollection");
         }
-
-
 
         ///////////////////////////////////////////////////////////////////////
         // Public functions

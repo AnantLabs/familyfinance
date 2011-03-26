@@ -5,10 +5,10 @@
     <Setting Name="FamilyFinanceDBConnectionString" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Data Source=C:\Users\Erik Lee\Documents\Projects\FamilyFinance\Trunk\FamilyFinance3\Code\FamilyFinance\Database\FamilyFinanceDB.sdf&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;Data Source=C:\Users\Erik\Documents\Projects\FamilyFinance\Trunk\FamilyFinance3\Code\FamilyFinance\Database\FamilyFinanceDB.sdf&lt;/ConnectionString&gt;
   &lt;ProviderName&gt;Microsoft.SqlServerCe.Client.3.5&lt;/ProviderName&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Data Source=C:\Users\Erik Lee\Documents\Projects\FamilyFinance\Trunk\FamilyFinance3\Code\FamilyFinance\Database\FamilyFinanceDB.sdf</Value>
+      <Value Profile="(Default)">Data Source=C:\Users\Erik\Documents\Projects\FamilyFinance\Trunk\FamilyFinance3\Code\FamilyFinance\Database\FamilyFinanceDB.sdf</Value>
     </Setting>
     <Setting Name="origionalConnection" Type="System.String" Scope="User">
       <Value Profile="(Default)">Data Source=|DataDirectory|\Database\FamilyFinanceDB.sdf</Value>

@@ -238,9 +238,9 @@ namespace FamilyFinance.Registry
             return oppName.ToString();
         }
 
-        protected bool setOppAccountID(bool cd, int newOppAccountID)
+        protected bool setOppAccountID(bool cd, int newAccountID)
         {
-            if (newOppAccountID == SpclAccount.MULTIPLE || newOppAccountID == SpclAccount.NULL)
+            if (newAccountID == SpclAccount.MULTIPLE || newAccountID == SpclAccount.NULL)
                 return false;
 
             FFDataSet.LineItemRow[] rows = this.transactionRow.GetLineItemRows();
@@ -259,11 +259,10 @@ namespace FamilyFinance.Registry
             // if count is 0 or 1 oppAccountID already has the right value
             // if count > 2 then change to multiple.
             if (count == 1)
-                oppLine.accountID = newOppAccountID;
+                oppLine.accountID = newAccountID;
 
             return result;
         }
-
 
         protected void setOppLineAmount(int lineID)
         {
@@ -303,10 +302,6 @@ namespace FamilyFinance.Registry
             this.saveRow();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="row"></param>
         public TransactionModel(FFDataSet.TransactionRow row)
         {
             this.transactionRow = row;

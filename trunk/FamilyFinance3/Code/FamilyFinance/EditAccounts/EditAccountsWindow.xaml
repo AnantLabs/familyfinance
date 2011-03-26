@@ -17,38 +17,40 @@
             <!-- Bank information tmplate -->
             <local:AccountDetailsTemplateSelector.BankTemplate>
                 <DataTemplate>
-                    <StackPanel Background="White">
-                        <StackPanel Background="White"
-                                    Margin="10,5,10,10"
-                                    Orientation="Horizontal">
+                    <StackPanel Background="{StaticResource DarkBlueBackGround}">
+                        <StackPanel Background="{StaticResource DarkBlueBackGround}"
+                                Margin="3"
+                                Orientation="Horizontal"
+                                >
 
                             <Label Content="Bank:" 
-                                   VerticalAlignment="Center" 
-                                   />
+                               VerticalAlignment="Center" 
+                               Foreground="White"
+                               />
                             <ComboBox Margin="0, 0, 10, 0" 
-                                      MinWidth="100"
-                                      VerticalAlignment="Center"
-                                      SelectedValue="{Binding Path=BankID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      ItemsSource="{Binding Source={StaticResource bankCM}, Path=BankCollection, Mode=OneWay}"
-                                      SelectedValuePath="ID"
-                                      DisplayMemberPath="Name"
-                                      />
+                                  MinWidth="100"
+                                  VerticalAlignment="Center"
+                                  SelectedValue="{Binding Path=BankID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  ItemsSource="{Binding Source={StaticResource bankCM}, Path=BankCollection, Mode=OneWay}"
+                                  SelectedValuePath="ID"
+                                  DisplayMemberPath="Name"
+                                  />
 
                             <Label Content="Account Number:" 
-                                   VerticalAlignment="Center" 
-                                   />
-                            <TextBox Height="23" 
-                                     Width="100" 
-                                     Margin="0, 0, 10, 0" 
-                                     Text="{Binding Path=BankAccountNumber, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
-                                     VerticalAlignment="Center" 
-                                     />
+                               VerticalAlignment="Center" 
+                               Foreground="White"
+                               />
+                            <TextBox MinWidth="100" 
+                                 Margin="0, 0, 10, 0" 
+                                 Text="{Binding Path=BankAccountNumber, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                 VerticalAlignment="Center" 
+                                 />
 
                             <Label Content="Routing Number:" 
-                                   VerticalAlignment="Center" 
-                                   />
-                            <TextBox Height="23" 
-                                     Width="70" 
+                               VerticalAlignment="Center" 
+                               Foreground="White"
+                               />
+                            <TextBox MinWidth="100" 
                                      Margin="0, 0, 10, 0" 
                                      IsEnabled="False"
                                      Text="{Binding Path=RoutingNumber, Mode=OneWay}" 
@@ -56,8 +58,9 @@
                                      />
 
                             <Label Content="Account Normal:" 
-                                   VerticalAlignment="Center" 
-                                   />
+                               Foreground="White"
+                               VerticalAlignment="Center" 
+                               />
                             <ComboBox Margin="0, 0, 10, 0" 
                                       MinWidth="60"
                                       VerticalAlignment="Center"

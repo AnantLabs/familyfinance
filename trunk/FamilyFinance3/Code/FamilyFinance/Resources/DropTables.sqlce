@@ -1,10 +1,15 @@
+-- Future Table DROP TABLE FitLine;
+-- Future Table DROP TABLE OFXFiles;
+
 DROP TABLE EnvelopeLine;
 DROP TABLE LineItem;
+DROP TABLE [Transaction];
 DROP TABLE Envelope;
+DROP TABLE BankInfo;
 DROP TABLE Account;
-DROP TABLE LineType;
 DROP TABLE EnvelopeGroup;
 DROP TABLE AccountType;
-
-
-
+-- Old Table DROP TABLE LineType;
+DROP TABLE TransactionType;
+DROP TABLE Bank;
+DROP TABLE Settings;
