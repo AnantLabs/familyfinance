@@ -25,6 +25,7 @@
       <type-set file="UmlTypes.xml" />
       <type-set file="UmlTypes.xml" />
       <type-set file="UmlTypes.xml" />
+      <type-set file="UmlTypes.xml" />
     </type-sets>
     <custom-types>
       <type id="Uml.Integer" name="Uml.Integer" description="" />
@@ -1817,7 +1818,10 @@ This is where the default values are set.</comment>
         <operation id="" name="Raise PropertyChanged" type="" type-id="" visibility="protected" abstract="false" virtual="false" static="false">
           <parameters>
             <parameter id="" name="propertyName" type="String" type-id="Uml.String" default-value="">
-              <documentation />
+              <documentation>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17\par
+}
+</documentation>
             </parameter>
           </parameters>
           <stereotypes />

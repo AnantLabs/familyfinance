@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{16002E7C-0645-4089-B51D-624886199FCF}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FamilyFinance</RootNamespace>
+    <AssemblyName>FamilyFinance</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.SqlServerCe, Version=3.5.1.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Buisness\AccountBankInfoDRM.cs" />
+    <Compile Include="Buisness\AccountCatagoryTM.cs" />
+    <Compile Include="Buisness\AccountTM.cs" />
+    <Compile Include="Buisness\AccountTypeDRM.cs" />
+    <Compile Include="Buisness\AccountTypeTM.cs" />
+    <Compile Include="Buisness\BankDRM.cs" />
+    <Compile Include="Buisness\AccountDRM.cs" />
+    <Compile Include="Buisness\BankTM.cs" />
+    <Compile Include="Buisness\EnvelopeGroupTM.cs" />
+    <Compile Include="Buisness\TableModel.cs" />
+    <Compile Include="Buisness\TransactionTypeTM.cs" />
+    <Compile Include="Buisness\CreditDebitTM.cs" />
+    <Compile Include="Buisness\EnvelopeDRM.cs" />
+    <Compile Include="Buisness\EnvelopeLineDRM.cs" />
+    <Compile Include="Data\CatagoryCON.cs" />
+    <Compile Include="Data\AccountTypeCON.cs" />
+    <Compile Include="Data\BankCON.cs" />
+    <Compile Include="Data\AccountCON.cs" />
+    <Compile Include="Data\EnvelopeCON.cs" />
+    <Compile Include="Data\EnvelopeGroupCON.cs" />
+    <Compile Include="Data\CreditDebitCON.cs" />
+    <Compile Include="Data\FFDataSet.cs">
+      <DependentUpon>FFDataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Data\FFDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FFDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Data\LineCompleteCON.cs" />
+    <Compile Include="Data\TransactionTypeCON.cs" />
+    <Compile Include="Data\MyData.cs" />
+    <Compile Include="Buisness\DataRowModel.cs" />
+    <Compile Include="Buisness\LineItemDRM.cs" />
+    <Compile Include="Buisness\TransactionDRM.cs" />
+    <Compile Include="Buisness\TransactionTypeDRM.cs" />
+    <Page Include="Presentation\EditAccount\AccountsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Buisness\EnvelopeGroupDRM.cs" />
+    <Compile Include="Buisness\BindableObject.cs" />
+    <Compile Include="Presentation\EditAccount\AccountsWindow.xaml.cs">
+      <DependentUpon>AccountsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\EditAccount\EditAccountsVM.cs" />
+    <Compile Include="Presentation\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Presentation\EditTypes\EditTypesWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Presentation\EditTypes\EditTypesVM.cs" />
+    <Compile Include="Presentation\EditTypes\EditTypesWindow.xaml.cs">
+      <DependentUpon>EditTypesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\ViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Data\FFDataSet.xsc">
+      <DependentUpon>FFDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Data\FFDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>FFDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Data\FFDataSet.xss">
+      <DependentUpon>FFDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="FFClassDiagram.cd" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Presentation\Registry\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

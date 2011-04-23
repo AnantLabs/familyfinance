@@ -1,0 +1,67 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+using FamilyFinance.Data;
+
+namespace FamilyFinance.Buisness
+{
+    public class TransactionTypeDRM : DataRowModel
+    {
+        /// <summary>
+        /// Local referance to the Transaction type row this object is modeling.
+        /// </summary>
+        private FFDataSet.TransactionTypeRow TransactionTypeRow;
+
+        /// <summary>
+        /// Gets the ID of the transaction type.
+        /// </summary>
+        public int ID
+        {
+            get
+            {
+                return this.TransactionTypeRow.id;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the name of the Transaction type.
+        /// </summary>
+        public string Name 
+        {
+            get 
+            {
+                return this.TransactionTypeRow.name;
+            }
+
+            set
+            {
+                this.TransactionTypeRow.name = this.validLength(value, TransactionTypeCON.NameMaxLength);
+            }
+        }
+
+        /// <summary>
+        /// Creates the object and keeps a local referance to the given Transaction type row.
+        /// </summary>
+        /// <param name="aRow"></param>
+        public TransactionTypeDRM(FFDataSet.TransactionTypeRow atRow)
+        {
+            this.TransactionTypeRow = atRow;
+        }
+
+        /// <summary>
+        /// Creates the object and keeps a reference to a new Transaction type row.
+        /// </summary>
+        /// <param name="aRow"></param>
+        public TransactionTypeDRM()
+        {
+            this.TransactionTypeRow = MyData.getInstance().TransactionType.NewTransactionTypeRow();
+
+            this.TransactionTypeRow.id = MyData.getInstance().getNextID("TransactionType");
+            this.TransactionTypeRow.name = "";
+
+            MyData.getInstance().TransactionType.AddTransactionTypeRow(this.TransactionTypeRow);
+        }
+    }
+}
