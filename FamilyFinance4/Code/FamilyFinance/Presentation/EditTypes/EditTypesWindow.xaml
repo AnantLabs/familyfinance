@@ -1,0 +1,49 @@
+﻿<Window x:Class="FamilyFinance.Presentation.EditTypes.EditTypesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:FamilyFinance.Presentation.EditTypes"
+        Height="288" 
+        Width="368"
+        Title="{Binding Path=Title, Mode=OneTime}">
+    
+    <Window.Resources>
+        <Style x:Key="RightAlignStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="TextAlignment" Value="Right" />
+        </Style>
+    </Window.Resources>
+    <Grid Background="{StaticResource DarkBlueBackGround}">
+        <DataGrid Name="typeDataGrid" 
+                  Margin="3"
+                  HorizontalAlignment="Stretch" 
+                  VerticalAlignment="Stretch"
+                  AutoGenerateColumns="False" 
+                  EnableRowVirtualization="True" 
+                  ItemsSource="{Binding Path=TableCollection, Mode=OneTime}"
+                  SelectionMode="Single" 
+                  CanUserDeleteRows="False" 
+                  CanUserResizeRows="False"
+                  CanUserAddRows="True" 
+                  HeadersVisibility="Column">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="nameColumn" 
+                                    Binding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                    Header="Name" 
+                                    Width="*"/>
+                <DataGridTextColumn x:Name="routingNumberColumn" 
+                                    Binding="{Binding Path=RoutingNumber, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                    Header="Routing Number" 
+                                    Width="*" />
+                <DataGridTextColumn x:Name="minPercentColumn" 
+                                    Binding="{Binding Path=MinPercentage, StringFormat='{}{0}%', Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                    Header="Minimum" 
+                                    ElementStyle="{StaticResource RightAlignStyle}"
+                                    Width="*" />
+                <DataGridTextColumn x:Name="maxPercentColumn" 
+                                    Binding="{Binding Path=MaxPercentage, StringFormat='{}{0}%', Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                    Header="Maximum" 
+                                    ElementStyle="{StaticResource RightAlignStyle}"
+                                    Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
