@@ -25,7 +25,7 @@ namespace FamilyFinance.Data
         /// <summary>
         /// The object to represent an account as an expence.
         /// </summary>
-        public static CatagoryCON EXPENCE = new CatagoryCON(3, "Expence", "EXP");
+        public static CatagoryCON EXPENSE = new CatagoryCON(3, "Expense", "EXP");
 
 
 
@@ -46,8 +46,8 @@ namespace FamilyFinance.Data
             if (id == CatagoryCON.ACCOUNT.ID)
                 return CatagoryCON.ACCOUNT.Name;
 
-            if (id == CatagoryCON.EXPENCE.ID)
-                return CatagoryCON.EXPENCE.Name;
+            if (id == CatagoryCON.EXPENSE.ID)
+                return CatagoryCON.EXPENSE.Name;
 
             throw new System.Exception("Invalid catagory id:" + id);
         }
@@ -70,8 +70,8 @@ namespace FamilyFinance.Data
             if (id == CatagoryCON.ACCOUNT.ID)
                 return CatagoryCON.ACCOUNT.ShortName;
 
-            if (id == CatagoryCON.EXPENCE.ID)
-                return CatagoryCON.EXPENCE.ShortName;
+            if (id == CatagoryCON.EXPENSE.ID)
+                return CatagoryCON.EXPENSE.ShortName;
 
             throw new System.Exception("Invalid catagory id:" + id);
         }

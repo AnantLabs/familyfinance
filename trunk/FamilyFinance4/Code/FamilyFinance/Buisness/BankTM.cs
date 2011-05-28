@@ -28,6 +28,20 @@ namespace FamilyFinance.Buisness
                 return _EditableBanks;
             }
         }
+
+        private ObservableCollection<BankDRM> _AllBanks;
+        public ObservableCollection<BankDRM> AllBanks
+        {
+            get
+            {
+                _AllBanks = new ObservableCollection<BankDRM>();
+
+                foreach (FFDataSet.BankRow row in MyData.getInstance().Bank)
+                    _AllBanks.Add(new BankDRM(row));
+
+                return _AllBanks;
+            }
+        }
         
         ///////////////////////////////////////////////////////////////////////
         // Private functions

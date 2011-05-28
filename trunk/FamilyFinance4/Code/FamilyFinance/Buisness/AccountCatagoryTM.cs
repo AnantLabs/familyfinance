@@ -20,7 +20,7 @@ namespace FamilyFinance.Buisness
 
                 //temp.Add(CatagoryCON.NULL);
                 temp.Add(CatagoryCON.ACCOUNT);
-                temp.Add(CatagoryCON.EXPENCE);
+                temp.Add(CatagoryCON.EXPENSE);
                 temp.Add(CatagoryCON.INCOME);
 
                 return temp;

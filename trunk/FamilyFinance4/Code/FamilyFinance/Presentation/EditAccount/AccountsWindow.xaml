@@ -29,35 +29,41 @@
             </MenuItem>
             <CheckBox Content="Incomes" 
                       Margin="0" 
-                      IsChecked="{Binding Path=IncludeIncomes, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" 
                       VerticalAlignment="Center" 
                       HorizontalAlignment="Left" 
+                      Checked="IncludeIncomes"
+                      Unchecked="FilterIncomes"
                       />
             <CheckBox Content="Accounts" 
-                      Margin="0" 
-                      IsChecked="{Binding Path=IncludeAccounts, Mode=OneWayToSource, FallbackValue=True, UpdateSourceTrigger=PropertyChanged}" 
+                      Margin="0"  
                       VerticalAlignment="Center" 
                       HorizontalAlignment="Left" 
+                      Checked="IncludeAccounts"
+                      Unchecked="FilterAccounts"
+                      IsChecked="True"
                       />
-            <CheckBox Content="Expences" 
+            <CheckBox Content="Expenses" 
                       Margin="0" 
-                      IsChecked="{Binding Path=IncludeExpences, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" 
                       VerticalAlignment="Center" 
                       HorizontalAlignment="Left" 
+                      Checked="IncludeExpenses"
+                      Unchecked="FilterExpenses"
                       />
             <CheckBox Content="Closed" 
-                      Margin="0" 
-                      IsChecked="{Binding Path=ShowClosed, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" 
+                      Margin="0"  
                       VerticalAlignment="Center" 
                       HorizontalAlignment="Left" 
+                      Checked="IncludeClosed"
+                      Unchecked="FilterClosed"
                       />
             <TextBox MinWidth="150" 
-                     Margin="0" 
-                     Text="{Binding Path=SearchText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" 
+                     Margin="0"  
                      HorizontalAlignment="Left" 
                      VerticalAlignment="Center" 
+                     TextChanged="FilterText"
                      />
         </Menu>
+        <!-- THe Main Grid -->
         <DataGrid Name="accountDataGrid" 
                   Grid.Row="1" 
                   Margin="3"
@@ -65,24 +71,24 @@
                   VerticalAlignment="Stretch"
                   AutoGenerateColumns="False" 
                   EnableRowVirtualization="True" 
-                  ItemsSource="{Binding Path=Accounts}" 
+                  ItemsSource="{Binding Source={StaticResource eaViewModel}, Path=Accounts, Mode=OneTime}" 
                   RowDetailsVisibilityMode="VisibleWhenSelected" 
                   SelectionMode="Single" 
                   CanUserDeleteRows="False" 
                   HeadersVisibility="Column">
             <DataGrid.Columns>
+                <!-- Account Name column -->
                 <DataGridTextColumn x:Name="nameColumn" 
                                     Binding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                     Header="Account Name" 
                                     CanUserSort="True"
-                                    MinWidth="150"
-                                    Width="50*" />
+                                    Width="30*" />
+                <!-- Account Type Combobox column -->
                 <DataGridTemplateColumn x:Name="typeColumnCB" 
                                         Header="Account Type"
                                         CanUserSort="True"
                                         SortMemberPath="TypeName" 
-                                        MinWidth="150"
-                                        Width="30*">
+                                        Width="20*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Path=TypeName, Mode=OneWay}" />
@@ -98,11 +104,11 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
+                <!-- Account Catagory Combobox column -->
                 <DataGridTemplateColumn x:Name="catagoryColumnCB" 
                                         Header="Catagory" 
                                         CanUserSort="True"
                                         SortMemberPath="CatagoryName" 
-                                        MinWidth="100"
                                         Width="20*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -119,20 +125,20 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
+                <!-- Closed column -->
                 <DataGridCheckBoxColumn x:Name="closedColumn"  
                                         Header="Closed" 
                                         Width="Auto"
-                                        MinWidth="40"
                                         CanUserResize="False"
                                         Binding="{Binding Path=Closed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                         />
+                <!-- Uses Envelopes column -->
                 <DataGridTemplateColumn x:Name="useEnvelopesColumn" 
                                         Header="Envelopes" 
                                         CanUserSort="True"
                                         CanUserResize="False"
                                         SortMemberPath="UsesEnvelopes" 
-                                        Width="Auto"
-                                        MinWidth="65">
+                                        Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <CheckBox HorizontalAlignment="Center"
@@ -142,14 +148,68 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                <!-- Has Bank Info column -->
                 <DataGridCheckBoxColumn x:Name="BankInfoColumn" 
                                         Header="Bank Info" 
                                         Width="Auto"
-                                        MinWidth="55"
                                         CanUserSort="True"
                                         CanUserResize="False"
                                         Binding="{Binding Path=HasBankInfo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         />
+                <!-- Account Number column -->
+                <DataGridTextColumn x:Name="accountNumberColumn" 
+                                    Binding="{Binding Path=AccountNumber, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                    Header="Account Number" 
+                                    CanUserSort="True"
+                                    Width="20*"/>
+                <!-- Account Normal Combobox column -->
+                <DataGridTemplateColumn x:Name="accountNormalColumnCB" 
+                                        Header="Normal" 
+                                        CanUserSort="True"
+                                        SortMemberPath="AccountNormal" 
+                                        Width="10*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=NormalName, Mode=OneWay}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox SelectedValue="{Binding Path=AccountNormal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      ItemsSource="{Binding Source={StaticResource eaViewModel}, Path=Normals, Mode=OneWay}"
+                                      SelectedValuePath="Value"
+                                      DisplayMemberPath="Name" 
+                                      />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <!-- Bank Combobox column -->
+                <DataGridTemplateColumn x:Name="bankColumnCB" 
+                                        Header="Bank"
+                                        CanUserSort="True"
+                                        SortMemberPath="BankName" 
+                                        Width="20*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=BankName, Mode=OneWay}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox SelectedValue="{Binding Path=BankID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      ItemsSource="{Binding Source={StaticResource eaViewModel}, Path=Banks, Mode=OneWay}"
+                                      SelectedValuePath="ID"
+                                      DisplayMemberPath="Name">
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <!-- Routing Number column -->
+                <DataGridTextColumn x:Name="routingNumberColumn" 
+                                    Binding="{Binding Path=RoutingNumber, Mode=OneWay}" 
+                                    Header="Routing Number" 
+                                    CanUserSort="True"
+                                    Width="20*" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

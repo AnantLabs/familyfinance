@@ -5,6 +5,8 @@ using System.Windows.Data;
 
 using FamilyFinance.Buisness;
 using FamilyFinance.Data;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace FamilyFinance.Presentation.EditAccount
 {
@@ -15,110 +17,6 @@ namespace FamilyFinance.Presentation.EditAccount
     {
         ///////////////////////////////////////////////////////////
         // Properties
-        private bool _IncludeIncomes;
-        public bool IncludeIncomes
-        {
-            get
-            {
-                return this._IncludeIncomes;
-            }
-            set
-            {
-                this._IncludeIncomes = value;
-            } 
-        }
-
-        private bool _IncludeAccounts;
-        public bool IncludeAccounts
-        {
-            get
-            {
-                return this._IncludeAccounts;
-            }
-            set
-            {
-                this._IncludeAccounts = value;
-                //this.RaisePropertyChanged("Accounts");
-            }
-        }
-
-        private bool _IncludeExpences;
-        public bool IncludeExpences
-        {
-            get
-            {
-                return this._IncludeExpences;
-            }
-            set
-            {
-                this._IncludeExpences = value;
-                //this.RaisePropertyChanged("Accounts");
-            }
-        }
-
-        private string _SearchText;
-        public string SearchText
-        {
-            get
-            {
-                return _SearchText;
-            }
-            set
-            {
-                this._SearchText = value;
-                //this.RaisePropertyChanged("Accounts");
-            }
-        }
-
-        private bool _ShowClosed;
-        public bool ShowClosed
-        {
-            get
-            {
-                return this._ShowClosed;
-            }
-            set
-            {
-                this._ShowClosed = value;
-                //this.RaisePropertyChanged("Accounts");
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the collection of accounts.
-        /// </summary>
-        //public ObservableCollection<AccountBankInfoDRM> Accounts 
-        //{
-        //    get
-        //    {
-        //        ObservableCollection<AccountBankInfoDRM> accounts = new ObservableCollection<AccountBankInfoDRM>();
-
-        //        List<byte> cats = new List<byte>();
-
-        //        if (this._IncludeIncomes)
-        //            cats.Add(CatagoryCON.INCOME.ID);
-
-        //        if (this._IncludeAccounts)
-        //            cats.Add(CatagoryCON.ACCOUNT.ID);
-
-        //        if (this._IncludeExpences)
-        //            cats.Add(CatagoryCON.EXPENCE.ID);
-
-        //        foreach (FFDataSet.AccountRow aRow in MyData.getInstance().Account)
-        //        {
-        //            bool validID = aRow.id > 0;
-        //            bool validCat = cats.Contains(aRow.catagory);
-        //            bool inSearch = aRow.name.ToLower().Contains(this._SearchText.ToLower());
-        //            bool doShow = this._ShowClosed || !aRow.closed;
-
-        //            if (validID && validCat && inSearch && doShow)
-        //                accounts.Add(new AccountBankInfoDRM(aRow));
-        //        }
-
-        //        return accounts;
-        //    }
-        //}
-
         private ICollectionView _Accounts;
         public ICollectionView Accounts
         {
@@ -133,7 +31,6 @@ namespace FamilyFinance.Presentation.EditAccount
             get
             {
                 ICollectionView temp = CollectionViewSource.GetDefaultView(new AccountTypeTM().AllAccountTypes);
-
                 temp.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
 
                 return temp;
@@ -148,6 +45,26 @@ namespace FamilyFinance.Presentation.EditAccount
             }
         }
 
+        public List<CreditDebitCON> Normals
+        {
+            get
+            {
+                return new CreditDebitTM().List;
+            }
+        }
+
+        public ICollectionView Banks
+        {
+            get
+            {
+                ICollectionView temp = CollectionViewSource.GetDefaultView(new BankTM().AllBanks);
+                temp.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+
+                return temp;
+            }
+        }
+
+
         ///////////////////////////////////////////////////////////
         // Public functions
 
@@ -156,15 +73,103 @@ namespace FamilyFinance.Presentation.EditAccount
         /// </summary>
         public EditAccountsVM()
         {
-            this._IncludeAccounts = true;
-            this._IncludeExpences = false;
-            this._IncludeIncomes = false;
-            this._SearchText = "";
-            this._ShowClosed = false;
+            //this._IncludeAccounts = true;
+            //this._IncludeExpenses = false;
+            //this._IncludeIncomes = false;
+            //this._SearchText = "";
+            //this._ShowClosed = false;
 
             this._Accounts = CollectionViewSource.GetDefaultView(new AccountTM().EditableAccounts);
             this._Accounts.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
         }
-    
+
+
+
+        public void IncludeIncomes(object sender, RoutedEventArgs e)
+        {
+            //_Accounts.Filter -= new FilterEventHandler(IncomeFilter);
+        }
+
+        public void FilterIncomes(object sender, RoutedEventArgs e)
+        {
+            //_Accounts.Filter += new FilterEventHandler(IncomeFilter);
+        }
+
+        private void IncomeFilter(object sender, FilterEventArgs e)
+        {
+            AccountBankInfoDRM row = e.Item as AccountBankInfoDRM;
+         
+            if ((row == null) || row.CatagoryID == CatagoryCON.INCOME.ID)
+                e.Accepted = false;
+        }
+
+
+
+        public void IncludeAccounts(object sender, RoutedEventArgs e)
+        {
+            //_Accounts.Filter -= new FilterEventHandler(AccountFilter);
+        }
+
+        public void FilterAccounts(object sender, RoutedEventArgs e)
+        {
+            //_Accounts.Filter += new FilterEventHandler(AccountFilter);
+        }
+
+        private void AccountFilter(object sender, FilterEventArgs e)
+        {
+            AccountBankInfoDRM row = e.Item as AccountBankInfoDRM;
+
+            if ((row == null) || row.CatagoryID == CatagoryCON.ACCOUNT.ID)
+                e.Accepted = false;
+        }
+
+
+
+        public void IncludeExpenses(object sender, RoutedEventArgs e)
+        {
+            //_Accounts.Filter -= new FilterEventHandler(ExpenseFilter);
+        }
+
+        public void FilterExpenses(object sender, RoutedEventArgs e)
+        {
+            //_Accounts.Filter += new FilterEventHandler(ExpenseFilter);
+        }
+
+        private void ExpenseFilter(object sender, FilterEventArgs e)
+        {
+            AccountBankInfoDRM row = e.Item as AccountBankInfoDRM;
+
+            if ((row == null) || row.CatagoryID == CatagoryCON.EXPENSE.ID)
+                e.Accepted = false;
+        }
+
+
+
+
+        public void IncludeClosed(object sender, RoutedEventArgs e)
+        {
+            //_Accounts.Filter -= new FilterEventHandler(ClosedFilter);
+        }
+
+        public void FilterClosed(object sender, RoutedEventArgs e)
+        {
+            //_Accounts.Filter += new FilterEventHandler(ClosedFilter);
+        }
+
+        private void ClosedFilter(object sender, FilterEventArgs e)
+        {
+            AccountBankInfoDRM row = e.Item as AccountBankInfoDRM;
+
+            if ((row == null) || row.Closed == true)
+                e.Accepted = false;
+        }
+
+
+
+
+        public void FilterText(object sender, TextChangedEventArgs e)
+        {
+            //_Accounts.Filter -= new FilterEventHandler(IncomeFilter);
+        }
     }
 }
