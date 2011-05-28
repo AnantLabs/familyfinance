@@ -16,12 +16,12 @@ namespace FamilyFinance.Presentation.EditTypes
 
         ///////////////////////////////////////////////////////////
         // Properties
-        //public System.Collections.IEnumerable TableCollection { get; private set; }
         public string Title { get; private set; }
 
         public int MaxNameLength { get; private set; }
         public int MaxRoutingLength { get; private set; }
 
+        // Using ICollectionView so we can set the sorting here.
         private ICollectionView _TableCollection;
         public ICollectionView TableCollection 
         {
@@ -70,8 +70,8 @@ namespace FamilyFinance.Presentation.EditTypes
             }
 
             // By default sort the table alphabetically by the name colum.
+            // This slower sort is fime with these small lists.
             this._TableCollection.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-            // TODO: find a faster sort.
         }
 
 

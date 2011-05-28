@@ -12,7 +12,7 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////////////////
         // Properties
         ///////////////////////////////////////////////////////////////////////
-        public List<CreditDebitCON> Catagories
+        public List<CreditDebitCON> List
         {
             get 
             {
