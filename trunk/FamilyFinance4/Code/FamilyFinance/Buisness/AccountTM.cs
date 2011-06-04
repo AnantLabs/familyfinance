@@ -12,16 +12,16 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////////////////
         // Properties
         ///////////////////////////////////////////////////////////////////////
-        private ObservableCollection<AccountBankInfoDRM> _EditableAccounts;
-        public ObservableCollection<AccountBankInfoDRM> EditableAccounts
+        private ObservableCollection<AccountDRM> _EditableAccounts;
+        public ObservableCollection<AccountDRM> EditableAccounts
         {
             get 
             {
-                _EditableAccounts = new ObservableCollection<AccountBankInfoDRM>();
+                _EditableAccounts = new ObservableCollection<AccountDRM>();
 
                 foreach (FFDataSet.AccountRow row in MyData.getInstance().Account)
                     if(row.id > AccountCON.NULL.ID)
-                        _EditableAccounts.Add(new AccountBankInfoDRM(row));
+                        _EditableAccounts.Add(new AccountDRM(row));
 
                 return _EditableAccounts; 
             }
