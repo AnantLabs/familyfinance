@@ -2,17 +2,30 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:FamilyFinance.Presentation.EditAccount"
+        xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         Title="Accounts" 
         WindowStyle="SingleBorderWindow"
         Height="486" 
         Width="917">
     <Window.Resources>
-        <local:EditAccountsVM x:Key="eaViewModel" />
+        <local:EditAccountsVM x:Key="editAccountsVM" />
+        <!-- Account Type CVS -->
+        <CollectionViewSource x:Key="accountTypesCVS" Source="{Binding Source={StaticResource editAccountsVM}, Path=AccountTypes}">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="Name" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+        <!-- Bank CVS -->
+        <CollectionViewSource x:Key="banksCVS" Source="{Binding Source={StaticResource editAccountsVM}, Path=Banks}">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="Name" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
     </Window.Resources>
     <Grid Height="Auto" 
           Width="Auto" 
           Background="{StaticResource DarkBlueBackGround}"
-          DataContext="{Binding Source={StaticResource eaViewModel}}">
+          DataContext="{Binding Source={StaticResource editAccountsVM}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -22,7 +35,8 @@
               Grid.Row="0" 
               HorizontalContentAlignment="Right" 
               FlowDirection="LeftToRight" 
-              VerticalContentAlignment="Center" Background="{StaticResource LightBlueMenuBackground}">
+              VerticalContentAlignment="Center" 
+              Background="{StaticResource LightBlueMenuBackground}">
             <MenuItem Header="Edit" Margin="4,4,50,4">
                 <MenuItem Header="Banks"/>
                 <MenuItem Header="Account Types"/>
@@ -31,39 +45,34 @@
                       Margin="0" 
                       VerticalAlignment="Center" 
                       HorizontalAlignment="Left" 
-                      Checked="IncludeIncomes"
-                      Unchecked="FilterIncomes"
+                      IsChecked="{Binding Source={StaticResource editAccountsVM}, Path=ShowIncomes}"
                       />
             <CheckBox Content="Accounts" 
                       Margin="0"  
                       VerticalAlignment="Center" 
                       HorizontalAlignment="Left" 
-                      Checked="IncludeAccounts"
-                      Unchecked="FilterAccounts"
-                      IsChecked="True"
+                      IsChecked="{Binding Source={StaticResource editAccountsVM}, Path=ShowAccounts}"
                       />
             <CheckBox Content="Expenses" 
                       Margin="0" 
                       VerticalAlignment="Center" 
                       HorizontalAlignment="Left" 
-                      Checked="IncludeExpenses"
-                      Unchecked="FilterExpenses"
+                      IsChecked="{Binding Source={StaticResource editAccountsVM}, Path=ShowExpenses}"
                       />
             <CheckBox Content="Closed" 
                       Margin="0"  
                       VerticalAlignment="Center" 
                       HorizontalAlignment="Left" 
-                      Checked="IncludeClosed"
-                      Unchecked="FilterClosed"
+                      IsChecked="{Binding Source={StaticResource editAccountsVM}, Path=ShowClosed}"
                       />
             <TextBox MinWidth="150" 
                      Margin="0"  
                      HorizontalAlignment="Left" 
-                     VerticalAlignment="Center" 
-                     TextChanged="FilterText"
+                     VerticalAlignment="Center"
+                     Text="{Binding Source={StaticResource editAccountsVM}, Path=SearchText, UpdateSourceTrigger=PropertyChanged}"
                      />
         </Menu>
-        <!-- THe Main Grid -->
+        <!-- The Main Grid -->
         <DataGrid Name="accountDataGrid" 
                   Grid.Row="1" 
                   Margin="3"
@@ -71,11 +80,11 @@
                   VerticalAlignment="Stretch"
                   AutoGenerateColumns="False" 
                   EnableRowVirtualization="True" 
-                  ItemsSource="{Binding Source={StaticResource eaViewModel}, Path=Accounts, Mode=OneTime}" 
                   RowDetailsVisibilityMode="VisibleWhenSelected" 
                   SelectionMode="Single" 
                   CanUserDeleteRows="False" 
-                  HeadersVisibility="Column">
+                  HeadersVisibility="Column"
+                  ItemsSource="{Binding Source={StaticResource editAccountsVM}, Path=AccountsView}" >
             <DataGrid.Columns>
                 <!-- Account Name column -->
                 <DataGridTextColumn x:Name="nameColumn" 
@@ -97,7 +106,7 @@
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
                             <ComboBox SelectedValue="{Binding Path=TypeID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      ItemsSource="{Binding Source={StaticResource eaViewModel}, Path=AccountTypes, Mode=OneWay}"
+                                      ItemsSource="{Binding Source={StaticResource accountTypesCVS}}"
                                       SelectedValuePath="ID"
                                       DisplayMemberPath="Name">
                             </ComboBox>
@@ -118,7 +127,7 @@
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
                             <ComboBox SelectedValue="{Binding Path=CatagoryID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      ItemsSource="{Binding Source={StaticResource eaViewModel}, Path=Catagories, Mode=OneWay}"
+                                      ItemsSource="{Binding Source={StaticResource editAccountsVM}, Path=Catagories}"
                                       SelectedValuePath="ID"
                                       DisplayMemberPath="Name" 
                                       />
@@ -176,7 +185,7 @@
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
                             <ComboBox SelectedValue="{Binding Path=AccountNormal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      ItemsSource="{Binding Source={StaticResource eaViewModel}, Path=Normals, Mode=OneWay}"
+                                      ItemsSource="{Binding Source={StaticResource editAccountsVM}, Path=Normals}"
                                       SelectedValuePath="Value"
                                       DisplayMemberPath="Name" 
                                       />
@@ -197,7 +206,7 @@
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
                             <ComboBox SelectedValue="{Binding Path=BankID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      ItemsSource="{Binding Source={StaticResource eaViewModel}, Path=Banks, Mode=OneWay}"
+                                      ItemsSource="{Binding Source={StaticResource banksCVS}}"
                                       SelectedValuePath="ID"
                                       DisplayMemberPath="Name">
                             </ComboBox>

@@ -13,7 +13,7 @@
                   VerticalAlignment="Stretch"
                   AutoGenerateColumns="False" 
                   EnableRowVirtualization="True" 
-                  ItemsSource="{Binding Path=TableCollection, Mode=OneTime}"
+                  ItemsSource="{Binding Path=TableCollectionView, Mode=OneTime}"
                   SelectionMode="Single" 
                   CanUserDeleteRows="False" 
                   CanUserResizeRows="False"
@@ -31,13 +31,11 @@
                 <DataGridTextColumn x:Name="minPercentColumn" 
                                     Binding="{Binding Path=MinPercentage, StringFormat='{}{0}%', Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                     Header="Minimum" 
-                                    ElementStyle="{StaticResource RightAlignStyle}"
-                                    Width="*" />
+                                    ElementStyle="{StaticResource RightAlignStyle}"/>
                 <DataGridTextColumn x:Name="maxPercentColumn" 
                                     Binding="{Binding Path=MaxPercentage, StringFormat='{}{0}%', Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                     Header="Maximum" 
-                                    ElementStyle="{StaticResource RightAlignStyle}"
-                                    Width="*" />
+                                    ElementStyle="{StaticResource RightAlignStyle}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

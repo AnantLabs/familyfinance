@@ -57,7 +57,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Buisness\AccountBankInfoDRM.cs" />
     <Compile Include="Buisness\AccountCatagoryTM.cs" />
     <Compile Include="Buisness\AccountTM.cs" />
     <Compile Include="Buisness\AccountTypeDRM.cs" />
@@ -164,6 +163,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Presentation\EditEnvelopes\" />
     <Folder Include="Presentation\Registry\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

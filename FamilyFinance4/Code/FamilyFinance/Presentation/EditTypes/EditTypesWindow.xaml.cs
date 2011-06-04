@@ -28,24 +28,28 @@ namespace FamilyFinance.Presentation.EditTypes
                     this.routingNumberColumn.Visibility = System.Windows.Visibility.Hidden;
                     this.minPercentColumn.Visibility = System.Windows.Visibility.Hidden;
                     this.maxPercentColumn.Visibility = System.Windows.Visibility.Hidden;
+                    this.Width = 250;
                     break;
 
                 case EditTypesVM.Table.TransactionType:
                     this.routingNumberColumn.Visibility = System.Windows.Visibility.Hidden;
                     this.minPercentColumn.Visibility = System.Windows.Visibility.Hidden;
                     this.maxPercentColumn.Visibility = System.Windows.Visibility.Hidden;
+                    this.Width = 250;
                     break;
 
                 case EditTypesVM.Table.Bank:
                     this.routingNumberColumn.Visibility = System.Windows.Visibility.Visible;
                     this.minPercentColumn.Visibility = System.Windows.Visibility.Hidden;
                     this.maxPercentColumn.Visibility = System.Windows.Visibility.Hidden;
+                    this.Width = 400;
                     break;
 
                 case EditTypesVM.Table.EnvelopeGroup:
                     this.routingNumberColumn.Visibility = System.Windows.Visibility.Hidden;
                     this.minPercentColumn.Visibility = System.Windows.Visibility.Visible;
                     this.maxPercentColumn.Visibility = System.Windows.Visibility.Visible;
+                    this.Width = 400;
                     break;
             }
         }

@@ -14,10 +14,14 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////////////////
         
         /// <summary>
-        /// Local referance to the account row this object is modeling.
+        /// Local reference to the account row this object is modeling.
         /// </summary>
         private FFDataSet.AccountRow accountRow;
 
+        /// <summary>
+        /// Local reference to the bank row this object is modeling.
+        /// </summary>        
+        private FFDataSet.BankInfoRow bankInfoRow;
         
         ///////////////////////////////////////////////////////////////////////
         // Properties to access this object.
@@ -96,7 +100,7 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// Gets the gatagory name forthis account.
+        /// Gets the catagory name for this account.
         /// </summary>
         public string CatagoryName
         {
@@ -140,6 +144,142 @@ namespace FamilyFinance.Buisness
         }
 
 
+        public bool HasBankInfo
+        {
+            get
+            {
+                if (this.bankInfoRow == null)
+                    return false;
+                else
+                    return true;
+            }
+
+            set
+            {
+                if (value == true && this.bankInfoRow == null)
+                {
+                    this.bankInfoRow = MyData.getInstance().BankInfo.NewBankInfoRow();
+
+                    this.bankInfoRow.accountID = this.ID;
+                    this.bankInfoRow.bankID = BankCON.NULL.ID;
+                    this.bankInfoRow.accountNumber = "";
+                    this.bankInfoRow.creditDebit = CreditDebitCON.DEBIT.Value;
+
+                    MyData.getInstance().BankInfo.AddBankInfoRow(this.bankInfoRow);
+                }
+                else if (value == false && this.bankInfoRow != null)
+                {
+                    this.bankInfoRow.Delete();
+                    this.bankInfoRow = null;
+                }
+
+                this.RaisePropertyChanged("AccountNumber");
+                this.RaisePropertyChanged("AccountNormal");
+                this.RaisePropertyChanged("NormalName");
+                this.RaisePropertyChanged("BankName");
+                this.RaisePropertyChanged("RoutingNumber");
+            }
+        }
+
+        public string AccountNumber
+        {
+            get
+            {
+                if (this.bankInfoRow == null)
+                    return "";
+                else
+                    return this.bankInfoRow.accountNumber;
+            }
+
+            set
+            {
+                if (this.bankInfoRow != null)
+                {
+                    this.bankInfoRow.accountNumber = this.validLength(value, AccountCON.AccountNumberMaxLength);
+                }
+            }
+        }
+
+        public bool? AccountNormal
+        {
+            get
+            {
+                if (this.bankInfoRow == null)
+                    return null;
+                else
+                    return this.bankInfoRow.creditDebit;
+            }
+
+            set
+            {
+                if (this.bankInfoRow != null)
+                {
+                    this.bankInfoRow.creditDebit = Convert.ToBoolean(value);
+                }
+            }
+        }
+
+        public string NormalName
+        {
+            get
+            {
+                if (this.bankInfoRow == null)
+                    return "";
+
+                else if (this.bankInfoRow.creditDebit == CreditDebitCON.CREDIT.Value)
+                    return CreditDebitCON.CREDIT.Name;
+
+                else
+                    return CreditDebitCON.DEBIT.Name;
+            }
+        }
+
+        public int BankID
+        {
+            get
+            {
+                if (this.bankInfoRow == null)
+                    return BankCON.NULL.ID;
+                else
+                    return this.bankInfoRow.bankID;
+            }
+
+            set
+            {
+                if (this.bankInfoRow != null)
+                {
+                    this.bankInfoRow.bankID = value;
+
+                    this.RaisePropertyChanged("BankName");
+                    this.RaisePropertyChanged("RoutingNumber");
+                }
+            }
+        }
+
+        public string BankName
+        {
+            get
+            {
+                if (this.bankInfoRow == null)
+                    return "";
+                else
+                    return this.bankInfoRow.BankRow.name;
+            }
+        }
+
+        public string RoutingNumber
+        {
+            get
+            {
+                if (this.bankInfoRow == null)
+                    return "";
+                else
+                    return this.bankInfoRow.BankRow.routingNumber;
+            }
+        }
+
+        
+
         ///////////////////////////////////////////////////////////////////////
         // Private functions
         ///////////////////////////////////////////////////////////////////////
@@ -152,10 +292,12 @@ namespace FamilyFinance.Buisness
         public AccountDRM(FFDataSet.AccountRow aRow)
         {
             this.accountRow = aRow;
+            this.bankInfoRow = MyData.getInstance().BankInfo.FindByaccountID(this.ID);
         }
 
         public AccountDRM()
         {
+            this.bankInfoRow = null;
             this.accountRow = MyData.getInstance().Account.NewAccountRow();
 
             this.accountRow.id = MyData.getInstance().getNextID("Account");

@@ -162,15 +162,8 @@
   <Class Name="FamilyFinance.Buisness.AccountDRM">
     <Position X="7.75" Y="8" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ACAAAAAgAAAAgAAAAAAAAAQAAAIAABAgAAAAAgCAAAA=</HashCode>
+      <HashCode>ACAAAABgAAAAgAAAAAAAAAQAAAoAgBAgALAAggCAAAQ=</HashCode>
       <FileName>Buisness\AccountDRM.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FamilyFinance.Buisness.AccountBankInfoDRM">
-    <Position X="9.75" Y="8" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAAABAAAAAAAAAAgAAAAAAAAgAgAAAALAAAAAAAAQ=</HashCode>
-      <FileName>Buisness\AccountBankInfoDRM.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FamilyFinance.Buisness.BankDRM">
@@ -183,7 +176,7 @@
   <Class Name="FamilyFinance.Buisness.DataRowModel">
     <Position X="5" Y="8" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Buisness\DataRowModel.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -246,21 +239,21 @@
   <Class Name="FamilyFinance.Buisness.AccountTypeTM" Collapsed="true">
     <Position X="12" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAoAAAAAAAAAAAAAAAEAAAAAAAAAAEAA=</HashCode>
       <FileName>Buisness\AccountTypeTM.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FamilyFinance.Buisness.BankTM" Collapsed="true">
     <Position X="13.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <HashCode>AAAAAgAAAAAAAEAAAAAAAAAAEAAAAAAAAAAAAAAAAIA=</HashCode>
       <FileName>Buisness\BankTM.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FamilyFinance.Buisness.CreditDebitTM" Collapsed="true">
     <Position X="20.75" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
       <FileName>Buisness\CreditDebitTM.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -295,14 +288,14 @@
   <Class Name="FamilyFinance.Presentation.EditAccount.EditAccountsVM" Collapsed="true">
     <Position X="7.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAACAQCAAAEAAAAIBAABAAFAACAAAAAACAAAAA=</HashCode>
+      <HashCode>AgAAEAAAEgACAAAIAAAAAIAARBBGAQAAABAAACAAAAA=</HashCode>
       <FileName>Presentation\EditAccount\EditAccountsVM.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FamilyFinance.Presentation.EditTypes.EditTypesVM" Collapsed="true">
     <Position X="9" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAIAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAIAAAAEAAAAgAAIAA=</HashCode>
       <FileName>Presentation\EditTypes\EditTypesVM.cs</FileName>
     </TypeIdentifier>
   </Class>

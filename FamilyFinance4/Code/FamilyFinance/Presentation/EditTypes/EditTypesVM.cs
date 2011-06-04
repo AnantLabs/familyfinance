@@ -4,6 +4,7 @@ using System.Windows.Data;
 
 using FamilyFinance.Buisness;
 using FamilyFinance.Data;
+using System.Collections;
 
 namespace FamilyFinance.Presentation.EditTypes
 {
@@ -20,14 +21,15 @@ namespace FamilyFinance.Presentation.EditTypes
 
         public int MaxNameLength { get; private set; }
         public int MaxRoutingLength { get; private set; }
+        
 
         // Using ICollectionView so we can set the sorting here.
-        private ICollectionView _TableCollection;
-        public ICollectionView TableCollection 
+        private ListCollectionView _TableCollectionView;
+        public ListCollectionView TableCollectionView 
         {
             get
             {
-                return _TableCollection;
+                return _TableCollectionView;
             }
         }
 
@@ -44,34 +46,35 @@ namespace FamilyFinance.Presentation.EditTypes
                     this.Title = "Account Types";
                     this.MaxNameLength = AccountTypeCON.NameMaxLength;
                     this.MaxRoutingLength = 0;
-                    this._TableCollection = CollectionViewSource.GetDefaultView(new AccountTypeTM().EditableAccountTypes);
+                    this._TableCollectionView = (ListCollectionView) CollectionViewSource.GetDefaultView(new AccountTypeTM().EditableAccountTypes);
                     break;
 
                 case Table.TransactionType:
                     this.Title = "Transaction Types";
                     this.MaxNameLength = TransactionTypeCON.NameMaxLength;
                     this.MaxRoutingLength = 0;
-                    this._TableCollection = CollectionViewSource.GetDefaultView(new TransactionTypeTM().EditableAccountType);
+                    this._TableCollectionView = (ListCollectionView) CollectionViewSource.GetDefaultView(new TransactionTypeTM().EditableAccountType);
                     break;
 
                 case Table.EnvelopeGroup:
                     this.Title = "Envelope Groups";
                     this.MaxNameLength = EnvelopeGroupCON.NameMaxLength;
                     this.MaxRoutingLength = 0;
-                    this._TableCollection = CollectionViewSource.GetDefaultView(new EnvelopeGroupTM().EditableEnvelopeGroups);
+                    this._TableCollectionView = (ListCollectionView) CollectionViewSource.GetDefaultView(new EnvelopeGroupTM().EditableEnvelopeGroups);
                     break;
 
                 case Table.Bank:
                     this.Title = "Banks";
                     this.MaxNameLength = BankCON.NameMaxLength;
                     this.MaxRoutingLength = BankCON.RountingNumMaxLength;
-                    this._TableCollection = CollectionViewSource.GetDefaultView(new BankTM().EditableBanks);
+                    this._TableCollectionView = (ListCollectionView) CollectionViewSource.GetDefaultView(new BankTM().EditableBanks);
                     break;
             }
 
             // By default sort the table alphabetically by the name colum.
             // This slower sort is fime with these small lists.
-            this._TableCollection.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            this._TableCollectionView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            
         }
 
 
