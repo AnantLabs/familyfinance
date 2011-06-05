@@ -28,6 +28,20 @@ namespace FamilyFinance.Buisness
                 return _EditableEnvelopeGroups;
             }
         }
+
+        private ObservableCollection<EnvelopeGroupDRM> _AllEnvelopeGroups;
+        public ObservableCollection<EnvelopeGroupDRM> AllEnvelopeGroups
+        {
+            get
+            {
+                _AllEnvelopeGroups = new ObservableCollection<EnvelopeGroupDRM>();
+
+                foreach (FFDataSet.EnvelopeGroupRow row in MyData.getInstance().EnvelopeGroup)
+                    _AllEnvelopeGroups.Add(new EnvelopeGroupDRM(row));
+
+                return _AllEnvelopeGroups;
+            }
+        }
         
         ///////////////////////////////////////////////////////////////////////
         // Private functions
@@ -42,7 +56,5 @@ namespace FamilyFinance.Buisness
         {
 
         }
-
-
     }
 }

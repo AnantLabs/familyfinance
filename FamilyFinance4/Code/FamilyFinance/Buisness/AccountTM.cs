@@ -26,7 +26,22 @@ namespace FamilyFinance.Buisness
                 return _EditableAccounts; 
             }
         }
-        
+
+        private ObservableCollection<AccountDRM> _FavoriteAccounts;
+        public ObservableCollection<AccountDRM> FavoriteAccounts
+        {
+            get
+            {
+                _FavoriteAccounts = new ObservableCollection<AccountDRM>();
+
+                foreach (FFDataSet.AccountRow row in MyData.getInstance().Account)
+                    if (row.catagory == CatagoryCON.ACCOUNT.ID || row.id == AccountCON.NULL.ID)
+                        _FavoriteAccounts.Add(new AccountDRM(row));
+
+                return _FavoriteAccounts;
+            }
+        }
+
         ///////////////////////////////////////////////////////////////////////
         // Private functions
         ///////////////////////////////////////////////////////////////////////

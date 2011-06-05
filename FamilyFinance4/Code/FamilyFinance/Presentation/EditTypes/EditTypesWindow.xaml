@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:FamilyFinance.Presentation.EditTypes"
         Height="288" 
-        Width="477"
+        Width="483"
         Title="{Binding Path=Title, Mode=OneTime}">
     <!-- No Resources because EditTypesVM takes a parameter. Data Context is set in code behind. -->
     <Grid Background="{StaticResource DarkBlueBackGround}">

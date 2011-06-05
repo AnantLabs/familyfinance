@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Data;
-
-using FamilyFinance.Buisness;
-using FamilyFinance.Data;
 using System.Windows;
 using System.Windows.Controls;
 using System;
+
+using FamilyFinance.Buisness;
+using FamilyFinance.Data;
 
 namespace FamilyFinance.Presentation.EditAccount
 {
@@ -29,7 +29,7 @@ namespace FamilyFinance.Presentation.EditAccount
             set
             {
                 this._ShowIncomes = value;
-                this._AccountsView.Refresh();
+                this.refreshViewFilter(this._AccountsView);
             }
         }
 
@@ -43,7 +43,7 @@ namespace FamilyFinance.Presentation.EditAccount
             set
             {
                 this._ShowAccounts = value;
-                this._AccountsView.Refresh();
+                this.refreshViewFilter(this._AccountsView);
             }
         }
 
@@ -57,7 +57,7 @@ namespace FamilyFinance.Presentation.EditAccount
             set
             {
                 this._ShowExpenses = value;
-                this._AccountsView.Refresh();
+                this.refreshViewFilter(this._AccountsView);
             }
         }
 
@@ -71,7 +71,7 @@ namespace FamilyFinance.Presentation.EditAccount
             set
             {
                 this._ShowClosed = value;
-                this._AccountsView.Refresh();
+                this.refreshViewFilter(this._AccountsView);
             }
         }
 
@@ -85,7 +85,7 @@ namespace FamilyFinance.Presentation.EditAccount
             set
             {
                 this._SearchText = value;
-                this._AccountsView.Refresh();
+                this.refreshViewFilter(this._AccountsView);
             }
         }
 
@@ -111,7 +111,7 @@ namespace FamilyFinance.Presentation.EditAccount
             }
         }
 
-        public ListCollectionView Banks
+        public ListCollectionView BanksView
         {
             get
             {
@@ -142,24 +142,7 @@ namespace FamilyFinance.Presentation.EditAccount
 
 
         ///////////////////////////////////////////////////////////
-        // Public functions
-
-        /// <summary>
-        /// Creates the view model for editing accounts
-        /// </summary>
-        public EditAccountsVM()
-        {
-            this._ShowIncomes = false;
-            this._ShowAccounts = true;
-            this._ShowExpenses = false;
-            this._ShowClosed = false;
-            this._SearchText = "";
-
-            this._AccountsView = (ListCollectionView)CollectionViewSource.GetDefaultView(new AccountTM().EditableAccounts);
-            this._AccountsView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-            this._AccountsView.Filter = new Predicate<Object>(Filter);
-        }
-
+        // Private functions
         private bool Filter(object item)
         {
             AccountDRM accRow = (AccountDRM)item;
@@ -178,10 +161,27 @@ namespace FamilyFinance.Presentation.EditAccount
             else if (!this._ShowClosed && accRow.Closed)
                 keepItem = false;
 
-            else if (!String.IsNullOrEmpty(this._SearchText) && !accRow.Name.Contains(this.SearchText))
+            else if (!String.IsNullOrEmpty(this._SearchText) && !accRow.Name.ToLower().Contains(this.SearchText.ToLower()))
                 keepItem = false;
 
             return keepItem;
+        }
+
+
+
+        ///////////////////////////////////////////////////////////
+        // Public functions
+        public EditAccountsVM()
+        {
+            this._ShowIncomes = false;
+            this._ShowAccounts = true;
+            this._ShowExpenses = false;
+            this._ShowClosed = false;
+            this._SearchText = "";
+
+            this._AccountsView = (ListCollectionView)CollectionViewSource.GetDefaultView(new AccountTM().EditableAccounts);
+            this._AccountsView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            this._AccountsView.Filter = new Predicate<Object>(Filter);
         }
 
     }

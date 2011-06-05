@@ -1885,7 +1885,7 @@ namespace FamilyFinance.Data {
             
             private global::System.Data.DataColumn columnfavoriteAccountID;
             
-            private global::System.Data.DataColumn columnpriorityOrder;
+            private global::System.Data.DataColumn columnpriority;
             
             private global::System.Data.DataColumn columnnotes;
             
@@ -1966,9 +1966,9 @@ namespace FamilyFinance.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn priorityOrderColumn {
+            public global::System.Data.DataColumn priorityColumn {
                 get {
-                    return this.columnpriorityOrder;
+                    return this.columnpriority;
                 }
             }
             
@@ -2025,7 +2025,7 @@ namespace FamilyFinance.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public EnvelopeRow AddEnvelopeRow(int id, string name, EnvelopeGroupRow parentEnvelopeGroupRowByFK_Envelope_groupID, bool closed, AccountRow parentAccountRowByFK_Envelope_accountID, int priorityOrder, string notes, string goal) {
+            public EnvelopeRow AddEnvelopeRow(int id, string name, EnvelopeGroupRow parentEnvelopeGroupRowByFK_Envelope_groupID, bool closed, AccountRow parentAccountRowByFK_Envelope_accountID, int priority, string notes, string goal) {
                 EnvelopeRow rowEnvelopeRow = ((EnvelopeRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         id,
@@ -2033,7 +2033,7 @@ namespace FamilyFinance.Data {
                         null,
                         closed,
                         null,
-                        priorityOrder,
+                        priority,
                         notes,
                         goal};
                 if ((parentEnvelopeGroupRowByFK_Envelope_groupID != null)) {
@@ -2076,7 +2076,7 @@ namespace FamilyFinance.Data {
                 this.columngroupID = base.Columns["groupID"];
                 this.columnclosed = base.Columns["closed"];
                 this.columnfavoriteAccountID = base.Columns["favoriteAccountID"];
-                this.columnpriorityOrder = base.Columns["priorityOrder"];
+                this.columnpriority = base.Columns["priority"];
                 this.columnnotes = base.Columns["notes"];
                 this.columngoal = base.Columns["goal"];
             }
@@ -2094,8 +2094,8 @@ namespace FamilyFinance.Data {
                 base.Columns.Add(this.columnclosed);
                 this.columnfavoriteAccountID = new global::System.Data.DataColumn("favoriteAccountID", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnfavoriteAccountID);
-                this.columnpriorityOrder = new global::System.Data.DataColumn("priorityOrder", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnpriorityOrder);
+                this.columnpriority = new global::System.Data.DataColumn("priority", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnpriority);
                 this.columnnotes = new global::System.Data.DataColumn("notes", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnnotes);
                 this.columngoal = new global::System.Data.DataColumn("goal", typeof(string), null, global::System.Data.MappingType.Element);
@@ -2109,7 +2109,7 @@ namespace FamilyFinance.Data {
                 this.columngroupID.AllowDBNull = false;
                 this.columnclosed.AllowDBNull = false;
                 this.columnfavoriteAccountID.AllowDBNull = false;
-                this.columnpriorityOrder.AllowDBNull = false;
+                this.columnpriority.AllowDBNull = false;
                 this.columnnotes.MaxLength = 536870911;
             }
             
@@ -4185,12 +4185,12 @@ namespace FamilyFinance.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int priorityOrder {
+            public int priority {
                 get {
-                    return ((int)(this[this.tableEnvelope.priorityOrderColumn]));
+                    return ((int)(this[this.tableEnvelope.priorityColumn]));
                 }
                 set {
-                    this[this.tableEnvelope.priorityOrderColumn] = value;
+                    this[this.tableEnvelope.priorityColumn] = value;
                 }
             }
             
