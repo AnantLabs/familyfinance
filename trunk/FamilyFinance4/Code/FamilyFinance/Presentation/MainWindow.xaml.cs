@@ -15,7 +15,7 @@ namespace FamilyFinance.Presentation
 
         private void EditAccounts_Click(object sender, RoutedEventArgs e)
         {
-            EditAccount.AccountsWindow aWin = new EditAccount.AccountsWindow();
+            EditAccount.EditAccountsWindow aWin = new EditAccount.EditAccountsWindow();
             aWin.ShowInTaskbar = false;
             aWin.ShowDialog();
         }
@@ -40,6 +40,13 @@ namespace FamilyFinance.Presentation
             etWin.ShowInTaskbar = false;
             etWin.ShowDialog();
         }
+        
+        private void EditEnvelopes_Click(object sender, RoutedEventArgs e)
+        {
+            EditEnvelopes.EditEnvelopesWindow eWin = new EditEnvelopes.EditEnvelopesWindow();
+            eWin.ShowInTaskbar = false;
+            eWin.ShowDialog();
+        }
 
         private void EditEnvelopeGroups_Click(object sender, RoutedEventArgs e)
         {
@@ -50,13 +57,11 @@ namespace FamilyFinance.Presentation
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
             FamilyFinance.Data.MyData.getInstance().readData();
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
-
             FamilyFinance.Data.MyData.getInstance().saveData();
         }
 

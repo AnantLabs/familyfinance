@@ -1,13 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Windows.Data;
 
 namespace FamilyFinance.Presentation
 {
     public abstract class ViewModel : FamilyFinance.Buisness.BindableObject
     {
 
+        /// <summary>
+        /// Commits any editing and then refreshs the given view. Typically used when filter parameters have changed.
+        /// </summary>
+        /// <param name="lcv"></param>
+        protected void refreshViewFilter(ListCollectionView lcv)
+        {
+            if (lcv.IsEditingItem)
+                lcv.CommitEdit();
+
+            else if (lcv.IsAddingNew)
+                lcv.CommitNew();
+
+            lcv.Refresh();
+        }
 
     }
 }

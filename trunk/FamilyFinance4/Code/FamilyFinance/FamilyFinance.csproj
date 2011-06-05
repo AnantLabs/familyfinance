@@ -64,6 +64,7 @@
     <Compile Include="Buisness\BankDRM.cs" />
     <Compile Include="Buisness\AccountDRM.cs" />
     <Compile Include="Buisness\BankTM.cs" />
+    <Compile Include="Buisness\EnvelopeTM.cs" />
     <Compile Include="Buisness\EnvelopeGroupTM.cs" />
     <Compile Include="Buisness\TableModel.cs" />
     <Compile Include="Buisness\TransactionTypeTM.cs" />
@@ -93,7 +94,11 @@
     <Compile Include="Buisness\LineItemDRM.cs" />
     <Compile Include="Buisness\TransactionDRM.cs" />
     <Compile Include="Buisness\TransactionTypeDRM.cs" />
-    <Page Include="Presentation\EditAccount\AccountsWindow.xaml">
+    <Page Include="Presentation\EditAccount\EditAccountsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Presentation\EditEnvelopes\EditEnvelopesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -107,10 +112,14 @@
     </Compile>
     <Compile Include="Buisness\EnvelopeGroupDRM.cs" />
     <Compile Include="Buisness\BindableObject.cs" />
-    <Compile Include="Presentation\EditAccount\AccountsWindow.xaml.cs">
-      <DependentUpon>AccountsWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Presentation\EditAccount\EditAccountsVM.cs" />
+    <Compile Include="Presentation\EditAccount\EditAccountsWindow.xaml.cs">
+      <DependentUpon>EditAccountsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\EditEnvelopes\EditEnvelopesVM.cs" />
+    <Compile Include="Presentation\EditEnvelopes\EditEnvelopesWindow.xaml.cs">
+      <DependentUpon>EditEnvelopesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -163,7 +172,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Presentation\EditEnvelopes\" />
     <Folder Include="Presentation\Registry\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

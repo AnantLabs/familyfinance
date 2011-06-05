@@ -25,6 +25,8 @@
                           Click="EditAccountTypes_Click"/>
                 <MenuItem Header="Transaction Types"
                           Click="EditTransactionTypes_Click"/>
+                <MenuItem Header="Envelopes"
+                          Click="EditEnvelopes_Click"/>
                 <MenuItem Header="Envelope Groups"
                           Click="EditEnvelopeGroups_Click"/>
                 <MenuItem Header="Banks"

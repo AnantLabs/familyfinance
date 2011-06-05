@@ -7,6 +7,13 @@ namespace FamilyFinance.Data
 {
     class EnvelopeCON
     {
+
+
+        public static int NameMaxLength = MyData.getInstance().Envelope.nameColumn.MaxLength;
+        public static int NotesMaxLength = MyData.getInstance().Envelope.notesColumn.MaxLength;
+        public static int GoalMaxLength = MyData.getInstance().Envelope.goalColumn.MaxLength;
+
+
         /// <summary>
         /// The object to represent an NULL envelope.
         /// </summary>

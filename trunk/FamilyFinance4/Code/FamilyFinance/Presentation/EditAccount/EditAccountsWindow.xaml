@@ -1,26 +1,13 @@
-﻿<Window x:Class="FamilyFinance.Presentation.EditAccount.AccountsWindow"
+﻿<Window x:Class="FamilyFinance.Presentation.EditAccount.EditAccountsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:FamilyFinance.Presentation.EditAccount"
-        xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         Title="Accounts" 
         WindowStyle="SingleBorderWindow"
         Height="486" 
         Width="917">
     <Window.Resources>
         <local:EditAccountsVM x:Key="editAccountsVM" />
-        <!-- Account Type CVS -->
-        <CollectionViewSource x:Key="accountTypesCVS" Source="{Binding Source={StaticResource editAccountsVM}, Path=AccountTypes}">
-            <CollectionViewSource.SortDescriptions>
-                <scm:SortDescription PropertyName="Name" />
-            </CollectionViewSource.SortDescriptions>
-        </CollectionViewSource>
-        <!-- Bank CVS -->
-        <CollectionViewSource x:Key="banksCVS" Source="{Binding Source={StaticResource editAccountsVM}, Path=Banks}">
-            <CollectionViewSource.SortDescriptions>
-                <scm:SortDescription PropertyName="Name" />
-            </CollectionViewSource.SortDescriptions>
-        </CollectionViewSource>
     </Window.Resources>
     <Grid Height="Auto" 
           Width="Auto" 
@@ -38,8 +25,10 @@
               VerticalContentAlignment="Center" 
               Background="{StaticResource LightBlueMenuBackground}">
             <MenuItem Header="Edit" Margin="4,4,50,4">
-                <MenuItem Header="Banks"/>
-                <MenuItem Header="Account Types"/>
+                <MenuItem Header="Account Types"
+                          Click="EditAccountTypes_Click"/>
+                <MenuItem Header="Banks"
+                          Click="EditBanks_Click"/>
             </MenuItem>
             <CheckBox Content="Incomes" 
                       Margin="0" 
@@ -106,7 +95,7 @@
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
                             <ComboBox SelectedValue="{Binding Path=TypeID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      ItemsSource="{Binding Source={StaticResource accountTypesCVS}}"
+                                      ItemsSource="{Binding Source={StaticResource editAccountsVM}, Path=AccountTypesView}"
                                       SelectedValuePath="ID"
                                       DisplayMemberPath="Name">
                             </ComboBox>
@@ -188,6 +177,7 @@
                                       ItemsSource="{Binding Source={StaticResource editAccountsVM}, Path=Normals}"
                                       SelectedValuePath="Value"
                                       DisplayMemberPath="Name" 
+                                      IsEnabled="{Binding Path=HasBankInfo, Mode=OneWay}"
                                       />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
@@ -206,10 +196,11 @@
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
                             <ComboBox SelectedValue="{Binding Path=BankID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      ItemsSource="{Binding Source={StaticResource banksCVS}}"
+                                      ItemsSource="{Binding Source={StaticResource editAccountsVM}, Path=BanksView}"
                                       SelectedValuePath="ID"
-                                      DisplayMemberPath="Name">
-                            </ComboBox>
+                                      DisplayMemberPath="Name"
+                                      IsEnabled="{Binding Path=HasBankInfo, Mode=OneWay}" 
+                                      />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
