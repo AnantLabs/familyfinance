@@ -7,7 +7,7 @@ using FamilyFinance.Data;
 
 namespace FamilyFinance.Buisness
 {
-    class AccountDRM : DataRowModel
+    public class AccountDRM : DataRowModel
     {
         ///////////////////////////////////////////////////////////////////////
         // Local variables
@@ -295,20 +295,23 @@ namespace FamilyFinance.Buisness
             this.bankInfoRow = MyData.getInstance().BankInfo.FindByaccountID(this.ID);
         }
 
-        public AccountDRM()
+        public AccountDRM(string name, int typeID, byte catagory, bool closed, bool envelopes)
         {
             this.bankInfoRow = null;
             this.accountRow = MyData.getInstance().Account.NewAccountRow();
 
             this.accountRow.id = MyData.getInstance().getNextID("Account");
-            this.accountRow.name = "";
-            this.accountRow.typeID = AccountTypeCON.NULL.ID;
-            this.accountRow.catagory = CatagoryCON.ACCOUNT.ID;
-            this.accountRow.closed = false;
-            this.accountRow.envelopes = false;
+            this.accountRow.name = name;
+            this.accountRow.typeID = typeID;
+            this.accountRow.catagory = catagory;
+            this.accountRow.closed = closed;
+            this.accountRow.envelopes = envelopes;
 
             MyData.getInstance().Account.AddAccountRow(this.accountRow);
         }
 
+        public AccountDRM() : this("", AccountTypeCON.NULL.ID, CatagoryCON.ACCOUNT.ID, false, false)
+        {
+        }
     }
 }

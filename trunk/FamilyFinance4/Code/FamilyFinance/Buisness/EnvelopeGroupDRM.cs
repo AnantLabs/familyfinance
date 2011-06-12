@@ -79,7 +79,7 @@ namespace FamilyFinance.Buisness
 
 
         /// <summary>
-        /// Creates the object and keeps a local referance to the given account type row.
+        /// Creates the object and keeps a local referance to the given Envelope Group row.
         /// </summary>
         /// <param name="aRow"></param>
         public EnvelopeGroupDRM(FFDataSet.EnvelopeGroupRow atRow)
@@ -88,17 +88,27 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// Creates the object and keeps a reference to a new account type row.
+        /// Creates the object and keeps a reference to a new Envelope Group row.
         /// </summary>
-        /// <param name="aRow"></param>
-        public EnvelopeGroupDRM()
+        /// <param name="name">The name of the new Envelope Group.</param>
+        public EnvelopeGroupDRM(string name) : this(name, 0.0m, 0.0m)
+        {
+        }
+
+        /// <summary>
+        /// Creates the object and keeps a reference to a new Envelope Group row.
+        /// </summary>
+        /// <param name="name">The name of the new Envelope Group.</param>
+        /// <param name="minPer">The minimum bound of the Envelope Group.</param>
+        /// <param name="maxPer">The maximum bound of the Envelope Group.</param>
+        public EnvelopeGroupDRM(string name, decimal minPer, decimal maxPer)
         {
             this.EnvelopeGroupRow = MyData.getInstance().EnvelopeGroup.NewEnvelopeGroupRow();
 
             this.EnvelopeGroupRow.id = MyData.getInstance().getNextID("EnvelopeGroup");
-            this.EnvelopeGroupRow.name = "";
-            this.EnvelopeGroupRow.minPercent = 0m;
-            this.EnvelopeGroupRow.maxPercent = 0m;
+            this.EnvelopeGroupRow.name = name;
+            this.EnvelopeGroupRow.minPercent = minPer;
+            this.EnvelopeGroupRow.maxPercent = maxPer;
 
             MyData.getInstance().EnvelopeGroup.AddEnvelopeGroupRow(this.EnvelopeGroupRow);
         }

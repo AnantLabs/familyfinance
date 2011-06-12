@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FamilyFinance.Data
 {
-    class EnvelopeCON
+    public class EnvelopeCON
     {
 
 

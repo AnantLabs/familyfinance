@@ -53,13 +53,16 @@ namespace FamilyFinance.Buisness
         /// <summary>
         /// Creates the object and keeps a reference to a new Transaction type row.
         /// </summary>
-        /// <param name="aRow"></param>
-        public TransactionTypeDRM()
+        public TransactionTypeDRM() : this("")
+        {
+        }
+
+        public TransactionTypeDRM(string name)
         {
             this.TransactionTypeRow = MyData.getInstance().TransactionType.NewTransactionTypeRow();
 
             this.TransactionTypeRow.id = MyData.getInstance().getNextID("TransactionType");
-            this.TransactionTypeRow.name = "";
+            this.TransactionTypeRow.name = name;
 
             MyData.getInstance().TransactionType.AddTransactionTypeRow(this.TransactionTypeRow);
         }

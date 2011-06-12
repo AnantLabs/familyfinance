@@ -47,6 +47,14 @@ namespace FamilyFinance.Presentation.EditEnvelopes
         {
             get
             {
+                if (this._EnvelopesView == null)
+                {
+
+                    this._EnvelopesView = (ListCollectionView)CollectionViewSource.GetDefaultView(new EnvelopeTM().EditableEnvelopes);
+                    this._EnvelopesView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                    this._EnvelopesView.Filter = new Predicate<Object>(Filter); 
+                }
+
                 return _EnvelopesView;
             }
         }
@@ -102,10 +110,6 @@ namespace FamilyFinance.Presentation.EditEnvelopes
         {
             this._ShowClosed = false;
             this._SearchText = "";
-
-            this._EnvelopesView = (ListCollectionView)CollectionViewSource.GetDefaultView(new EnvelopeTM().EditableEnvelopes);
-            this._EnvelopesView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-            this._EnvelopesView.Filter = new Predicate<Object>(Filter); 
         }
 
 
