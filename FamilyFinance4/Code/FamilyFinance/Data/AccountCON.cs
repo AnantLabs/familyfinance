@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FamilyFinance.Data
 {
-    class AccountCON
+    public class AccountCON
     {
 
         public static int NameMaxLength = MyData.getInstance().Account.nameColumn.MaxLength;

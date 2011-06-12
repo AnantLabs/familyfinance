@@ -263,7 +263,7 @@ namespace FamilyFinance.Data
 
         public int getNextID(string table)
         {
-            int id = 1;
+            int id = 0;
 
             DataRowCollection rows = this.ffDataSet.Tables[table].Rows;
 

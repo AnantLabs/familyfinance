@@ -111,6 +111,36 @@
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <Grid Height="Auto" 
+                          Width="Auto" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" 
+                               Grid.Column="0" 
+                               Content="Notes:"/>
+                        <Label Grid.Row="0" 
+                               Grid.Column="1" 
+                               Content="Goal:"/>
+                        <TextBox Grid.Row="1" 
+                                 Grid.Column="0"
+                                 TextWrapping="Wrap"
+                                 MinWidth="250" 
+                                 MinHeight="100"
+                                 Text="{Binding Path=Notes, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                 AcceptsReturn="True" 
+                                 AcceptsTab="True" 
+                                 Margin="5"  />
+                    </Grid>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
         </DataGrid>
     </Grid>
 </Window>

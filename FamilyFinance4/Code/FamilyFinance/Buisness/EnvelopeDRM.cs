@@ -3,7 +3,7 @@
 
 namespace FamilyFinance.Buisness
 {
-    class EnvelopeDRM : DataRowModel
+    public class EnvelopeDRM : DataRowModel
     {
         ///////////////////////////////////////////////////////////////////////
         // Local variables
@@ -71,7 +71,6 @@ namespace FamilyFinance.Buisness
                 return this.envelopeRow.EnvelopeGroupRow.name;
             }
         }
-
 
         /// <summary>
         /// Gets or sets the Closed flag for this envelope. True if the envelope is closed, 
@@ -171,21 +170,27 @@ namespace FamilyFinance.Buisness
             this.envelopeRow = eRow;
         }
 
-        public EnvelopeDRM()
+        public EnvelopeDRM(string name, int groupID, int favoriteAccountID, bool closed)
         {
             this.envelopeRow = MyData.getInstance().Envelope.NewEnvelopeRow();
 
             this.envelopeRow.id = MyData.getInstance().getNextID("Envelope");
-            this.envelopeRow.name = "";
-            this.envelopeRow.groupID = EnvelopeGroupCON.NULL.ID;
-            this.envelopeRow.closed = false;
-            this.envelopeRow.favoriteAccountID = AccountCON.NULL.ID;
+            this.envelopeRow.name = name;
+            this.envelopeRow.groupID = groupID;
+            this.envelopeRow.favoriteAccountID = favoriteAccountID;
+            this.envelopeRow.closed = closed;
             this.envelopeRow.priority = this.envelopeRow.id;
             this.envelopeRow.notes = "";
             this.envelopeRow.goal = "";
 
             MyData.getInstance().Envelope.AddEnvelopeRow(this.envelopeRow);
         }
+
+        public EnvelopeDRM() : this("", EnvelopeGroupCON.NULL.ID, AccountCON.NULL.ID, false)
+        {
+        }
+
+
 
     }
 }

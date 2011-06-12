@@ -7,7 +7,7 @@ using FamilyFinance.Data;
 
 namespace FamilyFinance.Buisness
 {
-    class AccountTypeDRM : DataRowModel
+    public class AccountTypeDRM : DataRowModel
     {
         /// <summary>
         /// Local referance to the account type row this object is modeling.
@@ -53,15 +53,21 @@ namespace FamilyFinance.Buisness
         /// <summary>
         /// Creates the object and keeps a reference to a new account type row.
         /// </summary>
-        /// <param name="aRow"></param>
-        public AccountTypeDRM()
+        /// <param name="name">The name of the new AccountType.</param>
+        public AccountTypeDRM(string name)
         {
             this.accountTypeRow = MyData.getInstance().AccountType.NewAccountTypeRow();
 
             this.accountTypeRow.id = MyData.getInstance().getNextID("AccountType");
-            this.accountTypeRow.name = "";
+            this.accountTypeRow.name = name;
 
             MyData.getInstance().AccountType.AddAccountTypeRow(this.accountTypeRow);
         }
+
+        public AccountTypeDRM() : this("")
+        {
+
+        }
+
     }
 }
