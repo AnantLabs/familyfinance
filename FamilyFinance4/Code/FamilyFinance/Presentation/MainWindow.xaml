@@ -31,6 +31,8 @@
                           Click="EditEnvelopeGroups_Click"/>
                 <MenuItem Header="Banks"
                           Click="EditBanks_Click"/>
+                <MenuItem Header="Transaction"
+                          Click="Transaction_Click"/>
             </MenuItem>
         </Menu>
 

@@ -301,11 +301,11 @@ namespace FamilyFinance.Buisness
             this.accountRow = MyData.getInstance().Account.NewAccountRow();
 
             this.accountRow.id = MyData.getInstance().getNextID("Account");
-            this.accountRow.name = name;
-            this.accountRow.typeID = typeID;
-            this.accountRow.catagory = catagory;
-            this.accountRow.closed = closed;
-            this.accountRow.envelopes = envelopes;
+            this.Name = name;
+            this.TypeID = typeID;
+            this.CatagoryID = catagory;
+            this.Closed = closed;
+            this.UsesEnvelopes = envelopes;
 
             MyData.getInstance().Account.AddAccountRow(this.accountRow);
         }

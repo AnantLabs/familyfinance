@@ -59,7 +59,7 @@ namespace FamilyFinance.Buisness
             this.accountTypeRow = MyData.getInstance().AccountType.NewAccountTypeRow();
 
             this.accountTypeRow.id = MyData.getInstance().getNextID("AccountType");
-            this.accountTypeRow.name = name;
+            this.Name = name;
 
             MyData.getInstance().AccountType.AddAccountTypeRow(this.accountTypeRow);
         }

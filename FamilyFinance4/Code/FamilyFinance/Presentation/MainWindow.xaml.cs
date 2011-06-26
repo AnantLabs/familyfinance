@@ -23,35 +23,30 @@ namespace FamilyFinance.Presentation
         private void EditAccountTypes_Click(object sender, RoutedEventArgs e)
         {
             EditTypes.EditTypesWindow etWin= new EditTypes.EditTypesWindow(EditTypes.EditTypesVM.Table.AccountType);
-            etWin.ShowInTaskbar = false;
             etWin.ShowDialog();
         }
 
         private void EditTransactionTypes_Click(object sender, RoutedEventArgs e)
         {
             EditTypes.EditTypesWindow etWin = new EditTypes.EditTypesWindow(EditTypes.EditTypesVM.Table.TransactionType);
-            etWin.ShowInTaskbar = false;
             etWin.ShowDialog();
         }
 
         private void EditBanks_Click(object sender, RoutedEventArgs e)
         {
             EditTypes.EditTypesWindow etWin = new EditTypes.EditTypesWindow(EditTypes.EditTypesVM.Table.Bank);
-            etWin.ShowInTaskbar = false;
             etWin.ShowDialog();
         }
         
         private void EditEnvelopes_Click(object sender, RoutedEventArgs e)
         {
             EditEnvelopes.EditEnvelopesWindow eWin = new EditEnvelopes.EditEnvelopesWindow();
-            eWin.ShowInTaskbar = false;
             eWin.ShowDialog();
         }
 
         private void EditEnvelopeGroups_Click(object sender, RoutedEventArgs e)
         {
             EditTypes.EditTypesWindow etWin = new EditTypes.EditTypesWindow(EditTypes.EditTypesVM.Table.EnvelopeGroup);
-            etWin.ShowInTaskbar = false;
             etWin.ShowDialog();
         }
 
@@ -63,6 +58,12 @@ namespace FamilyFinance.Presentation
         private void Window_Closed(object sender, EventArgs e)
         {
             FamilyFinance.Data.MyData.getInstance().saveData();
+        }
+
+        private void Transaction_Click(object sender, RoutedEventArgs e)
+        {
+            EditTransaction.EditTransactionWindow tWin = new EditTransaction.EditTransactionWindow();
+            tWin.ShowDialog();
         }
 
     }

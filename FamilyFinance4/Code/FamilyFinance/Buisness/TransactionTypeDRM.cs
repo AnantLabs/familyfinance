@@ -62,7 +62,7 @@ namespace FamilyFinance.Buisness
             this.TransactionTypeRow = MyData.getInstance().TransactionType.NewTransactionTypeRow();
 
             this.TransactionTypeRow.id = MyData.getInstance().getNextID("TransactionType");
-            this.TransactionTypeRow.name = name;
+            this.Name = name;
 
             MyData.getInstance().TransactionType.AddTransactionTypeRow(this.TransactionTypeRow);
         }
