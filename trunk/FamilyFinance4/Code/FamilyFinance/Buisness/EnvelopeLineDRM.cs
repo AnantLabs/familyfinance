@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FamilyFinance.Buisness
 {
-    class EnvelopeLineDRM : DataRowModel
+    public class EnvelopeLineDRM : DataRowModel
     {
     }
 }

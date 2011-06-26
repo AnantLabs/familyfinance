@@ -24,7 +24,7 @@ namespace FamilyFinance.Presentation.EditEnvelopes
             set
             {
                 this._ShowClosed = value;
-                this.refreshViewFilter(this._EnvelopesView);
+                ViewModel.refreshViewFilter(this._EnvelopesView);
             }
         }
 
@@ -38,7 +38,7 @@ namespace FamilyFinance.Presentation.EditEnvelopes
             set
             {
                 this._SearchText = value;
-                this.refreshViewFilter(this._EnvelopesView);
+                ViewModel.refreshViewFilter(this._EnvelopesView);
             }
         }
 
@@ -49,7 +49,6 @@ namespace FamilyFinance.Presentation.EditEnvelopes
             {
                 if (this._EnvelopesView == null)
                 {
-
                     this._EnvelopesView = (ListCollectionView)CollectionViewSource.GetDefaultView(new EnvelopeTM().EditableEnvelopes);
                     this._EnvelopesView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
                     this._EnvelopesView.Filter = new Predicate<Object>(Filter); 

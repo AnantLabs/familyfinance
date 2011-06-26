@@ -20,42 +20,38 @@
         <!-- Menu -->
         <Menu x:Name="menu"
               Grid.Row="0" 
-              HorizontalContentAlignment="Right" 
               FlowDirection="LeftToRight" 
               VerticalContentAlignment="Center" 
               Background="{StaticResource LightBlueMenuBackground}">
-            <MenuItem Header="Edit" Margin="4,4,50,4">
+            <MenuItem Header="Edit" 
+                      VerticalAlignment="Center">
                 <MenuItem Header="Account Types"
                           Click="EditAccountTypes_Click"/>
                 <MenuItem Header="Banks"
                           Click="EditBanks_Click"/>
             </MenuItem>
             <CheckBox Content="Incomes" 
-                      Margin="0" 
+                      Margin="50,0,0,0" 
                       VerticalAlignment="Center" 
                       HorizontalAlignment="Left" 
                       IsChecked="{Binding Source={StaticResource editAccountsVM}, Path=ShowIncomes}"
                       />
-            <CheckBox Content="Accounts" 
-                      Margin="0"  
+            <CheckBox Content="Accounts"   
                       VerticalAlignment="Center" 
                       HorizontalAlignment="Left" 
                       IsChecked="{Binding Source={StaticResource editAccountsVM}, Path=ShowAccounts}"
                       />
             <CheckBox Content="Expenses" 
-                      Margin="0" 
                       VerticalAlignment="Center" 
                       HorizontalAlignment="Left" 
                       IsChecked="{Binding Source={StaticResource editAccountsVM}, Path=ShowExpenses}"
                       />
             <CheckBox Content="Closed" 
-                      Margin="0"  
                       VerticalAlignment="Center" 
                       HorizontalAlignment="Left" 
                       IsChecked="{Binding Source={StaticResource editAccountsVM}, Path=ShowClosed}"
                       />
-            <TextBox MinWidth="150" 
-                     Margin="0"  
+            <TextBox MinWidth="200" 
                      HorizontalAlignment="Left" 
                      VerticalAlignment="Center"
                      Text="{Binding Source={StaticResource editAccountsVM}, Path=SearchText, UpdateSourceTrigger=PropertyChanged}"

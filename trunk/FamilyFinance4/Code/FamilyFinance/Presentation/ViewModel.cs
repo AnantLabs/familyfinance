@@ -9,7 +9,7 @@ namespace FamilyFinance.Presentation
         /// Commits any editing and then refreshs the given view. Typically used when filter parameters have changed.
         /// </summary>
         /// <param name="lcv"></param>
-        protected void refreshViewFilter(ListCollectionView lcv)
+        static public void refreshViewFilter(ListCollectionView lcv)
         {
             if (lcv.IsEditingItem)
                 lcv.CommitEdit();

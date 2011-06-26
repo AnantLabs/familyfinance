@@ -53,7 +53,7 @@ namespace FamilyFinance.Presentation.EditTypes
                     this.Title = "Transaction Types";
                     this.MaxNameLength = TransactionTypeCON.NameMaxLength;
                     this.MaxRoutingLength = 0;
-                    this._TableCollectionView = (ListCollectionView) CollectionViewSource.GetDefaultView(new TransactionTypeTM().EditableAccountType);
+                    this._TableCollectionView = (ListCollectionView) CollectionViewSource.GetDefaultView(new TransactionTypeTM().EditableTransactionType);
                     break;
 
                 case Table.EnvelopeGroup:

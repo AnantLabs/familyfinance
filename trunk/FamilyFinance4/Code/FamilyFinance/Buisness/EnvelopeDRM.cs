@@ -175,13 +175,13 @@ namespace FamilyFinance.Buisness
             this.envelopeRow = MyData.getInstance().Envelope.NewEnvelopeRow();
 
             this.envelopeRow.id = MyData.getInstance().getNextID("Envelope");
-            this.envelopeRow.name = name;
-            this.envelopeRow.groupID = groupID;
-            this.envelopeRow.favoriteAccountID = favoriteAccountID;
-            this.envelopeRow.closed = closed;
-            this.envelopeRow.priority = this.envelopeRow.id;
-            this.envelopeRow.notes = "";
-            this.envelopeRow.goal = "";
+            this.Name = name;
+            this.GroupID = groupID;
+            this.FavoriteAccountID = favoriteAccountID;
+            this.Closed = closed;
+            this.Priority = this.envelopeRow.id;
+            this.Notes = "";
+            this.Goal = "";
 
             MyData.getInstance().Envelope.AddEnvelopeRow(this.envelopeRow);
         }

@@ -71,13 +71,6 @@
     <Compile Include="Buisness\CreditDebitTM.cs" />
     <Compile Include="Buisness\EnvelopeDRM.cs" />
     <Compile Include="Buisness\EnvelopeLineDRM.cs" />
-    <Compile Include="Data\CatagoryCON.cs" />
-    <Compile Include="Data\AccountTypeCON.cs" />
-    <Compile Include="Data\BankCON.cs" />
-    <Compile Include="Data\AccountCON.cs" />
-    <Compile Include="Data\EnvelopeCON.cs" />
-    <Compile Include="Data\EnvelopeGroupCON.cs" />
-    <Compile Include="Data\CreditDebitCON.cs" />
     <Compile Include="Data\FFDataSet.cs">
       <DependentUpon>FFDataSet.xsd</DependentUpon>
       <SubType>Component</SubType>
@@ -87,8 +80,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FFDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Data\LineCompleteCON.cs" />
-    <Compile Include="Data\TransactionTypeCON.cs" />
     <Compile Include="Data\MyData.cs" />
     <Compile Include="Buisness\DataRowModel.cs" />
     <Compile Include="Buisness\LineItemDRM.cs" />
@@ -99,6 +90,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Presentation\EditEnvelopes\EditEnvelopesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\EditTransaction\EditTransactionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -119,6 +114,10 @@
     <Compile Include="Presentation\EditEnvelopes\EditEnvelopesVM.cs" />
     <Compile Include="Presentation\EditEnvelopes\EditEnvelopesWindow.xaml.cs">
       <DependentUpon>EditEnvelopesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\EditTransaction\EditTransactionVM.cs" />
+    <Compile Include="Presentation\EditTransaction\EditTransactionWindow.xaml.cs">
+      <DependentUpon>EditTransactionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Presentation\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -172,6 +171,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Data\Constants\" />
     <Folder Include="Import\" />
     <Folder Include="Presentation\Registry\" />
   </ItemGroup>

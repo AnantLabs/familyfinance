@@ -29,7 +29,7 @@ namespace FamilyFinance.Presentation.EditAccount
             set
             {
                 this._ShowIncomes = value;
-                this.refreshViewFilter(this._AccountsView);
+                ViewModel.refreshViewFilter(this._AccountsView);
             }
         }
 
@@ -43,7 +43,7 @@ namespace FamilyFinance.Presentation.EditAccount
             set
             {
                 this._ShowAccounts = value;
-                this.refreshViewFilter(this._AccountsView);
+                ViewModel.refreshViewFilter(this._AccountsView);
             }
         }
 
@@ -57,7 +57,7 @@ namespace FamilyFinance.Presentation.EditAccount
             set
             {
                 this._ShowExpenses = value;
-                this.refreshViewFilter(this._AccountsView);
+                ViewModel.refreshViewFilter(this._AccountsView);
             }
         }
 
@@ -71,7 +71,7 @@ namespace FamilyFinance.Presentation.EditAccount
             set
             {
                 this._ShowClosed = value;
-                this.refreshViewFilter(this._AccountsView);
+                ViewModel.refreshViewFilter(this._AccountsView);
             }
         }
 
@@ -85,7 +85,7 @@ namespace FamilyFinance.Presentation.EditAccount
             set
             {
                 this._SearchText = value;
-                this.refreshViewFilter(this._AccountsView);
+                ViewModel.refreshViewFilter(this._AccountsView);
             }
         }
 

@@ -77,8 +77,8 @@ namespace FamilyFinance.Buisness
             this.bankRow = MyData.getInstance().Bank.NewBankRow();
 
             this.bankRow.id = MyData.getInstance().getNextID("Bank");
-            this.bankRow.name = "";
-            this.bankRow.routingNumber = "";
+            this.Name = "";
+            this.RoutingNumber = "";
 
             MyData.getInstance().Bank.AddBankRow(this.bankRow);
         }

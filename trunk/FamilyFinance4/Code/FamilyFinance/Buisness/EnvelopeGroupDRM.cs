@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 using FamilyFinance.Data;
 
 namespace FamilyFinance.Buisness
@@ -106,9 +102,9 @@ namespace FamilyFinance.Buisness
             this.EnvelopeGroupRow = MyData.getInstance().EnvelopeGroup.NewEnvelopeGroupRow();
 
             this.EnvelopeGroupRow.id = MyData.getInstance().getNextID("EnvelopeGroup");
-            this.EnvelopeGroupRow.name = name;
-            this.EnvelopeGroupRow.minPercent = minPer;
-            this.EnvelopeGroupRow.maxPercent = maxPer;
+            this.Name = name;
+            this.MinPercentage = minPer;
+            this.MaxPercentage = maxPer;
 
             MyData.getInstance().EnvelopeGroup.AddEnvelopeGroupRow(this.EnvelopeGroupRow);
         }

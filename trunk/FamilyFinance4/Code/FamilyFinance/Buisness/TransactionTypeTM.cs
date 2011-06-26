@@ -15,7 +15,7 @@ namespace FamilyFinance.Buisness
         // Properties
         ///////////////////////////////////////////////////////////////////////
         private ObservableCollection<TransactionTypeDRM> _EditableTransactionType;
-        public ObservableCollection<TransactionTypeDRM> EditableAccountType
+        public ObservableCollection<TransactionTypeDRM> EditableTransactionType
         {
             get 
             {
