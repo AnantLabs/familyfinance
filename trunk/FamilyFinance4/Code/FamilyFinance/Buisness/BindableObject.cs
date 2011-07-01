@@ -17,7 +17,7 @@ namespace FamilyFinance.Buisness
             // public, instance property on this object.
             if (propertyName != "" && TypeDescriptor.GetProperties(this)[propertyName] == null)
             {
-                string msg = "Invalid property name: " + propertyName;
+                System.Windows.MessageBox.Show("Invalid property name: " + propertyName, "Invalid Property", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Stop);
             }
 
             else if (this.PropertyChanged != null)

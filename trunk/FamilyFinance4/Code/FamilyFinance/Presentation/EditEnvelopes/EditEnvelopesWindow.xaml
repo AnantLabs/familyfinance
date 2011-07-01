@@ -25,12 +25,12 @@
               VerticalContentAlignment="Center" 
               Background="{StaticResource LightBlueMenuBackground}">
             <MenuItem Header="Edit" 
-                      VerticalAlignment="Center">
+                      VerticalAlignment="Center" Margin="0,0,50,0">
                 <MenuItem Header="Envelope Groups"
                           Click="EditEnvelopeGroups_Click"/>
             </MenuItem>
             <CheckBox Content="Closed" 
-                      Margin="50,0,0,0"  
+                      Margin="0"  
                       VerticalAlignment="Center" 
                       IsChecked="{Binding Source={StaticResource editEnvelopesVM}, Path=ShowClosed}" />
             <TextBox MinWidth="200"  

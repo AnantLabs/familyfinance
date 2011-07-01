@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FamilyFinance.Data
 {
-    class CreditDebitCON
+    public class CreditDebitCON
     {
 
         /// <summary>
@@ -17,6 +17,22 @@ namespace FamilyFinance.Data
         /// The Debit instance.
         /// </summary>
         public static CreditDebitCON DEBIT = new CreditDebitCON(true, "Debit");
+
+        public static CreditDebitCON GetPlolartiy(bool? value)
+        {
+            CreditDebitCON polarity;
+
+            if (value == null)
+                polarity = null;
+
+            else if (value == CREDIT.Value)
+                polarity = CREDIT;
+
+            else
+                polarity = DEBIT;
+
+            return polarity;
+        }
 
         /// <summary>
         /// The value of the Credit or Debit
@@ -56,8 +72,7 @@ namespace FamilyFinance.Data
         }
 
         /// <summary>
-        /// Prevents outside instantiation of this class. This is esentially an Enum like the kind
-        /// available in Java.
+        /// Prevents outside instantiation of this class. This is a Java style enum.
         /// </summary>
         /// <param name="id">The id of the catagory.</param>
         /// <param name="name">The name of the catagory.</param>

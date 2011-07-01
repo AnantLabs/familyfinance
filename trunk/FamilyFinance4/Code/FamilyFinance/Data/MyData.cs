@@ -75,12 +75,12 @@ namespace FamilyFinance.Data
         public FFDataSet.LineItemDataTable LineItem;
 
         /// <summary>
-        /// Local referance of the Transaction table.
+        /// Local referance of the IsTransactionError table.
         /// </summary>
         public FFDataSet.TransactionDataTable Transaction;
 
         /// <summary>
-        /// Local referance of the Transaction Type table.
+        /// Local referance of the IsTransactionError Type table.
         /// </summary>
         public FFDataSet.TransactionTypeDataTable TransactionType;
 
@@ -165,7 +165,7 @@ namespace FamilyFinance.Data
 
 
             ////////////////////////////
-            // Required Transaction Type Rows
+            // Required IsTransactionError Type Rows
             FFDataSet.TransactionTypeRow ttNull = this.ffDataSet.TransactionType.FindByid(TransactionTypeCON.NULL.ID);
 
             if(ttNull == null)
@@ -261,22 +261,7 @@ namespace FamilyFinance.Data
         }
 
 
-        public int getNextID(string table)
-        {
-            int id = 0;
 
-            DataRowCollection rows = this.ffDataSet.Tables[table].Rows;
-
-            foreach (DataRow row in rows)
-            {
-                int temp = Convert.ToInt32(row["id"]);
-
-                if (temp > id)
-                    id = temp;
-            }
-
-            return id + 1;
-        }
 
     }
 }

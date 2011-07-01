@@ -38,7 +38,8 @@ namespace FamilyFinance.Buisness
 
             set
             {
-                this.bankRow.name = this.validLength(value, BankCON.NameMaxLength);
+                this.bankRow.name = this.truncateIfNeeded(value, BankCON.NameMaxLength);
+                this.RaisePropertyChanged("Name");
             }
         }
 
@@ -54,7 +55,7 @@ namespace FamilyFinance.Buisness
 
             set
             {
-                this.bankRow.routingNumber = this.validLength(value, BankCON.RountingNumMaxLength);
+                this.bankRow.routingNumber = this.truncateIfNeeded(value, BankCON.RountingNumMaxLength);
                 
             }
         }

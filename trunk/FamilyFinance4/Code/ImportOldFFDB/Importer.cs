@@ -53,13 +53,13 @@ namespace ImportOldFFDB
                 if (oldRow.id <= 0)
                     continue;
 
-                AccountDRM acc = new AccountDRM(oldRow.name, newAccountTypeID, oldRow.catagory, oldRow.closed, oldRow.envelopes);
+                AccountDRM acc = new AccountDRM(oldRow.name, newAccountTypeID, CatagoryCON.getCatagory(oldRow.catagory), oldRow.closed, oldRow.envelopes);
 
                 // Assume there is bank information if this accounts catagory is an account.
                 if (acc.CatagoryID == CatagoryCON.ACCOUNT.ID)
                 {
                     acc.HasBankInfo = true;
-                    acc.AccountNormal = oldRow.creditDebit;
+                    acc.AccountNormal = CreditDebitCON.GetPlolartiy(oldRow.creditDebit);
                 }
 
                 // Save the old and new ids.

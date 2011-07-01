@@ -94,6 +94,13 @@ namespace FamilyFinance.Presentation.EditAccount
         {
             get 
             {
+                if (this._AccountsView == null)
+                {
+                    this._AccountsView = new ListCollectionView(DataSetModel.getInstance().Accounts);
+                    this._AccountsView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                    this._AccountsView.Filter = new Predicate<Object>(EditableAccountsFilter);
+                }
+
                 return _AccountsView;
             }
         }
@@ -102,12 +109,12 @@ namespace FamilyFinance.Presentation.EditAccount
         {
             get
             {
-                ListCollectionView temp;
-                    
-                temp = (ListCollectionView)CollectionViewSource.GetDefaultView(new AccountTypeTM().AllAccountTypes);
-                temp.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                ListCollectionView atView;
 
-                return temp;
+                atView = new ListCollectionView(DataSetModel.getInstance().AccountTypes);
+                atView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+
+                return atView;
             }
         }
 
@@ -115,12 +122,12 @@ namespace FamilyFinance.Presentation.EditAccount
         {
             get
             {
-                ListCollectionView temp;
+                ListCollectionView bView;
 
-                temp = (ListCollectionView)CollectionViewSource.GetDefaultView(new BankTM().AllBanks);
-                temp.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                bView = new ListCollectionView(DataSetModel.getInstance().Banks);
+                bView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
 
-                return temp;
+                return bView;
             }
         }
 
@@ -128,7 +135,9 @@ namespace FamilyFinance.Presentation.EditAccount
         {
             get
             {
-                return new AccountCatagoryTM().Catagories;
+                // We don't need to worry about filtering or sorting just pass back the list.
+                // The view will be automatically/annonymously generated.
+                return DataSetModel.getInstance().AccountCatagories;
             }
         }
 
@@ -136,20 +145,25 @@ namespace FamilyFinance.Presentation.EditAccount
         {
             get
             {
-                return new CreditDebitTM().List;
+                // We don't need to worry about filtering or sorting just pass back the list.
+                // The view will be automatically/annonymously generated.
+                return DataSetModel.getInstance().CreditDebits;
             }
         }
 
 
         ///////////////////////////////////////////////////////////
         // Private functions
-        private bool Filter(object item)
+        private bool EditableAccountsFilter(object item)
         {
             AccountDRM accRow = (AccountDRM)item;
             bool keepItem = true; // Assume the item will be shown in the list
 
             // Remove the item if we don't want to see incomes, accounts, expenses, closed, or not in the search.
-            if (!this._ShowIncomes && accRow.CatagoryID == CatagoryCON.INCOME.ID)
+            if (accRow.CatagoryID == CatagoryCON.NULL.ID)
+                keepItem = false;
+            
+            else if (!this._ShowIncomes && accRow.CatagoryID == CatagoryCON.INCOME.ID)
                 keepItem = false;
 
             else if (!this._ShowAccounts && accRow.CatagoryID == CatagoryCON.ACCOUNT.ID)
@@ -178,10 +192,6 @@ namespace FamilyFinance.Presentation.EditAccount
             this._ShowExpenses = false;
             this._ShowClosed = false;
             this._SearchText = "";
-
-            this._AccountsView = (ListCollectionView)CollectionViewSource.GetDefaultView(new AccountTM().EditableAccounts);
-            this._AccountsView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-            this._AccountsView.Filter = new Predicate<Object>(Filter);
         }
 
     }

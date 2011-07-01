@@ -57,20 +57,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Buisness\AccountCatagoryTM.cs" />
-    <Compile Include="Buisness\AccountTM.cs" />
     <Compile Include="Buisness\AccountTypeDRM.cs" />
-    <Compile Include="Buisness\AccountTypeTM.cs" />
     <Compile Include="Buisness\BankDRM.cs" />
     <Compile Include="Buisness\AccountDRM.cs" />
-    <Compile Include="Buisness\BankTM.cs" />
-    <Compile Include="Buisness\EnvelopeTM.cs" />
-    <Compile Include="Buisness\EnvelopeGroupTM.cs" />
-    <Compile Include="Buisness\TableModel.cs" />
-    <Compile Include="Buisness\TransactionTypeTM.cs" />
-    <Compile Include="Buisness\CreditDebitTM.cs" />
+    <Compile Include="Buisness\DataSetModel.cs" />
     <Compile Include="Buisness\EnvelopeDRM.cs" />
     <Compile Include="Buisness\EnvelopeLineDRM.cs" />
+    <Compile Include="Buisness\RegistryEnvLineModel.cs" />
+    <Compile Include="Buisness\RegistryLineModel.cs" />
+    <Compile Include="Buisness\TransactionModel.cs" />
+    <Compile Include="Data\AccountCON.cs" />
+    <Compile Include="Data\AccountTypeCON.cs" />
+    <Compile Include="Data\BankCON.cs" />
+    <Compile Include="Data\CatagoryCON.cs" />
+    <Compile Include="Data\CreditDebitCON.cs" />
+    <Compile Include="Data\EnvelopeCON.cs" />
+    <Compile Include="Data\EnvelopeGroupCON.cs" />
     <Compile Include="Data\FFDataSet.cs">
       <DependentUpon>FFDataSet.xsd</DependentUpon>
       <SubType>Component</SubType>
@@ -80,6 +82,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FFDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Data\LineCompleteCON.cs" />
+    <Compile Include="Data\LineItemCON.cs" />
     <Compile Include="Data\MyData.cs" />
     <Compile Include="Buisness\DataRowModel.cs" />
     <Compile Include="Buisness\LineItemDRM.cs" />
@@ -107,6 +111,8 @@
     </Compile>
     <Compile Include="Buisness\EnvelopeGroupDRM.cs" />
     <Compile Include="Buisness\BindableObject.cs" />
+    <Compile Include="Data\TransactionCON.cs" />
+    <Compile Include="Data\TransactionTypeCON.cs" />
     <Compile Include="Presentation\EditAccount\EditAccountsVM.cs" />
     <Compile Include="Presentation\EditAccount\EditAccountsWindow.xaml.cs">
       <DependentUpon>EditAccountsWindow.xaml</DependentUpon>
@@ -171,7 +177,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\Constants\" />
     <Folder Include="Import\" />
     <Folder Include="Presentation\Registry\" />
   </ItemGroup>
