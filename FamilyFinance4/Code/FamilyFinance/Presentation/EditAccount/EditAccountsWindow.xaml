@@ -24,18 +24,17 @@
               VerticalContentAlignment="Center" 
               Background="{StaticResource LightBlueMenuBackground}">
             <MenuItem Header="Edit" 
-                      VerticalAlignment="Center">
+                      VerticalAlignment="Center" Margin="0,0,50,0">
                 <MenuItem Header="Account Types"
                           Click="EditAccountTypes_Click"/>
                 <MenuItem Header="Banks"
                           Click="EditBanks_Click"/>
             </MenuItem>
             <CheckBox Content="Incomes" 
-                      Margin="50,0,0,0" 
+                      Margin="4,0,0,0" 
                       VerticalAlignment="Center" 
                       HorizontalAlignment="Left" 
-                      IsChecked="{Binding Source={StaticResource editAccountsVM}, Path=ShowIncomes}"
-                      />
+                      IsChecked="{Binding Source={StaticResource editAccountsVM}, Path=ShowIncomes}" Padding="4,0,0,0" />
             <CheckBox Content="Accounts"   
                       VerticalAlignment="Center" 
                       HorizontalAlignment="Left" 

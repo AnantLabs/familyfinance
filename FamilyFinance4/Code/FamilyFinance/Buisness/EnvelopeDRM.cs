@@ -40,7 +40,7 @@ namespace FamilyFinance.Buisness
 
             set
             {
-                this.envelopeRow.name = this.validLength(value, EnvelopeCON.NameMaxLength);
+                this.envelopeRow.name = this.truncateIfNeeded(value, EnvelopeCON.NameMaxLength);
             }
         }
 
@@ -139,7 +139,7 @@ namespace FamilyFinance.Buisness
 
             set
             {
-                this.envelopeRow.notes = this.validLength(value, EnvelopeCON.NotesMaxLength);
+                this.envelopeRow.notes = this.truncateIfNeeded(value, EnvelopeCON.NotesMaxLength);
             }
         }
 
@@ -152,7 +152,7 @@ namespace FamilyFinance.Buisness
 
             set
             {
-                this.envelopeRow.goal = this.validLength(value, EnvelopeCON.GoalMaxLength);
+                this.envelopeRow.goal = this.truncateIfNeeded(value, EnvelopeCON.GoalMaxLength);
             }
         }
        

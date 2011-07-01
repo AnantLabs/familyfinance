@@ -33,7 +33,7 @@ namespace FamilyFinance.Buisness
 
             set
             {
-                this.EnvelopeGroupRow.name = this.validLength(value, EnvelopeGroupCON.NameMaxLength);
+                this.EnvelopeGroupRow.name = this.truncateIfNeeded(value, EnvelopeGroupCON.NameMaxLength);
             }
         }
 

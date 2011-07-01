@@ -49,9 +49,9 @@ namespace FamilyFinance.Presentation.EditEnvelopes
             {
                 if (this._EnvelopesView == null)
                 {
-                    this._EnvelopesView = (ListCollectionView)CollectionViewSource.GetDefaultView(new EnvelopeTM().EditableEnvelopes);
+                    this._EnvelopesView = new ListCollectionView(DataSetModel.getInstance().Envelopes);
                     this._EnvelopesView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-                    this._EnvelopesView.Filter = new Predicate<Object>(Filter); 
+                    this._EnvelopesView.Filter = new Predicate<Object>(EditableEnvelopesFilter); 
                 }
 
                 return _EnvelopesView;
@@ -62,9 +62,7 @@ namespace FamilyFinance.Presentation.EditEnvelopes
         {
             get
             {
-                ListCollectionView temp;
-                    
-                temp = (ListCollectionView) CollectionViewSource.GetDefaultView(new EnvelopeGroupTM().AllEnvelopeGroups);
+                ListCollectionView temp = new ListCollectionView(DataSetModel.getInstance().EnvelopeGroups);
                 temp.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
 
                 return temp;
@@ -75,25 +73,28 @@ namespace FamilyFinance.Presentation.EditEnvelopes
         {
             get 
             {
-                ListCollectionView temp;
+                ListCollectionView favoriteAccView = new ListCollectionView(DataSetModel.getInstance().Accounts);
 
-                temp = (ListCollectionView)CollectionViewSource.GetDefaultView(new AccountTM().FavoriteAccounts);
-                temp.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                favoriteAccView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                favoriteAccView.Filter = this.FavoriteAccountsFilter;
 
-                return temp;
+                return favoriteAccView;
             }
         }
 
 
         ///////////////////////////////////////////////////////////
         // Private functions
-        private bool Filter(object item)
+        private bool EditableEnvelopesFilter(object item)
         {
             EnvelopeDRM envRow = (EnvelopeDRM)item;
             bool keepItem = true; // Assume the item will be shown in the list
 
+            if (EnvelopeCON.isSpecial(envRow.ID))
+                keepItem = false;
+
             // Remove the item if we don't want to see closed envelopes or it's not in the search.
-            if (!this._ShowClosed && envRow.Closed)
+            else if (!this._ShowClosed && envRow.Closed)
                 keepItem = false;
 
             else if (!String.IsNullOrEmpty(this._SearchText) && !envRow.Name.ToLower().Contains(this.SearchText.ToLower()))
@@ -102,6 +103,16 @@ namespace FamilyFinance.Presentation.EditEnvelopes
             return keepItem;
         }
 
+        private bool FavoriteAccountsFilter(object item)
+        {
+            AccountDRM accRow = (AccountDRM)item;
+            bool keepItem = true; // Assume the item will be shown in the list
+
+            if (CatagoryCON.ACCOUNT.ID == accRow.CatagoryID)
+                keepItem = false;
+
+            return keepItem;
+        }
 
         ///////////////////////////////////////////////////////////
         // Public functions

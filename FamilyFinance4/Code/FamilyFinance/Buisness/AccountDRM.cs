@@ -7,6 +7,10 @@ using FamilyFinance.Data;
 
 namespace FamilyFinance.Buisness
 {
+    /// <summary>
+    /// A modle of an account row in the dataset. This also manages a bankInfo row, if the
+    /// user wants to attach bank information to the account row.
+    /// </summary>
     public class AccountDRM : DataRowModel
     {
         ///////////////////////////////////////////////////////////////////////
@@ -49,7 +53,7 @@ namespace FamilyFinance.Buisness
 
             set
             {
-                this.accountRow.name = this.validLength(value, AccountCON.NameMaxLength);
+                this.accountRow.name = this.truncateIfNeeded(value, AccountCON.NameMaxLength);
             }
         }
 
@@ -95,7 +99,8 @@ namespace FamilyFinance.Buisness
                 this.accountRow.catagory = value;
 
                 this.RaisePropertyChanged("CatagoryName");
-                this.RaisePropertyChanged("UseEnvelopes");
+                this.RaisePropertyChanged("UsesEnvelopes");
+                this.RaisePropertyChanged("CanUseEnvelopes");
             }
         }
 
@@ -143,6 +148,13 @@ namespace FamilyFinance.Buisness
             }
         }
 
+        public bool CanUseEnvelopes
+        {
+            get
+            {
+                return (this.accountRow.catagory == CatagoryCON.ACCOUNT.ID);
+            }
+        }
 
         public bool HasBankInfo
         {
@@ -195,26 +207,26 @@ namespace FamilyFinance.Buisness
             {
                 if (this.bankInfoRow != null)
                 {
-                    this.bankInfoRow.accountNumber = this.validLength(value, AccountCON.AccountNumberMaxLength);
+                    this.bankInfoRow.accountNumber = this.truncateIfNeeded(value, AccountCON.AccountNumberMaxLength);
                 }
             }
         }
 
-        public bool? AccountNormal
+        public CreditDebitCON AccountNormal
         {
             get
             {
                 if (this.bankInfoRow == null)
                     return null;
                 else
-                    return this.bankInfoRow.creditDebit;
+                    return CreditDebitCON.GetPlolartiy(this.bankInfoRow.creditDebit);
             }
 
             set
             {
                 if (this.bankInfoRow != null)
                 {
-                    this.bankInfoRow.creditDebit = Convert.ToBoolean(value);
+                    this.bankInfoRow.creditDebit = value.Value;
                 }
             }
         }
@@ -226,11 +238,8 @@ namespace FamilyFinance.Buisness
                 if (this.bankInfoRow == null)
                     return "";
 
-                else if (this.bankInfoRow.creditDebit == CreditDebitCON.CREDIT.Value)
-                    return CreditDebitCON.CREDIT.Name;
-
                 else
-                    return CreditDebitCON.DEBIT.Name;
+                    return CreditDebitCON.GetPlolartiy(this.bankInfoRow.creditDebit).Name;
             }
         }
 
@@ -295,7 +304,7 @@ namespace FamilyFinance.Buisness
             this.bankInfoRow = MyData.getInstance().BankInfo.FindByaccountID(this.ID);
         }
 
-        public AccountDRM(string name, int typeID, byte catagory, bool closed, bool envelopes)
+        public AccountDRM(string name, int typeID, CatagoryCON catagory, bool closed, bool envelopes)
         {
             this.bankInfoRow = null;
             this.accountRow = MyData.getInstance().Account.NewAccountRow();
@@ -303,14 +312,14 @@ namespace FamilyFinance.Buisness
             this.accountRow.id = MyData.getInstance().getNextID("Account");
             this.Name = name;
             this.TypeID = typeID;
-            this.CatagoryID = catagory;
+            this.CatagoryID = catagory.ID;
             this.Closed = closed;
             this.UsesEnvelopes = envelopes;
 
             MyData.getInstance().Account.AddAccountRow(this.accountRow);
         }
 
-        public AccountDRM() : this("", AccountTypeCON.NULL.ID, CatagoryCON.ACCOUNT.ID, false, false)
+        public AccountDRM() : this("", AccountTypeCON.NULL.ID, CatagoryCON.ACCOUNT, false, false)
         {
         }
     }

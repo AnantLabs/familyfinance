@@ -4,14 +4,14 @@
     <Position X="4.054" Y="13.595" Height="1.198" Width="3.169" />
   </Comment>
   <Class Name="FamilyFinance.Data.MyData">
-    <Position X="7.5" Y="13.5" Width="18.75" />
+    <Position X="7.5" Y="14" Width="18.75" />
     <TypeIdentifier>
-      <HashCode>AQCAAIEQAAAAAQCAABESAAAAAAAAAEUAQAAgAAAAAEA=</HashCode>
+      <HashCode>AQCAAIEQAAAAAQCAABECAAAAAAAAAEUAQAAgAAAAAEA=</HashCode>
       <FileName>Data\MyData.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FamilyFinance.Data.FFDataSet">
-    <Position X="11.25" Y="14.5" Width="4" />
+    <Position X="12.75" Y="15.5" Width="4" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
       <Compartment Name="Properties" Collapsed="true" />
@@ -145,14 +145,21 @@
     </TypeIdentifier>
   </Class>
   <Class Name="FamilyFinance.Buisness.AccountTypeDRM">
-    <Position X="12" Y="8" Width="1.5" />
+    <Position X="6.75" Y="8" Width="1.5" />
+    <InheritanceLine Type="FamilyFinance.Buisness.DataRowModel" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.25" Y="7.683" />
+        <Point X="7.5" Y="7.683" />
+        <Point X="7.5" Y="8" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgAAAAAAAAAQAAAAAAIAAAAAAAAAAAAA=</HashCode>
       <FileName>Buisness\AccountTypeDRM.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FamilyFinance.Buisness.BindableObject" Collapsed="true">
-    <Position X="2" Y="8" Width="1.5" />
+    <Position X="2" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Buisness\BindableObject.cs</FileName>
@@ -160,143 +167,187 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="FamilyFinance.Buisness.AccountDRM">
-    <Position X="7.75" Y="8" Width="1.5" />
+    <Position X="12.25" Y="8" Width="1.5" />
+    <InheritanceLine Type="FamilyFinance.Buisness.DataRowModel" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.25" Y="7.683" />
+        <Point X="12.938" Y="7.683" />
+        <Point X="12.938" Y="8" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>ACAAAABgAAAAgAAAAAAAAAQAAAoAgBAgALAAggCAAAQ=</HashCode>
+      <HashCode>ACAAAABgAAAAgAAAAAAAAAQAAAoAgBAgALAAggCgAAQ=</HashCode>
       <FileName>Buisness\AccountDRM.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FamilyFinance.Buisness.BankDRM">
-    <Position X="13.75" Y="8" Width="1.75" />
+    <Position X="15.75" Y="8" Width="1.75" />
+    <InheritanceLine Type="FamilyFinance.Buisness.DataRowModel" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.25" Y="7.683" />
+        <Point X="16.625" Y="7.683" />
+        <Point X="16.625" Y="8" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AACAAAAAAAAAgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAQ=</HashCode>
       <FileName>Buisness\BankDRM.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FamilyFinance.Buisness.DataRowModel">
-    <Position X="5" Y="8" Width="1.5" />
+    <Position X="4.75" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
       <FileName>Buisness\DataRowModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FamilyFinance.Buisness.TableModel" Collapsed="true">
-    <Position X="5" Y="6" Width="1.5" />
+  <Class Name="FamilyFinance.Buisness.EnvelopeDRM">
+    <Position X="14" Y="8" Width="1.5" />
+    <InheritanceLine Type="FamilyFinance.Buisness.DataRowModel" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.25" Y="7.683" />
+        <Point X="14.75" Y="7.683" />
+        <Point X="14.75" Y="8" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Buisness\TableModel.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FamilyFinance.Buisness.EnvelopeDRM" Collapsed="true">
-    <Position X="15.75" Y="8" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AQQgAAAAAAAAgAAECAAAAAQAAAAAAAAAAAAAAACAgAE=</HashCode>
       <FileName>Buisness\EnvelopeDRM.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FamilyFinance.Buisness.EnvelopeGroupDRM">
-    <Position X="17.5" Y="8" Width="1.5" />
+    <Position X="10.25" Y="8" Width="1.75" />
+    <InheritanceLine Type="FamilyFinance.Buisness.DataRowModel" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.25" Y="7.683" />
+        <Point X="11.125" Y="7.683" />
+        <Point X="11.125" Y="8" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAIAAAAgAAAAAAAACQAAAAAAAAAAAAAAAAAACA=</HashCode>
       <FileName>Buisness\EnvelopeGroupDRM.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FamilyFinance.Buisness.EnvelopeLineDRM" Collapsed="true">
-    <Position X="19.25" Y="8" Width="1.5" />
+  <Class Name="FamilyFinance.Buisness.EnvelopeLineDRM">
+    <Position X="21.25" Y="8" Width="1.5" />
+    <InheritanceLine Type="FamilyFinance.Buisness.DataRowModel" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.25" Y="7.683" />
+        <Point X="18.729" Y="7.683" Type="JumpStart" />
+        <Point X="18.896" Y="7.683" Type="JumpEnd" />
+        <Point X="22" Y="7.683" />
+        <Point X="22" Y="8" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAIIAAAgAAAACAAAAACgAAAAAAAAAAAAAAgAAAA=</HashCode>
       <FileName>Buisness\EnvelopeLineDRM.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FamilyFinance.Buisness.LineItemDRM" Collapsed="true">
-    <Position X="21" Y="8" Width="1.5" />
+  <Class Name="FamilyFinance.Buisness.LineItemDRM">
+    <Position X="19.5" Y="8" Width="1.5" />
+    <InheritanceLine Type="FamilyFinance.Buisness.DataRowModel" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.25" Y="7.683" />
+        <Point X="18.729" Y="7.683" Type="JumpStart" />
+        <Point X="18.896" Y="7.683" Type="JumpEnd" />
+        <Point X="20.25" Y="7.683" />
+        <Point X="20.25" Y="8" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAACAgAAAACgAAgAAAEAAAQAAgAAAAA=</HashCode>
       <FileName>Buisness\LineItemDRM.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FamilyFinance.Buisness.TransactionDRM" Collapsed="true">
-    <Position X="22.75" Y="8" Width="1.5" />
+  <Class Name="FamilyFinance.Buisness.TransactionDRM">
+    <Position X="17.75" Y="8" Width="1.5" />
+    <InheritanceLine Type="FamilyFinance.Buisness.DataRowModel" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.25" Y="7.683" />
+        <Point X="18.562" Y="7.683" />
+        <Point X="18.562" Y="8" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAABgAQAgAAAAAAAAAAAgAAAAABAhAAAAAAAAAAA=</HashCode>
       <FileName>Buisness\TransactionDRM.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FamilyFinance.Buisness.TransactionTypeDRM">
-    <Position X="24.5" Y="8" Width="1.5" />
+    <Position X="8.5" Y="8" Width="1.5" />
+    <InheritanceLine Type="FamilyFinance.Buisness.DataRowModel" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.25" Y="7.683" />
+        <Point X="9.312" Y="7.683" />
+        <Point X="9.312" Y="8" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgAAAAAAAIAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Buisness\TransactionTypeDRM.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FamilyFinance.Buisness.AccountCatagoryTM" Collapsed="true">
-    <Position X="7.75" Y="4" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
-      <FileName>Buisness\AccountCatagoryTM.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FamilyFinance.Buisness.AccountTypeTM" Collapsed="true">
-    <Position X="12" Y="5.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAoAAAAAAAAAAAAAAAEAAAAAAAAAAEAA=</HashCode>
-      <FileName>Buisness\AccountTypeTM.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FamilyFinance.Buisness.BankTM" Collapsed="true">
-    <Position X="13.75" Y="5.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAgAAAAAAAEAAAAAAAAAAEAAAAAAAAAAAAAAAAIA=</HashCode>
-      <FileName>Buisness\BankTM.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FamilyFinance.Buisness.CreditDebitTM" Collapsed="true">
-    <Position X="20.75" Y="4.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
-      <FileName>Buisness\CreditDebitTM.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FamilyFinance.Buisness.TransactionTypeTM" Collapsed="true">
-    <Position X="22.75" Y="5.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAEAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Buisness\TransactionTypeTM.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FamilyFinance.Buisness.EnvelopeGroupTM" Collapsed="true">
-    <Position X="17.5" Y="5.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAABAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Buisness\EnvelopeGroupTM.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FamilyFinance.Buisness.AccountTM" Collapsed="true">
-    <Position X="7.75" Y="5.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Buisness\AccountTM.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="FamilyFinance.Presentation.ViewModel" Collapsed="true">
     <Position X="5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Presentation\ViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FamilyFinance.Presentation.EditAccount.EditAccountsVM" Collapsed="true">
     <Position X="7.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgAAEAAAEgACAAAIAAAAAIAARBBGAQAAABAAACAAAAA=</HashCode>
+      <HashCode>IgAAEAAAEgACAAAIAAAAAIAARABGAQAAAhAAACAAAAA=</HashCode>
       <FileName>Presentation\EditAccount\EditAccountsVM.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FamilyFinance.Presentation.EditTypes.EditTypesVM" Collapsed="true">
     <Position X="9" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAIAAAAEAAAAgAAIAA=</HashCode>
+      <HashCode>EAAAAAAgAAAEAEAAAAAAAAAAAAAIgAAAEAAAAgAAIAA=</HashCode>
       <FileName>Presentation\EditTypes\EditTypesVM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FamilyFinance.Buisness.DataSetModel">
+    <Position X="6.75" Y="2.75" Width="20" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>QAAAAIAAABAAAAaAAAAEAAAAAAACAQyAABABAAAAAAI=</HashCode>
+      <FileName>Buisness\DataSetModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FamilyFinance.Buisness.RegistryEnvLineModel">
+    <Position X="21.25" Y="5.5" Width="1.5" />
+    <InheritanceLine Type="FamilyFinance.Buisness.EnvelopeLineDRM" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="22.312" Y="8" />
+        <Point X="22.312" Y="7.625" />
+        <Point X="22.25" Y="7.625" />
+        <Point X="22.25" Y="7.31" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAgAAAAAAAAAAAAAAAAABABAAAAAAAAAAA=</HashCode>
+      <FileName>Buisness\RegistryEnvLineModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FamilyFinance.Buisness.RegistryLineModel" Collapsed="true">
+    <Position X="19.5" Y="6.25" Width="1.5" />
+    <InheritanceLine Type="FamilyFinance.Buisness.TransactionDRM" FixedFromPoint="true">
+      <Path>
+        <Point X="18.812" Y="8" />
+        <Point X="18.812" Y="7.316" />
+        <Point X="20.25" Y="7.316" />
+        <Point X="20.25" Y="6.941" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Buisness\RegistryLineModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

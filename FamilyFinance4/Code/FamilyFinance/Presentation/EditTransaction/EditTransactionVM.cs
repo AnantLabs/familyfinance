@@ -30,7 +30,7 @@ namespace FamilyFinance.Presentation.EditTransaction
             {
                 if (this._CreditsView == null)
                 {
-                    this._CreditsView = (ListCollectionView)CollectionViewSource.GetDefaultView(this._lines);
+                    this._CreditsView = new ListCollectionView(this._lines);
                     this._CreditsView.Filter = new Predicate<Object>(CreditsFilter);
                 }
 
@@ -45,7 +45,7 @@ namespace FamilyFinance.Presentation.EditTransaction
             {
                 if (this._DebitsView == null)
                 {
-                    this._DebitsView = (ListCollectionView)CollectionViewSource.GetDefaultView(this._lines);
+                    this._DebitsView = new ListCollectionView(this._lines);
                     this._DebitsView.Filter = new Predicate<Object>(DebitsFilter);
                 }
 
@@ -60,7 +60,7 @@ namespace FamilyFinance.Presentation.EditTransaction
             {
                 if (this._TransactionTypesView == null)
                 {
-                    this._TransactionTypesView = (ListCollectionView)CollectionViewSource.GetDefaultView(new TransactionTypeTM().EditableTransactionType);
+                    this._TransactionTypesView = new ListCollectionView(DataSetModel.getInstance().TransactionTypes);
                     this._TransactionTypesView.Filter = new Predicate<Object>(DebitsFilter);
                 }
 
@@ -101,7 +101,7 @@ namespace FamilyFinance.Presentation.EditTransaction
                     }
                 }
 
-                ListCollectionView envView = (ListCollectionView)CollectionViewSource.GetDefaultView(envColl);
+                ListCollectionView envView = new ListCollectionView(envColl);
                 envView.SortDescriptions.Add(new System.ComponentModel.SortDescription("EnvelopeName", System.ComponentModel.ListSortDirection.Ascending));
 
                 return envView;
@@ -116,7 +116,7 @@ namespace FamilyFinance.Presentation.EditTransaction
 
                 foreach (LineItemDRM line in this._lines)
                 {
-                    if (line.CreditDebit != CreditDebitCON.CREDIT.Value)
+                    if (line.Polarity != CreditDebitCON.CREDIT.Value)
                     {
                         sum += line.Amount;
                     }
@@ -134,7 +134,7 @@ namespace FamilyFinance.Presentation.EditTransaction
 
                 foreach (LineItemDRM line in this._lines)
                 {
-                    if (line.CreditDebit != CreditDebitCON.DEBIT.Value)
+                    if (line.Polarity != CreditDebitCON.DEBIT.Value)
                     {
                         sum += line.Amount;
                     }
@@ -169,7 +169,7 @@ namespace FamilyFinance.Presentation.EditTransaction
             bool keepItem = false; // Assume the item will NOT be shown in the list
 
             // Keep the item if it is a credit
-            if (lineRow.CreditDebit == CreditDebitCON.CREDIT.Value)
+            if (lineRow.Polarity == CreditDebitCON.CREDIT.Value)
                 keepItem = true;
 
             return keepItem;
@@ -181,7 +181,7 @@ namespace FamilyFinance.Presentation.EditTransaction
             bool keepItem = false; // Assume the item will NOT be shown in the list
 
             // Keep the item if it is a debit
-            if (lineRow.CreditDebit == CreditDebitCON.DEBIT.Value)
+            if (lineRow.Polarity == CreditDebitCON.DEBIT.Value)
                 keepItem = true;
 
             return keepItem;

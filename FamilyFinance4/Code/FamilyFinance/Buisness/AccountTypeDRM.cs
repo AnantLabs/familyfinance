@@ -37,7 +37,7 @@ namespace FamilyFinance.Buisness
 
             set
             {
-                this.accountTypeRow.name = this.validLength(value, AccountTypeCON.NameMaxLength);
+                this.accountTypeRow.name = this.truncateIfNeeded(value, AccountTypeCON.NameMaxLength);
             }
         }
 

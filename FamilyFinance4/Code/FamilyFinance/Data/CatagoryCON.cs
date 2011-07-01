@@ -75,6 +75,31 @@ namespace FamilyFinance.Data
 
             throw new System.Exception("Invalid catagory id:" + id);
         }
+
+
+        /// <summary>
+        /// Gets the catagory of the given catagory id.
+        /// </summary>
+        /// <param name="id">The id of the catagory.</param>
+        /// <returns>The catagory.</returns>
+        public static CatagoryCON getCatagory(byte id)
+        {
+
+            if (id == CatagoryCON.NULL.ID)
+                return CatagoryCON.NULL;
+
+            if (id == CatagoryCON.INCOME.ID)
+                return CatagoryCON.INCOME;
+
+            if (id == CatagoryCON.ACCOUNT.ID)
+                return CatagoryCON.ACCOUNT;
+
+            if (id == CatagoryCON.EXPENSE.ID)
+                return CatagoryCON.EXPENSE;
+
+            throw new System.Exception("Invalid catagory id:" + id);
+        }
+
         /// <summary>
         /// The id value of the catagory.
         /// </summary>

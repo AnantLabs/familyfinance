@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FamilyFinance.Data
 {
-    class LineCompleteCON
+    public class LineCompleteCON
     {
         /// <summary>
         /// The initial value when an Account is made.

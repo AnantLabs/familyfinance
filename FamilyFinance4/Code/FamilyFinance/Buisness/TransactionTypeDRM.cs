@@ -10,7 +10,7 @@ namespace FamilyFinance.Buisness
     public class TransactionTypeDRM : DataRowModel
     {
         /// <summary>
-        /// Local referance to the Transaction type row this object is modeling.
+        /// Local referance to the IsTransactionError type row this object is modeling.
         /// </summary>
         private FFDataSet.TransactionTypeRow TransactionTypeRow;
 
@@ -37,12 +37,12 @@ namespace FamilyFinance.Buisness
 
             set
             {
-                this.TransactionTypeRow.name = this.validLength(value, TransactionTypeCON.NameMaxLength);
+                this.TransactionTypeRow.name = this.truncateIfNeeded(value, TransactionTypeCON.NameMaxLength);
             }
         }
 
         /// <summary>
-        /// Creates the object and keeps a local referance to the given Transaction type row.
+        /// Creates the object and keeps a local referance to the given IsTransactionError type row.
         /// </summary>
         /// <param name="aRow"></param>
         public TransactionTypeDRM(FFDataSet.TransactionTypeRow atRow)
@@ -51,7 +51,7 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// Creates the object and keeps a reference to a new Transaction type row.
+        /// Creates the object and keeps a reference to a new IsTransactionError type row.
         /// </summary>
         public TransactionTypeDRM() : this("")
         {

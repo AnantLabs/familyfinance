@@ -116,8 +116,8 @@ namespace FamilyFinance.Data {
                 if ((ds.Tables["LineItem"] != null)) {
                     base.Tables.Add(new LineItemDataTable(ds.Tables["LineItem"]));
                 }
-                if ((ds.Tables["Transaction"] != null)) {
-                    base.Tables.Add(new TransactionDataTable(ds.Tables["Transaction"]));
+                if ((ds.Tables["IsTransactionError"] != null)) {
+                    base.Tables.Add(new TransactionDataTable(ds.Tables["IsTransactionError"]));
                 }
                 if ((ds.Tables["TransactionType"] != null)) {
                     base.Tables.Add(new TransactionTypeDataTable(ds.Tables["TransactionType"]));
@@ -331,8 +331,8 @@ namespace FamilyFinance.Data {
                 if ((ds.Tables["LineItem"] != null)) {
                     base.Tables.Add(new LineItemDataTable(ds.Tables["LineItem"]));
                 }
-                if ((ds.Tables["Transaction"] != null)) {
-                    base.Tables.Add(new TransactionDataTable(ds.Tables["Transaction"]));
+                if ((ds.Tables["IsTransactionError"] != null)) {
+                    base.Tables.Add(new TransactionDataTable(ds.Tables["IsTransactionError"]));
                 }
                 if ((ds.Tables["TransactionType"] != null)) {
                     base.Tables.Add(new TransactionTypeDataTable(ds.Tables["TransactionType"]));
@@ -418,7 +418,7 @@ namespace FamilyFinance.Data {
                     this.tableLineItem.InitVars();
                 }
             }
-            this.tableTransaction = ((TransactionDataTable)(base.Tables["Transaction"]));
+            this.tableTransaction = ((TransactionDataTable)(base.Tables["IsTransactionError"]));
             if ((initTable == true)) {
                 if ((this.tableTransaction != null)) {
                     this.tableTransaction.InitVars();
@@ -3225,7 +3225,7 @@ namespace FamilyFinance.Data {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public TransactionDataTable() {
-                this.TableName = "Transaction";
+                this.TableName = "IsTransactionError";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -4649,7 +4649,7 @@ namespace FamilyFinance.Data {
                         return ((string)(this[this.tableTransaction.descriptionColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'description\' in table \'Transaction\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'description\' in table \'IsTransactionError\' is DBNull.", e);
                     }
                 }
                 set {
