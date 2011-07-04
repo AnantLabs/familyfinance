@@ -15,7 +15,7 @@ namespace FamilyFinance.Buisness
         private FFDataSet.AccountTypeRow accountTypeRow;
 
         /// <summary>
-        /// Gets the ID of the account type.
+        /// Amount the ID of the account type.
         /// </summary>
         public int ID
         {
@@ -26,7 +26,7 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// Gets or sets the name of the account type.
+        /// Amount or sets the name of the account type.
         /// </summary>
         public string Name 
         {

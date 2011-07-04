@@ -31,7 +31,7 @@ namespace FamilyFinance.Buisness
         // Properties to access this object.
         ///////////////////////////////////////////////////////////////////////
         /// <summary>
-        /// Gets the ID of the account.
+        /// Amount the ID of the account.
         /// </summary>
         public int ID
         {
@@ -42,7 +42,7 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// Gets or sets the name of the account.
+        /// Amount or sets the name of the account.
         /// </summary>
         public string Name 
         {
@@ -58,7 +58,7 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// Gets or sets the typeID of this account.
+        /// Amount or sets the typeID of this account.
         /// </summary>
         public int TypeID
         {
@@ -74,7 +74,7 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// Gets the type name of this account.
+        /// Amount the type name of this account.
         /// </summary>
         public string TypeName
         {
@@ -85,7 +85,7 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// Gets or sets the Catagory of this account.
+        /// Amount or sets the Catagory of this account.
         /// </summary>
         public byte CatagoryID
         {
@@ -105,7 +105,7 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// Gets the catagory name for this account.
+        /// Amount the catagory name for this account.
         /// </summary>
         public string CatagoryName
         {
@@ -116,7 +116,7 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// Gets or sets the Closed flag for this account. True if the account is closed, 
+        /// Amount or sets the Closed flag for this account. True if the account is closed, 
         /// false if the account is open.
         /// </summary>
         public bool Closed
@@ -133,7 +133,7 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// Gets or sets the flag stating whether or not this account uses envelopes.
+        /// Amount or sets the flag stating whether or not this account uses envelopes.
         /// </summary>
         public bool UsesEnvelopes
         {
@@ -175,7 +175,7 @@ namespace FamilyFinance.Buisness
                     this.bankInfoRow.accountID = this.ID;
                     this.bankInfoRow.bankID = BankCON.NULL.ID;
                     this.bankInfoRow.accountNumber = "";
-                    this.bankInfoRow.creditDebit = CreditDebitCON.DEBIT.Value;
+                    this.bankInfoRow.polarity = PolarityCON.DEBIT.Value;
 
                     MyData.getInstance().BankInfo.AddBankInfoRow(this.bankInfoRow);
                 }
@@ -212,21 +212,21 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        public CreditDebitCON AccountNormal
+        public PolarityCON AccountNormal
         {
             get
             {
                 if (this.bankInfoRow == null)
                     return null;
                 else
-                    return CreditDebitCON.GetPlolartiy(this.bankInfoRow.creditDebit);
+                    return PolarityCON.GetPlolartiy(this.bankInfoRow.polarity);
             }
 
             set
             {
                 if (this.bankInfoRow != null)
                 {
-                    this.bankInfoRow.creditDebit = value.Value;
+                    this.bankInfoRow.polarity = value.Value;
                 }
             }
         }
@@ -239,7 +239,7 @@ namespace FamilyFinance.Buisness
                     return "";
 
                 else
-                    return CreditDebitCON.GetPlolartiy(this.bankInfoRow.creditDebit).Name;
+                    return PolarityCON.GetPlolartiy(this.bankInfoRow.polarity).Name;
             }
         }
 

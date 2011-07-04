@@ -16,7 +16,7 @@ namespace FamilyFinance.Buisness
         private FFDataSet.BankRow bankRow;
 
         /// <summary>
-        /// Gets the ID of the Bank.
+        /// Amount the ID of the Bank.
         /// </summary>
         public int ID
         {
@@ -27,7 +27,7 @@ namespace FamilyFinance.Buisness
         }
   
         /// <summary>
-        /// Gets or sets the name of the account.
+        /// Amount or sets the name of the account.
         /// </summary>
         public string Name 
         {
@@ -44,7 +44,7 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// Gets or sets the banks routing number.
+        /// Amount or sets the banks routing number.
         /// </summary>
         public string RoutingNumber
         {

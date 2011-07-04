@@ -30,7 +30,7 @@ namespace FamilyFinance.Data
 
 
         /// <summary>
-        /// Gets the name of the given catagory id.
+        /// Amount the name of the given catagory id.
         /// </summary>
         /// <param name="id">The id of the catagory.</param>
         /// <returns>The name of the catagory.</returns>
@@ -54,7 +54,7 @@ namespace FamilyFinance.Data
 
 
         /// <summary>
-        /// Gets the short name of the given catagory id.
+        /// Amount the short name of the given catagory id.
         /// </summary>
         /// <param name="id">The id of the catagory.</param>
         /// <returns>The short name of the catagory.</returns>
@@ -78,7 +78,7 @@ namespace FamilyFinance.Data
 
 
         /// <summary>
-        /// Gets the catagory of the given catagory id.
+        /// Amount the catagory of the given catagory id.
         /// </summary>
         /// <param name="id">The id of the catagory.</param>
         /// <returns>The catagory.</returns>
@@ -106,7 +106,7 @@ namespace FamilyFinance.Data
         private readonly byte _ID;
 
         /// <summary>
-        /// Gets the ID of the catagory.
+        /// Amount the ID of the catagory.
         /// </summary>
         public byte ID
         {
@@ -122,7 +122,7 @@ namespace FamilyFinance.Data
         private readonly string _Name;
 
         /// <summary>
-        /// Gets the name of the catagory.
+        /// Amount the name of the catagory.
         /// </summary>
         public string Name
         {
@@ -138,7 +138,7 @@ namespace FamilyFinance.Data
         private readonly string _ShortName;
 
         /// <summary>
-        /// Gets the short name of the catagory.
+        /// Amount the short name of the catagory.
         /// </summary>
         public string ShortName
         {

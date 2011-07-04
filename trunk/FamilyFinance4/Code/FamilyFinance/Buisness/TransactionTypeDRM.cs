@@ -15,7 +15,7 @@ namespace FamilyFinance.Buisness
         private FFDataSet.TransactionTypeRow TransactionTypeRow;
 
         /// <summary>
-        /// Gets the ID of the transaction type.
+        /// Amount the ID of the transaction type.
         /// </summary>
         public int ID
         {
@@ -26,7 +26,7 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// Gets or sets the name of the Transaction type.
+        /// Amount or sets the name of the Transaction type.
         /// </summary>
         public string Name 
         {

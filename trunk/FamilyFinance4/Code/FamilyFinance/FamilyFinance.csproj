@@ -63,26 +63,22 @@
     <Compile Include="Buisness\DataSetModel.cs" />
     <Compile Include="Buisness\EnvelopeDRM.cs" />
     <Compile Include="Buisness\EnvelopeLineDRM.cs" />
-    <Compile Include="Buisness\RegistryEnvLineModel.cs" />
+    <Compile Include="Buisness\InputValidator.cs" />
+    <Compile Include="Buisness\RegistryEnvelopeLineModel.cs" />
     <Compile Include="Buisness\RegistryLineModel.cs" />
     <Compile Include="Buisness\TransactionModel.cs" />
     <Compile Include="Data\AccountCON.cs" />
     <Compile Include="Data\AccountTypeCON.cs" />
     <Compile Include="Data\BankCON.cs" />
     <Compile Include="Data\CatagoryCON.cs" />
-    <Compile Include="Data\CreditDebitCON.cs" />
+    <Compile Include="Data\EnvelopeLineCON.cs" />
     <Compile Include="Data\EnvelopeCON.cs" />
     <Compile Include="Data\EnvelopeGroupCON.cs" />
-    <Compile Include="Data\FFDataSet.cs">
-      <DependentUpon>FFDataSet.xsd</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Data\FFDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FFDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Data\LineCompleteCON.cs" />
     <Compile Include="Data\LineItemCON.cs" />
     <Compile Include="Data\MyData.cs" />
     <Compile Include="Buisness\DataRowModel.cs" />
@@ -111,7 +107,9 @@
     </Compile>
     <Compile Include="Buisness\EnvelopeGroupDRM.cs" />
     <Compile Include="Buisness\BindableObject.cs" />
+    <Compile Include="Data\PolarityCON.cs" />
     <Compile Include="Data\TransactionCON.cs" />
+    <Compile Include="Data\TransactionStateCON.cs" />
     <Compile Include="Data\TransactionTypeCON.cs" />
     <Compile Include="Presentation\EditAccount\EditAccountsVM.cs" />
     <Compile Include="Presentation\EditAccount\EditAccountsWindow.xaml.cs">

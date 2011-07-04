@@ -18,7 +18,7 @@ namespace FamilyFinance.Buisness
         // Properties to access this object.
         ///////////////////////////////////////////////////////////////////////
         /// <summary>
-        /// Gets the ID of the account.
+        /// Amount the ID of the account.
         /// </summary>
         public int ID
         {
@@ -29,7 +29,7 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// Gets or sets the name of the account.
+        /// Amount or sets the name of the account.
         /// </summary>
         public string Name 
         {
@@ -45,7 +45,7 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// Gets or sets the typeID of this account.
+        /// Amount or sets the typeID of this account.
         /// </summary>
         public int GroupID
         {
@@ -62,7 +62,7 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// Gets the type name of this account.
+        /// Amount the type name of this account.
         /// </summary>
         public string GroupName
         {
@@ -73,7 +73,7 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// Gets or sets the Closed flag for this envelope. True if the envelope is closed, 
+        /// Amount or sets the Closed flag for this envelope. True if the envelope is closed, 
         /// false if the envelope is open.
         /// </summary>
         public bool Closed
@@ -90,7 +90,7 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// Gets or sets the favorite account id.
+        /// Amount or sets the favorite account id.
         /// </summary>
         public int FavoriteAccountID
         {
@@ -107,7 +107,7 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// Gets the favorite account name.
+        /// Amount the favorite account name.
         /// </summary>
         public string FavoriteAccountName
         {

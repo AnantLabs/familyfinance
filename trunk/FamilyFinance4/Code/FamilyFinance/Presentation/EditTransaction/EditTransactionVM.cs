@@ -116,7 +116,7 @@ namespace FamilyFinance.Presentation.EditTransaction
 
                 foreach (LineItemDRM line in this._lines)
                 {
-                    if (line.Polarity != CreditDebitCON.CREDIT.Value)
+                    if (line.Polarity != PolarityCON.CREDIT)
                     {
                         sum += line.Amount;
                     }
@@ -134,7 +134,7 @@ namespace FamilyFinance.Presentation.EditTransaction
 
                 foreach (LineItemDRM line in this._lines)
                 {
-                    if (line.Polarity != CreditDebitCON.DEBIT.Value)
+                    if (line.Polarity != PolarityCON.DEBIT)
                     {
                         sum += line.Amount;
                     }
@@ -169,7 +169,7 @@ namespace FamilyFinance.Presentation.EditTransaction
             bool keepItem = false; // Assume the item will NOT be shown in the list
 
             // Keep the item if it is a credit
-            if (lineRow.Polarity == CreditDebitCON.CREDIT.Value)
+            if (lineRow.Polarity == PolarityCON.CREDIT)
                 keepItem = true;
 
             return keepItem;
@@ -181,7 +181,7 @@ namespace FamilyFinance.Presentation.EditTransaction
             bool keepItem = false; // Assume the item will NOT be shown in the list
 
             // Keep the item if it is a debit
-            if (lineRow.Polarity == CreditDebitCON.DEBIT.Value)
+            if (lineRow.Polarity == PolarityCON.DEBIT)
                 keepItem = true;
 
             return keepItem;

@@ -1,13 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
+using FamilyFinance.Data;
 
 namespace FamilyFinance.Buisness
 {
+    /// <summary>
+    /// The Data Row Model wrapper for an envelope line row.
+    /// </summary>
     public class EnvelopeLineDRM : DataRowModel
     {
-        private EnvelopeLineRow _envelopeLineRow;
+        private FFDataSet.EnvelopeLineRow _envelopeLineRow;
 
         /// <summary>
         /// Gets the id of this envelopeLine
@@ -16,10 +18,7 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
+                return this._envelopeLineRow.id;
             }
         }
 
@@ -30,10 +29,7 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
+                return this._envelopeLineRow.lineItemID;
             }
         }
 
@@ -44,38 +40,39 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
+                return this._envelopeLineRow.LineItemRow.transactionID;
             }
         }
 
         /// <summary>
         /// Gets or Sets the description of this envelope line.
         /// </summary>
-        public string Description
+        public virtual string Description
         {
             get
             {
-                throw new System.NotImplementedException();
+                return this._envelopeLineRow.description;
             }
             set
             {
+                this._envelopeLineRow.description = this.truncateIfNeeded(value, EnvelopeLineCON.DescriptionMaxLength);
             }
         }
 
         /// <summary>
-        /// Gets or Sets the amount of this envelope line.
+        /// Gets or Sets the amount of this envelope line. Values are rounded to the nearest 2
+        /// decimals and negative numbers are allowed.
         /// </summary>
         public decimal Amount
         {
             get
             {
-                throw new System.NotImplementedException();
+                return this._envelopeLineRow.amount;
             }
             set
             {
+                // Round to 2 decimal places. 
+                this._envelopeLineRow.amount = Decimal.Round(value, 2);
             }
         }
 
@@ -86,25 +83,28 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                throw new System.NotImplementedException();
+                return this._envelopeLineRow.envelopeID;
             }
             set
             {
+                this._envelopeLineRow.envelopeID = value;
             }
         }
 
         /// <summary>
-        /// Gets the name of the envelope this envelope line is associated with.
+        /// Amount the name of the envelope this envelope line is associated with.
         /// </summary>
         public string EnvelopeName
         {
             get
             {
-                throw new System.NotImplementedException();
+                return this._envelopeLineRow.EnvelopeRow.name;
             }
-            set
-            {
-            }
+        }
+
+        public EnvelopeLineDRM(FFDataSet.LineItemRow lineRow)
+        {
+
         }
     }
 }

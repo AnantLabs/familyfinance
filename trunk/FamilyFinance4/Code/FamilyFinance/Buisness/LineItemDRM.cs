@@ -7,11 +7,6 @@ namespace FamilyFinance.Buisness
 {
     public class LineItemDRM : DataRowModel
     {
-        ///////////////////////////////////////////////////////////////////////////////////////////
-        // Static Trancaction ID stuff
-        ///////////////////////////////////////////////////////////////////////////////////////////
-
-
 
         ///////////////////////////////////////////////////////////////////////////////////////////
         // Local Variables
@@ -90,15 +85,15 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        public bool Polarity
+        public PolarityCON Polarity
         {
             get
             {
-                return this._lineItemRow.creditDebit;
+                return PolarityCON.GetPlolartiy(this._lineItemRow.polarity);
             }
             set
             {
-                this._lineItemRow.creditDebit = value;
+                this._lineItemRow.polarity = value.Value;
             }
         }
 
@@ -106,10 +101,7 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
+                return false;
             }
         }
 
@@ -119,36 +111,35 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////////////////////////////////////
         // Public Functions
         ///////////////////////////////////////////////////////////////////////////////////////////
-        public LineItemDRM(FFDataSet.LineItemRow lRow)
+        public LineItemDRM(FFDataSet.LineItemRow linRow)
         {
-            this._lineItemRow = lRow;
+            InputValidator.CheckNotNull(linRow);
+
+            this._lineItemRow = linRow;
         }
 
-        public LineItemDRM(int transactionID) 
-            : this(transactionID, AccountCON.NULL.ID, "", 0.0m, CreditDebitCON.CREDIT)
-        {
-        }
+        //public LineItemDRM(int transactionID) 
+        //    : this(transactionID, AccountCON.NULL.ID, "", 0.0m, PolarityCON.CREDIT)
+        //{
+        //}
 
-        public LineItemDRM() 
-            : this(LineItemDRM._TransactionID, AccountCON.NULL.ID, "", 0.0m, CreditDebitCON.CREDIT)
-        {
-        }
+        //public LineItemDRM() 
+        //    : this(LineItemDRM._TransactionID, AccountCON.NULL.ID, "", 0.0m, PolarityCON.CREDIT)
+        //{
+        //}
 
-        public LineItemDRM(int transactionID, int accountID, string confrimationNum, decimal amount, CreditDebitCON creditDebit) 
+        public LineItemDRM(TransactionDRM transDRM, int accountID, string confrimationNum, decimal amount, PolarityCON polarity) 
         {
-            if (!setTransactionID(transactionID))
-            {
-                throw new Exception("Invalid Transation ID.");
-            }
+            InputValidator.CheckNotNull(transDRM);
 
             this._lineItemRow = MyData.getInstance().LineItem.NewLineItemRow();
 
             this._lineItemRow.id = MyData.getInstance().getNextID("LineItem");
-            this._lineItemRow.transactionID = transactionID;
+            this._lineItemRow.transactionID = transDRM.TransactionID;
             this.AccountID = accountID;
             this.ConfirmationNumber = confrimationNum;
             this.Amount = amount;
-            this.Polarity = creditDebit.Value;
+            this.Polarity = polarity;
 
             MyData.getInstance().LineItem.AddLineItemRow(this._lineItemRow);
         }

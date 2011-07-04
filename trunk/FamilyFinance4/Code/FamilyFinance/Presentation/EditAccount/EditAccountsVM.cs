@@ -141,7 +141,7 @@ namespace FamilyFinance.Presentation.EditAccount
             }
         }
 
-        public List<CreditDebitCON> Normals
+        public List<PolarityCON> Normals
         {
             get
             {

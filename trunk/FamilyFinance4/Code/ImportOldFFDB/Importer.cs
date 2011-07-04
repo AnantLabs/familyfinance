@@ -59,7 +59,7 @@ namespace ImportOldFFDB
                 if (acc.CatagoryID == CatagoryCON.ACCOUNT.ID)
                 {
                     acc.HasBankInfo = true;
-                    acc.AccountNormal = CreditDebitCON.GetPlolartiy(oldRow.creditDebit);
+                    acc.AccountNormal = PolarityCON.GetPlolartiy(oldRow.creditDebit);
                 }
 
                 // Save the old and new ids.

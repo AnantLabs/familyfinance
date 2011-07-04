@@ -4,6 +4,9 @@ using FamilyFinance.Data;
 
 namespace FamilyFinance.Buisness
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class TransactionDRM : DataRowModel
     {
         ///////////////////////////////////////////////////////////////////////////////////////////
@@ -27,7 +30,7 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// gets or sets the date for the transaction.
+        /// Gets or sets the date for the transaction.
         /// </summary>
         public DateTime Date
         {
@@ -70,7 +73,7 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// gets or sets the transaction description.
+        /// Gets or sets the transaction description.
         /// </summary>
         public string Description
         {
@@ -87,15 +90,15 @@ namespace FamilyFinance.Buisness
         /// <summary>
         /// gets or sets the complete status of the transaction. See CompleteCON for values.
         /// </summary>
-        public string CompleteCode
+        public TransactionStateCON State
         {
             get
             {
-                return this._transactionRow.complete;
+                return TransactionStateCON.GetState(this._transactionRow.state);
             }
             set
             {
-                this._transactionRow.complete = this.truncateIfNeeded(value, TransactionCON.CompleteMaxLength);
+                this._transactionRow.state = value.Value;
             }
         }
 
@@ -141,14 +144,14 @@ namespace FamilyFinance.Buisness
         /// <summary>
         /// Creates a new transaction data row with default values.
         /// </summary>
-        public TransactionDRM() : this(DateTime.Today, TransactionTypeCON.NULL.ID, "", LineCompleteCON.PENDING)
+        public TransactionDRM() : this(DateTime.Today, TransactionTypeCON.NULL.ID, "", TransactionStateCON.PENDING)
         {
         }
 
         /// <summary>
         /// Creates a new transaction data row with the given values
         /// </summary>
-        public TransactionDRM(DateTime date, int typeID, string description, LineCompleteCON complete)
+        public TransactionDRM(DateTime date, int typeID, string description, TransactionStateCON state)
         {
             this._transactionRow = MyData.getInstance().Transaction.NewTransactionRow();
 
@@ -156,7 +159,7 @@ namespace FamilyFinance.Buisness
             this.Date = date;
             this.TypeID = typeID;
             this.Description = description;
-            this.CompleteCode = complete.Value;
+            this.State = state;
 
             MyData.getInstance().Transaction.AddTransactionRow(this._transactionRow);
         }
