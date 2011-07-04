@@ -22,7 +22,7 @@ namespace FamilyFinance.Buisness
         private static DataSetModel _Instance;
 
         /// <summary>
-        /// Gets the singleton instance of the DataSetModel class.
+        /// Amount the singleton instance of the DataSetModel class.
         /// </summary>
         /// <returns>Singelton instance of the DataSetModel class</returns>
         public static DataSetModel getInstance()
@@ -61,14 +61,14 @@ namespace FamilyFinance.Buisness
         /// A list containing the Credit and Debits. The credits and debits are used in describing 
         /// the polarity of a Line Item and an account that has bank information.
         /// </summary>
-        public List<CreditDebitCON> CreditDebits
+        public List<PolarityCON> CreditDebits
         {
             get
             {
-                List<CreditDebitCON> temp = new List<CreditDebitCON>();
+                List<PolarityCON> temp = new List<PolarityCON>();
 
-                temp.Add(CreditDebitCON.CREDIT);
-                temp.Add(CreditDebitCON.DEBIT);
+                temp.Add(PolarityCON.CREDIT);
+                temp.Add(PolarityCON.DEBIT);
 
                 return temp;
             }

@@ -1,4 +1,8 @@
-﻿using FamilyFinance.Data;
+﻿using System;
+using System.Data;
+
+
+using FamilyFinance.Data;
 
 namespace FamilyFinance.Buisness
 {
@@ -25,22 +29,7 @@ namespace FamilyFinance.Buisness
 
             return validString;
         }
+        
 
-        public int getNextID(string table)
-        {
-            int id = 0;
-
-            DataRowCollection rows = this.ffDataSet.Tables[table].Rows;
-
-            foreach (DataRow row in rows)
-            {
-                int temp = Convert.ToInt32(row["id"]);
-
-                if (temp > id)
-                    id = temp;
-            }
-
-            return id + 1;
-        }
     }
 }

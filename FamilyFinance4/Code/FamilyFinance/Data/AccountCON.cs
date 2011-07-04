@@ -23,7 +23,7 @@ namespace FamilyFinance.Data
         private readonly int _ID;
 
         /// <summary>
-        /// Gets the ID of the account.
+        /// Amount the ID of the account.
         /// </summary>
         public int ID
         {
@@ -39,7 +39,7 @@ namespace FamilyFinance.Data
         private readonly string _Name;
 
         /// <summary>
-        /// Gets the name of the account.
+        /// Amount the name of the account.
         /// </summary>
         public string Name
         {

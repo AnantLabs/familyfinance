@@ -11,7 +11,7 @@ namespace FamilyFinance.Buisness
         private FFDataSet.EnvelopeGroupRow EnvelopeGroupRow;
 
         /// <summary>
-        /// Gets the ID of the account type.
+        /// Amount the ID of the account type.
         /// </summary>
         public int ID
         {
@@ -22,7 +22,7 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// Gets or sets the name of the account type.
+        /// Amount or sets the name of the account type.
         /// </summary>
         public string Name 
         {
@@ -38,7 +38,7 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// Gets or sets the minimum percentage for this envelope group.
+        /// Amount or sets the minimum percentage for this envelope group.
         /// </summary>
         public decimal MinPercentage
         {
@@ -54,7 +54,7 @@ namespace FamilyFinance.Buisness
         }
 
         /// <summary>
-        /// Gets or sets the maximum percentage for this envelope group.
+        /// Amount or sets the maximum percentage for this envelope group.
         /// </summary>
         public decimal MaxPercentage
         {
@@ -71,9 +71,6 @@ namespace FamilyFinance.Buisness
 
 
 
-
-
-
         /// <summary>
         /// Creates the object and keeps a local referance to the given Envelope Group row.
         /// </summary>
@@ -81,6 +78,11 @@ namespace FamilyFinance.Buisness
         public EnvelopeGroupDRM(FFDataSet.EnvelopeGroupRow atRow)
         {
             this.EnvelopeGroupRow = atRow;
+        }
+
+        public EnvelopeGroupDRM()
+            : this("", 0.0m, 0.0m)
+        {
         }
 
         /// <summary>

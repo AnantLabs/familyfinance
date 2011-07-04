@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Data;
 using System.IO;
 
@@ -31,8 +29,27 @@ namespace FamilyFinance.Data
             return MyData.Instance;
         }
 
+        /// <summary>
+        /// Gets the next ID for the given table name.
+        /// </summary>
+        /// <param name="table"></param>
+        /// <returns></returns>
+        public int getNextID(string tableName)
+        {
+            int id = 0;
 
+            DataRowCollection rows = this.ffDataSet.Tables[tableName].Rows;
 
+            foreach (DataRow row in rows)
+            {
+                int temp = Convert.ToInt32(row["id"]);
+
+                if (temp > id)
+                    id = temp;
+            }
+
+            return id + 1;
+        }
 
         /// <summary>
         /// Local referance of the Account table.

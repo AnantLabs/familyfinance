@@ -169,9 +169,7 @@
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
                             <ComboBox SelectedValue="{Binding Path=AccountNormal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      ItemsSource="{Binding Source={StaticResource editAccountsVM}, Path=Normals}"
-                                      SelectedValuePath="Value"
-                                      DisplayMemberPath="Name" 
+                                      ItemsSource="{Binding Source={StaticResource editAccountsVM}, Path=Normals}" DisplayMemberPath="Name" 
                                       IsEnabled="{Binding Path=HasBankInfo, Mode=OneWay}"
                                       />
                         </DataTemplate>

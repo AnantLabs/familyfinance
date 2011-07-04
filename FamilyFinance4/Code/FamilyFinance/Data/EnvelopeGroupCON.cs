@@ -21,7 +21,7 @@ namespace FamilyFinance.Data
         private readonly int _ID;
 
         /// <summary>
-        /// Gets the ID of the envelope group.
+        /// Amount the ID of the envelope group.
         /// </summary>
         public int ID
         {
@@ -37,7 +37,7 @@ namespace FamilyFinance.Data
         private readonly string _Name;
 
         /// <summary>
-        /// Gets the name of the envelope group.
+        /// Amount the name of the envelope group.
         /// </summary>
         public string Name
         {

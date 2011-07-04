@@ -1,12 +1,114 @@
-﻿
+﻿using System;
+
+using FamilyFinance.Data;
 
 namespace FamilyFinance.Buisness
 {
     /// <summary>
-    /// This class "is a" transaction and "has a" specific lineItem in focus for making easy changes, like in a registry setting.
+    /// This class "is a" LineItemDRM and "has a" TransactionDRM for making easy changes
+    /// like in a registry setting.
     /// </summary>
-    class RegistryLineModel : TransactionDRM
+    class RegistryLineModel : LineItemDRM
     {
+
+        private TransactionDRM _transactionDRM;
+
+        /// <summary>
+        /// Gets or sets the datetime of the parent transaction
+        /// </summary>
+        public DateTime Date
+        {
+            get
+            {
+                return this._transactionDRM.Date;
+            }
+            set
+            {
+                this._transactionDRM.Date = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the type ID of the parent transaction
+        /// </summary>
+        public int TypeID
+        {
+            get
+            {
+                return this._transactionDRM.TypeID;
+            }
+            set
+            {
+                this._transactionDRM.TypeID = value;
+            }
+        }
+
+        /// <summary>
+        /// GEts the name of the transaction type of the parent transation
+        /// </summary>
+        public string TypeName
+        {
+            get
+            {
+                return this._transactionDRM.TypeName;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the description of the parent transaction
+        /// </summary>
+        public string Description
+        {
+            get
+            {
+                return this._transactionDRM.Description;
+            }
+            set
+            {
+                this._transactionDRM.Description = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the complete code for the parent transaction
+        /// </summary>
+        public TransactionStateCON Complete
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the account id of the line items on the opposite side of the transaction.
+        /// </summary>
+        public int OppositeAccountID
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+            }
+        }
+
+        public string OppositeAccountName
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+            set
+            {
+            }
+        }
+
+
 
         //public int OppAccountID
         //{
@@ -156,5 +258,15 @@ namespace FamilyFinance.Buisness
 
         //    MyData.getInstance().LineItem.AddLineItemRow(oppLine);
         //}
+
+        public RegistryLineModel(TransactionDRM transDRM, FFDataSet.LineItemRow lineRow)
+            : base(lineRow)
+        {
+            InputValidator.CheckNotNull(transDRM);
+            InputValidator.CheckNotNull(lineRow);
+
+            this._transactionDRM = transDRM;
+        }
+        
     }
 }

@@ -6,7 +6,7 @@
   <Class Name="FamilyFinance.Data.MyData">
     <Position X="7.5" Y="14" Width="18.75" />
     <TypeIdentifier>
-      <HashCode>AQCAAIEQAAAAAQCAABECAAAAAAAAAEUAQAAgAAAAAEA=</HashCode>
+      <HashCode>AQCAAIESAAAAAQCAABECAAAAAAAAAEUAQAAgAAAAAEA=</HashCode>
       <FileName>Data\MyData.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -141,18 +141,10 @@
     </NestedTypes>
     <TypeIdentifier>
       <HashCode>EzqGAIASwyAAAYLgLAGCQQAAgMgCQB0CAEAAAoEABFQ=</HashCode>
-      <FileName>Data\FFDataSet.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FamilyFinance.Buisness.AccountTypeDRM">
     <Position X="6.75" Y="8" Width="1.5" />
-    <InheritanceLine Type="FamilyFinance.Buisness.DataRowModel" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="6.25" Y="7.683" />
-        <Point X="7.5" Y="7.683" />
-        <Point X="7.5" Y="8" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgAAAAAAAAAQAAAAAAIAAAAAAAAAAAAA=</HashCode>
       <FileName>Buisness\AccountTypeDRM.cs</FileName>
@@ -168,13 +160,6 @@
   </Class>
   <Class Name="FamilyFinance.Buisness.AccountDRM">
     <Position X="12.25" Y="8" Width="1.5" />
-    <InheritanceLine Type="FamilyFinance.Buisness.DataRowModel" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="6.25" Y="7.683" />
-        <Point X="12.938" Y="7.683" />
-        <Point X="12.938" Y="8" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>ACAAAABgAAAAgAAAAAAAAAQAAAoAgBAgALAAggCgAAQ=</HashCode>
       <FileName>Buisness\AccountDRM.cs</FileName>
@@ -182,13 +167,6 @@
   </Class>
   <Class Name="FamilyFinance.Buisness.BankDRM">
     <Position X="15.75" Y="8" Width="1.75" />
-    <InheritanceLine Type="FamilyFinance.Buisness.DataRowModel" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="6.25" Y="7.683" />
-        <Point X="16.625" Y="7.683" />
-        <Point X="16.625" Y="8" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AACAAAAAAAAAgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAQ=</HashCode>
       <FileName>Buisness\BankDRM.cs</FileName>
@@ -203,13 +181,6 @@
   </Class>
   <Class Name="FamilyFinance.Buisness.EnvelopeDRM">
     <Position X="14" Y="8" Width="1.5" />
-    <InheritanceLine Type="FamilyFinance.Buisness.DataRowModel" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="6.25" Y="7.683" />
-        <Point X="14.75" Y="7.683" />
-        <Point X="14.75" Y="8" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AQQgAAAAAAAAgAAECAAAAAQAAAAAAAAAAAAAAACAgAE=</HashCode>
       <FileName>Buisness\EnvelopeDRM.cs</FileName>
@@ -217,13 +188,6 @@
   </Class>
   <Class Name="FamilyFinance.Buisness.EnvelopeGroupDRM">
     <Position X="10.25" Y="8" Width="1.75" />
-    <InheritanceLine Type="FamilyFinance.Buisness.DataRowModel" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="6.25" Y="7.683" />
-        <Point X="11.125" Y="7.683" />
-        <Point X="11.125" Y="8" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAIAAAAgAAAAAAAACQAAAAAAAAAAAAAAAAAACA=</HashCode>
       <FileName>Buisness\EnvelopeGroupDRM.cs</FileName>
@@ -231,15 +195,6 @@
   </Class>
   <Class Name="FamilyFinance.Buisness.EnvelopeLineDRM">
     <Position X="21.25" Y="8" Width="1.5" />
-    <InheritanceLine Type="FamilyFinance.Buisness.DataRowModel" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="6.25" Y="7.683" />
-        <Point X="18.729" Y="7.683" Type="JumpStart" />
-        <Point X="18.896" Y="7.683" Type="JumpEnd" />
-        <Point X="22" Y="7.683" />
-        <Point X="22" Y="8" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAIIAAAgAAAACAAAAACgAAAAAAAAAAAAAAgAAAA=</HashCode>
       <FileName>Buisness\EnvelopeLineDRM.cs</FileName>
@@ -247,15 +202,6 @@
   </Class>
   <Class Name="FamilyFinance.Buisness.LineItemDRM">
     <Position X="19.5" Y="8" Width="1.5" />
-    <InheritanceLine Type="FamilyFinance.Buisness.DataRowModel" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="6.25" Y="7.683" />
-        <Point X="18.729" Y="7.683" Type="JumpStart" />
-        <Point X="18.896" Y="7.683" Type="JumpEnd" />
-        <Point X="20.25" Y="7.683" />
-        <Point X="20.25" Y="8" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAACAgAAAACgAAgAAAEAAAQAAgAAAAA=</HashCode>
       <FileName>Buisness\LineItemDRM.cs</FileName>
@@ -263,13 +209,6 @@
   </Class>
   <Class Name="FamilyFinance.Buisness.TransactionDRM">
     <Position X="17.75" Y="8" Width="1.5" />
-    <InheritanceLine Type="FamilyFinance.Buisness.DataRowModel" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="6.25" Y="7.683" />
-        <Point X="18.562" Y="7.683" />
-        <Point X="18.562" Y="8" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAABgAQAgAAAAAAAAAAAgAAAAABAhAAAAAAAAAAA=</HashCode>
       <FileName>Buisness\TransactionDRM.cs</FileName>
@@ -277,13 +216,6 @@
   </Class>
   <Class Name="FamilyFinance.Buisness.TransactionTypeDRM">
     <Position X="8.5" Y="8" Width="1.5" />
-    <InheritanceLine Type="FamilyFinance.Buisness.DataRowModel" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="6.25" Y="7.683" />
-        <Point X="9.312" Y="7.683" />
-        <Point X="9.312" Y="8" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgAAAAAAAIAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Buisness\TransactionTypeDRM.cs</FileName>
@@ -320,33 +252,17 @@
       <FileName>Buisness\DataSetModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FamilyFinance.Buisness.RegistryEnvLineModel">
+  <Class Name="FamilyFinance.Buisness.RegistryEnvelopeLineModel">
     <Position X="21.25" Y="5.5" Width="1.5" />
-    <InheritanceLine Type="FamilyFinance.Buisness.EnvelopeLineDRM" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="22.312" Y="8" />
-        <Point X="22.312" Y="7.625" />
-        <Point X="22.25" Y="7.625" />
-        <Point X="22.25" Y="7.31" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAgAAAAAAAAAAAAAAAAABABAAAAAAAAAAA=</HashCode>
-      <FileName>Buisness\RegistryEnvLineModel.cs</FileName>
+      <FileName>Buisness\RegistryEnvelopeLineModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FamilyFinance.Buisness.RegistryLineModel" Collapsed="true">
-    <Position X="19.5" Y="6.25" Width="1.5" />
-    <InheritanceLine Type="FamilyFinance.Buisness.TransactionDRM" FixedFromPoint="true">
-      <Path>
-        <Point X="18.812" Y="8" />
-        <Point X="18.812" Y="7.316" />
-        <Point X="20.25" Y="7.316" />
-        <Point X="20.25" Y="6.941" />
-      </Path>
-    </InheritanceLine>
+  <Class Name="FamilyFinance.Buisness.RegistryLineModel">
+    <Position X="19.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>EAAAAAAAAAAgAIIAAAAAAAEAAAAAABAhAAAAAAAAAAA=</HashCode>
       <FileName>Buisness\RegistryLineModel.cs</FileName>
     </TypeIdentifier>
   </Class>

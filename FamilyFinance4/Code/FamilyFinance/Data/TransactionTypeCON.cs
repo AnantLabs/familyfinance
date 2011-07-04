@@ -18,7 +18,7 @@ namespace FamilyFinance.Data
         private readonly int _ID;
 
         /// <summary>
-        /// Gets the ID of the Line Type.
+        /// Amount the ID of the Line Type.
         /// </summary>
         public int ID
         {
@@ -34,7 +34,7 @@ namespace FamilyFinance.Data
         private readonly string _Name;
 
         /// <summary>
-        /// Gets the name of the catagory.
+        /// Amount the name of the catagory.
         /// </summary>
         public string Name
         {

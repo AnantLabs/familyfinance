@@ -79,7 +79,7 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="creditDebit" msprop:Generator_ColumnVarNameInTable="columncreditDebit" msprop:Generator_ColumnPropNameInRow="creditDebit" msprop:Generator_ColumnPropNameInTable="creditDebitColumn" msprop:Generator_UserColumnName="creditDebit" type="xs:boolean" />
+              <xs:element name="polarity" msprop:Generator_ColumnVarNameInTable="columnpolarity" msprop:Generator_ColumnPropNameInRow="polarity" msprop:Generator_ColumnPropNameInTable="polarityColumn" msprop:Generator_UserColumnName="polarity" type="xs:boolean" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -98,14 +98,20 @@
               <xs:element name="closed" msprop:Generator_ColumnVarNameInTable="columnclosed" msprop:Generator_ColumnPropNameInRow="closed" msprop:Generator_ColumnPropNameInTable="closedColumn" msprop:Generator_UserColumnName="closed" type="xs:boolean" />
               <xs:element name="favoriteAccountID" msprop:Generator_ColumnVarNameInTable="columnfavoriteAccountID" msprop:Generator_ColumnPropNameInRow="favoriteAccountID" msprop:Generator_ColumnPropNameInTable="favoriteAccountIDColumn" msprop:Generator_UserColumnName="favoriteAccountID" type="xs:int" />
               <xs:element name="priority" msprop:Generator_ColumnVarNameInTable="columnpriority" msprop:Generator_ColumnPropNameInRow="priority" msprop:Generator_ColumnPropNameInTable="priorityColumn" msprop:Generator_UserColumnName="priority" type="xs:int" />
-              <xs:element name="notes" msprop:Generator_ColumnVarNameInTable="columnnotes" msprop:Generator_ColumnPropNameInRow="notes" msprop:Generator_ColumnPropNameInTable="notesColumn" msprop:Generator_UserColumnName="notes" minOccurs="0">
+              <xs:element name="notes" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="notes" msprop:Generator_ColumnVarNameInTable="columnnotes" msprop:Generator_ColumnPropNameInTable="notesColumn" msprop:Generator_UserColumnName="notes" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="536870911" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="goal" msprop:Generator_ColumnVarNameInTable="columngoal" msprop:Generator_ColumnPropNameInRow="goal" msprop:Generator_ColumnPropNameInTable="goalColumn" msprop:Generator_UserColumnName="goal" type="xs:string" minOccurs="0" />
+              <xs:element name="goal" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="goal" msprop:Generator_ColumnVarNameInTable="columngoal" msprop:Generator_ColumnPropNameInTable="goalColumn" msprop:Generator_UserColumnName="goal" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="536870911" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -156,7 +162,7 @@
                 </xs:simpleType>
               </xs:element>
               <xs:element name="amount" msprop:Generator_ColumnVarNameInTable="columnamount" msprop:Generator_ColumnPropNameInRow="amount" msprop:Generator_ColumnPropNameInTable="amountColumn" msprop:Generator_UserColumnName="amount" type="xs:decimal" />
-              <xs:element name="creditDebit" msprop:Generator_ColumnVarNameInTable="columncreditDebit" msprop:Generator_ColumnPropNameInRow="creditDebit" msprop:Generator_ColumnPropNameInTable="creditDebitColumn" msprop:Generator_UserColumnName="creditDebit" type="xs:boolean" />
+              <xs:element name="polarity" msprop:Generator_ColumnVarNameInTable="columnpolarity" msprop:Generator_ColumnPropNameInRow="polarity" msprop:Generator_ColumnPropNameInTable="polarityColumn" msprop:Generator_UserColumnName="polarity" type="xs:boolean" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -166,17 +172,17 @@
               <xs:element name="id" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
               <xs:element name="date" msprop:Generator_ColumnVarNameInTable="columndate" msprop:Generator_ColumnPropNameInRow="date" msprop:Generator_ColumnPropNameInTable="dateColumn" msprop:Generator_UserColumnName="date" type="xs:dateTime" />
               <xs:element name="typeID" msprop:Generator_ColumnVarNameInTable="columntypeID" msprop:Generator_ColumnPropNameInRow="typeID" msprop:Generator_ColumnPropNameInTable="typeIDColumn" msprop:Generator_UserColumnName="typeID" type="xs:int" />
-              <xs:element name="description" msprop:Generator_ColumnVarNameInTable="columndescription" msprop:Generator_ColumnPropNameInRow="description" msprop:Generator_ColumnPropNameInTable="descriptionColumn" msprop:Generator_UserColumnName="description" minOccurs="0">
+              <xs:element name="description" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="description" msprop:Generator_ColumnVarNameInTable="columndescription" msprop:Generator_ColumnPropNameInTable="descriptionColumn" msprop:Generator_UserColumnName="description" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="536870911" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="complete" msprop:Generator_ColumnVarNameInTable="columncomplete" msprop:Generator_ColumnPropNameInRow="complete" msprop:Generator_ColumnPropNameInTable="completeColumn" msprop:Generator_UserColumnName="complete">
+              <xs:element name="state" msprop:Generator_ColumnVarNameInTable="columnstate" msprop:Generator_ColumnPropNameInRow="state" msprop:Generator_ColumnPropNameInTable="stateColumn" msprop:Generator_UserColumnName="state" default=" ">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
-                    <xs:maxLength value="1" />
+                    <xs:length value="1" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
@@ -187,7 +193,7 @@
           <xs:complexType>
             <xs:sequence>
               <xs:element name="id" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
-              <xs:element name="name" msprop:nullValue="_throw" msprop:Generator_ColumnPropNameInRow="name" msprop:Generator_ColumnVarNameInTable="columnname" msprop:Generator_ColumnPropNameInTable="nameColumn" msprop:Generator_UserColumnName="name">
+              <xs:element name="name" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="name" msprop:Generator_ColumnVarNameInTable="columnname" msprop:Generator_ColumnPropNameInTable="nameColumn" msprop:Generator_UserColumnName="name">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="15" />
@@ -242,16 +248,16 @@
   </xs:element>
   <xs:annotation>
     <xs:appinfo>
-      <msdata:Relationship name="FK_Account_typeID" msdata:parent="AccountType" msdata:child="Account" msdata:parentkey="id" msdata:childkey="typeID" msprop:Generator_UserChildTable="Account" msprop:Generator_ChildPropName="GetAccountRows" msprop:Generator_UserParentTable="AccountType" msprop:Generator_UserRelationName="FK_Account_typeID" msprop:Generator_RelationVarName="relationFK_Account_typeID" msprop:Generator_ParentPropName="AccountTypeRow" />
-      <msdata:Relationship name="FK_BankInfo_accountID" msdata:parent="Account" msdata:child="BankInfo" msdata:parentkey="id" msdata:childkey="accountID" msprop:Generator_UserChildTable="BankInfo" msprop:Generator_ChildPropName="GetBankInfoRows" msprop:Generator_UserParentTable="Account" msprop:Generator_UserRelationName="FK_BankInfo_accountID" msprop:Generator_RelationVarName="relationFK_BankInfo_accountID" msprop:Generator_ParentPropName="AccountRow" />
-      <msdata:Relationship name="FK_BankInfo_bankID" msdata:parent="Bank" msdata:child="BankInfo" msdata:parentkey="id" msdata:childkey="bankID" msprop:Generator_UserChildTable="BankInfo" msprop:Generator_ChildPropName="GetBankInfoRows" msprop:Generator_UserParentTable="Bank" msprop:Generator_UserRelationName="FK_BankInfo_bankID" msprop:Generator_RelationVarName="relationFK_BankInfo_bankID" msprop:Generator_ParentPropName="BankRow" />
-      <msdata:Relationship name="FK_Envelope_accountID" msdata:parent="Account" msdata:child="Envelope" msdata:parentkey="id" msdata:childkey="favoriteAccountID" msprop:Generator_UserChildTable="Envelope" msprop:Generator_ChildPropName="GetEnvelopeRows" msprop:Generator_UserParentTable="Account" msprop:Generator_UserRelationName="FK_Envelope_accountID" msprop:Generator_RelationVarName="relationFK_Envelope_accountID" msprop:Generator_ParentPropName="AccountRow" />
-      <msdata:Relationship name="FK_Envelope_groupID" msdata:parent="EnvelopeGroup" msdata:child="Envelope" msdata:parentkey="id" msdata:childkey="groupID" msprop:Generator_UserChildTable="Envelope" msprop:Generator_ChildPropName="GetEnvelopeRows" msprop:Generator_UserParentTable="EnvelopeGroup" msprop:Generator_UserRelationName="FK_Envelope_groupID" msprop:Generator_RelationVarName="relationFK_Envelope_groupID" msprop:Generator_ParentPropName="EnvelopeGroupRow" />
-      <msdata:Relationship name="FK_EnvelopeLine_envelopeID" msdata:parent="Envelope" msdata:child="EnvelopeLine" msdata:parentkey="id" msdata:childkey="envelopeID" msprop:Generator_UserChildTable="EnvelopeLine" msprop:Generator_ChildPropName="GetEnvelopeLineRows" msprop:Generator_UserParentTable="Envelope" msprop:Generator_UserRelationName="FK_EnvelopeLine_envelopeID" msprop:Generator_RelationVarName="relationFK_EnvelopeLine_envelopeID" msprop:Generator_ParentPropName="EnvelopeRow" />
-      <msdata:Relationship name="FK_EnvelopeLine_lineID" msdata:parent="LineItem" msdata:child="EnvelopeLine" msdata:parentkey="id" msdata:childkey="lineItemID" msprop:Generator_UserChildTable="EnvelopeLine" msprop:Generator_ChildPropName="GetEnvelopeLineRows" msprop:Generator_UserParentTable="LineItem" msprop:Generator_UserRelationName="FK_EnvelopeLine_lineID" msprop:Generator_RelationVarName="relationFK_EnvelopeLine_lineID" msprop:Generator_ParentPropName="LineItemRow" />
-      <msdata:Relationship name="FK_Line_accountID" msdata:parent="Account" msdata:child="LineItem" msdata:parentkey="id" msdata:childkey="accountID" msprop:Generator_UserChildTable="LineItem" msprop:Generator_ChildPropName="GetLineItemRows" msprop:Generator_UserParentTable="Account" msprop:Generator_UserRelationName="FK_Line_accountID" msprop:Generator_RelationVarName="relationFK_Line_accountID" msprop:Generator_ParentPropName="AccountRow" />
-      <msdata:Relationship name="FK_Line_transactionID" msdata:parent="Transaction" msdata:child="LineItem" msdata:parentkey="id" msdata:childkey="transactionID" msprop:Generator_UserChildTable="LineItem" msprop:Generator_ChildPropName="GetLineItemRows" msprop:Generator_UserParentTable="Transaction" msprop:Generator_UserRelationName="FK_Line_transactionID" msprop:Generator_RelationVarName="relationFK_Line_transactionID" msprop:Generator_ParentPropName="TransactionRow" />
-      <msdata:Relationship name="FK_Transaction_transactionTypeID" msdata:parent="TransactionType" msdata:child="Transaction" msdata:parentkey="id" msdata:childkey="typeID" msprop:Generator_UserChildTable="Transaction" msprop:Generator_ChildPropName="GetTransactionRows" msprop:Generator_UserParentTable="TransactionType" msprop:Generator_UserRelationName="FK_Transaction_transactionTypeID" msprop:Generator_RelationVarName="relationFK_Transaction_transactionTypeID" msprop:Generator_ParentPropName="TransactionTypeRow" />
+      <msdata:Relationship name="FK_Account_typeID" msdata:parent="AccountType" msdata:child="Account" msdata:parentkey="id" msdata:childkey="typeID" msprop:Generator_UserChildTable="Account" msprop:Generator_ChildPropName="GetAccountRows" msprop:Generator_ParentPropName="AccountTypeRow" msprop:Generator_UserRelationName="FK_Account_typeID" msprop:Generator_RelationVarName="relationFK_Account_typeID" msprop:Generator_UserParentTable="AccountType" />
+      <msdata:Relationship name="FK_BankInfo_accountID" msdata:parent="Account" msdata:child="BankInfo" msdata:parentkey="id" msdata:childkey="accountID" msprop:Generator_UserChildTable="BankInfo" msprop:Generator_ChildPropName="GetBankInfoRows" msprop:Generator_ParentPropName="AccountRow" msprop:Generator_UserRelationName="FK_BankInfo_accountID" msprop:Generator_RelationVarName="relationFK_BankInfo_accountID" msprop:Generator_UserParentTable="Account" />
+      <msdata:Relationship name="FK_BankInfo_bankID" msdata:parent="Bank" msdata:child="BankInfo" msdata:parentkey="id" msdata:childkey="bankID" msprop:Generator_UserChildTable="BankInfo" msprop:Generator_ChildPropName="GetBankInfoRows" msprop:Generator_ParentPropName="BankRow" msprop:Generator_UserRelationName="FK_BankInfo_bankID" msprop:Generator_RelationVarName="relationFK_BankInfo_bankID" msprop:Generator_UserParentTable="Bank" />
+      <msdata:Relationship name="FK_Envelope_accountID" msdata:parent="Account" msdata:child="Envelope" msdata:parentkey="id" msdata:childkey="favoriteAccountID" msprop:Generator_UserChildTable="Envelope" msprop:Generator_ChildPropName="GetEnvelopeRows" msprop:Generator_ParentPropName="AccountRow" msprop:Generator_UserRelationName="FK_Envelope_accountID" msprop:Generator_RelationVarName="relationFK_Envelope_accountID" msprop:Generator_UserParentTable="Account" />
+      <msdata:Relationship name="FK_Envelope_groupID" msdata:parent="EnvelopeGroup" msdata:child="Envelope" msdata:parentkey="id" msdata:childkey="groupID" msprop:Generator_UserChildTable="Envelope" msprop:Generator_ChildPropName="GetEnvelopeRows" msprop:Generator_ParentPropName="EnvelopeGroupRow" msprop:Generator_UserRelationName="FK_Envelope_groupID" msprop:Generator_RelationVarName="relationFK_Envelope_groupID" msprop:Generator_UserParentTable="EnvelopeGroup" />
+      <msdata:Relationship name="FK_EnvelopeLine_envelopeID" msdata:parent="Envelope" msdata:child="EnvelopeLine" msdata:parentkey="id" msdata:childkey="envelopeID" msprop:Generator_UserChildTable="EnvelopeLine" msprop:Generator_ChildPropName="GetEnvelopeLineRows" msprop:Generator_ParentPropName="EnvelopeRow" msprop:Generator_UserRelationName="FK_EnvelopeLine_envelopeID" msprop:Generator_RelationVarName="relationFK_EnvelopeLine_envelopeID" msprop:Generator_UserParentTable="Envelope" />
+      <msdata:Relationship name="FK_EnvelopeLine_lineID" msdata:parent="LineItem" msdata:child="EnvelopeLine" msdata:parentkey="id" msdata:childkey="lineItemID" msprop:Generator_UserChildTable="EnvelopeLine" msprop:Generator_ChildPropName="GetEnvelopeLineRows" msprop:Generator_ParentPropName="LineItemRow" msprop:Generator_UserRelationName="FK_EnvelopeLine_lineID" msprop:Generator_RelationVarName="relationFK_EnvelopeLine_lineID" msprop:Generator_UserParentTable="LineItem" />
+      <msdata:Relationship name="FK_Line_accountID" msdata:parent="Account" msdata:child="LineItem" msdata:parentkey="id" msdata:childkey="accountID" msprop:Generator_UserChildTable="LineItem" msprop:Generator_ChildPropName="GetLineItemRows" msprop:Generator_ParentPropName="AccountRow" msprop:Generator_UserRelationName="FK_Line_accountID" msprop:Generator_RelationVarName="relationFK_Line_accountID" msprop:Generator_UserParentTable="Account" />
+      <msdata:Relationship name="FK_Line_transactionID" msdata:parent="Transaction" msdata:child="LineItem" msdata:parentkey="id" msdata:childkey="transactionID" msprop:Generator_UserChildTable="LineItem" msprop:Generator_ChildPropName="GetLineItemRows" msprop:Generator_ParentPropName="TransactionRow" msprop:Generator_UserRelationName="FK_Line_transactionID" msprop:Generator_RelationVarName="relationFK_Line_transactionID" msprop:Generator_UserParentTable="Transaction" />
+      <msdata:Relationship name="FK_Transaction_transactionTypeID" msdata:parent="TransactionType" msdata:child="Transaction" msdata:parentkey="id" msdata:childkey="typeID" msprop:Generator_UserChildTable="Transaction" msprop:Generator_ChildPropName="GetTransactionRows" msprop:Generator_ParentPropName="TransactionTypeRow" msprop:Generator_UserRelationName="FK_Transaction_transactionTypeID" msprop:Generator_RelationVarName="relationFK_Transaction_transactionTypeID" msprop:Generator_UserParentTable="TransactionType" />
     </xs:appinfo>
   </xs:annotation>
 </xs:schema>
