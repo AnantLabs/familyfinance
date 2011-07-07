@@ -113,7 +113,7 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////////////////////////////////////
         public LineItemDRM(FFDataSet.LineItemRow linRow)
         {
-            InputValidator.CheckNotNull(linRow);
+            InputValidator.CheckNotNull(linRow, "FFDataSet.LineItemRow");
 
             this._lineItemRow = linRow;
         }
@@ -130,7 +130,7 @@ namespace FamilyFinance.Buisness
 
         public LineItemDRM(TransactionDRM transDRM, int accountID, string confrimationNum, decimal amount, PolarityCON polarity) 
         {
-            InputValidator.CheckNotNull(transDRM);
+            InputValidator.CheckNotNull(transDRM, "TransactionDRM");
 
             this._lineItemRow = MyData.getInstance().LineItem.NewLineItemRow();
 

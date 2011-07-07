@@ -155,7 +155,7 @@ namespace FamilyFinance.Buisness
         {
             this._transactionRow = MyData.getInstance().Transaction.NewTransactionRow();
 
-            this._transactionRow.id = MyData.getInstance().getNextID("IsTransactionError");
+            this._transactionRow.id = MyData.getInstance().getNextID("Transaction");
             this.Date = date;
             this.TypeID = typeID;
             this.Description = description;

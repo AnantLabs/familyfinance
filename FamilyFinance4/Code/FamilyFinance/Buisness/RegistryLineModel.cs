@@ -262,8 +262,8 @@ namespace FamilyFinance.Buisness
         public RegistryLineModel(TransactionDRM transDRM, FFDataSet.LineItemRow lineRow)
             : base(lineRow)
         {
-            InputValidator.CheckNotNull(transDRM);
-            InputValidator.CheckNotNull(lineRow);
+            InputValidator.CheckNotNull(transDRM, "TransactionDRM");
+            InputValidator.CheckNotNull(lineRow, "FFDataSet.LineItemRow");
 
             this._transactionDRM = transDRM;
         }

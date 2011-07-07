@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 
+
 namespace FamilyFinance.Data
 {
     public class MyData
@@ -37,6 +38,10 @@ namespace FamilyFinance.Data
         public int getNextID(string tableName)
         {
             int id = 0;
+
+            DataTable tableToGetIDFrom = this.ffDataSet.Tables[tableName];
+
+            FamilyFinance.Buisness.InputValidator.CheckNotNull(tableToGetIDFrom, "DataTable");
 
             DataRowCollection rows = this.ffDataSet.Tables[tableName].Rows;
 
@@ -141,6 +146,8 @@ namespace FamilyFinance.Data
                 catch (System.Security.SecurityException e)
                 {
                     string temp = e.ToString();
+                    System.Windows.MessageBox.Show(temp, "Error", System.Windows.MessageBoxButton.OK);
+
                 }
 
             }
