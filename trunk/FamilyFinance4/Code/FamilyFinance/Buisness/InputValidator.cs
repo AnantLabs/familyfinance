@@ -4,16 +4,15 @@ namespace FamilyFinance.Buisness
 {
     public static class InputValidator
     {
-        public static void CheckNotNull(object objectToValidate)
+        public static void CheckNotNull(object objectToValidate, string objectName)
         {
             if (objectToValidate == null)
-                allertUserToError(objectToValidate, "Null Object");
+                allertUserToError(objectName, "Null Object");
         }
 
-        private static void allertUserToError(object problemObject, string errorType)
+        private static void allertUserToError(string objectName, string errorType)
         {
-            string nameOfObjectType = problemObject.GetType().FullName;
-            string messageToUser = "Unexpected " + errorType;
+            string messageToUser = "Unexpected " + errorType + "\n" + objectName;
                         
             System.Windows.MessageBox.Show(messageToUser, 
                 errorType, 

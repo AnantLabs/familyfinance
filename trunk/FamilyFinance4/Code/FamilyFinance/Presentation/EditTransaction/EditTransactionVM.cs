@@ -68,28 +68,12 @@ namespace FamilyFinance.Presentation.EditTransaction
             }
         }
 
-        private int _currentLineID;
-        private int CurrentLineID
-        {
-            get
-            {
-                return this._currentLineID;
-            }
-            set
-            {
-                if (this._currentLineID != value)
-                {
-                    this._currentLineID = value;
-                }
-            }
-        }
-
         public ListCollectionView EnvelopeLinesView
         {
             get
             {
                 ObservableCollection<EnvelopeLineDRM> envColl = new ObservableCollection<EnvelopeLineDRM>();
-                FFDataSet.LineItemRow currentLine = MyData.getInstance().LineItem.FindByid(CurrentLineID);
+                FFDataSet.LineItemRow currentLine = MyData.getInstance().LineItem.FindByid(2);
 
                 if (currentLine != null)
                 {
@@ -193,7 +177,6 @@ namespace FamilyFinance.Presentation.EditTransaction
         ///////////////////////////////////////////////////////////
         public EditTransactionVM(int transID) : base(transID)
         {
-            this._currentLineID = 0;
             this._lines = new ObservableCollection<LineItemDRM>();
 
             if (this._transactionRow != null)
@@ -209,7 +192,6 @@ namespace FamilyFinance.Presentation.EditTransaction
 
         public EditTransactionVM()
         {
-            this._currentLineID = 0;
             this._lines = new ObservableCollection<LineItemDRM>();
         }
     }
