@@ -11,13 +11,13 @@ namespace FamilyFinance.Presentation.EditTransaction
     /// This class inherits from the TransactionDRM instead of strictly from the ViewModel class
     /// because this "is a" transaction we are editing, it comes from the Bindable object which is the important part.
     /// </summary>
-    public class EditTransactionVM : TransactionDRM
+    public class EditTransactionVM : ViewModel
     {
 
         ///////////////////////////////////////////////////////////
         // Private variables
         ///////////////////////////////////////////////////////////
-        private ObservableCollection<LineItemDRM> _lines;
+        private TransactionModel transactionModel;
 
 
         ///////////////////////////////////////////////////////////
@@ -61,7 +61,7 @@ namespace FamilyFinance.Presentation.EditTransaction
                 if (this._TransactionTypesView == null)
                 {
                     this._TransactionTypesView = new ListCollectionView(DataSetModel.getInstance().TransactionTypes);
-                    this._TransactionTypesView.Filter = new Predicate<Object>(DebitsFilter);
+                    //this._TransactionTypesView.Filter = new Predicate<Object>(DebitsFilter);
                 }
 
                 return this._TransactionTypesView;
@@ -92,41 +92,6 @@ namespace FamilyFinance.Presentation.EditTransaction
             }
         }
 
-        public decimal CreditsSum
-        {
-            get
-            {
-                decimal sum = 0.0m;
-
-                foreach (LineItemDRM line in this._lines)
-                {
-                    if (line.Polarity != PolarityCON.CREDIT)
-                    {
-                        sum += line.Amount;
-                    }
-                }
-
-                return sum;
-            }
-        }
-
-        public decimal DebitsSum
-        {
-            get
-            {
-                decimal sum = 0.0m;
-
-                foreach (LineItemDRM line in this._lines)
-                {
-                    if (line.Polarity != PolarityCON.DEBIT)
-                    {
-                        sum += line.Amount;
-                    }
-                }
-
-                return sum;
-            }
-        }
 
         public decimal EnvelopeLineSum
         {
@@ -175,24 +140,15 @@ namespace FamilyFinance.Presentation.EditTransaction
         ///////////////////////////////////////////////////////////
         // Public functions
         ///////////////////////////////////////////////////////////
-        public EditTransactionVM(int transID) : base(transID)
+        public EditTransactionVM(int transID) 
+            : base(transID)
         {
-            this._lines = new ObservableCollection<LineItemDRM>();
 
-            if (this._transactionRow != null)
-            {
-                FFDataSet.LineItemRow[] rows = this._transactionRow.GetLineItemRows();
 
-                foreach (FFDataSet.LineItemRow line in rows)
-                {
-                    this._lines.Add(new LineItemDRM(line));
-                }
-            }
         }
 
         public EditTransactionVM()
         {
-            this._lines = new ObservableCollection<LineItemDRM>();
         }
     }
 }

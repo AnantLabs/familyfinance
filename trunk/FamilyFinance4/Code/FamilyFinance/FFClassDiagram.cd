@@ -3,10 +3,13 @@
   <Comment CommentText="Singleton class.&#xD;&#xA;- Public referances to the dataset tables.&#xD;&#xA;- A single save function to commit row changes.&#xD;&#xA;- Private Table adapters.&#xD;&#xA;- Private event handlers for setting default values.&#xD;&#xA;- Simplified version of the FFDataSet">
     <Position X="4.054" Y="13.595" Height="1.198" Width="3.169" />
   </Comment>
+  <Comment CommentText="DRM classes are responsible for wrapping the table rows in a bindable object and to ensure data stays within bounds. Idealy there will only be one  instance of a DRM for each row in the dataset.">
+    <Position X="1.862" Y="8.281" Height="1.167" Width="2.398" />
+  </Comment>
   <Class Name="FamilyFinance.Data.MyData">
     <Position X="7.5" Y="14" Width="18.75" />
     <TypeIdentifier>
-      <HashCode>AQCAAIESAAAAAQCAABECAAAAAAAAAEUAQAAgAAAAAEA=</HashCode>
+      <HashCode>AQCAAIEQAAAAAQCAABESAAAAAAAAAEUAQAAgAAAAAEA=</HashCode>
       <FileName>Data\MyData.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -150,44 +153,29 @@
       <FileName>Buisness\AccountTypeDRM.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FamilyFinance.Buisness.BindableObject" Collapsed="true">
-    <Position X="2" Y="7.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Buisness\BindableObject.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="FamilyFinance.Buisness.AccountDRM">
-    <Position X="12.25" Y="8" Width="1.5" />
+    <Position X="5" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ACAAAABgAAAAgAAAAAAAAAQAAAoAgBAgALAAggCgAAQ=</HashCode>
       <FileName>Buisness\AccountDRM.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FamilyFinance.Buisness.BankDRM">
-    <Position X="15.75" Y="8" Width="1.75" />
+    <Position X="8.5" Y="8" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AACAAAAAAAAAgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAQ=</HashCode>
       <FileName>Buisness\BankDRM.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FamilyFinance.Buisness.DataRowModel">
-    <Position X="4.75" Y="7.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
-      <FileName>Buisness\DataRowModel.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="FamilyFinance.Buisness.EnvelopeDRM">
-    <Position X="14" Y="8" Width="1.5" />
+    <Position X="11.5" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQQgAAAAAAAAgAAECAAAAAQAAAAAAAAAAAAAAACAgAE=</HashCode>
       <FileName>Buisness\EnvelopeDRM.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FamilyFinance.Buisness.EnvelopeGroupDRM">
-    <Position X="10.25" Y="8" Width="1.75" />
+    <Position X="13.25" Y="8" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAIAAAAgAAAAAAAACQAAAAAAAAAAAAAAAAAACA=</HashCode>
       <FileName>Buisness\EnvelopeGroupDRM.cs</FileName>
@@ -210,22 +198,15 @@
   <Class Name="FamilyFinance.Buisness.TransactionDRM">
     <Position X="17.75" Y="8" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAABgAQAgAAAAAAAAAAAgAAAAABAhAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAABgAAAgAAAAAAAAAAAgAAAAABAhAAAABAAAAAA=</HashCode>
       <FileName>Buisness\TransactionDRM.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FamilyFinance.Buisness.TransactionTypeDRM">
-    <Position X="8.5" Y="8" Width="1.5" />
+    <Position X="16" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgAAAAAAAIAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Buisness\TransactionTypeDRM.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FamilyFinance.Presentation.ViewModel" Collapsed="true">
-    <Position X="5" Y="0.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Presentation\ViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FamilyFinance.Presentation.EditAccount.EditAccountsVM" Collapsed="true">

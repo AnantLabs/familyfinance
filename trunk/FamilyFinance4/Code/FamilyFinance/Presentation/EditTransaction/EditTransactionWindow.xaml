@@ -27,8 +27,7 @@
             </MenuItem>
         </Menu>
         <Grid Grid.Row="1"
-              Margin="3"
-              Background="White">
+              Margin="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -42,8 +41,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0"
-                  Grid.ColumnSpan="2"
-                  Background="White">
+                  Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20*" />
                     <ColumnDefinition Width="20*" />
@@ -58,11 +56,13 @@
                             HorizontalAlignment="Stretch" 
                             SelectedDate="{Binding Path=Date}" />
                 <ComboBox Name="transactionTypeCB" 
-                      Grid.Row="0"
-                      Grid.Column="1" 
-                      Margin="0,5"
-                      VerticalAlignment="Center" 
-                      HorizontalAlignment="Stretch" SelectedValue="{Binding Path=TypeID}" ItemsSource="{Binding Path=TransactionTypesView}" />
+                          Grid.Row="0"
+                          Grid.Column="1" 
+                          Margin="0,5"
+                          VerticalAlignment="Center" 
+                          HorizontalAlignment="Stretch" 
+                          SelectedValue="{Binding Path=TypeID}" 
+                          ItemsSource="{Binding Path=TransactionTypesView}" />
                 <TextBox Name="descriptionTB" 
                          Grid.Row="0"
                          Grid.Column="2" 

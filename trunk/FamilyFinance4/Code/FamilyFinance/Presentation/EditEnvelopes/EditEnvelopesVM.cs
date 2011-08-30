@@ -106,10 +106,10 @@ namespace FamilyFinance.Presentation.EditEnvelopes
         private bool FavoriteAccountsFilter(object item)
         {
             AccountDRM accRow = (AccountDRM)item;
-            bool keepItem = true; // Assume the item will be shown in the list
+            bool keepItem = false; // Assume the item will NOT be in the list
 
-            if (CatagoryCON.ACCOUNT.ID == accRow.CatagoryID)
-                keepItem = false;
+            if (accRow.CatagoryID == CatagoryCON.ACCOUNT.ID)
+                keepItem = true;
 
             return keepItem;
         }
