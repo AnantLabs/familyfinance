@@ -99,7 +99,7 @@ namespace FamilyFinance.Presentation.EditTypes
                     break;
 
                 case Table.TransactionType:
-                    this.Title = "IsTransactionError Types";
+                    this.Title = "Transaction Types";
                     this.MaxNameLength = TransactionTypeCON.NameMaxLength;
                     this.MaxRoutingLength = 0;
                     this._TableCollectionView = new ListCollectionView(DataSetModel.getInstance().TransactionTypes);
