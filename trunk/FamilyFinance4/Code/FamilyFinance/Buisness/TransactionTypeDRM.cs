@@ -9,14 +9,8 @@ namespace FamilyFinance.Buisness
 {
     public class TransactionTypeDRM : DataRowModel
     {
-        /// <summary>
-        /// Local referance to the IsTransactionError type row this object is modeling.
-        /// </summary>
         private FFDataSet.TransactionTypeRow TransactionTypeRow;
 
-        /// <summary>
-        /// Amount the ID of the transaction type.
-        /// </summary>
         public int ID
         {
             get
@@ -25,9 +19,6 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        /// <summary>
-        /// Amount or sets the name of the Transaction type.
-        /// </summary>
         public string Name 
         {
             get 
@@ -41,30 +32,14 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        /// <summary>
-        /// Creates the object and keeps a local referance to the given IsTransactionError type row.
-        /// </summary>
-        /// <param name="aRow"></param>
-        public TransactionTypeDRM(FFDataSet.TransactionTypeRow atRow)
+        public TransactionTypeDRM(FFDataSet.TransactionTypeRow ttRow)
         {
-            this.TransactionTypeRow = atRow;
+            this.TransactionTypeRow = ttRow;
         }
 
-        /// <summary>
-        /// Creates the object and keeps a reference to a new IsTransactionError type row.
-        /// </summary>
-        public TransactionTypeDRM() : this("")
+        public TransactionTypeDRM()
         {
-        }
-
-        public TransactionTypeDRM(string name)
-        {
-            this.TransactionTypeRow = MyData.getInstance().TransactionType.NewTransactionTypeRow();
-
-            this.TransactionTypeRow.id = MyData.getInstance().getNextID("TransactionType");
-            this.Name = name;
-
-            MyData.getInstance().TransactionType.AddTransactionTypeRow(this.TransactionTypeRow);
+            this.TransactionTypeRow = DataSetModel.Instance.NewTransactionTypeRow();
         }
     }
 }

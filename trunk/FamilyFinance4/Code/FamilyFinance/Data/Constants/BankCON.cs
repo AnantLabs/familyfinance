@@ -8,8 +8,8 @@ namespace FamilyFinance.Data
     class BankCON
     {
 
-        public static int RountingNumMaxLength = MyData.getInstance().Bank.routingNumberColumn.MaxLength;
-        public static int NameMaxLength = MyData.getInstance().Bank.nameColumn.MaxLength;
+        //public static int RountingNumMaxLength = MyData.getInstance().Bank.routingNumberColumn.MaxLength;
+        //public static int NameMaxLength = MyData.getInstance().Bank.nameColumn.MaxLength;
                 
         /// <summary>
         /// The object to represent an NULL Bank.

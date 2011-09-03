@@ -8,18 +8,11 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////////////////
         // Local variables
         ///////////////////////////////////////////////////////////////////////
-        
-        /// <summary>
-        /// Local reference to the account row this object is modeling.
-        /// </summary>
         private FFDataSet.EnvelopeRow envelopeRow;
        
         ///////////////////////////////////////////////////////////////////////
         // Properties to access this object.
         ///////////////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Amount the ID of the account.
-        /// </summary>
         public int ID
         {
             get
@@ -28,9 +21,6 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        /// <summary>
-        /// Amount or sets the name of the account.
-        /// </summary>
         public string Name 
         {
             get 
@@ -44,9 +34,6 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        /// <summary>
-        /// Amount or sets the typeID of this account.
-        /// </summary>
         public int GroupID
         {
             get 
@@ -61,9 +48,6 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        /// <summary>
-        /// Amount the type name of this account.
-        /// </summary>
         public string GroupName
         {
             get
@@ -72,10 +56,6 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        /// <summary>
-        /// Amount or sets the Closed flag for this envelope. True if the envelope is closed, 
-        /// false if the envelope is open.
-        /// </summary>
         public bool Closed
         {
             get
@@ -89,9 +69,6 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        /// <summary>
-        /// Amount or sets the favorite account id.
-        /// </summary>
         public int FavoriteAccountID
         {
             get 
@@ -106,9 +83,6 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        /// <summary>
-        /// Amount the favorite account name.
-        /// </summary>
         public string FavoriteAccountName
         {
             get
@@ -157,40 +131,21 @@ namespace FamilyFinance.Buisness
         }
        
         ///////////////////////////////////////////////////////////////////////
-        // Private functions
-        ///////////////////////////////////////////////////////////////////////
-
-
-        
-        ///////////////////////////////////////////////////////////////////////
         // Public functions
         ///////////////////////////////////////////////////////////////////////
-        public EnvelopeDRM(FFDataSet.EnvelopeRow eRow)
-        {
-            this.envelopeRow = eRow;
-        }
-
-        public EnvelopeDRM(string name, int groupID, int favoriteAccountID, bool closed)
-        {
-            this.envelopeRow = MyData.getInstance().Envelope.NewEnvelopeRow();
-
-            this.envelopeRow.id = MyData.getInstance().getNextID("Envelope");
-            this.Name = name;
-            this.GroupID = groupID;
-            this.FavoriteAccountID = favoriteAccountID;
-            this.Closed = closed;
-            this.Priority = this.envelopeRow.id;
-            this.Notes = "";
-            this.Goal = "";
-
-            MyData.getInstance().Envelope.AddEnvelopeRow(this.envelopeRow);
-        }
-
         public EnvelopeDRM() : this("", EnvelopeGroupCON.NULL.ID, AccountCON.NULL.ID, false)
         {
         }
 
+        public EnvelopeDRM(string name, int groupID, int favoriteAccountID, bool closed)
+        {
+            this.envelopeRow = DataSetModel.Instance.NewEnvelopeRow(name, groupID, favoriteAccountID, closed, "", "");
+        }
 
+        public EnvelopeDRM(FFDataSet.EnvelopeRow eRow)
+        {
+            this.envelopeRow = eRow;
+        }
 
     }
 }

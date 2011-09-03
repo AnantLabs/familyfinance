@@ -11,7 +11,7 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////////////////////////////////////
         // Local Variables
         ///////////////////////////////////////////////////////////////////////////////////////////
-        private FFDataSet.LineItemRow _lineItemRow;
+        private FFDataSet.LineItemRow lineItemRow;
 
 
         ///////////////////////////////////////////////////////////////////////////////////////////
@@ -21,7 +21,7 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this._lineItemRow.id;
+                return this.lineItemRow.id;
             }
         }
 
@@ -29,11 +29,11 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this._lineItemRow.transactionID;
+                return this.lineItemRow.transactionID;
             }
             set
             {
-                this._lineItemRow.transactionID = value;
+                this.lineItemRow.transactionID = value;
             }
         }
 
@@ -41,12 +41,12 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this._lineItemRow.accountID;
+                return this.lineItemRow.accountID;
             }
 
             set
             {
-                this._lineItemRow.accountID = value;
+                this.lineItemRow.accountID = value;
             }
         }
 
@@ -54,7 +54,7 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this._lineItemRow.AccountRow.name;
+                return this.lineItemRow.AccountRow.name;
             }
         }
 
@@ -62,11 +62,11 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this._lineItemRow.confirmationNumber;
+                return this.lineItemRow.confirmationNumber;
             }
             set
             {
-                this._lineItemRow.confirmationNumber = value.Substring(0, LineItemCON.ConfirmationNumberMaxLength);
+                this.lineItemRow.confirmationNumber = value.Substring(0, LineItemCON.ConfirmationNumberMaxLength);
             }
         }
 
@@ -74,14 +74,14 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this._lineItemRow.amount;
+                return this.lineItemRow.amount;
             }
             set
             {
                 if(value < 0.0m)
                     value = Decimal.Negate(value);
 
-                this._lineItemRow.amount = Decimal.Round(value, 2);
+                this.lineItemRow.amount = Decimal.Round(value, 2);
             }
         }
 
@@ -89,11 +89,11 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return PolarityCON.GetPlolartiy(this._lineItemRow.polarity);
+                return PolarityCON.GetPlolartiy(this.lineItemRow.polarity);
             }
             set
             {
-                this._lineItemRow.polarity = value.Value;
+                this.lineItemRow.polarity = value.Value;
             }
         }
 
@@ -106,8 +106,6 @@ namespace FamilyFinance.Buisness
         }
 
 
-
-
         ///////////////////////////////////////////////////////////////////////////////////////////
         // Public Functions
         ///////////////////////////////////////////////////////////////////////////////////////////
@@ -115,33 +113,14 @@ namespace FamilyFinance.Buisness
         {
             InputValidator.CheckNotNull(linRow, "FFDataSet.LineItemRow");
 
-            this._lineItemRow = linRow;
+            this.lineItemRow = linRow;
         }
 
-        //public LineItemDRM(int transactionID) 
-        //    : this(transactionID, AccountCON.NULL.ID, "", 0.0m, PolarityCON.CREDIT)
-        //{
-        //}
-
-        //public LineItemDRM() 
-        //    : this(LineItemDRM._TransactionID, AccountCON.NULL.ID, "", 0.0m, PolarityCON.CREDIT)
-        //{
-        //}
-
-        public LineItemDRM(TransactionDRM transDRM, int accountID, string confrimationNum, decimal amount, PolarityCON polarity) 
+        public LineItemDRM(FFDataSet.TransactionRow transactionRow) 
         {
-            InputValidator.CheckNotNull(transDRM, "TransactionDRM");
+            InputValidator.CheckNotNull(transactionRow, "FFDataSet.TransactionRow");
 
-            this._lineItemRow = MyData.getInstance().LineItem.NewLineItemRow();
-
-            this._lineItemRow.id = MyData.getInstance().getNextID("LineItem");
-            this._lineItemRow.transactionID = transDRM.TransactionID;
-            this.AccountID = accountID;
-            this.ConfirmationNumber = confrimationNum;
-            this.Amount = amount;
-            this.Polarity = polarity;
-
-            MyData.getInstance().LineItem.AddLineItemRow(this._lineItemRow);
+            this.lineItemRow = DataSetModel.Instance.NewLineItemRow(transactionRow);
         }
 
 

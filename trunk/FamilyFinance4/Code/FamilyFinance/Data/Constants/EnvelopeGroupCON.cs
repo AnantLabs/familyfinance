@@ -8,7 +8,7 @@ namespace FamilyFinance.Data
     class EnvelopeGroupCON
     {
 
-        public static int NameMaxLength = MyData.getInstance().EnvelopeGroup.nameColumn.MaxLength;
+        //public static int NameMaxLength = MyData.getInstance().EnvelopeGroup.nameColumn.MaxLength;
                 
         /// <summary>
         /// The object to represent an NULL envelope group.

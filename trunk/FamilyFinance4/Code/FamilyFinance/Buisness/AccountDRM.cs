@@ -16,23 +16,12 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////////////////
         // Local variables
         ///////////////////////////////////////////////////////////////////////
-        
-        /// <summary>
-        /// Local reference to the account row this object is modeling.
-        /// </summary>
         private FFDataSet.AccountRow accountRow;
-
-        /// <summary>
-        /// Local reference to the bank row this object is modeling.
-        /// </summary>        
         private FFDataSet.BankInfoRow bankInfoRow;
         
         ///////////////////////////////////////////////////////////////////////
         // Properties to access this object.
         ///////////////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Amount the ID of the account.
-        /// </summary>
         public int ID
         {
             get
@@ -41,9 +30,6 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        /// <summary>
-        /// Amount or sets the name of the account.
-        /// </summary>
         public string Name 
         {
             get 
@@ -57,9 +43,6 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        /// <summary>
-        /// Amount or sets the typeID of this account.
-        /// </summary>
         public int TypeID
         {
             get 
@@ -73,9 +56,6 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        /// <summary>
-        /// Amount the type name of this account.
-        /// </summary>
         public string TypeName
         {
             get
@@ -84,9 +64,6 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        /// <summary>
-        /// Amount or sets the Catagory of this account.
-        /// </summary>
         public byte CatagoryID
         {
             get
@@ -104,9 +81,6 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        /// <summary>
-        /// Amount the catagory name for this account.
-        /// </summary>
         public string CatagoryName
         {
             get
@@ -115,10 +89,6 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        /// <summary>
-        /// Amount or sets the Closed flag for this account. True if the account is closed, 
-        /// false if the account is open.
-        /// </summary>
         public bool Closed
         {
             get
@@ -132,9 +102,6 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        /// <summary>
-        /// Amount or sets the flag stating whether or not this account uses envelopes.
-        /// </summary>
         public bool UsesEnvelopes
         {
             get
@@ -160,24 +127,15 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                if (this.bankInfoRow == null)
-                    return false;
-                else
-                    return true;
+                return (this.bankInfoRow != null);
             }
 
             set
             {
                 if (value == true && this.bankInfoRow == null)
                 {
-                    this.bankInfoRow = MyData.getInstance().BankInfo.NewBankInfoRow();
-
-                    this.bankInfoRow.accountID = this.ID;
-                    this.bankInfoRow.bankID = BankCON.NULL.ID;
-                    this.bankInfoRow.accountNumber = "";
-                    this.bankInfoRow.polarity = PolarityCON.DEBIT.Value;
-
-                    MyData.getInstance().BankInfo.AddBankInfoRow(this.bankInfoRow);
+                    this.bankInfoRow = DataSetModel.Instance.NewBankInfoRow(
+                        this.accountRow, BankCON.NULL.ID, "", PolarityCON.DEBIT);
                 }
                 else if (value == false && this.bankInfoRow != null)
                 {
@@ -288,39 +246,23 @@ namespace FamilyFinance.Buisness
         }
 
         
-
-        ///////////////////////////////////////////////////////////////////////
-        // Private functions
-        ///////////////////////////////////////////////////////////////////////
-
-
-        
         ///////////////////////////////////////////////////////////////////////
         // Public functions
         ///////////////////////////////////////////////////////////////////////
-        public AccountDRM(FFDataSet.AccountRow aRow)
-        {
-            this.accountRow = aRow;
-            this.bankInfoRow = MyData.getInstance().BankInfo.FindByaccountID(this.ID);
-        }
-
-        public AccountDRM(string name, int typeID, CatagoryCON catagory, bool closed, bool envelopes)
-        {
-            this.bankInfoRow = null;
-            this.accountRow = MyData.getInstance().Account.NewAccountRow();
-
-            this.accountRow.id = MyData.getInstance().getNextID("Account");
-            this.Name = name;
-            this.TypeID = typeID;
-            this.CatagoryID = catagory.ID;
-            this.Closed = closed;
-            this.UsesEnvelopes = envelopes;
-
-            MyData.getInstance().Account.AddAccountRow(this.accountRow);
-        }
-
         public AccountDRM() : this("", AccountTypeCON.NULL.ID, CatagoryCON.ACCOUNT, false, false)
         {
+        }
+
+        public AccountDRM(string name, int typeID, CatagoryCON catagory, bool closed, bool useEnvelopes)
+        {
+            this.accountRow = DataSetModel.Instance.NewAccountRow(name, typeID, catagory, closed, useEnvelopes);
+            this.bankInfoRow = null;
+        }
+
+        public AccountDRM(FFDataSet.AccountRow accountRow, FFDataSet.BankInfoRow bankRow)
+        {
+            this.accountRow = accountRow;
+            this.bankInfoRow = bankRow;
         }
     }
 }

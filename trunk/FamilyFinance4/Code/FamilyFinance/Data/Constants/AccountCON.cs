@@ -8,8 +8,8 @@ namespace FamilyFinance.Data
     public class AccountCON
     {
 
-        public static int NameMaxLength = MyData.getInstance().Account.nameColumn.MaxLength;
-        public static int AccountNumberMaxLength = MyData.getInstance().BankInfo.accountNumberColumn.MaxLength;
+        //public static int NameMaxLength = MyData.getInstance().Account.nameColumn.MaxLength;
+        //public static int AccountNumberMaxLength = MyData.getInstance().BankInfo.accountNumberColumn.MaxLength;
 
         /// <summary>
         /// The object to represent an NULL account.

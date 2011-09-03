@@ -9,15 +9,8 @@ namespace FamilyFinance.Buisness
 {
     public class BankDRM : DataRowModel
     {
-
-        /// <summary>
-        /// Local referance to the account row this object is modeling.
-        /// </summary>
         private FFDataSet.BankRow bankRow;
 
-        /// <summary>
-        /// Amount the ID of the Bank.
-        /// </summary>
         public int ID
         {
             get
@@ -26,9 +19,6 @@ namespace FamilyFinance.Buisness
             }
         }
   
-        /// <summary>
-        /// Amount or sets the name of the account.
-        /// </summary>
         public string Name 
         {
             get 
@@ -43,9 +33,6 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        /// <summary>
-        /// Amount or sets the banks routing number.
-        /// </summary>
         public string RoutingNumber
         {
             get
@@ -56,32 +43,17 @@ namespace FamilyFinance.Buisness
             set
             {
                 this.bankRow.routingNumber = this.truncateIfNeeded(value, BankCON.RountingNumMaxLength);
-                
             }
         }
 
-        /// <summary>
-        /// Creates the object and keeps a local referance to the given bank row.
-        /// </summary>
-        /// <param name="bRow"></param>
+        public BankDRM()
+        {
+            this.bankRow = DataSetModel.Instance.NewBankRow("", "");
+        }
+
         public BankDRM(FFDataSet.BankRow bRow)
         {
             this.bankRow = bRow;
-        }
-
-        /// <summary>
-        /// Creates the object and keeps a reference to a new account type row.
-        /// </summary>
-        /// <param name="aRow"></param>
-        public BankDRM()
-        {
-            this.bankRow = MyData.getInstance().Bank.NewBankRow();
-
-            this.bankRow.id = MyData.getInstance().getNextID("Bank");
-            this.Name = "";
-            this.RoutingNumber = "";
-
-            MyData.getInstance().Bank.AddBankRow(this.bankRow);
         }
 
     }
