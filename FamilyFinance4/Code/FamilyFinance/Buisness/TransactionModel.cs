@@ -13,8 +13,6 @@ namespace FamilyFinance.Buisness
         private ObservableCollection<LineItemDRM> _lines;
 
 
-
-
         public decimal CreditsSum
         {
             get
@@ -62,15 +60,15 @@ namespace FamilyFinance.Buisness
 
         private void buildLinesOfTransaction()
         {
-            if (this._transactionRow != null)
-            {
-                FFDataSet.LineItemRow[] rows = this._transactionRow.GetLineItemRows();
+            //if (this._transactionRow != null)
+            //{
+            //    FFDataSet.LineItemRow[] rows = this._transactionRow.GetLineItemRows();
 
-                foreach (FFDataSet.LineItemRow line in rows)
-                {
-                    this._lines.Add(new LineItemDRM(line));
-                }
-            }
+            //    foreach (FFDataSet.LineItemRow line in rows)
+            //    {
+            //        this._lines.Add(new LineItemDRM(line));
+            //    }
+            //}
         }
     }
 }

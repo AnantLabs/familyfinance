@@ -8,7 +8,7 @@ namespace FamilyFinance.Data
     class AccountTypeCON
     {
 
-        public static int NameMaxLength = MyData.getInstance().AccountType.nameColumn.MaxLength;
+        //public static int NameMaxLength = MyData.getInstance().AccountType.nameColumn.MaxLength;
         
         /// <summary>
         /// The object to represent an NULL Account Type.

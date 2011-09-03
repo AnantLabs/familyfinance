@@ -67,20 +67,19 @@
     <Compile Include="Buisness\RegistryEnvelopeLineModel.cs" />
     <Compile Include="Buisness\RegistryLineModel.cs" />
     <Compile Include="Buisness\TransactionModel.cs" />
-    <Compile Include="Data\AccountCON.cs" />
-    <Compile Include="Data\AccountTypeCON.cs" />
-    <Compile Include="Data\BankCON.cs" />
-    <Compile Include="Data\CatagoryCON.cs" />
-    <Compile Include="Data\EnvelopeLineCON.cs" />
-    <Compile Include="Data\EnvelopeCON.cs" />
-    <Compile Include="Data\EnvelopeGroupCON.cs" />
+    <Compile Include="Data\Constants\AccountCON.cs" />
+    <Compile Include="Data\Constants\AccountTypeCON.cs" />
+    <Compile Include="Data\Constants\BankCON.cs" />
+    <Compile Include="Data\Constants\CatagoryCON.cs" />
+    <Compile Include="Data\Constants\EnvelopeLineCON.cs" />
+    <Compile Include="Data\Constants\EnvelopeCON.cs" />
+    <Compile Include="Data\Constants\EnvelopeGroupCON.cs" />
     <Compile Include="Data\FFDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FFDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Data\LineItemCON.cs" />
-    <Compile Include="Data\MyData.cs" />
+    <Compile Include="Data\Constants\LineItemCON.cs" />
     <Compile Include="Buisness\DataRowModel.cs" />
     <Compile Include="Buisness\LineItemDRM.cs" />
     <Compile Include="Buisness\TransactionDRM.cs" />
@@ -107,10 +106,10 @@
     </Compile>
     <Compile Include="Buisness\EnvelopeGroupDRM.cs" />
     <Compile Include="Buisness\BindableObject.cs" />
-    <Compile Include="Data\PolarityCON.cs" />
-    <Compile Include="Data\TransactionCON.cs" />
-    <Compile Include="Data\TransactionStateCON.cs" />
-    <Compile Include="Data\TransactionTypeCON.cs" />
+    <Compile Include="Data\Constants\PolarityCON.cs" />
+    <Compile Include="Data\Constants\TransactionCON.cs" />
+    <Compile Include="Data\Constants\TransactionStateCON.cs" />
+    <Compile Include="Data\Constants\TransactionTypeCON.cs" />
     <Compile Include="Presentation\EditAccount\EditAccountsVM.cs" />
     <Compile Include="Presentation\EditAccount\EditAccountsWindow.xaml.cs">
       <DependentUpon>EditAccountsWindow.xaml</DependentUpon>

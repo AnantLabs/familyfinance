@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
+using FamilyFinance.Data;
 using FamilyFinance.Data;
 
 namespace FamilyFinance.Buisness
 {
     public class AccountTypeDRM : DataRowModel
     {
-        /// <summary>
-        /// Local referance to the account type row this object is modeling.
-        /// </summary>
         private FFDataSet.AccountTypeRow accountTypeRow;
 
-        /// <summary>
-        /// Amount the ID of the account type.
-        /// </summary>
         public int ID
         {
             get
@@ -25,9 +16,6 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        /// <summary>
-        /// Amount or sets the name of the account type.
-        /// </summary>
         public string Name 
         {
             get 
@@ -41,27 +29,14 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        /// <summary>
-        /// Creates the object and keeps a local referance to the given account type row.
-        /// </summary>
-        /// <param name="aRow"></param>
         public AccountTypeDRM(FFDataSet.AccountTypeRow atRow)
         {
             this.accountTypeRow = atRow;
         }
 
-        /// <summary>
-        /// Creates the object and keeps a reference to a new account type row.
-        /// </summary>
-        /// <param name="name">The name of the new AccountType.</param>
         public AccountTypeDRM(string name)
         {
-            this.accountTypeRow = MyData.getInstance().AccountType.NewAccountTypeRow();
-
-            this.accountTypeRow.id = MyData.getInstance().getNextID("AccountType");
-            this.Name = name;
-
-            MyData.getInstance().AccountType.AddAccountTypeRow(this.accountTypeRow);
+            this.accountTypeRow = DataSetModel.Instance.NewAccountTypeRow(name);
         }
 
         public AccountTypeDRM() : this("")
