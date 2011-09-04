@@ -39,7 +39,7 @@ namespace FamilyFinance.Buisness
 
             set
             {
-                this.accountRow.name = this.truncateIfNeeded(value, AccountCON.NameMaxLength);
+                this.accountRow.name = value;
             }
         }
 
@@ -134,8 +134,7 @@ namespace FamilyFinance.Buisness
             {
                 if (value == true && this.bankInfoRow == null)
                 {
-                    this.bankInfoRow = DataSetModel.Instance.NewBankInfoRow(
-                        this.accountRow, BankCON.NULL.ID, "", PolarityCON.DEBIT);
+                    this.bankInfoRow = DataSetModel.Instance.NewBankInfoRow(this.accountRow);
                 }
                 else if (value == false && this.bankInfoRow != null)
                 {
@@ -165,7 +164,7 @@ namespace FamilyFinance.Buisness
             {
                 if (this.bankInfoRow != null)
                 {
-                    this.bankInfoRow.accountNumber = this.truncateIfNeeded(value, AccountCON.AccountNumberMaxLength);
+                    this.bankInfoRow.accountNumber = value;
                 }
             }
         }
@@ -249,13 +248,9 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////////////////
         // Public functions
         ///////////////////////////////////////////////////////////////////////
-        public AccountDRM() : this("", AccountTypeCON.NULL.ID, CatagoryCON.ACCOUNT, false, false)
+        public AccountDRM()
         {
-        }
-
-        public AccountDRM(string name, int typeID, CatagoryCON catagory, bool closed, bool useEnvelopes)
-        {
-            this.accountRow = DataSetModel.Instance.NewAccountRow(name, typeID, catagory, closed, useEnvelopes);
+            this.accountRow = DataSetModel.Instance.NewAccountRow();
             this.bankInfoRow = null;
         }
 

@@ -434,8 +434,8 @@ namespace FamilyFinance.Buisness
                 {
                     _Accounts = new ObservableCollection<AccountDRM>();
 
-                    foreach (FFDataSet.AccountRow row in MyData.getInstance().Account)
-                        _Accounts.Add(new AccountDRM(row));
+                    foreach (FFDataSet.AccountRow row in this.ffDataSet.Account)
+                        _Accounts.Add(new AccountDRM(row, ffDataSet.BankInfo.FindByaccountID(row.id)));
                 }
 
                 return _Accounts;
@@ -451,7 +451,7 @@ namespace FamilyFinance.Buisness
                 {
                     _AccountTypes = new ObservableCollection<AccountTypeDRM>();
 
-                    foreach (FFDataSet.AccountTypeRow row in MyData.getInstance().AccountType)
+                    foreach (FFDataSet.AccountTypeRow row in ffDataSet.AccountType)
                         _AccountTypes.Add(new AccountTypeDRM(row));
                 }
 
@@ -468,7 +468,7 @@ namespace FamilyFinance.Buisness
                 {
                     _Banks = new ObservableCollection<BankDRM>();
 
-                    foreach (FFDataSet.BankRow row in MyData.getInstance().Bank)
+                    foreach (FFDataSet.BankRow row in ffDataSet.Bank)
                         _Banks.Add(new BankDRM(row));
                 }
 
@@ -483,7 +483,7 @@ namespace FamilyFinance.Buisness
             {
                 _EnvelopeGroups = new ObservableCollection<EnvelopeGroupDRM>();
 
-                foreach (FFDataSet.EnvelopeGroupRow row in MyData.getInstance().EnvelopeGroup)
+                foreach (FFDataSet.EnvelopeGroupRow row in ffDataSet.EnvelopeGroup)
                     _EnvelopeGroups.Add(new EnvelopeGroupDRM(row));
 
                 return _EnvelopeGroups;
@@ -497,7 +497,7 @@ namespace FamilyFinance.Buisness
             {
                 _Envelopes = new ObservableCollection<EnvelopeDRM>();
 
-                foreach (FFDataSet.EnvelopeRow row in MyData.getInstance().Envelope)
+                foreach (FFDataSet.EnvelopeRow row in ffDataSet.Envelope)
                     _Envelopes.Add(new EnvelopeDRM(row));
 
                 return _Envelopes;
@@ -513,13 +513,22 @@ namespace FamilyFinance.Buisness
                 {
                     _TransactionType = new ObservableCollection<TransactionTypeDRM>();
 
-                    foreach (FFDataSet.TransactionTypeRow row in MyData.getInstance().TransactionType)
+                    foreach (FFDataSet.TransactionTypeRow row in ffDataSet.TransactionType)
                         _TransactionType.Add(new TransactionTypeDRM(row));
                 }
 
                 return _TransactionType;
             }
         }
-    
+
+
+        ///////////////////////////////////////////////////////////////////////
+        // A transaction the user can modify.
+        ///////////////////////////////////////////////////////////////////////
+        public TransactionModel TransactionModelByID(int id)
+        {
+            return new TransactionModel(ffDataSet.Transaction.FindByid(id));
+        }
+
     }
 }

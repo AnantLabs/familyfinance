@@ -5,7 +5,7 @@ namespace FamilyFinance.Data
     class TransactionTypeCON
     {
 
-        public static int NameMaxLength = MyData.getInstance().TransactionType.nameColumn.MaxLength;
+        //public static int NameMaxLength = MyData.getInstance().TransactionType.nameColumn.MaxLength;
                 
         /// <summary>
         /// The object to represent an NULL Line Type.

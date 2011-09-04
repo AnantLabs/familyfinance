@@ -9,8 +9,12 @@ namespace FamilyFinance.Buisness
 {
     class TransactionModel : TransactionDRM
     {
+        public ObservableCollection<LineItemDRM> LineItems
+        {
+            get;
+            private set;
+        }
 
-        private ObservableCollection<LineItemDRM> _lines;
 
 
         public decimal CreditsSum
@@ -19,7 +23,7 @@ namespace FamilyFinance.Buisness
             {
                 decimal sum = 0.0m;
 
-                foreach (LineItemDRM line in this._lines)
+                foreach (LineItemDRM line in this.LineItems)
                 {
                     if (line.Polarity != PolarityCON.CREDIT)
                     {
@@ -37,7 +41,7 @@ namespace FamilyFinance.Buisness
             {
                 decimal sum = 0.0m;
 
-                foreach (LineItemDRM line in this._lines)
+                foreach (LineItemDRM line in this.LineItems)
                 {
                     if (line.Polarity != PolarityCON.DEBIT)
                     {
@@ -49,26 +53,8 @@ namespace FamilyFinance.Buisness
             }
         }
 
-
-        public TransactionModel(int transID)
-            : base(transID)
+        public TransactionModel()
         {
-            this._lines = new ObservableCollection<LineItemDRM>();
-
-            buildLinesOfTransaction();
-        }
-
-        private void buildLinesOfTransaction()
-        {
-            //if (this._transactionRow != null)
-            //{
-            //    FFDataSet.LineItemRow[] rows = this._transactionRow.GetLineItemRows();
-
-            //    foreach (FFDataSet.LineItemRow line in rows)
-            //    {
-            //        this._lines.Add(new LineItemDRM(line));
-            //    }
-            //}
         }
     }
 }

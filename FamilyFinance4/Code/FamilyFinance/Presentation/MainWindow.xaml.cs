@@ -52,12 +52,12 @@ namespace FamilyFinance.Presentation
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            FamilyFinance.Data.MyData.getInstance().readData();
+            FamilyFinance.Buisness.DataSetModel.Instance.loadData();
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            FamilyFinance.Data.MyData.getInstance().saveData();
+            FamilyFinance.Buisness.DataSetModel.Instance.saveData();
         }
 
         private void Transaction_Click(object sender, RoutedEventArgs e)

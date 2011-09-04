@@ -28,7 +28,7 @@ namespace FamilyFinance.Buisness
 
             set
             {
-                this.bankRow.name = this.truncateIfNeeded(value, BankCON.NameMaxLength);
+                this.bankRow.name = value;
                 this.RaisePropertyChanged("Name");
             }
         }
@@ -42,13 +42,13 @@ namespace FamilyFinance.Buisness
 
             set
             {
-                this.bankRow.routingNumber = this.truncateIfNeeded(value, BankCON.RountingNumMaxLength);
+                this.bankRow.routingNumber = value;
             }
         }
 
         public BankDRM()
         {
-            this.bankRow = DataSetModel.Instance.NewBankRow("", "");
+            this.bankRow = DataSetModel.Instance.NewBankRow();
         }
 
         public BankDRM(FFDataSet.BankRow bRow)

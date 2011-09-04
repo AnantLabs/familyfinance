@@ -55,7 +55,7 @@ namespace FamilyFinance.Buisness
             }
             set
             {
-                this._envelopeLineRow.description = this.truncateIfNeeded(value, EnvelopeLineCON.DescriptionMaxLength);
+                this._envelopeLineRow.description = value;
             }
         }
 

@@ -25,7 +25,7 @@ namespace FamilyFinance.Buisness
 
             set
             {
-                this.accountTypeRow.name = this.truncateIfNeeded(value, AccountTypeCON.NameMaxLength);
+                this.accountTypeRow.name = value;
             }
         }
 
@@ -34,14 +34,9 @@ namespace FamilyFinance.Buisness
             this.accountTypeRow = atRow;
         }
 
-        public AccountTypeDRM(string name)
+        public AccountTypeDRM()
         {
-            this.accountTypeRow = DataSetModel.Instance.NewAccountTypeRow(name);
-        }
-
-        public AccountTypeDRM() : this("")
-        {
-
+            this.accountTypeRow = DataSetModel.Instance.NewAccountTypeRow();
         }
 
     }
