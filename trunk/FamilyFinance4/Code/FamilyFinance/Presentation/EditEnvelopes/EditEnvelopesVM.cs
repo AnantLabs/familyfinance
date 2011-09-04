@@ -49,7 +49,7 @@ namespace FamilyFinance.Presentation.EditEnvelopes
             {
                 if (this._EnvelopesView == null)
                 {
-                    this._EnvelopesView = new ListCollectionView(DataSetModel.getInstance().Envelopes);
+                    this._EnvelopesView = new ListCollectionView(DataSetModel.Instance.Envelopes);
                     this._EnvelopesView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
                     this._EnvelopesView.Filter = new Predicate<Object>(EditableEnvelopesFilter); 
                 }
@@ -62,7 +62,7 @@ namespace FamilyFinance.Presentation.EditEnvelopes
         {
             get
             {
-                ListCollectionView temp = new ListCollectionView(DataSetModel.getInstance().EnvelopeGroups);
+                ListCollectionView temp = new ListCollectionView(DataSetModel.Instance.EnvelopeGroups);
                 temp.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
 
                 return temp;
@@ -73,7 +73,7 @@ namespace FamilyFinance.Presentation.EditEnvelopes
         {
             get 
             {
-                ListCollectionView favoriteAccView = new ListCollectionView(DataSetModel.getInstance().Accounts);
+                ListCollectionView favoriteAccView = new ListCollectionView(DataSetModel.Instance.Accounts);
 
                 favoriteAccView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
                 favoriteAccView.Filter = this.FavoriteAccountsFilter;

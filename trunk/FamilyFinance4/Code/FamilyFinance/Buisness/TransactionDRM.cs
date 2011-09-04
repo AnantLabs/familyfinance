@@ -12,7 +12,7 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////////////////////////////////////
         // Local Variables
         ///////////////////////////////////////////////////////////////////////////////////////////
-        private FFDataSet.TransactionRow _transactionRow;
+        private FFDataSet.TransactionRow transactionRow;
 
 
         ///////////////////////////////////////////////////////////////////////////////////////////
@@ -22,7 +22,7 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this._transactionRow.id;
+                return this.transactionRow.id;
             }
         }
 
@@ -30,12 +30,12 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this._transactionRow.date;
+                return this.transactionRow.date;
             }
 
             set
             {
-                this._transactionRow.date = value;
+                this.transactionRow.date = value;
             }
         }
 
@@ -43,12 +43,12 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this._transactionRow.typeID;
+                return this.transactionRow.typeID;
             }
 
             set
             {
-                this._transactionRow.typeID = value;
+                this.transactionRow.typeID = value;
             }
         }
 
@@ -56,7 +56,7 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this._transactionRow.TransactionTypeRow.name;
+                return this.transactionRow.TransactionTypeRow.name;
             }
         }
 
@@ -64,11 +64,11 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this._transactionRow.description;
+                return this.transactionRow.description;
             }
             set
             {
-                this._transactionRow.description = this.truncateIfNeeded(value, TransactionCON.DescriptionMaxLength);
+                this.transactionRow.description = value;
             }
         }
 
@@ -76,11 +76,11 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return TransactionStateCON.GetState(this._transactionRow.state);
+                return TransactionStateCON.GetState(this.transactionRow.state);
             }
             set
             {
-                this._transactionRow.state = value.Value;
+                this.transactionRow.state = value.Value;
             }
         }
 
@@ -99,34 +99,14 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////////////////////////////////////
         // Public Functions
         ///////////////////////////////////////////////////////////////////////////////////////////
+        public TransactionDRM()
+        {
+            this.transactionRow = DataSetModel.Instance.NewTransactionRow();
+        }
+
         public TransactionDRM(FFDataSet.TransactionRow tRow)
         {
-            this._transactionRow = tRow;
-        }
-
-        protected TransactionDRM(int transID)
-        {
-            this._transactionRow = MyData.getInstance().Transaction.FindByid(transID);
-        }
-
-        public TransactionDRM() : this(DateTime.Today, TransactionTypeCON.NULL.ID, "", TransactionStateCON.PENDING)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new transaction data row with the given values
-        /// </summary>
-        public TransactionDRM(DateTime date, int typeID, string description, TransactionStateCON state)
-        {
-            this._transactionRow = MyData.getInstance().Transaction.NewTransactionRow();
-
-            this._transactionRow.id = MyData.getInstance().getNextID("Transaction");
-            this.Date = date;
-            this.TypeID = typeID;
-            this.Description = description;
-            this.State = state;
-
-            MyData.getInstance().Transaction.AddTransactionRow(this._transactionRow);
+            this.transactionRow = tRow;
         }
 
     }

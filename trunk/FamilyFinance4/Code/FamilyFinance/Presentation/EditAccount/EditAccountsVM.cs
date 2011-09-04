@@ -96,7 +96,7 @@ namespace FamilyFinance.Presentation.EditAccount
             {
                 if (this._AccountsView == null)
                 {
-                    this._AccountsView = new ListCollectionView(DataSetModel.getInstance().Accounts);
+                    this._AccountsView = new ListCollectionView(DataSetModel.Instance.Accounts);
                     this._AccountsView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
                     this._AccountsView.Filter = new Predicate<Object>(EditableAccountsFilter);
                 }
@@ -111,7 +111,7 @@ namespace FamilyFinance.Presentation.EditAccount
             {
                 ListCollectionView atView;
 
-                atView = new ListCollectionView(DataSetModel.getInstance().AccountTypes);
+                atView = new ListCollectionView(DataSetModel.Instance.AccountTypes);
                 atView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
 
                 return atView;
@@ -124,7 +124,7 @@ namespace FamilyFinance.Presentation.EditAccount
             {
                 ListCollectionView bView;
 
-                bView = new ListCollectionView(DataSetModel.getInstance().Banks);
+                bView = new ListCollectionView(DataSetModel.Instance.Banks);
                 bView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
 
                 return bView;
@@ -137,7 +137,7 @@ namespace FamilyFinance.Presentation.EditAccount
             {
                 // We don't need to worry about filtering or sorting just pass back the list.
                 // The view will be automatically/annonymously generated.
-                return DataSetModel.getInstance().AccountCatagories;
+                return DataSetModel.Instance.AccountCatagories;
             }
         }
 
@@ -147,7 +147,7 @@ namespace FamilyFinance.Presentation.EditAccount
             {
                 // We don't need to worry about filtering or sorting just pass back the list.
                 // The view will be automatically/annonymously generated.
-                return DataSetModel.getInstance().CreditDebits;
+                return DataSetModel.Instance.Polarities;
             }
         }
 

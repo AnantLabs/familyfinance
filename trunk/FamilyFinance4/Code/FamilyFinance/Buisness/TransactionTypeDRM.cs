@@ -28,7 +28,7 @@ namespace FamilyFinance.Buisness
 
             set
             {
-                this.TransactionTypeRow.name = this.truncateIfNeeded(value, TransactionTypeCON.NameMaxLength);
+                this.TransactionTypeRow.name = value;
             }
         }
 

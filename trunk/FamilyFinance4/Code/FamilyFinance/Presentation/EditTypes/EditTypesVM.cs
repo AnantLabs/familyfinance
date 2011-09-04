@@ -19,18 +19,15 @@ namespace FamilyFinance.Presentation.EditTypes
         // Properties
         public string Title { get; private set; }
 
-        public int MaxNameLength { get; private set; }
-        public int MaxRoutingLength { get; private set; }
+        //public int MaxNameLength { get; private set; }
+        //public int MaxRoutingLength { get; private set; }
         
 
         // Using ICollectionView so we can set the sorting here.
-        private ListCollectionView _TableCollectionView;
-        public ListCollectionView TableCollectionView 
+        public ListCollectionView TableCollectionView
         {
-            get
-            {
-                return _TableCollectionView;
-            }
+            get; 
+            private set;
         }
 
 
@@ -92,40 +89,32 @@ namespace FamilyFinance.Presentation.EditTypes
             {
                 case Table.AccountType:
                     this.Title = "Account Types";
-                    this.MaxNameLength = AccountTypeCON.NameMaxLength;
-                    this.MaxRoutingLength = 0;
-                    this._TableCollectionView = new ListCollectionView(DataSetModel.getInstance().AccountTypes);
-                    this._TableCollectionView.Filter = this.AccountTypeFilter;
+                    this.TableCollectionView = new ListCollectionView(DataSetModel.Instance.AccountTypes);
+                    this.TableCollectionView.Filter = this.AccountTypeFilter;
                     break;
 
                 case Table.TransactionType:
                     this.Title = "Transaction Types";
-                    this.MaxNameLength = TransactionTypeCON.NameMaxLength;
-                    this.MaxRoutingLength = 0;
-                    this._TableCollectionView = new ListCollectionView(DataSetModel.getInstance().TransactionTypes);
-                    this._TableCollectionView.Filter = this.TransactionTypeFilter;
+                    this.TableCollectionView = new ListCollectionView(DataSetModel.Instance.TransactionTypes);
+                    this.TableCollectionView.Filter = this.TransactionTypeFilter;
                     break;
 
                 case Table.EnvelopeGroup:
                     this.Title = "Envelope Groups";
-                    this.MaxNameLength = EnvelopeGroupCON.NameMaxLength;
-                    this.MaxRoutingLength = 0;
-                    this._TableCollectionView = new ListCollectionView(DataSetModel.getInstance().EnvelopeGroups);
-                    this._TableCollectionView.Filter = this.EnvelopeGroupFilter;
+                    this.TableCollectionView = new ListCollectionView(DataSetModel.Instance.EnvelopeGroups);
+                    this.TableCollectionView.Filter = this.EnvelopeGroupFilter;
                     break;
 
                 case Table.Bank:
                     this.Title = "Banks";
-                    this.MaxNameLength = BankCON.NameMaxLength;
-                    this.MaxRoutingLength = BankCON.RountingNumMaxLength;
-                    this._TableCollectionView = new ListCollectionView(DataSetModel.getInstance().Banks);
-                    this._TableCollectionView.Filter = this.BanksFilter;
+                    this.TableCollectionView = new ListCollectionView(DataSetModel.Instance.Banks);
+                    this.TableCollectionView.Filter = this.BanksFilter;
                     break;
             }
 
             // By default sort the table alphabetically by the name colum.
             // This slower sort is fime with these small lists.
-            this._TableCollectionView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            this.TableCollectionView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             
         }
 

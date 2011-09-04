@@ -30,7 +30,7 @@ namespace FamilyFinance.Presentation.EditTransaction
             {
                 if (this._CreditsView == null)
                 {
-                    this._CreditsView = new ListCollectionView(this._lines);
+                    this._CreditsView = new ListCollectionView(this.transactionModel.LineItems);
                     this._CreditsView.Filter = new Predicate<Object>(CreditsFilter);
                 }
 
@@ -45,7 +45,7 @@ namespace FamilyFinance.Presentation.EditTransaction
             {
                 if (this._DebitsView == null)
                 {
-                    this._DebitsView = new ListCollectionView(this._lines);
+                    this._DebitsView = new ListCollectionView(this.transactionModel.LineItems);
                     this._DebitsView.Filter = new Predicate<Object>(DebitsFilter);
                 }
 
@@ -60,7 +60,7 @@ namespace FamilyFinance.Presentation.EditTransaction
             {
                 if (this._TransactionTypesView == null)
                 {
-                    this._TransactionTypesView = new ListCollectionView(DataSetModel.getInstance().TransactionTypes);
+                    this._TransactionTypesView = new ListCollectionView(DataSetModel.Instance.TransactionTypes);
                     //this._TransactionTypesView.Filter = new Predicate<Object>(DebitsFilter);
                 }
 
@@ -141,7 +141,6 @@ namespace FamilyFinance.Presentation.EditTransaction
         // Public functions
         ///////////////////////////////////////////////////////////
         public EditTransactionVM(int transID) 
-            : base(transID)
         {
 
 
@@ -149,6 +148,7 @@ namespace FamilyFinance.Presentation.EditTransaction
 
         public EditTransactionVM()
         {
+            this.transactionModel = new TransactionModel();
         }
     }
 }

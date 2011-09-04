@@ -66,7 +66,7 @@ namespace FamilyFinance.Buisness
             }
             set
             {
-                this.lineItemRow.confirmationNumber = value.Substring(0, LineItemCON.ConfirmationNumberMaxLength);
+                this.lineItemRow.confirmationNumber = value;
             }
         }
 

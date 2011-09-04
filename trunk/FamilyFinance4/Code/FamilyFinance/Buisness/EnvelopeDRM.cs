@@ -30,7 +30,7 @@ namespace FamilyFinance.Buisness
 
             set
             {
-                this.envelopeRow.name = this.truncateIfNeeded(value, EnvelopeCON.NameMaxLength);
+                this.envelopeRow.name = value;
             }
         }
 
@@ -113,7 +113,7 @@ namespace FamilyFinance.Buisness
 
             set
             {
-                this.envelopeRow.notes = this.truncateIfNeeded(value, EnvelopeCON.NotesMaxLength);
+                this.envelopeRow.notes = value;
             }
         }
 
@@ -126,20 +126,16 @@ namespace FamilyFinance.Buisness
 
             set
             {
-                this.envelopeRow.goal = this.truncateIfNeeded(value, EnvelopeCON.GoalMaxLength);
+                this.envelopeRow.goal = value;
             }
         }
        
         ///////////////////////////////////////////////////////////////////////
         // Public functions
         ///////////////////////////////////////////////////////////////////////
-        public EnvelopeDRM() : this("", EnvelopeGroupCON.NULL.ID, AccountCON.NULL.ID, false)
+        public EnvelopeDRM()
         {
-        }
-
-        public EnvelopeDRM(string name, int groupID, int favoriteAccountID, bool closed)
-        {
-            this.envelopeRow = DataSetModel.Instance.NewEnvelopeRow(name, groupID, favoriteAccountID, closed, "", "");
+            this.envelopeRow = DataSetModel.Instance.NewEnvelopeRow();
         }
 
         public EnvelopeDRM(FFDataSet.EnvelopeRow eRow)
