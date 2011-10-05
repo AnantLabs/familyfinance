@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountTypeMerger.cs" />
     <Compile Include="Importer.cs" />
     <Compile Include="OldFFDBDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
