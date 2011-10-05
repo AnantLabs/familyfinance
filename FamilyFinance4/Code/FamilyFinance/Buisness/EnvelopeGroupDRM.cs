@@ -54,14 +54,20 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        public EnvelopeGroupDRM(FFDataSet.EnvelopeGroupRow atRow)
-        {
-            this.envelopeGroupRow = atRow;
-        }
-
         public EnvelopeGroupDRM()
         {
             this.envelopeGroupRow = DataSetModel.Instance.NewEnvelopeGroupRow();
+        }
+
+        public EnvelopeGroupDRM(string envelopeGroupName)
+        {
+            this.envelopeGroupRow = DataSetModel.Instance.NewEnvelopeGroupRow();
+            this.Name = envelopeGroupName;
+        }
+
+        public EnvelopeGroupDRM(FFDataSet.EnvelopeGroupRow atRow)
+        {
+            this.envelopeGroupRow = atRow;
         }
 
     }

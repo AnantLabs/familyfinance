@@ -13,14 +13,34 @@ using System.Windows.Shapes;
 
 namespace FamilyFinance.Presentation.EditTransaction
 {
-    /// <summary>
-    /// Interaction logic for EditTransactionWindow.xaml
-    /// </summary>
     public partial class EditTransactionWindow : Window
     {
+        private EditTransactionVM transactionViewModel;
+
         public EditTransactionWindow()
         {
             InitializeComponent();
+
+            grabTheTransactionViewModelFromTheWindowsResources();
+            loadTransaction(2);
+        }
+
+        public EditTransactionWindow(int transactionID)
+        {
+            InitializeComponent();
+
+            grabTheTransactionViewModelFromTheWindowsResources();
+            loadTransaction(transactionID);
+        }
+
+        private void grabTheTransactionViewModelFromTheWindowsResources()
+        {
+            this.transactionViewModel = (EditTransactionVM)this.FindResource("editTransactionVM");
+        }
+
+        private void loadTransaction(int transID)
+        {
+            this.transactionViewModel.loadTransaction(transID);
         }
     }
 }

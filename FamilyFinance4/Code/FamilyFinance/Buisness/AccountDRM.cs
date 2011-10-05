@@ -64,20 +64,20 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        public byte CatagoryID
+        public CatagoryCON Catagory
         {
             get
             {
-                return this.accountRow.catagory;
+                return CatagoryCON.getCatagory(this.accountRow.catagory);
             }
 
             set
             {
-                this.accountRow.catagory = value;
+                this.accountRow.catagory = value.ID;
 
-                this.RaisePropertyChanged("CatagoryName");
-                this.RaisePropertyChanged("UsesEnvelopes");
-                this.RaisePropertyChanged("CanUseEnvelopes");
+                this.reportPropertyChangedWithName("CatagoryName");
+                this.reportPropertyChangedWithName("UsesEnvelopes");
+                this.reportPropertyChangedWithName("CanUseEnvelopes");
             }
         }
 
@@ -142,11 +142,11 @@ namespace FamilyFinance.Buisness
                     this.bankInfoRow = null;
                 }
 
-                this.RaisePropertyChanged("AccountNumber");
-                this.RaisePropertyChanged("AccountNormal");
-                this.RaisePropertyChanged("NormalName");
-                this.RaisePropertyChanged("BankName");
-                this.RaisePropertyChanged("RoutingNumber");
+                this.reportPropertyChangedWithName("AccountNumber");
+                this.reportPropertyChangedWithName("AccountNormal");
+                this.reportPropertyChangedWithName("NormalName");
+                this.reportPropertyChangedWithName("BankName");
+                this.reportPropertyChangedWithName("RoutingNumber");
             }
         }
 
@@ -216,8 +216,8 @@ namespace FamilyFinance.Buisness
                 {
                     this.bankInfoRow.bankID = value;
 
-                    this.RaisePropertyChanged("BankName");
-                    this.RaisePropertyChanged("RoutingNumber");
+                    this.reportPropertyChangedWithName("BankName");
+                    this.reportPropertyChangedWithName("RoutingNumber");
                 }
             }
         }

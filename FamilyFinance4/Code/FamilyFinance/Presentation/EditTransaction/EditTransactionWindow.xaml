@@ -46,7 +46,6 @@
                     <ColumnDefinition Width="20*" />
                     <ColumnDefinition Width="20*" />
                     <ColumnDefinition Width="50*" />
-                    <ColumnDefinition Width="20*" />
                 </Grid.ColumnDefinitions>
                 <DatePicker Name="datePicker1" 
                             Grid.Row="0"
@@ -54,14 +53,14 @@
                             Margin="5" 
                             VerticalAlignment="Center" 
                             HorizontalAlignment="Stretch" 
-                            SelectedDate="{Binding Path=Date}" />
+                            SelectedDate="{Binding Path=TransactionModel.Date}" />
                 <ComboBox Name="transactionTypeCB" 
                           Grid.Row="0"
                           Grid.Column="1" 
                           Margin="0,5"
                           VerticalAlignment="Center" 
                           HorizontalAlignment="Stretch" 
-                          SelectedValue="{Binding Path=TypeID}" 
+                          SelectedValue="{Binding Path=TransactionModel.TypeID}" 
                           ItemsSource="{Binding Path=TransactionTypesView}" />
                 <TextBox Name="descriptionTB" 
                          Grid.Row="0"
@@ -69,18 +68,13 @@
                          Margin="5,5,0,5"
                          VerticalAlignment="Center" 
                          HorizontalAlignment="Stretch" 
-                         Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
-                <ComboBox Name="completeCB"  
-                      Grid.Row="0"
-                      Grid.Column="3"
-                      Margin="5"
-                      VerticalAlignment="Center" 
-                      HorizontalAlignment="Stretch"/>
+                         Text="{Binding Path=TransactionModel.Description, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
             </Grid>
             <TextBlock Grid.Row="1"
                        Grid.Column="0" 
                        Text="Source"
                        Margin="3,5,0,0"
+                       Foreground="White"
                        HorizontalAlignment="Left" 
                        VerticalAlignment="Bottom" 
                        FontWeight="Bold" />
@@ -88,6 +82,7 @@
                        Grid.Column="1" 
                        Text="Destination"
                        Margin="6,0,0,0"
+                       Foreground="White"
                        HorizontalAlignment="Left" 
                        VerticalAlignment="Bottom" 
                        FontWeight="Bold" />
@@ -95,6 +90,7 @@
                        Grid.Column="0" 
                        Text="Envelope Lines"
                        Margin="3,5,0,0"
+                       Foreground="White"
                        HorizontalAlignment="Left" 
                        VerticalAlignment="Bottom" 
                        FontWeight="Bold" />
@@ -102,21 +98,24 @@
                        Grid.Column="1" 
                        Text="{Binding Path=EnvelopeLineSum, StringFormat=\{0:c\}, Mode=OneWay}"
                        Margin="3,0"
+                       Foreground="White"
                        HorizontalAlignment="Right" 
                        VerticalAlignment="Top" />
             <TextBlock Grid.Row="3" 
                        HorizontalAlignment="Right"
                        Margin="0,0,6,0" 
                        Name="textBlock1" 
-                       Text="{Binding Path=CreditsSum, StringFormat=\{0:c\}, Mode=OneWay}" 
+                       Text="{Binding Path=TransactionModel.DebitSum, StringFormat=\{0:c\}, Mode=OneWay}" 
+                       Foreground="White"
                        VerticalAlignment="Top"  />
-            <TextBlock HorizontalAlignment="Right" 
+            <TextBlock Grid.Column="1" 
+                       Grid.Row="3"
+                       HorizontalAlignment="Right" 
                        Margin="3,0" 
                        Name="textBlock2" 
-                       Text="{Binding Path=DebitsSum, StringFormat=\{0:c\}, Mode=OneWay}" 
+                       Text="{Binding Path=TransactionModel.DebitSum, StringFormat=\{0:c\}, Mode=OneWay}" 
                        VerticalAlignment="Top" 
-                       Grid.Column="1" 
-                       Grid.Row="3" />
+                       Foreground="White" />
             <DataGrid Name="creditDataGrid" 
                       Grid.Row="2"
                       Grid.Column="0"
@@ -127,7 +126,7 @@
                       SelectionMode="Single" 
                       CanUserDeleteRows="False" 
                       HeadersVisibility="Column"
-                      ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=EnvelopesView}" 
+                      ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=CreditsView}" 
                       DataContext="{Binding Path=CreditsView}">
                 <DataGrid.Columns>
                     <!-- Account Credit Combobox column -->
@@ -178,7 +177,7 @@
                       SelectionMode="Single" 
                       CanUserDeleteRows="False" 
                       HeadersVisibility="Column"
-                      ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=EnvelopesView}" 
+                      ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=DebitsView}" 
                       DataContext="{Binding Path=DebitsView}">
                 <DataGrid.Columns>
                     <!-- Account Credit Combobox column -->

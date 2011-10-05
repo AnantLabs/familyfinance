@@ -11,7 +11,7 @@ namespace FamilyFinance.Buisness
     {
         private FFDataSet.TransactionTypeRow TransactionTypeRow;
 
-        public int ID
+        public int ID 
         {
             get
             {
@@ -32,14 +32,21 @@ namespace FamilyFinance.Buisness
             }
         }
 
+        public TransactionTypeDRM()
+        {
+            this.TransactionTypeRow = DataSetModel.Instance.NewTransactionTypeRow();
+        }
+
         public TransactionTypeDRM(FFDataSet.TransactionTypeRow ttRow)
         {
             this.TransactionTypeRow = ttRow;
         }
 
-        public TransactionTypeDRM()
+        public TransactionTypeDRM(string transactionTypeName)
         {
             this.TransactionTypeRow = DataSetModel.Instance.NewTransactionTypeRow();
+            this.Name = transactionTypeName;
         }
+    
     }
 }

@@ -7,28 +7,18 @@ namespace FamilyFinance.Data
 {
     public class EnvelopeCON
     {
-
-
-        //public static int NameMaxLength = MyData.getInstance().Envelope.nameColumn.MaxLength;
-        //public static int NotesMaxLength = MyData.getInstance().Envelope.notesColumn.MaxLength;
-        //public static int GoalMaxLength = MyData.getInstance().Envelope.goalColumn.MaxLength;
-
-
-        /// <summary>
-        /// The object to represent an NULL envelope.
-        /// </summary>
+        ///////////////////////////////////////////////////////////
+        // Java Style Enum Instances
+        ///////////////////////////////////////////////////////////
         public static EnvelopeCON NULL = new EnvelopeCON(-1, " ");
         public static EnvelopeCON SPLIT = new EnvelopeCON(-2, "-Split-");
         public static EnvelopeCON NO_ENVELOPE = new EnvelopeCON(0, "-No Envelope-");
 
-        /// <summary>
-        /// The id value of the envelope.
-        /// </summary>
-        private readonly int _ID;
 
-        /// <summary>
-        /// Amount the ID of the envelope.
-        /// </summary>
+        ///////////////////////////////////////////////////////////
+        // Properties
+        ///////////////////////////////////////////////////////////
+        private readonly int _ID;
         public int ID
         {
             get
@@ -37,14 +27,7 @@ namespace FamilyFinance.Data
             }
         }
 
-        /// <summary>
-        /// The name of the envelope
-        /// </summary>
         private readonly string _Name;
-
-        /// <summary>
-        /// Amount the name of the envelope.
-        /// </summary>
         public string Name
         {
             get
@@ -53,6 +36,19 @@ namespace FamilyFinance.Data
             }
         }
 
+        ///////////////////////////////////////////////////////////
+        // Private Functions
+        ///////////////////////////////////////////////////////////
+        private EnvelopeCON(int id, string name)
+        {
+            this._ID = id;
+            this._Name = name;
+        }
+
+
+        ///////////////////////////////////////////////////////////
+        // Public Functions
+        ///////////////////////////////////////////////////////////
         public override string ToString()
         {
             return this.Name;
@@ -64,18 +60,6 @@ namespace FamilyFinance.Data
                 return true;
             else
                 return false;
-        }
-
-        /// <summary>
-        /// Prevents outside instantiation of this class. This is esentially an Enum like the kind
-        /// available in Java.
-        /// </summary>
-        /// <param name="id">The stored value of the envelope.</param>
-        /// <param name="name">The name of the envelope.</param>
-        private EnvelopeCON(int id, string name)
-        {
-            this._ID = id;
-            this._Name = name;
         }
 
     }

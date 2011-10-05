@@ -1,6 +1,4 @@
-﻿
-using FamilyFinance.Data;
-using FamilyFinance.Data;
+﻿using FamilyFinance.Data;
 
 namespace FamilyFinance.Buisness
 {
@@ -29,14 +27,20 @@ namespace FamilyFinance.Buisness
             }
         }
 
+        public AccountTypeDRM()
+        {
+            this.accountTypeRow = DataSetModel.Instance.NewAccountTypeRow();
+        }
+
         public AccountTypeDRM(FFDataSet.AccountTypeRow atRow)
         {
             this.accountTypeRow = atRow;
         }
 
-        public AccountTypeDRM()
+        public AccountTypeDRM(string accountTypeName)
         {
             this.accountTypeRow = DataSetModel.Instance.NewAccountTypeRow();
+            this.Name = accountTypeName;
         }
 
     }

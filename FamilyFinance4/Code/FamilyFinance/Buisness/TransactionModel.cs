@@ -1,60 +1,84 @@
-﻿
-
-using System.Collections.ObjectModel;
-using System.Windows.Data;
+﻿using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using FamilyFinance.Data;
+
 
 
 namespace FamilyFinance.Buisness
 {
-    class TransactionModel : TransactionDRM
+    public class TransactionModel : TransactionDRM
     {
+        ///////////////////////////////////////////////////////////
+        // Properties
+        ///////////////////////////////////////////////////////////
+        private ObservableCollection<LineItemDRM> lineItems;
         public ObservableCollection<LineItemDRM> LineItems
         {
-            get;
-            private set;
-        }
-
-
-
-        public decimal CreditsSum
-        {
             get
             {
-                decimal sum = 0.0m;
-
-                foreach (LineItemDRM line in this.LineItems)
-                {
-                    if (line.Polarity != PolarityCON.CREDIT)
-                    {
-                        sum += line.Amount;
-                    }
-                }
-
-                return sum;
+                return lineItems;
             }
         }
 
-        public decimal DebitsSum
+
+        ///////////////////////////////////////////////////////////
+        // Private functions
+        ///////////////////////////////////////////////////////////
+        private void newEmptyLineItemCollection()
         {
-            get
+            this.lineItems = new ObservableCollection<LineItemDRM>();
+        }
+
+        private void listenForChangesToTheCollection()
+        {
+            this.lineItems.CollectionChanged += new NotifyCollectionChangedEventHandler(lineItems_CollectionChanged);
+        }
+
+        private void lineItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+                setTheLinesTransaction(e.NewItems);
+        }
+
+        private void setTheLinesTransaction(System.Collections.IList iList)
+        {
+            foreach (LineItemDRM line in iList)
             {
-                decimal sum = 0.0m;
-
-                foreach (LineItemDRM line in this.LineItems)
-                {
-                    if (line.Polarity != PolarityCON.DEBIT)
-                    {
-                        sum += line.Amount;
-                    }
-                }
-
-                return sum;
+                line.setParentTransaction(this);
             }
         }
 
-        public TransactionModel()
+        private void fillLineItemCollection(LineItemDRM[] lines)
         {
+            foreach (LineItemDRM line in lines)
+                this.lineItems.Add(line);
+
         }
+
+
+        ///////////////////////////////////////////////////////////
+        // Public functions
+        ///////////////////////////////////////////////////////////
+        public TransactionModel() : base()
+        {
+            newEmptyLineItemCollection();
+            listenForChangesToTheCollection();
+        }
+
+        public TransactionModel(FFDataSet.TransactionRow tRow) : base(tRow)
+        {
+            newEmptyLineItemCollection();
+            fillLineItemCollection(this.getWrappedTransactionLines());
+            listenForChangesToTheCollection();
+        }
+
+        public TransactionModel(int transactionID) : base(transactionID)
+        {
+            newEmptyLineItemCollection();
+            fillLineItemCollection(this.getWrappedTransactionLines());
+            listenForChangesToTheCollection();
+        }
+
+
     }
 }

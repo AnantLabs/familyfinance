@@ -4,15 +4,8 @@
     <Position X="4.054" Y="13.595" Height="1.198" Width="3.169" />
   </Comment>
   <Comment CommentText="DRM classes are responsible for wrapping the table rows in a bindable object and to ensure data stays within bounds. Idealy there will only be one  instance of a DRM for each row in the dataset.">
-    <Position X="1.862" Y="8.281" Height="1.167" Width="2.398" />
+    <Position X="0.5" Y="4.364" Height="1.167" Width="2.398" />
   </Comment>
-  <Class Name="FamilyFinance.Data.MyData">
-    <Position X="7.5" Y="14" Width="18.75" />
-    <TypeIdentifier>
-      <HashCode>AQCAAIEQAAAAAQCAABESAAAAAAAAAEUAQAAgAAAAAEA=</HashCode>
-      <FileName>Data\MyData.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="FamilyFinance.Data.FFDataSet">
     <Position X="12.75" Y="15.5" Width="4" />
     <Compartments>
@@ -177,7 +170,7 @@
   <Class Name="FamilyFinance.Buisness.EnvelopeGroupDRM">
     <Position X="13.25" Y="8" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAIAAAAgAAAAAAAACQAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <HashCode>AAAAAAAIAAAAgAAAIAAAAAQAAAAAAAAAAAAAAAAAACA=</HashCode>
       <FileName>Buisness\EnvelopeGroupDRM.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -191,14 +184,14 @@
   <Class Name="FamilyFinance.Buisness.LineItemDRM">
     <Position X="19.5" Y="8" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAACAgAAAACgAAgAAAEAAAQAAgAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAACAAACAgAAAACgAAgAAAAAAAQABgAAAAA=</HashCode>
       <FileName>Buisness\LineItemDRM.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FamilyFinance.Buisness.TransactionDRM">
-    <Position X="17.75" Y="8" Width="1.5" />
+    <Position X="3.25" Y="2.75" Width="3" />
     <TypeIdentifier>
-      <HashCode>AAAAAABgAAAgAAAAAAAAAAAgAAAAABAhAAAABAAAAAA=</HashCode>
+      <HashCode>AAEAAABAoAAgAIAAAAAAAAAgAAAAABAhQAAAAAAIAEA=</HashCode>
       <FileName>Buisness\TransactionDRM.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -219,17 +212,17 @@
   <Class Name="FamilyFinance.Presentation.EditTypes.EditTypesVM" Collapsed="true">
     <Position X="9" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>EAAAAAAgAAAEAEAAAAAAAAAAAAAIgAAAEAAAAgAAIAA=</HashCode>
+      <HashCode>EAAAAAAgAAAEAEAAAAAAAAAAAAAAgAAAAAAAAgAAAAA=</HashCode>
       <FileName>Presentation\EditTypes\EditTypesVM.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FamilyFinance.Buisness.DataSetModel">
-    <Position X="6.75" Y="2.75" Width="20" />
+  <Class Name="FamilyFinance.Buisness.DataSetModel" Collapsed="true">
+    <Position X="1.25" Y="9.25" Width="2" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>QAAAAIAAABAAAAaAAAAEAAAAAAACAQyAABABAAAAAAI=</HashCode>
+      <HashCode>IAAAEJBBgBgEBgbAABBFCAAAAAACCciAQBAhCUAAEAI=</HashCode>
       <FileName>Buisness\DataSetModel.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -245,6 +238,13 @@
     <TypeIdentifier>
       <HashCode>EAAAAAAAAAAgAIIAAAAAAAEAAAAAABAhAAAAAAAAAAA=</HashCode>
       <FileName>Buisness\RegistryLineModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FamilyFinance.Buisness.TransactionModel">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAoAAAAIAAAAAAcAAAACCAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Buisness\TransactionModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

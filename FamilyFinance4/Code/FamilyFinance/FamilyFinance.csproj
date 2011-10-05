@@ -63,7 +63,6 @@
     <Compile Include="Buisness\DataSetModel.cs" />
     <Compile Include="Buisness\EnvelopeDRM.cs" />
     <Compile Include="Buisness\EnvelopeLineDRM.cs" />
-    <Compile Include="Buisness\InputValidator.cs" />
     <Compile Include="Buisness\RegistryEnvelopeLineModel.cs" />
     <Compile Include="Buisness\RegistryLineModel.cs" />
     <Compile Include="Buisness\TransactionModel.cs" />

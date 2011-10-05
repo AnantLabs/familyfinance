@@ -7,10 +7,18 @@ namespace FamilyFinance.Buisness
 {
     public class LineItemDRM : DataRowModel
     {
-
         ///////////////////////////////////////////////////////////////////////////////////////////
         // Local Variables
         ///////////////////////////////////////////////////////////////////////////////////////////
+        //public enum Property { 
+        //    AccountID, 
+        //    AccountName,
+        //    ConfirmationNumber,
+        //    Amoun,
+        //    Polarity,
+        //    IsLineError
+        //};
+        
         private FFDataSet.LineItemRow lineItemRow;
 
 
@@ -21,7 +29,7 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this.lineItemRow.id;
+                return lineItemRow.id;
             }
         }
 
@@ -29,11 +37,7 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this.lineItemRow.transactionID;
-            }
-            set
-            {
-                this.lineItemRow.transactionID = value;
+                return lineItemRow.transactionID;
             }
         }
 
@@ -41,9 +45,8 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this.lineItemRow.accountID;
+                return lineItemRow.accountID;
             }
-
             set
             {
                 this.lineItemRow.accountID = value;
@@ -54,7 +57,7 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this.lineItemRow.AccountRow.name;
+                return lineItemRow.AccountRow.name;
             }
         }
 
@@ -62,7 +65,7 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this.lineItemRow.confirmationNumber;
+                return lineItemRow.confirmationNumber;
             }
             set
             {
@@ -74,11 +77,11 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this.lineItemRow.amount;
+                return lineItemRow.amount;
             }
             set
             {
-                if(value < 0.0m)
+                if (value < 0.0m)
                     value = Decimal.Negate(value);
 
                 this.lineItemRow.amount = Decimal.Round(value, 2);
@@ -97,32 +100,87 @@ namespace FamilyFinance.Buisness
             }
         }
 
+        public TransactionStateCON State
+        {
+            get
+            {
+                return TransactionStateCON.GetState(this.lineItemRow.state);
+            }
+            set
+            {
+                this.lineItemRow.state = value.Value;
+            }
+        }
+
         public bool IsLineError
         {
             get
             {
-                return false;
+                if (lineItemRow == null)
+                    return false;
+
+                else
+                    return determineLineError();
             }
+        }
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        // Private Functions
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        private bool determineLineError()
+        {
+            decimal envLineSum = envelopeLineSum();
+            bool accountUsesEnvelopes = lineItemRow.AccountRow.envelopes;
+
+            if (accountUsesEnvelopes && lineItemRow.amount == envLineSum)
+                return false;
+
+            else if (!accountUsesEnvelopes && envLineSum == 0)
+                return false;
+
+            else
+                return true;
+        }
+
+        private decimal envelopeLineSum()
+        {
+            decimal sum = 0;
+
+            foreach (FFDataSet.EnvelopeLineRow envLine in lineItemRow.GetEnvelopeLineRows())
+                sum += envLine.amount;
+
+            return sum;
         }
 
 
         ///////////////////////////////////////////////////////////////////////////////////////////
         // Public Functions
         ///////////////////////////////////////////////////////////////////////////////////////////
-        public LineItemDRM(FFDataSet.LineItemRow linRow)
+        public LineItemDRM()
         {
-            InputValidator.CheckNotNull(linRow, "FFDataSet.LineItemRow");
-
-            this.lineItemRow = linRow;
+            this.lineItemRow = DataSetModel.Instance.NewLineItemRow();
+        }
+        
+        public LineItemDRM(FFDataSet.LineItemRow lineRow)
+        {
+            this.lineItemRow = lineRow;
         }
 
-        public LineItemDRM(FFDataSet.TransactionRow transactionRow) 
+        public LineItemDRM(TransactionDRM transaction)
         {
-            InputValidator.CheckNotNull(transactionRow, "FFDataSet.TransactionRow");
-
-            this.lineItemRow = DataSetModel.Instance.NewLineItemRow(transactionRow);
+            this.lineItemRow = DataSetModel.Instance.NewLineItemRow(transaction);
         }
 
+        //public void reportPropertyChanged(Property property)
+        //{
+        //    this.reportPropertyChangedWithName(property.ToString());
+        //}
+
+        public void setParentTransaction(TransactionDRM transaction)
+        {
+            this.lineItemRow.transactionID = transaction.TransactionID;
+        }
 
     }
 }

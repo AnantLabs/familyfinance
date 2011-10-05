@@ -16,30 +16,21 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////////////////
         // Singleton stuff
         ///////////////////////////////////////////////////////////////////////
-        public static void initializeInstance()
-        {
-            _Instance = new DataSetModel();
-        }
-
-        private DataSetModel()
-        {
-            ffDataSet = new FFDataSet();
-        }
-
         private static DataSetModel _Instance;
         public static DataSetModel Instance
         {
             get
             {
-                verifyDataSetExists();
+                if (DataSetModel._Instance == null)
+                    _Instance = new DataSetModel();
+
                 return DataSetModel._Instance;
             }
         }
 
-        private static void verifyDataSetExists()
+        private DataSetModel()
         {
-            if (DataSetModel._Instance == null)
-                throw new Exception("Data Set Model needs to be initialized first.");
+            ffDataSet = new FFDataSet();
         }
 
         public void loadData()
@@ -88,62 +79,70 @@ namespace FamilyFinance.Buisness
         {
             ////////////////////////////
             // Required Account type Rows
-            FFDataSet.AccountTypeRow atNull = this.ffDataSet.AccountType.FindByid(AccountTypeCON.NULL.ID);
+            FFDataSet.AccountTypeRow accountTypeNull = this.ffDataSet.AccountType.FindByid(AccountTypeCON.NULL.ID);
 
-            if (atNull == null)
-                atNull = this.ffDataSet.AccountType.AddAccountTypeRow(AccountTypeCON.NULL.ID, AccountTypeCON.NULL.Name);
+            if (accountTypeNull == null)
+                accountTypeNull = this.ffDataSet.AccountType.AddAccountTypeRow(AccountTypeCON.NULL.ID, AccountTypeCON.NULL.Name);
 
 
             ////////////////////////////
             // Required Envelope Group Rows
-            FFDataSet.EnvelopeGroupRow egNull = this.ffDataSet.EnvelopeGroup.FindByid(EnvelopeGroupCON.NULL.ID);
+            FFDataSet.EnvelopeGroupRow envelopeGroupNull = this.ffDataSet.EnvelopeGroup.FindByid(EnvelopeGroupCON.NULL.ID);
 
-            if (egNull == null)
-                egNull = this.ffDataSet.EnvelopeGroup.AddEnvelopeGroupRow(EnvelopeGroupCON.NULL.ID, AccountTypeCON.NULL.Name, 0.0m, 0.0m);
+            if (envelopeGroupNull == null)
+                envelopeGroupNull = this.ffDataSet.EnvelopeGroup.AddEnvelopeGroupRow(EnvelopeGroupCON.NULL.ID, AccountTypeCON.NULL.Name, 0.0m, 0.0m);
 
 
             ////////////////////////////
-            // Required IsTransactionError Type Rows
-            FFDataSet.TransactionTypeRow ttNull = this.ffDataSet.TransactionType.FindByid(TransactionTypeCON.NULL.ID);
+            // Required Transaction Type Rows
+            FFDataSet.TransactionTypeRow transactionTypeNull = this.ffDataSet.TransactionType.FindByid(TransactionTypeCON.NULL.ID);
 
-            if (ttNull == null)
-                this.ffDataSet.TransactionType.AddTransactionTypeRow(TransactionTypeCON.NULL.ID, TransactionTypeCON.NULL.Name);
+            if (transactionTypeNull == null)
+                transactionTypeNull = this.ffDataSet.TransactionType.AddTransactionTypeRow(TransactionTypeCON.NULL.ID, TransactionTypeCON.NULL.Name);
 
 
             ////////////////////////////
             // Required Bank Rows
-            FFDataSet.BankRow bNull = this.ffDataSet.Bank.FindByid(BankCON.NULL.ID);
+            FFDataSet.BankRow bankNull = this.ffDataSet.Bank.FindByid(BankCON.NULL.ID);
 
-            if (bNull == null)
-                this.ffDataSet.Bank.AddBankRow(BankCON.NULL.ID, BankCON.NULL.Name, " ");
+            if (bankNull == null)
+                bankNull = this.ffDataSet.Bank.AddBankRow(BankCON.NULL.ID, BankCON.NULL.Name, " ");
 
 
             ////////////////////////////
             // Required Account Rows
-            FFDataSet.AccountRow aMul = this.ffDataSet.Account.FindByid(AccountCON.MULTIPLE.ID);
-            FFDataSet.AccountRow aNull = this.ffDataSet.Account.FindByid(AccountCON.NULL.ID);
+            FFDataSet.AccountRow accountMultiple = this.ffDataSet.Account.FindByid(AccountCON.MULTIPLE.ID);
+            FFDataSet.AccountRow accountNull = this.ffDataSet.Account.FindByid(AccountCON.NULL.ID);
 
-            if (aMul == null)
-                this.ffDataSet.Account.AddAccountRow(AccountCON.MULTIPLE.ID, AccountCON.MULTIPLE.Name, atNull, CatagoryCON.NULL.ID, false, false);
+            if (accountMultiple == null)
+                accountMultiple = this.ffDataSet.Account.AddAccountRow(AccountCON.MULTIPLE.ID, AccountCON.MULTIPLE.Name, accountTypeNull, CatagoryCON.NULL.ID, false, false);
 
-            if (aNull == null)
-                aNull = this.ffDataSet.Account.AddAccountRow(AccountCON.NULL.ID, AccountCON.NULL.Name, atNull, CatagoryCON.NULL.ID, false, false);
+            if (accountNull == null)
+                accountNull = this.ffDataSet.Account.AddAccountRow(AccountCON.NULL.ID, AccountCON.NULL.Name, accountTypeNull, CatagoryCON.NULL.ID, false, false);
 
 
             ////////////////////////////
             // Required Envelope Rows
-            FFDataSet.EnvelopeRow eSplit = this.ffDataSet.Envelope.FindByid(EnvelopeCON.SPLIT.ID);
-            FFDataSet.EnvelopeRow eNull = this.ffDataSet.Envelope.FindByid(EnvelopeCON.NULL.ID);
-            FFDataSet.EnvelopeRow eNoE = this.ffDataSet.Envelope.FindByid(EnvelopeCON.NO_ENVELOPE.ID);
+            FFDataSet.EnvelopeRow envelopeSplit = this.ffDataSet.Envelope.FindByid(EnvelopeCON.SPLIT.ID);
+            FFDataSet.EnvelopeRow envelopeNull = this.ffDataSet.Envelope.FindByid(EnvelopeCON.NULL.ID);
+            FFDataSet.EnvelopeRow envelopeNoEnvelope = this.ffDataSet.Envelope.FindByid(EnvelopeCON.NO_ENVELOPE.ID);
 
-            if (eSplit == null)
-                this.ffDataSet.Envelope.AddEnvelopeRow(EnvelopeCON.SPLIT.ID, EnvelopeCON.SPLIT.Name, egNull, false, aNull, 0, " ", "N");
+            if (envelopeSplit == null)
+                envelopeSplit = this.ffDataSet.Envelope.AddEnvelopeRow(EnvelopeCON.SPLIT.ID, EnvelopeCON.SPLIT.Name, envelopeGroupNull, false, accountNull, 0, " ", "N");
 
-            if (eNull == null)
-                this.ffDataSet.Envelope.AddEnvelopeRow(EnvelopeCON.NULL.ID, EnvelopeCON.NULL.Name, egNull, false, aNull, 0, " ", "N");
+            if (envelopeNull == null)
+                envelopeNull = this.ffDataSet.Envelope.AddEnvelopeRow(EnvelopeCON.NULL.ID, EnvelopeCON.NULL.Name, envelopeGroupNull, false, accountNull, 0, " ", "N");
 
-            if (eNoE == null)
-                this.ffDataSet.Envelope.AddEnvelopeRow(EnvelopeCON.NO_ENVELOPE.ID, EnvelopeCON.NO_ENVELOPE.Name, egNull, false, aNull, 0, " ", "N");
+            if (envelopeNoEnvelope == null)
+                envelopeNoEnvelope = this.ffDataSet.Envelope.AddEnvelopeRow(EnvelopeCON.NO_ENVELOPE.ID, EnvelopeCON.NO_ENVELOPE.Name, envelopeGroupNull, false, accountNull, 0, " ", "N");
+            
+            ////////////////////////////
+            // Required Transaction Row
+            FFDataSet.TransactionRow transactionNull = this.ffDataSet.Transaction.FindByid(TransactionCON.NULL.ID);
+
+            if (transactionNull == null)
+                transactionNull = this.ffDataSet.Transaction.AddTransactionRow(TransactionCON.NULL.ID, DateTime.MinValue, transactionTypeNull, "");
+
 
         }
 
@@ -212,6 +211,7 @@ namespace FamilyFinance.Buisness
             }
         }
 
+
         ///////////////////////////////////////////////////////////////////////
         // New Row stuff
         ///////////////////////////////////////////////////////////////////////
@@ -221,7 +221,6 @@ namespace FamilyFinance.Buisness
 
             DataTable tableToGetIDFrom = this.ffDataSet.Tables[tableName];
 
-            FamilyFinance.Buisness.InputValidator.CheckNotNull(tableToGetIDFrom, "DataTable");
 
             DataRowCollection rows = this.ffDataSet.Tables[tableName].Rows;
 
@@ -338,16 +337,26 @@ namespace FamilyFinance.Buisness
             return newRow;
         }
 
-        public FFDataSet.LineItemRow NewLineItemRow(FFDataSet.TransactionRow transaction)
+        public FFDataSet.LineItemRow NewLineItemRow(TransactionDRM transaction)
+        {
+            FFDataSet.LineItemRow newRow = this.NewLineItemRow();
+
+            newRow.transactionID = transaction.TransactionID;
+
+            return newRow;
+        }
+
+        public FFDataSet.LineItemRow NewLineItemRow()
         {
             FFDataSet.LineItemRow newRow = ffDataSet.LineItem.NewLineItemRow();
 
             newRow.id = this.getNextIDFromTableNamed("LineItem");
-            newRow.transactionID = transaction.id;
+            newRow.transactionID = TransactionCON.NULL.ID;
             newRow.accountID = AccountCON.NULL.ID;
             newRow.confirmationNumber = "";
             newRow.amount = 0m;
             newRow.polarity = PolarityCON.CREDIT.Value;
+            newRow.state = TransactionStateCON.PENDING.Value;
 
             ffDataSet.LineItem.AddLineItemRow(newRow);
 
@@ -362,7 +371,6 @@ namespace FamilyFinance.Buisness
             newRow.date = DateTime.Today;
             newRow.typeID = TransactionTypeCON.NULL.ID;
             newRow.description = "";
-            newRow.state = TransactionStateCON.PENDING.Value;
 
             ffDataSet.Transaction.AddTransactionRow(newRow);
 
@@ -386,10 +394,6 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////////////////
         // Lists that stay the same.
         ///////////////////////////////////////////////////////////////////////
-
-        /// <summary>
-        /// List of Account catagories (Account, Expense, Income) The NULL catagory is excluded.
-        /// </summary>
         public List<CatagoryCON> AccountCatagories
         {
             get
@@ -404,10 +408,6 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        /// <summary>
-        /// A list containing the Credit and Debits. The credits and debits are used in describing 
-        /// the polarity of a Line Item and an account that has bank information.
-        /// </summary>
         public List<PolarityCON> Polarities
         {
             get
@@ -522,12 +522,14 @@ namespace FamilyFinance.Buisness
         }
 
 
-        ///////////////////////////////////////////////////////////////////////
-        // A transaction the user can modify.
-        ///////////////////////////////////////////////////////////////////////
-        public TransactionModel TransactionModelByID(int id)
+        public FFDataSet.TransactionRow getTransactionRowWithID(int transID)
         {
-            return new TransactionModel(ffDataSet.Transaction.FindByid(id));
+            FFDataSet.TransactionRow row = ffDataSet.Transaction.FindByid(transID);
+
+            if (row == null)
+                showErrorMessage("Invalid transaction row ID.");
+
+            return row;
         }
 
     }

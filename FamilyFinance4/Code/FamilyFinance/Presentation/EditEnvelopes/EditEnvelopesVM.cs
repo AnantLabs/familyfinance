@@ -108,7 +108,7 @@ namespace FamilyFinance.Presentation.EditEnvelopes
             AccountDRM accRow = (AccountDRM)item;
             bool keepItem = false; // Assume the item will NOT be in the list
 
-            if (accRow.CatagoryID == CatagoryCON.ACCOUNT.ID)
+            if (accRow.Catagory == CatagoryCON.ACCOUNT)
                 keepItem = true;
 
             return keepItem;
