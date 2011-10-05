@@ -7,21 +7,39 @@ namespace FamilyFinance.Buisness
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        /// <summary>
-        /// Helper function to raise the property changed event.
-        /// </summary>
-        /// <param name="propertyName">The name of the property that changed.</param>
-        protected void RaisePropertyChanged(string propertyName)
+        protected void reportAllPropertiesChanged()
         {
-            // Verify that the property name matches a real,  
-            // public, instance property on this object.
-            if (propertyName != "" && TypeDescriptor.GetProperties(this)[propertyName] == null)
-            {
-                System.Windows.MessageBox.Show("Invalid property name: " + propertyName, "Invalid Property", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Stop);
-            }
+            raisePropertyChanged("");
+        }
 
-            else if (this.PropertyChanged != null)
+        private void raisePropertyChanged(string propertyName)
+        {
+            if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected void reportPropertyChangedWithName(string propertyName)
+        {
+            if (isValidPropertyName(propertyName))
+                raisePropertyChanged(propertyName);
+            else
+                showInvalidPropertyNamePopUp(propertyName);
+        }
+
+        private bool isValidPropertyName(string propertyName)
+        {
+            if(TypeDescriptor.GetProperties(this)[propertyName] == null)
+                return false;
+            else
+                return true;
+        }
+
+        private void showInvalidPropertyNamePopUp(string propertyName)
+        {
+            System.Windows.MessageBox.Show("Invalid property name: " + propertyName, 
+                "Invalid Property", 
+                System.Windows.MessageBoxButton.OK, 
+                System.Windows.MessageBoxImage.Stop);
         }
     }
 }

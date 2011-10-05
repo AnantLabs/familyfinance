@@ -4,36 +4,29 @@ using System.Collections.ObjectModel;
 
 using FamilyFinance.Buisness;
 using FamilyFinance.Data;
+using System.Reflection;
 
 namespace FamilyFinance.Presentation.EditTransaction
 {
-    /// <summary>
-    /// This class inherits from the TransactionDRM instead of strictly from the ViewModel class
-    /// because this "is a" transaction we are editing, it comes from the Bindable object which is the important part.
-    /// </summary>
     public class EditTransactionVM : ViewModel
     {
-
-        ///////////////////////////////////////////////////////////
-        // Private variables
-        ///////////////////////////////////////////////////////////
-        private TransactionModel transactionModel;
-
-
         ///////////////////////////////////////////////////////////
         // Properties
         ///////////////////////////////////////////////////////////
+        private TransactionModel transactionModel;
+        public TransactionModel TransactionModel
+        {
+            get
+            {
+                return this.transactionModel;
+            }
+        }
+
         private ListCollectionView _CreditsView;
         public ListCollectionView CreditsView
         {
             get
             {
-                if (this._CreditsView == null)
-                {
-                    this._CreditsView = new ListCollectionView(this.transactionModel.LineItems);
-                    this._CreditsView.Filter = new Predicate<Object>(CreditsFilter);
-                }
-
                 return this._CreditsView;
             }
         }
@@ -43,12 +36,6 @@ namespace FamilyFinance.Presentation.EditTransaction
         {
             get
             {
-                if (this._DebitsView == null)
-                {
-                    this._DebitsView = new ListCollectionView(this.transactionModel.LineItems);
-                    this._DebitsView.Filter = new Predicate<Object>(DebitsFilter);
-                }
-
                 return this._DebitsView;
             }
         }
@@ -58,37 +45,7 @@ namespace FamilyFinance.Presentation.EditTransaction
         {
             get
             {
-                if (this._TransactionTypesView == null)
-                {
-                    this._TransactionTypesView = new ListCollectionView(DataSetModel.Instance.TransactionTypes);
-                    //this._TransactionTypesView.Filter = new Predicate<Object>(DebitsFilter);
-                }
-
                 return this._TransactionTypesView;
-            }
-        }
-
-        public ListCollectionView EnvelopeLinesView
-        {
-            get
-            {
-                ObservableCollection<EnvelopeLineDRM> envColl = new ObservableCollection<EnvelopeLineDRM>();
-                FFDataSet.LineItemRow currentLine = MyData.getInstance().LineItem.FindByid(2);
-
-                if (currentLine != null)
-                {
-                    FFDataSet.EnvelopeLineRow[] rows = currentLine.GetEnvelopeLineRows();
-
-                    foreach (FFDataSet.EnvelopeLineRow envLine in rows)
-                    {
-                        //envColl.Add(new EnvelopeLineDRM(envLine));
-                    }
-                }
-
-                ListCollectionView envView = new ListCollectionView(envColl);
-                envView.SortDescriptions.Add(new System.ComponentModel.SortDescription("EnvelopeName", System.ComponentModel.ListSortDirection.Ascending));
-
-                return envView;
             }
         }
 
@@ -97,14 +54,7 @@ namespace FamilyFinance.Presentation.EditTransaction
         {
             get
             {
-                decimal sum = 0;
-
-                //foreach (EnvelopeLineDRM envLine in _envelopeLines)
-                //{
-                //    sum += envLine.Amount;
-                //}
-
-                return sum;
+                return 0;
             }
         }
 
@@ -115,9 +65,8 @@ namespace FamilyFinance.Presentation.EditTransaction
         private bool CreditsFilter(object item)
         {
             LineItemDRM lineRow = (LineItemDRM)item;
-            bool keepItem = false; // Assume the item will NOT be shown in the list
+            bool keepItem = false;
 
-            // Keep the item if it is a credit
             if (lineRow.Polarity == PolarityCON.CREDIT)
                 keepItem = true;
 
@@ -127,28 +76,41 @@ namespace FamilyFinance.Presentation.EditTransaction
         private bool DebitsFilter(object item)
         {
             LineItemDRM lineRow = (LineItemDRM)item;
-            bool keepItem = false; // Assume the item will NOT be shown in the list
+            bool keepItem = false; 
 
-            // Keep the item if it is a debit
             if (lineRow.Polarity == PolarityCON.DEBIT)
                 keepItem = true;
 
             return keepItem;
         }
 
+        private void setupViews()
+        {
+            this._CreditsView = new ListCollectionView(this.transactionModel.LineItems);
+            this._CreditsView.Filter = new Predicate<Object>(CreditsFilter);
+
+            this._DebitsView = new ListCollectionView(this.transactionModel.LineItems);
+            this._DebitsView.Filter = new Predicate<Object>(DebitsFilter);
+
+            this._TransactionTypesView = new ListCollectionView(DataSetModel.Instance.TransactionTypes);
+            //this._TransactionTypesView.Filter = new Predicate<Object>(DebitsFilter);
+        }
 
         ///////////////////////////////////////////////////////////
         // Public functions
         ///////////////////////////////////////////////////////////
-        public EditTransactionVM(int transID) 
-        {
-
-
-        }
-
         public EditTransactionVM()
         {
-            this.transactionModel = new TransactionModel();
+
         }
+
+        public void loadTransaction(int transID)
+        {
+            this.transactionModel = new TransactionModel(transID);
+            this.setupViews();
+            this.reportAllPropertiesChanged();
+        }
+
+
     }
 }

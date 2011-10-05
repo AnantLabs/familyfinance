@@ -160,16 +160,16 @@ namespace FamilyFinance.Presentation.EditAccount
             bool keepItem = true; // Assume the item will be shown in the list
 
             // Remove the item if we don't want to see incomes, accounts, expenses, closed, or not in the search.
-            if (accRow.CatagoryID == CatagoryCON.NULL.ID)
+            if (accRow.Catagory == CatagoryCON.NULL)
                 keepItem = false;
             
-            else if (!this._ShowIncomes && accRow.CatagoryID == CatagoryCON.INCOME.ID)
+            else if (!this._ShowIncomes && accRow.Catagory == CatagoryCON.INCOME)
                 keepItem = false;
 
-            else if (!this._ShowAccounts && accRow.CatagoryID == CatagoryCON.ACCOUNT.ID)
+            else if (!this._ShowAccounts && accRow.Catagory == CatagoryCON.ACCOUNT)
                 keepItem = false;
 
-            else if (!this._ShowExpenses && accRow.CatagoryID == CatagoryCON.EXPENSE.ID)
+            else if (!this._ShowExpenses && accRow.Catagory == CatagoryCON.EXPENSE)
                 keepItem = false;
 
             else if (!this._ShowClosed && accRow.Closed)

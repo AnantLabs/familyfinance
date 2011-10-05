@@ -29,7 +29,7 @@ namespace FamilyFinance.Buisness
             set
             {
                 this.bankRow.name = value;
-                this.RaisePropertyChanged("Name");
+                this.reportPropertyChangedWithName("Name");
             }
         }
 

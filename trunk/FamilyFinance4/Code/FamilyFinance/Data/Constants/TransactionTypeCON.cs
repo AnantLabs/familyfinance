@@ -2,7 +2,7 @@
 
 namespace FamilyFinance.Data
 {
-    class TransactionTypeCON
+    public class TransactionTypeCON
     {
 
         //public static int NameMaxLength = MyData.getInstance().TransactionType.nameColumn.MaxLength;

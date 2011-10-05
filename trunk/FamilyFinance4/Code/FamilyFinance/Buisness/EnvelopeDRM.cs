@@ -44,7 +44,7 @@ namespace FamilyFinance.Buisness
             set
             {
                 this.envelopeRow.groupID = value;
-                this.RaisePropertyChanged("GroupName");
+                this.reportPropertyChangedWithName("GroupName");
             }
         }
 
@@ -79,7 +79,7 @@ namespace FamilyFinance.Buisness
             set
             {
                 this.envelopeRow.favoriteAccountID = value;
-                this.RaisePropertyChanged("FavoriteAccountName");
+                this.reportPropertyChangedWithName("FavoriteAccountName");
             }
         }
 

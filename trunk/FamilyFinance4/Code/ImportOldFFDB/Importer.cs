@@ -1,15 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.Data;
-
-using FamilyFinance.Data;
 using FamilyFinance.Buisness;
+using FamilyFinance.Data;
 
 namespace ImportOldFFDB
 {
     class Importer
     {
         private OldFFDBDataSet oldData = new OldFFDBDataSet();
-        private MyData myData = MyData.getInstance();
+        private DataSetModel myData = DataSetModel.Instance;
 
         private Dictionary<int, int> oldToNewIDAccountType = new Dictionary<int, int>();
         private Dictionary<int, int> oldToNewIDEnvelopeGroup = new Dictionary<int, int>();
@@ -17,7 +15,23 @@ namespace ImportOldFFDB
         private Dictionary<int, int> oldToNewIDAccount = new Dictionary<int, int>();
         private Dictionary<int, int> oldToNewIDEnvelope = new Dictionary<int, int>();
 
-        private void fillDataSet()
+        public void import()
+        {
+            DataSetModel.Instance.loadData();
+
+            this.fillOldDataSet();
+
+            this.mergeAccountType();
+            this.mergeEnvelopeGroup();
+            this.mergeLineType();
+            this.appendAccount();
+            this.appendEnvelope();
+            this.appendLineItems();
+
+            DataSetModel.Instance.saveData();
+        }
+
+        private void fillOldDataSet()
         {
             // Create anonymous table adapters to fill the Old Data set tables
             new OldFFDBDataSetTableAdapters.AccountTypeTableAdapter().Fill(oldData.AccountType);
@@ -28,6 +42,103 @@ namespace ImportOldFFDB
             new OldFFDBDataSetTableAdapters.LineItemTableAdapter().Fill(oldData.LineItem);
             new OldFFDBDataSetTableAdapters.EnvelopeLineTableAdapter().Fill(oldData.EnvelopeLine);
         }
+
+        private void mergeAccountType()
+        {
+            // Create a dictionary of the current account Types for efficient lookup by name.
+            Dictionary<string, int> currentValues = new Dictionary<string, int>();
+
+            foreach (AccountTypeDRM exsistingRow in this.myData.AccountTypes)
+            {
+                currentValues.Add(exsistingRow.Name, exsistingRow.ID);
+            }
+
+
+            // Now add all the old accountTypes from the OldFFDBDataSet to the current data.
+            foreach (OldFFDBDataSet.AccountTypeRow oldRow in this.oldData.AccountType)
+            {
+                int newID;
+
+                if (currentValues.TryGetValue(oldRow.name, out newID))
+                {
+                    // The old account type name is alread in the current table.
+                    // So do nothing yet.
+                }
+                else
+                {
+                    // Else we need to add the old account type to our current data and get the generated newID.
+                    newID = new AccountTypeDRM(oldRow.name).ID;
+                }
+                
+                // Save the old and new ids.
+                this.oldToNewIDAccountType.Add(oldRow.id, newID);
+            }
+        }
+
+        private void mergeEnvelopeGroup()
+        {
+            // Create a dictionary of the current account Types for efficient lookup by name.
+            Dictionary<string, int> currentValues = new Dictionary<string, int>();
+
+            foreach (EnvelopeGroupDRM exsistingRow in this.myData.EnvelopeGroups)
+            {
+                currentValues.Add(exsistingRow.Name, exsistingRow.ID);
+            }
+
+
+            // Now add all the old Envelope Groups from the OldFFDBDataSet to the current data.
+            foreach (OldFFDBDataSet.EnvelopeGroupRow oldRow in this.oldData.EnvelopeGroup)
+            {
+                int newID;
+
+                if (currentValues.TryGetValue(oldRow.name, out newID))
+                {
+                    // The old Envelope Group name is alread in the current table.
+                    // So do nothing yet.
+                }
+                else
+                {
+                    // Else we need to add the old account type to our current data and get the generated newID.
+                    newID = new EnvelopeGroupDRM(oldRow.name).ID;
+                }
+
+                // Save the old and new ids.
+                this.oldToNewIDEnvelopeGroup.Add(oldRow.id, newID);
+            }
+        }
+
+        private void mergeLineType()
+        {
+            // Create a dictionary of the current account Types for efficient lookup by name.
+            Dictionary<string, int> currentValues = new Dictionary<string, int>();
+
+            foreach (TransactionTypeDRM exsistingRow in this.myData.TransactionTypes)
+            {
+                currentValues.Add(exsistingRow.Name, exsistingRow.ID);
+            }
+
+
+            // Now add all the old Envelope Groups from the OldFFDBDataSet to the current data.
+            foreach (OldFFDBDataSet.LineTypeRow oldRow in this.oldData.LineType)
+            {
+                int newID;
+
+                if (currentValues.TryGetValue(oldRow.name, out newID))
+                {
+                    // The old line type name is alread in the current table.
+                    // So do nothing yet.
+                }
+                else
+                {
+                    // Else we need to add the old account type to our current data and get the generated newID.
+                    newID = new TransactionTypeDRM(oldRow.name).ID;
+                }
+
+                // Save the old and new ids.
+                this.oldToNewIDLineType.Add(oldRow.id, newID);
+            }
+        }
+
 
         private void appendAccount()
         {
@@ -53,10 +164,15 @@ namespace ImportOldFFDB
                 if (oldRow.id <= 0)
                     continue;
 
-                AccountDRM acc = new AccountDRM(oldRow.name, newAccountTypeID, CatagoryCON.getCatagory(oldRow.catagory), oldRow.closed, oldRow.envelopes);
+                AccountDRM acc = new AccountDRM();
+                acc.Name = oldRow.name;
+                acc.TypeID = newAccountTypeID;
+                acc.Catagory = CatagoryCON.getCatagory(oldRow.catagory);
+                acc.Closed = oldRow.closed;
+                acc.UsesEnvelopes = oldRow.envelopes;
 
                 // Assume there is bank information if this accounts catagory is an account.
-                if (acc.CatagoryID == CatagoryCON.ACCOUNT.ID)
+                if (acc.Catagory == CatagoryCON.ACCOUNT)
                 {
                     acc.HasBankInfo = true;
                     acc.AccountNormal = PolarityCON.GetPlolartiy(oldRow.creditDebit);
@@ -64,38 +180,6 @@ namespace ImportOldFFDB
 
                 // Save the old and new ids.
                 this.oldToNewIDAccount.Add(oldRow.id, acc.ID);
-            }
-        }
-
-        private void mergeAccountType()
-        {
-            // Create a dictionary of the current account Types for efficient lookup by name.
-            Dictionary<string, int> currentValues = new Dictionary<string, int>();
-
-            foreach (FFDataSet.AccountTypeRow exsistingRow in this.myData.AccountType)
-            {
-                currentValues.Add(exsistingRow.name, exsistingRow.id);
-            }
-
-
-            // Now add all the old accountTypes from the OldFFDBDataSet to the current data.
-            foreach (OldFFDBDataSet.AccountTypeRow oldRow in this.oldData.AccountType)
-            {
-                int newID;
-
-                if (currentValues.TryGetValue(oldRow.name, out newID))
-                {
-                    // The old account type name is alread in the current table.
-                    // So do nothing yet.
-                }
-                else
-                {
-                    // Else we need to add the old account type to our current data and get the generated newID.
-                    newID = new AccountTypeDRM(oldRow.name).ID;
-                }
-                
-                // Save the old and new ids.
-                this.oldToNewIDAccountType.Add(oldRow.id, newID);
             }
         }
 
@@ -124,120 +208,99 @@ namespace ImportOldFFDB
                 if (oldRow.id <= 0)
                     continue;
 
-                EnvelopeDRM env = new EnvelopeDRM(oldRow.name, newEnvelopeGroupID, AccountCON.NULL.ID, oldRow.closed);
+                EnvelopeDRM env = new EnvelopeDRM();
+                env.Name = oldRow.name;
+                env.GroupID = newEnvelopeGroupID;
+                env.FavoriteAccountID = AccountCON.NULL.ID;
+                env.Closed = oldRow.closed;
 
                 // Save the old and new ids.
                 this.oldToNewIDEnvelope.Add(oldRow.id, env.ID);
             }
         }
 
-        private void mergeEnvelopeGroup()
+        private int getEnvelopeGroupID(OldFFDBDataSet.EnvelopeRow oldRow)
         {
-            // Create a dictionary of the current account Types for efficient lookup by name.
-            Dictionary<string, int> currentValues = new Dictionary<string, int>();
+            int newEnvelopeGroupID;
 
-            foreach (FFDataSet.EnvelopeGroupRow exsistingRow in this.myData.EnvelopeGroup)
+            if (!this.oldToNewIDEnvelopeGroup.TryGetValue(oldRow.groupID, out newEnvelopeGroupID))
             {
-                currentValues.Add(exsistingRow.name, exsistingRow.id);
+                // This means there the Envelope has an envelopeGroup ID that is uknown.
+                string error = "Error reading group id from Envelope. Envelope.ID = " + oldRow.id + " Envelope.groupID = " + oldRow.groupID;
+                System.Console.WriteLine(error);
+                throw new System.Exception(error);
             }
 
-
-            // Now add all the old Envelope Groups from the OldFFDBDataSet to the current data.
-            foreach (OldFFDBDataSet.EnvelopeGroupRow oldRow in this.oldData.EnvelopeGroup)
-            {
-                int newID;
-
-                if (currentValues.TryGetValue(oldRow.name, out newID))
-                {
-                    // The old Envelope Group name is alread in the current table.
-                    // So do nothing yet.
-                }
-                else
-                {
-                    // Else we need to add the old account type to our current data and get the generated newID.
-                    newID = new EnvelopeGroupDRM(oldRow.name).ID;
-                }
-
-                // Save the old and new ids.
-                this.oldToNewIDEnvelopeGroup.Add(oldRow.id, newID);
-            }
+            return newEnvelopeGroupID;
         }
 
-        private void appendLineItem()
+        private void appendLineItems()
         {
-            // There are no special case Line Items
-
+            Dictionary<int, TransactionModel> oldIDToNewTransaction = new Dictionary<int, TransactionModel>();
             // Append all the old LineItem / transactions from the OldFFDBDataSet to the current data.
-            //foreach (OldFFDBDataSet.EnvelopeRow oldRow in this.oldData.Envelope)
-            //{
-            //    int newEnvelopeGroupID;
 
-            //    if (!this.oldToNewIDEnvelopeGroup.TryGetValue(oldRow.groupID, out newEnvelopeGroupID))
-            //    {
-            //        // This means there the Envelope has an envelopeGroup ID that is uknown.
-            //        string error = "Error reading group id from Envelope. Envelope.ID = " + oldRow.id + " Envelope.groupID = " + oldRow.groupID;
-            //        System.Console.WriteLine(error);
-            //        throw new System.Exception(error);
-            //    }
-
-            //    // Skip the special cases
-            //    if (oldRow.id <= 0)
-            //        continue;
-
-            //    EnvelopeDRM env = new EnvelopeDRM(oldRow.name, newEnvelopeGroupID, AccountCON.NULL.ID, oldRow.closed);
-
-            //    // Save the old and new ids.
-            //    this.oldToNewIDEnvelope.Add(oldRow.id, env.ID);
-            //}
-        }
-
-        private void mergeLineType()
-        {
-            // Create a dictionary of the current account Types for efficient lookup by name.
-            Dictionary<string, int> currentValues = new Dictionary<string, int>();
-
-            foreach (FFDataSet.TransactionTypeRow exsistingRow in this.myData.TransactionType)
+            foreach (OldFFDBDataSet.LineItemRow oldRow in this.oldData.LineItem)
             {
-                currentValues.Add(exsistingRow.name, exsistingRow.id);
-            }
+                TransactionModel transactionModel;
 
-
-            // Now add all the old Envelope Groups from the OldFFDBDataSet to the current data.
-            foreach (OldFFDBDataSet.LineTypeRow oldRow in this.oldData.LineType)
-            {
-                int newID;
-
-                if (currentValues.TryGetValue(oldRow.name, out newID))
+                if (oldIDToNewTransaction.TryGetValue(oldRow.id, out transactionModel))
                 {
-                    // The old line type name is alread in the current table.
+                    // The old transaction id was found in the dictionary.
                     // So do nothing yet.
                 }
                 else
                 {
-                    // Else we need to add the old account type to our current data and get the generated newID.
-                    newID = new TransactionTypeDRM(oldRow.name).ID;
+                    transactionModel = new TransactionModel();
+
+                    transactionModel.Date = oldRow.date;
+                    transactionModel.Description = oldRow.description;
+                    transactionModel.TypeID = getNewTypeIDFromOldID(oldRow.typeID);
                 }
 
-                // Save the old and new ids.
-                this.oldToNewIDLineType.Add(oldRow.id, newID);
+                LineItemDRM lineDRM = new LineItemDRM();
+
+                lineDRM.ConfirmationNumber = oldRow.confirmationNumber;
+                lineDRM.Amount = oldRow.amount;
+                lineDRM.Polarity = PolarityCON.GetPlolartiy(oldRow.creditDebit);
+                lineDRM.State = TransactionStateCON.GetState(oldRow.complete[0]);
+                lineDRM.AccountID = getNewAccountIDFromOldID(oldRow.accountID);
+
+                transactionModel.LineItems.Add(lineDRM);
             }
         }
 
-        public void import()
+        private int getNewTypeIDFromOldID(int oldTypeID)
         {
-            MyData.getInstance().readData();
+            int newTypeID;
 
-            this.fillDataSet();
+            if(oldToNewIDLineType.TryGetValue(oldTypeID, out newTypeID))
+            {
+                // do nothing the new ID was found
+            }
+            else
+            {
+                newTypeID = TransactionTypeCON.NULL.ID;
+            }
 
-            this.mergeAccountType();
-            this.mergeEnvelopeGroup();
-            this.mergeLineType();
-            this.appendAccount();
-            this.appendEnvelope();
-            this.appendLineItem();
-
-            MyData.getInstance().saveData();
+            return newTypeID;
         }
+
+        private int getNewAccountIDFromOldID(int oldAccountID)
+        {
+            int newAccountID;
+
+            if (oldToNewIDAccount.TryGetValue(oldAccountID, out newAccountID))
+            {
+                // do nothing the new ID was found
+            }
+            else
+            {
+                newAccountID = AccountCON.NULL.ID;
+            }
+
+            return newAccountID;
+        }
+
 
     }
 }
