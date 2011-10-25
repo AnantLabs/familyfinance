@@ -37,7 +37,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="50*" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="100*"/>
+                <RowDefinition Height="70*"/>
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0"
@@ -61,7 +61,9 @@
                           VerticalAlignment="Center" 
                           HorizontalAlignment="Stretch" 
                           SelectedValue="{Binding Path=TransactionModel.TypeID}" 
-                          ItemsSource="{Binding Path=TransactionTypesView}" />
+                          ItemsSource="{Binding Path=TransactionTypesView}"
+                          SelectedValuePath="ID"
+                          DisplayMemberPath="Name"/>
                 <TextBox Name="descriptionTB" 
                          Grid.Row="0"
                          Grid.Column="2" 
@@ -70,6 +72,7 @@
                          HorizontalAlignment="Stretch" 
                          Text="{Binding Path=TransactionModel.Description, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
             </Grid>
+            <!-- Source -->
             <TextBlock Grid.Row="1"
                        Grid.Column="0" 
                        Text="Source"
@@ -78,6 +81,7 @@
                        HorizontalAlignment="Left" 
                        VerticalAlignment="Bottom" 
                        FontWeight="Bold" />
+            <!-- Destination -->
             <TextBlock Grid.Row="1"
                        Grid.Column="1" 
                        Text="Destination"
@@ -86,6 +90,7 @@
                        HorizontalAlignment="Left" 
                        VerticalAlignment="Bottom" 
                        FontWeight="Bold" />
+            <!-- Envelope Lines -->
             <TextBlock Grid.Row="3"
                        Grid.Column="0" 
                        Text="Envelope Lines"
@@ -94,6 +99,7 @@
                        HorizontalAlignment="Left" 
                        VerticalAlignment="Bottom" 
                        FontWeight="Bold" />
+            <!-- Envelope Line Sum -->
             <TextBlock Grid.Row="5"
                        Grid.Column="1" 
                        Text="{Binding Path=EnvelopeLineSum, StringFormat=\{0:c\}, Mode=OneWay}"
@@ -101,13 +107,15 @@
                        Foreground="White"
                        HorizontalAlignment="Right" 
                        VerticalAlignment="Top" />
+            <!-- Source Sum -->
             <TextBlock Grid.Row="3" 
                        HorizontalAlignment="Right"
                        Margin="0,0,6,0" 
                        Name="textBlock1" 
-                       Text="{Binding Path=TransactionModel.DebitSum, StringFormat=\{0:c\}, Mode=OneWay}" 
+                       Text="{Binding Path=TransactionModel.CreditSum, StringFormat=\{0:c\}, Mode=OneWay}" 
                        Foreground="White"
                        VerticalAlignment="Top"  />
+            <!-- Destination Sum -->
             <TextBlock Grid.Column="1" 
                        Grid.Row="3"
                        HorizontalAlignment="Right" 

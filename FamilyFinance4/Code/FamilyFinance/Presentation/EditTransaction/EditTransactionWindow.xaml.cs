@@ -22,7 +22,7 @@ namespace FamilyFinance.Presentation.EditTransaction
             InitializeComponent();
 
             grabTheTransactionViewModelFromTheWindowsResources();
-            loadTransaction(2);
+            loadTransaction(62);
         }
 
         public EditTransactionWindow(int transactionID)

@@ -5,13 +5,7 @@ namespace FamilyFinance.Buisness
 {
     public class TransactionDRM : DataRowModel
     {
-        //public enum Property { 
-        //    Date, 
-        //    TypeID, 
-        //    TypeName, 
-        //    Description, 
-        //    IsTransactionError 
-        //};
+
         
         private FFDataSet.TransactionRow transactionRow;
 
@@ -87,7 +81,7 @@ namespace FamilyFinance.Buisness
         }
 
 
-        decimal CreditSum
+        public decimal CreditSum
         {
             get
             {
@@ -101,7 +95,7 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        decimal DebitSum
+        public decimal DebitSum
         {
             get
             {
@@ -176,11 +170,6 @@ namespace FamilyFinance.Buisness
         {
             this.transactionRow = DataSetModel.Instance.getTransactionRowWithID(transactionID);
         }
-
-        //public void reportPropertyChanged(Property property)
-        //{
-        //    this.reportPropertyChangedWithName(property.ToString());
-        //}
 
         public void raiseDependentProperties()
         {

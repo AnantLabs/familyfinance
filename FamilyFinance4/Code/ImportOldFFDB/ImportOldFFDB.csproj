@@ -60,8 +60,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountTypeMerger.cs" />
-    <Compile Include="Importer.cs" />
+    <Compile Include="Classes\AccountTypeMerger.cs" />
+    <Compile Include="Classes\AccountAppender.cs" />
+    <Compile Include="Classes\TransactionAppender.cs" />
+    <Compile Include="Classes\EnvelopeAppender.cs" />
+    <Compile Include="Classes\TransactionTypeMerger.cs" />
+    <Compile Include="Classes\EnvelopeGroupMerger.cs" />
+    <Compile Include="Classes\Importer.cs" />
     <Compile Include="OldFFDBDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
