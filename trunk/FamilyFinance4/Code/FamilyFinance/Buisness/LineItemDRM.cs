@@ -10,14 +10,7 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////////////////////////////////////
         // Local Variables
         ///////////////////////////////////////////////////////////////////////////////////////////
-        //public enum Property { 
-        //    AccountID, 
-        //    AccountName,
-        //    ConfirmationNumber,
-        //    Amoun,
-        //    Polarity,
-        //    IsLineError
-        //};
+
         
         private FFDataSet.LineItemRow lineItemRow;
 
@@ -171,11 +164,6 @@ namespace FamilyFinance.Buisness
         {
             this.lineItemRow = DataSetModel.Instance.NewLineItemRow(transaction);
         }
-
-        //public void reportPropertyChanged(Property property)
-        //{
-        //    this.reportPropertyChangedWithName(property.ToString());
-        //}
 
         public void setParentTransaction(TransactionDRM transaction)
         {
