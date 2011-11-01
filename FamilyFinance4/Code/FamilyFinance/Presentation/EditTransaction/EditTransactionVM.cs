@@ -13,42 +13,20 @@ namespace FamilyFinance.Presentation.EditTransaction
         ///////////////////////////////////////////////////////////
         // Properties
         ///////////////////////////////////////////////////////////
-        private TransactionModel transactionModel;
-        public TransactionModel TransactionModel
-        {
-            get
-            {
-                return this.transactionModel;
-            }
-        }
+        public TransactionModel TransactionModel { get; private set; }
 
-        private ListCollectionView _CreditsView;
-        public ListCollectionView CreditsView
-        {
-            get
-            {
-                return this._CreditsView;
-            }
-        }
+        public ListCollectionView CreditsView { get; private set; }
 
-        private ListCollectionView _DebitsView;
-        public ListCollectionView DebitsView
-        {
-            get
-            {
-                return this._DebitsView;
-            }
-        }
+        public ListCollectionView DebitsView { get; private set; }
 
-        private ListCollectionView _TransactionTypesView;
-        public ListCollectionView TransactionTypesView
-        {
-            get
-            {
-                return this._TransactionTypesView;
-            }
-        }
+        public ListCollectionView EnvelopeLinesView { get; private set; } 
 
+
+        public ListCollectionView TransactionTypesView { get; private set; }
+
+        public ListCollectionView AccountsView { get; private set; }
+
+        public ListCollectionView EnvelopesView { get; private set; }
 
         public decimal EnvelopeLineSum
         {
@@ -86,15 +64,62 @@ namespace FamilyFinance.Presentation.EditTransaction
 
         private void setupViews()
         {
-            this._CreditsView = new ListCollectionView(this.transactionModel.LineItems);
-            this._CreditsView.Filter = new Predicate<Object>(CreditsFilter);
+            this.CreditsView = new ListCollectionView(this.TransactionModel.LineItems);
+            this.CreditsView.Filter = new Predicate<Object>(CreditsFilter);
+            this.CreditsView.CurrentChanged += new EventHandler(CreditView_CurrentChanged);
 
-            this._DebitsView = new ListCollectionView(this.transactionModel.LineItems);
-            this._DebitsView.Filter = new Predicate<Object>(DebitsFilter);
+            this.DebitsView = new ListCollectionView(this.TransactionModel.LineItems);
+            this.DebitsView.Filter = new Predicate<Object>(DebitsFilter);
+            this.DebitsView.CurrentChanged += new EventHandler(DebitView_CurrentChanged);
 
-            this._TransactionTypesView = new ListCollectionView(DataSetModel.Instance.TransactionTypes);
-            //this._TransactionTypesView.Filter = new Predicate<Object>(DebitsFilter);
+            this.TransactionTypesView = new ListCollectionView(DataSetModel.Instance.TransactionTypes);
+
+            this.AccountsView = new ListCollectionView(DataSetModel.Instance.Accounts);
+
         }
+
+        private void CreditView_CurrentChanged(object sender, EventArgs e)
+        {
+            if (this.CreditsView.IsAddingNew)
+            {
+                LineItemDRM newLine = (LineItemDRM)CreditsView.CurrentAddItem;
+                newCreditLine(newLine);
+            }
+        }
+
+        private void DebitView_CurrentChanged(object sender, EventArgs e)
+        {
+            if (this.DebitsView.IsAddingNew)
+            {
+                LineItemDRM newLine = (LineItemDRM)DebitsView.CurrentAddItem;
+                newDebitLine(newLine);
+            }
+        }
+
+        private void newDebitLine(LineItemDRM newLine)
+        {
+            decimal suggestedAmount = this.TransactionModel.CreditSum - this.TransactionModel.DebitSum;
+
+            if (suggestedAmount < 0)
+                suggestedAmount = 0;
+
+            newLine.Polarity = PolarityCON.DEBIT;
+            newLine.Amount = suggestedAmount;
+        }
+
+        private void newCreditLine(LineItemDRM newLine)
+        {
+            decimal suggestedAmount = this.TransactionModel.DebitSum - this.TransactionModel.CreditSum;
+
+            if (suggestedAmount < 0)
+                suggestedAmount = 0;
+
+            newLine.Polarity = PolarityCON.CREDIT;
+            newLine.Amount = suggestedAmount;
+        }
+
+
+     
 
         ///////////////////////////////////////////////////////////
         // Public functions
@@ -106,8 +131,9 @@ namespace FamilyFinance.Presentation.EditTransaction
 
         public void loadTransaction(int transID)
         {
-            this.transactionModel = new TransactionModel(transID);
+            this.TransactionModel = new TransactionModel(transID);
             this.setupViews();
+
             this.reportAllPropertiesChanged();
         }
 

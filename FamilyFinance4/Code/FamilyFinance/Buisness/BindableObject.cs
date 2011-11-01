@@ -7,15 +7,15 @@ namespace FamilyFinance.Buisness
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void reportAllPropertiesChanged()
-        {
-            raisePropertyChanged("");
-        }
-
         private void raisePropertyChanged(string propertyName)
         {
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected void reportAllPropertiesChanged()
+        {
+            raisePropertyChanged("");
         }
 
         protected void reportPropertyChangedWithName(string propertyName)

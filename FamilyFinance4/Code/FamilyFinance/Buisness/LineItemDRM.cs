@@ -10,8 +10,6 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////////////////////////////////////
         // Local Variables
         ///////////////////////////////////////////////////////////////////////////////////////////
-
-        
         private FFDataSet.LineItemRow lineItemRow;
 
 
@@ -78,6 +76,7 @@ namespace FamilyFinance.Buisness
                     value = Decimal.Negate(value);
 
                 this.lineItemRow.amount = Decimal.Round(value, 2);
+                this.reportPropertyChangedWithName("Amount");
             }
         }
 
@@ -90,6 +89,7 @@ namespace FamilyFinance.Buisness
             set
             {
                 this.lineItemRow.polarity = value.Value;
+                this.reportPropertyChangedWithName("Polarity");
             }
         }
 
@@ -105,46 +105,58 @@ namespace FamilyFinance.Buisness
             }
         }
 
+
+
         public bool IsLineError
         {
             get
             {
-                if (lineItemRow == null)
+                decimal envLineSum = EnvelopeLineSum;
+                bool accountUsesEnvelopes = lineItemRow.AccountRow.envelopes;
+
+                if (accountUsesEnvelopes && lineItemRow.amount == envLineSum)
+                    return false;
+
+                else if (!accountUsesEnvelopes && envLineSum == 0)
                     return false;
 
                 else
-                    return determineLineError();
+                    return true;
             }
         }
+
+        public decimal EnvelopeLineSum
+        {
+            get
+            {
+                decimal sum = 0;
+
+                foreach (FFDataSet.EnvelopeLineRow envLine in lineItemRow.GetEnvelopeLineRows())
+                    sum += envLine.amount;
+
+                return sum;
+            }
+        }
+
 
 
         ///////////////////////////////////////////////////////////////////////////////////////////
         // Private Functions
         ///////////////////////////////////////////////////////////////////////////////////////////
-        private bool determineLineError()
+        private void listenForLineitemBalanceChanges()
         {
-            decimal envLineSum = envelopeLineSum();
-            bool accountUsesEnvelopes = lineItemRow.AccountRow.envelopes;
-
-            if (accountUsesEnvelopes && lineItemRow.amount == envLineSum)
-                return false;
-
-            else if (!accountUsesEnvelopes && envLineSum == 0)
-                return false;
-
-            else
-                return true;
+            DataSetModel.Instance.LineBalanceChanged += new DataSetModel.LineBalanceChangedEventHandler(Instance_LineBalanceChanged);
         }
 
-        private decimal envelopeLineSum()
+        private void Instance_LineBalanceChanged(int lineitemID)
         {
-            decimal sum = 0;
-
-            foreach (FFDataSet.EnvelopeLineRow envLine in lineItemRow.GetEnvelopeLineRows())
-                sum += envLine.amount;
-
-            return sum;
+            if (this.LineID == lineitemID)
+            {
+                this.reportPropertyChangedWithName("IsLineError");
+                this.reportPropertyChangedWithName("EnvelopeLineSum");
+            }
         }
+
 
 
         ///////////////////////////////////////////////////////////////////////////////////////////
@@ -165,9 +177,29 @@ namespace FamilyFinance.Buisness
             this.lineItemRow = DataSetModel.Instance.NewLineItemRow(transaction);
         }
 
+
         public void setParentTransaction(TransactionDRM transaction)
         {
             this.lineItemRow.transactionID = transaction.TransactionID;
+        }
+
+        protected FFDataSet.EnvelopeLineRow[] getEnvelopeLineRows()
+        {
+            return this.lineItemRow.GetEnvelopeLineRows();
+        }
+
+        public EnvelopeLineDRM newEnvelopeLineItemForLineitem()
+        {
+            return new EnvelopeLineDRM(this);
+        }
+
+        public void Delete()
+        {
+            // Set amount to zero so there we don't have to listen to when rows are
+            // added or removed. By setting the amount to zero before deleting it 
+            // just listening to the column changes will keep eveything syncronized.
+            this.Amount = 0;
+            this.lineItemRow.Delete();
         }
 
     }

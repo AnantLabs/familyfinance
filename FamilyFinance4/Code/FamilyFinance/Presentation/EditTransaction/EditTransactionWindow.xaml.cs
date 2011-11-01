@@ -42,5 +42,7 @@ namespace FamilyFinance.Presentation.EditTransaction
         {
             this.transactionViewModel.loadTransaction(transID);
         }
+
+
     }
 }

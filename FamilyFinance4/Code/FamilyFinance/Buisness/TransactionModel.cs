@@ -11,14 +11,7 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////
         // Properties
         ///////////////////////////////////////////////////////////
-        private ObservableCollection<LineItemDRM> lineItems;
-        public ObservableCollection<LineItemDRM> LineItems
-        {
-            get
-            {
-                return lineItems;
-            }
-        }
+        public ObservableCollection<LineItemModel> LineItems { get; private set; }
 
 
         ///////////////////////////////////////////////////////////
@@ -26,33 +19,39 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////
         private void newEmptyLineItemCollection()
         {
-            this.lineItems = new ObservableCollection<LineItemDRM>();
+            this.LineItems = new ObservableCollection<LineItemModel>();
         }
 
-        private void listenForChangesToTheCollection()
+        private void fillLineItemCollection(FFDataSet.LineItemRow[] lines)
         {
-            this.lineItems.CollectionChanged += new NotifyCollectionChangedEventHandler(lineItems_CollectionChanged);
+            foreach (FFDataSet.LineItemRow line in lines)
+                this.LineItems.Add(new LineItemModel(line));
         }
 
-        private void lineItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void listenToCollectionChanges()
+        {
+            this.LineItems.CollectionChanged += new NotifyCollectionChangedEventHandler(LineItems_CollectionChanged);
+        }
+
+        private void LineItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
-                setTheLinesTransaction(e.NewItems);
+                pointNewLinesToThisTransaction(e.NewItems);
+
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+                deleteLine(e.OldItems);
         }
 
-        private void setTheLinesTransaction(System.Collections.IList iList)
+        private void deleteLine(System.Collections.IList iList)
         {
-            foreach (LineItemDRM line in iList)
-            {
-                line.setParentTransaction(this);
-            }
+            foreach (LineItemModel oldLine in iList)
+                oldLine.Delete();
         }
 
-        private void fillLineItemCollection(LineItemDRM[] lines)
+        private void pointNewLinesToThisTransaction(System.Collections.IList iList)
         {
-            foreach (LineItemDRM line in lines)
-                this.lineItems.Add(line);
-
+            foreach(LineItemModel newLine in iList)
+                newLine.setParentTransaction(this);
         }
 
 
@@ -62,23 +61,22 @@ namespace FamilyFinance.Buisness
         public TransactionModel() : base()
         {
             newEmptyLineItemCollection();
-            listenForChangesToTheCollection();
+            listenToCollectionChanges();
         }
 
         public TransactionModel(FFDataSet.TransactionRow tRow) : base(tRow)
         {
             newEmptyLineItemCollection();
-            fillLineItemCollection(this.getWrappedTransactionLines());
-            listenForChangesToTheCollection();
+            fillLineItemCollection(this.getLineItemRows());
+            listenToCollectionChanges();
         }
 
         public TransactionModel(int transactionID) : base(transactionID)
         {
             newEmptyLineItemCollection();
-            fillLineItemCollection(this.getWrappedTransactionLines());
-            listenForChangesToTheCollection();
+            fillLineItemCollection(this.getLineItemRows());
+            listenToCollectionChanges();
         }
-
 
     }
 }
