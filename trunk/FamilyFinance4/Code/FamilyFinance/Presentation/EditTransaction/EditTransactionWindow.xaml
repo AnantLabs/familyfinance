@@ -7,6 +7,7 @@
         Width="745">
     <Window.Resources>
         <local:EditTransactionVM x:Key="editTransactionVM" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter1" />
     </Window.Resources>
     <Grid Height="Auto" 
           Width="Auto" 
@@ -115,6 +116,15 @@
                        Text="{Binding Path=TransactionModel.CreditSum, StringFormat=\{0:c\}, Mode=OneWay}" 
                        Foreground="White"
                        VerticalAlignment="Top"  />
+            <!-- Transaction Imbalance Error -->
+            <TextBlock Grid.Column="1" 
+                       Grid.Row="3"
+                       HorizontalAlignment="Left" 
+                       Margin="3,0" 
+                       Text="&lt;-- Error Transaction needs to balance. --&gt;" 
+                       VerticalAlignment="Top"
+                       Foreground="Red" 
+                       Visibility="{Binding Path=TransactionModel.IsTransactionError, Converter={StaticResource BooleanToVisibilityConverter1}}" />
             <!-- Destination Sum -->
             <TextBlock Grid.Column="1" 
                        Grid.Row="3"
@@ -124,6 +134,7 @@
                        Text="{Binding Path=TransactionModel.DebitSum, StringFormat=\{0:c\}, Mode=OneWay}" 
                        VerticalAlignment="Top" 
                        Foreground="White" />
+            <!-- Source Grid -->
             <DataGrid Name="creditDataGrid" 
                       Grid.Row="2"
                       Grid.Column="0"
@@ -132,10 +143,11 @@
                       VerticalAlignment="Stretch"
                       AutoGenerateColumns="False" 
                       SelectionMode="Single" 
-                      CanUserDeleteRows="False" 
                       HeadersVisibility="Column"
                       ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=CreditsView}" 
-                      DataContext="{Binding Path=CreditsView}">
+                      DataContext="{Binding Path=CreditsView}" 
+                      CanUserResizeRows="False" 
+                      RowDetailsVisibilityMode="Collapsed">
                 <DataGrid.Columns>
                     <!-- Account Credit Combobox column -->
                     <DataGridTemplateColumn x:Name="accountCreditColumnCB" 
@@ -151,30 +163,32 @@
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
                                 <ComboBox SelectedValue="{Binding Path=AccountID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=AccountsView}"
-                                              SelectedValuePath="ID"
-                                              DisplayMemberPath="Name">
+                                          ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=AccountsView}"
+                                          SelectedValuePath="ID"
+                                          DisplayMemberPath="Name">
                                 </ComboBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
                     <!-- Confirmation Number column -->
                     <DataGridTextColumn x:Name="confirmationCreditColumn" 
-                                            Binding="{Binding Path=ConfirmationNumber, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
-                                            Header="Confirmation" 
-                                            CanUserSort="True"
-                                            MinWidth="80"
-                                            Width="40*" />
+                                        Binding="{Binding Path=ConfirmationNumber, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                        Header="Confirmation" 
+                                        CanUserSort="True"
+                                        MinWidth="80"
+                                        Width="40*" />
                     <!-- Amount Credit column -->
                     <DataGridTextColumn x:Name="amountCreditColumn" 
-                                            Binding="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
-                                            Header="Credit" 
-                                            CanUserSort="True"
-                                            MinWidth="60"
-                                            Width="20*" />
+                                        Binding="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat=\{0:c\}}" 
+                                        Header="Credit" 
+                                        CanUserSort="True"
+                                        MinWidth="60"
+                                        ElementStyle="{StaticResource RightAlignStyle}"
+                                        Width="20*" />
 
                 </DataGrid.Columns>
             </DataGrid>
+            <!-- Destination Grid -->
             <DataGrid Name="debitDataGrid" 
                       Grid.Row="2"
                       Grid.Column="1"
@@ -183,10 +197,11 @@
                       VerticalAlignment="Stretch"
                       AutoGenerateColumns="False" 
                       SelectionMode="Single" 
-                      CanUserDeleteRows="False" 
                       HeadersVisibility="Column"
                       ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=DebitsView}" 
-                      DataContext="{Binding Path=DebitsView}">
+                      DataContext="{Binding Path=DebitsView}" 
+                      CanUserResizeRows="False" 
+                      RowDetailsVisibilityMode="Collapsed">
                 <DataGrid.Columns>
                     <!-- Account Credit Combobox column -->
                     <DataGridTemplateColumn x:Name="accountDebitColumnCB" 
@@ -211,21 +226,30 @@
                     </DataGridTemplateColumn>
                     <!-- Confirmation Number column -->
                     <DataGridTextColumn x:Name="confirmationDebitColumn" 
-                                            Binding="{Binding Path=ConfirmationNumber, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
-                                            Header="Confirmation" 
-                                            CanUserSort="True"
-                                            MinWidth="80"
-                                            Width="40*" />
+                                        Binding="{Binding Path=ConfirmationNumber, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                        Header="Confirmation" 
+                                        CanUserSort="True"
+                                        MinWidth="80"
+                                        Width="40*" />
                     <!-- Amount Credit column -->
                     <DataGridTextColumn x:Name="amountDebitColumn" 
-                                            Binding="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
-                                            Header="Debit" 
-                                            CanUserSort="True"
-                                            MinWidth="60"
-                                            Width="20*" />
+                                        Binding="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat=\{0:c\}}" 
+                                        Header="Debit" 
+                                        CanUserSort="True"
+                                        MinWidth="60"
+                                        ElementStyle="{StaticResource RightAlignStyle}"
+                                        Width="20*" />
 
                 </DataGrid.Columns>
             </DataGrid>
+            <!-- Grid Splitter -->
+            <GridSplitter Grid.Row="3"
+                          Grid.ColumnSpan="2" 
+                          VerticalAlignment="Stretch"
+                          HorizontalAlignment="Stretch"
+                          Background="Transparent"
+                          ResizeDirection="Rows" />
+            <!-- Envelope Lines Grid -->
             <DataGrid Name="envDataGrid" 
                       Grid.Row="4"
                       Grid.Column="0"
@@ -237,7 +261,7 @@
                       CanUserDeleteRows="False" 
                       HeadersVisibility="Column"
                       ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=EnvelopesView}" 
-                      DataContext="{Binding Path=CreditsView/EnvelopeLines}">
+                      DataContext="{Binding Path=EnvelopeLinesView}">
                 <DataGrid.Columns>
                     <!-- Account Credit Combobox column -->
                     <DataGridTemplateColumn x:Name="EnvelopeColumnCB" 

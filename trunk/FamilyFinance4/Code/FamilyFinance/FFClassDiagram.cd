@@ -1,250 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Comment CommentText="Singleton class.&#xD;&#xA;- Public referances to the dataset tables.&#xD;&#xA;- A single save function to commit row changes.&#xD;&#xA;- Private Table adapters.&#xD;&#xA;- Private event handlers for setting default values.&#xD;&#xA;- Simplified version of the FFDataSet">
-    <Position X="4.054" Y="13.595" Height="1.198" Width="3.169" />
-  </Comment>
-  <Comment CommentText="DRM classes are responsible for wrapping the table rows in a bindable object and to ensure data stays within bounds. Idealy there will only be one  instance of a DRM for each row in the dataset.">
-    <Position X="0.5" Y="4.364" Height="1.167" Width="2.398" />
-  </Comment>
-  <Class Name="FamilyFinance.Data.FFDataSet">
-    <Position X="12.75" Y="15.5" Width="4" />
-    <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
-      <Compartment Name="Properties" Collapsed="true" />
-      <Compartment Name="Methods" Collapsed="true" />
-    </Compartments>
-    <NestedTypes>
-      <Class Name="FamilyFinance.Data.FFDataSet.LineItemRow" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Delegate Name="FamilyFinance.Data.FFDataSet.EnvelopeRowChangeEventHandler" Collapsed="true">
-        <TypeIdentifier />
-      </Delegate>
-      <Class Name="FamilyFinance.Data.FFDataSet.BankInfoDataTable" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Class Name="FamilyFinance.Data.FFDataSet.BankRowChangeEvent" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Delegate Name="FamilyFinance.Data.FFDataSet.BankInfoRowChangeEventHandler" Collapsed="true">
-        <TypeIdentifier />
-      </Delegate>
-      <Class Name="FamilyFinance.Data.FFDataSet.AccountRowChangeEvent" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Delegate Name="FamilyFinance.Data.FFDataSet.TransactionTypeRowChangeEventHandler" Collapsed="true">
-        <TypeIdentifier />
-      </Delegate>
-      <Class Name="FamilyFinance.Data.FFDataSet.EnvelopeLineDataTable" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Class Name="FamilyFinance.Data.FFDataSet.AccountTypeRowChangeEvent" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Class Name="FamilyFinance.Data.FFDataSet.TransactionDataTable" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Delegate Name="FamilyFinance.Data.FFDataSet.AccountTypeRowChangeEventHandler" Collapsed="true">
-        <TypeIdentifier />
-      </Delegate>
-      <Class Name="FamilyFinance.Data.FFDataSet.BankInfoRow" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Class Name="FamilyFinance.Data.FFDataSet.AccountTypeRow" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Class Name="FamilyFinance.Data.FFDataSet.AccountRow" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Delegate Name="FamilyFinance.Data.FFDataSet.TransactionRowChangeEventHandler" Collapsed="true">
-        <TypeIdentifier />
-      </Delegate>
-      <Class Name="FamilyFinance.Data.FFDataSet.EnvelopeLineRowChangeEvent" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Class Name="FamilyFinance.Data.FFDataSet.EnvelopeGroupDataTable" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Delegate Name="FamilyFinance.Data.FFDataSet.EnvelopeGroupRowChangeEventHandler" Collapsed="true">
-        <TypeIdentifier />
-      </Delegate>
-      <Class Name="FamilyFinance.Data.FFDataSet.BankInfoRowChangeEvent" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Class Name="FamilyFinance.Data.FFDataSet.EnvelopeDataTable" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Class Name="FamilyFinance.Data.FFDataSet.LineItemRowChangeEvent" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Class Name="FamilyFinance.Data.FFDataSet.TransactionTypeRowChangeEvent" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Class Name="FamilyFinance.Data.FFDataSet.EnvelopeLineRow" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Class Name="FamilyFinance.Data.FFDataSet.TransactionTypeDataTable" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Class Name="FamilyFinance.Data.FFDataSet.BankDataTable" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Class Name="FamilyFinance.Data.FFDataSet.AccountDataTable" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Class Name="FamilyFinance.Data.FFDataSet.LineItemDataTable" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Class Name="FamilyFinance.Data.FFDataSet.AccountTypeDataTable" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Delegate Name="FamilyFinance.Data.FFDataSet.BankRowChangeEventHandler" Collapsed="true">
-        <TypeIdentifier />
-      </Delegate>
-      <Delegate Name="FamilyFinance.Data.FFDataSet.AccountRowChangeEventHandler" Collapsed="true">
-        <TypeIdentifier />
-      </Delegate>
-      <Class Name="FamilyFinance.Data.FFDataSet.EnvelopeGroupRow" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Delegate Name="FamilyFinance.Data.FFDataSet.EnvelopeLineRowChangeEventHandler" Collapsed="true">
-        <TypeIdentifier />
-      </Delegate>
-      <Class Name="FamilyFinance.Data.FFDataSet.TransactionRowChangeEvent" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Class Name="FamilyFinance.Data.FFDataSet.EnvelopeGroupRowChangeEvent" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Class Name="FamilyFinance.Data.FFDataSet.EnvelopeRowChangeEvent" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Class Name="FamilyFinance.Data.FFDataSet.TransactionTypeRow" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Delegate Name="FamilyFinance.Data.FFDataSet.LineItemRowChangeEventHandler" Collapsed="true">
-        <TypeIdentifier />
-      </Delegate>
-      <Class Name="FamilyFinance.Data.FFDataSet.BankRow" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Class Name="FamilyFinance.Data.FFDataSet.EnvelopeRow" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-      <Class Name="FamilyFinance.Data.FFDataSet.TransactionRow" Collapsed="true">
-        <TypeIdentifier />
-      </Class>
-    </NestedTypes>
+  <Class Name="FamilyFinance.Buisness.TransactionModel" Collapsed="true">
+    <Position X="1" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>EzqGAIASwyAAAYLgLAGCQQAAgMgCQB0CAEAAAoEABFQ=</HashCode>
+      <HashCode>IAIIAAAAAAAAAAAAEAACAgCAQAAAAAAAAUAAYAAAAAA=</HashCode>
+      <FileName>Buisness\TransactionModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FamilyFinance.Buisness.AccountTypeDRM">
-    <Position X="6.75" Y="8" Width="1.5" />
+  <Class Name="FamilyFinance.Buisness.TransactionDRM" Collapsed="true">
+    <Position X="1" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgAAAAAAAAAQAAAAAAIAAAAAAAAAAAAA=</HashCode>
-      <FileName>Buisness\AccountTypeDRM.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FamilyFinance.Buisness.AccountDRM">
-    <Position X="5" Y="8" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>ACAAAABgAAAAgAAAAAAAAAQAAAoAgBAgALAAggCgAAQ=</HashCode>
-      <FileName>Buisness\AccountDRM.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FamilyFinance.Buisness.BankDRM">
-    <Position X="8.5" Y="8" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AACAAAAAAAAAgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAQ=</HashCode>
-      <FileName>Buisness\BankDRM.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FamilyFinance.Buisness.EnvelopeDRM">
-    <Position X="11.5" Y="8" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AQQgAAAAAAAAgAAECAAAAAQAAAAAAAAAAAAAAACAgAE=</HashCode>
-      <FileName>Buisness\EnvelopeDRM.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FamilyFinance.Buisness.EnvelopeGroupDRM">
-    <Position X="13.25" Y="8" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAIAAAAgAAAIAAAAAQAAAAAAAAAAAAAAAAAACA=</HashCode>
-      <FileName>Buisness\EnvelopeGroupDRM.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FamilyFinance.Buisness.EnvelopeLineDRM">
-    <Position X="21.25" Y="8" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAIIAAAgAAAACAAAAACgAAAAAAAAAAAAAAgAAAA=</HashCode>
-      <FileName>Buisness\EnvelopeLineDRM.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FamilyFinance.Buisness.LineItemDRM">
-    <Position X="19.5" Y="8" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAACAAACAgAAAACgAAgAAAAAAAQABgAAAAA=</HashCode>
-      <FileName>Buisness\LineItemDRM.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FamilyFinance.Buisness.TransactionDRM">
-    <Position X="3.25" Y="2.75" Width="3" />
-    <TypeIdentifier>
-      <HashCode>AAEAAABAoAAgAIAAAAAAAAAgAAAAABAhQAAAAAAIAEA=</HashCode>
+      <HashCode>AAEAAgBAIAAgAIAAAAAAAAAgAAEAABAhQAAEAAAIAAA=</HashCode>
       <FileName>Buisness\TransactionDRM.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FamilyFinance.Buisness.TransactionTypeDRM">
-    <Position X="16" Y="8" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgAAAAAAAIAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Buisness\TransactionTypeDRM.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FamilyFinance.Presentation.EditAccount.EditAccountsVM" Collapsed="true">
-    <Position X="7.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>IgAAEAAAEgACAAAIAAAAAIAARABGAQAAAhAAACAAAAA=</HashCode>
-      <FileName>Presentation\EditAccount\EditAccountsVM.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FamilyFinance.Presentation.EditTypes.EditTypesVM" Collapsed="true">
-    <Position X="9" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>EAAAAAAgAAAEAEAAAAAAAAAAAAAAgAAAAAAAAgAAAAA=</HashCode>
-      <FileName>Presentation\EditTypes\EditTypesVM.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FamilyFinance.Buisness.DataSetModel" Collapsed="true">
-    <Position X="1.25" Y="9.25" Width="2" />
-    <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>IAAAEJBBgBgEBgbAABBFCAAAAAACCciAQBAhCUAAEAI=</HashCode>
-      <FileName>Buisness\DataSetModel.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FamilyFinance.Buisness.RegistryEnvelopeLineModel">
-    <Position X="21.25" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAQAgAAAAAAAAAAAAAAAAABABAAAAAAAAAAA=</HashCode>
-      <FileName>Buisness\RegistryEnvelopeLineModel.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="FamilyFinance.Buisness.RegistryLineModel">
-    <Position X="19.5" Y="4.5" Width="1.5" />
+  <Class Name="FamilyFinance.Buisness.RegistryLineModel" Collapsed="true">
+    <Position X="3.25" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAAAAAAAAAAgAIIAAAAAAAEAAAAAABAhAAAAAAAAAAA=</HashCode>
       <FileName>Buisness\RegistryLineModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FamilyFinance.Buisness.TransactionModel">
-    <Position X="4" Y="0.5" Width="1.5" />
+  <Class Name="FamilyFinance.Buisness.RegistryEnvelopeLineModel" Collapsed="true">
+    <Position X="5.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAoAAAAIAAAAAAcAAAACCAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Buisness\TransactionModel.cs</FileName>
+      <HashCode>AAAAAAAAAQAgAAAAAAAAAAAAAAAAABABAAAAAAAAAAA=</HashCode>
+      <FileName>Buisness\RegistryEnvelopeLineModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FamilyFinance.Buisness.LineItemDRM" Collapsed="true">
+    <Position X="3.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACEAACAgAAAACgAAkAAAAAgAQCBgAAAAA=</HashCode>
+      <FileName>Buisness\LineItemDRM.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FamilyFinance.Buisness.EnvelopeLineDRM" Collapsed="true">
+    <Position X="5.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIIAAAgAAAAAAAAAACgACEAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Buisness\EnvelopeLineDRM.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

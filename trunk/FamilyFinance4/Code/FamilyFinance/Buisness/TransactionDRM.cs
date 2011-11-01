@@ -5,8 +5,6 @@ namespace FamilyFinance.Buisness
 {
     public class TransactionDRM : DataRowModel
     {
-
-        
         private FFDataSet.TransactionRow transactionRow;
 
 
@@ -68,6 +66,8 @@ namespace FamilyFinance.Buisness
             }
         }
         
+
+
         public bool IsTransactionError
         {
             get
@@ -79,7 +79,6 @@ namespace FamilyFinance.Buisness
                     return true;
             }
         }
-
 
         public decimal CreditSum
         {
@@ -108,6 +107,7 @@ namespace FamilyFinance.Buisness
                 return debitSum;
             }
         }
+
 
         ///////////////////////////////////////////////////////////
         // Private functions
@@ -141,41 +141,63 @@ namespace FamilyFinance.Buisness
                 return false;
         }
 
-
-        protected LineItemDRM[] getWrappedTransactionLines()
+        private void listenForTransactionBalanceChanges()
         {
-            FFDataSet.LineItemRow[] lines = this.transactionRow.GetLineItemRows();
-            LineItemDRM[] array = new LineItemDRM[lines.Length];
-
-            for (int i = 0; i < lines.Length; i++)
-                array[i] = new LineItemDRM(lines[i]);
-
-            return array;
+            DataSetModel.Instance.TransactionBalanceChanged += new DataSetModel.TransactionBalanceChangedEventHandler(Instance_TransactionBalanceChanged);
         }
+
+        private void Instance_TransactionBalanceChanged(int transactionID)
+        {
+            if (this.TransactionID == transactionID)
+            {
+                this.reportPropertyChangedWithName("IsTransactionError");
+                this.reportPropertyChangedWithName("CreditSum");
+                this.reportPropertyChangedWithName("DebitSum");
+            }
+        }
+
+        private void newEmptyTransaction()
+        {
+            this.transactionRow = DataSetModel.Instance.NewTransactionRow();
+        }
+
+
 
         ///////////////////////////////////////////////////////////
         // Public functions
         ///////////////////////////////////////////////////////////
         public TransactionDRM()
         {
-            this.transactionRow = DataSetModel.Instance.NewTransactionRow();
+            newEmptyTransaction();
+            listenForTransactionBalanceChanges();
         }
 
         public TransactionDRM(FFDataSet.TransactionRow tRow)
         {
             this.transactionRow = tRow;
+            listenForTransactionBalanceChanges();
         }
 
         public TransactionDRM(int transactionID)
         {
             this.transactionRow = DataSetModel.Instance.getTransactionRowWithID(transactionID);
+            listenForTransactionBalanceChanges();
         }
 
-        public void raiseDependentProperties()
+
+        protected FFDataSet.LineItemRow[] getLineItemRows()
         {
-            reportPropertyChangedWithName("IsTransactionError");
-            reportPropertyChangedWithName("CreditSum");
-            reportPropertyChangedWithName("DebitSum");
+            return this.transactionRow.GetLineItemRows();
+        }
+
+        public LineItemDRM newLineItemForTransaction()
+        {
+            return new LineItemDRM(this);
+        }
+
+        public void Delete()
+        {
+            this.transactionRow.Delete();
         }
 
     }

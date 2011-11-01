@@ -31,6 +31,9 @@ namespace FamilyFinance.Buisness
         private DataSetModel()
         {
             ffDataSet = new FFDataSet();
+
+            ffDataSet.LineItem.ColumnChanged += new DataColumnChangeEventHandler(LineItem_ColumnChanged);
+            ffDataSet.EnvelopeLine.ColumnChanged += new DataColumnChangeEventHandler(EnvelopeLine_ColumnChanged);
         }
 
         public void loadData()
@@ -136,12 +139,22 @@ namespace FamilyFinance.Buisness
             if (envelopeNoEnvelope == null)
                 envelopeNoEnvelope = this.ffDataSet.Envelope.AddEnvelopeRow(EnvelopeCON.NO_ENVELOPE.ID, EnvelopeCON.NO_ENVELOPE.Name, envelopeGroupNull, false, accountNull, 0, " ", "N");
             
+
             ////////////////////////////
             // Required Transaction Row
             FFDataSet.TransactionRow transactionNull = this.ffDataSet.Transaction.FindByid(TransactionCON.NULL.ID);
 
             if (transactionNull == null)
                 transactionNull = this.ffDataSet.Transaction.AddTransactionRow(TransactionCON.NULL.ID, DateTime.MinValue, transactionTypeNull, "");
+
+
+            ////////////////////////////
+            // Required LineItem Row
+            FFDataSet.LineItemRow lineItemNull = this.ffDataSet.LineItem.FindByid(LineItemCON.NULL.ID);
+
+            if (lineItemNull == null)
+                lineItemNull = this.ffDataSet.LineItem.AddLineItemRow(LineItemCON.NULL.ID, transactionNull, accountNull, "", 0, TransactionStateCON.PENDING.Value, false);
+
 
 
         }
@@ -322,15 +335,24 @@ namespace FamilyFinance.Buisness
             return newRow;
         }
 
-        public FFDataSet.EnvelopeLineRow NewEnvelopeLineRow(FFDataSet.LineItemRow lineItem)
+        public FFDataSet.EnvelopeLineRow NewEnvelopeLineRow(LineItemDRM lineItem)
+        {
+            FFDataSet.EnvelopeLineRow newRow = this.NewEnvelopeLineRow();
+            
+            newRow.lineItemID = lineItem.LineID;
+
+            return newRow;
+        }
+
+        public FFDataSet.EnvelopeLineRow NewEnvelopeLineRow()
         {
             FFDataSet.EnvelopeLineRow newRow = ffDataSet.EnvelopeLine.NewEnvelopeLineRow();
 
             newRow.id = this.getNextIDFromTableNamed("EnvelopeLine");
-            newRow.lineItemID = lineItem.id;
+            newRow.lineItemID = LineItemCON.NULL.ID;
             newRow.envelopeID = EnvelopeCON.NULL.ID;
             newRow.description = "";
-            newRow.amount = 0m;
+            newRow.amount = 0;
 
             ffDataSet.EnvelopeLine.AddEnvelopeLineRow(newRow);
 
@@ -522,6 +544,62 @@ namespace FamilyFinance.Buisness
         }
 
 
+
+        ///////////////////////////////////////////////////////////////////////
+        // Events
+        ///////////////////////////////////////////////////////////////////////
+        private void LineItem_ColumnChanged(object sender, DataColumnChangeEventArgs e)
+        {
+            if (e.Row.RowState == DataRowState.Detached)
+                return;
+
+            string columnName = e.Column.ColumnName;
+
+            if (columnName == "amount" || columnName == "polarity")
+            {
+                int transID = (e.Row as FFDataSet.LineItemRow).transactionID;
+                raiseTransactionBalanceChange(transID);
+            }
+        }
+
+        private void EnvelopeLine_ColumnChanged(object sender, DataColumnChangeEventArgs e)
+        {
+            if (e.Row.RowState == DataRowState.Detached)
+                return;
+
+            string columnName = e.Column.ColumnName;
+
+            if (columnName == "amount")
+            {
+                int lineID = (e.Row as FFDataSet.EnvelopeLineRow).lineItemID;
+                raiseLineBalanceChange(lineID);
+            }
+        }
+
+
+        public delegate void TransactionBalanceChangedEventHandler(int transactionID);
+        public event TransactionBalanceChangedEventHandler TransactionBalanceChanged;
+
+        private void raiseTransactionBalanceChange(int transID)
+        {
+            if (this.TransactionBalanceChanged != null)
+                this.TransactionBalanceChanged(transID);
+        }
+
+        public delegate void LineBalanceChangedEventHandler(int lineitemID);
+        public event LineBalanceChangedEventHandler LineBalanceChanged;
+
+        private void raiseLineBalanceChange(int lineitemID)
+        {
+            if (this.LineBalanceChanged != null)
+                this.LineBalanceChanged(lineitemID);
+        }
+
+
+
+        ///////////////////////////////////////////////////////////////////////
+        // 
+        ///////////////////////////////////////////////////////////////////////
         public FFDataSet.TransactionRow getTransactionRowWithID(int transID)
         {
             FFDataSet.TransactionRow row = ffDataSet.Transaction.FindByid(transID);
@@ -532,5 +610,6 @@ namespace FamilyFinance.Buisness
             return row;
         }
 
+        
     }
 }

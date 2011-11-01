@@ -6,13 +6,17 @@ namespace FamilyFinance.Buisness
 {
     public class EnvelopeLineDRM : DataRowModel
     {
-        private FFDataSet.EnvelopeLineRow _envelopeLineRow;
+        private FFDataSet.EnvelopeLineRow envelopeLineRow;
 
+
+        ///////////////////////////////////////////////////////////
+        // Properties
+        ///////////////////////////////////////////////////////////
         public int EnvelopeLineID
         {
             get
             {
-                return this._envelopeLineRow.id;
+                return this.envelopeLineRow.id;
             }
         }
 
@@ -20,7 +24,7 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this._envelopeLineRow.lineItemID;
+                return this.envelopeLineRow.lineItemID;
             }
         }
 
@@ -28,7 +32,7 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this._envelopeLineRow.LineItemRow.transactionID;
+                return this.envelopeLineRow.LineItemRow.transactionID;
             }
         }
 
@@ -36,11 +40,11 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this._envelopeLineRow.description;
+                return this.envelopeLineRow.description;
             }
             set
             {
-                this._envelopeLineRow.description = value;
+                this.envelopeLineRow.description = value;
             }
         }
 
@@ -48,12 +52,12 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this._envelopeLineRow.amount;
+                return this.envelopeLineRow.amount;
             }
             set
             {
                 // Round to 2 decimal places. 
-                this._envelopeLineRow.amount = Decimal.Round(value, 2);
+                this.envelopeLineRow.amount = Decimal.Round(value, 2);
             }
         }
 
@@ -61,11 +65,11 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this._envelopeLineRow.envelopeID;
+                return this.envelopeLineRow.envelopeID;
             }
             set
             {
-                this._envelopeLineRow.envelopeID = value;
+                this.envelopeLineRow.envelopeID = value;
             }
         }
 
@@ -73,13 +77,41 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this._envelopeLineRow.EnvelopeRow.name;
+                return this.envelopeLineRow.EnvelopeRow.name;
             }
         }
 
-        public EnvelopeLineDRM(FFDataSet.LineItemRow lineRow)
-        {
 
+
+        ///////////////////////////////////////////////////////////
+        // Public functions
+        ///////////////////////////////////////////////////////////
+        public EnvelopeLineDRM()
+        {
+            this.envelopeLineRow = DataSetModel.Instance.NewEnvelopeLineRow();
         }
+
+        public EnvelopeLineDRM(FFDataSet.EnvelopeLineRow envLineRow)
+        {
+            this.envelopeLineRow = envLineRow;
+        }
+
+        public EnvelopeLineDRM(LineItemDRM lineItem)
+        {
+            this.envelopeLineRow = DataSetModel.Instance.NewEnvelopeLineRow(lineItem);
+        }
+
+
+        public void setParentLine(LineItemDRM lineitem)
+        {
+            this.envelopeLineRow.lineItemID = lineitem.LineID;
+        }
+
+        public void Delete()
+        {
+            this.Amount = 0;
+            this.envelopeLineRow.Delete();
+        }
+
     }
 }
