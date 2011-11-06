@@ -40,6 +40,21 @@ namespace FamilyFinance.Presentation.EditTransaction
         ///////////////////////////////////////////////////////////
         // Private functions
         ///////////////////////////////////////////////////////////
+        private void setupViews()
+        {
+            this.CreditsView = new ListCollectionView(this.TransactionModel.LineItems);
+            this.CreditsView.Filter = new Predicate<Object>(CreditsFilter);
+            this.CreditsView.CurrentChanged += new EventHandler(CreditOrDebitView_CurrentChanged);
+
+            this.DebitsView = new ListCollectionView(this.TransactionModel.LineItems);
+            this.DebitsView.Filter = new Predicate<Object>(DebitsFilter);
+            this.DebitsView.CurrentChanged += new EventHandler(CreditOrDebitView_CurrentChanged);
+
+            this.TransactionTypesView = new ListCollectionView(DataSetModel.Instance.TransactionTypes);
+
+            this.AccountsView = new ListCollectionView(DataSetModel.Instance.Accounts);
+        }
+
         private bool CreditsFilter(object item)
         {
             LineItemDRM lineRow = (LineItemDRM)item;
@@ -62,62 +77,56 @@ namespace FamilyFinance.Presentation.EditTransaction
             return keepItem;
         }
 
-        private void setupViews()
+        private void CreditOrDebitView_CurrentChanged(object sender, EventArgs e)
         {
-            this.CreditsView = new ListCollectionView(this.TransactionModel.LineItems);
-            this.CreditsView.Filter = new Predicate<Object>(CreditsFilter);
-            this.CreditsView.CurrentChanged += new EventHandler(CreditView_CurrentChanged);
+            ListCollectionView view = (ListCollectionView) sender;
 
-            this.DebitsView = new ListCollectionView(this.TransactionModel.LineItems);
-            this.DebitsView.Filter = new Predicate<Object>(DebitsFilter);
-            this.DebitsView.CurrentChanged += new EventHandler(DebitView_CurrentChanged);
-
-            this.TransactionTypesView = new ListCollectionView(DataSetModel.Instance.TransactionTypes);
-
-            this.AccountsView = new ListCollectionView(DataSetModel.Instance.Accounts);
-
-        }
-
-        private void CreditView_CurrentChanged(object sender, EventArgs e)
-        {
-            if (this.CreditsView.IsAddingNew)
+            if (view.IsAddingNew)
             {
                 LineItemDRM newLine = (LineItemDRM)CreditsView.CurrentAddItem;
-                newCreditLine(newLine);
+
+                newLine.Amount = suggestedAmountDependingOnView(view);
+                newLine.Polarity = determinePolarityDependingOnView(view);
+
+
             }
         }
 
-        private void DebitView_CurrentChanged(object sender, EventArgs e)
+        private decimal suggestedAmountDependingOnView(ListCollectionView view)
         {
-            if (this.DebitsView.IsAddingNew)
-            {
-                LineItemDRM newLine = (LineItemDRM)DebitsView.CurrentAddItem;
-                newDebitLine(newLine);
-            }
-        }
+            decimal suggestedAmount;
 
-        private void newDebitLine(LineItemDRM newLine)
-        {
-            decimal suggestedAmount = this.TransactionModel.CreditSum - this.TransactionModel.DebitSum;
+            if(view == DebitsView)
+                suggestedAmount = TransactionModel.CreditSum - TransactionModel.DebitSum;
+            else
+                suggestedAmount = TransactionModel.DebitSum - TransactionModel.CreditSum;
 
             if (suggestedAmount < 0)
                 suggestedAmount = 0;
 
-            newLine.Polarity = PolarityCON.DEBIT;
-            newLine.Amount = suggestedAmount;
+            return suggestedAmount;
         }
 
-        private void newCreditLine(LineItemDRM newLine)
+        private PolarityCON determinePolarityDependingOnView(ListCollectionView view)
         {
-            decimal suggestedAmount = this.TransactionModel.DebitSum - this.TransactionModel.CreditSum;
-
-            if (suggestedAmount < 0)
-                suggestedAmount = 0;
-
-            newLine.Polarity = PolarityCON.CREDIT;
-            newLine.Amount = suggestedAmount;
+            if (view == DebitsView)
+                return PolarityCON.DEBIT;
+            else
+                return PolarityCON.CREDIT;
         }
 
+        private void resetViewFilterIfNeeded(ListCollectionView view)
+        {
+            // When adding a new line the credit or debit filter might be applied
+            // too soon and a ghost copy of the line might appear in the opposite
+            // view or datagrid. So when an item is added to the view and after 
+            // the polarity is set refresh the opposite view to remove the ghost 
+            // line.
+            if (view == DebitsView)
+                this.CreditsView.Refresh();
+            else
+                this.DebitsView.Refresh();
+        }
 
      
 

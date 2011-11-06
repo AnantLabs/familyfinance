@@ -28,6 +28,7 @@ namespace FamilyFinance.Buisness
                 this.LineItems.Add(new LineItemModel(line));
         }
 
+
         private void listenToCollectionChanges()
         {
             this.LineItems.CollectionChanged += new NotifyCollectionChangedEventHandler(LineItems_CollectionChanged);
@@ -39,10 +40,10 @@ namespace FamilyFinance.Buisness
                 pointNewLinesToThisTransaction(e.NewItems);
 
             else if (e.Action == NotifyCollectionChangedAction.Remove)
-                deleteLine(e.OldItems);
+                deleteLineItems(e.OldItems);
         }
 
-        private void deleteLine(System.Collections.IList iList)
+        private void deleteLineItems(System.Collections.IList iList)
         {
             foreach (LineItemModel oldLine in iList)
                 oldLine.Delete();
@@ -53,6 +54,7 @@ namespace FamilyFinance.Buisness
             foreach(LineItemModel newLine in iList)
                 newLine.setParentTransaction(this);
         }
+
 
 
         ///////////////////////////////////////////////////////////
