@@ -22,11 +22,29 @@ namespace FamilyFinance.Presentation.EditTransaction
         public ListCollectionView EnvelopeLinesView { get; private set; } 
 
 
-        public ListCollectionView TransactionTypesView { get; private set; }
+        public ListCollectionView TransactionTypesView 
+        {
+            get
+            {
+                return new ListCollectionView(DataSetModel.Instance.TransactionTypes);
+            }
+        }
 
-        public ListCollectionView AccountsView { get; private set; }
+        public ListCollectionView AccountsView 
+        {
+            get
+            {
+                return new ListCollectionView(DataSetModel.Instance.Accounts);
+            }
+        }
 
-        public ListCollectionView EnvelopesView { get; private set; }
+        public ListCollectionView EnvelopesView
+        {
+            get
+            {
+                return new ListCollectionView(DataSetModel.Instance.Envelopes);
+            }
+        }
 
         public decimal EnvelopeLineSum
         {
@@ -50,9 +68,8 @@ namespace FamilyFinance.Presentation.EditTransaction
             this.DebitsView.Filter = new Predicate<Object>(DebitsFilter);
             this.DebitsView.CurrentChanged += new EventHandler(CreditOrDebitView_CurrentChanged);
 
-            this.TransactionTypesView = new ListCollectionView(DataSetModel.Instance.TransactionTypes);
 
-            this.AccountsView = new ListCollectionView(DataSetModel.Instance.Accounts);
+            
         }
 
         private bool CreditsFilter(object item)
@@ -83,12 +100,12 @@ namespace FamilyFinance.Presentation.EditTransaction
 
             if (view.IsAddingNew)
             {
-                LineItemDRM newLine = (LineItemDRM)CreditsView.CurrentAddItem;
+                LineItemDRM newLine = (LineItemDRM)view.CurrentAddItem;
 
                 newLine.Amount = suggestedAmountDependingOnView(view);
                 newLine.Polarity = determinePolarityDependingOnView(view);
 
-
+                removeGhostLine(view);
             }
         }
 
@@ -115,7 +132,7 @@ namespace FamilyFinance.Presentation.EditTransaction
                 return PolarityCON.CREDIT;
         }
 
-        private void resetViewFilterIfNeeded(ListCollectionView view)
+        private void removeGhostLine(ListCollectionView view)
         {
             // When adding a new line the credit or debit filter might be applied
             // too soon and a ghost copy of the line might appear in the opposite

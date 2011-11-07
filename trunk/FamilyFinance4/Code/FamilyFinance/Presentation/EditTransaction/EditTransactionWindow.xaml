@@ -145,9 +145,9 @@
                       SelectionMode="Single" 
                       HeadersVisibility="Column"
                       ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=CreditsView}" 
-                      DataContext="{Binding Path=CreditsView}" 
                       CanUserResizeRows="False" 
-                      RowDetailsVisibilityMode="Collapsed">
+                      RowDetailsVisibilityMode="Collapsed"
+                      >
                 <DataGrid.Columns>
                     <!-- Account Credit Combobox column -->
                     <DataGridTemplateColumn x:Name="accountCreditColumnCB" 
@@ -157,7 +157,17 @@
                                         Width="30*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Path=AccountName, Mode=OneWay}" />
+                                <TextBlock Text="{Binding Path=AccountName, Mode=OneWay}" >
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=IsAccountError, Mode=OneWay}" Value="True" >
+                                                    <Setter Property="Background" Value="Red"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                         <DataGridTemplateColumn.CellEditingTemplate>
@@ -199,7 +209,6 @@
                       SelectionMode="Single" 
                       HeadersVisibility="Column"
                       ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=DebitsView}" 
-                      DataContext="{Binding Path=DebitsView}" 
                       CanUserResizeRows="False" 
                       RowDetailsVisibilityMode="Collapsed">
                 <DataGrid.Columns>
@@ -211,15 +220,25 @@
                                         Width="30*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Path=AccountName, Mode=OneWay}" />
+                                <TextBlock Text="{Binding Path=AccountName, Mode=OneWay}" >
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=IsAccountError, Mode=OneWay}" Value="True" >
+                                                    <Setter Property="Background" Value="Red"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
                                 <ComboBox SelectedValue="{Binding Path=AccountID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=AccountsView}"
-                                              SelectedValuePath="ID"
-                                              DisplayMemberPath="Name">
+                                          ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=AccountsView}"
+                                          SelectedValuePath="ID"
+                                          DisplayMemberPath="Name">
                                 </ComboBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
@@ -260,8 +279,7 @@
                       SelectionMode="Single" 
                       CanUserDeleteRows="False" 
                       HeadersVisibility="Column"
-                      ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=EnvelopesView}" 
-                      DataContext="{Binding Path=EnvelopeLinesView}">
+                      ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=EnvelopeLinesView}">
                 <DataGrid.Columns>
                     <!-- Account Credit Combobox column -->
                     <DataGridTemplateColumn x:Name="EnvelopeColumnCB" 
