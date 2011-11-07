@@ -41,6 +41,8 @@ namespace FamilyFinance.Buisness
             set
             {
                 this.lineItemRow.accountID = value;
+                this.reportPropertyChangedWithName("AccountName");
+                this.reportPropertyChangedWithName("IsAccountError");
             }
         }
 
@@ -106,6 +108,17 @@ namespace FamilyFinance.Buisness
         }
 
 
+
+        public bool IsAccountError
+        {
+            get
+            {
+                if (this.lineItemRow.accountID == AccountCON.NULL.ID)
+                    return true;
+                else
+                    return false;
+            }
+        }
 
         public bool IsLineError
         {
