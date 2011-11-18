@@ -172,7 +172,7 @@
                         </DataGridTemplateColumn.CellTemplate>
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
-                                <ComboBox SelectedValue="{Binding Path=AccountID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                <ComboBox SelectedValue="{Binding Path=AccountID}"
                                           ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=AccountsView}"
                                           SelectedValuePath="ID"
                                           DisplayMemberPath="Name">

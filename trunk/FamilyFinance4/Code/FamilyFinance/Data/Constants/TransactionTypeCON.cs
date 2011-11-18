@@ -5,21 +5,16 @@ namespace FamilyFinance.Data
     public class TransactionTypeCON
     {
 
-        //public static int NameMaxLength = MyData.getInstance().TransactionType.nameColumn.MaxLength;
-                
-        /// <summary>
-        /// The object to represent an NULL Line Type.
-        /// </summary>
+        ///////////////////////////////////////////////////////////
+        // Static Instances
+        ///////////////////////////////////////////////////////////
         public static TransactionTypeCON NULL = new TransactionTypeCON(-1, " ");
 
-        /// <summary>
-        /// The id value of the line type.
-        /// </summary>
-        private readonly int _ID;
 
-        /// <summary>
-        /// Amount the ID of the Line Type.
-        /// </summary>
+        ///////////////////////////////////////////////////////////
+        // Properties
+        ///////////////////////////////////////////////////////////
+        private readonly int _ID;
         public int ID
         {
             get
@@ -28,14 +23,8 @@ namespace FamilyFinance.Data
             }
         }
 
-        /// <summary>
-        /// The name of the catagory
-        /// </summary>
-        private readonly string _Name;
 
-        /// <summary>
-        /// Amount the name of the catagory.
-        /// </summary>
+        private readonly string _Name;
         public string Name
         {
             get
@@ -49,16 +38,26 @@ namespace FamilyFinance.Data
             return this.Name;
         }
 
-        /// <summary>
-        /// Prevents outside instantiation of this class. This is esentially an Enum like the kind
-        /// available in Java.
-        /// </summary>
-        /// <param name="id">The stored value of the line complete state.</param>
-        /// <param name="name">The name of the line complete state.</param>
+
+        ///////////////////////////////////////////////////////////
+        // Private Constructor
+        ///////////////////////////////////////////////////////////
         private TransactionTypeCON(int id, string name)
         {
             this._ID = id;
             this._Name = name;
+        }
+
+
+        ///////////////////////////////////////////////////////////
+        // Public static functions
+        ///////////////////////////////////////////////////////////
+        public static bool IsSpecial(int transTypeID)
+        {
+            if (transTypeID == TransactionTypeCON.NULL.ID)
+                return true;
+            else
+                return false;
         }
 
     }

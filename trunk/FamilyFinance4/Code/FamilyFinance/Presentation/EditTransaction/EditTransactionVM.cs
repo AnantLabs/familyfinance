@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Windows.Data;
+using System.Collections;
 using System.Collections.ObjectModel;
 
 using FamilyFinance.Buisness;
+using FamilyFinance.Buisness.Sorters;
 using FamilyFinance.Data;
-using System.Reflection;
 
 namespace FamilyFinance.Presentation.EditTransaction
 {
@@ -15,26 +16,28 @@ namespace FamilyFinance.Presentation.EditTransaction
         ///////////////////////////////////////////////////////////
         public TransactionModel TransactionModel { get; private set; }
 
+        public ListCollectionView TransactionTypesView { get; private set; }
+
         public ListCollectionView CreditsView { get; private set; }
 
         public ListCollectionView DebitsView { get; private set; }
 
         public ListCollectionView EnvelopeLinesView { get; private set; } 
 
-
-        public ListCollectionView TransactionTypesView 
+        public decimal EnvelopeLineSum
         {
             get
             {
-                return new ListCollectionView(DataSetModel.Instance.TransactionTypes);
+                return 0;
             }
         }
+
 
         public ListCollectionView AccountsView 
         {
             get
             {
-                return new ListCollectionView(DataSetModel.Instance.Accounts);
+                return getANewSortedViewOfAccounts();
             }
         }
 
@@ -46,20 +49,15 @@ namespace FamilyFinance.Presentation.EditTransaction
             }
         }
 
-        public decimal EnvelopeLineSum
-        {
-            get
-            {
-                return 0;
-            }
-        }
-
 
         ///////////////////////////////////////////////////////////
         // Private functions
         ///////////////////////////////////////////////////////////
         private void setupViews()
-        {
+        {            
+            this.TransactionTypesView = new ListCollectionView(DataSetModel.Instance.TransactionTypes);
+            this.TransactionTypesView.CustomSort = new TransactionTypesComparer();
+
             this.CreditsView = new ListCollectionView(this.TransactionModel.LineItems);
             this.CreditsView.Filter = new Predicate<Object>(CreditsFilter);
             this.CreditsView.CurrentChanged += new EventHandler(CreditOrDebitView_CurrentChanged);
@@ -67,14 +65,12 @@ namespace FamilyFinance.Presentation.EditTransaction
             this.DebitsView = new ListCollectionView(this.TransactionModel.LineItems);
             this.DebitsView.Filter = new Predicate<Object>(DebitsFilter);
             this.DebitsView.CurrentChanged += new EventHandler(CreditOrDebitView_CurrentChanged);
-
-
             
         }
 
         private bool CreditsFilter(object item)
         {
-            LineItemDRM lineRow = (LineItemDRM)item;
+            LineItemModel lineRow = (LineItemModel)item;
             bool keepItem = false;
 
             if (lineRow.Polarity == PolarityCON.CREDIT)
@@ -85,7 +81,7 @@ namespace FamilyFinance.Presentation.EditTransaction
 
         private bool DebitsFilter(object item)
         {
-            LineItemDRM lineRow = (LineItemDRM)item;
+            LineItemModel lineRow = (LineItemModel)item;
             bool keepItem = false; 
 
             if (lineRow.Polarity == PolarityCON.DEBIT)
@@ -100,13 +96,19 @@ namespace FamilyFinance.Presentation.EditTransaction
 
             if (view.IsAddingNew)
             {
-                LineItemDRM newLine = (LineItemDRM)view.CurrentAddItem;
+                LineItemModel newLine = (LineItemModel)view.CurrentAddItem;
 
                 newLine.Amount = suggestedAmountDependingOnView(view);
                 newLine.Polarity = determinePolarityDependingOnView(view);
 
                 removeGhostLine(view);
             }
+
+            LineItemModel currentLine = (LineItemModel)view.CurrentItem;
+            this.EnvelopeLinesView = new ListCollectionView(currentLine.EnvelopeLines);
+            this.reportPropertyChangedWithName("EnvelopeLinesView");
+
+
         }
 
         private decimal suggestedAmountDependingOnView(ListCollectionView view)
@@ -145,7 +147,29 @@ namespace FamilyFinance.Presentation.EditTransaction
                 this.DebitsView.Refresh();
         }
 
-     
+
+        private ListCollectionView getANewSortedViewOfAccounts()
+        {
+
+            ListCollectionView listView = new ListCollectionView(DataSetModel.Instance.Accounts);
+
+            listView.CustomSort = new AccountsCategoryNameComparer();
+            listView.Filter = new Predicate<Object>(AccountsFilter);
+
+            return listView;
+        }
+
+        private bool AccountsFilter(object item)
+        {
+            AccountDRM account = (AccountDRM)item;
+            bool keepItem = true;
+
+            if (account.ID == AccountCON.MULTIPLE.ID)
+                keepItem = false;
+
+            return keepItem;
+        }
+
 
         ///////////////////////////////////////////////////////////
         // Public functions

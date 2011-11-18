@@ -259,5 +259,13 @@ namespace FamilyFinance.Buisness
             this.accountRow = accountRow;
             this.bankInfoRow = bankRow;
         }
+
+        public bool IsSpecial()
+        {
+            if (AccountCON.isSpecial(this.ID))
+                return true;
+            else
+                return false;
+        }
     }
 }
