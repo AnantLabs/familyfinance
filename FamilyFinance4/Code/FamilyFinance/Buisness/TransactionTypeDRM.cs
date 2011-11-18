@@ -9,8 +9,15 @@ namespace FamilyFinance.Buisness
 {
     public class TransactionTypeDRM : DataRowModel
     {
+        ///////////////////////////////////////////////////////////
+        // Local Members
+        ///////////////////////////////////////////////////////////
         private FFDataSet.TransactionTypeRow TransactionTypeRow;
 
+
+        ///////////////////////////////////////////////////////////
+        // Properties
+        ///////////////////////////////////////////////////////////
         public int ID 
         {
             get
@@ -37,6 +44,10 @@ namespace FamilyFinance.Buisness
             this.TransactionTypeRow = DataSetModel.Instance.NewTransactionTypeRow();
         }
 
+
+        ///////////////////////////////////////////////////////////
+        // Public functions
+        ///////////////////////////////////////////////////////////
         public TransactionTypeDRM(FFDataSet.TransactionTypeRow ttRow)
         {
             this.TransactionTypeRow = ttRow;
@@ -47,6 +58,13 @@ namespace FamilyFinance.Buisness
             this.TransactionTypeRow = DataSetModel.Instance.NewTransactionTypeRow();
             this.Name = transactionTypeName;
         }
-    
+
+        public bool IsSpecial()
+        {
+            if (TransactionTypeCON.IsSpecial(this.ID))
+                return true;
+            else
+                return false;
+        }
     }
 }

@@ -63,10 +63,12 @@
     <Compile Include="Buisness\DataSetModel.cs" />
     <Compile Include="Buisness\EnvelopeDRM.cs" />
     <Compile Include="Buisness\EnvelopeLineDRM.cs" />
-    <Compile Include="Buisness\LineItemModel.cs" />
+    <Compile Include="Buisness\Sorters\AccountsCategoryNameComparer.cs" />
+    <Compile Include="Buisness\Sorters\TransactionTypesComparer.cs" />
+    <Compile Include="Presentation\EditTransaction\LineItemModel.cs" />
     <Compile Include="Buisness\RegistryEnvelopeLineModel.cs" />
     <Compile Include="Buisness\RegistryLineModel.cs" />
-    <Compile Include="Buisness\TransactionModel.cs" />
+    <Compile Include="Presentation\EditTransaction\TransactionModel.cs" />
     <Compile Include="Data\Constants\AccountCON.cs" />
     <Compile Include="Data\Constants\AccountTypeCON.cs" />
     <Compile Include="Data\Constants\BankCON.cs" />

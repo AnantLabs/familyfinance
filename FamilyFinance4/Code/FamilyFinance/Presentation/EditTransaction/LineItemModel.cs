@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
-using FamilyFinance.Data;
 
-namespace FamilyFinance.Buisness
+using FamilyFinance.Data;
+using FamilyFinance.Buisness;
+
+namespace FamilyFinance.Presentation.EditTransaction
 {
     public class LineItemModel : LineItemDRM
     {

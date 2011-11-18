@@ -1,10 +1,12 @@
 ﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+
 using FamilyFinance.Data;
+using FamilyFinance.Buisness;
 
 
 
-namespace FamilyFinance.Buisness
+namespace FamilyFinance.Presentation.EditTransaction
 {
     public class TransactionModel : TransactionDRM
     {

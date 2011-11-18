@@ -88,11 +88,22 @@ namespace ImportOldFFDB
                 addEnvelopeLine(newLine, eLine);
         }
 
-        private void addEnvelopeLine(LineItemDRM newLine, OldFFDBDataSet.EnvelopeLineRow eLine)
+        private void addEnvelopeLine(LineItemDRM newLine, OldFFDBDataSet.EnvelopeLineRow sourceELine)
         {
-            //EnvelopeLineDRM newELine = new EnvelopeLineDRM(newLine);
+            EnvelopeLineDRM newELine = new EnvelopeLineDRM(newLine);
+
+            newELine.EnvelopeID = envelopeAppender.getDestinationIdFromSourceId(sourceELine.envelopeID);
+            newELine.Description = getELineDescription(sourceELine);
+            newELine.Amount = sourceELine.amount;
         }
 
+        private string getELineDescription(OldFFDBDataSet.EnvelopeLineRow sourceELine)
+        {
+            if (sourceELine.IsdescriptionNull())
+                return null;
+            else
+                return sourceELine.description;
+        }
 
 
 

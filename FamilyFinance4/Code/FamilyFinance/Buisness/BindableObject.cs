@@ -41,5 +41,6 @@ namespace FamilyFinance.Buisness
                 System.Windows.MessageBoxButton.OK, 
                 System.Windows.MessageBoxImage.Stop);
         }
+
     }
 }
