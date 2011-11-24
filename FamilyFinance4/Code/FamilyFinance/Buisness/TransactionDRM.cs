@@ -65,18 +65,13 @@ namespace FamilyFinance.Buisness
                 this.transactionRow.description = value;
             }
         }
-        
 
 
         public bool IsTransactionError
         {
             get
             {
-                if (isOneSidedTransaction() || isTransactionBalanced())
-                    return false;
-
-                else
-                    return true;
+                return this.isTransactionError();
             }
         }
 
@@ -84,13 +79,7 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                decimal creditSum = 0;
-
-                foreach (FFDataSet.LineItemRow line in this.transactionRow.GetLineItemRows())
-                    if (line.polarity == PolarityCON.CREDIT.Value)
-                        creditSum += line.amount;
-
-                return creditSum;
+                return this.getCreditSum();
             }
         }
 
@@ -98,15 +87,10 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                decimal debitSum = 0;
-
-                foreach (FFDataSet.LineItemRow line in this.transactionRow.GetLineItemRows())
-                    if (line.polarity == PolarityCON.DEBIT.Value)
-                        debitSum += line.amount;
-
-                return debitSum;
+                return this.getDebitSum();
             }
         }
+
 
 
         ///////////////////////////////////////////////////////////
@@ -141,24 +125,35 @@ namespace FamilyFinance.Buisness
                 return false;
         }
 
-        private void listenForTransactionBalanceChanges()
+        private bool isTransactionError()
         {
-            DataSetModel.Instance.TransactionBalanceChanged += new DataSetModel.TransactionBalanceChangedEventHandler(Instance_TransactionBalanceChanged);
+            if (isOneSidedTransaction() || isTransactionBalanced())
+                return false;
+
+            else
+                return true;
         }
 
-        private void Instance_TransactionBalanceChanged(int transactionID)
+        private decimal getCreditSum()
         {
-            if (this.TransactionID == transactionID)
-            {
-                this.reportPropertyChangedWithName("IsTransactionError");
-                this.reportPropertyChangedWithName("CreditSum");
-                this.reportPropertyChangedWithName("DebitSum");
-            }
+               decimal creditSum = 0;
+
+                foreach (FFDataSet.LineItemRow line in this.transactionRow.GetLineItemRows())
+                    if (line.polarity == PolarityCON.CREDIT.Value)
+                        creditSum += line.amount;
+
+                return creditSum;
         }
 
-        private void newEmptyTransaction()
+        private decimal getDebitSum()
         {
-            this.transactionRow = DataSetModel.Instance.NewTransactionRow();
+            decimal debitSum = 0;
+
+            foreach (FFDataSet.LineItemRow line in this.transactionRow.GetLineItemRows())
+                if (line.polarity == PolarityCON.DEBIT.Value)
+                    debitSum += line.amount;
+
+            return debitSum;
         }
 
 
@@ -168,20 +163,17 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////
         public TransactionDRM()
         {
-            newEmptyTransaction();
-            listenForTransactionBalanceChanges();
+            this.transactionRow = DataSetModel.Instance.NewTransactionRow();
         }
 
         public TransactionDRM(FFDataSet.TransactionRow tRow)
         {
             this.transactionRow = tRow;
-            listenForTransactionBalanceChanges();
         }
 
         public TransactionDRM(int transactionID)
         {
             this.transactionRow = DataSetModel.Instance.getTransactionRowWithID(transactionID);
-            listenForTransactionBalanceChanges();
         }
 
 
@@ -190,12 +182,14 @@ namespace FamilyFinance.Buisness
             return this.transactionRow.GetLineItemRows();
         }
 
-        public LineItemDRM newLineItemForTransaction()
+        public void retportDependantPropertiesChanged()
         {
-            return new LineItemDRM(this);
+            this.reportPropertyChangedWithName("IsTransactionError");
+            this.reportPropertyChangedWithName("CreditSum");
+            this.reportPropertyChangedWithName("DebitSum");
         }
 
-        public void Delete()
+        public void delete()
         {
             this.transactionRow.Delete();
         }

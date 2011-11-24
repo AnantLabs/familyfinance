@@ -36,7 +36,7 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        public virtual string Description
+        public string Description
         {
             get
             {
@@ -48,7 +48,7 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        public decimal Amount
+        public virtual decimal Amount
         {
             get
             {

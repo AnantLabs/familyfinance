@@ -11,6 +11,7 @@ namespace FamilyFinance.Buisness
         // Local Variables
         ///////////////////////////////////////////////////////////////////////////////////////////
         private FFDataSet.LineItemRow lineItemRow;
+        private TransactionDRM parentTransaction;
 
 
         ///////////////////////////////////////////////////////////////////////////////////////////
@@ -79,6 +80,7 @@ namespace FamilyFinance.Buisness
 
                 this.lineItemRow.amount = Decimal.Round(value, 2);
                 this.reportPropertyChangedWithName("Amount");
+                this.reportToParentThatADependantPropertyHasChanged();
             }
         }
 
@@ -92,6 +94,7 @@ namespace FamilyFinance.Buisness
             {
                 this.lineItemRow.polarity = value.Value;
                 this.reportPropertyChangedWithName("Polarity");
+                this.reportToParentThatADependantPropertyHasChanged();
             }
         }
 
@@ -124,7 +127,7 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                decimal envLineSum = EnvelopeLineSum;
+                decimal envLineSum = this.EnvelopeLineSum;
                 bool accountUsesEnvelopes = lineItemRow.AccountRow.envelopes;
 
                 if (accountUsesEnvelopes && lineItemRow.amount == envLineSum)
@@ -153,21 +156,19 @@ namespace FamilyFinance.Buisness
 
 
 
+
         ///////////////////////////////////////////////////////////////////////////////////////////
         // Private Functions
         ///////////////////////////////////////////////////////////////////////////////////////////
-        private void listenForLineitemBalanceChanges()
+        private void reportToParentThatADependantPropertyHasChanged()
         {
-            DataSetModel.Instance.LineBalanceChanged += new DataSetModel.LineBalanceChangedEventHandler(Instance_LineBalanceChanged);
+            if (this.parentTransaction != null)
+                this.parentTransaction.retportDependantPropertiesChanged();
         }
 
-        private void Instance_LineBalanceChanged(int lineitemID)
+        protected FFDataSet.EnvelopeLineRow[] getEnvelopeLineRows()
         {
-            if (this.LineID == lineitemID)
-            {
-                this.reportPropertyChangedWithName("IsLineError");
-                this.reportPropertyChangedWithName("EnvelopeLineSum");
-            }
+            return this.lineItemRow.GetEnvelopeLineRows();
         }
 
 
@@ -180,25 +181,30 @@ namespace FamilyFinance.Buisness
             this.lineItemRow = DataSetModel.Instance.NewLineItemRow();
         }
         
-        public LineItemDRM(FFDataSet.LineItemRow lineRow)
+        //public LineItemDRM(FFDataSet.LineItemRow lineRow)
+        //{
+        //    this.lineItemRow = lineRow;
+        //}
+
+        public LineItemDRM(FFDataSet.LineItemRow lineRow, TransactionDRM parentTransaction)
         {
             this.lineItemRow = lineRow;
+            this.parentTransaction = parentTransaction;
         }
 
-        public LineItemDRM(TransactionDRM transaction)
+        public LineItemDRM(TransactionDRM parentTransaction)
         {
-            this.lineItemRow = DataSetModel.Instance.NewLineItemRow(transaction);
+            this.lineItemRow = DataSetModel.Instance.NewLineItemRow(parentTransaction);
+            this.parentTransaction = parentTransaction;
         }
+
 
 
         public void setParentTransaction(TransactionDRM transaction)
         {
             this.lineItemRow.transactionID = transaction.TransactionID;
-        }
-
-        protected FFDataSet.EnvelopeLineRow[] getEnvelopeLineRows()
-        {
-            return this.lineItemRow.GetEnvelopeLineRows();
+            this.parentTransaction = transaction;
+            this.reportToParentThatADependantPropertyHasChanged();
         }
 
         public EnvelopeLineDRM newEnvelopeLineItemForLineitem()
@@ -206,7 +212,7 @@ namespace FamilyFinance.Buisness
             return new EnvelopeLineDRM(this);
         }
 
-        public void Delete()
+        public void delete()
         {
             // Set amount to zero so there we don't have to listen to when rows are
             // added or removed. By setting the amount to zero before deleting it 

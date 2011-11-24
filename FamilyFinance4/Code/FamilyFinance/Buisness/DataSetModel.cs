@@ -32,8 +32,8 @@ namespace FamilyFinance.Buisness
         {
             ffDataSet = new FFDataSet();
 
-            ffDataSet.LineItem.ColumnChanged += new DataColumnChangeEventHandler(LineItem_ColumnChanged);
-            ffDataSet.EnvelopeLine.ColumnChanged += new DataColumnChangeEventHandler(EnvelopeLine_ColumnChanged);
+            //ffDataSet.LineItem.ColumnChanged += new DataColumnChangeEventHandler(LineItem_ColumnChanged);
+            //ffDataSet.EnvelopeLine.ColumnChanged += new DataColumnChangeEventHandler(EnvelopeLine_ColumnChanged);
         }
 
         public void loadData()
@@ -548,52 +548,52 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////////////////
         // Events
         ///////////////////////////////////////////////////////////////////////
-        private void LineItem_ColumnChanged(object sender, DataColumnChangeEventArgs e)
-        {
-            if (e.Row.RowState == DataRowState.Detached)
-                return;
+        //private void LineItem_ColumnChanged(object sender, DataColumnChangeEventArgs e)
+        //{
+        //    if (e.Row.RowState == DataRowState.Detached)
+        //        return;
 
-            string columnName = e.Column.ColumnName;
+        //    string columnName = e.Column.ColumnName;
 
-            if (columnName == "amount" || columnName == "polarity")
-            {
-                int transID = (e.Row as FFDataSet.LineItemRow).transactionID;
-                raiseTransactionBalanceChange(transID);
-            }
-        }
+        //    if (columnName == "amount" || columnName == "polarity")
+        //    {
+        //        int transID = (e.Row as FFDataSet.LineItemRow).transactionID;
+        //        raiseTransactionBalanceChange(transID);
+        //    }
+        //}
 
-        private void EnvelopeLine_ColumnChanged(object sender, DataColumnChangeEventArgs e)
-        {
-            if (e.Row.RowState == DataRowState.Detached)
-                return;
+        //private void EnvelopeLine_ColumnChanged(object sender, DataColumnChangeEventArgs e)
+        //{
+        //    if (e.Row.RowState == DataRowState.Detached)
+        //        return;
 
-            string columnName = e.Column.ColumnName;
+        //    string columnName = e.Column.ColumnName;
 
-            if (columnName == "amount")
-            {
-                int lineID = (e.Row as FFDataSet.EnvelopeLineRow).lineItemID;
-                raiseLineBalanceChange(lineID);
-            }
-        }
+        //    if (columnName == "amount")
+        //    {
+        //        int lineID = (e.Row as FFDataSet.EnvelopeLineRow).lineItemID;
+        //        raiseLineBalanceChange(lineID);
+        //    }
+        //}
 
 
-        public delegate void TransactionBalanceChangedEventHandler(int transactionID);
-        public event TransactionBalanceChangedEventHandler TransactionBalanceChanged;
+        //public delegate void TransactionBalanceChangedEventHandler(int transactionID);
+        //public event TransactionBalanceChangedEventHandler TransactionBalanceChanged;
 
-        private void raiseTransactionBalanceChange(int transID)
-        {
-            if (this.TransactionBalanceChanged != null)
-                this.TransactionBalanceChanged(transID);
-        }
+        //private void raiseTransactionBalanceChange(int transID)
+        //{
+        //    if (this.TransactionBalanceChanged != null)
+        //        this.TransactionBalanceChanged(transID);
+        //}
 
-        public delegate void LineBalanceChangedEventHandler(int lineitemID);
-        public event LineBalanceChangedEventHandler LineBalanceChanged;
+        //public delegate void LineBalanceChangedEventHandler(int lineitemID);
+        //public event LineBalanceChangedEventHandler LineBalanceChanged;
 
-        private void raiseLineBalanceChange(int lineitemID)
-        {
-            if (this.LineBalanceChanged != null)
-                this.LineBalanceChanged(lineitemID);
-        }
+        //private void raiseLineBalanceChange(int lineitemID)
+        //{
+        //    if (this.LineBalanceChanged != null)
+        //        this.LineBalanceChanged(lineitemID);
+        //}
 
 
 

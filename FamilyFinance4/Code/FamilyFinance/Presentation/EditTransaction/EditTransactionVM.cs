@@ -22,7 +22,20 @@ namespace FamilyFinance.Presentation.EditTransaction
 
         public ListCollectionView DebitsView { get; private set; }
 
-        public ListCollectionView EnvelopeLinesView { get; private set; } 
+        private ListCollectionView _EnvelopeLinesView;
+        public ListCollectionView EnvelopeLinesView 
+        {
+            get
+            {
+                return this._EnvelopeLinesView;
+            }
+
+            private set
+            {
+                this._EnvelopeLinesView = value;
+                this.reportPropertyChangedWithName("EnvelopeLinesView");
+            }
+        } 
 
         public decimal EnvelopeLineSum
         {
@@ -105,9 +118,18 @@ namespace FamilyFinance.Presentation.EditTransaction
             }
 
             LineItemModel currentLine = (LineItemModel)view.CurrentItem;
-            this.EnvelopeLinesView = new ListCollectionView(currentLine.EnvelopeLines);
-            this.reportPropertyChangedWithName("EnvelopeLinesView");
 
+            if (currentLine != null)
+            {
+                if (currentLine.supportsEnvelopeLines())
+                {
+                    this.EnvelopeLinesView = new ListCollectionView(currentLine.EnvelopeLines);
+                }
+            }
+            else
+            {
+                this.EnvelopeLinesView = null;
+            }
 
         }
 
