@@ -259,12 +259,12 @@ namespace FamilyFinance.Buisness
         //    MyData.getInstance().LineItem.AddLineItemRow(oppLine);
         //}
 
-        public RegistryLineModel(TransactionDRM transDRM, FFDataSet.LineItemRow lineRow)
-            : base(lineRow)
-        {
+        //public RegistryLineModel(TransactionDRM transDRM, FFDataSet.LineItemRow lineRow)
+        //    : base(lineRow)
+        //{
 
-            this._transactionDRM = transDRM;
-        }
+        //    this._transactionDRM = transDRM;
+        //}
         
     }
 }

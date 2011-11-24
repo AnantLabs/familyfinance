@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections.ObjectModel;
-
-using FamilyFinance.Data;
+﻿using System.Collections.ObjectModel;
 using FamilyFinance.Buisness;
+using FamilyFinance.Data;
 
 namespace FamilyFinance.Presentation.EditTransaction
 {
@@ -32,7 +27,6 @@ namespace FamilyFinance.Presentation.EditTransaction
         }
 
 
-
         ///////////////////////////////////////////////////////////
         // Public functions
         ///////////////////////////////////////////////////////////
@@ -41,17 +35,31 @@ namespace FamilyFinance.Presentation.EditTransaction
             newEmptyEnvelopeLineCollection();
         }
 
-        public LineItemModel(FFDataSet.LineItemRow lRow) : base(lRow)
+        public LineItemModel(FFDataSet.LineItemRow lRow, TransactionDRM parentTransaction) : base(lRow, parentTransaction)
         {
             newEmptyEnvelopeLineCollection();
             fillEnvelopeLineCollection(this.getEnvelopeLineRows());
         }
 
-        public LineItemModel(TransactionDRM transaction) : base(transaction)
+        //public LineItemModel(TransactionDRM parentTransaction) : base(parentTransaction)
+        //{
+        //    newEmptyEnvelopeLineCollection();
+        //    fillEnvelopeLineCollection(this.getEnvelopeLineRows());
+        //}
+
+
+        public void setParentTransaction(TransactionModel transaction)
         {
-            newEmptyEnvelopeLineCollection();
-            fillEnvelopeLineCollection(this.getEnvelopeLineRows());
+            base.setParentTransaction((TransactionDRM) transaction);
         }
+
+
+        public void retportDependantPropertiesChanged()
+        {
+            this.reportPropertyChangedWithName("IsLineError");
+            this.reportPropertyChangedWithName("EnvelopeLineSum");
+        }
+
 
     }
 }

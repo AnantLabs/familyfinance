@@ -16,6 +16,7 @@ namespace FamilyFinance.Presentation.EditTransaction
         public ObservableCollection<LineItemModel> LineItems { get; private set; }
 
 
+
         ///////////////////////////////////////////////////////////
         // Private functions
         ///////////////////////////////////////////////////////////
@@ -27,7 +28,7 @@ namespace FamilyFinance.Presentation.EditTransaction
         private void fillLineItemCollection(FFDataSet.LineItemRow[] lines)
         {
             foreach (FFDataSet.LineItemRow line in lines)
-                this.LineItems.Add(new LineItemModel(line));
+                this.LineItems.Add(new LineItemModel(line, this));
         }
 
 
@@ -48,7 +49,7 @@ namespace FamilyFinance.Presentation.EditTransaction
         private void deleteLineItems(System.Collections.IList iList)
         {
             foreach (LineItemModel oldLine in iList)
-                oldLine.Delete();
+                oldLine.delete();
         }
 
         private void pointNewLinesToThisTransaction(System.Collections.IList iList)
@@ -81,6 +82,10 @@ namespace FamilyFinance.Presentation.EditTransaction
             fillLineItemCollection(this.getLineItemRows());
             listenToCollectionChanges();
         }
+
+
+        
+
 
     }
 }
