@@ -181,11 +181,6 @@ namespace FamilyFinance.Buisness
             this.lineItemRow = DataSetModel.Instance.NewLineItemRow();
         }
         
-        //public LineItemDRM(FFDataSet.LineItemRow lineRow)
-        //{
-        //    this.lineItemRow = lineRow;
-        //}
-
         public LineItemDRM(FFDataSet.LineItemRow lineRow, TransactionDRM parentTransaction)
         {
             this.lineItemRow = lineRow;
@@ -207,9 +202,15 @@ namespace FamilyFinance.Buisness
             this.reportToParentThatADependantPropertyHasChanged();
         }
 
-        public EnvelopeLineDRM newEnvelopeLineItemForLineitem()
+        public bool supportsEnvelopeLines()
         {
-            return new EnvelopeLineDRM(this);
+            return this.lineItemRow.AccountRow.envelopes;
+        }
+
+        public void retportDependantPropertiesChanged()
+        {
+            this.reportPropertyChangedWithName("IsLineError");
+            this.reportPropertyChangedWithName("EnvelopeLineSum");
         }
 
         public void delete()

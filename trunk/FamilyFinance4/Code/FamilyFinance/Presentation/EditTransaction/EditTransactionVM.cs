@@ -125,6 +125,10 @@ namespace FamilyFinance.Presentation.EditTransaction
                 {
                     this.EnvelopeLinesView = new ListCollectionView(currentLine.EnvelopeLines);
                 }
+                else
+                {
+                    this.EnvelopeLinesView = null;
+                }
             }
             else
             {

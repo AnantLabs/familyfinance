@@ -71,7 +71,11 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this.isTransactionError();
+                if (isOneSidedTransaction() || isTransactionBalanced())
+                    return false;
+
+                else
+                    return true;
             }
         }
 
@@ -79,7 +83,13 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this.getCreditSum();
+                decimal creditSum = 0;
+
+                foreach (FFDataSet.LineItemRow line in this.transactionRow.GetLineItemRows())
+                    if (line.polarity == PolarityCON.CREDIT.Value)
+                        creditSum += line.amount;
+
+                return creditSum;
             }
         }
 
@@ -87,7 +97,13 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this.getDebitSum();
+                decimal debitSum = 0;
+
+                foreach (FFDataSet.LineItemRow line in this.transactionRow.GetLineItemRows())
+                    if (line.polarity == PolarityCON.DEBIT.Value)
+                        debitSum += line.amount;
+
+                return debitSum;
             }
         }
 
@@ -125,37 +141,11 @@ namespace FamilyFinance.Buisness
                 return false;
         }
 
-        private bool isTransactionError()
+
+        protected FFDataSet.LineItemRow[] getLineItemRows()
         {
-            if (isOneSidedTransaction() || isTransactionBalanced())
-                return false;
-
-            else
-                return true;
+            return this.transactionRow.GetLineItemRows();
         }
-
-        private decimal getCreditSum()
-        {
-               decimal creditSum = 0;
-
-                foreach (FFDataSet.LineItemRow line in this.transactionRow.GetLineItemRows())
-                    if (line.polarity == PolarityCON.CREDIT.Value)
-                        creditSum += line.amount;
-
-                return creditSum;
-        }
-
-        private decimal getDebitSum()
-        {
-            decimal debitSum = 0;
-
-            foreach (FFDataSet.LineItemRow line in this.transactionRow.GetLineItemRows())
-                if (line.polarity == PolarityCON.DEBIT.Value)
-                    debitSum += line.amount;
-
-            return debitSum;
-        }
-
 
 
         ///////////////////////////////////////////////////////////
@@ -177,10 +167,6 @@ namespace FamilyFinance.Buisness
         }
 
 
-        protected FFDataSet.LineItemRow[] getLineItemRows()
-        {
-            return this.transactionRow.GetLineItemRows();
-        }
 
         public void retportDependantPropertiesChanged()
         {
