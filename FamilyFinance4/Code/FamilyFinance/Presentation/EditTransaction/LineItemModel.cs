@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using FamilyFinance.Buisness;
 using FamilyFinance.Data;
+using System.Collections.Specialized;
 
 namespace FamilyFinance.Presentation.EditTransaction
 {
@@ -23,8 +24,37 @@ namespace FamilyFinance.Presentation.EditTransaction
         private void fillEnvelopeLineCollection(FFDataSet.EnvelopeLineRow[] envLines)
         {
             foreach (FFDataSet.EnvelopeLineRow envLine in envLines)
-                this.EnvelopeLines.Add(new EnvelopeLineDRM(envLine));
+                this.EnvelopeLines.Add(new EnvelopeLineDRM(envLine, this));
         }
+
+
+        private void listenToCollectionChanges()
+        {
+            this.EnvelopeLines.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(EnvelopeLines_CollectionChanged);
+        }
+
+        private void EnvelopeLines_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+                pointNewEnvelopeLinesToThisLineItem(e.NewItems);
+
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+                deleteEnvelopeLines(e.OldItems);
+        }
+
+        private void deleteEnvelopeLines(System.Collections.IList iList)
+        {
+            foreach (EnvelopeLineDRM oldELine in iList)
+                oldELine.delete();
+        }
+
+        private void pointNewEnvelopeLinesToThisLineItem(System.Collections.IList iList)
+        {
+            foreach (EnvelopeLineDRM newEnvLine in iList)
+                newEnvLine.setParentLine(this);
+        }
+
+
 
 
         ///////////////////////////////////////////////////////////
@@ -33,32 +63,17 @@ namespace FamilyFinance.Presentation.EditTransaction
         public LineItemModel() : base()
         {
             newEmptyEnvelopeLineCollection();
+            this.listenToCollectionChanges();
         }
 
         public LineItemModel(FFDataSet.LineItemRow lRow, TransactionDRM parentTransaction) : base(lRow, parentTransaction)
         {
             newEmptyEnvelopeLineCollection();
             fillEnvelopeLineCollection(this.getEnvelopeLineRows());
+            listenToCollectionChanges();
         }
 
-        //public LineItemModel(TransactionDRM parentTransaction) : base(parentTransaction)
-        //{
-        //    newEmptyEnvelopeLineCollection();
-        //    fillEnvelopeLineCollection(this.getEnvelopeLineRows());
-        //}
-
-
-        public void setParentTransaction(TransactionModel transaction)
-        {
-            base.setParentTransaction((TransactionDRM) transaction);
-        }
-
-
-        public void retportDependantPropertiesChanged()
-        {
-            this.reportPropertyChangedWithName("IsLineError");
-            this.reportPropertyChangedWithName("EnvelopeLineSum");
-        }
+        
 
 
     }

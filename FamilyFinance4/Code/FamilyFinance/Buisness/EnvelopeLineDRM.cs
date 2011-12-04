@@ -6,7 +6,11 @@ namespace FamilyFinance.Buisness
 {
     public class EnvelopeLineDRM : DataRowModel
     {
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        // Local Variables
+        ///////////////////////////////////////////////////////////////////////////////////////////
         private FFDataSet.EnvelopeLineRow envelopeLineRow;
+        private LineItemDRM parentLine;
 
 
         ///////////////////////////////////////////////////////////
@@ -82,6 +86,16 @@ namespace FamilyFinance.Buisness
         }
 
 
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        // Private Functions
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        private void reportToParentThatADependantPropertyHasChanged()
+        {
+            if (this.parentLine != null)
+                this.parentLine.retportDependantPropertiesChanged();
+        }
+
+
 
         ///////////////////////////////////////////////////////////
         // Public functions
@@ -91,23 +105,27 @@ namespace FamilyFinance.Buisness
             this.envelopeLineRow = DataSetModel.Instance.NewEnvelopeLineRow();
         }
 
-        public EnvelopeLineDRM(FFDataSet.EnvelopeLineRow envLineRow)
+        public EnvelopeLineDRM(FFDataSet.EnvelopeLineRow envLineRow, LineItemDRM parentLine)
         {
             this.envelopeLineRow = envLineRow;
+            this.parentLine = parentLine;
         }
 
-        public EnvelopeLineDRM(LineItemDRM lineItem)
+        public EnvelopeLineDRM(LineItemDRM parentLine)
         {
-            this.envelopeLineRow = DataSetModel.Instance.NewEnvelopeLineRow(lineItem);
+            this.envelopeLineRow = DataSetModel.Instance.NewEnvelopeLineRow(parentLine);
+            this.parentLine = parentLine;
         }
 
 
-        public void setParentLine(LineItemDRM lineitem)
+        public void setParentLine(LineItemDRM parentLine)
         {
-            this.envelopeLineRow.lineItemID = lineitem.LineID;
+            this.envelopeLineRow.lineItemID = parentLine.LineID;
+            this.parentLine = parentLine;
+            this.reportToParentThatADependantPropertyHasChanged();
         }
 
-        public void Delete()
+        public void delete()
         {
             this.Amount = 0;
             this.envelopeLineRow.Delete();
