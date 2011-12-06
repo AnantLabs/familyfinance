@@ -11,6 +11,8 @@ namespace FamilyFinance.Presentation.EditTransaction
 {
     public class EditTransactionVM : ViewModel
     {
+        private LineItemModel currentLine;
+
         ///////////////////////////////////////////////////////////
         // Properties
         ///////////////////////////////////////////////////////////
@@ -34,6 +36,7 @@ namespace FamilyFinance.Presentation.EditTransaction
             {
                 this._EnvelopeLinesView = value;
                 this.reportPropertyChangedWithName("EnvelopeLinesView");
+                this.reportPropertyChangedWithName("EnvelopeLineSum");
             }
         } 
 
@@ -41,7 +44,10 @@ namespace FamilyFinance.Presentation.EditTransaction
         {
             get
             {
-                return 0;
+                if (this.currentLine == null)
+                    return 0;
+                else 
+                    return this.currentLine.getEnvelopeLineSum();
             }
         }
 
@@ -58,7 +64,7 @@ namespace FamilyFinance.Presentation.EditTransaction
         {
             get
             {
-                return new ListCollectionView(DataSetModel.Instance.Envelopes);
+                return this.getANewSortedViewOfEnvelopes();
             }
         }
 
@@ -74,11 +80,13 @@ namespace FamilyFinance.Presentation.EditTransaction
             this.CreditsView = new ListCollectionView(this.TransactionModel.LineItems);
             this.CreditsView.Filter = new Predicate<Object>(CreditsFilter);
             this.CreditsView.CurrentChanged += new EventHandler(CreditOrDebitView_CurrentChanged);
+            this.CreditsView.MoveCurrentToFirst();
 
             this.DebitsView = new ListCollectionView(this.TransactionModel.LineItems);
             this.DebitsView.Filter = new Predicate<Object>(DebitsFilter);
             this.DebitsView.CurrentChanged += new EventHandler(CreditOrDebitView_CurrentChanged);
-            
+            this.DebitsView.MoveCurrentToLast();
+
         }
 
         private bool CreditsFilter(object item)
@@ -117,13 +125,14 @@ namespace FamilyFinance.Presentation.EditTransaction
                 removeGhostLine(view);
             }
 
-            LineItemModel currentLine = (LineItemModel)view.CurrentItem;
+            this.currentLine = (LineItemModel)view.CurrentItem;
 
             if (currentLine != null)
             {
                 if (currentLine.supportsEnvelopeLines())
                 {
                     this.EnvelopeLinesView = new ListCollectionView(currentLine.EnvelopeLines);
+                    this.EnvelopeLinesView.CurrentChanged += new EventHandler(EnvelopeLinesView_CurrentChanged);
                 }
                 else
                 {
@@ -135,6 +144,20 @@ namespace FamilyFinance.Presentation.EditTransaction
                 this.EnvelopeLinesView = null;
             }
 
+        }
+
+        void EnvelopeLinesView_CurrentChanged(object sender, EventArgs e)
+        {
+
+            if (this.EnvelopeLinesView.IsAddingNew)
+            {
+                EnvelopeLineDRM newELine = (EnvelopeLineDRM)this.EnvelopeLinesView.CurrentAddItem;
+
+                //newELine.Amount = suggestedAmountDependingOnCurrentLine(view);
+            }
+
+
+            this.reportPropertyChangedWithName("EnvelopeLineSum");
         }
 
         private decimal suggestedAmountDependingOnView(ListCollectionView view)
@@ -176,7 +199,6 @@ namespace FamilyFinance.Presentation.EditTransaction
 
         private ListCollectionView getANewSortedViewOfAccounts()
         {
-
             ListCollectionView listView = new ListCollectionView(DataSetModel.Instance.Accounts);
 
             listView.CustomSort = new AccountsCategoryNameComparer();
@@ -191,6 +213,28 @@ namespace FamilyFinance.Presentation.EditTransaction
             bool keepItem = true;
 
             if (account.ID == AccountCON.MULTIPLE.ID)
+                keepItem = false;
+
+            return keepItem;
+        }
+
+
+        private ListCollectionView getANewSortedViewOfEnvelopes()
+        {
+            ListCollectionView listView = new ListCollectionView(DataSetModel.Instance.Envelopes);
+
+            listView.CustomSort = new EnvelopesNameComparer();
+            listView.Filter = new Predicate<Object>(EnvelopesFilter);
+
+            return listView;
+        }
+
+        private bool EnvelopesFilter(object item)
+        {
+            EnvelopeDRM account = (EnvelopeDRM)item;
+            bool keepItem = true;
+
+            if (account.ID == EnvelopeCON.SPLIT.ID)
                 keepItem = false;
 
             return keepItem;

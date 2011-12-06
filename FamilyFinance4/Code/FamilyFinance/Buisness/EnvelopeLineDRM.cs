@@ -52,7 +52,7 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        public virtual decimal Amount
+        public decimal Amount
         {
             get
             {
@@ -62,6 +62,7 @@ namespace FamilyFinance.Buisness
             {
                 // Round to 2 decimal places. 
                 this.envelopeLineRow.amount = Decimal.Round(value, 2);
+                this.reportToParentThatADependantPropertyHasChanged();
             }
         }
 
@@ -74,6 +75,8 @@ namespace FamilyFinance.Buisness
             set
             {
                 this.envelopeLineRow.envelopeID = value;
+                this.reportPropertyChangedWithName("EnvelopeName");
+                this.reportPropertyChangedWithName("IsEnvelopeError");
             }
         }
 
@@ -85,6 +88,15 @@ namespace FamilyFinance.Buisness
             }
         }
 
+
+
+        public bool IsEnvelopeError
+        {
+            get
+            {
+                return envelopeLineRow.envelopeID == EnvelopeCON.NULL.ID;
+            }
+        }
 
         ///////////////////////////////////////////////////////////////////////////////////////////
         // Private Functions
