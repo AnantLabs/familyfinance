@@ -1,7 +1,8 @@
-﻿<Window x:Class="FamilyFinance.Presentation.EditTransaction.EditTransactionWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:FamilyFinance.Presentation.EditTransaction"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="FamilyFinance.Presentation.EditTransaction.EditTransactionWindow"
         Title="Edit Transaction" 
         Height="537" 
         Width="745">
@@ -22,7 +23,7 @@
               HorizontalContentAlignment="Right" 
               FlowDirection="LeftToRight" 
               VerticalContentAlignment="Center" 
-              Background="{StaticResource LightBlueMenuBackground}">
+              Background="{DynamicResource LightBlueMenuBackground}">
             <MenuItem Header="Edit" >
                 <MenuItem Header="Envelope Groups"/>
             </MenuItem>
@@ -48,30 +49,30 @@
                     <ColumnDefinition Width="20*" />
                     <ColumnDefinition Width="50*" />
                 </Grid.ColumnDefinitions>
-                <DatePicker Name="datePicker1" 
+                <DatePicker x:Name="datePicker1" 
                             Grid.Row="0"
                             Grid.Column="0"
                             Margin="5" 
                             VerticalAlignment="Center" 
                             HorizontalAlignment="Stretch" 
-                            SelectedDate="{Binding Path=TransactionModel.Date}" />
-                <ComboBox Name="transactionTypeCB" 
+                            SelectedDate="{Binding TransactionModel.Date}" />
+                <ComboBox x:Name="transactionTypeCB" 
                           Grid.Row="0"
                           Grid.Column="1" 
                           Margin="0,5"
                           VerticalAlignment="Center" 
                           HorizontalAlignment="Stretch" 
-                          SelectedValue="{Binding Path=TransactionModel.TypeID}" 
-                          ItemsSource="{Binding Path=TransactionTypesView}"
+                          SelectedValue="{Binding TransactionModel.TypeID}" 
+                          ItemsSource="{Binding TransactionTypesView}"
                           SelectedValuePath="ID"
                           DisplayMemberPath="Name"/>
-                <TextBox Name="descriptionTB" 
+                <TextBox x:Name="descriptionTB" 
                          Grid.Row="0"
                          Grid.Column="2" 
                          Margin="5,5,0,5"
                          VerticalAlignment="Center" 
                          HorizontalAlignment="Stretch" 
-                         Text="{Binding Path=TransactionModel.Description, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                         Text="{Binding TransactionModel.Description, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
             </Grid>
             <!-- Source -->
             <TextBlock Grid.Row="1"
@@ -103,7 +104,7 @@
             <!-- Envelope Line Sum -->
             <TextBlock Grid.Row="5"
                        Grid.Column="1" 
-                       Text="{Binding Path=EnvelopeLineSum, StringFormat=\{0:c\}, Mode=OneWay}"
+                       Text="{Binding EnvelopeLineSum, Mode=OneWay, StringFormat=\{0:c\}}"
                        Margin="3,0"
                        Foreground="White"
                        HorizontalAlignment="Right" 
@@ -112,8 +113,8 @@
             <TextBlock Grid.Row="3" 
                        HorizontalAlignment="Right"
                        Margin="0,0,6,0" 
-                       Name="textBlock1" 
-                       Text="{Binding Path=TransactionModel.CreditSum, StringFormat=\{0:c\}, Mode=OneWay}" 
+                       x:Name="textBlock1" 
+                       Text="{Binding TransactionModel.CreditSum, Mode=OneWay, StringFormat=\{0:c\}}" 
                        Foreground="White"
                        VerticalAlignment="Top"  />
             <!-- Transaction Imbalance Error -->
@@ -124,18 +125,18 @@
                        Text="&lt;-- Error Transaction needs to balance. --&gt;" 
                        VerticalAlignment="Top"
                        Foreground="Red" 
-                       Visibility="{Binding Path=TransactionModel.IsTransactionError, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                       Visibility="{Binding TransactionModel.IsTransactionError, Converter={StaticResource BooleanToVisibilityConverter1}}" />
             <!-- Destination Sum -->
             <TextBlock Grid.Column="1" 
                        Grid.Row="3"
                        HorizontalAlignment="Right" 
                        Margin="3,0" 
-                       Name="textBlock2" 
-                       Text="{Binding Path=TransactionModel.DebitSum, StringFormat=\{0:c\}, Mode=OneWay}" 
+                       x:Name="textBlock2" 
+                       Text="{Binding TransactionModel.DebitSum, Mode=OneWay, StringFormat=\{0:c\}}" 
                        VerticalAlignment="Top" 
                        Foreground="White" />
             <!-- Source Grid -->
-            <DataGrid Name="creditDataGrid" 
+            <DataGrid x:Name="creditDataGrid" 
                       Grid.Row="2"
                       Grid.Column="0"
                       Margin="0,0,3,0"
@@ -144,12 +145,12 @@
                       AutoGenerateColumns="False" 
                       SelectionMode="Single" 
                       HeadersVisibility="Column"
-                      ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=CreditsView}" 
+                      ItemsSource="{Binding CreditsView, Source={StaticResource editTransactionVM}}" 
                       CanUserResizeRows="False" 
                       RowDetailsVisibilityMode="Collapsed"
                       >
                 <DataGrid.Columns>
-                    <!-- Account Credit Combobox column -->
+                    <!-- Account Combobox column -->
                     <DataGridTemplateColumn x:Name="accountCreditColumnCB" 
                                         Header="Account"
                                         CanUserSort="True"
@@ -157,11 +158,11 @@
                                         Width="30*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Path=AccountName, Mode=OneWay}" >
+                                <TextBlock Text="{Binding AccountName, Mode=OneWay}" >
                                     <TextBlock.Style>
-                                        <Style TargetType="TextBlock">
+                                        <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Path=IsAccountError, Mode=OneWay}" Value="True" >
+                                                <DataTrigger Binding="{Binding IsAccountError, Mode=OneWay}" Value="True" >
                                                     <Setter Property="Background" Value="Red"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -172,34 +173,43 @@
                         </DataGridTemplateColumn.CellTemplate>
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
-                                <ComboBox SelectedValue="{Binding Path=AccountID}"
-                                          ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=AccountsView}"
+                                <ComboBox SelectedValue="{Binding AccountID}"
+                                          ItemsSource="{Binding AccountsView, Source={StaticResource editTransactionVM}}"
                                           SelectedValuePath="ID"
-                                          DisplayMemberPath="Name">
-                                </ComboBox>
+                                          DisplayMemberPath="Name"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
                     <!-- Confirmation Number column -->
                     <DataGridTextColumn x:Name="confirmationCreditColumn" 
-                                        Binding="{Binding Path=ConfirmationNumber, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                        Binding="{Binding ConfirmationNumber, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                         Header="Confirmation" 
                                         CanUserSort="True"
                                         MinWidth="80"
                                         Width="40*" />
                     <!-- Amount Credit column -->
                     <DataGridTextColumn x:Name="amountCreditColumn" 
-                                        Binding="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat=\{0:c\}}" 
+                                        Binding="{Binding Path=Amount, Mode=TwoWay, StringFormat=\{0:c\}, UpdateSourceTrigger=LostFocus}" 
                                         Header="Credit" 
                                         CanUserSort="True"
                                         MinWidth="60"
                                         ElementStyle="{StaticResource RightAlignStyle}"
-                                        Width="20*" />
+                                        Width="20*" >
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="{x:Type DataGridCell}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=IsLineError, Mode=OneWay}" Value="True" >
+                                        <Setter Property="Background" Value="Red"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
 
                 </DataGrid.Columns>
             </DataGrid>
             <!-- Destination Grid -->
-            <DataGrid Name="debitDataGrid" 
+            <DataGrid x:Name="debitDataGrid" 
                       Grid.Row="2"
                       Grid.Column="1"
                       Margin="3,0,0,0"
@@ -208,23 +218,23 @@
                       AutoGenerateColumns="False" 
                       SelectionMode="Single" 
                       HeadersVisibility="Column"
-                      ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=DebitsView}" 
+                      ItemsSource="{Binding DebitsView, Source={StaticResource editTransactionVM}}" 
                       CanUserResizeRows="False" 
                       RowDetailsVisibilityMode="Collapsed">
                 <DataGrid.Columns>
-                    <!-- Account Credit Combobox column -->
+                    <!-- Account Combobox column -->
                     <DataGridTemplateColumn x:Name="accountDebitColumnCB" 
-                                        Header="Account"
-                                        CanUserSort="True"
-                                        SortMemberPath="AccountName" 
-                                        Width="30*">
+                                            Header="Account"
+                                            CanUserSort="True"
+                                            SortMemberPath="AccountName" 
+                                            Width="30*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Path=AccountName, Mode=OneWay}" >
+                                <TextBlock Text="{Binding AccountName, Mode=OneWay}" >
                                     <TextBlock.Style>
-                                        <Style TargetType="TextBlock">
+                                        <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Path=IsAccountError, Mode=OneWay}" Value="True" >
+                                                <DataTrigger Binding="{Binding IsAccountError, Mode=OneWay}" Value="True" >
                                                     <Setter Property="Background" Value="Red"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -235,30 +245,38 @@
                         </DataGridTemplateColumn.CellTemplate>
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
-                                <ComboBox SelectedValue="{Binding Path=AccountID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                          ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=AccountsView}"
+                                <ComboBox SelectedValue="{Binding AccountID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          ItemsSource="{Binding AccountsView, Source={StaticResource editTransactionVM}}"
                                           SelectedValuePath="ID"
-                                          DisplayMemberPath="Name">
-                                </ComboBox>
+                                          DisplayMemberPath="Name"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
                     <!-- Confirmation Number column -->
                     <DataGridTextColumn x:Name="confirmationDebitColumn" 
-                                        Binding="{Binding Path=ConfirmationNumber, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                        Binding="{Binding ConfirmationNumber, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                         Header="Confirmation" 
                                         CanUserSort="True"
                                         MinWidth="80"
                                         Width="40*" />
-                    <!-- Amount Credit column -->
+                    <!-- Amount Debnit column -->
                     <DataGridTextColumn x:Name="amountDebitColumn" 
-                                        Binding="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus, StringFormat=\{0:c\}}" 
+                                        Binding="{Binding Amount, StringFormat=\{0:c\}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                         Header="Debit" 
                                         CanUserSort="True"
                                         MinWidth="60"
                                         ElementStyle="{StaticResource RightAlignStyle}"
-                                        Width="20*" />
-
+                                        Width="20*" >
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="{x:Type DataGridCell}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=IsLineError, Mode=OneWay}" Value="True" >
+                                        <Setter Property="Background" Value="Red"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
             <!-- Grid Splitter -->
@@ -269,7 +287,7 @@
                           Background="Transparent"
                           ResizeDirection="Rows" />
             <!-- Envelope Lines Grid -->
-            <DataGrid Name="envDataGrid" 
+            <DataGrid x:Name="envDataGrid" 
                       Grid.Row="4"
                       Grid.Column="0"
                       Grid.ColumnSpan="2"
@@ -279,7 +297,7 @@
                       SelectionMode="Single" 
                       CanUserDeleteRows="False" 
                       HeadersVisibility="Column"
-                      ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=EnvelopeLinesView}">
+                      ItemsSource="{Binding EnvelopeLinesView, Source={StaticResource editTransactionVM}}">
                 <DataGrid.Columns>
                     <!-- Account Credit Combobox column -->
                     <DataGridTemplateColumn x:Name="EnvelopeColumnCB" 
@@ -289,33 +307,43 @@
                                                 Width="30*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Path=EnvelopeName, Mode=OneWay}" />
+                                <TextBlock Text="{Binding EnvelopeName, Mode=OneWay}" >
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsEnvelopeError, Mode=OneWay}" Value="True" >
+                                                    <Setter Property="Background" Value="Red"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
-                                <ComboBox SelectedValue="{Binding Path=EnvelopeID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=EnvelopessView}"
-                                              SelectedValuePath="ID"
-                                              DisplayMemberPath="Name">
-                                </ComboBox>
+                                <ComboBox SelectedValue="{Binding EnvelopeID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          ItemsSource="{Binding EnvelopesView, Source={StaticResource editTransactionVM}}"
+                                          SelectedValuePath="ID"
+                                          DisplayMemberPath="Name"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
                     <!-- Confirmation Number column -->
                     <DataGridTextColumn x:Name="descriptionColumn" 
-                                            Binding="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                            Binding="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                             Header="Description" 
                                             CanUserSort="True"
                                             MinWidth="80"
                                             Width="60*" />
                     <!-- Amount column -->
                     <DataGridTextColumn x:Name="amountEnvColumn" 
-                                            Binding="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
-                                            Header="Amount"
-                                            CanUserSort="True"
-                                            MinWidth="60"
-                                            Width="20*" />
+                                        Binding="{Binding Amount, StringFormat=\{0:c\}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                        Header="Amount"
+                                        CanUserSort="True"
+                                        MinWidth="60"
+                                        Width="20*" 
+                                        ElementStyle="{DynamicResource RightAlignStyle}" />
 
                 </DataGrid.Columns>
             </DataGrid>

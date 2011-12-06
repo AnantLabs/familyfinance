@@ -143,5 +143,10 @@ namespace FamilyFinance.Buisness
             this.envelopeRow = eRow;
         }
 
+
+        public bool IsSpecial()
+        {
+            return EnvelopeCON.isSpecial(this.envelopeRow.id);
+        }
     }
 }

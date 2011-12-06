@@ -127,7 +127,7 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                decimal envLineSum = this.EnvelopeLineSum;
+                decimal envLineSum = this.getEnvelopeLineSum();
                 bool accountUsesEnvelopes = lineItemRow.AccountRow.envelopes;
 
                 if (accountUsesEnvelopes && lineItemRow.amount == envLineSum)
@@ -141,18 +141,6 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        public decimal EnvelopeLineSum
-        {
-            get
-            {
-                decimal sum = 0;
-
-                foreach (FFDataSet.EnvelopeLineRow envLine in lineItemRow.GetEnvelopeLineRows())
-                    sum += envLine.amount;
-
-                return sum;
-            }
-        }
 
 
 
@@ -210,7 +198,16 @@ namespace FamilyFinance.Buisness
         public void retportDependantPropertiesChanged()
         {
             this.reportPropertyChangedWithName("IsLineError");
-            this.reportPropertyChangedWithName("EnvelopeLineSum");
+        }
+
+        public decimal getEnvelopeLineSum()
+        {
+            decimal sum = 0;
+
+            foreach (FFDataSet.EnvelopeLineRow envLine in lineItemRow.GetEnvelopeLineRows())
+                sum += envLine.amount;
+
+            return sum;
         }
 
         public void delete()
