@@ -42,8 +42,12 @@ namespace FamilyFinance.Buisness
             set
             {
                 this.lineItemRow.accountID = value;
+
+                this.deleteEnvelopeLinesIfNeeded();
+
                 this.reportPropertyChangedWithName("AccountName");
                 this.reportPropertyChangedWithName("IsAccountError");
+                this.reportPropertyChangedWithName("IsLineError");
             }
         }
 
@@ -79,8 +83,10 @@ namespace FamilyFinance.Buisness
                     value = Decimal.Negate(value);
 
                 this.lineItemRow.amount = Decimal.Round(value, 2);
+
                 this.reportPropertyChangedWithName("Amount");
-                this.reportToParentThatADependantPropertyHasChanged();
+                this.reportPropertyChangedWithName("IsLineError");
+                this.reportToParentThatTheLineBalanceHasChanged();
             }
         }
 
@@ -93,8 +99,10 @@ namespace FamilyFinance.Buisness
             set
             {
                 this.lineItemRow.polarity = value.Value;
+
                 this.reportPropertyChangedWithName("Polarity");
-                this.reportToParentThatADependantPropertyHasChanged();
+                this.reportPropertyChangedWithName("IsLineError");
+                this.reportToParentThatTheLineBalanceHasChanged();
             }
         }
 
@@ -127,7 +135,11 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                decimal envLineSum = this.getEnvelopeLineSum();
+                if (this.lineItemRow.RowState == System.Data.DataRowState.Deleted
+                    || this.lineItemRow.RowState == System.Data.DataRowState.Detached)
+                    return false;
+
+                decimal envLineSum = this.EnvelopeLineSum;
                 bool accountUsesEnvelopes = lineItemRow.AccountRow.envelopes;
 
                 if (accountUsesEnvelopes && lineItemRow.amount == envLineSum)
@@ -141,17 +153,51 @@ namespace FamilyFinance.Buisness
             }
         }
 
+        public decimal EnvelopeLineSum
+        {
+            get
+            {
+                if (this.lineItemRow.RowState == System.Data.DataRowState.Deleted
+                    || this.lineItemRow.RowState == System.Data.DataRowState.Detached)
+                    return 0;
 
+                decimal sum = 0;
 
+                foreach (FFDataSet.EnvelopeLineRow envLine in lineItemRow.GetEnvelopeLineRows())
+                    sum += envLine.amount;
+
+                return sum;
+            }
+        }
 
 
         ///////////////////////////////////////////////////////////////////////////////////////////
         // Private Functions
         ///////////////////////////////////////////////////////////////////////////////////////////
-        private void reportToParentThatADependantPropertyHasChanged()
+        private void deleteEnvelopeLinesIfNeeded()
+        {
+            int envLineCount = this.getEnvelopeLineRows().Length;
+            bool accountUsesEnvelopes = lineItemRow.AccountRow.envelopes;
+
+            if (!accountUsesEnvelopes && envLineCount > 0)
+            {
+                deleteEnvelopeLines();
+
+            }
+        }
+
+        private void deleteEnvelopeLines()
+        {
+            FFDataSet.EnvelopeLineRow[] eLines = this.getEnvelopeLineRows();
+
+            foreach (FFDataSet.EnvelopeLineRow eLine in eLines)
+                eLine.Delete();
+        }
+
+        private void reportToParentThatTheLineBalanceHasChanged()
         {
             if (this.parentTransaction != null)
-                this.parentTransaction.retportDependantPropertiesChanged();
+                this.parentTransaction.retportDependantLineBalanceChanged();
         }
 
         protected FFDataSet.EnvelopeLineRow[] getEnvelopeLineRows()
@@ -187,7 +233,8 @@ namespace FamilyFinance.Buisness
         {
             this.lineItemRow.transactionID = transaction.TransactionID;
             this.parentTransaction = transaction;
-            this.reportToParentThatADependantPropertyHasChanged();
+
+            this.reportToParentThatTheLineBalanceHasChanged();
         }
 
         public bool supportsEnvelopeLines()
@@ -195,19 +242,10 @@ namespace FamilyFinance.Buisness
             return this.lineItemRow.AccountRow.envelopes;
         }
 
-        public void retportDependantPropertiesChanged()
+        public virtual void reportDependantEnvelopeLineBalanceChanged()
         {
+            this.reportPropertyChangedWithName("EnvelopeLineSum");
             this.reportPropertyChangedWithName("IsLineError");
-        }
-
-        public decimal getEnvelopeLineSum()
-        {
-            decimal sum = 0;
-
-            foreach (FFDataSet.EnvelopeLineRow envLine in lineItemRow.GetEnvelopeLineRows())
-                sum += envLine.amount;
-
-            return sum;
         }
 
         public void delete()
@@ -215,8 +253,10 @@ namespace FamilyFinance.Buisness
             // Set amount to zero so there we don't have to listen to when rows are
             // added or removed. By setting the amount to zero before deleting it 
             // just listening to the column changes will keep eveything syncronized.
+            this.deleteEnvelopeLines();
             this.Amount = 0;
             this.lineItemRow.Delete();
+
         }
 
     }
