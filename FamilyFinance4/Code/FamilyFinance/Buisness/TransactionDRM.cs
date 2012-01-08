@@ -168,11 +168,11 @@ namespace FamilyFinance.Buisness
 
 
 
-        public void retportDependantPropertiesChanged()
+        public void retportDependantLineBalanceChanged()
         {
-            this.reportPropertyChangedWithName("IsTransactionError");
             this.reportPropertyChangedWithName("CreditSum");
             this.reportPropertyChangedWithName("DebitSum");
+            this.reportPropertyChangedWithName("IsTransactionError");
         }
 
         public void delete()

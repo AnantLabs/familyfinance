@@ -7,6 +7,8 @@ namespace FamilyFinance.Presentation.EditTransaction
 {
     public class LineItemModel : LineItemDRM
     {
+        private EditTransactionVM parentEditTransactionVM;
+
         ///////////////////////////////////////////////////////////
         // Properties
         ///////////////////////////////////////////////////////////
@@ -54,7 +56,17 @@ namespace FamilyFinance.Presentation.EditTransaction
                 newEnvLine.setParentLine(this);
         }
 
+        private void reportToParentVMThatTheEnvelopeLineSumHasChanged()
+        {
+            if (this.parentEditTransactionVM != null)
+                this.parentEditTransactionVM.reportDependantEnvelopeLinesSumChanged();
+        }
 
+        //private void reportToParentVMThatLineWasDeleted()
+        //{
+        //    //if (this.parentEditTransactionVM != null)
+        //    //    this.parentEditTransactionVM.reportDependantLineWasDeleted();
+        //}
 
 
         ///////////////////////////////////////////////////////////
@@ -73,6 +85,23 @@ namespace FamilyFinance.Presentation.EditTransaction
             listenToCollectionChanges();
         }
 
+
+        public void setParentTransactionVM(EditTransactionVM editTransactionVM)
+        {
+            this.parentEditTransactionVM = editTransactionVM;
+        }
+
+        public override void reportDependantEnvelopeLineBalanceChanged()
+        {
+            base.reportDependantEnvelopeLineBalanceChanged();
+            this.reportToParentVMThatTheEnvelopeLineSumHasChanged();
+        }
+
+        //public override void delete()
+        //{
+        //    base.delete();
+        //    this.reportToParentVMThatLineWasDeleted();
+        //}
         
 
 

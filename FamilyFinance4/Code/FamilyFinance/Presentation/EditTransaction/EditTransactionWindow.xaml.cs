@@ -16,26 +16,46 @@ namespace FamilyFinance.Presentation.EditTransaction
     public partial class EditTransactionWindow : Window
     {
         private EditTransactionVM transactionViewModel;
+        private DataGrid sourceDataGrid;
+        private DataGrid destinationDataGrid;
 
-        public EditTransactionWindow()
+        private bool allReadyInSelectionChanged = false;
+        private void sourceOrDestinationDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            InitializeComponent();
+            if (allReadyInSelectionChanged)
+                return;
 
-            grabTheTransactionViewModelFromTheWindowsResources();
-            loadTransaction(1392);
+            allReadyInSelectionChanged = true;
+            //this.transactionViewModel.
+
+            DataGrid currentDG = (DataGrid)sender;
+
+            if (currentDG == sourceDataGrid)
+                this.unselectFromDestinationDataGrid();
+
+            else if (currentDG == destinationDataGrid)
+                this.unselectFromSourceDataGRid();
+
+
+            allReadyInSelectionChanged = false;
         }
 
-        public EditTransactionWindow(int transactionID)
+        private void unselectFromDestinationDataGrid()
         {
-            InitializeComponent();
-
-            grabTheTransactionViewModelFromTheWindowsResources();
-            loadTransaction(transactionID);
+            this.destinationDataGrid.SelectedIndex = -1;
         }
 
-        private void grabTheTransactionViewModelFromTheWindowsResources()
+        private void unselectFromSourceDataGRid()
+        {
+            this.sourceDataGrid.SelectedIndex = -1;
+        }
+
+        private void grabTheObjectsFromTheWindowsResources()
         {
             this.transactionViewModel = (EditTransactionVM)this.FindResource("editTransactionVM");
+
+            this.sourceDataGrid = (DataGrid)this.FindName("creditDataGrid");
+            this.destinationDataGrid = (DataGrid)this.FindName("debitDataGrid");
         }
 
         private void loadTransaction(int transID)
@@ -44,5 +64,23 @@ namespace FamilyFinance.Presentation.EditTransaction
         }
 
 
+        public EditTransactionWindow() : this(1392)
+        {
+        }
+
+        public EditTransactionWindow(int transactionID)
+        {
+            InitializeComponent();
+
+            grabTheObjectsFromTheWindowsResources();
+            loadTransaction(1392);
+
+
+            this.sourceDataGrid.SelectionChanged += new SelectionChangedEventHandler(sourceOrDestinationDataGrid_SelectionChanged);
+            this.destinationDataGrid.SelectionChanged += new SelectionChangedEventHandler(sourceOrDestinationDataGrid_SelectionChanged);
+
+            unselectFromSourceDataGRid();
+            unselectFromDestinationDataGrid();
+        }
     }
 }

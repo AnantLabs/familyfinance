@@ -50,6 +50,8 @@ namespace FamilyFinance.Presentation.EditTransaction
         {
             foreach (LineItemModel oldLine in iList)
                 oldLine.delete();
+
+
         }
 
         private void pointNewLinesToThisTransaction(System.Collections.IList iList)

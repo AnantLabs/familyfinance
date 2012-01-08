@@ -60,11 +60,12 @@ namespace FamilyFinance.Buisness
             }
             set
             {
-                // Round to 2 decimal places. 
                 this.envelopeLineRow.amount = Decimal.Round(value, 2);
-                this.reportToParentThatADependantPropertyHasChanged();
+
+                this.reportToParentLineBalanceHasChanged();
             }
         }
+
 
         public int EnvelopeID
         {
@@ -75,6 +76,7 @@ namespace FamilyFinance.Buisness
             set
             {
                 this.envelopeLineRow.envelopeID = value;
+
                 this.reportPropertyChangedWithName("EnvelopeName");
                 this.reportPropertyChangedWithName("IsEnvelopeError");
             }
@@ -98,13 +100,14 @@ namespace FamilyFinance.Buisness
             }
         }
 
+
         ///////////////////////////////////////////////////////////////////////////////////////////
         // Private Functions
         ///////////////////////////////////////////////////////////////////////////////////////////
-        private void reportToParentThatADependantPropertyHasChanged()
+        private void reportToParentLineBalanceHasChanged()
         {
             if (this.parentLine != null)
-                this.parentLine.retportDependantPropertiesChanged();
+                this.parentLine.reportDependantEnvelopeLineBalanceChanged();
         }
 
 
@@ -134,13 +137,16 @@ namespace FamilyFinance.Buisness
         {
             this.envelopeLineRow.lineItemID = parentLine.LineID;
             this.parentLine = parentLine;
-            this.reportToParentThatADependantPropertyHasChanged();
+
+            this.reportToParentLineBalanceHasChanged();
         }
 
         public void delete()
         {
             this.Amount = 0;
             this.envelopeLineRow.Delete();
+
+            this.reportToParentLineBalanceHasChanged();
         }
 
     }
