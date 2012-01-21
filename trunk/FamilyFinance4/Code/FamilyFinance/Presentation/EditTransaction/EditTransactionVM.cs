@@ -150,12 +150,6 @@ namespace FamilyFinance.Presentation.EditTransaction
 
         }
 
-        private decimal suggestedSubLineAmountDependingOnCurrentLine()
-        {
-            throw new NotImplementedException();
-        }
-
-
 
         ///////////////////////////////////////////////////////////
         // Private functions
@@ -233,6 +227,17 @@ namespace FamilyFinance.Presentation.EditTransaction
 
             return suggestedAmount;
         }
+
+        private decimal suggestedSubLineAmountDependingOnCurrentLine()
+        {
+            decimal suggestedAmount = 0;
+
+            if (this.currentLine != null)
+                suggestedAmount = this.currentLine.Amount - this.currentLine.EnvelopeLineSum;
+
+            return suggestedAmount;
+        }
+
 
         private PolarityCON determinePolarityDependingOnView(ListCollectionView view)
         {
