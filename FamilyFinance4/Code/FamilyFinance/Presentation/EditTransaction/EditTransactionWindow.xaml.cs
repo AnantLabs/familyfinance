@@ -19,35 +19,15 @@ namespace FamilyFinance.Presentation.EditTransaction
         private DataGrid sourceDataGrid;
         private DataGrid destinationDataGrid;
 
-        private bool allReadyInSelectionChanged = false;
-        private void sourceOrDestinationDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+        private void tellViewModelWhoItBelongsTo()
         {
-            if (allReadyInSelectionChanged)
-                return;
-
-            allReadyInSelectionChanged = true;
-            //this.transactionViewModel.
-
-            DataGrid currentDG = (DataGrid)sender;
-
-            if (currentDG == sourceDataGrid)
-                this.unselectFromDestinationDataGrid();
-
-            else if (currentDG == destinationDataGrid)
-                this.unselectFromSourceDataGRid();
-
-
-            allReadyInSelectionChanged = false;
+            this.transactionViewModel.setParentWindow(this);
         }
 
-        private void unselectFromDestinationDataGrid()
+        private void loadTransaction(int transID)
         {
-            this.destinationDataGrid.SelectedIndex = -1;
-        }
-
-        private void unselectFromSourceDataGRid()
-        {
-            this.sourceDataGrid.SelectedIndex = -1;
+            this.transactionViewModel.loadTransaction(transID);
         }
 
         private void grabTheObjectsFromTheWindowsResources()
@@ -58,12 +38,9 @@ namespace FamilyFinance.Presentation.EditTransaction
             this.destinationDataGrid = (DataGrid)this.FindName("debitDataGrid");
         }
 
-        private void loadTransaction(int transID)
-        {
-            this.transactionViewModel.loadTransaction(transID);
-        }
-
-
+        ///////////////////////////////////////////////////////////
+        // Public Functions
+        ///////////////////////////////////////////////////////////
         public EditTransactionWindow() : this(1392)
         {
         }
@@ -73,14 +50,23 @@ namespace FamilyFinance.Presentation.EditTransaction
             InitializeComponent();
 
             grabTheObjectsFromTheWindowsResources();
-            loadTransaction(1392);
-
-
-            this.sourceDataGrid.SelectionChanged += new SelectionChangedEventHandler(sourceOrDestinationDataGrid_SelectionChanged);
-            this.destinationDataGrid.SelectionChanged += new SelectionChangedEventHandler(sourceOrDestinationDataGrid_SelectionChanged);
+            loadTransaction(transactionID);
+            tellViewModelWhoItBelongsTo();
 
             unselectFromSourceDataGRid();
             unselectFromDestinationDataGrid();
         }
+
+        public void unselectFromDestinationDataGrid()
+        {
+            this.destinationDataGrid.SelectedIndex = -1;
+        }
+
+        public void unselectFromSourceDataGRid()
+        {
+            this.sourceDataGrid.SelectedIndex = -1;
+        }
+
+
     }
 }

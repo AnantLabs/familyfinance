@@ -12,6 +12,7 @@ namespace FamilyFinance.Presentation.EditTransaction
     public class EditTransactionVM : ViewModel
     {
         private LineItemModel currentLine;
+        private EditTransactionWindow parentWindow;
 
 
         ///////////////////////////////////////////////////////////
@@ -24,6 +25,7 @@ namespace FamilyFinance.Presentation.EditTransaction
         public ListCollectionView CreditsView { get; private set; }
 
         public ListCollectionView DebitsView { get; private set; }
+
 
         private ListCollectionView _EnvelopeLinesView;
         public ListCollectionView EnvelopeLinesView 
@@ -52,8 +54,6 @@ namespace FamilyFinance.Presentation.EditTransaction
             }
         }
 
-
-
         public ListCollectionView AccountsView 
         {
             get
@@ -71,23 +71,10 @@ namespace FamilyFinance.Presentation.EditTransaction
         }
 
 
+
         ///////////////////////////////////////////////////////////
-        // Private functions
+        // View Filters
         ///////////////////////////////////////////////////////////
-        private void setupViews()
-        {            
-            this.TransactionTypesView = new ListCollectionView(DataSetModel.Instance.TransactionTypes);
-            this.TransactionTypesView.CustomSort = new TransactionTypesComparer();
-
-            this.CreditsView = new ListCollectionView(this.TransactionModel.LineItems);
-            this.CreditsView.Filter = new Predicate<Object>(CreditsFilter);
-            this.CreditsView.CurrentChanged += new EventHandler(CreditOrDebitView_CurrentChanged);
-
-            this.DebitsView = new ListCollectionView(this.TransactionModel.LineItems);
-            this.DebitsView.Filter = new Predicate<Object>(DebitsFilter);
-            this.DebitsView.CurrentChanged += new EventHandler(CreditOrDebitView_CurrentChanged);
-        }
-
         private bool CreditsFilter(object item)
         {
             LineItemModel lineRow = (LineItemModel)item;
@@ -110,32 +97,94 @@ namespace FamilyFinance.Presentation.EditTransaction
             return keepItem;
         }
 
+        private bool AccountsFilter(object item)
+        {
+            AccountDRM account = (AccountDRM)item;
+            bool keepItem = true;
+
+            if (account.ID == AccountCON.MULTIPLE.ID)
+                keepItem = false;
+
+            return keepItem;
+        }
+
+        private bool EnvelopesFilter(object item)
+        {
+            EnvelopeDRM account = (EnvelopeDRM)item;
+            bool keepItem = true;
+
+            if (account.ID == EnvelopeCON.SPLIT.ID)
+                keepItem = false;
+
+            return keepItem;
+        }
+
+
+
+        ///////////////////////////////////////////////////////////
+        // Event Functions
+        ///////////////////////////////////////////////////////////
         private void CreditOrDebitView_CurrentChanged(object sender, EventArgs e)
         {
             ListCollectionView view = (ListCollectionView) sender;
 
             if (view.IsAddingNew)
             {
-                modifyNewLine(view);
+                modifyNewLineItem(view);
             }
 
             setCurrentLine((LineItemModel)view.CurrentItem);
 
         }
 
-        private void modifyNewLine(ListCollectionView view)
+        private void EnvelopeLinesView_CurrentChanged(object sender, EventArgs e)
         {
-            LineItemModel newLine = (LineItemModel)view.CurrentAddItem;
 
-            newLine.Amount = suggestedAmountDependingOnView(view);
-            newLine.Polarity = determinePolarityDependingOnView(view);
+            if (this.EnvelopeLinesView.IsAddingNew)
+            {
+                EnvelopeLineDRM newELine = (EnvelopeLineDRM)this.EnvelopeLinesView.CurrentAddItem;
 
-            removeGhostLine(view);
+                newELine.Amount = suggestedSubLineAmountDependingOnCurrentLine();
+            }
+
+
         }
 
+        private decimal suggestedSubLineAmountDependingOnCurrentLine()
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+        ///////////////////////////////////////////////////////////
+        // Private functions
+        ///////////////////////////////////////////////////////////
+        private void setupViews()
+        {            
+            this.TransactionTypesView = new ListCollectionView(DataSetModel.Instance.TransactionTypes);
+            this.TransactionTypesView.CustomSort = new TransactionTypesComparer();
+
+            this.CreditsView = new ListCollectionView(this.TransactionModel.LineItems);
+            this.CreditsView.Filter = new Predicate<Object>(CreditsFilter);
+            this.CreditsView.CurrentChanged += new EventHandler(CreditOrDebitView_CurrentChanged);
+
+            this.DebitsView = new ListCollectionView(this.TransactionModel.LineItems);
+            this.DebitsView.Filter = new Predicate<Object>(DebitsFilter);
+            this.DebitsView.CurrentChanged += new EventHandler(CreditOrDebitView_CurrentChanged);
+        }
+
+        private bool alreadySettingCurrentLine = false;
         private void setCurrentLine(LineItemModel line)
         {
+            if (this.alreadySettingCurrentLine)
+                return;
+            else
+                this.alreadySettingCurrentLine = true;
+
             this.currentLine = line;
+
+            this.tellParentWindowToDeselectLines();
 
             if (currentLine != null)
             {
@@ -155,22 +204,22 @@ namespace FamilyFinance.Presentation.EditTransaction
             {
                 this.EnvelopeLinesView = null;
             }
+
+
+            this.alreadySettingCurrentLine = false;
         }
         
-        private void EnvelopeLinesView_CurrentChanged(object sender, EventArgs e)
+        private void modifyNewLineItem(ListCollectionView view)
         {
+            LineItemModel newLine = (LineItemModel)view.CurrentAddItem;
 
-            if (this.EnvelopeLinesView.IsAddingNew)
-            {
-                EnvelopeLineDRM newELine = (EnvelopeLineDRM)this.EnvelopeLinesView.CurrentAddItem;
+            newLine.Amount = suggestedLineItemAmountDependingOnView(view);
+            newLine.Polarity = determinePolarityDependingOnView(view);
 
-                //newELine.Amount = suggestedAmountDependingOnCurrentLine(view);
-            }
-
-
+            removeGhostLine(view);
         }
 
-        private decimal suggestedAmountDependingOnView(ListCollectionView view)
+        private decimal suggestedLineItemAmountDependingOnView(ListCollectionView view)
         {
             decimal suggestedAmount;
 
@@ -197,7 +246,7 @@ namespace FamilyFinance.Presentation.EditTransaction
         {
             // When adding a new line the credit or debit filter might be applied
             // too soon and a ghost copy of the line might appear in the opposite
-            // view or datagrid. So when an item is added to the view and after 
+            // view and datagrid. So when an item is added to the view and after 
             // the polarity is set refresh the opposite view to remove the ghost 
             // line.
             if (view == DebitsView)
@@ -205,6 +254,7 @@ namespace FamilyFinance.Presentation.EditTransaction
             else
                 this.DebitsView.Refresh();
         }
+
 
 
         private ListCollectionView getANewSortedViewOfAccounts()
@@ -217,18 +267,6 @@ namespace FamilyFinance.Presentation.EditTransaction
             return listView;
         }
 
-        private bool AccountsFilter(object item)
-        {
-            AccountDRM account = (AccountDRM)item;
-            bool keepItem = true;
-
-            if (account.ID == AccountCON.MULTIPLE.ID)
-                keepItem = false;
-
-            return keepItem;
-        }
-
-
         private ListCollectionView getANewSortedViewOfEnvelopes()
         {
             ListCollectionView listView = new ListCollectionView(DataSetModel.Instance.Envelopes);
@@ -239,16 +277,22 @@ namespace FamilyFinance.Presentation.EditTransaction
             return listView;
         }
 
-        private bool EnvelopesFilter(object item)
+        private void tellParentWindowToDeselectLines()
         {
-            EnvelopeDRM account = (EnvelopeDRM)item;
-            bool keepItem = true;
-
-            if (account.ID == EnvelopeCON.SPLIT.ID)
-                keepItem = false;
-
-            return keepItem;
+            if (this.parentWindow != null)
+            {
+                if (this.currentLine == null)
+                {
+                    this.parentWindow.unselectFromDestinationDataGrid();
+                    this.parentWindow.unselectFromSourceDataGRid();
+                }
+                else if (this.currentLine.Polarity == PolarityCON.CREDIT)
+                    this.parentWindow.unselectFromDestinationDataGrid();
+                else
+                    this.parentWindow.unselectFromSourceDataGRid();
+            }
         }
+
 
 
         ///////////////////////////////////////////////////////////
@@ -265,6 +309,11 @@ namespace FamilyFinance.Presentation.EditTransaction
             this.setupViews();
 
             this.reportAllPropertiesChanged();
+        }
+
+        public void setParentWindow(EditTransactionWindow editWindow)
+        {
+            this.parentWindow = editWindow;
         }
 
         public void reportDependantEnvelopeLinesSumChanged()
