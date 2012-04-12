@@ -133,11 +133,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Presentation\Registry\RegistryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Presentation\EditTypes\EditTypesVM.cs" />
     <Compile Include="Presentation\EditTypes\EditTypesWindow.xaml.cs">
       <DependentUpon>EditTypesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Registry\RegistryAccountModel.cs" />
+    <Compile Include="Presentation\Registry\RegistryVM.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\Registry\RegistryWindow.xaml.cs">
+      <DependentUpon>RegistryWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Presentation\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -178,7 +190,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Import\" />
-    <Folder Include="Presentation\Registry\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
