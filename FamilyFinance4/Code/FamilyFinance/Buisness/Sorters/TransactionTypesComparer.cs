@@ -9,7 +9,10 @@ namespace FamilyFinance.Buisness.Sorters
             TransactionTypeDRM xType  = (TransactionTypeDRM)x;
             TransactionTypeDRM yType = (TransactionTypeDRM)y;
 
-            if (xType.IsSpecial())
+            if (xType.IsSpecial() && yType.IsSpecial())
+                return xType.ID.CompareTo(yType.ID);
+
+            else if (xType.IsSpecial())
                 return -1;
 
             else if (yType.IsSpecial())

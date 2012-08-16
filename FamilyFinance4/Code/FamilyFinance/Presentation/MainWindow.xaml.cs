@@ -66,5 +66,11 @@ namespace FamilyFinance.Presentation
             tWin.ShowDialog();
         }
 
+        private void Registry_Click(object sender, RoutedEventArgs e)
+        {
+            Registry.RegistryWindow rWin = new Registry.RegistryWindow();
+            rWin.ShowDialog();
+        }
+
     }
 }

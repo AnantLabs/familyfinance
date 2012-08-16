@@ -13,39 +13,41 @@ namespace FamilyFinance.Buisness
 
         private TransactionDRM _transactionDRM;
 
-        /// <summary>
-        /// Gets or sets the datetime of the parent transaction
-        /// </summary>
+        public int TransactionID
+        {
+            get
+            {
+                return _transactionDRM.TransactionID;
+            }
+        }
+
         public DateTime Date
         {
             get
             {
                 return this._transactionDRM.Date;
             }
+
             set
             {
                 this._transactionDRM.Date = value;
             }
         }
 
-        /// <summary>
-        /// Gets or sets the type ID of the parent transaction
-        /// </summary>
         public int TypeID
         {
             get
             {
                 return this._transactionDRM.TypeID;
             }
+
             set
             {
                 this._transactionDRM.TypeID = value;
+                this.reportPropertyChangedWithName("TypeName");
             }
         }
 
-        /// <summary>
-        /// GEts the name of the transaction type of the parent transation
-        /// </summary>
         public string TypeName
         {
             get
@@ -54,9 +56,6 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        /// <summary>
-        /// Gets or sets the description of the parent transaction
-        /// </summary>
         public string Description
         {
             get
@@ -69,31 +68,24 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        /// <summary>
-        /// Gets or sets the complete code for the parent transaction
-        /// </summary>
-        public TransactionStateCON Complete
+        public bool IsTransactionError
         {
             get
             {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
+                return this._transactionDRM.IsTransactionError;
             }
         }
 
-        /// <summary>
-        /// Gets or sets the account id of the line items on the opposite side of the transaction.
-        /// </summary>
+
         public int OppositeAccountID
         {
             get
             {
-                throw new System.NotImplementedException();
+                return 1;
             }
             set
             {
+                //if(this._transactionDRM.CanChangeOppositeAccount(this))
             }
         }
 
@@ -101,35 +93,9 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                throw new System.NotImplementedException();
-            }
-            set
-            {
+                return " ";
             }
         }
-
-
-
-        //public int OppAccountID
-        //{
-        //    get
-        //    {
-        //        return this.getOppAccountID();
-        //    }
-
-        //    set
-        //    {
-        //        this.setOppAccountID(value);
-        //    }
-        //}
-
-        //public string OppAccountName
-        //{
-        //    get
-        //    {
-        //        return this.getOppAccountName();
-        //    }
-        //}
 
 
         ///////////////////////////////////////////////////////////////////////////////////////////

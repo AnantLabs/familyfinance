@@ -143,7 +143,6 @@
     <Compile Include="Presentation\EditTypes\EditTypesWindow.xaml.cs">
       <DependentUpon>EditTypesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Registry\RegistryAccountModel.cs" />
     <Compile Include="Presentation\Registry\RegistryVM.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -33,6 +33,7 @@
                           Click="EditBanks_Click"/>
                 <MenuItem Header="Transaction"
                           Click="Transaction_Click"/>
+                <MenuItem Header="Registry" Click="Registry_Click" />
             </MenuItem>
         </Menu>
 
