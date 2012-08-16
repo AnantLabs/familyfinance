@@ -107,6 +107,30 @@ namespace FamilyFinance.Buisness
             }
         }
 
+        public bool canChangeOppositeAccount(LineItemDRM compareLine)
+        {
+            if (isOneSidedTransaction() || isOppositeSideSimple(compareLine))
+                return true;
+            else
+                return false;
+        }
+
+        public void changeOppositeAccount(LineItemDRM compareLine)
+        {
+            FFDataSet.LineItemRow oppLine;
+
+            if (isOneSidedTransaction())
+            {
+                oppLine = this.getLineItemRows()[0];
+            }
+            else if (isOppositeSideSimple(compareLine))
+            {
+
+            }
+            else
+                throw new Exception("Can't change the opposite account of a complex transaction.");
+               
+        }
 
 
         ///////////////////////////////////////////////////////////
@@ -117,6 +141,20 @@ namespace FamilyFinance.Buisness
             int size = transactionRow.GetLineItemRows().Length;
 
             if (size == 1)
+                return true;
+            else
+                return false;
+        }
+
+        public bool isOppositeSideSimple(LineItemDRM compareLine)
+        {
+            int count = 0;
+
+            foreach (FFDataSet.LineItemRow line in this.transactionRow.GetLineItemRows())
+                if (line.polarity != compareLine.Polarity.Value)
+                    count++;
+
+            if (count == 1)
                 return true;
             else
                 return false;

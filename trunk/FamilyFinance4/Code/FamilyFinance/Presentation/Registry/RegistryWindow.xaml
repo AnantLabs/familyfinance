@@ -32,7 +32,7 @@
                 <MenuItem Header="Envelope Groups"/>
             </MenuItem>
         </Menu>
-        <!-- Three DataGrids -->
+
         <Grid Grid.Row="1"
               Margin="5">
             <Grid.ColumnDefinitions>
@@ -46,42 +46,34 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <TextBlock Text="--Account Name / Envelope --"
-                       Grid.Row="0"
+            <TextBlock x:Name="registryTitle" 
+                       Text="{Binding Path=RegistryTitle, Mode=OneWay}" 
                        Grid.Column="2" 
                        Margin="6,0,0,0"
                        Foreground="White"
                        HorizontalAlignment="Left" 
                        VerticalAlignment="Bottom" 
                        FontWeight="Bold" />
-            <TextBlock Text="{Binding EnvelopeLineSum, Mode=OneWay, StringFormat=\{0:c\}}"
-                       Grid.Row="2"
-                       Grid.Column="2" 
-                       Margin="3,0"
-                       Foreground="White"
-                       HorizontalAlignment="Right" 
-                       VerticalAlignment="Top" />
-
             <!-- Account / Envelope Trees -->
             <TabControl Grid.Row="1">
                 <TabItem Header="Accounts" >
                     <DataGrid x:Name="accountsDataGrid" 
-                              ItemsSource="{Binding AccountsView, Source={StaticResource registryVM}}"
+                              ItemsSource="{Binding Source={StaticResource registryVM}, Path=AccountsView, Mode=OneWay}"
                               HeadersVisibility="Column"
                               AutoGenerateColumns="False" 
                               SelectionMode="Single" 
-                              CanUserResizeRows="False" >
+                              CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False" GridLinesVisibility="None">
                         <DataGrid.Columns>
                             <!-- Name column -->
-                            <DataGridTextColumn Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                            <DataGridTextColumn Binding="{Binding Name, Mode=OneWay}"
                                                 CanUserSort="True"
                                                 MinWidth="80"
                                                 Width="40*" />
                             <!-- Balance column -->
-                            <DataGridTextColumn Binding="{Binding Amount, StringFormat=\{0:c\}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                            <DataGridTextColumn Binding="{Binding EndingBalance, StringFormat=\{0:c\}, Mode=OneWay}" 
                                         CanUserSort="True"
-                                        MinWidth="60"
                                         ElementStyle="{StaticResource RightAlignStyle}"
+                                        MinWidth="60"
                                         Width="20*" >
                                 <DataGridTextColumn.CellStyle>
                                     <Style TargetType="{x:Type DataGridCell}">
@@ -97,13 +89,69 @@
                     </DataGrid>
                 </TabItem>
                 <TabItem Header="Incomes" >
-
+                    <DataGrid x:Name="incomesDataGrid" 
+                              ItemsSource="{Binding Source={StaticResource registryVM}, Path=IncomesView, Mode=OneWay}"
+                              HeadersVisibility="Column"
+                              AutoGenerateColumns="False" 
+                              SelectionMode="Single" 
+                              CanUserResizeRows="False" 
+                              CanUserAddRows="False" 
+                              CanUserDeleteRows="False" 
+                              GridLinesVisibility="None">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Name, Mode=OneWay}"
+                                                CanUserSort="True" />
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </TabItem>
                 <TabItem Header="Expences" >
-
+                    <DataGrid x:Name="expencesDataGrid" 
+                              ItemsSource="{Binding Source={StaticResource registryVM}, Path=ExpencesView, Mode=OneWay}"
+                              HeadersVisibility="Column"
+                              AutoGenerateColumns="False" 
+                              SelectionMode="Single" 
+                              CanUserResizeRows="False" 
+                              CanUserAddRows="False" 
+                              CanUserDeleteRows="False" 
+                              GridLinesVisibility="None">
+                        <DataGrid.Columns>
+                            <!-- Name column -->
+                            <DataGridTextColumn Binding="{Binding Name, Mode=OneWay}"
+                                                CanUserSort="True"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </TabItem>
                 <TabItem Header="Envelopes" >
-
+                    <DataGrid x:Name="envelopesDataGrid" 
+                              ItemsSource="{Binding Source={StaticResource registryVM}, Path=EnvelopesView, Mode=OneWay}"
+                              HeadersVisibility="Column"
+                              AutoGenerateColumns="False" 
+                              SelectionMode="Single" 
+                              CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False" GridLinesVisibility="None">
+                        <DataGrid.Columns>
+                            <!-- Name column -->
+                            <DataGridTextColumn Binding="{Binding Name, Mode=OneWay}"
+                                                CanUserSort="True"
+                                                MinWidth="80"
+                                                Width="40*" />
+                            <!-- Balance column -->
+                            <DataGridTextColumn Binding="{Binding EndingBalance, StringFormat=\{0:c\}, Mode=OneWay}" 
+                                        CanUserSort="True"
+                                        ElementStyle="{StaticResource RightAlignStyle}"
+                                        MinWidth="60"
+                                        Width="20*" >
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="{x:Type DataGridCell}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=IsLineError, Mode=OneWay}" Value="True" >
+                                                <Setter Property="Background" Value="Red"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </TabItem>
 
 
@@ -185,7 +233,21 @@
                     </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
-
+            
+            <StackPanel Grid.Row="2" 
+                        Grid.Column="2" 
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Right">
+                <TextBlock Text="{Binding Mode=OneWay, Path=ReconciledBalance}"
+                       Margin="30,0,0,0"
+                       Foreground="White" />
+                <TextBlock Text="{Binding Mode=OneWay, Path=ClearedBalance}"
+                       Margin="30,0,0,0"
+                       Foreground="White" />
+                <TextBlock Text="{Binding Mode=OneWay, Path=EndingBalance}"
+                       Margin="30,0,0,0"
+                       Foreground="White" />
+            </StackPanel>
 
         </Grid>
     </Grid>

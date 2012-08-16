@@ -129,7 +129,38 @@ namespace FamilyFinance.Buisness
                 this.envelopeRow.goal = value;
             }
         }
-       
+
+        public decimal EndingBalance
+        {
+            get
+            {
+                return this.getEndingBalance();
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////////////
+        // Private functions
+        ///////////////////////////////////////////////////////////////////////
+        private decimal getEndingBalance()
+        {
+            decimal credits = 0;
+            decimal debits = 0;
+
+            FamilyFinance.Data.FFDataSet.EnvelopeLineRow[] lines;
+            lines = this.envelopeRow.GetEnvelopeLineRows();
+
+            foreach (FFDataSet.EnvelopeLineRow line in lines)
+            {
+                if (line.LineItemRow.polarity == PolarityCON.CREDIT.Value)
+                    credits += line.amount;
+                else
+                    debits += line.amount;
+            }
+
+            return credits - debits;
+        }
+    
+
         ///////////////////////////////////////////////////////////////////////
         // Public functions
         ///////////////////////////////////////////////////////////////////////
@@ -143,10 +174,11 @@ namespace FamilyFinance.Buisness
             this.envelopeRow = eRow;
         }
 
-
         public bool IsSpecial()
         {
             return EnvelopeCON.isSpecial(this.envelopeRow.id);
         }
+
+
     }
 }

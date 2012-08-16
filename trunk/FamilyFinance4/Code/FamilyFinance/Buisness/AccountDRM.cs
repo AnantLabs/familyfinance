@@ -16,7 +16,7 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////////////////
         // Local variables
         ///////////////////////////////////////////////////////////////////////
-        private FFDataSet.AccountRow accountRow;
+        protected FFDataSet.AccountRow accountRow;
         private FFDataSet.BankInfoRow bankInfoRow;
         
         ///////////////////////////////////////////////////////////////////////
@@ -244,6 +244,15 @@ namespace FamilyFinance.Buisness
             }
         }
 
+
+        public decimal EndingBalance
+        {
+            get
+            {
+                return this.getEndingBalance();
+            }
+        }
+
         
         ///////////////////////////////////////////////////////////////////////
         // Public functions
@@ -260,6 +269,7 @@ namespace FamilyFinance.Buisness
             this.bankInfoRow = bankRow;
         }
 
+
         public bool IsSpecial()
         {
             if (AccountCON.isSpecial(this.ID))
@@ -267,5 +277,28 @@ namespace FamilyFinance.Buisness
             else
                 return false;
         }
+
+        public decimal getEndingBalance()
+        {
+            decimal credits = 0;
+            decimal debits = 0;
+
+            FamilyFinance.Data.FFDataSet.LineItemRow[] lines;
+            lines = this.accountRow.GetLineItemRows();
+
+            foreach (FFDataSet.LineItemRow line in lines)
+            {
+                if (line.polarity == PolarityCON.CREDIT.Value)
+                    credits += line.amount;
+                else
+                    debits += line.amount;
+            }
+
+            if (this.AccountNormal == PolarityCON.CREDIT)
+                return credits - debits;
+            else
+                return debits - credits;
+        }
+
     }
 }
