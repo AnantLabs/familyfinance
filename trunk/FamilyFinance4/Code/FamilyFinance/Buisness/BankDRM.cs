@@ -7,7 +7,7 @@ using FamilyFinance.Data;
 
 namespace FamilyFinance.Buisness
 {
-    public class BankDRM : DataRowModel
+    public class BankDRM : BindableObject, DataRowModel
     {
         private FFDataSet.BankRow bankRow;
 
@@ -54,6 +54,11 @@ namespace FamilyFinance.Buisness
         public BankDRM(FFDataSet.BankRow bRow)
         {
             this.bankRow = bRow;
+        }
+
+        public void deleteRowFromDataset()
+        {
+            this.bankRow.Delete();
         }
 
     }

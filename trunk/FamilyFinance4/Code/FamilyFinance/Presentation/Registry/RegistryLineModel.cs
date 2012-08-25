@@ -8,7 +8,7 @@ namespace FamilyFinance.Buisness
     /// This class "is a" LineItemDRM and "has a" TransactionDRM for making easy changes
     /// like in a registry setting.
     /// </summary>
-    class RegistryLineModel : LineItemDRM
+    class RegistryLineModel : BindableObject
     {
 
         private TransactionDRM _transactionDRM;

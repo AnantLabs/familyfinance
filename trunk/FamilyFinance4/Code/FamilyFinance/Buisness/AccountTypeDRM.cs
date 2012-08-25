@@ -2,7 +2,7 @@
 
 namespace FamilyFinance.Buisness
 {
-    public class AccountTypeDRM : DataRowModel
+    public class AccountTypeDRM : BindableObject, DataRowModel
     {
         private FFDataSet.AccountTypeRow accountTypeRow;
 
@@ -43,5 +43,10 @@ namespace FamilyFinance.Buisness
             this.Name = accountTypeName;
         }
 
+
+        public void deleteRowFromDataset()
+        {
+            this.accountTypeRow.Delete();
+        }
     }
 }

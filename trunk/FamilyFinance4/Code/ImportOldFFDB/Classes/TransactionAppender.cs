@@ -61,8 +61,9 @@ namespace ImportOldFFDB
 
         private void addLineToTransaction(TransactionDRM transaction, OldFFDBDataSet.LineItemRow sourceLine)
         {
-            LineItemDRM newLine = new LineItemDRM(transaction);
+            LineItemDRM newLine = new LineItemDRM();
 
+            newLine.setParentTransaction(transaction);
             newLine.AccountID = accountAppender.getDestinationIdFromSourceId(sourceLine.accountID);
             newLine.Amount = sourceLine.amount;
             newLine.ConfirmationNumber = getConfirmationNumber(sourceLine);

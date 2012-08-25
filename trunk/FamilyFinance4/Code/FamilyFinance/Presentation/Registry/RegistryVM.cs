@@ -2,6 +2,7 @@
 using System.Windows.Data;
 using FamilyFinance.Buisness;
 using FamilyFinance.Data;
+using System.Collections.ObjectModel;
 
 namespace FamilyFinance.Presentation.Registry
 {
@@ -9,6 +10,9 @@ namespace FamilyFinance.Presentation.Registry
     {
         private AccountDRM currentAccount;
         private EnvelopeDRM currentEnvelope;
+        //private ObservableCollection<RegistryLineItemModel> currentLineItems;
+
+
 
 
         ///////////////////////////////////////////////////////////
@@ -43,7 +47,7 @@ namespace FamilyFinance.Presentation.Registry
             {
                 if (this.currentAccount != null)
                 {
-                    return "Ending Balance " + this.currentAccount.EndingBalance.ToString("C2");
+                    return "Ending Balance " + this.currentAccount.getEndingBalance().ToString("C2");
                 }
                 else if (this.currentEnvelope != null)
                 {
@@ -60,7 +64,7 @@ namespace FamilyFinance.Presentation.Registry
             {
                 if (this.currentAccount != null)
                 {
-                    return "Cleared " + this.currentAccount.EndingBalance.ToString("C2");
+                    return "Cleared " + this.currentAccount.getClearedBalance().ToString("C2");
                 }
                 else
                     return "";
@@ -73,7 +77,7 @@ namespace FamilyFinance.Presentation.Registry
             {
                 if (this.currentAccount != null)
                 {
-                    return "Reconsiled " + this.currentAccount.EndingBalance.ToString("C2");
+                    return "Reconsiled " + this.currentAccount.getReconciledBalance().ToString("C2");
                 }
                 else
                     return "";
@@ -155,40 +159,30 @@ namespace FamilyFinance.Presentation.Registry
         }
 
 
+
         ///////////////////////////////////////////////////////////
         // Event Functions
         ///////////////////////////////////////////////////////////
-        void AccountsView_CurrentChanged(object sender, EventArgs e)
+        private void AccountsView_CurrentChanged(object sender, EventArgs e)
         {
-            this.currentAccount = (AccountDRM)this.AccountsView.CurrentItem;
-            this.currentEnvelope = null;
-
-            this.reportSummaryPropertiesChanged();
+            this.switchToSelectedAccount();
         }
 
-        void IncomesView_CurrentChanged(object sender, EventArgs e)
+        private void IncomesView_CurrentChanged(object sender, EventArgs e)
         {
-            this.currentAccount = (AccountDRM)this.IncomesView.CurrentItem;
-            this.currentEnvelope = null;
-
-            this.reportSummaryPropertiesChanged();
+            this.switchToSelectedIncome();
         }
 
-        void ExpencesView_CurrentChanged(object sender, EventArgs e)
+        private void ExpencesView_CurrentChanged(object sender, EventArgs e)
         {
-            this.currentAccount = (AccountDRM)this.ExpencesView.CurrentItem;
-            this.currentEnvelope = null;
-
-            this.reportSummaryPropertiesChanged();
+            this.switchToSelectedExpence();
         }
 
-        void EnvelopesView_CurrentChanged(object sender, EventArgs e)
+        private void EnvelopesView_CurrentChanged(object sender, EventArgs e)
         {
-            this.currentEnvelope = (EnvelopeDRM)this.EnvelopesView.CurrentItem;
-            this.currentAccount = null;
-
-            this.reportSummaryPropertiesChanged();
+            switchToSelectedEnvelope();
         }
+
 
 
         ///////////////////////////////////////////////////////////
@@ -235,7 +229,37 @@ namespace FamilyFinance.Presentation.Registry
             this.currentEnvelope = null;
         }
 
+        public void switchToSelectedAccount()
+        {
+            this.currentAccount = (AccountDRM)this.AccountsView.CurrentItem;
+            this.currentEnvelope = null;
 
+            this.reportSummaryPropertiesChanged();
+        }
+
+        public void switchToSelectedIncome()
+        {
+            this.currentAccount = (AccountDRM)this.IncomesView.CurrentItem;
+            this.currentEnvelope = null;
+
+            this.reportSummaryPropertiesChanged();
+        }
+
+        public void switchToSelectedExpence()
+        {
+            this.currentAccount = (AccountDRM)this.ExpencesView.CurrentItem;
+            this.currentEnvelope = null;
+
+            this.reportSummaryPropertiesChanged();
+        }
+
+        public void switchToSelectedEnvelope()
+        {
+            this.currentEnvelope = (EnvelopeDRM)this.EnvelopesView.CurrentItem;
+            this.currentAccount = null;
+
+            this.reportSummaryPropertiesChanged();
+        }
 
     }
 }

@@ -548,52 +548,10 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////////////////
         // Events
         ///////////////////////////////////////////////////////////////////////
-        //private void LineItem_ColumnChanged(object sender, DataColumnChangeEventArgs e)
-        //{
-        //    if (e.Row.RowState == DataRowState.Detached)
-        //        return;
-
-        //    string columnName = e.Column.ColumnName;
-
-        //    if (columnName == "amount" || columnName == "polarity")
-        //    {
-        //        int transID = (e.Row as FFDataSet.LineItemRow).transactionID;
-        //        raiseTransactionBalanceChange(transID);
-        //    }
-        //}
-
-        //private void EnvelopeLine_ColumnChanged(object sender, DataColumnChangeEventArgs e)
-        //{
-        //    if (e.Row.RowState == DataRowState.Detached)
-        //        return;
-
-        //    string columnName = e.Column.ColumnName;
-
-        //    if (columnName == "amount")
-        //    {
-        //        int lineID = (e.Row as FFDataSet.EnvelopeLineRow).lineItemID;
-        //        raiseLineBalanceChange(lineID);
-        //    }
-        //}
 
 
-        //public delegate void TransactionBalanceChangedEventHandler(int transactionID);
-        //public event TransactionBalanceChangedEventHandler TransactionBalanceChanged;
 
-        //private void raiseTransactionBalanceChange(int transID)
-        //{
-        //    if (this.TransactionBalanceChanged != null)
-        //        this.TransactionBalanceChanged(transID);
-        //}
 
-        //public delegate void LineBalanceChangedEventHandler(int lineitemID);
-        //public event LineBalanceChangedEventHandler LineBalanceChanged;
-
-        //private void raiseLineBalanceChange(int lineitemID)
-        //{
-        //    if (this.LineBalanceChanged != null)
-        //        this.LineBalanceChanged(lineitemID);
-        //}
 
 
 
@@ -610,7 +568,16 @@ namespace FamilyFinance.Buisness
             return row;
         }
 
+        public bool doesAccountUseEnvelopes(int accountID)
+        {
+            FFDataSet.AccountRow account = this.ffDataSet.Account.FindByid(accountID);
 
+            if (account != null)
+                return account.envelopes;
+            else
+                return false;
+
+        }
 
 
 
