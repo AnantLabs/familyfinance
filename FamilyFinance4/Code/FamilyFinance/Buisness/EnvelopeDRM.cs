@@ -3,7 +3,7 @@
 
 namespace FamilyFinance.Buisness
 {
-    public class EnvelopeDRM : DataRowModel
+    public class EnvelopeDRM : BindableObject, DataRowModel
     {
         ///////////////////////////////////////////////////////////////////////
         // Local variables
@@ -178,7 +178,11 @@ namespace FamilyFinance.Buisness
         {
             return EnvelopeCON.isSpecial(this.envelopeRow.id);
         }
-
+        
+        public void deleteRowFromDataset()
+        {
+            this.envelopeRow.Delete();
+        }
 
     }
 }

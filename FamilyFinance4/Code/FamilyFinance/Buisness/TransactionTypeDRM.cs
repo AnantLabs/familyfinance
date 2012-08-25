@@ -7,7 +7,7 @@ using FamilyFinance.Data;
 
 namespace FamilyFinance.Buisness
 {
-    public class TransactionTypeDRM : DataRowModel
+    public class TransactionTypeDRM : BindableObject, DataRowModel
     {
         ///////////////////////////////////////////////////////////
         // Local Members
@@ -65,6 +65,11 @@ namespace FamilyFinance.Buisness
                 return true;
             else
                 return false;
+        }
+
+        public void deleteRowFromDataset()
+        {
+            this.TransactionTypeRow.Delete();
         }
     }
 }

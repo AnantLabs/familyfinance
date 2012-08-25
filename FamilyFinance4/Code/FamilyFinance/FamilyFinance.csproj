@@ -66,10 +66,8 @@
     <Compile Include="Buisness\Sorters\AccountsCategoryNameComparer.cs" />
     <Compile Include="Buisness\Sorters\EnvelopesNameComparer.cs" />
     <Compile Include="Buisness\Sorters\TransactionTypesComparer.cs" />
-    <Compile Include="Presentation\EditTransaction\LineItemModel.cs" />
-    <Compile Include="Buisness\RegistryEnvelopeLineModel.cs" />
-    <Compile Include="Buisness\RegistryLineModel.cs" />
-    <Compile Include="Presentation\EditTransaction\TransactionModel.cs" />
+    <Compile Include="Buisness\LineItemModel.cs" />
+    <Compile Include="Buisness\TransactionModel.cs" />
     <Compile Include="Data\Constants\AccountCON.cs" />
     <Compile Include="Data\Constants\AccountTypeCON.cs" />
     <Compile Include="Data\Constants\BankCON.cs" />
@@ -143,6 +141,7 @@
     <Compile Include="Presentation\EditTypes\EditTypesWindow.xaml.cs">
       <DependentUpon>EditTypesWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Registry\RegistryLineModel.cs" />
     <Compile Include="Presentation\Registry\RegistryVM.cs">
       <SubType>Code</SubType>
     </Compile>

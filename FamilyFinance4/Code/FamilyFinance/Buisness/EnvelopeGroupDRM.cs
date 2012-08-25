@@ -3,7 +3,7 @@ using FamilyFinance.Data;
 
 namespace FamilyFinance.Buisness
 {
-    public class EnvelopeGroupDRM : DataRowModel
+    public class EnvelopeGroupDRM : BindableObject, DataRowModel
     {
         private FFDataSet.EnvelopeGroupRow envelopeGroupRow;
 
@@ -69,6 +69,12 @@ namespace FamilyFinance.Buisness
         {
             this.envelopeGroupRow = atRow;
         }
+
+        public void deleteRowFromDataset()
+        {
+            this.envelopeGroupRow.Delete();
+        }
+
 
     }
 }

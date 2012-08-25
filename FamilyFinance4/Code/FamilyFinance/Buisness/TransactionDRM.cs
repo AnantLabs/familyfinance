@@ -3,7 +3,7 @@ using System;
 
 namespace FamilyFinance.Buisness
 {
-    public class TransactionDRM : DataRowModel
+    public class TransactionDRM : BindableObject, DataRowModel
     {
         private FFDataSet.TransactionRow transactionRow;
 
@@ -67,124 +67,6 @@ namespace FamilyFinance.Buisness
         }
 
 
-        public bool IsTransactionError
-        {
-            get
-            {
-                if (isOneSidedTransaction() || isTransactionBalanced())
-                    return false;
-
-                else
-                    return true;
-            }
-        }
-
-        public decimal CreditSum
-        {
-            get
-            {
-                decimal creditSum = 0;
-
-                foreach (FFDataSet.LineItemRow line in this.transactionRow.GetLineItemRows())
-                    if (line.polarity == PolarityCON.CREDIT.Value)
-                        creditSum += line.amount;
-
-                return creditSum;
-            }
-        }
-
-        public decimal DebitSum
-        {
-            get
-            {
-                decimal debitSum = 0;
-
-                foreach (FFDataSet.LineItemRow line in this.transactionRow.GetLineItemRows())
-                    if (line.polarity == PolarityCON.DEBIT.Value)
-                        debitSum += line.amount;
-
-                return debitSum;
-            }
-        }
-
-        public bool canChangeOppositeAccount(LineItemDRM compareLine)
-        {
-            if (isOneSidedTransaction() || isOppositeSideSimple(compareLine))
-                return true;
-            else
-                return false;
-        }
-
-        public void changeOppositeAccount(LineItemDRM compareLine)
-        {
-            FFDataSet.LineItemRow oppLine;
-
-            if (isOneSidedTransaction())
-            {
-                oppLine = this.getLineItemRows()[0];
-            }
-            else if (isOppositeSideSimple(compareLine))
-            {
-
-            }
-            else
-                throw new Exception("Can't change the opposite account of a complex transaction.");
-               
-        }
-
-
-        ///////////////////////////////////////////////////////////
-        // Private functions
-        ///////////////////////////////////////////////////////////
-        private bool isOneSidedTransaction()
-        {
-            int size = transactionRow.GetLineItemRows().Length;
-
-            if (size == 1)
-                return true;
-            else
-                return false;
-        }
-
-        public bool isOppositeSideSimple(LineItemDRM compareLine)
-        {
-            int count = 0;
-
-            foreach (FFDataSet.LineItemRow line in this.transactionRow.GetLineItemRows())
-                if (line.polarity != compareLine.Polarity.Value)
-                    count++;
-
-            if (count == 1)
-                return true;
-            else
-                return false;
-        }
-
-        private bool isTransactionBalanced()
-        {
-            decimal creditSum = 0;
-            decimal debitSum = 0;
-
-            foreach (FFDataSet.LineItemRow line in this.transactionRow.GetLineItemRows())
-            {
-                if (line.polarity == PolarityCON.CREDIT.Value)
-                    creditSum += line.amount;
-                else
-                    debitSum += line.amount;
-            }
-
-            if (creditSum == debitSum)
-                return true;
-            else
-                return false;
-        }
-
-
-        protected FFDataSet.LineItemRow[] getLineItemRows()
-        {
-            return this.transactionRow.GetLineItemRows();
-        }
-
 
         ///////////////////////////////////////////////////////////
         // Public functions
@@ -206,14 +88,18 @@ namespace FamilyFinance.Buisness
 
 
 
-        public void retportDependantLineBalanceChanged()
+        public LineItemModel[] getLineItemModels()
         {
-            this.reportPropertyChangedWithName("CreditSum");
-            this.reportPropertyChangedWithName("DebitSum");
-            this.reportPropertyChangedWithName("IsTransactionError");
+            FFDataSet.LineItemRow[] rawLines = this.transactionRow.GetLineItemRows();
+            LineItemModel[] modelLines = new LineItemModel[rawLines.Length];
+
+            for (int i = 0; i < rawLines.Length; i++)
+                modelLines[i] = new LineItemModel(rawLines[i]);
+
+            return modelLines;
         }
 
-        public void delete()
+        public void deleteRowFromDataset()
         {
             this.transactionRow.Delete();
         }

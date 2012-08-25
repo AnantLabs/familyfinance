@@ -11,7 +11,7 @@ namespace FamilyFinance.Buisness
     /// A modle of an account row in the dataset. This also manages a bankInfo row, if the
     /// user wants to attach bank information to the account row.
     /// </summary>
-    public class AccountDRM : DataRowModel
+    public class AccountDRM : BindableObject, DataRowModel
     {
         ///////////////////////////////////////////////////////////////////////
         // Local variables
@@ -244,15 +244,6 @@ namespace FamilyFinance.Buisness
             }
         }
 
-
-        public decimal EndingBalance
-        {
-            get
-            {
-                return this.getEndingBalance();
-            }
-        }
-
         
         ///////////////////////////////////////////////////////////////////////
         // Public functions
@@ -300,5 +291,75 @@ namespace FamilyFinance.Buisness
                 return debits - credits;
         }
 
+        public decimal getClearedBalance()
+        {
+            decimal credits = 0;
+            decimal debits = 0;
+
+            FamilyFinance.Data.FFDataSet.LineItemRow[] lines;
+            lines = this.accountRow.GetLineItemRows();
+
+            foreach (FFDataSet.LineItemRow line in lines)
+            {
+                if (line.state == TransactionStateCON.CLEARED.Value
+                    || line.state == TransactionStateCON.RECONSILED.Value)
+                {
+                    if (line.polarity == PolarityCON.CREDIT.Value)
+                        credits += line.amount;
+                    else
+                        debits += line.amount;
+                }
+            }
+
+            if (this.AccountNormal == PolarityCON.CREDIT)
+                return credits - debits;
+            else
+                return debits - credits;
+        }
+
+        public decimal getReconciledBalance()
+        {
+            decimal credits = 0;
+            decimal debits = 0;
+
+            FamilyFinance.Data.FFDataSet.LineItemRow[] lines;
+            lines = this.accountRow.GetLineItemRows();
+
+            foreach (FFDataSet.LineItemRow line in lines)
+            {
+                if (line.state == TransactionStateCON.RECONSILED.Value)
+                {
+                    if (line.polarity == PolarityCON.CREDIT.Value)
+                        credits += line.amount;
+                    else
+                        debits += line.amount;
+                }
+            }
+
+            if (this.AccountNormal == PolarityCON.CREDIT)
+                return credits - debits;
+            else
+                return debits - credits;
+        }
+
+
+        public LineItemDRM[] getLineItems()
+        {
+            FFDataSet.LineItemRow[] rawLines = this.accountRow.GetLineItemRows();
+            LineItemDRM[] modelLines = new LineItemDRM[rawLines.Length];
+
+            for (int i = 0; i < rawLines.Length; i++)
+            {
+                modelLines[i] = new LineItemDRM(rawLines[i]);
+            }
+
+            return modelLines;
+        }
+
+
+        public void deleteRowFromDataset()
+        {
+            this.accountRow.Delete();
+        }
     }
 }

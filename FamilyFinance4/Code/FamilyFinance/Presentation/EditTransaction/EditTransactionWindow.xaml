@@ -105,7 +105,7 @@
                        HorizontalAlignment="Left" 
                        VerticalAlignment="Bottom" 
                        FontWeight="Bold" />
-            <TextBlock Text="{Binding EnvelopeLineSum, Mode=OneWay, StringFormat=\{0:c\}}"
+            <TextBlock Text="{Binding Mode=OneWay, StringFormat=\{0:c\}, Path=EnvelopeLineSum}"
                        Grid.Row="5"
                        Grid.Column="2" 
                        Margin="3,0"
@@ -297,7 +297,7 @@
                       VerticalAlignment="Stretch"
                       AutoGenerateColumns="False" 
                       SelectionMode="Single" HeadersVisibility="Column"
-                      ItemsSource="{Binding EnvelopeLinesView, Source={StaticResource editTransactionVM}}">
+                      ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=EnvelopeLinesView}">
                 <DataGrid.Columns>
                     <!-- Account Credit Combobox column -->
                     <DataGridTemplateColumn x:Name="EnvelopeColumnCB" 

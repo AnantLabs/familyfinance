@@ -11,13 +11,13 @@ namespace FamilyFinance.Presentation.EditTransaction
 {
     public class EditTransactionVM : ViewModel
     {
-        private LineItemModel currentLine;
         private EditTransactionWindow parentWindow;
+        private LineItemModel currentLineItem;
 
 
         ///////////////////////////////////////////////////////////
         // Properties
-        ///////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////  
         public TransactionModel TransactionModel { get; private set; }
 
         public ListCollectionView TransactionTypesView { get; private set; }
@@ -26,39 +26,16 @@ namespace FamilyFinance.Presentation.EditTransaction
 
         public ListCollectionView DebitsView { get; private set; }
 
-
-        private ListCollectionView _EnvelopeLinesView;
-        public ListCollectionView EnvelopeLinesView 
-        {
-            get
-            {
-                return this._EnvelopeLinesView;
-            }
-
-            private set
-            {
-                this._EnvelopeLinesView = value;
-                this.reportPropertyChangedWithName("EnvelopeLinesView");
-                this.reportPropertyChangedWithName("EnvelopeLineSum");
-            }
-        } 
-
-        public decimal EnvelopeLineSum
-        {
-            get
-            {
-                if (this.currentLine == null)
-                    return 0;
-                else 
-                    return this.currentLine.EnvelopeLineSum;
-            }
-        }
-
         public ListCollectionView AccountsView 
         {
             get
             {
-                return getANewSortedViewOfAccounts();
+                ListCollectionView listView = new ListCollectionView(DataSetModel.Instance.Accounts);
+
+                listView.CustomSort = new AccountsCategoryNameComparer();
+                listView.Filter = new Predicate<Object>(AccountsFilter);
+
+                return listView;
             }
         }
 
@@ -66,10 +43,27 @@ namespace FamilyFinance.Presentation.EditTransaction
         {
             get
             {
-                return this.getANewSortedViewOfEnvelopes();
+                ListCollectionView listView = new ListCollectionView(DataSetModel.Instance.Envelopes);
+
+                listView.CustomSort = new EnvelopesNameComparer();
+                listView.Filter = new Predicate<Object>(EnvelopesFilter);
+
+                return listView;
             }
         }
 
+        public ListCollectionView EnvelopeLinesView { get; private set; }
+
+        public decimal EnvelopeLineSum
+        {
+            get
+            {
+                if (this.currentLineItem == null)
+                    return 0;
+                else
+                    return this.currentLineItem.EnvelopeLineSum;
+            }
+        }
 
 
         ///////////////////////////////////////////////////////////
@@ -147,7 +141,7 @@ namespace FamilyFinance.Presentation.EditTransaction
                 newELine.Amount = suggestedSubLineAmountDependingOnCurrentLine();
             }
 
-
+            //this.reportPropertyChangedWithName("EnvelopeLineSum");
         }
 
 
@@ -176,17 +170,17 @@ namespace FamilyFinance.Presentation.EditTransaction
             else
                 this.alreadySettingCurrentLine = true;
 
-            this.currentLine = line;
+            this.currentLineItem = line;
 
             this.tellParentWindowToDeselectLines();
 
-            if (currentLine != null)
+            if (this.currentLineItem != null)
             {
-                currentLine.setParentTransactionVM(this);
+                //currentLineItem.setParentTransactionVM(this);
 
-                if (currentLine.supportsEnvelopeLines())
+                if (currentLineItem.supportsEnvelopeLines())
                 {
-                    this.EnvelopeLinesView = new ListCollectionView(currentLine.EnvelopeLines);
+                    this.EnvelopeLinesView = new ListCollectionView(currentLineItem.EnvelopeLines);
                     this.EnvelopeLinesView.CurrentChanged += new EventHandler(EnvelopeLinesView_CurrentChanged);
                 }
                 else
@@ -199,6 +193,8 @@ namespace FamilyFinance.Presentation.EditTransaction
                 this.EnvelopeLinesView = null;
             }
 
+            this.reportPropertyChangedWithName("EnvelopeLinesView");
+            this.reportPropertyChangedWithName("EnvelopeLineSum");
 
             this.alreadySettingCurrentLine = false;
         }
@@ -218,9 +214,9 @@ namespace FamilyFinance.Presentation.EditTransaction
             decimal suggestedAmount;
 
             if(view == DebitsView)
-                suggestedAmount = TransactionModel.CreditSum - TransactionModel.DebitSum;
+                suggestedAmount = this.TransactionModel.CreditSum - this.TransactionModel.DebitSum;
             else
-                suggestedAmount = TransactionModel.DebitSum - TransactionModel.CreditSum;
+                suggestedAmount = this.TransactionModel.DebitSum - this.TransactionModel.CreditSum;
 
             if (suggestedAmount < 0)
                 suggestedAmount = 0;
@@ -232,8 +228,8 @@ namespace FamilyFinance.Presentation.EditTransaction
         {
             decimal suggestedAmount = 0;
 
-            if (this.currentLine != null)
-                suggestedAmount = this.currentLine.Amount - this.currentLine.EnvelopeLineSum;
+            if (this.currentLineItem != null)
+                suggestedAmount = this.currentLineItem.Amount - this.currentLineItem.EnvelopeLineSum;
 
             return suggestedAmount;
         }
@@ -262,36 +258,17 @@ namespace FamilyFinance.Presentation.EditTransaction
 
 
 
-        private ListCollectionView getANewSortedViewOfAccounts()
-        {
-            ListCollectionView listView = new ListCollectionView(DataSetModel.Instance.Accounts);
-
-            listView.CustomSort = new AccountsCategoryNameComparer();
-            listView.Filter = new Predicate<Object>(AccountsFilter);
-
-            return listView;
-        }
-
-        private ListCollectionView getANewSortedViewOfEnvelopes()
-        {
-            ListCollectionView listView = new ListCollectionView(DataSetModel.Instance.Envelopes);
-
-            listView.CustomSort = new EnvelopesNameComparer();
-            listView.Filter = new Predicate<Object>(EnvelopesFilter);
-
-            return listView;
-        }
 
         private void tellParentWindowToDeselectLines()
         {
             if (this.parentWindow != null)
             {
-                if (this.currentLine == null)
+                if (this.currentLineItem == null)
                 {
                     this.parentWindow.unselectFromDestinationDataGrid();
                     this.parentWindow.unselectFromSourceDataGRid();
                 }
-                else if (this.currentLine.Polarity == PolarityCON.CREDIT)
+                else if (this.currentLineItem.Polarity == PolarityCON.CREDIT)
                     this.parentWindow.unselectFromDestinationDataGrid();
                 else
                     this.parentWindow.unselectFromSourceDataGRid();
@@ -308,22 +285,17 @@ namespace FamilyFinance.Presentation.EditTransaction
 
         }
 
+        public void setParentWindow(EditTransactionWindow editWindow)
+        {
+            this.parentWindow = editWindow;
+        }
+
         public void loadTransaction(int transID)
         {
             this.TransactionModel = new TransactionModel(transID);
             this.setupViews();
 
             this.reportAllPropertiesChanged();
-        }
-
-        public void setParentWindow(EditTransactionWindow editWindow)
-        {
-            this.parentWindow = editWindow;
-        }
-
-        public void reportDependantEnvelopeLinesSumChanged()
-        {
-            this.reportPropertyChangedWithName("EnvelopeLineSum");
         }
 
     }
