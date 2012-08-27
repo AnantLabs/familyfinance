@@ -54,20 +54,20 @@
             <Grid Grid.Row="0"
                   Grid.ColumnSpan="3">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="20*" />
-                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="25*" />
+                    <ColumnDefinition Width="25*" />
                     <ColumnDefinition Width="50*" />
                 </Grid.ColumnDefinitions>
                 <DatePicker SelectedDate="{Binding TransactionModel.Date}"
                             Grid.Row="0"
                             Grid.Column="0"
-                            Margin="0, 0, 3,0" 
+                            Margin="0" 
                             VerticalAlignment="Center" 
-                            HorizontalAlignment="Stretch" />
+                            HorizontalAlignment="Stretch" BorderThickness="0" />
                 <ComboBox x:Name="transactionTypeCB" 
                           Grid.Row="0"
                           Grid.Column="1" 
-                          Margin="0,5"
+                          Margin="5"
                           VerticalAlignment="Center" 
                           HorizontalAlignment="Stretch" 
                           SelectedValue="{Binding TransactionModel.TypeID}" 
@@ -105,23 +105,16 @@
                        HorizontalAlignment="Left" 
                        VerticalAlignment="Bottom" 
                        FontWeight="Bold" />
-            <TextBlock Text="{Binding Mode=OneWay, StringFormat=\{0:c\}, Path=EnvelopeLineSum}"
-                       Grid.Row="5"
-                       Grid.Column="2" 
-                       Margin="3,0"
-                       Foreground="White"
-                       HorizontalAlignment="Right" 
-                       VerticalAlignment="Top" />
             <TextBlock Text="{Binding TransactionModel.CreditSum, Mode=OneWay, StringFormat=\{0:c\}}" 
                        Grid.Row="3" 
                        HorizontalAlignment="Right"
                        Margin="0,0,6,0"  
                        Foreground="White"
                        VerticalAlignment="Top"  />
-            <TextBlock Text="&lt;-- Error Transaction needs to balance. --&gt;" 
+            <TextBlock Text="&lt;-- Error: Transaction needs to balance. --&gt;" 
                        Grid.Column="2" 
                        Grid.Row="3"
-                       HorizontalAlignment="Left" 
+                       HorizontalAlignment="Center" 
                        Margin="3,0" 
                        VerticalAlignment="Top"
                        Foreground="Red" 
@@ -133,6 +126,21 @@
                        Margin="3,0" 
                        VerticalAlignment="Top" 
                        Foreground="White" />
+            <TextBlock Text="Error: Line needs to balance. --&gt;" 
+                       Grid.Row="5"
+                       Grid.Column="2" 
+                       HorizontalAlignment="Center" 
+                       Margin="3,0" 
+                       VerticalAlignment="Top"
+                       Foreground="Red" 
+                       Visibility="{Binding Converter={StaticResource BooleanToVisibilityConverter1}, Path=IsLineError}" />
+            <TextBlock Text="{Binding Mode=OneWay, StringFormat=\{0:c\}, Path=EnvelopeLineSum}"
+                       Grid.Row="5"
+                       Grid.Column="2" 
+                       Margin="3,0"
+                       Foreground="White"
+                       HorizontalAlignment="Right" 
+                       VerticalAlignment="Top" />
             <!-- Source Grid -->
             <DataGrid x:Name="creditDataGrid" 
                       ItemsSource="{Binding CreditsView, Source={StaticResource editTransactionVM}}" 
@@ -144,7 +152,7 @@
                       SelectionMode="Single" 
                       HeadersVisibility="Column"
                       CanUserResizeRows="False" 
-                      RowDetailsVisibilityMode="Collapsed">
+                      RowDetailsVisibilityMode="Collapsed" BorderBrush="{x:Null}">
                 <DataGrid.Columns>
                     <!-- Account Combobox column -->
                     <DataGridTemplateColumn x:Name="accountCreditColumnCB" 
@@ -203,6 +211,9 @@
                     </DataGridTextColumn>
 
                 </DataGrid.Columns>
+                <DataGrid.Background>
+                    <SolidColorBrush />
+                </DataGrid.Background>
             </DataGrid>
             <!-- Grid Splitter -->
             <GridSplitter Grid.Row="2"
@@ -221,7 +232,7 @@
                       SelectionMode="Single" 
                       HeadersVisibility="Column"
                       ItemsSource="{Binding DebitsView, Source={StaticResource editTransactionVM}}" 
-                      CanUserResizeRows="False" >
+                      CanUserResizeRows="False" BorderBrush="{x:Null}">
                 <DataGrid.Columns>
                     <!-- Account Combobox column -->
                     <DataGridTemplateColumn x:Name="accountDebitColumnCB" 
@@ -260,7 +271,7 @@
                                         CanUserSort="True"
                                         MinWidth="80"
                                         Width="40*" />
-                    <!-- Amount Debnit column -->
+                    <!-- Amount Debit column -->
                     <DataGridTextColumn x:Name="amountDebitColumn" 
                                         Binding="{Binding Amount, StringFormat=\{0:c\}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                         Header="Debit" 
@@ -279,6 +290,9 @@
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
                 </DataGrid.Columns>
+                <DataGrid.Background>
+                    <SolidColorBrush />
+                </DataGrid.Background>
             </DataGrid>
             
             <!-- Grid Splitter -->
@@ -297,7 +311,7 @@
                       VerticalAlignment="Stretch"
                       AutoGenerateColumns="False" 
                       SelectionMode="Single" HeadersVisibility="Column"
-                      ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=EnvelopeLinesView}">
+                      ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=EnvelopeLinesView}" BorderBrush="{x:Null}">
                 <DataGrid.Columns>
                     <!-- Account Credit Combobox column -->
                     <DataGridTemplateColumn x:Name="EnvelopeColumnCB" 
@@ -346,6 +360,9 @@
                                         ElementStyle="{DynamicResource RightAlignStyle}" />
 
                 </DataGrid.Columns>
+                <DataGrid.Background>
+                    <SolidColorBrush />
+                </DataGrid.Background>
             </DataGrid>
         </Grid>
     </Grid>

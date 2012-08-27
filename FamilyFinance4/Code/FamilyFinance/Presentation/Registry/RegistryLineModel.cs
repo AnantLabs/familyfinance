@@ -4,20 +4,16 @@ using FamilyFinance.Data;
 
 namespace FamilyFinance.Buisness
 {
-    /// <summary>
-    /// This class "is a" LineItemDRM and "has a" TransactionDRM for making easy changes
-    /// like in a registry setting.
-    /// </summary>
     class RegistryLineModel : BindableObject
     {
-
-        private TransactionDRM _transactionDRM;
+        private TransactionModel transaction;
+        private LineItemModel lineItem;
 
         public int TransactionID
         {
             get
             {
-                return _transactionDRM.TransactionID;
+                return transaction.TransactionID;
             }
         }
 
@@ -25,12 +21,12 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this._transactionDRM.Date;
+                return this.transaction.Date;
             }
 
             set
             {
-                this._transactionDRM.Date = value;
+                this.transaction.Date = value;
             }
         }
 
@@ -38,12 +34,12 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this._transactionDRM.TypeID;
+                return this.transaction.TypeID;
             }
 
             set
             {
-                this._transactionDRM.TypeID = value;
+                this.transaction.TypeID = value;
                 this.reportPropertyChangedWithName("TypeName");
             }
         }
@@ -52,7 +48,7 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this._transactionDRM.TypeName;
+                return this.transaction.TypeName;
             }
         }
 
@@ -60,11 +56,11 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this._transactionDRM.Description;
+                return this.transaction.Description;
             }
             set
             {
-                this._transactionDRM.Description = value;
+                this.transaction.Description = value;
             }
         }
 
@@ -72,7 +68,7 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return this._transactionDRM.IsTransactionError;
+                return false;
             }
         }
 

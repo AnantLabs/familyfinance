@@ -31,7 +31,7 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                decimal envLineSum = this.EnvelopeLineSum;
+                decimal envLineSum = (decimal)this.EnvelopeLineSum;
                 bool accountUsesEnvelopes = this.supportsEnvelopeLines();
 
                 if (accountUsesEnvelopes && this.Amount == envLineSum)
@@ -45,10 +45,13 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        public decimal EnvelopeLineSum
+        public decimal? EnvelopeLineSum
         {
             get
             {
+                if (this.EnvelopeLines == null)
+                    return null;
+
                 decimal sum = 0;
 
                 foreach (EnvelopeLineDRM envLine in this.EnvelopeLines)

@@ -155,7 +155,6 @@ namespace FamilyFinance.Buisness
         }
 
 
-
         public void deleteTransactionLinesAndEnvelopeLinesFromDataset() 
         {
             this.LineItems.Clear();

@@ -39,7 +39,7 @@ namespace FamilyFinance.Presentation.EditTransaction
             }
         }
 
-        public ListCollectionView EnvelopesView
+        public ListCollectionView EnvelopesView 
         {
             get
             {
@@ -54,17 +54,27 @@ namespace FamilyFinance.Presentation.EditTransaction
 
         public ListCollectionView EnvelopeLinesView { get; private set; }
 
-        public decimal EnvelopeLineSum
+        public decimal? EnvelopeLineSum
         {
             get
             {
                 if (this.currentLineItem == null)
-                    return 0;
+                    return null;
                 else
                     return this.currentLineItem.EnvelopeLineSum;
             }
         }
 
+        public bool IsLineError
+        {
+            get
+            {
+                if (this.currentLineItem == null) 
+                    return false;
+                else
+                    return this.currentLineItem.IsLineError;
+            }
+        }
 
         ///////////////////////////////////////////////////////////
         // View Filters
@@ -195,6 +205,7 @@ namespace FamilyFinance.Presentation.EditTransaction
 
             this.reportPropertyChangedWithName("EnvelopeLinesView");
             this.reportPropertyChangedWithName("EnvelopeLineSum");
+            this.reportPropertyChangedWithName("IsLineError");
 
             this.alreadySettingCurrentLine = false;
         }
@@ -229,11 +240,10 @@ namespace FamilyFinance.Presentation.EditTransaction
             decimal suggestedAmount = 0;
 
             if (this.currentLineItem != null)
-                suggestedAmount = this.currentLineItem.Amount - this.currentLineItem.EnvelopeLineSum;
+                suggestedAmount = this.currentLineItem.Amount - (decimal)this.currentLineItem.EnvelopeLineSum;
 
             return suggestedAmount;
         }
-
 
         private PolarityCON determinePolarityDependingOnView(ListCollectionView view)
         {
