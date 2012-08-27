@@ -42,9 +42,9 @@ namespace FamilyFinance.Buisness
             {
                 this.lineItemRow.accountID = value;
 
+                this.reportPropertyChangedWithName("AccountID");
                 this.reportPropertyChangedWithName("AccountName");
                 this.reportPropertyChangedWithName("IsAccountError");
-                this.reportPropertyChangedWithName("IsLineError");
             }
         }
 
@@ -64,6 +64,7 @@ namespace FamilyFinance.Buisness
             }
             set
             {
+                this.reportPropertyChangedWithName("ConfirmationNumber");
                 this.lineItemRow.confirmationNumber = value;
             }
         }
@@ -82,7 +83,6 @@ namespace FamilyFinance.Buisness
                 this.lineItemRow.amount = Decimal.Round(value, 2);
 
                 this.reportPropertyChangedWithName("Amount");
-                this.reportPropertyChangedWithName("IsLineError");
             }
         }
 
@@ -97,7 +97,6 @@ namespace FamilyFinance.Buisness
                 this.lineItemRow.polarity = value.Value;
 
                 this.reportPropertyChangedWithName("Polarity");
-                this.reportPropertyChangedWithName("IsLineError");
             }
         }
 
@@ -163,7 +162,6 @@ namespace FamilyFinance.Buisness
             if(this.lineItemRow.transactionID != transaction.TransactionID)
                 this.lineItemRow.transactionID = transaction.TransactionID;
         }
-
 
         public bool supportsEnvelopeLines()
         {
