@@ -4,7 +4,7 @@ using FamilyFinance.Data;
 
 namespace FamilyFinance.Buisness
 {
-    public class EnvelopeLineDRM : BindableObject, DataRowModel
+    public class EnvelopeLineDRM : DataRowModel
     {
         ///////////////////////////////////////////////////////////////////////////////////////////
         // Local Variables
@@ -47,10 +47,14 @@ namespace FamilyFinance.Buisness
             }
             set
             {
-                this.envelopeLineRow.envelopeID = value;
+                if (this.envelopeLineRow.envelopeID != value)
+                {
+                    this.envelopeLineRow.envelopeID = value;
 
-                this.reportPropertyChangedWithName("EnvelopeName");
-                this.reportPropertyChangedWithName("IsEnvelopeError");
+                    this.reportPropertyChangedWithName("EnvelopeID");
+                    this.reportPropertyChangedWithName("EnvelopeName");
+                    this.reportPropertyChangedWithName("IsEnvelopeError");
+                }
             }
         }
 
@@ -70,7 +74,11 @@ namespace FamilyFinance.Buisness
             }
             set
             {
-                this.envelopeLineRow.description = value;
+                if (this.envelopeLineRow.description != value)
+                {
+                    this.envelopeLineRow.description = value;
+                    this.reportPropertyChangedWithName("Description");
+                }
             }
         }
 
@@ -82,9 +90,11 @@ namespace FamilyFinance.Buisness
             }
             set
             {
-                this.envelopeLineRow.amount = Decimal.Round(value, 2);
-
-                //this.reportToParentLineBalanceHasChanged();
+                if (this.envelopeLineRow.amount != value)
+                {
+                    this.envelopeLineRow.amount = Decimal.Round(value, 2);
+                    this.reportPropertyChangedWithName("Amount");
+                }
             }
         }
 
@@ -93,7 +103,7 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                return envelopeLineRow.envelopeID == EnvelopeCON.NULL.ID;
+                return EnvelopeCON.isSpecial(this.EnvelopeID);
             }
         }
 

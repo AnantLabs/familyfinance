@@ -114,11 +114,7 @@ namespace FamilyFinance.Buisness
 
             ////////////////////////////
             // Required Account Rows
-            FFDataSet.AccountRow accountMultiple = this.ffDataSet.Account.FindByid(AccountCON.MULTIPLE.ID);
             FFDataSet.AccountRow accountNull = this.ffDataSet.Account.FindByid(AccountCON.NULL.ID);
-
-            if (accountMultiple == null)
-                accountMultiple = this.ffDataSet.Account.AddAccountRow(AccountCON.MULTIPLE.ID, AccountCON.MULTIPLE.Name, accountTypeNull, CatagoryCON.NULL.ID, false, false);
 
             if (accountNull == null)
                 accountNull = this.ffDataSet.Account.AddAccountRow(AccountCON.NULL.ID, AccountCON.NULL.Name, accountTypeNull, CatagoryCON.NULL.ID, false, false);
@@ -126,12 +122,8 @@ namespace FamilyFinance.Buisness
 
             ////////////////////////////
             // Required Envelope Rows
-            FFDataSet.EnvelopeRow envelopeSplit = this.ffDataSet.Envelope.FindByid(EnvelopeCON.SPLIT.ID);
             FFDataSet.EnvelopeRow envelopeNull = this.ffDataSet.Envelope.FindByid(EnvelopeCON.NULL.ID);
             FFDataSet.EnvelopeRow envelopeNoEnvelope = this.ffDataSet.Envelope.FindByid(EnvelopeCON.NO_ENVELOPE.ID);
-
-            if (envelopeSplit == null)
-                envelopeSplit = this.ffDataSet.Envelope.AddEnvelopeRow(EnvelopeCON.SPLIT.ID, EnvelopeCON.SPLIT.Name, envelopeGroupNull, false, accountNull, 0, " ", "N");
 
             if (envelopeNull == null)
                 envelopeNull = this.ffDataSet.Envelope.AddEnvelopeRow(EnvelopeCON.NULL.ID, EnvelopeCON.NULL.Name, envelopeGroupNull, false, accountNull, 0, " ", "N");

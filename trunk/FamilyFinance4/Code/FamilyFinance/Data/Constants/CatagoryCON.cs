@@ -36,22 +36,8 @@ namespace FamilyFinance.Data
         /// <returns>The name of the catagory.</returns>
         public static string getName(byte id)
         {
-
-            if (id == CatagoryCON.NULL.ID)
-                return CatagoryCON.NULL.Name;
-
-            if (id == CatagoryCON.INCOME.ID)
-                return CatagoryCON.INCOME.Name;
-
-            if (id == CatagoryCON.ACCOUNT.ID)
-                return CatagoryCON.ACCOUNT.Name;
-
-            if (id == CatagoryCON.EXPENSE.ID)
-                return CatagoryCON.EXPENSE.Name;
-
-            throw new System.Exception("Invalid catagory id:" + id);
+            return getCatagory(id)._Name;
         }
-
 
         /// <summary>
         /// Amount the short name of the given catagory id.
@@ -60,22 +46,8 @@ namespace FamilyFinance.Data
         /// <returns>The short name of the catagory.</returns>
         public static string getShortName(byte id)
         {
-
-            if (id == CatagoryCON.NULL.ID)
-                return CatagoryCON.NULL.ShortName;
-
-            if (id == CatagoryCON.INCOME.ID)
-                return CatagoryCON.INCOME.ShortName;
-
-            if (id == CatagoryCON.ACCOUNT.ID)
-                return CatagoryCON.ACCOUNT.ShortName;
-
-            if (id == CatagoryCON.EXPENSE.ID)
-                return CatagoryCON.EXPENSE.ShortName;
-
-            throw new System.Exception("Invalid catagory id:" + id);
+            return getCatagory(id)._ShortName;
         }
-
 
         /// <summary>
         /// Amount the catagory of the given catagory id.

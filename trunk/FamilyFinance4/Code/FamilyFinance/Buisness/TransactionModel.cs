@@ -13,6 +13,7 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////
         public ObservableCollection<LineItemModel> LineItems { get; private set; }
 
+
         public bool IsTransactionError
         {
             get
@@ -53,6 +54,16 @@ namespace FamilyFinance.Buisness
             }
         }
 
+        /// <summary>
+        /// Dummy Property to tell higher objects that lower properties changed.
+        /// </summary>
+        public bool LineProperties
+        {
+            get
+            {
+                return true;
+            }
+        }
 
 
         ///////////////////////////////////////////////////////////
@@ -65,6 +76,10 @@ namespace FamilyFinance.Buisness
                 reportPropertyChangedWithName("CreditSum");
                 reportPropertyChangedWithName("DebitSum");
                 reportPropertyChangedWithName("IsTransactionError");
+            }
+            else if (e.PropertyName == "AccountID" || e.PropertyName == "EnvelopeLineSum" || e.PropertyName == "IsLineError")
+            {
+                reportPropertyChangedWithName("LineProperties");
             }
         }
 
@@ -90,9 +105,29 @@ namespace FamilyFinance.Buisness
         {
             foreach (LineItemModel newLine in iList)
             {
-                newLine.setParentTransaction(this);
                 newLine.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(LineItem_PropertyChanged);
+
+                if (newLine.TransactionID != this.TransactionID)
+                {
+                    newLine.setParentTransaction(this);
+                    newLine.Amount = suggestedAmount(newLine);
+                }
             }
+        }
+
+        private decimal suggestedAmount(LineItemModel newLine)
+        {
+            decimal suggested = 0;
+
+            if (newLine.Polarity == PolarityCON.DEBIT)
+                suggested = this.CreditSum - this.DebitSum;
+            else
+                suggested = this.DebitSum - this.CreditSum;
+
+            if (suggested < 0)
+                suggested = 0;
+
+            return suggested;
         }
 
         private bool isOneSidedTransaction()
@@ -124,6 +159,7 @@ namespace FamilyFinance.Buisness
                 return false;
         }
 
+        
 
 
 
@@ -160,6 +196,7 @@ namespace FamilyFinance.Buisness
             this.LineItems.Clear();
             this.deleteRowFromDataset();
         }
+
 
 
 

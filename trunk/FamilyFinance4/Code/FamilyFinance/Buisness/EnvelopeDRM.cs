@@ -3,7 +3,7 @@
 
 namespace FamilyFinance.Buisness
 {
-    public class EnvelopeDRM : BindableObject, DataRowModel
+    public class EnvelopeDRM : DataRowModel
     {
         ///////////////////////////////////////////////////////////////////////
         // Local variables

@@ -11,70 +11,75 @@ namespace FamilyFinance.Presentation.EditTransaction
 {
     public class EditTransactionVM : ViewModel
     {
-        private EditTransactionWindow parentWindow;
         private LineItemModel currentLineItem;
-
 
         ///////////////////////////////////////////////////////////
         // Properties
         ///////////////////////////////////////////////////////////  
         public TransactionModel TransactionModel { get; private set; }
 
+
         public ListCollectionView TransactionTypesView { get; private set; }
+
+        public ListCollectionView AccountsView { get; private set; }
+
+        public ListCollectionView EnvelopesView { get; private set; }
 
         public ListCollectionView CreditsView { get; private set; }
 
         public ListCollectionView DebitsView { get; private set; }
 
-        public ListCollectionView AccountsView 
+        public ListCollectionView EnvelopeLinesView
         {
             get
             {
-                ListCollectionView listView = new ListCollectionView(DataSetModel.Instance.Accounts);
+                ListCollectionView view = null;
 
-                listView.CustomSort = new AccountsCategoryNameComparer();
-                listView.Filter = new Predicate<Object>(AccountsFilter);
+                if (this.currentLineItem != null)
+                {
+                    int envLineCount = this.currentLineItem.EnvelopeLines.Count;
+                    bool usesEnvelopes = this.currentLineItem.supportsEnvelopeLines();
 
-                return listView;
+                    if (envLineCount != 0 || usesEnvelopes)
+                        view = new ListCollectionView(this.currentLineItem.EnvelopeLines);
+                }
+
+                return view;
             }
         }
 
-        public ListCollectionView EnvelopesView 
-        {
-            get
-            {
-                ListCollectionView listView = new ListCollectionView(DataSetModel.Instance.Envelopes);
 
-                listView.CustomSort = new EnvelopesNameComparer();
-                listView.Filter = new Predicate<Object>(EnvelopesFilter);
-
-                return listView;
-            }
-        }
-
-        public ListCollectionView EnvelopeLinesView { get; private set; }
-
-        public decimal? EnvelopeLineSum
+        public bool IsCurrentLineError
         {
             get
             {
                 if (this.currentLineItem == null)
-                    return null;
-                else
-                    return this.currentLineItem.EnvelopeLineSum;
-            }
-        }
-
-        public bool IsLineError
-        {
-            get
-            {
-                if (this.currentLineItem == null) 
                     return false;
                 else
                     return this.currentLineItem.IsLineError;
             }
         }
+
+        public decimal? CurrentEnvelopeLineSum
+        {
+            get
+            {
+                decimal? sum = null;
+
+                if (this.currentLineItem != null)
+                {
+                    int envLineCount = this.currentLineItem.EnvelopeLines.Count;
+                    bool usesEnvelopes = this.currentLineItem.supportsEnvelopeLines();
+                    
+                    if (envLineCount != 0 || usesEnvelopes)
+                        sum = this.currentLineItem.EnvelopeLineSum;
+                }
+
+                return sum;
+            }
+        }
+
+
 
         ///////////////////////////////////////////////////////////
         // View Filters
@@ -82,47 +87,22 @@ namespace FamilyFinance.Presentation.EditTransaction
         private bool CreditsFilter(object item)
         {
             LineItemModel lineRow = (LineItemModel)item;
-            bool keepItem = false;
 
             if (lineRow.Polarity == PolarityCON.CREDIT)
-                keepItem = true;
-
-            return keepItem;
+                return true;
+            else
+                return false;
         }
 
         private bool DebitsFilter(object item)
         {
             LineItemModel lineRow = (LineItemModel)item;
-            bool keepItem = false; 
 
             if (lineRow.Polarity == PolarityCON.DEBIT)
-                keepItem = true;
-
-            return keepItem;
+                return true;
+            else
+                return false;
         }
-
-        private bool AccountsFilter(object item)
-        {
-            AccountDRM account = (AccountDRM)item;
-            bool keepItem = true;
-
-            if (account.ID == AccountCON.MULTIPLE.ID)
-                keepItem = false;
-
-            return keepItem;
-        }
-
-        private bool EnvelopesFilter(object item)
-        {
-            EnvelopeDRM account = (EnvelopeDRM)item;
-            bool keepItem = true;
-
-            if (account.ID == EnvelopeCON.SPLIT.ID)
-                keepItem = false;
-
-            return keepItem;
-        }
-
 
 
         ///////////////////////////////////////////////////////////
@@ -131,37 +111,37 @@ namespace FamilyFinance.Presentation.EditTransaction
         private void CreditOrDebitView_CurrentChanged(object sender, EventArgs e)
         {
             ListCollectionView view = (ListCollectionView) sender;
+            LineItemModel lineModel = (LineItemModel)view.CurrentItem;
 
-            if (view.IsAddingNew)
-            {
-                modifyNewLineItem(view);
-            }
-
-            setCurrentLine((LineItemModel)view.CurrentItem);
-
+            this.currentLineItem = lineModel;
+            this.reportPropertyChangedWithName("EnvelopeLinesView");
+            this.reportPropertyChangedWithName("IsCurrentLineError");
+            this.reportPropertyChangedWithName("CurrentEnvelopeLineSum");
         }
-
-        private void EnvelopeLinesView_CurrentChanged(object sender, EventArgs e)
+       
+        private void TransactionModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-
-            if (this.EnvelopeLinesView.IsAddingNew)
+            if (e.PropertyName == "LineProperties")
             {
-                EnvelopeLineDRM newELine = (EnvelopeLineDRM)this.EnvelopeLinesView.CurrentAddItem;
-
-                newELine.Amount = suggestedSubLineAmountDependingOnCurrentLine();
+                this.reportPropertyChangedWithName("EnvelopeLinesView");
+                this.reportPropertyChangedWithName("IsCurrentLineError");
+                this.reportPropertyChangedWithName("CurrentEnvelopeLineSum");
             }
-
-            //this.reportPropertyChangedWithName("EnvelopeLineSum");
         }
-
 
         ///////////////////////////////////////////////////////////
         // Private functions
         ///////////////////////////////////////////////////////////
         private void setupViews()
-        {            
+        {
             this.TransactionTypesView = new ListCollectionView(DataSetModel.Instance.TransactionTypes);
             this.TransactionTypesView.CustomSort = new TransactionTypesComparer();
+
+            this.AccountsView = new ListCollectionView(DataSetModel.Instance.Accounts);
+            this.AccountsView.CustomSort = new AccountsCategoryNameComparer();
+
+            this.EnvelopesView = new ListCollectionView(DataSetModel.Instance.Envelopes);
+            this.EnvelopesView.CustomSort = new EnvelopesNameComparer();
 
             this.CreditsView = new ListCollectionView(this.TransactionModel.LineItems);
             this.CreditsView.Filter = new Predicate<Object>(CreditsFilter);
@@ -172,140 +152,34 @@ namespace FamilyFinance.Presentation.EditTransaction
             this.DebitsView.CurrentChanged += new EventHandler(CreditOrDebitView_CurrentChanged);
         }
 
-        private bool alreadySettingCurrentLine = false;
-        private void setCurrentLine(LineItemModel line)
-        {
-            if (this.alreadySettingCurrentLine)
-                return;
-            else
-                this.alreadySettingCurrentLine = true;
-
-            this.currentLineItem = line;
-
-            this.tellParentWindowToDeselectLines();
-
-            if (this.currentLineItem != null)
-            {
-                //currentLineItem.setParentTransactionVM(this);
-
-                if (currentLineItem.supportsEnvelopeLines())
-                {
-                    this.EnvelopeLinesView = new ListCollectionView(currentLineItem.EnvelopeLines);
-                    this.EnvelopeLinesView.CurrentChanged += new EventHandler(EnvelopeLinesView_CurrentChanged);
-                }
-                else
-                {
-                    this.EnvelopeLinesView = null;
-                }
-            }
-            else
-            {
-                this.EnvelopeLinesView = null;
-            }
-
-            this.reportPropertyChangedWithName("EnvelopeLinesView");
-            this.reportPropertyChangedWithName("EnvelopeLineSum");
-            this.reportPropertyChangedWithName("IsLineError");
-
-            this.alreadySettingCurrentLine = false;
-        }
-        
-        private void modifyNewLineItem(ListCollectionView view)
-        {
-            LineItemModel newLine = (LineItemModel)view.CurrentAddItem;
-
-            newLine.Amount = suggestedLineItemAmountDependingOnView(view);
-            newLine.Polarity = determinePolarityDependingOnView(view);
-
-            removeGhostLine(view);
-        }
-
-        private decimal suggestedLineItemAmountDependingOnView(ListCollectionView view)
-        {
-            decimal suggestedAmount;
-
-            if(view == DebitsView)
-                suggestedAmount = this.TransactionModel.CreditSum - this.TransactionModel.DebitSum;
-            else
-                suggestedAmount = this.TransactionModel.DebitSum - this.TransactionModel.CreditSum;
-
-            if (suggestedAmount < 0)
-                suggestedAmount = 0;
-
-            return suggestedAmount;
-        }
-
-        private decimal suggestedSubLineAmountDependingOnCurrentLine()
-        {
-            decimal suggestedAmount = 0;
-
-            if (this.currentLineItem != null)
-                suggestedAmount = this.currentLineItem.Amount - (decimal)this.currentLineItem.EnvelopeLineSum;
-
-            return suggestedAmount;
-        }
-
-        private PolarityCON determinePolarityDependingOnView(ListCollectionView view)
-        {
-            if (view == DebitsView)
-                return PolarityCON.DEBIT;
-            else
-                return PolarityCON.CREDIT;
-        }
-
-        private void removeGhostLine(ListCollectionView view)
-        {
-            // When adding a new line the credit or debit filter might be applied
-            // too soon and a ghost copy of the line might appear in the opposite
-            // view and datagrid. So when an item is added to the view and after 
-            // the polarity is set refresh the opposite view to remove the ghost 
-            // line.
-            if (view == DebitsView)
-                this.CreditsView.Refresh();
-            else
-                this.DebitsView.Refresh();
-        }
-
-
-
-
-        private void tellParentWindowToDeselectLines()
-        {
-            if (this.parentWindow != null)
-            {
-                if (this.currentLineItem == null)
-                {
-                    this.parentWindow.unselectFromDestinationDataGrid();
-                    this.parentWindow.unselectFromSourceDataGRid();
-                }
-                else if (this.currentLineItem.Polarity == PolarityCON.CREDIT)
-                    this.parentWindow.unselectFromDestinationDataGrid();
-                else
-                    this.parentWindow.unselectFromSourceDataGRid();
-            }
-        }
-
-
+ 
 
         ///////////////////////////////////////////////////////////
         // Public functions
         ///////////////////////////////////////////////////////////
         public EditTransactionVM()
         {
-
-        }
-
-        public void setParentWindow(EditTransactionWindow editWindow)
-        {
-            this.parentWindow = editWindow;
         }
 
         public void loadTransaction(int transID)
         {
             this.TransactionModel = new TransactionModel(transID);
-            this.setupViews();
+            this.TransactionModel.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(TransactionModel_PropertyChanged);
 
+            this.setupViews();
             this.reportAllPropertiesChanged();
+        }
+
+
+
+        public void sourceGridHasFocus()
+        {
+             LineItemModel.newLinesPolarity = PolarityCON.CREDIT;
+        }
+
+        public void destinationGridHasFocus()
+        {
+            LineItemModel.newLinesPolarity = PolarityCON.DEBIT;
         }
 
     }

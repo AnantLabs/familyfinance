@@ -72,7 +72,6 @@
     <Compile Include="Data\Constants\AccountTypeCON.cs" />
     <Compile Include="Data\Constants\BankCON.cs" />
     <Compile Include="Data\Constants\CatagoryCON.cs" />
-    <Compile Include="Data\Constants\EnvelopeLineCON.cs" />
     <Compile Include="Data\Constants\EnvelopeCON.cs" />
     <Compile Include="Data\Constants\EnvelopeGroupCON.cs" />
     <Compile Include="Data\FFDataSet.Designer.cs">
