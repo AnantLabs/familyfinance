@@ -11,7 +11,7 @@ namespace FamilyFinance.Data
         // Java Style Enum Instances
         ///////////////////////////////////////////////////////////
         public static EnvelopeCON NULL = new EnvelopeCON(-1, " ");
-        public static EnvelopeCON SPLIT = new EnvelopeCON(-2, "-Split-");
+        //public static EnvelopeCON SPLIT = new EnvelopeCON(-2, "-Split-");
         public static EnvelopeCON NO_ENVELOPE = new EnvelopeCON(0, "-No Envelope-");
 
 
@@ -56,7 +56,8 @@ namespace FamilyFinance.Data
         
         public static bool isSpecial(int id)
         {
-            if (id == SPLIT.ID || id == NULL.ID || id == NO_ENVELOPE.ID)
+            //if (id == SPLIT.ID || id == NULL.ID || id == NO_ENVELOPE.ID)
+            if (id == NULL.ID || id == NO_ENVELOPE.ID)
                 return true;
             else
                 return false;

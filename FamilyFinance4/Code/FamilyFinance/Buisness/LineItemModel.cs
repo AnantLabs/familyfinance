@@ -24,34 +24,45 @@ namespace FamilyFinance.Buisness
                     this.EnvelopeLines.Clear();
 
                 base.AccountID = value;
+
+                this.reportPropertyChangedWithName("IsLineError");
+                this.reportPropertyChangedWithName("EnvelopeLineSum");
             }
         }
+
+        public static PolarityCON newLinesPolarity { get; set; }
+
 
         public bool IsLineError
         {
             get
             {
-                decimal envLineSum = (decimal)this.EnvelopeLineSum;
-                bool accountUsesEnvelopes = this.supportsEnvelopeLines();
+                bool result = true;
 
-                if (accountUsesEnvelopes && this.Amount == envLineSum)
-                    return false;
-
-                else if (!accountUsesEnvelopes && envLineSum == 0)
-                    return false;
+                if (this.isLineNull())
+                    result = false;
 
                 else
-                    return true;
+                {
+                    int envLineCount = this.EnvelopeLines.Count;
+                    decimal envLineSum = this.EnvelopeLineSum;
+                    bool usesEnvelopes = this.supportsEnvelopeLines();
+
+                    if (usesEnvelopes && envLineCount > 0 && this.Amount == envLineSum)
+                        result = false;
+
+                    if (!usesEnvelopes && envLineCount == 0)
+                        result = false;
+                }
+
+                return result;
             }
         }
 
-        public decimal? EnvelopeLineSum
+        public decimal EnvelopeLineSum
         {
             get
             {
-                if (this.EnvelopeLines == null)
-                    return null;
-
                 decimal sum = 0;
 
                 foreach (EnvelopeLineDRM envLine in this.EnvelopeLines)
@@ -60,11 +71,10 @@ namespace FamilyFinance.Buisness
                 return sum;
             }
         }
-
-
-
+        
+        
         ///////////////////////////////////////////////////////////
-        // Private functions
+        // Events
         ///////////////////////////////////////////////////////////
         private void EnvelopeLineLine_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
@@ -84,6 +94,10 @@ namespace FamilyFinance.Buisness
                 deleteEnvelopeLines(e.OldItems);
         }
 
+
+        ///////////////////////////////////////////////////////////
+        // Private functions
+        ///////////////////////////////////////////////////////////
         private void deleteEnvelopeLines(System.Collections.IList iList)
         {
             foreach (EnvelopeLineDRM oldELine in iList)
@@ -91,16 +105,33 @@ namespace FamilyFinance.Buisness
                 oldELine.deleteRowFromDataset();
                 oldELine.PropertyChanged -= new System.ComponentModel.PropertyChangedEventHandler(EnvelopeLineLine_PropertyChanged);
             }
+
+            this.reportPropertyChangedWithName("IsLineError");
+            this.reportPropertyChangedWithName("EnvelopeLineSum");
         }
 
         private void pointNewEnvelopeLinesToThisLineItem(System.Collections.IList iList)
         {
             foreach (EnvelopeLineDRM newEnvLine in iList)
             {
-                newEnvLine.setParentLine(this);
                 newEnvLine.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(EnvelopeLineLine_PropertyChanged);
+
+                if (newEnvLine.LineItemID != this.LineID)
+                {
+                    newEnvLine.setParentLine(this);
+                    newEnvLine.Amount = suggestedEnvelopeAmount();
+                }
             }
+            
+            this.reportPropertyChangedWithName("IsLineError");
+            this.reportPropertyChangedWithName("EnvelopeLineSum");
         }
+
+        private decimal suggestedEnvelopeAmount()
+        {
+            return this.Amount - this.EnvelopeLineSum;
+        }
+
 
 
         ///////////////////////////////////////////////////////////
@@ -108,6 +139,9 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////
         public LineItemModel() : base()
         {
+            if(newLinesPolarity != null)
+                this.Polarity = newLinesPolarity;
+
             this.EnvelopeLines = new ObservableCollection<EnvelopeLineDRM>();
             this.EnvelopeLines.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(EnvelopeLines_CollectionChanged);
         }
@@ -127,6 +161,14 @@ namespace FamilyFinance.Buisness
         {
             this.EnvelopeLines.Clear();
             this.deleteRowFromDataset();
+        }
+
+        public bool hasEnvelopeLines()
+        {
+            if(this.EnvelopeLines.Count > 0)
+                return true;
+            else 
+                return false;
         }
 
 

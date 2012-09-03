@@ -7,7 +7,7 @@ using FamilyFinance.Data;
 
 namespace FamilyFinance.Buisness
 {
-    public class BankDRM : BindableObject, DataRowModel
+    public class BankDRM : DataRowModel
     {
         private FFDataSet.BankRow bankRow;
 

@@ -11,7 +11,7 @@ namespace FamilyFinance.Data
         // Static Instances
         ///////////////////////////////////////////////////////////
         public static AccountCON NULL = new AccountCON(-1, " ");
-        public static AccountCON MULTIPLE = new AccountCON(-2, "-Multiple-");
+        //public static AccountCON MULTIPLE = new AccountCON(-2, "-Multiple-");
 
 
         ///////////////////////////////////////////////////////////
@@ -58,7 +58,7 @@ namespace FamilyFinance.Data
 
         public static bool isSpecial(int id)
         {
-            if (id == NULL.ID || id == MULTIPLE.ID)
+            if (id == NULL.ID) // || id == MULTIPLE.ID)
                 return true;
             else
                 return false;

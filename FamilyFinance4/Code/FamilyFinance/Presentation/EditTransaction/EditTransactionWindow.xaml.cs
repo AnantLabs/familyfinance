@@ -15,28 +15,54 @@ namespace FamilyFinance.Presentation.EditTransaction
 {
     public partial class EditTransactionWindow : Window
     {
+        ///////////////////////////////////////////////////////////
+        // local variables
+        ///////////////////////////////////////////////////////////
         private EditTransactionVM transactionViewModel;
-        private DataGrid sourceDataGrid;
-        private DataGrid destinationDataGrid;
 
 
-        private void tellViewModelWhoItBelongsTo()
+        ///////////////////////////////////////////////////////////
+        // Events
+        ///////////////////////////////////////////////////////////
+        private void dataGrid_GotFocus(object sender, RoutedEventArgs e)
         {
-            this.transactionViewModel.setParentWindow(this);
+            DataGrid grid = (DataGrid)sender;
+
+            if (grid == this.sourceDataGrid)
+            {
+                this.transactionViewModel.sourceGridHasFocus();
+                this.unselectFromDestinationDataGrid();
+                //this.unselectFromEnvelopeDataGrid();
+            }
+            else if (grid == this.destinationDataGrid)
+            {
+                this.transactionViewModel.destinationGridHasFocus();
+                this.unselectFromSourceDataGrid();
+                //this.unselectFromEnvelopeDataGrid();
+            }
+
+
         }
 
-        private void loadTransaction(int transID)
+
+        ///////////////////////////////////////////////////////////
+        // Private Functions
+        ///////////////////////////////////////////////////////////
+        private void unselectFromDestinationDataGrid()
         {
-            this.transactionViewModel.loadTransaction(transID);
+            this.destinationDataGrid.SelectedIndex = -1;
         }
 
-        private void grabTheObjectsFromTheWindowsResources()
+        private void unselectFromSourceDataGrid()
         {
-            this.transactionViewModel = (EditTransactionVM)this.FindResource("editTransactionVM");
-
-            this.sourceDataGrid = (DataGrid)this.FindName("creditDataGrid");
-            this.destinationDataGrid = (DataGrid)this.FindName("debitDataGrid");
+            this.sourceDataGrid.SelectedIndex = -1;
         }
+
+        //private void unselectFromEnvelopeDataGrid()
+        //{
+        //    this.envelopeDataGrid.SelectedIndex = -1;
+        //}
+
 
         ///////////////////////////////////////////////////////////
         // Public Functions
@@ -49,24 +75,13 @@ namespace FamilyFinance.Presentation.EditTransaction
         {
             InitializeComponent();
 
-            grabTheObjectsFromTheWindowsResources();
-            loadTransaction(transactionID);
-            tellViewModelWhoItBelongsTo();
+            this.transactionViewModel = (EditTransactionVM)this.FindResource("editTransactionVM");
+            this.transactionViewModel.loadTransaction(transactionID);
 
-            unselectFromSourceDataGRid();
-            unselectFromDestinationDataGrid();
+            this.unselectFromSourceDataGrid();
+            this.unselectFromDestinationDataGrid();
+            //this.unselectFromEnvelopeDataGrid();
         }
-
-        public void unselectFromDestinationDataGrid()
-        {
-            this.destinationDataGrid.SelectedIndex = -1;
-        }
-
-        public void unselectFromSourceDataGRid()
-        {
-            this.sourceDataGrid.SelectedIndex = -1;
-        }
-
 
     }
 }

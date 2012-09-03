@@ -3,7 +3,7 @@ using System;
 
 namespace FamilyFinance.Buisness
 {
-    public class TransactionDRM : BindableObject, DataRowModel
+    public class TransactionDRM : DataRowModel
     {
         private FFDataSet.TransactionRow transactionRow;
 
@@ -28,7 +28,11 @@ namespace FamilyFinance.Buisness
 
             set
             {
-                this.transactionRow.date = value;
+                if (this.transactionRow.date != value)
+                {
+                    this.transactionRow.date = value;
+                    this.reportPropertyChangedWithName("Date");
+                }
             }
         }
 
@@ -41,8 +45,12 @@ namespace FamilyFinance.Buisness
 
             set
             {
-                this.transactionRow.typeID = value;
-                this.reportPropertyChangedWithName("TypeName");
+                if (this.transactionRow.typeID != value)
+                {
+                    this.transactionRow.typeID = value;
+                    this.reportPropertyChangedWithName("TypeID");
+                    this.reportPropertyChangedWithName("TypeName");
+                }
             }
         }
 
@@ -62,7 +70,11 @@ namespace FamilyFinance.Buisness
             }
             set
             {
-                this.transactionRow.description = value;
+                if (this.transactionRow.description != value)
+                {
+                    this.transactionRow.description = value;
+                    this.reportPropertyChangedWithName("Description");
+                }
             }
         }
 

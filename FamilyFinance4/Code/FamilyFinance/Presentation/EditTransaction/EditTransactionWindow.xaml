@@ -84,7 +84,7 @@
             <TextBlock Text="Source"
                        Grid.Row="1"
                        Grid.Column="0" 
-                       Margin="3,5,0,0"
+                       Margin="6,6,0,0"
                        Foreground="White"
                        HorizontalAlignment="Left" 
                        VerticalAlignment="Bottom" 
@@ -92,7 +92,7 @@
             <TextBlock Text="Destination"
                        Grid.Row="1"
                        Grid.Column="2" 
-                       Margin="6,0,0,0"
+                       Margin="6,6,0,0"
                        Foreground="White"
                        HorizontalAlignment="Left" 
                        VerticalAlignment="Bottom" 
@@ -126,23 +126,25 @@
                        Margin="3,0" 
                        VerticalAlignment="Top" 
                        Foreground="White" />
-            <TextBlock Text="Error: Line needs to balance. --&gt;" 
+            <TextBlock Text=" Error: Line needs to balance. --&gt; " 
+                       Visibility="{Binding Converter={StaticResource BooleanToVisibilityConverter1}, Path=IsCurrentLineError}"
                        Grid.Row="5"
                        Grid.Column="2" 
                        HorizontalAlignment="Center" 
                        Margin="3,0" 
                        VerticalAlignment="Top"
-                       Foreground="Red" 
-                       Visibility="{Binding Converter={StaticResource BooleanToVisibilityConverter1}, Path=IsLineError}" />
-            <TextBlock Text="{Binding Mode=OneWay, StringFormat=\{0:c\}, Path=EnvelopeLineSum}"
+                       Background="Red"
+                       Foreground="White"/>
+            <TextBlock Text="{Binding Mode=OneWay, StringFormat=\{0:c\}, Path=CurrentEnvelopeLineSum}"
                        Grid.Row="5"
                        Grid.Column="2" 
                        Margin="3,0"
                        Foreground="White"
                        HorizontalAlignment="Right" 
                        VerticalAlignment="Top" />
+            
             <!-- Source Grid -->
-            <DataGrid x:Name="creditDataGrid" 
+            <DataGrid x:Name="sourceDataGrid" 
                       ItemsSource="{Binding CreditsView, Source={StaticResource editTransactionVM}}" 
                       Grid.Row="2"
                       Grid.Column="0"
@@ -152,7 +154,7 @@
                       SelectionMode="Single" 
                       HeadersVisibility="Column"
                       CanUserResizeRows="False" 
-                      RowDetailsVisibilityMode="Collapsed" BorderBrush="{x:Null}">
+                      RowDetailsVisibilityMode="Collapsed" BorderBrush="{x:Null}" GotFocus="dataGrid_GotFocus">
                 <DataGrid.Columns>
                     <!-- Account Combobox column -->
                     <DataGridTemplateColumn x:Name="accountCreditColumnCB" 
@@ -180,7 +182,9 @@
                                 <ComboBox SelectedValue="{Binding AccountID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                           ItemsSource="{Binding AccountsView, Source={StaticResource editTransactionVM}}"
                                           SelectedValuePath="ID"
-                                          DisplayMemberPath="Name"/>
+                                          DisplayMemberPath="Name">
+                                    
+                                </ComboBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
@@ -204,6 +208,7 @@
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding Path=IsLineError, Mode=OneWay}" Value="True" >
                                         <Setter Property="Background" Value="Red"/>
+                                        <Setter Property="Foreground" Value="White" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
@@ -223,7 +228,7 @@
                           Background="Transparent"
                           ResizeDirection="Columns" />
             <!-- Destination Grid -->
-            <DataGrid x:Name="debitDataGrid" 
+            <DataGrid x:Name="destinationDataGrid" 
                       Grid.Row="2"
                       Grid.Column="2"
                       HorizontalAlignment="Stretch" 
@@ -232,7 +237,7 @@
                       SelectionMode="Single" 
                       HeadersVisibility="Column"
                       ItemsSource="{Binding DebitsView, Source={StaticResource editTransactionVM}}" 
-                      CanUserResizeRows="False" BorderBrush="{x:Null}">
+                      CanUserResizeRows="False" BorderBrush="{x:Null}" GotFocus="dataGrid_GotFocus">
                 <DataGrid.Columns>
                     <!-- Account Combobox column -->
                     <DataGridTemplateColumn x:Name="accountDebitColumnCB" 
@@ -284,6 +289,7 @@
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding Path=IsLineError, Mode=OneWay}" Value="True" >
                                         <Setter Property="Background" Value="Red"/>
+                                        <Setter Property="Foreground" Value="White"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
@@ -303,7 +309,7 @@
                           Background="Transparent"
                           ResizeDirection="Rows" />
             <!-- Envelope Lines Grid -->
-            <DataGrid x:Name="envDataGrid" 
+            <DataGrid x:Name="envelopeDataGrid" 
                       Grid.Row="4"
                       Grid.Column="0"
                       Grid.ColumnSpan="3"
@@ -311,7 +317,7 @@
                       VerticalAlignment="Stretch"
                       AutoGenerateColumns="False" 
                       SelectionMode="Single" HeadersVisibility="Column"
-                      ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=EnvelopeLinesView}" BorderBrush="{x:Null}">
+                      ItemsSource="{Binding Source={StaticResource editTransactionVM}, Path=EnvelopeLinesView}" BorderBrush="{x:Null}" GotFocus="dataGrid_GotFocus">
                 <DataGrid.Columns>
                     <!-- Account Credit Combobox column -->
                     <DataGridTemplateColumn x:Name="EnvelopeColumnCB" 

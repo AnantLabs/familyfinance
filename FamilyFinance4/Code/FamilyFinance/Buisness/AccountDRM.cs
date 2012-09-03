@@ -11,7 +11,7 @@ namespace FamilyFinance.Buisness
     /// A modle of an account row in the dataset. This also manages a bankInfo row, if the
     /// user wants to attach bank information to the account row.
     /// </summary>
-    public class AccountDRM : BindableObject, DataRowModel
+    public class AccountDRM : DataRowModel
     {
         ///////////////////////////////////////////////////////////////////////
         // Local variables

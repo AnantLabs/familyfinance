@@ -5,7 +5,7 @@ using FamilyFinance.Data;
 
 namespace FamilyFinance.Buisness
 {
-    public class LineItemDRM : BindableObject, DataRowModel
+    public class LineItemDRM : DataRowModel
     {
         ///////////////////////////////////////////////////////////////////////////////////////////
         // Local Variables
@@ -40,11 +40,14 @@ namespace FamilyFinance.Buisness
             }
             set
             {
-                this.lineItemRow.accountID = value;
+                if (this.lineItemRow.accountID != value)
+                {
+                    this.lineItemRow.accountID = value;
 
-                this.reportPropertyChangedWithName("AccountID");
-                this.reportPropertyChangedWithName("AccountName");
-                this.reportPropertyChangedWithName("IsAccountError");
+                    this.reportPropertyChangedWithName("AccountID");
+                    this.reportPropertyChangedWithName("AccountName");
+                    this.reportPropertyChangedWithName("IsAccountError");
+                }
             }
         }
 
@@ -64,8 +67,11 @@ namespace FamilyFinance.Buisness
             }
             set
             {
-                this.reportPropertyChangedWithName("ConfirmationNumber");
-                this.lineItemRow.confirmationNumber = value;
+                if(this.lineItemRow.confirmationNumber != value)
+                {
+                    this.reportPropertyChangedWithName("ConfirmationNumber");
+                    this.lineItemRow.confirmationNumber = value;
+                }
             }
         }
 
@@ -77,12 +83,14 @@ namespace FamilyFinance.Buisness
             }
             set
             {
-                if (value < 0.0m)
-                    value = Decimal.Negate(value);
+                if (this.lineItemRow.amount != value)
+                {
+                    if (value < 0.0m)
+                        value = Decimal.Negate(value);
 
-                this.lineItemRow.amount = Decimal.Round(value, 2);
-
-                this.reportPropertyChangedWithName("Amount");
+                    this.lineItemRow.amount = Decimal.Round(value, 2);
+                    this.reportPropertyChangedWithName("Amount");
+                }
             }
         }
 
@@ -94,9 +102,11 @@ namespace FamilyFinance.Buisness
             }
             set
             {
-                this.lineItemRow.polarity = value.Value;
-
-                this.reportPropertyChangedWithName("Polarity");
+                if (this.lineItemRow.polarity != value.Value)
+                {
+                    this.lineItemRow.polarity = value.Value;
+                    this.reportPropertyChangedWithName("Polarity");
+                }
             }
         }
 
@@ -108,7 +118,11 @@ namespace FamilyFinance.Buisness
             }
             set
             {
-                this.lineItemRow.state = value.Value;
+                if (this.lineItemRow.state != value.Value)
+                {
+                    this.lineItemRow.state = value.Value;
+                    this.reportPropertyChangedWithName("State");
+                }
             }
         }
 
@@ -118,7 +132,7 @@ namespace FamilyFinance.Buisness
         {
             get
             {
-                if (this.lineItemRow.accountID == AccountCON.NULL.ID)
+                if (AccountCON.isSpecial(this.lineItemRow.accountID))
                     return true;
                 else
                     return false;
@@ -165,8 +179,15 @@ namespace FamilyFinance.Buisness
 
         public bool supportsEnvelopeLines()
         {
-            return this.lineItemRow.AccountRow.envelopes;
+            if (this.isLineNull())
+                return false;
+            if (this.lineItemRow != null)
+                return this.lineItemRow.AccountRow.envelopes;
+            else
+                return false;
         }
+
+
 
         public void deleteRowFromDataset()
         {
@@ -176,6 +197,11 @@ namespace FamilyFinance.Buisness
             this.Amount = 0;
             this.lineItemRow.Delete();
         }
+
+        public bool isLineNull()
+        {
+            return base.isDataRowNull(this.lineItemRow);
+        } 
 
     
     }

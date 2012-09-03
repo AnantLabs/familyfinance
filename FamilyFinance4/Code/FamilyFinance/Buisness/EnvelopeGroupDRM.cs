@@ -3,7 +3,7 @@ using FamilyFinance.Data;
 
 namespace FamilyFinance.Buisness
 {
-    public class EnvelopeGroupDRM : BindableObject, DataRowModel
+    public class EnvelopeGroupDRM : DataRowModel
     {
         private FFDataSet.EnvelopeGroupRow envelopeGroupRow;
 

@@ -2,7 +2,7 @@
 
 namespace FamilyFinance.Buisness
 {
-    public class AccountTypeDRM : BindableObject, DataRowModel
+    public class AccountTypeDRM : DataRowModel
     {
         private FFDataSet.AccountTypeRow accountTypeRow;
 

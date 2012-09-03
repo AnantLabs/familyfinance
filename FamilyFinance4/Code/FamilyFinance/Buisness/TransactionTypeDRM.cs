@@ -7,7 +7,7 @@ using FamilyFinance.Data;
 
 namespace FamilyFinance.Buisness
 {
-    public class TransactionTypeDRM : BindableObject, DataRowModel
+    public class TransactionTypeDRM : DataRowModel
     {
         ///////////////////////////////////////////////////////////
         // Local Members
