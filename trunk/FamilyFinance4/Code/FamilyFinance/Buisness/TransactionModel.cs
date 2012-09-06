@@ -174,9 +174,11 @@ namespace FamilyFinance.Buisness
 
         public TransactionModel(FFDataSet.TransactionRow tRow) : base(tRow)
         {
-            this.LineItems = new ObservableCollection<LineItemModel>(this.getLineItemModels());
+            this.LineItems = new ObservableCollection<LineItemModel>();
             this.LineItems.CollectionChanged += new NotifyCollectionChangedEventHandler(LineItems_CollectionChanged);
-
+           
+            // add the lines this way so the collection(add/Remove) event can handle
+            // subscribing and unsubscribing
             foreach (LineItemModel newLine in this.getLineItemModels())
                 this.LineItems.Add(newLine);
         }

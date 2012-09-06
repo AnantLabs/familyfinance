@@ -165,7 +165,7 @@
                           Background="Transparent"
                           ResizeDirection="Columns" />
             <!-- Registry Grid -->
-            <DataGrid x:Name="debitDataGrid" 
+            <DataGrid x:Name="registryDataGrid" 
                       Grid.Row="1"
                       Grid.Column="2"
                       HorizontalAlignment="Stretch" 
@@ -173,18 +173,32 @@
                       AutoGenerateColumns="False" 
                       SelectionMode="Single" 
                       HeadersVisibility="Column"
-                      ItemsSource="{Binding DebitsView, Source={StaticResource registryVM}}" 
+                      ItemsSource="{Binding Source={StaticResource registryVM}, Path=RegistryLinesView}" 
                       CanUserResizeRows="False" >
                 <DataGrid.Columns>
-                    <!-- Account Combobox column -->
-                    <DataGridTemplateColumn x:Name="accountDebitColumnCB" 
-                                            Header="Account"
+                    <DataGridTemplateColumn x:Name="dateColumn" 
+                                            Header="Date"
                                             CanUserSort="True"
-                                            SortMemberPath="AccountName" 
+                                            SortMemberPath="Date" 
+                                            Width="10*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Date, StringFormat=\{0:dd/MM/yyyy\}, Mode=OneWay}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding Date}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn x:Name="oppAccounColumnCB" 
+                                            Header="Source/Destination"
+                                            CanUserSort="False" 
                                             Width="30*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding AccountName, Mode=OneWay}" >
+                                <TextBlock Text="{Binding OppositeAccountName, Mode=OneWay}" >
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Style.Triggers>
@@ -199,38 +213,46 @@
                         </DataGridTemplateColumn.CellTemplate>
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
-                                <ComboBox SelectedValue="{Binding AccountID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                          ItemsSource="{Binding AccountsView, Source={StaticResource editTransactionVM}}"
+                                <ComboBox SelectedValue="{Binding OppositeAccountID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          ItemsSource="{Binding AccountsView, Source={StaticResource registryVM}}"
                                           SelectedValuePath="ID"
                                           DisplayMemberPath="Name"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <!-- Confirmation Number column -->
-                    <DataGridTextColumn x:Name="confirmationDebitColumn" 
+                    <DataGridTextColumn x:Name="descriptionColumn" 
+                                        Binding="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                        Header="Description" 
+                                        CanUserSort="True"
+                                        MinWidth="80"
+                                        Width="40*" />
+                    <DataGridTextColumn x:Name="confirmationColumn" 
                                         Binding="{Binding ConfirmationNumber, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                         Header="Confirmation" 
                                         CanUserSort="True"
                                         MinWidth="80"
                                         Width="40*" />
-                    <!-- Amount Debnit column -->
-                    <DataGridTextColumn x:Name="amountDebitColumn" 
-                                        Binding="{Binding Amount, StringFormat=\{0:c\}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                    <DataGridTextColumn x:Name="debitAmountColumn" 
+                                        Binding="{Binding DebitAmount, StringFormat=\{0:c\}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                         Header="Debit" 
                                         CanUserSort="True"
                                         MinWidth="60"
                                         ElementStyle="{StaticResource RightAlignStyle}"
-                                        Width="20*" >
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="{x:Type DataGridCell}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=IsLineError, Mode=OneWay}" Value="True" >
-                                        <Setter Property="Background" Value="Red"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
+                                        Width="20*" />
+                    <DataGridTextColumn x:Name="creditAmountColumn" 
+                                        Binding="{Binding CreditAmount, StringFormat=\{0:c\}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                        Header="Credit" 
+                                        CanUserSort="True"
+                                        MinWidth="60"
+                                        ElementStyle="{StaticResource RightAlignStyle}"
+                                        Width="20*" />
+                    <DataGridTextColumn x:Name="totalAmountColumn" 
+                                        Binding="{Binding RunningTotal, StringFormat=\{0:c\}, Mode=OneWay}" 
+                                        Header="Credit" 
+                                        CanUserSort="True"
+                                        MinWidth="60"
+                                        ElementStyle="{StaticResource RightAlignStyle}"
+                                        Width="20*" />
                 </DataGrid.Columns>
             </DataGrid>
             

@@ -4,10 +4,25 @@ using FamilyFinance.Data;
 
 namespace FamilyFinance.Buisness
 {
-    class RegistryLineModel : BindableObject
+    public class RegistryLineModel : BindableObject
     {
         private TransactionModel transaction;
         private LineItemModel lineItem;
+        private LineItemModel oppositeLine;
+
+        public static int CurrentAccountID;
+
+
+        ///////////////////////////////////////////////////////////
+        // Properties
+        ///////////////////////////////////////////////////////////
+        public int LineID
+        {
+            get
+            {
+                return lineItem.LineID;
+            }
+        }
 
         public int TransactionID
         {
@@ -16,7 +31,7 @@ namespace FamilyFinance.Buisness
                 return transaction.TransactionID;
             }
         }
-
+        
         public DateTime Date
         {
             get
@@ -40,7 +55,6 @@ namespace FamilyFinance.Buisness
             set
             {
                 this.transaction.TypeID = value;
-                this.reportPropertyChangedWithName("TypeName");
             }
         }
 
@@ -49,6 +63,61 @@ namespace FamilyFinance.Buisness
             get
             {
                 return this.transaction.TypeName;
+            }
+        }
+
+        public int AccountID
+        {
+            get
+            {
+                return lineItem.AccountID;
+            }
+            set
+            {
+                this.lineItem.AccountID = value;
+            }
+        }
+
+        public string AccountName
+        {
+            get
+            {
+                return lineItem.AccountName;
+            }
+        }
+        
+        public int OppositeAccountID
+        {
+            get
+            {
+                int oppCount = this.getOppositeLineCount;
+
+                if (oppCount == 0)
+                    return AccountCON.NULL.ID;
+                if (oppCount == 1)
+                    return this.oppositeLine.AccountID;
+                else
+                    return AccountCON.MULTIPLE.ID;
+            }
+            set
+            {
+                if (this.oppositeLine != null)
+                    this.oppositeLine.AccountID = value;
+            }
+        }
+
+        public string OppositeAccountName
+        {
+            get
+            {
+                int oppCount = this.getOppositeLineCount;
+
+                if (oppCount == 0)
+                    return AccountCON.NULL.Name;
+                if (oppCount == 1)
+                    return this.oppositeLine.AccountName;
+                else
+                    return AccountCON.MULTIPLE.Name;
             }
         }
 
@@ -64,169 +133,144 @@ namespace FamilyFinance.Buisness
             }
         }
 
-        public bool IsTransactionError
+        public string ConfirmationNumber
         {
             get
             {
-                return false;
-            }
-        }
-
-
-        public int OppositeAccountID
-        {
-            get
-            {
-                return 1;
+                return lineItem.ConfirmationNumber;
             }
             set
             {
-                //if(this._transactionDRM.CanChangeOppositeAccount(this))
+                this.lineItem.ConfirmationNumber = value;
             }
         }
-
-        public string OppositeAccountName
+        
+        public int EnvelopeID
         {
             get
             {
-                return " ";
+                return lineItem.AccountID;
+            }
+            set
+            {
+                this.lineItem.AccountID = value;
             }
         }
+
+        public string EnvelopeName
+        {
+            get
+            {
+                return lineItem.AccountName;
+            }
+        }
+        
+        public decimal? CreditAmount
+        {
+            get
+            {
+                if (this.lineItem.Polarity == PolarityCON.CREDIT && this.lineItem.Amount > 0)
+                    return lineItem.Amount;
+                else
+                    return null;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    this.lineItem.Polarity = PolarityCON.CREDIT;
+                    this.lineItem.Amount = (decimal)value;
+                }
+            }
+        }
+
+        public TransactionStateCON State
+        {
+            get
+            {
+                return this.lineItem.State;
+            }
+            set
+            {
+                this.lineItem.State = value;
+            }
+        }
+
+        public decimal? DebitAmount
+        {
+            get
+            {
+                if (this.lineItem.Polarity == PolarityCON.DEBIT && this.lineItem.Amount > 0)
+                    return lineItem.Amount;
+                else
+                    return null;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    this.lineItem.Polarity = PolarityCON.DEBIT;
+                    this.lineItem.Amount = (decimal)value;
+                }
+            }
+        }
+
+        public decimal? RunningTotal { get; set; }
+
+
 
 
         ///////////////////////////////////////////////////////////////////////////////////////////
         // Private Functions
         ///////////////////////////////////////////////////////////////////////////////////////////
-        //private void setOppAccountID(int newOppAccID)
-        //{
-        //    int oppLinesCount = 0;
-        //    FFDataSet.LineItemRow[] lines = this._lineItemRow.TransactionRow.GetLineItemRows();
-        //    FFDataSet.LineItemRow oppLine = null;
+        private int getOppositeLineCount
+        {
+            get
+            {
+                int count = 0;
 
-        //    foreach (FFDataSet.LineItemRow line in lines)
-        //    {
-        //        if (line.creditDebit != this._lineItemRow.creditDebit)
-        //        {
-        //            oppLinesCount++;
-        //            oppLine = line;
-        //        }
-        //    }
+                foreach (LineItemModel line in this.transaction.LineItems)
+                    if (line.Polarity != lineItem.Polarity)
+                        count++;
 
-        //    if (oppLinesCount == 0)
-        //    {
-        //        // We could do something here but it is not trivial to do.
-        //        //   If we get here and if there is only 1 line in this transaction we could duplicate 
-        //        //      the existing line to make an opposite line.
-        //        //   If we get here and there are multiple lines on one side and non on the opposite side
-        //        //      it means we are working with a one-sided complex transaction and this is not the 
-        //        //      class to handle this situation.
-        //    }
-        //    else if (oppLinesCount == 1)
-        //    {
-        //        oppLine.accountID = newOppAccID;
-        //    }
-        //    else if (oppLinesCount >= 2)
-        //    {
-        //        // This is a complex transaction, so don't commit the change because we don't know which
-        //        // opposite line to update.
-        //    }
-        //}
-
-        //private int getOppAccountID()
-        //{
-        //    int oppLinesCount = 0;
-        //    int oppAccountID = AccountCON.NULL.ID;
-        //    FFDataSet.LineItemRow[] lines = this._lineItemRow.TransactionRow.GetLineItemRows();
-
-        //    foreach (FFDataSet.LineItemRow line in lines)
-        //    {
-        //        if (line.creditDebit != this._lineItemRow.creditDebit)
-        //        {
-        //            oppLinesCount++;
-        //            oppAccountID = line.accountID;
-        //        }
-        //    }
-
-        //    if (oppLinesCount >= 2)
-        //    {
-        //        oppAccountID = AccountCON.MULTIPLE.ID;
-        //    }
-
-        //    return oppAccountID;
-        //}
-
-        //private string getOppAccountName()
-        //{
-        //    int oppLinesCount = 0;
-        //    string oppAccountName = AccountCON.NULL.Name;
-        //    FFDataSet.LineItemRow[] lines = this._lineItemRow.TransactionRow.GetLineItemRows();
-
-        //    foreach (FFDataSet.LineItemRow line in lines)
-        //    {
-        //        if (line.creditDebit != this._lineItemRow.creditDebit)
-        //        {
-        //            oppLinesCount++;
-        //            oppAccountName = line.AccountRow.name;
-        //        }
-        //    }
-
-        //    if (oppLinesCount >= 2)
-        //    {
-        //        oppAccountName = AccountCON.MULTIPLE.Name;
-        //    }
-
-        //    return oppAccountName;
-        //}
-
+                return count;
+            }
+        }
 
 
                 
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        //// Public Functions
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        //public RegistryLineModel(FFDataSet.LineItemRow lRow)
-        //{
-        //    this._lineItemRow = lRow;
-        //}
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        //  Public Functions
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        public RegistryLineModel()
+        {
+            this.lineItem = new LineItemModel();
+            this.lineItem.AccountID = RegistryLineModel.CurrentAccountID;
+            this.lineItem.Polarity = PolarityCON.CREDIT;
 
-        //        public LineItemDRM() : this(AccountCON.NULL.ID, AccountCON.NULL.ID, "",  0.0m, CreditDebitCON.CREDIT)
-        //{
-        //}
+            this.oppositeLine = new LineItemModel();
+            this.oppositeLine.Polarity = PolarityCON.DEBIT;
 
-        //public LineItemDRM(int accountID, int oppAccountID, string confrimationNum, decimal amount, CreditDebitCON creditDebit)
-        //    : base()
-        //{
-        //    // Make the first line of the transaction.
-        //    this._lineItemRow = MyData.getInstance().LineItem.NewLineItemRow();
+            this.transaction = new TransactionModel();
+            this.transaction.LineItems.Add(this.lineItem);
+            this.transaction.LineItems.Add(this.oppositeLine);
+        }
 
-        //    this._lineItemRow.id = MyData.getInstance().getNextID("LineItem");
-        //    this._lineItemRow.transactionID = this.TransactionID;
-        //    this.AccountID = accountID;
-        //    this.ConfirmationNumber = confrimationNum;
-        //    this.Amount = amount;
-        //    this.Polarity = creditDebit.Value;
+        public RegistryLineModel(TransactionLine tLine)
+        {
+            this.transaction = tLine.Transaction;
+            this.lineItem = tLine.LineItem;
 
-        //    MyData.getInstance().LineItem.AddLineItemRow(this._lineItemRow);
 
-        //    // Make the second or opposite line of the transaction.
-        //    FFDataSet.LineItemRow oppLine = MyData.getInstance().LineItem.NewLineItemRow();
+            if (this.getOppositeLineCount == 1)
+            {
+                foreach (LineItemModel line in this.transaction.LineItems)
+                    if (line.Polarity != this.lineItem.Polarity)
+                        this.oppositeLine = line;
+            }
+        }
 
-        //    oppLine.id = this._lineItemRow.id + 1;
-        //    oppLine.transactionID = this._lineItemRow.transactionID;
-        //    oppLine.accountID = oppAccountID;
-        //    oppLine.confirmationNumber = this._lineItemRow.confirmationNumber;
-        //    oppLine.amount = this._lineItemRow.amount;
-        //    oppLine.creditDebit = !this._lineItemRow.creditDebit;
 
-        //    MyData.getInstance().LineItem.AddLineItemRow(oppLine);
-        //}
-
-        //public RegistryLineModel(TransactionDRM transDRM, FFDataSet.LineItemRow lineRow)
-        //    : base(lineRow)
-        //{
-
-        //    this._transactionDRM = transDRM;
-        //}
         
     }
 }
