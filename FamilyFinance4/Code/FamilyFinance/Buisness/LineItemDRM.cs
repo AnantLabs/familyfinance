@@ -69,8 +69,8 @@ namespace FamilyFinance.Buisness
             {
                 if(this.lineItemRow.confirmationNumber != value)
                 {
-                    this.reportPropertyChangedWithName("ConfirmationNumber");
                     this.lineItemRow.confirmationNumber = value;
+                    this.reportPropertyChangedWithName("ConfirmationNumber");
                 }
             }
         }

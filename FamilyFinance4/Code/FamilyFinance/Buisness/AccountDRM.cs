@@ -343,23 +343,25 @@ namespace FamilyFinance.Buisness
         }
 
 
-        public LineItemDRM[] getLineItems()
-        {
-            FFDataSet.LineItemRow[] rawLines = this.accountRow.GetLineItemRows();
-            LineItemDRM[] modelLines = new LineItemDRM[rawLines.Length];
-
-            for (int i = 0; i < rawLines.Length; i++)
-            {
-                modelLines[i] = new LineItemDRM(rawLines[i]);
-            }
-
-            return modelLines;
-        }
-
-
         public void deleteRowFromDataset()
         {
             this.accountRow.Delete();
+        }
+
+        public RegistryLineModel[] getTransactionLines()
+        {
+            FFDataSet.LineItemRow[] rawLines = this.accountRow.GetLineItemRows();
+            List<RegistryLineModel> transactionList = new List<RegistryLineModel>();
+            TransactionLine tempTransactionLine;
+
+            foreach(FFDataSet.LineItemRow rawLine in rawLines)
+            {
+                // TODO: add in a search to remove duplicate transactions in the same lineItem list.
+                tempTransactionLine = new TransactionLine(rawLine);
+                transactionList.Add(new RegistryLineModel(tempTransactionLine));
+            }
+
+            return transactionList.ToArray();
         }
     }
 }

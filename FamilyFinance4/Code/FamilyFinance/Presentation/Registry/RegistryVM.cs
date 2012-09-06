@@ -10,9 +10,7 @@ namespace FamilyFinance.Presentation.Registry
     {
         private AccountDRM currentAccount;
         private EnvelopeDRM currentEnvelope;
-        //private ObservableCollection<RegistryLineItemModel> currentLineItems;
-
-
+        private ObservableCollection<RegistryLineModel> currentLineItems;
 
 
         ///////////////////////////////////////////////////////////
@@ -54,7 +52,7 @@ namespace FamilyFinance.Presentation.Registry
                     return "Ending Balance " + this.currentEnvelope.EndingBalance.ToString("C2");
                 }
                 else
-                    return "Ending Balance";
+                    return "";
             }
         }
 
@@ -84,6 +82,7 @@ namespace FamilyFinance.Presentation.Registry
             }
         }
 
+
         public ListCollectionView AccountsView { get; private set; }
 
         public ListCollectionView IncomesView { get; private set; }
@@ -92,6 +91,19 @@ namespace FamilyFinance.Presentation.Registry
 
         public ListCollectionView EnvelopesView { get; private set; }
 
+        public ListCollectionView RegistryLinesView
+        {
+            get
+            {
+                if (this.currentAccount == null)
+                    return null;
+                else
+                {
+                    this.currentLineItems = new ObservableCollection<RegistryLineModel>(this.currentAccount.getTransactionLines());
+                    return new ListCollectionView(this.currentLineItems);
+                }
+            }
+        }
 
 
         ///////////////////////////////////////////////////////////
@@ -100,62 +112,48 @@ namespace FamilyFinance.Presentation.Registry
         private bool AccountsFilter(object item)
         {
             AccountDRM row = (AccountDRM)item;
+            bool keep = false;
 
-            if (row == null)
-                return false;
+            if (row.Catagory == CatagoryCON.ACCOUNT)
+            {
+                if (row.Closed == false || row.getEndingBalance() != 0)
+                    keep = true;
+            }
 
-            if (row.Catagory != CatagoryCON.ACCOUNT)
-                return false;
-
-            if (row.Closed == true)
-                return false;
-
-            return true;
+            return keep;
         }
         
         private bool IncomesFilter(object item)
         {
             AccountDRM row = (AccountDRM)item;
+            bool keep = false;
 
-            if (row == null)
-                return false;
+            if (row.Catagory == CatagoryCON.INCOME && row.Closed == false)
+                keep = true;
 
-            if (row.Catagory != CatagoryCON.INCOME)
-                return false;
-
-            if (row.Closed == true)
-                return false;
-
-            return true;
+            return keep;
         }
 
         private bool ExpencesFilter(object item)
         {
             AccountDRM row = (AccountDRM)item;
+            bool keep = false;
 
-            if (row == null)
-                return false;
+            if (row.Catagory == CatagoryCON.EXPENSE && row.Closed == false)
+                keep = true;
 
-            if (row.Catagory != CatagoryCON.EXPENSE)
-                return false;
-
-            if (row.Closed == true)
-                return false;
-
-            return true;
+            return keep;
         }
 
         private bool EnvelopesFilter(object item)
         {
             EnvelopeDRM row = (EnvelopeDRM)item;
+            bool keep = false;
 
-            if (row == null || row.IsSpecial())
-                return false;
+            if (row.Closed == false || row.EndingBalance != 0)
+                    keep = true;
 
-            if (row.EndingBalance != 0 && row.Closed == true)
-                return false;
-
-            return true;
+            return keep;
         }
 
 
@@ -180,7 +178,7 @@ namespace FamilyFinance.Presentation.Registry
 
         private void EnvelopesView_CurrentChanged(object sender, EventArgs e)
         {
-            switchToSelectedEnvelope();
+            this.switchToSelectedEnvelope();
         }
 
 
@@ -210,13 +208,23 @@ namespace FamilyFinance.Presentation.Registry
 
         private void reportSummaryPropertiesChanged()
         {
+            this.reportPropertyChangedWithName("RegistryLinesView");
             this.reportPropertyChangedWithName("RegistryTitle");
             this.reportPropertyChangedWithName("EndingBalance");
             this.reportPropertyChangedWithName("ReconciledBalance");
             this.reportPropertyChangedWithName("ClearedBalance");
         }
 
+        private void switchToSelectedAccount(ListCollectionView view)
+        {
+            this.currentAccount = (AccountDRM)view.CurrentItem;
+            this.currentEnvelope = null;
+           
+            if(this.currentAccount != null)
+                RegistryLineModel.CurrentAccountID = this.currentAccount.ID;
 
+            this.reportSummaryPropertiesChanged();
+        }
         
         ///////////////////////////////////////////////////////////
         // Public functions
@@ -231,26 +239,17 @@ namespace FamilyFinance.Presentation.Registry
 
         public void switchToSelectedAccount()
         {
-            this.currentAccount = (AccountDRM)this.AccountsView.CurrentItem;
-            this.currentEnvelope = null;
-
-            this.reportSummaryPropertiesChanged();
+            this.switchToSelectedAccount(this.AccountsView);
         }
 
         public void switchToSelectedIncome()
         {
-            this.currentAccount = (AccountDRM)this.IncomesView.CurrentItem;
-            this.currentEnvelope = null;
-
-            this.reportSummaryPropertiesChanged();
+            this.switchToSelectedAccount(this.IncomesView);
         }
 
         public void switchToSelectedExpence()
         {
-            this.currentAccount = (AccountDRM)this.ExpencesView.CurrentItem;
-            this.currentEnvelope = null;
-
-            this.reportSummaryPropertiesChanged();
+            this.switchToSelectedAccount(this.ExpencesView);
         }
 
         public void switchToSelectedEnvelope()

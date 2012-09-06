@@ -104,6 +104,29 @@ namespace FamilyFinance.Presentation.EditTransaction
                 return false;
         }
 
+        private bool AccountsFilter(object item)
+        {
+            AccountDRM account = (AccountDRM)item;
+            bool keepItem = true;
+
+            if (account.ID == AccountCON.MULTIPLE.ID)
+                keepItem = false;
+
+            return keepItem;
+        }
+
+        private bool EnvelopesFilter(object item)
+        {
+            EnvelopeDRM account = (EnvelopeDRM)item;
+            bool keepItem = true;
+
+            if (account.ID == EnvelopeCON.SPLIT.ID)
+                keepItem = false;
+
+            return keepItem;
+        }
+
+
 
         ///////////////////////////////////////////////////////////
         // Event Functions
@@ -139,9 +162,11 @@ namespace FamilyFinance.Presentation.EditTransaction
 
             this.AccountsView = new ListCollectionView(DataSetModel.Instance.Accounts);
             this.AccountsView.CustomSort = new AccountsCategoryNameComparer();
+            this.AccountsView.Filter = new Predicate<Object>(AccountsFilter);
 
             this.EnvelopesView = new ListCollectionView(DataSetModel.Instance.Envelopes);
             this.EnvelopesView.CustomSort = new EnvelopesNameComparer();
+            this.EnvelopesView.Filter = new Predicate<Object>(EnvelopesFilter);
 
             this.CreditsView = new ListCollectionView(this.TransactionModel.LineItems);
             this.CreditsView.Filter = new Predicate<Object>(CreditsFilter);

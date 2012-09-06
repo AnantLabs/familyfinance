@@ -139,9 +139,10 @@ namespace FamilyFinance.Buisness
         ///////////////////////////////////////////////////////////
         public LineItemModel() : base()
         {
-            if(newLinesPolarity != null)
-                this.Polarity = newLinesPolarity;
-
+            if (newLinesPolarity == null)
+                newLinesPolarity = PolarityCON.CREDIT; // good default
+                
+            this.Polarity = newLinesPolarity;
             this.EnvelopeLines = new ObservableCollection<EnvelopeLineDRM>();
             this.EnvelopeLines.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(EnvelopeLines_CollectionChanged);
         }
