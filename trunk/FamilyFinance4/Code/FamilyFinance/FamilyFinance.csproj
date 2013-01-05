@@ -64,7 +64,10 @@
     <Compile Include="Buisness\EnvelopeDRM.cs" />
     <Compile Include="Buisness\EnvelopeLineDRM.cs" />
     <Compile Include="Buisness\Sorters\AccountsCategoryNameComparer.cs" />
-    <Compile Include="Buisness\Sorters\EnvelopesNameComparer.cs" />
+    <Compile Include="Buisness\Sorters\EnvelopesNameComparer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Buisness\Sorters\RegistryLinesComparer.cs" />
     <Compile Include="Buisness\Sorters\TransactionTypesComparer.cs" />
     <Compile Include="Buisness\LineItemModel.cs" />
     <Compile Include="Buisness\TransactionLine.cs" />

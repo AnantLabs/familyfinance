@@ -270,6 +270,13 @@ namespace FamilyFinance.Buisness
             }
         }
 
+        public decimal getAmount()
+        {
+            if (this.lineItem.Polarity == PolarityCON.DEBIT)
+                return lineItem.Amount;
+            else
+                return Decimal.Negate(lineItem.Amount);
+        }
 
         
     }

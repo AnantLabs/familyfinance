@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Data;
 using FamilyFinance.Buisness;
+using FamilyFinance.Buisness.Sorters;
 using FamilyFinance.Data;
 using System.Collections.ObjectModel;
 
@@ -39,46 +40,39 @@ namespace FamilyFinance.Presentation.Registry
             }
         }
 
-        public string EndingBalance
+        private decimal endingBalance;
+        public string EndingBalanceString
         {
             get
             {
-                if (this.currentAccount != null)
-                {
-                    return "Ending Balance " + this.currentAccount.getEndingBalance().ToString("C2");
-                }
-                else if (this.currentEnvelope != null)
-                {
-                    return "Ending Balance " + this.currentEnvelope.EndingBalance.ToString("C2");
-                }
-                else
+                if (this.currentAccount == null && this.currentEnvelope == null)
                     return "";
+                else
+                    return "Ending Balance " + this.endingBalance.ToString("C2");
             }
         }
 
-        public string ClearedBalance
+        private decimal clearedBalance;
+        public string ClearedBalanceString
         {
             get
             {
-                if (this.currentAccount != null)
-                {
-                    return "Cleared " + this.currentAccount.getClearedBalance().ToString("C2");
-                }
-                else
+                if (this.currentAccount == null)
                     return "";
+                else
+                    return "Cleared " + clearedBalance.ToString("C2");
             }
         }
 
+        private decimal reconciledBalance;
         public string ReconciledBalance
         {
             get
             {
-                if (this.currentAccount != null)
-                {
-                    return "Reconsiled " + this.currentAccount.getReconciledBalance().ToString("C2");
-                }
-                else
+                if (this.currentAccount == null)
                     return "";
+                else
+                    return "Reconsiled " + this.reconciledBalance.ToString("C2");
             }
         }
 
@@ -91,19 +85,9 @@ namespace FamilyFinance.Presentation.Registry
 
         public ListCollectionView EnvelopesView { get; private set; }
 
-        public ListCollectionView RegistryLinesView
-        {
-            get
-            {
-                if (this.currentAccount == null)
-                    return null;
-                else
-                {
-                    this.currentLineItems = new ObservableCollection<RegistryLineModel>(this.currentAccount.getTransactionLines());
-                    return new ListCollectionView(this.currentLineItems);
-                }
-            }
-        }
+        public ListCollectionView RegistryLinesView { get; private set; }
+
+
 
 
         ///////////////////////////////////////////////////////////
@@ -156,6 +140,17 @@ namespace FamilyFinance.Presentation.Registry
             return keep;
         }
 
+        private bool RegistryFilter(object item)
+        {
+            RegistryLineModel row = (RegistryLineModel)item;
+            bool keep = false;
+
+            if (row.AccountID == this.currentAccount.ID)
+                keep = true;
+
+            return keep;
+        }
+
 
 
         ///////////////////////////////////////////////////////////
@@ -204,25 +199,69 @@ namespace FamilyFinance.Presentation.Registry
             this.EnvelopesView.Filter = new Predicate<Object>(EnvelopesFilter);
             this.EnvelopesView.CurrentChanged += new EventHandler(EnvelopesView_CurrentChanged);
 
+            this.switchToSelectedAccount(this.AccountsView);
+        }
+
+        private void updateBalanceValues()
+        {
+            decimal value;
+            
+            this.endingBalance = Decimal.Zero;
+            this.clearedBalance = Decimal.Zero;
+            this.reconciledBalance = Decimal.Zero;
+
+            foreach (RegistryLineModel line in this.RegistryLinesView)
+            {
+                value = line.getAmount();
+                this.endingBalance += value;
+                line.RunningTotal = this.endingBalance;
+
+                if (line.State == TransactionStateCON.RECONSILED)
+                {
+                    this.clearedBalance += value;
+                    this.reconciledBalance += value;
+                }
+                else if (line.State == TransactionStateCON.CLEARED)
+                {
+                    this.clearedBalance += value;
+                }
+            }
         }
 
         private void reportSummaryPropertiesChanged()
         {
-            this.reportPropertyChangedWithName("RegistryLinesView");
             this.reportPropertyChangedWithName("RegistryTitle");
-            this.reportPropertyChangedWithName("EndingBalance");
-            this.reportPropertyChangedWithName("ReconciledBalance");
-            this.reportPropertyChangedWithName("ClearedBalance");
+            this.reportPropertyChangedWithName("EndingBalanceString");
+            this.reportPropertyChangedWithName("ReconciledBalanceString");
+            this.reportPropertyChangedWithName("ClearedBalanceString");
         }
 
         private void switchToSelectedAccount(ListCollectionView view)
         {
             this.currentAccount = (AccountDRM)view.CurrentItem;
             this.currentEnvelope = null;
-           
-            if(this.currentAccount != null)
-                RegistryLineModel.CurrentAccountID = this.currentAccount.ID;
 
+            if (this.currentAccount != null)
+            {
+                RegistryLineModel.CurrentAccountID = this.currentAccount.ID;
+                
+                this.currentLineItems = new ObservableCollection<RegistryLineModel>(this.currentAccount.getTransactionLines());
+                this.currentLineItems.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(currentLineItems_CollectionChanged);
+
+                this.RegistryLinesView = new ListCollectionView(this.currentLineItems);
+                this.RegistryLinesView.Filter = new Predicate<Object>(RegistryFilter);
+                this.RegistryLinesView.CustomSort = new RegistryLinesComparer();
+            }
+            else
+            {
+
+            }
+
+           
+
+            RegistryLineModel[] lines = this.currentAccount.getTransactionLines();
+
+            this.updateBalanceValues();
             this.reportSummaryPropertiesChanged();
         }
         
@@ -257,6 +296,7 @@ namespace FamilyFinance.Presentation.Registry
             this.currentEnvelope = (EnvelopeDRM)this.EnvelopesView.CurrentItem;
             this.currentAccount = null;
 
+            this.updateBalanceValues();
             this.reportSummaryPropertiesChanged();
         }
 
