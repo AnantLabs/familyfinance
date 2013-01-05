@@ -180,7 +180,7 @@
                                             Header="Date"
                                             CanUserSort="True"
                                             SortMemberPath="Date" 
-                                            Width="10*">
+                                            Width="20*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Date, StringFormat=\{0:dd/MM/yyyy\}, Mode=OneWay}" />
@@ -231,7 +231,7 @@
                                         Header="Confirmation" 
                                         CanUserSort="True"
                                         MinWidth="80"
-                                        Width="40*" />
+                                        Width="25*" />
                     <DataGridTextColumn x:Name="debitAmountColumn" 
                                         Binding="{Binding DebitAmount, StringFormat=\{0:c\}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                         Header="Debit" 
