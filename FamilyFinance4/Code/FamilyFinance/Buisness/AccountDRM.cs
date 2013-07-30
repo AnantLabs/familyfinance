@@ -244,7 +244,15 @@ namespace FamilyFinance.Buisness
             }
         }
 
+        public decimal EndingBalance
+        {
+            get
+            {
+                return this.getEndingBalance();
+            }
+        }
         
+
         ///////////////////////////////////////////////////////////////////////
         // Public functions
         ///////////////////////////////////////////////////////////////////////
@@ -259,7 +267,6 @@ namespace FamilyFinance.Buisness
             this.accountRow = accountRow;
             this.bankInfoRow = bankRow;
         }
-
 
         public bool IsSpecial()
         {
@@ -341,7 +348,13 @@ namespace FamilyFinance.Buisness
             else
                 return debits - credits;
         }
+        
+        public void dependentLineItemChanged()
+        {
+            this.reportPropertyChangedWithName("EndingBalance");
+        }
 
+        
 
         public void deleteRowFromDataset()
         {

@@ -6,7 +6,7 @@ FROM Envelope INNER JOIN (
 	FROM LineItem INNER JOIN EnvelopeLine ON LineItem.id = EnvelopeLine.lineItemID
 	WHERE LineItem.accountID = @@
 	GROUP BY EnvelopeLine.envelopeID ) AS elSum ON Envelope.id = elSum.envelopeID
-WHERE Envelope.closed = 0 AND elSum.credit <> elSum.debit
+WHERE elSum.credit <> elSum.debit
 ORDER BY Envelope.name
 
 --@ 3

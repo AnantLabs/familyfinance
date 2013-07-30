@@ -36,7 +36,7 @@
         <Grid Grid.Row="1"
               Margin="5">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="30*" />
+                <ColumnDefinition Width="20*" />
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="80*" />
             </Grid.ColumnDefinitions>
@@ -100,7 +100,8 @@
                               GridLinesVisibility="None">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Name, Mode=OneWay}"
-                                                CanUserSort="True" />
+                                                CanUserSort="True"
+                                                Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
@@ -117,7 +118,8 @@
                         <DataGrid.Columns>
                             <!-- Name column -->
                             <DataGridTextColumn Binding="{Binding Name, Mode=OneWay}"
-                                                CanUserSort="True"/>
+                                                CanUserSort="True"
+                                                Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
@@ -180,7 +182,7 @@
                                             Header="Date"
                                             CanUserSort="True"
                                             SortMemberPath="Date" 
-                                            Width="20*">
+                                            Width="15*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Date, StringFormat=\{0:dd/MM/yyyy\}, Mode=OneWay}" />
@@ -238,21 +240,21 @@
                                         CanUserSort="True"
                                         MinWidth="60"
                                         ElementStyle="{StaticResource RightAlignStyle}"
-                                        Width="20*" />
+                                        Width="Auto" />
                     <DataGridTextColumn x:Name="creditAmountColumn" 
                                         Binding="{Binding CreditAmount, StringFormat=\{0:c\}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                         Header="Credit" 
                                         CanUserSort="True"
                                         MinWidth="60"
                                         ElementStyle="{StaticResource RightAlignStyle}"
-                                        Width="20*" />
+                                        Width="Auto" />
                     <DataGridTextColumn x:Name="totalAmountColumn" 
                                         Binding="{Binding RunningTotal, StringFormat=\{0:c\}, Mode=OneWay}" 
                                         Header="Credit" 
                                         CanUserSort="True"
                                         MinWidth="60"
                                         ElementStyle="{StaticResource RightAlignStyle}"
-                                        Width="20*" />
+                                        Width="Auto" />
                 </DataGrid.Columns>
             </DataGrid>
             
@@ -260,13 +262,13 @@
                         Grid.Column="2" 
                         Orientation="Horizontal" 
                         HorizontalAlignment="Right">
-                <TextBlock Text="{Binding Mode=OneWay, Path=ReconciledBalance}"
+                <TextBlock Text="{Binding Mode=OneWay, Path=ReconciledBalanceString}"
                        Margin="30,0,0,0"
                        Foreground="White" />
-                <TextBlock Text="{Binding Mode=OneWay, Path=ClearedBalance}"
+                <TextBlock Text="{Binding Mode=OneWay, Path=ClearedBalanceString}"
                        Margin="30,0,0,0"
                        Foreground="White" />
-                <TextBlock Text="{Binding Mode=OneWay, Path=EndingBalance}"
+                <TextBlock Text="{Binding Mode=OneWay, Path=EndingBalanceString}"
                        Margin="30,0,0,0"
                        Foreground="White" />
             </StackPanel>
