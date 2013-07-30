@@ -31,9 +31,6 @@ namespace FamilyFinance.Buisness
         private DataSetModel()
         {
             ffDataSet = new FFDataSet();
-
-            //ffDataSet.LineItem.ColumnChanged += new DataColumnChangeEventHandler(LineItem_ColumnChanged);
-            //ffDataSet.EnvelopeLine.ColumnChanged += new DataColumnChangeEventHandler(EnvelopeLine_ColumnChanged);
         }
 
         public void loadData()
@@ -538,14 +535,11 @@ namespace FamilyFinance.Buisness
 
 
         ///////////////////////////////////////////////////////////////////////
-        // Events
+        // Event stuff
         ///////////////////////////////////////////////////////////////////////
 
 
-
-
-
-
+   
 
         ///////////////////////////////////////////////////////////////////////
         // 
@@ -571,8 +565,23 @@ namespace FamilyFinance.Buisness
 
         }
 
+        public void updateLineItemDependants(LineItemDRM line)
+        {
+            if (line == null)
+                return;
+
+            foreach (AccountDRM account in this.Accounts)
+            {
+                if (account.ID == line.AccountID)
+                {
+                    account.dependentLineItemChanged();
+                    return;
+                }
+            }
+
+        }
 
 
-        
+
     }
 }

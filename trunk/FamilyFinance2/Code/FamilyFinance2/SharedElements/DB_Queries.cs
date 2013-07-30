@@ -26,7 +26,6 @@ namespace FamilyFinance2.SharedElements
     {
         public int ID;
         public decimal Balance;
-        public string Name;
 
         public IdBalance(int id, decimal balance)
         {
