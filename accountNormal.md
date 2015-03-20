@@ -1,0 +1,20 @@
+# INFO: Picking the Account's Normal Balance. #
+
+
+## Quick Answer ##
+
+Most of the time **Debit** is the selection you want. This is where money leaving the account is negative and the money going into the account is positive. Examples would be checking, savings, cash, or any of the 'Expenses'.
+
+If you want the registries running total to look like your loan or credit card statement then pick **Credit**. This is where the money you spend from the account is positive and the money that you pay into the account is negative. More examples include any type of account considered a liability or any of the 'Incomes'.
+
+
+
+## Long Answer ##
+
+An accounts Normal Balance can be either Debit or Credit. In asking several financial people, debit and credit only refers to if the number belongs in the left or right column. Credits are always on the left and debits are always on the right. The Accounts Normal Balance is picked by what the balance in the account is "Normally" and it determines how the numbers are added up. Checking and saving accounts (or Assets) are examples of Debit accounts. In these accounts the credits are negative and debits are positive. On the other side Loans and Credit Cards (or Liabilities) are examples of Credit accounts. In these accounts credits are positive and debits are negative.
+
+
+
+## Program Standard ##
+
+As a program standard, all credits are negative and all debits are positive. The only exception is when calculating the starting balance, ending balance and the running total of the accounts that have there Normal Balance set to Credit. You will notice that an account that uses envelopes and is marked as Credit will calculate a credit as positive when looking at the account registry, but when looking at the sub transactions and envelopes it will be calculated as a negative. This is because whether an account's normal balance is credit or debit, a credit line means money leaving, and a debit line means money coming in.
